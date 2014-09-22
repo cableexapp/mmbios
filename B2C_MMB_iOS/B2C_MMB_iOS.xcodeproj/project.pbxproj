@@ -184,6 +184,13 @@
 		6181A55D19CFC6E6000E2D14 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A55C19CFC6E6000E2D14 /* libresolv.dylib */; };
 		6181A55F19CFC6EF000E2D14 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A55E19CFC6EF000E2D14 /* libstdc++.dylib */; };
 		6181A56119CFC6F5000E2D14 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A56019CFC6F5000E2D14 /* libiconv.dylib */; };
+		61CCBCE119CFFF150008A46B /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDB19CFFF150008A46B /* Icon-40@2x.png */; };
+		61CCBCE219CFFF150008A46B /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDC19CFFF150008A46B /* Icon-60@2x.png */; };
+		61CCBCE319CFFF150008A46B /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDD19CFFF150008A46B /* Icon-Small.png */; };
+		61CCBCE419CFFF150008A46B /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDE19CFFF150008A46B /* Icon-Small@2x.png */; };
+		61CCBCE519CFFF150008A46B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDF19CFFF150008A46B /* Icon.png */; };
+		61CCBCE619CFFF150008A46B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE019CFFF150008A46B /* Icon@2x.png */; };
+		61CCBCE819D00C880008A46B /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE719D00C880008A46B /* star.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -490,6 +497,13 @@
 		6181A55C19CFC6E6000E2D14 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		6181A55E19CFC6EF000E2D14 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		6181A56019CFC6F5000E2D14 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		61CCBCDB19CFFF150008A46B /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
+		61CCBCDC19CFFF150008A46B /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
+		61CCBCDD19CFFF150008A46B /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		61CCBCDE19CFFF150008A46B /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		61CCBCDF19CFFF150008A46B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		61CCBCE019CFFF150008A46B /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		61CCBCE719D00C880008A46B /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -663,6 +677,7 @@
 		6181A34F19CFC3F8000E2D14 /* B2C_MMB_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				61CCBCDA19CFFF150008A46B /* icon */,
 				6181A35819CFC3F9000E2D14 /* AppDelegate.h */,
 				6181A35919CFC3F9000E2D14 /* AppDelegate.m */,
 				6181A35B19CFC3F9000E2D14 /* Main_iPhone.storyboard */,
@@ -857,6 +872,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				61CCBCE719D00C880008A46B /* star.png */,
 				6181A3F519CFC4C2000E2D14 /* 102.png */,
 				6181A3F619CFC4C2000E2D14 /* arrow.png */,
 				6181A3F719CFC4C2000E2D14 /* ask.png */,
@@ -1240,6 +1256,19 @@
 			path = ThirdViewController;
 			sourceTree = "<group>";
 		};
+		61CCBCDA19CFFF150008A46B /* icon */ = {
+			isa = PBXGroup;
+			children = (
+				61CCBCDB19CFFF150008A46B /* Icon-40@2x.png */,
+				61CCBCDC19CFFF150008A46B /* Icon-60@2x.png */,
+				61CCBCDD19CFFF150008A46B /* Icon-Small.png */,
+				61CCBCDE19CFFF150008A46B /* Icon-Small@2x.png */,
+				61CCBCDF19CFFF150008A46B /* Icon.png */,
+				61CCBCE019CFFF150008A46B /* Icon@2x.png */,
+			);
+			path = icon;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1323,8 +1352,11 @@
 				6181A4C519CFC4C2000E2D14 /* DCFChenMoreCell.xib in Resources */,
 				6181A4D819CFC4C2000E2D14 /* click1.png in Resources */,
 				6181A4F519CFC4C2000E2D14 /* sv_3.png in Resources */,
+				61CCBCE419CFFF150008A46B /* Icon-Small@2x.png in Resources */,
 				6181A4F219CFC4C2000E2D14 /* sun.png in Resources */,
+				61CCBCE619CFFF150008A46B /* Icon@2x.png in Resources */,
 				6181A4E819CFC4C2000E2D14 /* Learn@2x.png in Resources */,
+				61CCBCE819D00C880008A46B /* star.png in Resources */,
 				6181A4D719CFC4C2000E2D14 /* ask.png in Resources */,
 				6181A4ED19CFC4C2000E2D14 /* Parents@2x.png in Resources */,
 				6181A36519CFC3F9000E2D14 /* Images.xcassets in Resources */,
@@ -1338,6 +1370,7 @@
 				6181A4E719CFC4C2000E2D14 /* Learn.png in Resources */,
 				6181A4E919CFC4C2000E2D14 /* mmb.png in Resources */,
 				6122714519CFC81500FE4DFF /* PayViewController.xib in Resources */,
+				61CCBCE319CFFF150008A46B /* Icon-Small.png in Resources */,
 				6122714619CFC81500FE4DFF /* title_logo.png in Resources */,
 				6181A4EA19CFC4C2000E2D14 /* News.png in Resources */,
 				6181A4F619CFC4C2000E2D14 /* unchoose.png in Resources */,
@@ -1350,12 +1383,15 @@
 				6181A4DC19CFC4C2000E2D14 /* tel.png in Resources */,
 				6122713719CFC81500FE4DFF /* Alixpay.bundle in Resources */,
 				6181A35419CFC3F9000E2D14 /* InfoPlist.strings in Resources */,
+				61CCBCE519CFFF150008A46B /* Icon.png in Resources */,
 				6181A4DD19CFC4C2000E2D14 /* up.png in Resources */,
 				6181A4F019CFC4C2000E2D14 /* Set@2x.png in Resources */,
 				6181A4E319CFC4C2000E2D14 /* cell_3.png in Resources */,
+				61CCBCE119CFFF150008A46B /* Icon-40@2x.png in Resources */,
 				6181A4EE19CFC4C2000E2D14 /* Set.png in Resources */,
 				6181A4DE19CFC4C2000E2D14 /* askPrice.png in Resources */,
 				6181A52819CFC4C2000E2D14 /* OneStepCell.xib in Resources */,
+				61CCBCE219CFFF150008A46B /* Icon-60@2x.png in Resources */,
 				6181A4E419CFC4C2000E2D14 /* choose.png in Resources */,
 				6181A4E019CFC4C2000E2D14 /* caLogo.png in Resources */,
 				6181A4E219CFC4C2000E2D14 /* cell_2.png in Resources */,

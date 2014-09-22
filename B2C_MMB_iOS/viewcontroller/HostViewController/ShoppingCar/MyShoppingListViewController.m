@@ -663,30 +663,33 @@ NSComparator cmptr = ^(id obj1, id obj2){
 {
     sender.selected = !sender.selected;
     
-    NSMutableArray *arr = [[NSMutableArray alloc] init];
-    for(UIButton *btn in cellBtnArray)
-    {
-        NSString *s = [NSString stringWithFormat:@"%d",btn.selected];
-        [arr addObject:s];
-    }
+    int tag =  [sender tag];
+    NSLog(@"tag = %d",tag);
     
-    UIButton *b = (UIButton *)[headBtnArray objectAtIndex:0];
-    if([arr containsObject:@"0"] == YES)
-    {
-        [b setSelected:NO];
-        if(buttomBtn)
-        {
-            [buttomBtn setSelected:NO];
-        }
-    }
-    else
-    {
-        [b setSelected:YES];
-        if(buttomBtn)
-        {
-            [buttomBtn setSelected:YES];
-        }
-    }
+//    NSMutableArray *arr = [[NSMutableArray alloc] init];
+//    for(UIButton *btn in cellBtnArray)
+//    {
+//        NSString *s = [NSString stringWithFormat:@"%d",btn.selected];
+//        [arr addObject:s];
+//    }
+//    
+//    UIButton *b = (UIButton *)[headBtnArray objectAtIndex:0];
+//    if([arr containsObject:@"0"] == YES)
+//    {
+//        [b setSelected:NO];
+//        if(buttomBtn)
+//        {
+//            [buttomBtn setSelected:NO];
+//        }
+//    }
+//    else
+//    {
+//        [b setSelected:YES];
+//        if(buttomBtn)
+//        {
+//            [buttomBtn setSelected:YES];
+//        }
+//    }
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

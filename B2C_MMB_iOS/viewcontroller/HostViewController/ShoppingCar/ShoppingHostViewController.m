@@ -168,7 +168,8 @@
     NSLog(@"%d",[[sender view] tag]);
     
     [self setHidesBottomBarWhenPushed:YES];
-    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
+//    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
+    GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] init];
     [self.navigationController pushViewController:goodsDetail animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

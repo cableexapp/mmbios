@@ -116,12 +116,26 @@
         if(i == tag)
         {
             _seq = b.titleLabel.text;
-            NSLog(@"_seq = %@",_seq);
             if(dataArray.count != 0)
             {
                 [dataArray removeAllObjects];
             }
             intPage = 1;
+            
+            //价格product_price  销量:sale_num
+
+            if(i == 0)
+            {
+                _seq = @"";
+            }
+            if(i == 1)
+            {
+                _seq = @"product_price";
+            }
+            if(i == 2)
+            {
+                _seq = @"sale_num";
+            }
             [self loadRequest:_seq];
         }
         else
@@ -261,7 +275,6 @@
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
     
     [moreCell startAnimation];
 }

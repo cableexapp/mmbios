@@ -71,6 +71,7 @@
 {
     if(URLTag == URLShopListTag)
     {
+        
         NSLog(@"dic = %@",dicRespon);
         NSLog(@"msg = %@",[dicRespon objectForKey:@"message"]);
     }

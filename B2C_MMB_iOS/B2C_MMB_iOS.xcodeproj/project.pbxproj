@@ -191,6 +191,8 @@
 		61CCBCE519CFFF150008A46B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDF19CFFF150008A46B /* Icon.png */; };
 		61CCBCE619CFFF150008A46B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE019CFFF150008A46B /* Icon@2x.png */; };
 		61CCBCE819D00C880008A46B /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE719D00C880008A46B /* star.png */; };
+		61CCBCEC19D0142C0008A46B /* GoodsDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CCBCEA19D0142C0008A46B /* GoodsDetailTableViewCell.m */; };
+		61CCBCED19D0142C0008A46B /* GoodsDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCEB19D0142C0008A46B /* GoodsDetailTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -504,6 +506,9 @@
 		61CCBCDF19CFFF150008A46B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		61CCBCE019CFFF150008A46B /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		61CCBCE719D00C880008A46B /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		61CCBCE919D0142C0008A46B /* GoodsDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailTableViewCell.h; sourceTree = "<group>"; };
+		61CCBCEA19D0142C0008A46B /* GoodsDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailTableViewCell.m; sourceTree = "<group>"; };
+		61CCBCEB19D0142C0008A46B /* GoodsDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoodsDetailTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1171,6 +1176,9 @@
 				6181A49919CFC4C2000E2D14 /* ChooseListTableViewController.m */,
 				6181A49A19CFC4C2000E2D14 /* GoodsDetailViewController.h */,
 				6181A49B19CFC4C2000E2D14 /* GoodsDetailViewController.m */,
+				61CCBCE919D0142C0008A46B /* GoodsDetailTableViewCell.h */,
+				61CCBCEA19D0142C0008A46B /* GoodsDetailTableViewCell.m */,
+				61CCBCEB19D0142C0008A46B /* GoodsDetailTableViewCell.xib */,
 				6181A49C19CFC4C2000E2D14 /* HomeImprovementChannel */,
 				6181A4A119CFC4C2000E2D14 /* HostNaviViewController.h */,
 				6181A4A219CFC4C2000E2D14 /* HostNaviViewController.m */,
@@ -1345,6 +1353,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61CCBCED19D0142C0008A46B /* GoodsDetailTableViewCell.xib in Resources */,
 				6181A4E519CFC4C2000E2D14 /* delete.png in Resources */,
 				6181A4EB19CFC4C2000E2D14 /* News@2x.png in Resources */,
 				6181A4EC19CFC4C2000E2D14 /* Parents.png in Resources */,
@@ -1424,6 +1433,7 @@
 				6181A4CE19CFC4C2000E2D14 /* DCFConnectionUtil.m in Sources */,
 				6181A4C419CFC4C2000E2D14 /* DCFChenMoreCell.m in Sources */,
 				6181A53919CFC4C2000E2D14 /* ThirdNaviViewController.m in Sources */,
+				61CCBCEC19D0142C0008A46B /* GoodsDetailTableViewCell.m in Sources */,
 				6122714419CFC81500FE4DFF /* PayViewController.m in Sources */,
 				6181A51819CFC4C2000E2D14 /* UIImage+MultiFormat.m in Sources */,
 				6181A50819CFC4C2000E2D14 /* FMResultSet.m in Sources */,

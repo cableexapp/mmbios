@@ -13,11 +13,14 @@
 #import "DCFCustomExtra.h"
 #import "AliViewController.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "GoodsDetailTableViewCell.h"
 
 @interface GoodsDetailViewController ()
 {
     NSString *cell_two_content;
     NSString *cell_four_content;
+    
+    NSMutableArray *cellBtnArray;
 }
 @end
 
@@ -108,11 +111,12 @@
     [tv setBackgroundColor:[UIColor colorWithRed:229.0/255.0 green:227.0/255.0 blue:235.0/255.0 alpha:1.0]];
     [self.view addSubview:tv];
     
-//    NSLog(@"%f %f %f",ScreenHeight,self.view.window.frame.size.height,[[UIScreen mainScreen] bounds].size.height);
     
     cell_two_content = @"远东电线电缆BVVB 2*1平方 国际 护套铜芯电线100米";
     
     cell_four_content = @"第一次到这里买，服务好，价格公道，童叟无欺，发货快，电线电缆已经安装好，很满意，绝对正品，赞一个";
+    
+    cellBtnArray = [[NSMutableArray alloc] init];
 }
 
 
@@ -135,8 +139,15 @@
     }
     if(indexPath.row == 1)
     {
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:cell_two_content WithSize:CGSizeMake(320, MAXFLOAT)];
-        return size.height+14;
+//        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:cell_two_content WithSize:CGSizeMake(320, MAXFLOAT)];
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, size.height)];
+//        [label setText:cell_two_content];
+//        [label setFont:[UIFont systemFontOfSize:13]];
+//        [label setNumberOfLines:0];
+//        
+//        return label.frame.size.height+10;
+        UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+        return cell.contentView.frame.size.height;
     }
     if(indexPath.row == 2 || indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 5)
     {
@@ -144,7 +155,7 @@
     }
     if(indexPath.row == 6)
     {
-        return 60;
+        return 165;
 
     }
     return 0;
@@ -152,15 +163,25 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView setSeparatorStyle:0];
+//    [tableView setSeparatorStyle:0];
     
-    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if(!cell)
+    if(indexPath.row == 6)
+    {
+        GoodsDetailTableViewCell *cell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsDetailTableViewCell" owner:self options:nil] lastObject];
+        return cell;
+    }
+    
+    static NSString *cellId = @"cellId";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:0];
     }
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    }
+
     if(indexPath.row == 0)
     {
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(85, 5, 150, 150)];
@@ -171,8 +192,8 @@
     if(indexPath.row == 1)
     {
         
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:cell_two_content WithSize:CGSizeMake(320, MAXFLOAT)];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 300, size.height)];
+        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:cell_two_content WithSize:CGSizeMake(300, MAXFLOAT)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, size.height)];
         [label setText:cell_two_content];
         [label setNumberOfLines:0];
         [label setFont:[UIFont systemFontOfSize:13]];
@@ -180,12 +201,7 @@
         [label setTextColor:[UIColor blackColor]];
         [cell.contentView addSubview:label];
         [cell.contentView setBackgroundColor:[UIColor whiteColor]];
-        for(int i=0;i<2;i++)
-        {
-            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, (cell.contentView.frame.size.height-1)*i, 320, 2)];
-            [lineView setBackgroundColor:[UIColor colorWithRed:110.0/255.0 green:138.0/255.0 blue:154.0/255.0 alpha:1.0]];
-            [cell.contentView addSubview:lineView];
-        }
+
     }
     if(indexPath.row == 2)
     {
@@ -195,7 +211,6 @@
         [label setText:@"价格"];
         [label setFont:[UIFont systemFontOfSize:12]];
         [label setTextAlignment:NSTextAlignmentLeft];
-        [label setBackgroundColor:[UIColor redColor]];
         [cell.contentView addSubview:label];
         
         CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"¥500.00－¥550.00" WithSize:CGSizeMake(MAXFLOAT, 30)];
@@ -204,7 +219,6 @@
         [priceLabel setTextAlignment:NSTextAlignmentLeft];
         [priceLabel setText:@"¥500.00－¥550.00"];
         [priceLabel setFont:[UIFont systemFontOfSize:12]];
-        [priceLabel setBackgroundColor:[UIColor redColor]];
         [cell.contentView addSubview:priceLabel];
         
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"运费5元" WithSize:CGSizeMake(MAXFLOAT, 30)];
@@ -213,7 +227,6 @@
         [tradeLabel setTextAlignment:NSTextAlignmentRight];
         [tradeLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
         [tradeLabel setFont:[UIFont systemFontOfSize:12]];
-        [tradeLabel setBackgroundColor:[UIColor redColor]];
         [cell.contentView addSubview:tradeLabel];
 
     }
@@ -221,41 +234,7 @@
     {
         [cell.textLabel setText:@"颜色分类"];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        
-//        CGSize size1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:@"米七(匿名)" WithSize:CGSizeMake(MAXFLOAT, 20)];
-//        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, size1.width, 20)];
-//        [nameLabel setText:@"米七(匿名)"];
-//        [nameLabel setFont:[UIFont systemFontOfSize:11]];
-//        [nameLabel setTextAlignment:NSTextAlignmentLeft];
-//        [nameLabel setBackgroundColor:[UIColor purpleColor]];
-//        [cell.contentView addSubview:nameLabel];
-//        [cell.contentView setBackgroundColor:[UIColor colorWithRed:229.0/255.0 green:227.0/255.0 blue:235.0/255.0 alpha:1.0]];
-//
-//        CGSize size2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:@"评价日期:5.23" WithSize:CGSizeMake(MAXFLOAT, 20)];
-//        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake((320-size2.width)/2, nameLabel.frame.origin.y, size2.width, 20)];
-//        [dateLabel setFont:[UIFont systemFontOfSize:11]];
-//        [dateLabel setTextAlignment:NSTextAlignmentLeft];
-//        [dateLabel setText:@"评价日期:5.23"];
-//        [dateLabel setBackgroundColor:[UIColor yellowColor]];
-//        [cell.contentView addSubview:dateLabel];
-//        
-//        
-//        CGSize size3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:@"颜色分类:红色" WithSize:CGSizeMake(MAXFLOAT,20)];
-//        UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-size3.width-5, dateLabel.frame.origin.y, size3.width, 20)];
-//        [colorLabel setFont:[UIFont systemFontOfSize:11]];
-//        [colorLabel setText:@"颜色分类:红色"];
-//        [colorLabel setTextAlignment:NSTextAlignmentLeft];
-//        [colorLabel setBackgroundColor:[UIColor redColor]];
-//        [cell.contentView addSubview:colorLabel];
-//        
-//        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:cell_four_content WithSize:CGSizeMake(320, MAXFLOAT)];
-//        UILabel *contentlabel = [[UILabel alloc] initWithFrame:CGRectMake(5, dateLabel.frame.origin.y + dateLabel.frame.size.height + 5, 300, size.height)];
-//        [contentlabel setBackgroundColor:[UIColor whiteColor]];
-//        [contentlabel setTextAlignment:NSTextAlignmentLeft];
-//        [contentlabel setText:cell_four_content];
-//        [contentlabel setFont:[UIFont systemFontOfSize:11]];
-//        [contentlabel setNumberOfLines:0];
-//        [cell.contentView addSubview:contentlabel];
+
     }
     if(indexPath.row == 4)
     {
@@ -268,7 +247,6 @@
         [label setText:@"远东电缆旗舰店"];
         [label setTextAlignment:NSTextAlignmentLeft];
         [label setTextColor:[UIColor blueColor]];
-        [label setBackgroundColor:[UIColor redColor]];
         
         UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 7, label.frame.size.width+40, 30)];
         [firstView addSubview:firstIv];
@@ -298,11 +276,12 @@
         [cell.contentView addSubview:starView];
         
         UIImageView *chatIv = [[UIImageView alloc] initWithFrame:CGRectMake(320-40, 7, 30, 30)];
+        [chatIv setUserInteractionEnabled:YES];
         [chatIv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
-        [cell.contentView addSubview:chatIv];
         
         UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatTap:)];
         [chatIv addGestureRecognizer:chatTap];
+        [cell.contentView addSubview:chatIv];
     }
     if(indexPath.row == 5)
     {
@@ -328,10 +307,13 @@
             
             [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             
+            [cellBtnArray addObject:btn];
+            
             [cell.contentView addSubview:btn];
             
         }
     }
+
     return cell;
 }
 
@@ -356,6 +338,18 @@
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     NSLog(@"tag = %d",[sender tag]);
+    
+    for(UIButton *btn in cellBtnArray)
+    {
+        if(btn.tag == [sender tag])
+        {
+            
+        }
+        else
+        {
+            [btn setSelected:NO];
+        }
+    }
 }
 
 

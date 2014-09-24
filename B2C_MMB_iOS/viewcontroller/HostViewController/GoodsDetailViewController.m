@@ -14,6 +14,7 @@
 #import "AliViewController.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "GoodsDetailTableViewCell.h"
+#import "MyShoppingListViewController.h"
 
 @interface GoodsDetailViewController ()
 {
@@ -28,6 +29,8 @@
     NSMutableArray *chooseCountBtnArray;
     
     UIView *chooseColorAndCountView; //选择颜色和数量的试图
+    
+    MyShoppingListViewController *shop;
 }
 @end
 
@@ -57,17 +60,17 @@
     {
         NSLog(@"加入购物车");
         
-        NSURL *urlStr = [NSURL URLWithString:@"com.easemob.enterprise.demo.ui"];
+        [self setHidesBottomBarWhenPushed:YES];
+        [self.navigationController pushViewController:shop animated:YES];
         
-        if ([[UIApplication sharedApplication] canOpenURL:urlStr])
-        {    NSLog(@"can go to test");
-            [[UIApplication sharedApplication] openURL:urlStr];
-        }
-        else
-        {    NSLog(@"can not go to test！！！！！");
-        }
 //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"com.easemob.enterprise.demo.ui"]];
     }
+}
+
+- (void)rightItemClick:(id) sender
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:shop animated:YES];
 }
 
 - (void)viewDidLoad
@@ -121,6 +124,15 @@
     [self.view addSubview:tv];
     
     
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
+    [rightBtn setFrame:CGRectMake(0, 5, 34, 34)];
+    [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = right;
+    
     cell_two_content = @"远东电线电缆BVVB 2*1平方 国际 护套铜芯电线100米";
     
     cell_four_content = @"第一次到这里买，服务好，价格公道，童叟无欺，发货快，电线电缆已经安装好，很满意，绝对正品，赞一个";
@@ -130,6 +142,9 @@
     chooseColorBtnArray = [[NSMutableArray alloc] init];
     
     chooseCountBtnArray = [[NSMutableArray alloc] init];
+    
+    shop = [[MyShoppingListViewController alloc] init];
+
 }
 
 

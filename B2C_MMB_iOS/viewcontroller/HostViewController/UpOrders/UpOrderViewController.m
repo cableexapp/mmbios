@@ -9,6 +9,7 @@
 #import "UpOrderViewController.h"
 #import "DCFCustomExtra.h"
 #import "DCFTopLabel.h"
+#import "ChooseReceiveAddressViewController.h"
 
 @interface UpOrderViewController ()
 {
@@ -37,7 +38,7 @@
     [super viewDidLoad];
     
     [self pushAndPopStyle];
-    
+
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单提交"];
     self.navigationItem.titleView = top;
@@ -174,7 +175,7 @@
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
-
+            [cell setSelectionStyle:0];
             
             if(indexPath.section == 0)
             {
@@ -286,6 +287,16 @@
             }
     }
     return cell;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row == 0)
+    {
+//        ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] initWithNibName:@"ChooseReceiveAddressViewController" bundle:nil];
+        ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
+        [self.navigationController pushViewController:chooseAddress animated:YES];
+    }
 }
 - (void)didReceiveMemoryWarning
 {

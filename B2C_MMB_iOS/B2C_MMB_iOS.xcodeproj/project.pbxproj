@@ -25,6 +25,10 @@
 		6122714519CFC81500FE4DFF /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6122713119CFC81500FE4DFF /* PayViewController.xib */; };
 		6122714619CFC81500FE4DFF /* title_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6122713519CFC81500FE4DFF /* title_logo.png */; };
 		612A241D19D25B5900E544E0 /* UpOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 612A241C19D25B5900E544E0 /* UpOrderViewController.m */; };
+		612A242119D2926800E544E0 /* ChooseReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 612A241F19D2926800E544E0 /* ChooseReceiveAddressViewController.m */; };
+		612A242219D2926800E544E0 /* ChooseReceiveAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */; };
+		6166ED5519D2B06800D9A219 /* addAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5419D2B06800D9A219 /* addAddress.png */; };
+		6166ED5819D2B44D00D9A219 /* AddReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
 		6181A34E19CFC3F8000E2D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34D19CFC3F8000E2D14 /* UIKit.framework */; };
@@ -240,6 +244,12 @@
 		6122713519CFC81500FE4DFF /* title_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_logo.png; sourceTree = "<group>"; };
 		612A241B19D25B5900E544E0 /* UpOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpOrderViewController.h; sourceTree = "<group>"; };
 		612A241C19D25B5900E544E0 /* UpOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpOrderViewController.m; sourceTree = "<group>"; };
+		612A241E19D2926800E544E0 /* ChooseReceiveAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseReceiveAddressViewController.h; sourceTree = "<group>"; };
+		612A241F19D2926800E544E0 /* ChooseReceiveAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseReceiveAddressViewController.m; sourceTree = "<group>"; };
+		612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseReceiveAddressViewController.xib; sourceTree = "<group>"; };
+		6166ED5419D2B06800D9A219 /* addAddress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addAddress.png; sourceTree = "<group>"; };
+		6166ED5619D2B44D00D9A219 /* AddReceiveAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiveAddressViewController.h; sourceTree = "<group>"; };
+		6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveAddressViewController.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6181A34919CFC3F8000E2D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -630,6 +640,11 @@
 			children = (
 				612A241B19D25B5900E544E0 /* UpOrderViewController.h */,
 				612A241C19D25B5900E544E0 /* UpOrderViewController.m */,
+				612A241E19D2926800E544E0 /* ChooseReceiveAddressViewController.h */,
+				612A241F19D2926800E544E0 /* ChooseReceiveAddressViewController.m */,
+				612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */,
+				6166ED5619D2B44D00D9A219 /* AddReceiveAddressViewController.h */,
+				6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */,
 			);
 			path = UpOrders;
 			sourceTree = "<group>";
@@ -889,6 +904,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6166ED5419D2B06800D9A219 /* addAddress.png */,
 				61CCBCE719D00C880008A46B /* star.png */,
 				6181A3F519CFC4C2000E2D14 /* 102.png */,
 				6181A3F619CFC4C2000E2D14 /* arrow.png */,
@@ -1366,6 +1382,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				612A242219D2926800E544E0 /* ChooseReceiveAddressViewController.xib in Resources */,
 				61CCBCED19D0142C0008A46B /* GoodsDetailTableViewCell.xib in Resources */,
 				6181A4E519CFC4C2000E2D14 /* delete.png in Resources */,
 				6181A4EB19CFC4C2000E2D14 /* News@2x.png in Resources */,
@@ -1409,6 +1426,7 @@
 				6181A4DD19CFC4C2000E2D14 /* up.png in Resources */,
 				6181A4F019CFC4C2000E2D14 /* Set@2x.png in Resources */,
 				6181A4E319CFC4C2000E2D14 /* cell_3.png in Resources */,
+				6166ED5519D2B06800D9A219 /* addAddress.png in Resources */,
 				61CCBCE119CFFF150008A46B /* Icon-40@2x.png in Resources */,
 				6181A4EE19CFC4C2000E2D14 /* Set.png in Resources */,
 				6181A4DE19CFC4C2000E2D14 /* askPrice.png in Resources */,
@@ -1467,6 +1485,7 @@
 				6181A51C19CFC4C2000E2D14 /* UIImage (fixOrientation).m in Sources */,
 				6181A51519CFC4C2000E2D14 /* SDWebImagePrefetcher.m in Sources */,
 				6181A50619CFC4C2000E2D14 /* FMDatabase.m in Sources */,
+				6166ED5819D2B44D00D9A219 /* AddReceiveAddressViewController.m in Sources */,
 				6181A52319CFC4C2000E2D14 /* SendEmailViewController.m in Sources */,
 				6181A50519CFC4C2000E2D14 /* ELCImagePickerDemoViewController.m in Sources */,
 				6181A50419CFC4C2000E2D14 /* ELCImagePickerController.m in Sources */,
@@ -1499,6 +1518,7 @@
 				6181A52219CFC4C2000E2D14 /* FindBackSec_SecondViewController.m in Sources */,
 				6181A53619CFC4C2000E2D14 /* RegisterViewController.m in Sources */,
 				6181A4BF19CFC4C2000E2D14 /* DCFImageUtil.m in Sources */,
+				612A242119D2926800E544E0 /* ChooseReceiveAddressViewController.m in Sources */,
 				6181A4FD19CFC4C2000E2D14 /* CKRefreshArrowView.m in Sources */,
 				6181A52719CFC4C2000E2D14 /* OneStepCell.m in Sources */,
 				6181A4CA19CFC4C2000E2D14 /* DCFRootNaviController.m in Sources */,
@@ -1667,6 +1687,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "B2C_MMB_iOS/B2C_MMB_iOS-Prefix.pch";
 				INFOPLIST_FILE = "B2C_MMB_iOS/B2C_MMB_iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AliPay/alipay",
@@ -1685,6 +1706,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "B2C_MMB_iOS/B2C_MMB_iOS-Prefix.pch";
 				INFOPLIST_FILE = "B2C_MMB_iOS/B2C_MMB_iOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AliPay/alipay",

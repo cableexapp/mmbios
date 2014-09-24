@@ -56,10 +56,13 @@
     
     [self initCutomBar];
     
+    //设置tabbar图片文字颜色
 //    [[UITabBar appearance] setTintColor:[UIColor redColor]];
-//    [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:30/255.0 green:35/255.0 blue:32/255.0 alpha:1.0]];
+
+    //设置tabbar背景颜色
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:99/255.0 green:170/255.0 blue:20/255.0 alpha:1.0]];
+//    [[UITabBar appearance] setBarTintColor:[UIColor orangeColor]];
 
 }
 - (BOOL)shouldAutorotate

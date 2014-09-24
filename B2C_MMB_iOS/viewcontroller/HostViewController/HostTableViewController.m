@@ -36,6 +36,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    
 //    if(searchBar)
 //    {
 //        [searchBar resignFirstResponder];

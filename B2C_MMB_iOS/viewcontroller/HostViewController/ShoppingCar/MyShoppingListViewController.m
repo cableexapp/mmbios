@@ -15,6 +15,7 @@
 #import "DCFChenMoreCell.h"
 //#import "LoginViewController.h"
 #import "LoginNaviViewController.h"
+#import "UpOrderViewController.h"
 
 @interface MyShoppingListViewController ()
 {
@@ -265,6 +266,11 @@
 - (void) payBtnClick:(UIButton *) sender
 {
     NSLog(@"结算");
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    UpOrderViewController *order = [[UpOrderViewController alloc] init];
+    [self.navigationController pushViewController:order animated:YES];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 

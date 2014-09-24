@@ -24,6 +24,7 @@
 		6122714419CFC81500FE4DFF /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6122713019CFC81500FE4DFF /* PayViewController.m */; };
 		6122714519CFC81500FE4DFF /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6122713119CFC81500FE4DFF /* PayViewController.xib */; };
 		6122714619CFC81500FE4DFF /* title_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6122713519CFC81500FE4DFF /* title_logo.png */; };
+		612A241D19D25B5900E544E0 /* UpOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 612A241C19D25B5900E544E0 /* UpOrderViewController.m */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
 		6181A34E19CFC3F8000E2D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34D19CFC3F8000E2D14 /* UIKit.framework */; };
@@ -237,6 +238,8 @@
 		6122713319CFC81500FE4DFF /* DataSigner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSigner.h; sourceTree = "<group>"; };
 		6122713419CFC81500FE4DFF /* DataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVerifier.h; sourceTree = "<group>"; };
 		6122713519CFC81500FE4DFF /* title_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_logo.png; sourceTree = "<group>"; };
+		612A241B19D25B5900E544E0 /* UpOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpOrderViewController.h; sourceTree = "<group>"; };
+		612A241C19D25B5900E544E0 /* UpOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpOrderViewController.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6181A34919CFC3F8000E2D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -620,6 +623,15 @@
 				6122713419CFC81500FE4DFF /* DataVerifier.h */,
 			);
 			path = RSA;
+			sourceTree = "<group>";
+		};
+		612A241A19D25B5900E544E0 /* UpOrders */ = {
+			isa = PBXGroup;
+			children = (
+				612A241B19D25B5900E544E0 /* UpOrderViewController.h */,
+				612A241C19D25B5900E544E0 /* UpOrderViewController.m */,
+			);
+			path = UpOrders;
 			sourceTree = "<group>";
 		};
 		6181A33D19CFC3F8000E2D14 = {
@@ -1171,6 +1183,7 @@
 		6181A48B19CFC4C2000E2D14 /* HostViewController */ = {
 			isa = PBXGroup;
 			children = (
+				612A241A19D25B5900E544E0 /* UpOrders */,
 				6181A48C19CFC4C2000E2D14 /* AskPrice */,
 				6181A49819CFC4C2000E2D14 /* ChooseListTableViewController.h */,
 				6181A49919CFC4C2000E2D14 /* ChooseListTableViewController.m */,
@@ -1426,6 +1439,7 @@
 				6122713B19CFC81500FE4DFF /* AlixPayResult.m in Sources */,
 				6181A53719CFC4C2000E2D14 /* SecondNaviViewController.m in Sources */,
 				6181A51419CFC4C2000E2D14 /* SDWebImageManager.m in Sources */,
+				612A241D19D25B5900E544E0 /* UpOrderViewController.m in Sources */,
 				6181A36319CFC3F9000E2D14 /* ViewController.m in Sources */,
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
 				6181A4D219CFC4C2000E2D14 /* TestExecutor.m in Sources */,

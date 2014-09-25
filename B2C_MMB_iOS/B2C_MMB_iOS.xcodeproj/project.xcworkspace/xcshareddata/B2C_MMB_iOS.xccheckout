@@ -10,31 +10,62 @@
 	<string>B2C_MMB_iOS</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>E808F174-422F-448B-A4DC-EB3CA8DAA9AC</key>
+		<key>55cf90a1-0c96-468b-aa50-050415425df3++4954</key>
+		<string>http://192.168.8.2/svn/su2_apps/ITS/trunk/ios/Hangzhoutong/tools/SDWebImage</string>
+		<key>55cf90a1-0c96-468b-aa50-050415425df3++5127</key>
+		<string>http://192.168.8.2/svn/su2_apps/SmartCity_ios/v1.0.0/trunk/SmartCity/tools/phone</string>
+		<key>F60F4B91C26728757CB15F60425EE88018D8FA71</key>
 		<string>ssh://github.com/cableexapp/mmbios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>B2C_MMB_iOS/B2C_MMB_iOS.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>E808F174-422F-448B-A4DC-EB3CA8DAA9AC</key>
+		<key>55cf90a1-0c96-468b-aa50-050415425df3++4954</key>
+		<string>../../../B2C_MMB_iOS/Tools/SDWebImage</string>
+		<key>55cf90a1-0c96-468b-aa50-050415425df3++5127</key>
+		<string>../../../B2C_MMB_iOS/Tools/phone</string>
+		<key>F60F4B91C26728757CB15F60425EE88018D8FA71</key>
 		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>55cf90a1-0c96-468b-aa50-050415425df3++4954</key>
+		<string>http://192.168.8.2/svn/su2_apps</string>
+		<key>55cf90a1-0c96-468b-aa50-050415425df3++5127</key>
+		<string>http://192.168.8.2/svn/su2_apps</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/cableexapp/mmbios.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E808F174-422F-448B-A4DC-EB3CA8DAA9AC</string>
+	<string>F60F4B91C26728757CB15F60425EE88018D8FA71</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E808F174-422F-448B-A4DC-EB3CA8DAA9AC</string>
+			<string>F60F4B91C26728757CB15F60425EE88018D8FA71</string>
 			<key>IDESourceControlWCCName</key>
 			<string>mmbios</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>55cf90a1-0c96-468b-aa50-050415425df3++5127</string>
+			<key>IDESourceControlWCCName</key>
+			<string>phone</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>55cf90a1-0c96-468b-aa50-050415425df3++4954</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SDWebImage</string>
 		</dict>
 	</array>
 </dict>

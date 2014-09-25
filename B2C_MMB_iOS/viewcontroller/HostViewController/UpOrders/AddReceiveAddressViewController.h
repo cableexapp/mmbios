@@ -10,7 +10,11 @@
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFTopLabel.h"
+#import "FMDatabase.h"
 
 @interface AddReceiveAddressViewController : UIViewController
+@property (strong,nonatomic) FMDatabase *db;
+
+- (void) openDatabase;
 
 @end

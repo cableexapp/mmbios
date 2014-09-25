@@ -82,9 +82,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"test");
     
-    
+   NSString *p = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
+    NSLog(@"p = %@",p);
+//    sqlite3 *dataBase;
+//    if(sqlite3_open([p UTF8String], &dataBase) != SQLITE_OK)
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     
@@ -127,6 +129,8 @@
     mainQueue = [[NSOperationQueue alloc] init] ;
     [self.mainQueue setMaxConcurrentOperationCount:30];
     
+    [self loadFMDB];
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -140,9 +144,16 @@
         //        NSLog(@"Not Found!");
         return;
     }
-    NSString *dbPath = [documentDirectory stringByAppendingPathComponent:@"MyDB.db"];
     
-    self.db = [[FMDatabase alloc] initWithPath:dbPath];
+    
+    NSLog(@"test");
+//    NSString *dbPath = [documentDirectory stringByAppendingPathComponent:@"MyDB.db"];
+    
+    NSString *dbPath = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
+    NSLog(@"%@",dbPath);
+    
+//    self.db = [[FMDatabase alloc] initWithPath:dbPath];
+    self.db = [FMDatabase databaseWithPath:dbPath];
     [self.db setLogsErrors:YES];
     [self.db setTraceExecution:YES];
     [self.db setCrashOnErrors:YES];

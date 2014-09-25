@@ -29,6 +29,8 @@
 		612A242219D2926800E544E0 /* ChooseReceiveAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */; };
 		6166ED5519D2B06800D9A219 /* addAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5419D2B06800D9A219 /* addAddress.png */; };
 		6166ED5819D2B44D00D9A219 /* AddReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */; };
+		6166ED5A19D2B86400D9A219 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5919D2B86400D9A219 /* area.plist */; };
+		6166ED5C19D2BAD200D9A219 /* t_prov_city_area_street.db in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5B19D2BAD200D9A219 /* t_prov_city_area_street.db */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
 		6181A34E19CFC3F8000E2D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34D19CFC3F8000E2D14 /* UIKit.framework */; };
@@ -250,6 +252,8 @@
 		6166ED5419D2B06800D9A219 /* addAddress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addAddress.png; sourceTree = "<group>"; };
 		6166ED5619D2B44D00D9A219 /* AddReceiveAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiveAddressViewController.h; sourceTree = "<group>"; };
 		6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveAddressViewController.m; sourceTree = "<group>"; };
+		6166ED5919D2B86400D9A219 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
+		6166ED5B19D2BAD200D9A219 /* t_prov_city_area_street.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = t_prov_city_area_street.db; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6181A34919CFC3F8000E2D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -724,6 +728,8 @@
 		6181A35019CFC3F9000E2D14 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6166ED5B19D2BAD200D9A219 /* t_prov_city_area_street.db */,
+				6166ED5919D2B86400D9A219 /* area.plist */,
 				6181A35119CFC3F9000E2D14 /* B2C_MMB_iOS-Info.plist */,
 				6181A35219CFC3F9000E2D14 /* InfoPlist.strings */,
 				6181A35519CFC3F9000E2D14 /* main.m */,
@@ -1399,6 +1405,7 @@
 				6181A4D719CFC4C2000E2D14 /* ask.png in Resources */,
 				6181A4ED19CFC4C2000E2D14 /* Parents@2x.png in Resources */,
 				6181A36519CFC3F9000E2D14 /* Images.xcassets in Resources */,
+				6166ED5A19D2B86400D9A219 /* area.plist in Resources */,
 				6181A4F319CFC4C2000E2D14 /* sv_1.png in Resources */,
 				6181A4D919CFC4C2000E2D14 /* click2.png in Resources */,
 				6181A4DF19CFC4C2000E2D14 /* cabel.png in Resources */,
@@ -1413,6 +1420,7 @@
 				6122714619CFC81500FE4DFF /* title_logo.png in Resources */,
 				6181A4EA19CFC4C2000E2D14 /* News.png in Resources */,
 				6181A4F619CFC4C2000E2D14 /* unchoose.png in Resources */,
+				6166ED5C19D2BAD200D9A219 /* t_prov_city_area_street.db in Resources */,
 				6181A51F19CFC4C2000E2D14 /* AliViewController.xib in Resources */,
 				6181A4E619CFC4C2000E2D14 /* jxht_mr.png in Resources */,
 				6181A4DA19CFC4C2000E2D14 /* magnifying glass.png in Resources */,

@@ -8,6 +8,8 @@
 
 #import "AddReceiveAddressViewController.h"
 #import "DCFCustomExtra.h"
+#import "FMDatabaseAdditions.h"
+#import "FMResultSet.h"
 
 @interface AddReceiveAddressViewController ()
 
@@ -33,7 +35,49 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
     self.navigationItem.titleView = top;
     
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    if(!documentDirectory)
+    {
+        //        NSLog(@"Not Found!");
+        return;
+    }
+    NSString *dbPath = [documentDirectory stringByAppendingPathComponent:@"MyDB.db"];
+    
+    self.db = [[FMDatabase alloc] initWithPath:dbPath];
+    [self.db setLogsErrors:YES];
+    [self.db setTraceExecution:YES];
+    [self.db setCrashOnErrors:YES];
+    [self.db setShouldCacheStatements:YES];
+    
+    [self.db open];
+    [self openDatabase];
+
+    
     // Do any additional setup after loading the view.
+}
+
+- (void) openDatabase
+{
+    if(![self.db open])
+    {
+        return;
+    }
+    [self.db beginTransaction];
+    
+    //用户集合
+    if(![self.db tableExists:@"UserIdCollection"])
+    {
+        [self.db executeQuery:@"CREATE TABLE UserIdCollection (Name text,UserId text)"];
+    }
+    
+    //主页用户查询商品集合
+    if(![self.db tableExists:@"HostCabelCollection"])
+    {
+        [self.db executeQuery:@"CREATE TABLE HostCabelCollection (SearchCabelName text,UserId text)"];
+    }
+    [self.db commit];
 }
 
 - (void)didReceiveMemoryWarning

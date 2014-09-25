@@ -102,6 +102,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"选择收货地址"];
     self.navigationItem.titleView = top;
     
+    [self pushAndPopStyle];
     
     rightItemBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightItemBtn setFrame:CGRectMake(0, 0, 25, 25)];

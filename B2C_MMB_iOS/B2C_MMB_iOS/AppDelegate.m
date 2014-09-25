@@ -171,18 +171,21 @@
     }
     [self.db beginTransaction];
     
-    //用户集合
-    if(![self.db tableExists:@"UserIdCollection"])
-    {
-        [self.db executeQuery:@"CREATE TABLE UserIdCollection (Name text,UserId text)"];
-    }
-    
-    //主页用户查询商品集合
-    if(![self.db tableExists:@"HostCabelCollection"])
-    {
-        [self.db executeQuery:@"CREATE TABLE HostCabelCollection (SearchCabelName text,UserId text)"];
-    }
+//    //用户集合
+//    if(![self.db tableExists:@"UserIdCollection"])
+//    {
+//        [self.db executeQuery:@"CREATE TABLE UserIdCollection (Name text,UserId text)"];
+//    }
+//    
+//    //主页用户查询商品集合
+//    if(![self.db tableExists:@"HostCabelCollection"])
+//    {
+//        [self.db executeQuery:@"CREATE TABLE HostCabelCollection (SearchCabelName text,UserId text)"];
+//    }
     [self.db commit];
+    
+    
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

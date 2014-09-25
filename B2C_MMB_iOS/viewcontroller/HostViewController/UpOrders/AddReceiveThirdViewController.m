@@ -1,27 +1,24 @@
 //
-//  AddReceiveAddressViewController.m
+//  AddReceiveThirdViewController.m
 //  B2C_MMB_iOS
 //
-//  Created by App01 on 14-9-24.
+//  Created by App01 on 14-9-25.
 //  Copyright (c) 2014年 YUANDONG. All rights reserved.
 //
 
-#import "AddReceiveAddressViewController.h"
+#import "AddReceiveThirdViewController.h"
 #import "DCFCustomExtra.h"
 #import "FMDatabaseAdditions.h"
 #import "FMResultSet.h"
 #import "AppDelegate.h"
-#import "AddReceiveAddressSecondViewController.h"
+#import "AddReceiveFourthViewController.h"
 
-@interface AddReceiveAddressViewController ()
+@implementation AddReceiveThirdViewController
 {
     AppDelegate *app;
     
     NSMutableArray *dataArray;
 }
-@end
-
-@implementation AddReceiveAddressViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,11 +29,25 @@
     return self;
 }
 
+- (id) initWithData:(NSDictionary *) dic WithProvince:(NSString *) province
+{
+    if(self = [super init])
+    {
+        _myDic = [[NSDictionary alloc] initWithDictionary:dic];
+        
+        _city = [_myDic objectForKey:@"name"];
+        
+        _provinceAndCity = [NSString stringWithFormat:@"%@%@",province,_city];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor redColor]];
+    
+    [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     
     [self pushAndPopStyle];
     
@@ -45,26 +56,25 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
     self.navigationItem.titleView = top;
     
-
-    [self loadDataBase];
     
-    // Do any additional setup after loading the view.
+    [self loadDataBase];
 }
 
 - (void) loadDataBase
 {
     dataArray = [[NSMutableArray alloc] init];
     
-    FMResultSet *rs = [app.db executeQuery:@"SELECT * FROM t_prov_city_area_street"];
+    NSString *code = [_myDic objectForKey:@"code"];
+    
+    FMResultSet *rs = [app.db executeQuery:@"SELECT * FROM t_prov_city_area_street WHERE parentId = ?",code];
     while ([rs next])
     {
         NSString *level = [rs stringForColumn:@"level"];
-        if([level isEqualToString:@"1"])
+        if([level isEqualToString:@"3"])
         {
             NSString *name = [rs stringForColumn:@"name"];
             NSString *code = [rs stringForColumn:@"code"];
             NSString *parentId = [rs stringForColumn:@"parentId"];
-            NSLog(@"%@  %@  %@",name,code,parentId);
             
             NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  name,@"name",
@@ -76,19 +86,12 @@
     }
     [rs close];
     
-    NSLog(@"%@",dataArray);
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight-64)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
     [self.view addSubview:tv];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -122,8 +125,8 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AddReceiveAddressSecondViewController *second = [[AddReceiveAddressSecondViewController alloc] initWithData:[dataArray objectAtIndex:indexPath.row]];
-    [self.navigationController pushViewController:second animated:YES];
+    AddReceiveFourthViewController *fourth = [[AddReceiveFourthViewController alloc] initWithData:[dataArray objectAtIndex:indexPath.row] WithCity:_provinceAndCity];
+    [self.navigationController pushViewController:fourth animated:YES];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -135,15 +138,12 @@
 {
     return [UIView new];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+
+- (void)didReceiveMemoryWarning
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
-*/
 
 @end

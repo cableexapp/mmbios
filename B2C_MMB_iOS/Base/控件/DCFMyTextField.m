@@ -14,7 +14,19 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        self.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:152.0/255.0 blue:155.0/255.0 alpha:1.0].CGColor;
+        self.layer.borderWidth = 1.0f;
+        [self setBackgroundColor:[UIColor whiteColor]];
+        self.layer.masksToBounds = YES;
+        
+//        UIToolbar *topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+//        [topView setBarStyle:UIBarStyleBlackOpaque];
+//        UIBarButtonItem *helloBtn = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:self action:nil];
+//        UIBarButtonItem *btnSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+//        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
+//        NSArray *array = [NSArray arrayWithObjects:helloBtn,btnSpace,doneBtn, nil];
+//        [topView setItems:array];
+//        [self setInputAccessoryView:topView];
     }
     return self;
 }
@@ -26,8 +38,9 @@
 
 - (void) awakeFromNib
 {
-    self.layer.borderColor = [UIColor grayColor].CGColor;
+    self.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:152.0/255.0 blue:155.0/255.0 alpha:1.0].CGColor;
     self.layer.borderWidth = 1.0f;
+    [self setBackgroundColor:[UIColor whiteColor]];
     self.layer.masksToBounds = YES;
     
     UIToolbar *topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];

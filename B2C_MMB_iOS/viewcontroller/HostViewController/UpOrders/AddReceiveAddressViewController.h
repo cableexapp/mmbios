@@ -12,9 +12,11 @@
 #import "DCFTopLabel.h"
 #import "FMDatabase.h"
 
-@interface AddReceiveAddressViewController : UIViewController
+@interface AddReceiveAddressViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView *tv;
+}
 @property (strong,nonatomic) FMDatabase *db;
 
-- (void) openDatabase;
 
 @end

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		611A7D1B19D3E80C0033A433 /* AddReceiveAddressSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611A7D1A19D3E80C0033A433 /* AddReceiveAddressSecondViewController.m */; };
+		611A7D1E19D3F7DE0033A433 /* AddReceiveThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611A7D1D19D3F7DE0033A433 /* AddReceiveThirdViewController.m */; };
+		611A7D2119D3FD920033A433 /* AddReceiveFourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611A7D2019D3FD920033A433 /* AddReceiveFourthViewController.m */; };
+		611A7D2419D3FFAD0033A433 /* AddReceiveFinalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611A7D2319D3FFAD0033A433 /* AddReceiveFinalViewController.m */; };
 		6122713619CFC81500FE4DFF /* AlipayRsaLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6122711519CFC81500FE4DFF /* AlipayRsaLib.a */; };
 		6122713719CFC81500FE4DFF /* Alixpay.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6122711719CFC81500FE4DFF /* Alixpay.bundle */; };
 		6122713819CFC81500FE4DFF /* AlixPaylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6122711819CFC81500FE4DFF /* AlixPaylib.a */; };
@@ -191,6 +195,7 @@
 		6181A55D19CFC6E6000E2D14 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A55C19CFC6E6000E2D14 /* libresolv.dylib */; };
 		6181A55F19CFC6EF000E2D14 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A55E19CFC6EF000E2D14 /* libstdc++.dylib */; };
 		6181A56119CFC6F5000E2D14 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A56019CFC6F5000E2D14 /* libiconv.dylib */; };
+		618459DA19D414A8000A3F4E /* delete_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 618459D919D414A8000A3F4E /* delete_1.png */; };
 		61CCBCE119CFFF150008A46B /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDB19CFFF150008A46B /* Icon-40@2x.png */; };
 		61CCBCE219CFFF150008A46B /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDC19CFFF150008A46B /* Icon-60@2x.png */; };
 		61CCBCE319CFFF150008A46B /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDD19CFFF150008A46B /* Icon-Small.png */; };
@@ -213,6 +218,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		611A7D1919D3E80C0033A433 /* AddReceiveAddressSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiveAddressSecondViewController.h; sourceTree = "<group>"; };
+		611A7D1A19D3E80C0033A433 /* AddReceiveAddressSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveAddressSecondViewController.m; sourceTree = "<group>"; };
+		611A7D1C19D3F7DE0033A433 /* AddReceiveThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiveThirdViewController.h; sourceTree = "<group>"; };
+		611A7D1D19D3F7DE0033A433 /* AddReceiveThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveThirdViewController.m; sourceTree = "<group>"; };
+		611A7D1F19D3FD920033A433 /* AddReceiveFourthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiveFourthViewController.h; sourceTree = "<group>"; };
+		611A7D2019D3FD920033A433 /* AddReceiveFourthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveFourthViewController.m; sourceTree = "<group>"; };
+		611A7D2219D3FFAD0033A433 /* AddReceiveFinalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiveFinalViewController.h; sourceTree = "<group>"; };
+		611A7D2319D3FFAD0033A433 /* AddReceiveFinalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveFinalViewController.m; sourceTree = "<group>"; };
 		6122711519CFC81500FE4DFF /* AlipayRsaLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AlipayRsaLib.a; sourceTree = "<group>"; };
 		6122711619CFC81500FE4DFF /* AlixLibService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlixLibService.h; sourceTree = "<group>"; };
 		6122711719CFC81500FE4DFF /* Alixpay.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Alixpay.bundle; sourceTree = "<group>"; };
@@ -516,6 +529,7 @@
 		6181A55C19CFC6E6000E2D14 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		6181A55E19CFC6EF000E2D14 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		6181A56019CFC6F5000E2D14 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		618459D919D414A8000A3F4E /* delete_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_1.png; sourceTree = "<group>"; };
 		61CCBCDB19CFFF150008A46B /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
 		61CCBCDC19CFFF150008A46B /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
 		61CCBCDD19CFFF150008A46B /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -649,6 +663,14 @@
 				612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */,
 				6166ED5619D2B44D00D9A219 /* AddReceiveAddressViewController.h */,
 				6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */,
+				611A7D1919D3E80C0033A433 /* AddReceiveAddressSecondViewController.h */,
+				611A7D1A19D3E80C0033A433 /* AddReceiveAddressSecondViewController.m */,
+				611A7D1C19D3F7DE0033A433 /* AddReceiveThirdViewController.h */,
+				611A7D1D19D3F7DE0033A433 /* AddReceiveThirdViewController.m */,
+				611A7D1F19D3FD920033A433 /* AddReceiveFourthViewController.h */,
+				611A7D2019D3FD920033A433 /* AddReceiveFourthViewController.m */,
+				611A7D2219D3FFAD0033A433 /* AddReceiveFinalViewController.h */,
+				611A7D2319D3FFAD0033A433 /* AddReceiveFinalViewController.m */,
 			);
 			path = UpOrders;
 			sourceTree = "<group>";
@@ -910,6 +932,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				618459D919D414A8000A3F4E /* delete_1.png */,
 				6166ED5419D2B06800D9A219 /* addAddress.png */,
 				61CCBCE719D00C880008A46B /* star.png */,
 				6181A3F519CFC4C2000E2D14 /* 102.png */,
@@ -1390,6 +1413,7 @@
 			files = (
 				612A242219D2926800E544E0 /* ChooseReceiveAddressViewController.xib in Resources */,
 				61CCBCED19D0142C0008A46B /* GoodsDetailTableViewCell.xib in Resources */,
+				618459DA19D414A8000A3F4E /* delete_1.png in Resources */,
 				6181A4E519CFC4C2000E2D14 /* delete.png in Resources */,
 				6181A4EB19CFC4C2000E2D14 /* News@2x.png in Resources */,
 				6181A4EC19CFC4C2000E2D14 /* Parents.png in Resources */,
@@ -1465,6 +1489,7 @@
 				6122713B19CFC81500FE4DFF /* AlixPayResult.m in Sources */,
 				6181A53719CFC4C2000E2D14 /* SecondNaviViewController.m in Sources */,
 				6181A51419CFC4C2000E2D14 /* SDWebImageManager.m in Sources */,
+				611A7D2119D3FD920033A433 /* AddReceiveFourthViewController.m in Sources */,
 				612A241D19D25B5900E544E0 /* UpOrderViewController.m in Sources */,
 				6181A36319CFC3F9000E2D14 /* ViewController.m in Sources */,
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
@@ -1511,6 +1536,7 @@
 				6181A50B19CFC4C2000E2D14 /* Objc+UserInfo.m in Sources */,
 				6181A35619CFC3F9000E2D14 /* main.m in Sources */,
 				6181A51219CFC4C2000E2D14 /* SDWebImageDownloader.m in Sources */,
+				611A7D2419D3FFAD0033A433 /* AddReceiveFinalViewController.m in Sources */,
 				6181A50919CFC4C2000E2D14 /* MBProgressHUD.m in Sources */,
 				6122713C19CFC81500FE4DFF /* NSObject+SBJSON.m in Sources */,
 				6181A53A19CFC4C2000E2D14 /* ThirdTableViewController.m in Sources */,
@@ -1543,9 +1569,11 @@
 				6181A51119CFC4C2000E2D14 /* SDWebImageDecoder.m in Sources */,
 				6181A4D319CFC4C2000E2D14 /* BaseTask.m in Sources */,
 				6181A50719CFC4C2000E2D14 /* FMDatabaseAdditions.m in Sources */,
+				611A7D1E19D3F7DE0033A433 /* AddReceiveThirdViewController.m in Sources */,
 				6181A53019CFC4C2000E2D14 /* HostNaviViewController.m in Sources */,
 				6181A52C19CFC4C2000E2D14 /* ChooseListTableViewController.m in Sources */,
 				6181A50A19CFC4C2000E2D14 /* NSDictionary+exp.m in Sources */,
+				611A7D1B19D3E80C0033A433 /* AddReceiveAddressSecondViewController.m in Sources */,
 				6181A4C019CFC4C2000E2D14 /* DCFStringUtil.m in Sources */,
 				6181A4C319CFC4C2000E2D14 /* CustomAlertView.m in Sources */,
 				6181A53119CFC4C2000E2D14 /* HostTableViewController.m in Sources */,

@@ -129,6 +129,18 @@
     
     cellBtnArray = [[NSMutableArray alloc] init];
     
+    for(int i=0;i<dataArray.count;i++)
+    {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+        [btn setSelected:NO];
+        [btn setTag:i];
+        [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cellBtnArray addObject:btn];
+    }
+
+    
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height) style:0];
     [tv setDataSource:self];
     [tv setDelegate:self];
@@ -203,15 +215,18 @@
     
     if(rightItemBtnHasClick == NO)
     {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+//        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [btn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+//        [btn setFrame:CGRectMake(280, (size_3.height + 70 - 30)/2, 30, 30)];
+//        [btn setSelected:NO];
+//        [btn setTag:indexPath.row];
+//        [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [cell.contentView addSubview:btn];
+//        [cellBtnArray addObject:btn];
+        UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
         [btn setFrame:CGRectMake(280, (size_3.height + 70 - 30)/2, 30, 30)];
-        [btn setSelected:NO];
-        [btn setTag:indexPath.row];
-        [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:btn];
-        [cellBtnArray addObject:btn];
     }
     else
     {
@@ -226,7 +241,11 @@
 {
     UIButton *btn = (UIButton *)sender;
     btn.selected = !btn.selected;
-    NSLog(@"123");
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"%d",indexPath.row);
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

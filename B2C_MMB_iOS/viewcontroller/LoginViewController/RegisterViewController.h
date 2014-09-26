@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
+#import "DCFConnectionUtil.h"
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate>
+@interface RegisterViewController : UIViewController<UITextFieldDelegate,MBProgressHUDDelegate,ConnectionDelegate>
+{
+    MBProgressHUD *HUD;
+}
 @property (weak, nonatomic) IBOutlet UITextField *tf_account;
 @property (weak, nonatomic) IBOutlet UITextField *tf_sec;
 @property (weak, nonatomic) IBOutlet UITextField *tf_confirm;

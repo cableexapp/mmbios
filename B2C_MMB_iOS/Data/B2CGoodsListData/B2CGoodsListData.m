@@ -21,6 +21,8 @@
         
         _saleNum = [dic objectForKey:@"saleNum"];
         
+        _shopId = [dic objectForKey:@"shopId"];
+        
         _p1Path = [dic objectForKey:@"p1Path"];
         
         //.的下标

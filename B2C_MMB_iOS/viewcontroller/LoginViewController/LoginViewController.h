@@ -5,12 +5,15 @@
 //  Created by App01 on 14-8-29.
 //  Copyright (c) 2014年 App01. All rights reserved.
 //
-
+#import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
-@interface LoginViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate>
+@interface LoginViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate,MBProgressHUDDelegate>
 {
     DCFConnectionUtil *conn;
+    
+    MBProgressHUD *HUD;
 }
 @property (weak, nonatomic) IBOutlet UITextField *tf_Account;
 @property (weak, nonatomic) IBOutlet UITextField *tf_Secrect;

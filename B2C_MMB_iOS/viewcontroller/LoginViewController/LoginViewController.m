@@ -13,6 +13,7 @@
 #import "MCdes.h"
 #import "DCFCustomExtra.h"
 #import "MCDefine.h"
+#import "DCFStringUtil.h"
 
 @interface LoginViewController ()
 {
@@ -29,6 +30,20 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
 }
 
 - (void)viewDidLoad
@@ -137,9 +152,32 @@
 
 - (IBAction)loginBtnClick:(id)sender
 {
-    NSLog(@"登陆");
     
 //    cableex
+
+    [self log];
+}
+
+- (void) log
+{
+    [self.tf_Account resignFirstResponder];
+    [self.tf_Secrect resignFirstResponder];
+    
+    if(self.tf_Account.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入账号"];
+        return;
+    }
+    if(self.tf_Secrect.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入密码"];
+        return;
+    }
+    
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [HUD setDelegate:self];
+    [HUD setLabelText:@"正在登陆....."];
+    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     
     NSString *string = [NSString stringWithFormat:@"%@%@",@"UserLogin",time];
@@ -147,21 +185,30 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
-    NSString *des = [MCdes encryptUseDES:@"123456" key:@"cableex_app*#!Key"];
+    NSString *des = [MCdes encryptUseDES:self.tf_Secrect.text key:@"cableex_app*#!Key"];
     
-    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",@"chenxiao",des,token];
-
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.tf_Account.text,des,token];
+    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    
     if(URLTag == URLLoginTag)
     {
+        [HUD hide:YES];
+        
         NSLog(@"%@",dicRespon);
+        int reslut = [[dicRespon objectForKey:@"result"] intValue];
+        NSString *msg = [dicRespon objectForKey:@"msg"];
+        NSLog(@"msg = %@",msg);
+        if(reslut == 0)
+        {
+            [DCFStringUtil showNotice:msg];
+        }
     }
 }
 
@@ -192,12 +239,19 @@
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
+//    [textField resignFirstResponder];
+
     if(textField == _tf_Secrect)
     {
-        NSLog(@"去登陆");
+        [self log];
     }
     return YES;
+}
+
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
 }
 
 - (void)didReceiveMemoryWarning

@@ -18,12 +18,8 @@
 //NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:1];
 //NSIndexPath *pt = [self.tableView indexPathForSelectedRow];
 
-//#define URL_HOST_CHEN @"http://192.168.18.150/app/" //yzf
 
-//#define URL_HOST_CHEN @"http://app.up360.com:81/app/" //公司服务器
-//#define URL_HOST_CHEN @"http://192.168.18.165:8888/app/"  //yss
-//#define URL_HOST_CHEN @"http://app.up360.com/app/"  //线上
-//#define URL_HOST_CHEN @"http://192.168.18.48/app/"  //48
+
 #define URL_HOST_CHEN @"http://10.10.6.134:8080" //HJ
 //#define URL_HOST_CHEN @"http://10.10.0.46:8080" //GS
 

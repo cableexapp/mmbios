@@ -15,6 +15,7 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "GoodsDetailTableViewCell.h"
 #import "MyShoppingListViewController.h"
+#import "ShopHostTableViewController.h"
 
 @interface GoodsDetailViewController ()
 {
@@ -291,7 +292,7 @@
             
             UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 7, label.frame.size.width+40, 30)];
             [firstView addSubview:firstIv];
-            [firstIv addSubview:label];
+            [firstView addSubview:label];
             [cell.contentView addSubview:firstView];
             
             UITapGestureRecognizer *tap_1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstTap:)];
@@ -449,7 +450,10 @@
 
 - (void) firstTap:(UITapGestureRecognizer *) sender
 {
-    NSLog(@"firstTap");
+    UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
+    
+    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:label.text];
+    [self.navigationController pushViewController:shopHost animated:YES];
 }
 
 - (void) starViewTap:(UITapGestureRecognizer *) sender

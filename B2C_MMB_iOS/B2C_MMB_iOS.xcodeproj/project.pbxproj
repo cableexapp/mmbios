@@ -37,6 +37,7 @@
 		6166ED5C19D2BAD200D9A219 /* t_prov_city_area_street.db in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5B19D2BAD200D9A219 /* t_prov_city_area_street.db */; };
 		616A8E9519D4FA2A007E2526 /* BillMsgManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A8E9319D4FA2A007E2526 /* BillMsgManagerViewController.m */; };
 		616A8E9919D506CC007E2526 /* ChoosePayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A8E9819D506CC007E2526 /* ChoosePayTableViewController.m */; };
+		616A8E9C19D545BB007E2526 /* ShopHostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A8E9B19D545BB007E2526 /* ShopHostTableViewController.m */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
 		6181A34E19CFC3F8000E2D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34D19CFC3F8000E2D14 /* UIKit.framework */; };
@@ -273,6 +274,8 @@
 		616A8E9319D4FA2A007E2526 /* BillMsgManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BillMsgManagerViewController.m; sourceTree = "<group>"; };
 		616A8E9719D506CC007E2526 /* ChoosePayTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoosePayTableViewController.h; sourceTree = "<group>"; };
 		616A8E9819D506CC007E2526 /* ChoosePayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoosePayTableViewController.m; sourceTree = "<group>"; };
+		616A8E9A19D545BB007E2526 /* ShopHostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopHostTableViewController.h; sourceTree = "<group>"; };
+		616A8E9B19D545BB007E2526 /* ShopHostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopHostTableViewController.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6181A34919CFC3F8000E2D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1247,6 +1250,8 @@
 				61CCBCE919D0142C0008A46B /* GoodsDetailTableViewCell.h */,
 				61CCBCEA19D0142C0008A46B /* GoodsDetailTableViewCell.m */,
 				61CCBCEB19D0142C0008A46B /* GoodsDetailTableViewCell.xib */,
+				616A8E9A19D545BB007E2526 /* ShopHostTableViewController.h */,
+				616A8E9B19D545BB007E2526 /* ShopHostTableViewController.m */,
 				6181A49C19CFC4C2000E2D14 /* HomeImprovementChannel */,
 				6181A4A119CFC4C2000E2D14 /* HostNaviViewController.h */,
 				6181A4A219CFC4C2000E2D14 /* HostNaviViewController.m */,
@@ -1502,6 +1507,7 @@
 				611A7D2119D3FD920033A433 /* AddReceiveFourthViewController.m in Sources */,
 				612A241D19D25B5900E544E0 /* UpOrderViewController.m in Sources */,
 				6181A36319CFC3F9000E2D14 /* ViewController.m in Sources */,
+				616A8E9C19D545BB007E2526 /* ShopHostTableViewController.m in Sources */,
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
 				6181A4D219CFC4C2000E2D14 /* TestExecutor.m in Sources */,
 				6181A52919CFC4C2000E2D14 /* OneStepViewController.m in Sources */,

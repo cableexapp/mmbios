@@ -9,9 +9,14 @@
 #import "RegisterViewController.h"
 #import "DCFTopLabel.h"
 #import "DCFStringUtil.h"
+#import "DCFCustomExtra.h"
+#import "MCdes.h"
+#import "MCDefine.h"
 
 @interface RegisterViewController ()
-
+{
+    DCFConnectionUtil *conn;
+}
 @end
 
 @implementation RegisterViewController
@@ -25,6 +30,20 @@
     return self;
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -34,6 +53,9 @@
     DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"电缆买卖宝注册"];
     self.navigationItem.titleView = TOP;
     
+    [self.tf_account setReturnKeyType:UIReturnKeyNext];
+    [self.tf_sec setReturnKeyType:UIReturnKeyNext];
+    [self.tf_confirm setReturnKeyType:UIReturnKeyDone];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
@@ -48,26 +70,19 @@
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    if(textField == _tf_account)
+    [self.tf_account resignFirstResponder];
+    [self.tf_sec resignFirstResponder];
+    [self.tf_confirm resignFirstResponder];
+    
+
+    if(textField == self.tf_confirm)
     {
-        [_tf_confirm resignFirstResponder];
-        [_tf_sec resignFirstResponder];
-    }
-    if(textField == _tf_sec)
-    {
-        [_tf_account resignFirstResponder];
-        [_tf_confirm resignFirstResponder];
-    }
-    if(textField == _tf_confirm)
-    {
-        [_tf_account resignFirstResponder];
-        [_tf_sec resignFirstResponder];
+        [self regester];
     }
     return YES;
 }
 
-
-- (IBAction)registerBtnClick:(id)sender
+- (void) regester
 {
     [_tf_account resignFirstResponder];
     [_tf_sec resignFirstResponder];
@@ -88,9 +103,56 @@
         [DCFStringUtil showNotice:@"输入密码不一致,请检查"];
         return;
     }
-    NSLog(@"注册");
+    
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [HUD setDelegate:self];
+    [HUD setLabelText:@"正在注册....."];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
+    
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
+    NSString *des = [MCdes encryptUseDES:self.tf_sec.text key:@"cableex_app*#!Key"];
+    
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.tf_account.text,des,token];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if(URLTag == URLRegesterTag)
+    {
+        [HUD hide:YES];
+        
+        int result = [[dicRespon objectForKey:@"result"] intValue];
+        NSString *msg = [dicRespon objectForKey:@"msg"];
+        if(result == 0)
+        {
+            [DCFStringUtil showNotice:msg];
+        }
+        else if (result == 1)
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+}
+
+- (IBAction)registerBtnClick:(id)sender
+{
+    [self regester];
+}
+
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
+}
 
 - (void)didReceiveMemoryWarning
 {

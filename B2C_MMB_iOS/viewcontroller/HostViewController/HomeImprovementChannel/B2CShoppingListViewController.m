@@ -253,14 +253,10 @@
 
 - (void) loadRequest:(NSString *) seq
 {
-//    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     
     pageSize = 10;
 
-//    NSString *pagesize = [NSString stringWithFormat:@"%d",pageSize];
-    
-//    NSString *pageindex = [NSString stringWithFormat:@"%d",intPage];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     

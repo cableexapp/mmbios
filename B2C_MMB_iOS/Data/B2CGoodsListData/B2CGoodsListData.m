@@ -25,6 +25,8 @@
         
         _p1Path = [dic objectForKey:@"p1Path"];
         
+        _productId = [dic objectForKey:@"productId"];
+        
         //.的下标
         int docIndex = _p1Path.length-4;
         if([_p1Path characterAtIndex:docIndex] == '.')

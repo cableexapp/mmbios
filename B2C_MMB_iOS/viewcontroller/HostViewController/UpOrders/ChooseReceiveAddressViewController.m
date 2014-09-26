@@ -82,6 +82,12 @@
 {
     [super viewWillAppear:YES];
     
+    if(tv)
+    {
+        self.tvBackView.frame = tv.frame;
+    }
+    
+    
     [rightItemBtn setHidden:YES];
     rightItemBtnHasClick = NO;
     
@@ -116,6 +122,8 @@
     [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height - 64 - 49)];
     [self.buttomView setFrame:CGRectMake(0, self.tvBackView.frame.size.height, 320, 49)];
     
+    
+    
     dataArray = [[NSMutableArray alloc] init];
     for(int i = 0; i < 8; i++)
     {
@@ -139,7 +147,7 @@
         [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [cellBtnArray addObject:btn];
     }
-
+    
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height) style:0];
     [tv setDataSource:self];

@@ -139,9 +139,7 @@
     
     cellBtnArray = [[NSMutableArray alloc] init];
     
-    chooseColorBtnArray = [[NSMutableArray alloc] init];
-    
-    chooseCountBtnArray = [[NSMutableArray alloc] init];
+
     
     shop = [[MyShoppingListViewController alloc] init];
 
@@ -523,6 +521,10 @@
 #pragma mark - 加载选择颜色和数量界面
 - (UIView *) loadChooseColorAndCount
 {
+    chooseColorBtnArray = [[NSMutableArray alloc] init];
+    
+    chooseCountBtnArray = [[NSMutableArray alloc] init];
+    
     chooseColorAndCountView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-220, 320, 290)];
     [chooseColorAndCountView setBackgroundColor:[UIColor whiteColor]];
     
@@ -564,7 +566,7 @@
     }
     
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [closeBtn setFrame:CGRectMake(320-10-50, 30, 50, 30)];
+    [closeBtn setFrame:CGRectMake(320-10-50, 30, 50, 50)];
     [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [closeBtn setTitle:@"关闭x" forState:UIControlStateNormal];
     [closeBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];

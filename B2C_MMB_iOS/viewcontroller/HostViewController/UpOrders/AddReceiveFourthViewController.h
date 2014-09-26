@@ -20,7 +20,7 @@
 @property (strong,nonatomic) NSString *town;
 @property (strong,nonatomic) NSString *provinceAndCityAndTown;
 
-- (id) initWithData:(NSDictionary *) dic WithCity:(NSString *) city;
+- (id) initWithData:(NSArray *) array WithTown:(NSString *) town;
 @property (strong,nonatomic) FMDatabase *db;
 
 @end

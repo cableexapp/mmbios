@@ -113,6 +113,12 @@
 //    dataArray = [[NSMutableArray alloc] init];
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [mySearchBar resignFirstResponder];
+}
+
 - (void) rightBtnClick:(UIButton *) sender
 {
     [self.navigationController popViewControllerAnimated:YES];

@@ -29,17 +29,14 @@
     return self;
 }
 
-- (id) initWithData:(NSDictionary *) dic WithCity:(NSString *) city
+- (id) initWithData:(NSArray *) array WithTown:(NSString *) town;
 {
     if(self = [super init])
     {
-        _myDic = [[NSDictionary alloc] initWithDictionary:dic];
+        dataArray = [[NSMutableArray alloc] initWithArray:array];
         
-        _town = [_myDic objectForKey:@"name"];
-        NSLog(@"_town  = %@",_town);
+        _town = town;
         
-        _provinceAndCityAndTown = [NSString stringWithFormat:@"%@%@",city,_town];
-        NSLog(@"_provinceAndCityAndStreet = %@",_provinceAndCityAndTown);
     }
     return self;
 }
@@ -64,45 +61,13 @@
 
 - (void) loadDataBase
 {
-    dataArray = [[NSMutableArray alloc] init];
     
-    NSString *code = [_myDic objectForKey:@"code"];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight-64)];
+    [tv setDataSource:self];
+    [tv setDelegate:self];
+    [tv setShowsVerticalScrollIndicator:NO];
+    [self.view addSubview:tv];
     
-    FMResultSet *rs = [app.db executeQuery:@"SELECT * FROM t_prov_city_area_street WHERE parentId = ?",code];
-    while ([rs next])
-    {
-        NSString *level = [rs stringForColumn:@"level"];
-        if([level isEqualToString:@"4"])
-        {
-            NSString *name = [rs stringForColumn:@"name"];
-            NSString *code = [rs stringForColumn:@"code"];
-            NSString *parentId = [rs stringForColumn:@"parentId"];
-            
-            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 name,@"name",
-                                 code,@"code",
-                                 parentId,@"parentId",
-                                 nil];
-            [dataArray addObject:dic];
-        }
-    }
-    [rs close];
-    
-    if(dataArray.count == 0)
-    {
-        NSString *str = [NSString stringWithFormat:@"%@",_provinceAndCityAndTown];
-        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str];
-        [self.navigationController pushViewController:final animated:YES];
-    }
-    else
-    {
-        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight-64)];
-        [tv setDataSource:self];
-        [tv setDelegate:self];
-        [tv setShowsVerticalScrollIndicator:NO];
-        [self.view addSubview:tv];
-    }
-
 }
 
 
@@ -136,7 +101,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *str = [NSString stringWithFormat:@"%@%@",_provinceAndCityAndTown,[[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
+    NSString *str = [NSString stringWithFormat:@"%@%@",_town,[[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
     AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str];
     [self.navigationController pushViewController:final animated:YES];
 }

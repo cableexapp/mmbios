@@ -10,10 +10,18 @@
 #import "DCFCustomExtra.h"
 #import "DCFTopLabel.h"
 #import "ChooseReceiveAddressViewController.h"
+#import "BillMsgManagerViewController.h"
+#import "ChoosePayTableViewController.h"
 
 @interface UpOrderViewController ()
 {
     UIView *buttomView;
+    
+    DCFPickerView *pickerView;
+    
+    NSMutableArray *contentArray;
+    
+    NSString *sendMethod;
 }
 @end
 
@@ -30,7 +38,8 @@
 
 - (void) upBtnClick:(UIButton *) sender
 {
-    NSLog(@"提交");
+    ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] init];
+    [self.navigationController pushViewController:pay animated:YES];
 }
 
 - (void)viewDidLoad
@@ -39,6 +48,8 @@
     
     [self pushAndPopStyle];
 
+    contentArray = [[NSMutableArray alloc] initWithObjects:@"快递:¥8.00",@"平邮:¥5.00",@"物流:¥7.00 ", nil];
+    sendMethod = [contentArray objectAtIndex:0];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单提交"];
     self.navigationItem.titleView = top;
@@ -277,9 +288,12 @@
                     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
                     [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                     [cell.contentView addSubview:view];
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"配送费:快递8元" WithSize:CGSizeMake(MAXFLOAT,20)];
+                    
+                    NSString *str = [NSString stringWithFormat:@"配送费:%@",sendMethod];
+                    
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(MAXFLOAT,20)];
                     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size.width, 7, size.width, 30)];
-                    [label setText:@"配送费:快递8元"];
+                    [label setText:str];
                     [label setTextAlignment:NSTextAlignmentRight];
                     [label setFont:[UIFont systemFontOfSize:12]];
                     [cell.contentView addSubview:label];
@@ -291,13 +305,31 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 0)
+    if(indexPath.section == 0 && indexPath.row == 0)
     {
-//        ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] initWithNibName:@"ChooseReceiveAddressViewController" bundle:nil];
         ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
         [self.navigationController pushViewController:chooseAddress animated:YES];
     }
+    if(indexPath.section == 1 && indexPath.row == 0)
+    {
+        BillMsgManagerViewController *billManager = [[BillMsgManagerViewController alloc] init];
+        [self.navigationController pushViewController:billManager animated:YES];
+    }
+    if(indexPath.section == 2 && indexPath.row == 2)
+    {
+        pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:contentArray];
+        pickerView.delegate = self;
+        [self.view.window setBackgroundColor:[UIColor blackColor]];
+        [self.view.window addSubview:pickerView];
+    }
 }
+
+- (void) pickerView:(NSString *)title
+{
+    sendMethod = title;
+    [tv reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

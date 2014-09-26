@@ -12,6 +12,7 @@
 #import "FMResultSet.h"
 #import "AppDelegate.h"
 #import "AddReceiveFourthViewController.h"
+#import "AddReceiveFinalViewController.h"
 
 @implementation AddReceiveThirdViewController
 {
@@ -123,10 +124,49 @@
     return cell;
 }
 
+
+#pragma mark - 在家修改
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AddReceiveFourthViewController *fourth = [[AddReceiveFourthViewController alloc] initWithData:[dataArray objectAtIndex:indexPath.row] WithCity:_provinceAndCity];
-    [self.navigationController pushViewController:fourth animated:YES];
+    NSMutableArray *arr = [[NSMutableArray alloc] init];
+    
+    NSString *code = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"];
+    
+    FMResultSet *rs = [app.db executeQuery:@"SELECT * FROM t_prov_city_area_street WHERE parentId = ?",code];
+    while ([rs next])
+    {
+        NSString *level = [rs stringForColumn:@"level"];
+        if([level isEqualToString:@"4"])
+        {
+            NSString *name = [rs stringForColumn:@"name"];
+            NSString *code = [rs stringForColumn:@"code"];
+            NSString *parentId = [rs stringForColumn:@"parentId"];
+            
+            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 name,@"name",
+                                 code,@"code",
+                                 parentId,@"parentId",
+                                 nil];
+            [arr addObject:dic];
+        }
+    }
+    [rs close];
+    
+    NSString *town = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+    NSString *str = [NSString stringWithFormat:@"%@%@",_provinceAndCity,town];
+    
+    if(arr.count != 0)
+    {
+        AddReceiveFourthViewController *fourth = [[AddReceiveFourthViewController alloc] initWithData:arr WithTown:str];
+        [self.navigationController pushViewController:fourth animated:YES];
+        
+    }
+    else
+    {
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str];
+        [self.navigationController pushViewController:final animated:YES];
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "DCFPickerView.h"
 
-@interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickerView>
 {
     UITableView *tv;
 }

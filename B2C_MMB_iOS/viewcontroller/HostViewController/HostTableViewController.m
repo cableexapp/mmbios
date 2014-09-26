@@ -92,13 +92,6 @@
     [naviImageView setTag:100];
     [self.navigationController.navigationBar addSubview:naviImageView];
     
-//    UIButton *searchbtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [searchbtn setShowsTouchWhenHighlighted:NO];
-//    [searchbtn setFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y+5, 200, 34)];
-//    [searchbtn setBackgroundColor:[UIColor redColor]];
-//    [searchbtn addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navigationController.navigationBar addSubview:searchbtn];
-    
     UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y+5, 200, 34)];
 //    searchImageView setImage:<#(UIImage *)#>
     [searchImageView setUserInteractionEnabled:YES];

@@ -25,6 +25,8 @@
     NSArray *contentArray;
     
     UIStoryboard *sb;
+    
+    NSArray *useArray;
 }
 @end
 
@@ -82,7 +84,9 @@
     [topTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等信息"];
     [self.view addSubview:topTextField];
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height-44-44-22)];
+    useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
+    
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height-44-44-25)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
@@ -124,7 +128,7 @@
     {
         UIImageView *svImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i, 10, 145, 145)];
         [svImageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",[arr objectAtIndex:i]]]];
-        [svImageView setTag:i];
+        [svImageView setTag:10+i];
         [svImageView setUserInteractionEnabled:YES];
         svImageView.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
         svImageView.layer.borderWidth = 1.0f;
@@ -207,13 +211,22 @@
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *hotLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, topTextField.frame.origin.y + topTextField.frame.size.height, 320, 30)];
-    [hotLabel setText:@"热销商品"];
+    UILabel *hotLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 320, 30)];
+
+    if(section == 0)
+    {
+        [hotLabel setText:@"  热销商品"];
+ 
+    }
+    else if (section == 1)
+    {
+        [hotLabel setText:@"  家装线主题馆"];
+    }
     [hotLabel setTextAlignment:NSTextAlignmentLeft];
     [hotLabel setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     [hotLabel setFont:[UIFont boldSystemFontOfSize:14]];
@@ -222,7 +235,11 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 9;
+    if(section == 0)
+    {
+        return 1;
+    }
+    return 5;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -232,21 +249,26 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == 0)
+    if(indexPath.section == 0)
     {
-        if(sv)
+        if(indexPath.row == 0)
         {
-            return sv.frame.size.height;
+            if(sv)
+            {
+                return sv.frame.size.height;
+            }
+            return 0;
         }
-        return 0;
     }
+
     
     return 50;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
+//    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
+    static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     [tableView setSeparatorColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
     //    [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -254,13 +276,15 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        
+        [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+
         
     }
-    [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT) {
+        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    }
     
-    
-    if(indexPath.row == 0)
+    if(indexPath.section == 0 && indexPath.row == 0)
     {
         if(sv)
         {
@@ -269,27 +293,29 @@
     }
     else
     {
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:168.0/255.0 green:167.0/255.0 blue:171.0/255.0 alpha:1.0]];
-        
         for(int i = 0;i < 2;i++)
         {
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(1+160*i, 0, 159, 50)];
-            [view setBackgroundColor:[UIColor whiteColor]];
-            [cell.contentView addSubview:view];
-            
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 35, 30)];
-            [iv setImage:[UIImage imageNamed:@"sun.png"]];
-            [view addSubview:iv];
-            
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + iv.frame.size.width + 10, iv.frame.origin.y, 100, 30)];
-            [label setText:@"照明"];
-            [label setTextColor:[UIColor blueColor]];
-            [label setBackgroundColor:[UIColor clearColor]];
-            [view addSubview:label];
-            
-            [view setTag:indexPath.row*(100+i)];
-            UITapGestureRecognizer *viewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap:)];
-            [view addGestureRecognizer:viewTap];
+            if(indexPath.row*2 + i < useArray.count)
+            {
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(1+160*i, 0, 159, 50)];
+                [view setBackgroundColor:[UIColor whiteColor]];
+                [cell.contentView addSubview:view];
+                
+                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 35, 30)];
+                [iv setImage:[UIImage imageNamed:@"sun.png"]];
+                [view addSubview:iv];
+                
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + iv.frame.size.width + 10, iv.frame.origin.y, 100, 30)];
+                [label setText:[useArray objectAtIndex:indexPath.row*2 + i]];
+                [label setTextColor:[UIColor blueColor]];
+                [label setBackgroundColor:[UIColor clearColor]];
+                [view addSubview:label];
+                
+                [view setTag:indexPath.row*2 + i];
+                UITapGestureRecognizer *viewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap:)];
+                [view addGestureRecognizer:viewTap];
+            }
+       
         }
     }
     
@@ -298,11 +324,24 @@
 
 - (void) viewTap:(UITapGestureRecognizer *) sender
 {
-    NSLog(@"%d",[[sender view] tag]);
+    int tag = [[sender view] tag];
+
     UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
-    
+    NSString *str = nil;
+    if(tag == 0)
+    {
+        str = @"照明";
+    }
+    if(tag == 3)
+    {
+        str = @"插座";
+    }
+    else
+    {
+        str = label.text;
+    }
     [self setHidesBottomBarWhenPushed:YES];
-    B2CShoppingListViewController *shoppingList = [[B2CShoppingListViewController alloc] initWithUse:label.text];
+    B2CShoppingListViewController *shoppingList = [[B2CShoppingListViewController alloc] initWithUse:str];
     [self.navigationController pushViewController:shoppingList animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

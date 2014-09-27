@@ -53,6 +53,7 @@
     if(self = [super init])
     {
         _use = string;
+        NSLog(@"_use = %@",_use);
     }
     return self;
 }
@@ -136,7 +137,7 @@
             {
                 _seq = @"sale_num";
             }
-            [self loadRequest:_seq];
+            [self loadRequest:_seq WithUse:_use];
         }
         else
         {
@@ -199,6 +200,7 @@
         {
             case 0:
                 [selctBtn setTitle:@"相关度" forState:UIControlStateNormal];
+                [selctBtn setSelected:YES];
                 break;
             case 1:
                 [selctBtn setTitle:@"价格" forState:UIControlStateNormal];
@@ -245,13 +247,13 @@
     [self.refreshView refreshLastUpdatedDate];
     
     _seq = @"";
-    [self loadRequest:_seq];
+    [self loadRequest:_seq WithUse:_use];
     
 
     
 }
 
-- (void) loadRequest:(NSString *) seq
+- (void) loadRequest:(NSString *) seq WithUse:(NSString *) use
 {
     
     
@@ -264,7 +266,7 @@
     
     NSString *s = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d",_use,_seq,@"",@"",@"",s,pageSize,intPage];
+    NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d",use,_seq,@"",@"",@"",s,pageSize,intPage];
     
     NSLog(@"%@",pushString);
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductList.html?"];
@@ -483,7 +485,7 @@
             {
                 if ((intPage-1) * pageSize < intTotal )
                 {
-                    [self loadRequest:_seq];
+                    [self loadRequest:_seq WithUse:_use];
                 }
             }
         }
@@ -507,7 +509,7 @@
     
     _reloading = YES;
     intPage = 1;
-    [self loadRequest:_seq];
+    [self loadRequest:_seq WithUse:_use];
 }
 //
 - (void)doneLoadingViewData

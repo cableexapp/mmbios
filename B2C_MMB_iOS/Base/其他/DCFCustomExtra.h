@@ -38,4 +38,6 @@
 
 + (NSString *)md5:(NSString *)str;
 
++(NSDate *)changeSpToTime:(NSString*)spString;
+
 @end

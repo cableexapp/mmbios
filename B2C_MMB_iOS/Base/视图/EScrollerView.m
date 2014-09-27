@@ -7,6 +7,8 @@
 //
 
 #import "EScrollerView.h"
+#import "UIImageView+WebCache.h"
+
 @implementation EScrollerView
 @synthesize delegate;
 
@@ -55,7 +57,7 @@
             if ([imgURL hasPrefix:@"http://"])
             {
                 //网络图片 请使用ego异步图片库
-                //[imgView setImageWithURL:[NSURL URLWithString:imgURL]];
+                [imgView setImageWithURL:[NSURL URLWithString:imgURL]placeholderImage:[UIImage imageNamed:@"cabel.png"]];
             }
             else
             {

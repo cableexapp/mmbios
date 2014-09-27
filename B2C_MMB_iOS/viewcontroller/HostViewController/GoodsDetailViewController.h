@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 #import "MBProgressHUD.h"
+#import "EScrollerView.h"
 
-@interface GoodsDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ConnectionDelegate>
+@interface GoodsDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ConnectionDelegate,EScrollerViewDelegate>
 {
     DCFConnectionUtil *conn;
     MBProgressHUD *HUD;
     UITableView *tv;
+    EScrollerView *es;
 }
 @property (strong,nonatomic) NSString *productid;
 

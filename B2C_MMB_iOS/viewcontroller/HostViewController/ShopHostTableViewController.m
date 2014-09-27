@@ -318,7 +318,8 @@
 - (void) tap:(UITapGestureRecognizer *) sender
 {
     int tag = [[sender view] tag];
-
+    NSLog(@"tag = %d",tag);
+    NSLog(@"%@",dataArray);
     NSString *productId = [[dataArray objectAtIndex:tag] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     [self.navigationController pushViewController:detail animated:YES];

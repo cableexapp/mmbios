@@ -18,9 +18,21 @@
 
 @property (strong,nonatomic) NSString *p1Path;
 
+@property (strong,nonatomic) NSString *p2Path;
+
+@property (strong,nonatomic) NSString *p3Path;
+
+@property (strong,nonatomic) NSString *p4Path;
+
+@property (strong,nonatomic) NSString *p5Path;
+
+@property (strong,nonatomic) NSMutableArray *picArray;
+
 @property (strong,nonatomic) NSString *goodsName;
 
 @property (strong,nonatomic) NSString *goodsTitle;
+
+@property (strong,nonatomic) NSString *productPrice;
 
 @property (strong,nonatomic) NSString *goodsVoltage;  //额定电压
 
@@ -51,6 +63,8 @@
 @property (strong,nonatomic) NSString  *shopShortname;
 
 @property (strong,nonatomic) NSString  *shopId;
+
+@property (strong,nonatomic) NSString *score;
 
 - (void) dealData:(NSDictionary *) dictionary;
 

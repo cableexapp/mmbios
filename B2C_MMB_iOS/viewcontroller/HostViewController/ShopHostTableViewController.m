@@ -15,6 +15,7 @@
 #import "DCFCustomExtra.h"
 #import "B2CGoodsListData.h"
 #import "DCFCustomExtra.h"
+#import "GoodsDetailViewController.h"
 
 @interface ShopHostTableViewController ()
 {
@@ -316,7 +317,11 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    NSLog(@"%@",[sender view]);
+    int tag = [[sender view] tag];
+
+    NSString *productId = [[dataArray objectAtIndex:tag] productId];
+    GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

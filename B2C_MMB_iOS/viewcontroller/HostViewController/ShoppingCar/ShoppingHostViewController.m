@@ -169,7 +169,7 @@
     
     [self setHidesBottomBarWhenPushed:YES];
 //    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
-    GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] init];
+    GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:@""];
     [self.navigationController pushViewController:goodsDetail animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

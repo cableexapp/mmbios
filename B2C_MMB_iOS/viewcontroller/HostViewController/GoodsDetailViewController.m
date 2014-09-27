@@ -16,6 +16,8 @@
 #import "GoodsDetailTableViewCell.h"
 #import "MyShoppingListViewController.h"
 #import "ShopHostTableViewController.h"
+#import "B2CGoodsDetailData.h"
+
 
 @interface GoodsDetailViewController ()
 {
@@ -32,6 +34,8 @@
     UIView *chooseColorAndCountView; //选择颜色和数量的试图
     
     MyShoppingListViewController *shop;
+    
+    B2CGoodsDetailData *detailData;
 }
 @end
 
@@ -72,6 +76,16 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:shop animated:YES];
+}
+
+- (id) initWithProductId:(NSString *)productid
+{
+    if(self = [super init])
+    {
+        _productid = productid;
+        NSLog(@"productid = %@",_productid);
+    }
+    return self;
 }
 
 - (void)viewDidLoad
@@ -118,6 +132,8 @@
         [buttomView addSubview:btn];
     }
     
+    [self loadRequest];
+    
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight - 50 - 64) style:0];
     [tv setDataSource:self];
     [tv setDelegate:self];
@@ -146,6 +162,42 @@
 
 }
 
+
+- (void) loadRequest
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductDetail",time];
+    
+    NSString *token = [DCFCustomExtra md5:string];
+    
+//    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
+    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"290",token];
+
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if(URLTag == URLB2CProductDetailTag)
+    {
+        NSLog(@"%@",dicRespon);
+        int result = [[dicRespon objectForKey:@"result"] intValue];
+        NSString *msg = [dicRespon objectForKey:@"msg"];
+        if(result == 1)
+        {
+            detailData = [[B2CGoodsDetailData alloc] init];
+            [detailData dealData:dicRespon];
+            [tv reloadData];
+        }
+        else
+        {
+            [DCFStringUtil showNotice:msg];
+        }
+    }
+}
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -380,6 +432,20 @@
             if(showCell == YES)
             {
                 GoodsDetailTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsDetailTableViewCell" owner:self options:nil] lastObject];
+                
+                [customCell.barndLabel setText:detailData.goodsBrand];
+                [customCell.kindLabel setText:detailData.goodsModel];
+                [customCell.voltageLabel setText:detailData.goodsVoltage];
+                [customCell.surfaceLabel setText:detailData.spec];
+                [customCell.useLabel setText:detailData.use];
+                [customCell.threadLabel setText:detailData.coreNum];
+                [customCell.standLabel setText:detailData.standard];
+                [customCell.unitLabel setText:detailData.unit];
+                [customCell.thicknessLabel setText:detailData.insulationThickness];
+                [customCell.lengthLabel setText:detailData.avgLength];
+                [customCell.topLabel setText:detailData.avgDiameter];
+                [customCell.weightLabel setText:detailData.weight];
+                
                 return customCell;
                 
             }
@@ -757,6 +823,12 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.1;
+}
+
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
 }
 
 - (void)didReceiveMemoryWarning

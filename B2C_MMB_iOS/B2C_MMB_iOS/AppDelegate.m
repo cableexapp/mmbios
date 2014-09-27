@@ -88,17 +88,7 @@
 //    sqlite3 *dataBase;
 //    if(sqlite3_open([p UTF8String], &dataBase) != SQLITE_OK)
     
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartList",time];
-    
-    NSString *s = [DCFCustomExtra md5:string];
-    
-    NSString *pushString = [NSString stringWithFormat:@"visitorid=%@&memberid=%@&token=%@",[self uuid],@"13967",s];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartList.html?"];
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopListTag delegate:self];
-    //    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+   
     
     NSString *userId = [NSString stringWithFormat:@"%@",@"12345"];
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
@@ -212,6 +202,11 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    if([self.db open] == YES)
+    {
+        [self.db close];
+    }
+    
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 

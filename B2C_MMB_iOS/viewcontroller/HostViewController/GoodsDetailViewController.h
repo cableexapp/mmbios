@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
-@interface GoodsDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface GoodsDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ConnectionDelegate>
 {
+    DCFConnectionUtil *conn;
+    MBProgressHUD *HUD;
     UITableView *tv;
 }
+@property (strong,nonatomic) NSString *productid;
 
-
+- (id) initWithProductId:(NSString *) productid;
 @end

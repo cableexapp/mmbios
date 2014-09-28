@@ -24,10 +24,10 @@
 
 @property (strong,nonatomic) FMDatabase *db;
 
-@property (strong,nonatomic) NSString *udid;
+//@property (strong,nonatomic) NSString *udid;
 
 - (void) openDatabase;
 
--(NSString*) uuid;
+-(NSString*) getUdid;
 
 @end

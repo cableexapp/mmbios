@@ -30,7 +30,7 @@
     [super dealloc];
 }
 
--(id)initWithFrameRect:(CGRect)rect ImageArray:(NSArray *)imgArr TitleArray:(NSArray *)titArr
+-(id)initWithFrameRect:(CGRect)rect ImageArray:(NSArray *)imgArr TitleArray:(NSArray *)titArr WithTag:(int)tag
 {
     
 	if ((self=[super initWithFrame:rect]))
@@ -66,7 +66,17 @@
                 [imgView setImage:img];
             }
             
-            [imgView setFrame:CGRectMake(viewSize.size.width*i, 0,viewSize.size.width, viewSize.size.height)];
+//            [imgView setFrame:CGRectMake(viewSize.size.width*i, 0,viewSize.size.width, viewSize.size.height)];
+            myTag = tag;
+            if(myTag == 0)
+            {
+                [imgView setFrame:CGRectMake(viewSize.size.width*i, 0,viewSize.size.width, viewSize.size.height)];
+            }
+            if(myTag == 1)
+            {
+                [imgView setFrame:CGRectMake(85+(150+170)*i, 10,150, 140)];
+                
+            }
             imgView.tag=i;
             UITapGestureRecognizer *Tap =[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imagePressed:)] autorelease];
             [Tap setNumberOfTapsRequired:1];
@@ -82,7 +92,8 @@
         
         //说明文字层
         UIView *noteView=[[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-33,self.bounds.size.width,33)];
-        [noteView setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.5]];
+//        [noteView setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.5]];
+        [noteView setBackgroundColor:[UIColor clearColor]];
         
         float pageControlWidth=(pageCount-2)*10.0f+40.f;
         float pagecontrolHeight=20.0f;

@@ -16,6 +16,7 @@
 //#import "LoginViewController.h"
 #import "LoginNaviViewController.h"
 #import "UpOrderViewController.h"
+#import "B2CShopCarListData.h"
 
 @interface MyShoppingListViewController ()
 {
@@ -46,6 +47,8 @@
     UIButton *rightBtn;
     
     UIStoryboard *sb;
+    
+    NSMutableArray *dataArray;
 }
 @end
 
@@ -59,6 +62,7 @@
     }
     return self;
 }
+
 
 
 - (void) buttomBtnClick:(UIButton *) sender
@@ -91,12 +95,112 @@
     }
 }
 
+- (id) initWithDataArray:(NSArray *)arr
+{
+    if(self = [super init])
+    {
+        parameterArray = [[NSArray alloc] initWithArray:arr];
+        
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartList",time];
+        
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartList.html?"];
+        NSString *pushString = nil;
+        
+        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+        if(hasLogin == YES)
+        {
+            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",[parameterArray lastObject],token];
+        }
+        else
+        {
+            pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",[parameterArray lastObject],token];
+        }
+
+
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarGoodsMsgTag delegate:self];
+        
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
+    return self;
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if(URLTag == URLShopCarGoodsMsgTag)
+    {
+        NSLog(@"%@",dicRespon);
+        int result = [[dicRespon objectForKey:@"result"] intValue];
+        NSString *msg = [dicRespon objectForKey:@"msg"];
+        
+        if(result == 1)
+        {
+            NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[B2CShopCarListData getListArray:[dicRespon objectForKey:@"items"]]];
+            NSLog(@"%@",tempArray);
+            
+            dataArray = [[NSMutableArray alloc] init];
+            
+            headLabelArray = [[NSMutableArray alloc] init];
+            
+            for(int i=0;i<tempArray.count;i++)
+            {
+                NSString *sShopName = [[tempArray objectAtIndex:i] sShopName];
+                if(i == 0)
+                {
+                    [headLabelArray addObject:sShopName];
+                }
+                if(i > 0)
+                {
+                    if([headLabelArray containsObject:sShopName] == YES)
+                    {
+                        
+                    }
+                    else
+                    {
+                        [headLabelArray addObject:sShopName];
+                    }
+                }
+            }
+            NSLog(@"headLabelArray = %@",headLabelArray);
+            
+            for(int i=0;i<tempArray.count;i++)
+            {
+                NSString *sShopName = [[tempArray objectAtIndex:i] sShopName];
+                for(NSString *s in headLabelArray)
+                {
+                    if([sShopName isEqualToString:s])
+                    {
+                        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:[tempArray objectAtIndex:i],sShopName, nil];
+                        [dataArray addObject:dic];
+                    }
+                }
+            }
+            for(int i=0;i<dataArray.count;i++)
+            {
+                NSLog(@"dataArray = %@",[dataArray objectAtIndex:i]);
+            }
+            [tv reloadData];
+        }
+        else if (result == 0)
+        {
+            if(msg.length != 0)
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self pushAndPopStyle];
     
+
     //    [moreCell startAnimation];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -163,7 +267,6 @@
     [tv setDelegate:self];
     [self.view addSubview:tv];
     
-    headLabelArray = [[NSMutableArray alloc] initWithObjects:@"远东旗舰店", nil];
     
     introduceDataArray = [[NSMutableArray alloc] initWithObjects:
                           @"cell 1 荣宜电缆BVR 6平方 国际铜芯电缆 单芯多股铜线 95米,荣宜电缆BVR 6平方",
@@ -405,11 +508,29 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(!introduceDataArray || introduceDataArray.count == 0)
+    
+    NSLog(@"DJLFHSFJSJ;FKSJGJDKSJGDKASKDKA'SDSA");
+    if(!dataArray || dataArray.count == 0)
     {
         return 1;
     }
-    return introduceDataArray.count;
+    else
+    {
+        
+        NSString *s = [headLabelArray objectAtIndex:section];
+        int n = 0;
+        for(NSDictionary *dic in dataArray)
+        {
+            NSLog(@"%@",[[dic  allKeys] objectAtIndex:0]);
+
+            if([[[dic  allKeys] objectAtIndex:0] isEqualToString:s])
+            {
+                n++;
+            }
+        }
+        return n;
+    }
+    return 0;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section

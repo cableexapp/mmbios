@@ -36,6 +36,10 @@ enum {
     URLB2CGoodsListTag,  //商品列表
     
     URLB2CProductDetailTag,  //b2c商品详情
+    
+    URLShopCarGoodsMsgTag,   //购物车商品信息
+    
+    URLAddToShopCatTag,   //商品加入购物车
 };
 typedef NSUInteger URLTag;
 

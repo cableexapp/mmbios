@@ -7,11 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
 
 #pragma mark - 购物车列表
 
-@interface MyShoppingListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface MyShoppingListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate>
 {
     UITableView *tv;
+    
+    NSArray *parameterArray;
+    
+    DCFConnectionUtil *conn;
 }
+
+- (id) initWithDataArray:(NSArray *) arr;
 @end

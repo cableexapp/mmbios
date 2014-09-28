@@ -25,7 +25,9 @@
     NSTimer *timer;
     
     int num;
+    
+    int myTag;
 }
 @property(nonatomic,retain)id<EScrollerViewDelegate> delegate;
--(id)initWithFrameRect:(CGRect)rect ImageArray:(NSArray *)imgArr TitleArray:(NSArray *)titArr;
+-(id)initWithFrameRect:(CGRect)rect ImageArray:(NSArray *)imgArr TitleArray:(NSArray *)titArr WithTag:(int) tag;
 @end

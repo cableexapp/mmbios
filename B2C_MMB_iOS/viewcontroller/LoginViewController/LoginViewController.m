@@ -204,10 +204,17 @@
         NSLog(@"%@",dicRespon);
         int reslut = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
-        NSLog(@"msg = %@",msg);
         if(reslut == 0)
         {
             [DCFStringUtil showNotice:msg];
+        }
+        else
+        {
+            NSString *memberId = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"memberId"];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
     }
 }

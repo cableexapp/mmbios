@@ -32,6 +32,7 @@
 		612A242119D2926800E544E0 /* ChooseReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 612A241F19D2926800E544E0 /* ChooseReceiveAddressViewController.m */; };
 		612A242219D2926800E544E0 /* ChooseReceiveAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */; };
 		612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 612C909419D6561900430140 /* B2CGoodsDetailData.m */; };
+		615B01B219D8000A0002592E /* B2CShopCarListData.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B01B119D8000A0002592E /* B2CShopCarListData.m */; };
 		6166ED5519D2B06800D9A219 /* addAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5419D2B06800D9A219 /* addAddress.png */; };
 		6166ED5819D2B44D00D9A219 /* AddReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */; };
 		6166ED5A19D2B86400D9A219 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5919D2B86400D9A219 /* area.plist */; };
@@ -268,6 +269,8 @@
 		612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseReceiveAddressViewController.xib; sourceTree = "<group>"; };
 		612C909319D6561900430140 /* B2CGoodsDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGoodsDetailData.h; sourceTree = "<group>"; };
 		612C909419D6561900430140 /* B2CGoodsDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGoodsDetailData.m; sourceTree = "<group>"; };
+		615B01B019D8000A0002592E /* B2CShopCarListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShopCarListData.h; sourceTree = "<group>"; };
+		615B01B119D8000A0002592E /* B2CShopCarListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShopCarListData.m; sourceTree = "<group>"; };
 		6166ED5419D2B06800D9A219 /* addAddress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addAddress.png; sourceTree = "<group>"; };
 		6166ED5619D2B44D00D9A219 /* AddReceiveAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiveAddressViewController.h; sourceTree = "<group>"; };
 		6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveAddressViewController.m; sourceTree = "<group>"; };
@@ -700,6 +703,15 @@
 			path = B2CGoodsDetailData;
 			sourceTree = "<group>";
 		};
+		615B01AF19D7FFF20002592E /* B2CShopCarListData */ = {
+			isa = PBXGroup;
+			children = (
+				615B01B019D8000A0002592E /* B2CShopCarListData.h */,
+				615B01B119D8000A0002592E /* B2CShopCarListData.m */,
+			);
+			path = B2CShopCarListData;
+			sourceTree = "<group>";
+		};
 		6181A33D19CFC3F8000E2D14 = {
 			isa = PBXGroup;
 			children = (
@@ -889,6 +901,7 @@
 		6181A3DF19CFC4C2000E2D14 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				615B01AF19D7FFF20002592E /* B2CShopCarListData */,
 				612C909219D6560700430140 /* B2CGoodsDetailData */,
 				6181A3E019CFC4C2000E2D14 /* B2CGoodsListData */,
 				6181A3E319CFC4C2000E2D14 /* DCFMyArrangeHomeWorkList.h */,
@@ -1549,6 +1562,7 @@
 				6181A51519CFC4C2000E2D14 /* SDWebImagePrefetcher.m in Sources */,
 				6181A50619CFC4C2000E2D14 /* FMDatabase.m in Sources */,
 				6166ED5819D2B44D00D9A219 /* AddReceiveAddressViewController.m in Sources */,
+				615B01B219D8000A0002592E /* B2CShopCarListData.m in Sources */,
 				6181A52319CFC4C2000E2D14 /* SendEmailViewController.m in Sources */,
 				6181A50519CFC4C2000E2D14 /* ELCImagePickerDemoViewController.m in Sources */,
 				6181A50419CFC4C2000E2D14 /* ELCImagePickerController.m in Sources */,

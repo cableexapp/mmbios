@@ -129,7 +129,6 @@
     if(URLTag == URLRegesterTag)
     {
         [HUD hide:YES];
-        
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 0)

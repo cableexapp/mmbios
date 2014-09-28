@@ -66,6 +66,8 @@
 
 @property (strong,nonatomic) NSString *score;
 
+@property (strong,nonatomic) NSString *productId;
+
 - (void) dealData:(NSDictionary *) dictionary;
 
 @end

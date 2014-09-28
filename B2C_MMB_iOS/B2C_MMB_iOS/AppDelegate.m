@@ -60,12 +60,14 @@
     
 }
 
--(NSString*) uuid
+-(NSString*) getUdid
 {
     NSString *udid = [PhoneHelper getDeviceId];
     
     return udid;
 }
+
+
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {

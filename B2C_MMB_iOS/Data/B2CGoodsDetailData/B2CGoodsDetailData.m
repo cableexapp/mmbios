@@ -97,7 +97,6 @@
         }
         [_picArray replaceObjectAtIndex:i withObject:pic];
     }
-    NSLog(@"%@",_picArray);
     
   
     
@@ -137,7 +136,9 @@
     
     _shopId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopId"]];
     
-    _score = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"score"] objectAtIndex:0]];
+    _score = [NSString stringWithFormat:@"%@",[[dictionary objectForKey:@"score"] objectAtIndex:0]];
+    
+    _productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
 }
 
 @end

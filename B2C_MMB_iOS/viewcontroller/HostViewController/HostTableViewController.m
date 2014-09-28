@@ -211,7 +211,7 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellId = [NSString stringWithFormat:@"cell%ld%d",(long)indexPath.section,indexPath.row];
+    NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if(!cell)
     {
@@ -223,7 +223,7 @@
         if(!es)
         {
             NSArray *imageArray = [[NSArray alloc] initWithObjects:@"sv_1.png",@"sv_2.png",@"sv_3.png", nil];
-            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, 320, 80) ImageArray:imageArray TitleArray:nil];
+            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, 320, 80) ImageArray:imageArray TitleArray:nil WithTag:0];
             es.delegate = self;
             [cell.contentView addSubview:es];
         }

@@ -14,9 +14,13 @@
 @interface ChooseReceiveAddressViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *tv;
+    
+    NSMutableArray *dataArray;
 }
 @property (weak, nonatomic) IBOutlet UIView *tvBackView;
 @property (weak, nonatomic) IBOutlet UIView *buttomView;
 @property (weak, nonatomic) IBOutlet UIButton *buttomBtn;
+
+- (id) initWithDataArray:(NSMutableArray *) arr;
 
 @end

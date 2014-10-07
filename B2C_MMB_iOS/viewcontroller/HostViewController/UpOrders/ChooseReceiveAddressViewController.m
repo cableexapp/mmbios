@@ -9,10 +9,11 @@
 #import "ChooseReceiveAddressViewController.h"
 #import "DCFCustomExtra.h"
 #import "AddReceiveAddressViewController.h"
+#import "AddReceiveFinalViewController.h"
+#import "DCFChenMoreCell.h"
 
 @interface ChooseReceiveAddressViewController ()
 {
-    NSMutableArray *dataArray;
     NSMutableArray *cellBtnArray;
     
     UIButton *rightItemBtn;
@@ -32,16 +33,62 @@
     return self;
 }
 
+
+- (id) initWithDataArray:(NSMutableArray *) arr
+{
+    if(self = [super init])
+    {
+        dataArray = [[NSMutableArray alloc] initWithArray:arr];
+        NSLog(@"dataArray = %@",dataArray);
+        
+        if(dataArray.count == 0)
+        {
+            
+        }
+        else
+        {
+            //            for(int i = 0; i < dataArray.count; i++)
+            //            {
+            //                NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
+            //                                     @"二货",@"name",
+            //                                     @"13922326230",@"tel",
+            //                                     @"北京市市辖区海淀区万寿路街道",@"province",
+            //                                     @"北太平路31号51幼儿园北京市海淀区北太平路31",@"address",nil];
+            //                [dataArray addObject:dic];
+            //            }
+            
+            cellBtnArray = [[NSMutableArray alloc] init];
+            
+            for(int i=0;i<dataArray.count;i++)
+            {
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [btn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
+                [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+                [btn setSelected:NO];
+                [btn setTag:i];
+                [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                [cellBtnArray addObject:btn];
+            }
+            
+        }
+        if(tv)
+        {
+            [tv reloadData];
+        }
+    }
+    return self;
+}
+
 - (IBAction)buttomBtnClick:(id)sender
 {
     [self hideButtomView];
-
+    
 }
 
 - (void) rightItemClick:(UIButton *) sender
 {
     [self showButtomView];
-
+    
     
     AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
     [self.navigationController pushViewController:add animated:YES];
@@ -56,10 +103,10 @@
     [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height-64-49)];
     [tv setFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height)];
     
-//    for(UIButton *btn in cellBtnArray)
-//    {
-//        [btn setHidden:YES];
-//    }
+    //    for(UIButton *btn in cellBtnArray)
+    //    {
+    //        [btn setHidden:YES];
+    //    }
 }
 
 - (void) hideButtomView
@@ -98,14 +145,14 @@
             [btn setHidden:NO];
         }
     }
-
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"选择收货地址"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
@@ -124,29 +171,6 @@
     
     
     
-    dataArray = [[NSMutableArray alloc] init];
-    for(int i = 0; i < 8; i++)
-    {
-        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                             @"二货",@"name",
-                             @"13922326230",@"tel",
-                             @"黑龙江省哈尔滨市市辖区",@"province",
-                             @"北京市海淀区北太平路31号51幼儿园北京市海淀区北太平路31",@"address",nil];
-        [dataArray addObject:dic];
-    }
-    
-    cellBtnArray = [[NSMutableArray alloc] init];
-    
-    for(int i=0;i<dataArray.count;i++)
-    {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
-        [btn setSelected:NO];
-        [btn setTag:i];
-        [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [cellBtnArray addObject:btn];
-    }
     
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height) style:0];
@@ -163,18 +187,31 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if(dataArray.count == 0)
+    {
+        return 1;
+    }
     return dataArray.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *address = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"address"];
-    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
-    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 270, size_3.height)];
-    [addressLabel setText:address];
-    [addressLabel setFont:[UIFont systemFontOfSize:13]];
-    [addressLabel setNumberOfLines:0];
-    return size_3.height + 70;
+    if(dataArray.count == 0)
+    {
+        return 44;
+    }
+    else
+    {
+        NSString *address = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"address"];
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
+        //    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 270, size_3.height)];
+        //    [addressLabel setText:address];
+        //    [addressLabel setFont:[UIFont systemFontOfSize:13]];
+        //    [addressLabel setNumberOfLines:0];
+        return size_3.height + 70;
+        
+    }
+    return 44;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -191,58 +228,60 @@
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
     
-    NSString *name = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
-    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
-    [nameLabel setText:name];
-    [nameLabel setTextAlignment:NSTextAlignmentLeft];
-    [nameLabel setFont:[UIFont systemFontOfSize:13]];
-    [cell.contentView addSubview:nameLabel];
-    
-    NSString *tel = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"tel"];
-    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
-    UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-50-size_2.width, 5, size_2.width, 30)];
-    [telLabel setTextAlignment:NSTextAlignmentRight];
-    [telLabel setText:tel];
-    [telLabel setFont:[UIFont systemFontOfSize:13]];
-    [cell.contentView addSubview:telLabel];
-    
-    NSString *province = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"province"];
-    UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height, 270, 30)];
-    [provinceLabel setText:province];
-    [provinceLabel setFont:[UIFont systemFontOfSize:13]];
-    [cell.contentView addSubview:provinceLabel];
-    
-    NSString *address = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"address"];
-    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
-    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
-    [addressLabel setText:address];
-    [addressLabel setFont:[UIFont systemFontOfSize:13]];
-    [addressLabel setNumberOfLines:0];
-    [cell.contentView addSubview:addressLabel];
-    
-    if(rightItemBtnHasClick == NO)
+    if(indexPath.row == dataArray.count)
     {
-//        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [btn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
-//        [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
-//        [btn setFrame:CGRectMake(280, (size_3.height + 70 - 30)/2, 30, 30)];
-//        [btn setSelected:NO];
-//        [btn setTag:indexPath.row];
-//        [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//        [cell.contentView addSubview:btn];
-//        [cellBtnArray addObject:btn];
-        UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
-        [btn setFrame:CGRectMake(280, (size_3.height + 70 - 30)/2, 30, 30)];
-        [cell.contentView addSubview:btn];
+        DCFChenMoreCell *moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+        [moreCell noDataAnimation];
+        return moreCell;
     }
     else
     {
+        NSString *name = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
+        [nameLabel setText:name];
+        [nameLabel setTextAlignment:NSTextAlignmentLeft];
+        [nameLabel setFont:[UIFont systemFontOfSize:13]];
+        [cell.contentView addSubview:nameLabel];
+        
+        NSString *tel = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"tel"];
+        CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
+        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-50-size_2.width, 5, size_2.width, 30)];
+        [telLabel setTextAlignment:NSTextAlignmentRight];
+        [telLabel setText:tel];
+        [telLabel setFont:[UIFont systemFontOfSize:13]];
+        [cell.contentView addSubview:telLabel];
+        
+        NSString *province = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"province"];
+        UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height, 270, 30)];
+        [provinceLabel setText:province];
+        [provinceLabel setFont:[UIFont systemFontOfSize:13]];
+        [cell.contentView addSubview:provinceLabel];
+        
+        NSString *address = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"address"];
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
+        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
+        [addressLabel setText:address];
+        [addressLabel setFont:[UIFont systemFontOfSize:13]];
+        [addressLabel setNumberOfLines:0];
+        [cell.contentView addSubview:addressLabel];
+        
+        if(rightItemBtnHasClick == NO)
+        {
+            UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
+            [btn setFrame:CGRectMake(280, (size_3.height + 70 - 30)/2, 30, 30)];
+            [cell.contentView addSubview:btn];
+        }
+        else
+        {
+            
+        }
+        
+        
+        return cell;
         
     }
-
-    
-    return cell;
+    return nil;
 }
 
 - (void) cellBtnClick:(UIButton *) sender
@@ -254,6 +293,18 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%d",indexPath.row);
+    
+    UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
+    if(btn.hidden == YES)
+    {
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithMsgDic:[dataArray objectAtIndex:indexPath.row]];
+        [self.navigationController pushViewController:final animated:YES];
+        [self showButtomView];
+    }
+    else
+    {
+        
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

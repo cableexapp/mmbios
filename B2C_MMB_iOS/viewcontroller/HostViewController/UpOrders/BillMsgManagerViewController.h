@@ -8,7 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFMyTextField.h"
+#import "DCFConnectionUtil.h"
 
-@interface BillMsgManagerViewController : UIViewController<UITextFieldDelegate>
+//这个类，购物车列表类MyShoppingListViewController,UpOrderViewController
 
+@interface BillMsgManagerViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
+@property (assign,nonatomic) BOOL editOrAddBill;
+
+@property (strong,nonatomic) NSString *naviTitle;
+
+@property (assign,nonatomic)  int billHeadTag;
+
+@property (strong,nonatomic) NSString *tfContent;
+
+@property (strong,nonatomic) NSString *invoiceid;
 @end
+

@@ -10,9 +10,11 @@
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFPickerView.h"
+#import "DCFConnectionUtil.h"
 
-@interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickerView>
+@interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickerView,ConnectionDelegate>
 {
+    DCFConnectionUtil *conn;
     UITableView *tv;
 }
 @end

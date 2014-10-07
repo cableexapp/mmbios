@@ -133,7 +133,14 @@
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 0)
         {
-            [DCFStringUtil showNotice:msg];
+            if(msg.length == 0)
+            {
+                [DCFStringUtil showNotice:@"注册失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
         }
         else if (result == 1)
         {

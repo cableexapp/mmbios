@@ -102,7 +102,14 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *str = [NSString stringWithFormat:@"%@%@",_town,[[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
-    AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str];
+    NSLog(@"str = %@",str);
+    
+    NSString *code = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"]];
+    
+    //    BOOL swithStatus = [[[dataArray objectAtIndex:indexPath.row] objectForKey:@"swithStatus"] boolValue];
+    
+    AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str WithCode:code WithSwithStatus:YES];
+    
     [self.navigationController pushViewController:final animated:YES];
 }
 

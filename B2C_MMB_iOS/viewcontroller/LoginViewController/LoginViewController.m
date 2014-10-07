@@ -206,7 +206,14 @@
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(reslut == 0)
         {
-            [DCFStringUtil showNotice:msg];
+            if(msg.length == 0)
+            {
+                [DCFStringUtil showNotice:@"登录失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
         }
         else
         {

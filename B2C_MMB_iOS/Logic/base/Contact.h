@@ -40,6 +40,25 @@ enum {
     URLShopCarGoodsMsgTag,   //购物车商品信息
     
     URLAddToShopCatTag,   //商品加入购物车
+    URLShopCarsubtractTag,  //购物车减商品数目
+    
+    URLShopCarAddTag,    //购物车增加商品数目
+    
+    URLShopCarDeleteTag,  //购物车删除商品
+    
+    URLAddInvoiceTag,    //新增发票
+    
+    URLEditInvoiceTag,   //编辑发票
+    
+    URLCartConfirmTag,  //购物车结算
+    
+    URLReceiveAddressTag,   //收货地址
+    
+    URLAddMemberAddressTag,   //增加收货地址
+    
+    URLSetDefaultMemberAddressTag,  //设置默认收货地址
+    
+    URLEditMemberAddressTag,    //编辑收货地址
 };
 typedef NSUInteger URLTag;
 

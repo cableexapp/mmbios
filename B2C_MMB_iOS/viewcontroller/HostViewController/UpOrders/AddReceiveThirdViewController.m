@@ -38,7 +38,8 @@
         
         _city = [_myDic objectForKey:@"name"];
         
-        _provinceAndCity = [NSString stringWithFormat:@"%@%@",province,_city];
+        
+        _provinceAndCity = [NSString stringWithFormat:@"%@,%@",province,_city];
     }
     return self;
 }
@@ -154,7 +155,9 @@
     [rs close];
     
     NSString *town = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
-    NSString *str = [NSString stringWithFormat:@"%@%@",_provinceAndCity,town];
+    NSString *str = [NSString stringWithFormat:@"%@,%@",_provinceAndCity,town];
+    NSLog(@"_provinceAndCity = %@",_provinceAndCity);
+    NSLog(@"str = %@",str);
     
     if(arr.count != 0)
     {
@@ -164,7 +167,11 @@
     }
     else
     {
-        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str];
+        NSString *code = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"]];
+        //        BOOL swithStatus = [[[dataArray objectAtIndex:indexPath.row] objectForKey:@"swithStatus"] boolValue];
+        
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str WithCode:code WithSwithStatus:YES];
+        
         [self.navigationController pushViewController:final animated:YES];
     }
 }

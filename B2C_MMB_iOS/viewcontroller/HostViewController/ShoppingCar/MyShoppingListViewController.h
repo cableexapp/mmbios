@@ -11,7 +11,7 @@
 
 #pragma mark - 购物车列表
 
-@interface MyShoppingListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate>
+@interface MyShoppingListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,UIAlertViewDelegate>
 {
     UITableView *tv;
     

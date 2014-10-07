@@ -11,6 +11,7 @@
 		611A7D1E19D3F7DE0033A433 /* AddReceiveThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611A7D1D19D3F7DE0033A433 /* AddReceiveThirdViewController.m */; };
 		611A7D2119D3FD920033A433 /* AddReceiveFourthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611A7D2019D3FD920033A433 /* AddReceiveFourthViewController.m */; };
 		611A7D2419D3FFAD0033A433 /* AddReceiveFinalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611A7D2319D3FFAD0033A433 /* AddReceiveFinalViewController.m */; };
+		611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */; };
 		6122713619CFC81500FE4DFF /* AlipayRsaLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6122711519CFC81500FE4DFF /* AlipayRsaLib.a */; };
 		6122713719CFC81500FE4DFF /* Alixpay.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6122711719CFC81500FE4DFF /* Alixpay.bundle */; };
 		6122713819CFC81500FE4DFF /* AlixPaylib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6122711819CFC81500FE4DFF /* AlixPaylib.a */; };
@@ -231,6 +232,8 @@
 		611A7D2019D3FD920033A433 /* AddReceiveFourthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveFourthViewController.m; sourceTree = "<group>"; };
 		611A7D2219D3FFAD0033A433 /* AddReceiveFinalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReceiveFinalViewController.h; sourceTree = "<group>"; };
 		611A7D2319D3FFAD0033A433 /* AddReceiveFinalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReceiveFinalViewController.m; sourceTree = "<group>"; };
+		611C8C3E19E3BDD2000F4532 /* B2CAddressData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CAddressData.h; sourceTree = "<group>"; };
+		611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CAddressData.m; sourceTree = "<group>"; };
 		6122711519CFC81500FE4DFF /* AlipayRsaLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AlipayRsaLib.a; sourceTree = "<group>"; };
 		6122711619CFC81500FE4DFF /* AlixLibService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlixLibService.h; sourceTree = "<group>"; };
 		6122711719CFC81500FE4DFF /* Alixpay.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Alixpay.bundle; sourceTree = "<group>"; };
@@ -606,6 +609,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		611C8C3D19E3BDA9000F4532 /* B2CAddressData */ = {
+			isa = PBXGroup;
+			children = (
+				611C8C3E19E3BDD2000F4532 /* B2CAddressData.h */,
+				611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */,
+			);
+			path = B2CAddressData;
+			sourceTree = "<group>";
+		};
 		6122711319CFC81500FE4DFF /* AliPay */ = {
 			isa = PBXGroup;
 			children = (
@@ -901,6 +913,7 @@
 		6181A3DF19CFC4C2000E2D14 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				611C8C3D19E3BDA9000F4532 /* B2CAddressData */,
 				615B01AF19D7FFF20002592E /* B2CShopCarListData */,
 				612C909219D6560700430140 /* B2CGoodsDetailData */,
 				6181A3E019CFC4C2000E2D14 /* B2CGoodsListData */,
@@ -1604,6 +1617,7 @@
 				6181A4CA19CFC4C2000E2D14 /* DCFRootNaviController.m in Sources */,
 				6181A4CB19CFC4C2000E2D14 /* DCFTabBarCtrl.m in Sources */,
 				6181A51019CFC4C2000E2D14 /* SDWebImageCompat.m in Sources */,
+				611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */,
 				6181A52519CFC4C2000E2D14 /* FourthTableViewController.m in Sources */,
 				6181A52619CFC4C2000E2D14 /* ChooseTypeViewController.m in Sources */,
 				6181A52E19CFC4C2000E2D14 /* B2CShoppingListViewController.m in Sources */,

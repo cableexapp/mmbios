@@ -14,6 +14,8 @@
 #import "ChoosePayTableViewController.h"
 #import "LoginNaviViewController.h"
 #import "DCFStringUtil.h"
+#import "B2CAddressData.h"
+
 
 @interface UpOrderViewController ()
 {
@@ -28,9 +30,11 @@
     NSString *billMsg;
     
     UIStoryboard *sb;
+
+    NSMutableArray *addressListDataArray;   //收货地址数组
     
-    NSMutableArray *addressArray;
-    NSDictionary *addressDic;
+    
+    NSString *myAddressId;
 }
 @end
 
@@ -47,8 +51,36 @@
 
 - (void) upBtnClick:(UIButton *) sender
 {
-    ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] init];
-    [self.navigationController pushViewController:pay animated:YES];
+    
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"SubOrder",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:myAddressId,@"address", nil];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubOrderTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/SubOrder.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+//    ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] init];
+//    [self.navigationController pushViewController:pay animated:YES];
+}
+
+
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if(memberid.length == 0)
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -58,29 +90,28 @@
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     
-    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+//    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+//    
+//    if(memberid.length == 0 || memberid == nil || [memberid isKindOfClass:[NSNull class]])
+//    {
+//        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+//        [self presentViewController:loginNavi animated:YES completion:nil];
+//        
+//    }
+//    else
+//    {
     
-    if(memberid.length == 0 || memberid == nil || [memberid isKindOfClass:[NSNull class]])
-    {
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
-        
-    }
-    else
-    {
-        
         NSString *time = [DCFCustomExtra getFirstRunTime];
         NSString *string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-        NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,memberid];
-        NSLog(@"%@",pushString);
-        
+        NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+    
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         
-    }
+//    }
     
     
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
@@ -90,19 +121,19 @@
     else
     {
         NSMutableArray *billMsgArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
-        billMsg = [[billMsgArray lastObject] objectAtIndex:0];
+        billMsg = [billMsgArray objectAtIndex:0];
     }
     NSLog(@"billMsg=%@",billMsg);
     
-    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"])
-    {
-        addressDic = [[NSDictionary alloc] init];
-    }
-    else
-    {
-        addressArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"];
-        addressDic = [addressArray lastObject];
-    }
+//    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"])
+//    {
+//        addressDic = [[NSDictionary alloc] init];
+//    }
+//    else
+//    {
+//        addressArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"];
+//        addressDic = [addressArray lastObject];
+//    }
     
     if(tv)
     {
@@ -126,10 +157,8 @@
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
-    
     if (URLTag == URLReceiveAddressTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 0)
         {
             if(msg.length != 0)
@@ -144,7 +173,29 @@
         else if (result == 1)
         {
             [DCFStringUtil showNotice:msg];
+            
+            addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
+            
             [tv reloadData];
+        }
+    }
+    if(URLTag == URLSubOrderTag)
+    {
+        NSLog(@"%@",dicRespon);
+        if(result == 1)
+        {
+            
+        }
+        else
+        {
+            if(msg.length == 0)
+            {
+                [DCFStringUtil showNotice:@"提交失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
         }
     }
 }
@@ -201,7 +252,14 @@
 {
     if(section == 0)
     {
-        return 1;
+        if(!addressListDataArray || addressListDataArray.count == 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return addressListDataArray.count;
+        }
     }
     if(section == 1)
     {
@@ -220,30 +278,30 @@
 {
     if(indexPath.section == 0)
     {
-        if(indexPath.row == 0)
-        {
-            if(!addressDic || [addressDic.allKeys count] == 0)
+//        if(indexPath.row == 0)
+//        {
+            if(!addressListDataArray || addressListDataArray.count == 0)
             {
                 return 44;
             }
             else
             {
-                NSString *s1 = [addressDic objectForKey:@"province"];
-                NSString  *s2 = [addressDic objectForKey:@"city"];
-                NSString *s3 = [addressDic objectForKey:@"town"];
-                NSString *s4 = [addressDic objectForKey:@"detailAddress"];
+                NSString *s1 = [[addressListDataArray objectAtIndex:indexPath.row] province];
+                NSString  *s2 = [[addressListDataArray objectAtIndex:indexPath.row] city];
+                NSString *s3 = [[addressListDataArray objectAtIndex:indexPath.row] area];
+                NSString *s4 = [[addressListDataArray objectAtIndex:indexPath.row] addressName];
                 NSString *str = [NSString stringWithFormat:@"%@%@%@\n%@",s1,s2,s3,s4];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
-                //                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, nameLabel.frame.origin.y + nameLabel.frame.size.height, 260, size.height)];
-                //                [addressLabel setText:str];
-                //                [addressLabel setFont:[UIFont systemFontOfSize:12]];
-                //                [addressLabel setNumberOfLines:0];
+                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 35, 260, size.height)];
+                [addressLabel setText:str];
+                [addressLabel setFont:[UIFont systemFontOfSize:12]];
+                [addressLabel setNumberOfLines:0];
                 
                 
                 return 30+size.height + 10;
                 
             }
-        }
+//        }
     }
     if(indexPath.section == 2)
     {
@@ -313,7 +371,7 @@
         if(indexPath.section == 0)
         {
             
-            if(!addressDic || [addressDic.allKeys count] == 0)
+            if(!addressListDataArray || [addressListDataArray count] == 0)
             {
                 UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
                 [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
@@ -338,7 +396,9 @@
                 UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 20, 30)];
                 [iv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
                 
-                NSString *name = [addressDic objectForKey:@"name"];
+       
+                
+                NSString *name = [[addressListDataArray objectAtIndex:indexPath.row] receiver];
                 CGSize size_name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
                 UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, size_name.width, 30)];
                 [nameLabel setText:name];
@@ -346,7 +406,7 @@
                 [nameLabel setFont:[UIFont systemFontOfSize:13]];
                 
                 
-                NSString *tel = [addressDic objectForKey:@"mobile"];
+                NSString *tel = [[addressListDataArray objectAtIndex:indexPath.row] tel];
                 CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
                 UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-20-size_tel.width, 5, size_tel.width, 30)];
                 [telLabel setText:tel];
@@ -354,10 +414,12 @@
                 [telLabel setTextAlignment:NSTextAlignmentRight];
                 [cell.contentView addSubview:telLabel];
                 
-                NSString *s1 = [addressDic objectForKey:@"province"];
-                NSString  *s2 = [addressDic objectForKey:@"city"];
-                NSString *s3 = [addressDic objectForKey:@"town"];
-                NSString *s4 = [addressDic objectForKey:@"detailAddress"];
+                NSLog(@"**********%@",[[addressListDataArray objectAtIndex:indexPath.row] addressId]);
+                
+                NSString *s1 = [[addressListDataArray objectAtIndex:indexPath.row] province];
+                NSString  *s2 = [[addressListDataArray objectAtIndex:indexPath.row] city];
+                NSString *s3 = [[addressListDataArray objectAtIndex:indexPath.row] area];
+                NSString *s4 = [[addressListDataArray objectAtIndex:indexPath.row] addressName];
                 NSString *str = [NSString stringWithFormat:@"%@%@%@\n%@",s1,s2,s3,s4];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
                 UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, nameLabel.frame.origin.y + nameLabel.frame.size.height, 260, size.height)];
@@ -463,17 +525,20 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0 && indexPath.row == 0)
+    if(indexPath.section == 0)
     {
-        //        if(!addressDic || [addressDic.allKeys count] == 0)
-        //        {
-        //
-        //        }
-        //        else
-        //        {
-        ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] initWithDataArray:addressArray];
-        [self.navigationController pushViewController:chooseAddress animated:YES];
-        //        }
+        if(!addressListDataArray || addressListDataArray.count == 0)
+        {
+            
+        }
+        else
+        {
+            myAddressId = [[addressListDataArray objectAtIndex:indexPath.row] addressId];
+            
+            ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] initWithDataArray:addressListDataArray];
+            [self.navigationController pushViewController:chooseAddress animated:YES];
+        }
+
     }
     if(indexPath.section == 1 && indexPath.row == 0)
     {
@@ -488,24 +553,19 @@
             invoId = @"";
             headTag = @"0";
             billManager.editOrAddBill = NO;
-        }
-        else
-        {
-            NSMutableArray *billMsgArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
-            billMsg = [[billMsgArray lastObject] objectAtIndex:0];
-            invoId = [[billMsgArray lastObject] objectAtIndex:1];
-            headTag = [[billMsgArray lastObject] objectAtIndex:2];
-            billManager.editOrAddBill = YES;
-        }
-        
-        if([billMsg isEqualToString:@"请输入个人名称"])
-        {
             billManager.naviTitle = @"新增发票";
         }
         else
         {
+            NSMutableArray *billMsgArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
+            billMsg = [billMsgArray objectAtIndex:0];
+            invoId = [billMsgArray objectAtIndex:1];
+            headTag = [billMsgArray objectAtIndex:2];
+            billManager.editOrAddBill = YES;
             billManager.naviTitle = @"编辑发票";
+
         }
+ 
         
         billManager.tfContent = billMsg;
         billManager.invoiceid = invoId;

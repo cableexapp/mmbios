@@ -67,6 +67,8 @@
     int addBtnSection;
     
     UIButton *payBtn;
+    
+    NSMutableArray *shopIdArray;
 }
 @end
 
@@ -169,9 +171,23 @@
     return self;
 }
 
+
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if(memberid.length == 0)
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
+
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    //    NSLog(@"dic = %@",dicRespon);
+    NSLog(@"dic = %@",dicRespon);
     
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
@@ -189,10 +205,11 @@
             
             chooseGoodsArray = [[NSMutableArray alloc] init];
             
+//            shopIdArray = [[NSMutableArray alloc] init];
             
             for(int i=0;i<tempArray.count;i++)
             {
-                NSString *sShopName = [[tempArray objectAtIndex:i] sShopName];
+                NSString *sShopName = [[tempArray objectAtIndex:i] shopId];
                 if(i == 0)
                 {
                     [headLabelArray addObject:sShopName];
@@ -209,6 +226,8 @@
                     }
                 }
             }
+            
+            NSLog(@"headLabelArray = %@",headLabelArray);
             
             headBtnArray = [[NSMutableArray alloc] init];
             for(int i=0;i<headLabelArray.count;i++)
@@ -230,7 +249,7 @@
                 
                 for(B2CShopCarListData *data in tempArray)
                 {
-                    NSString *s = data.sShopName;
+                    NSString *s = data.shopId;
                     if([s isEqualToString:str])
                     {
                         [array addObject:data];
@@ -321,8 +340,6 @@
     }
     if(URLTag == URLShopCarsubtractTag)
     {
-        NSLog(@"%@",[dicRespon objectForKey:@"msg"]);
-        
         if(result == 0)
         {
             subtractNum = subtractNum +1;
@@ -342,6 +359,8 @@
             
             B2CShopCarListData *data =  [[dataArray objectAtIndex:subtractBtnSection] objectAtIndex:subtractBtnRow];
             data.num = [NSString stringWithFormat:@"%d",subtractNum];
+            
+            [self calculateTotalMoney];
             
             [tv reloadData];
         }
@@ -374,6 +393,8 @@
             B2CShopCarListData *data =  [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
             data.num = [NSString stringWithFormat:@"%d",addNum];
             
+            
+            [self calculateTotalMoney];
             [tv reloadData];
         }
         
@@ -388,6 +409,7 @@
         {
             [DCFStringUtil showNotice:msg];
             
+   
             for(int i=0;i<cellBtnArray.count;i++)
             {
                 NSMutableArray *arr = [cellBtnArray objectAtIndex:i];
@@ -455,7 +477,16 @@
                 }
             }
             
-            
+//            totalMoney = 0;
+//            for(int i=0;i<dataArray.count;i++)
+//            {
+//                NSString *money = [dataArray objectAtIndex:i];
+//                NSString *number = [[chooseGoodsArray objectAtIndex:i] num];
+//                
+//                total = total + [money floatValue]*[number floatValue];
+//                
+                [moneyLabel setText:[DCFCustomExtra notRounding:0.00 afterPoint:2]];
+//            }
             
             [buttomBtn setSelected:NO];
             [tv reloadData];
@@ -480,7 +511,7 @@
         
         if(result == 1)
         {
-            [DCFStringUtil showNotice:msg];
+//            [DCFStringUtil showNotice:msg];
             
             [self setHidesBottomBarWhenPushed:YES];
             UpOrderViewController *order = [[UpOrderViewController alloc] init];
@@ -503,7 +534,7 @@
 
 - (void) subtractBtnClick:(UIButton *) sender
 {
-    
+
     subtractBtnRow = sender.tag%1000;
     subtractBtnSection = sender.tag/1000;
     
@@ -539,8 +570,7 @@
         
         NSString *pushNum = [NSString stringWithFormat:@"%d",subtractNum];
         
-        NSString  *pushString = [NSString stringWithFormat:@"cartid=%@&itemnum=%@&token=%@",carListData.recordId,pushNum,token];
-        NSLog(@"%@",pushString);
+        NSString  *pushString = [NSString stringWithFormat:@"cartid=%@&itemnum=%@&token=%@",carListData.itemId,pushNum,token];
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarsubtractTag delegate:self];
         
@@ -555,31 +585,41 @@
     addBtnRow = sender.tag%1000;
     addBtnSection = sender.tag/1000;
     
+    UIButton *btn = [[cellBtnArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
+    if(btn.selected == NO)
+    {
+        [DCFStringUtil showNotice:@"请先选择商品"];
+        return;
+    }
+    else
+    {
+        B2CShopCarListData *carListData = [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
+        addNum = [carListData.num intValue];
+        addNum = addNum + 1;
+        
+        NSLog(@"number = %d",addNum);
+        
+        
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"UpdateShoppingCart",time];
+        
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UpdateShoppingCart.html?"];
+        
+        NSString *pushNum = [NSString stringWithFormat:@"%d",addNum];
+        
+        NSString  *pushString = [NSString stringWithFormat:@"cartid=%@&itemnum=%@&token=%@",carListData.itemId,pushNum,token];
+        NSLog(@"%@",pushString);
+        
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarAddTag delegate:self];
+        
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
     NSLog(@"row = %d  se = %d",addBtnRow,addBtnSection);
     
-    B2CShopCarListData *carListData = [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
-    addNum = [carListData.num intValue];
-    addNum = addNum + 1;
-    
-    NSLog(@"number = %d",addNum);
-    
-    
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"UpdateShoppingCart",time];
-    
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UpdateShoppingCart.html?"];
-    
-    NSString *pushNum = [NSString stringWithFormat:@"%d",addNum];
-    
-    NSString  *pushString = [NSString stringWithFormat:@"cartid=%@&itemnum=%@&token=%@",carListData.recordId,pushNum,token];
-    NSLog(@"%@",pushString);
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarAddTag delegate:self];
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+   
     
     //    [tv reloadData];
     //    NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:section];
@@ -788,11 +828,11 @@
             B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
             if(i == 0)
             {
-                items = [NSString stringWithFormat:@"%@,",data.colorId];
+                items = [NSString stringWithFormat:@"%@,",data.itemId];
             }
             else
             {
-                items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.colorId]];
+                items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
             }
         }
         items = [items substringWithRange:NSMakeRange(0, items.length-1)];
@@ -808,15 +848,16 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
     NSString *pushString = nil;
     
-    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    if(hasLogin == YES)
-    {
-        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[parameterArray lastObject],token,items];
-    }
-    else
-    {
-        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&coloritem=%@",[parameterArray lastObject],token,items];
-    }
+    
+//    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+//    if(hasLogin == YES)
+//    {
+    pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
+//    }
+//    else
+//    {
+//        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&coloritem=%@",[parameterArray lastObject],token,items];
+//    }
     
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
@@ -887,11 +928,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
                 B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
                 if(i == 0)
                 {
-                    items = [NSString stringWithFormat:@"%@,",data.recordId];
+                    items = [NSString stringWithFormat:@"%@,",data.itemId];
                 }
                 else
                 {
-                    items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.recordId]];
+                    items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
                 }
             }
             items = [items substringWithRange:NSMakeRange(0, items.length-1)];
@@ -908,7 +949,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
         
         
         NSString  *pushString = [NSString stringWithFormat:@"cartids=%@&token=%@",items,token];
-        NSLog(@"%@",pushString);
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarDeleteTag delegate:self];
         
@@ -1011,9 +1051,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     [view addSubview:[headBtnArray objectAtIndex:section]];
     
-    
+    NSString *title = [[[dataArray objectAtIndex:section] lastObject] sShopName];
     UILabel *sectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 200, 30)];
-    [sectionLabel setText:[headLabelArray objectAtIndex:section]];
+//    [sectionLabel setText:[headLabelArray objectAtIndex:section]];
+    [sectionLabel setText:title];
     [sectionLabel setTextAlignment:NSTextAlignmentLeft];
     [sectionLabel setTextColor:[UIColor blackColor]];
     [sectionLabel setFont:[UIFont systemFontOfSize:13]];
@@ -1277,7 +1318,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         B2CShopCarListData *carlist = [chooseGoodsArray objectAtIndex:i];
         NSString *price = carlist.price;
-        totalMoney = [price floatValue] + totalMoney;
+        totalMoney = [price floatValue]*[carlist.num intValue] + totalMoney;
     }
     
     

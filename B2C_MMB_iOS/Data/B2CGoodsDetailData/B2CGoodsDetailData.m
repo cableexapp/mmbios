@@ -27,7 +27,15 @@
     
     _items = [[NSArray alloc] initWithArray:[dictionary objectForKey:@"items"]];
     
-    NSDictionary *dic = [_items objectAtIndex:0];
+    NSDictionary *dic = nil;
+    if(_items.count == 0)
+    {
+        dic = [[NSDictionary alloc] init];
+    }
+    else
+    {
+        dic = [[NSDictionary alloc] initWithDictionary:[_items objectAtIndex:0]];
+    }
     
     _p1Path = [dic objectForKey:@"p1Path"];
     _p2Path = [dic objectForKey:@"p2Path"];

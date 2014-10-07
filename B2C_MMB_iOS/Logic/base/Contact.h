@@ -59,6 +59,8 @@ enum {
     URLSetDefaultMemberAddressTag,  //设置默认收货地址
     
     URLEditMemberAddressTag,    //编辑收货地址
+    
+    URLSubOrderTag,    //提交
 };
 typedef NSUInteger URLTag;
 

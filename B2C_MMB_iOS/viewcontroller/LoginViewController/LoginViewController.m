@@ -222,6 +222,8 @@
             [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"memberId"];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     }
 }

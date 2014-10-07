@@ -29,7 +29,7 @@
     
     NSString *invoicetype;
     
-    NSString *memberid;
+//    NSString *memberid;
     
     UIStoryboard *sb;
     
@@ -81,32 +81,33 @@
             
             if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
             {
-                NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+//                NSMutableArray *dataArray = [[NSMutableArray alloc] init];
                 NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
-                [dataArray addObject:arr];
-                [[NSUserDefaults standardUserDefaults] setObject:dataArray forKey:@"BillMsg"];
+//                [dataArray addObject:arr];
+                [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
             }
             else
             {
-                NSMutableArray *a = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
-                if(a && a.count != 0)
-                {
-                    for(NSMutableArray *localArray in a)
-                    {
-                        //判断该发票是否已经存在，如果存在就将其中信息替换成最新的
-                        if([[localArray objectAtIndex:1] isEqualToString:myInvoiceid])
-                        {
-                            [localArray replaceObjectAtIndex:0 withObject:tf.text];
-                            [localArray replaceObjectAtIndex:1 withObject:myInvoiceid];
-                            [localArray replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:_billHeadTag]];
-                        }
-                    }
-                }
-                else
-                {
+//                NSMutableArray *a = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
+//                if(a && a.count != 0)
+//                {
+//                    for(NSMutableArray *localArray in a)
+//                    {
+//                        //判断该发票是否已经存在，如果存在就将其中信息替换成最新的
+//                        if([[localArray objectAtIndex:1] isEqualToString:myInvoiceid])
+//                        {
+//                            [localArray replaceObjectAtIndex:0 withObject:tf.text];
+//                            [localArray replaceObjectAtIndex:1 withObject:myInvoiceid];
+//                            [localArray replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:_billHeadTag]];
+//                        }
+//                    }
+//                }
+//                else
+//                {
                     NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
-                    [a addObject:arr];
-                }
+//                    [a addObject:arr];
+                [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
+//                }
             }
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self.navigationController popViewControllerAnimated:YES];
@@ -127,39 +128,41 @@
         }
         else if (result == 1)
         {
-            [DCFStringUtil showNotice:msg];
-            
             NSString *myInvoiceid = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
             
             if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
             {
-                NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+//                NSMutableArray *dataArray = [[NSMutableArray alloc] init];
                 NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
-                [dataArray addObject:arr];
-                [[NSUserDefaults standardUserDefaults] setObject:dataArray forKey:@"BillMsg"];
+//                [dataArray addObject:arr];
+                [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
+
             }
             else
             {
-                NSMutableArray *a = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
-                if(a && a.count != 0)
-                {
-                    for(NSMutableArray *localArray in a)
-                    {
-                        //判断该发票是否已经存在，如果存在就将其中信息替换成最新的
-                        if([[localArray objectAtIndex:1] isEqualToString:myInvoiceid])
-                        {
-                            [localArray replaceObjectAtIndex:0 withObject:tf.text];
-                            [localArray replaceObjectAtIndex:1 withObject:myInvoiceid];
-                            [localArray replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:_billHeadTag]];
-                        }
-                    }
-                }
-                else
-                {
+//                NSMutableArray *a = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
+//                if(a && a.count != 0)
+//                {
+//                    for(NSMutableArray *localArray in a)
+//                    {
+//                        //判断该发票是否已经存在，如果存在就将其中信息替换成最新的
+//                        if([[localArray objectAtIndex:1] isEqualToString:myInvoiceid])
+//                        {
+//                            [localArray replaceObjectAtIndex:0 withObject:tf.text];
+//                            [localArray replaceObjectAtIndex:1 withObject:myInvoiceid];
+//                            [localArray replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:_billHeadTag]];
+//                        }
+//                    }
+//                }
+//                else
+//                {
                     NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
-                    [a addObject:arr];
-                }
+                [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
+
+//                    [a addObject:arr];
+//                }
             }
+            
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             [self.navigationController popViewControllerAnimated:YES];
@@ -223,6 +226,20 @@
     }
 }
 
+
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if(memberid.length == 0)
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
+
 - (void) sure:(UIButton *) sender
 {
     
@@ -259,15 +276,7 @@
             {
                 invoicetype = @"2";
             }
-            
-            memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-            
-            if(memberid.length == 0)
-            {
-                LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-                [self presentViewController:loginNavi animated:YES completion:nil];
-                
-            }
+      
             
             NSString *time = [DCFCustomExtra getFirstRunTime];
 #pragma mark - 当editOrAddBill为0的时候表示新增发票，为1的时候表示编辑发票
@@ -279,8 +288,7 @@
                 NSString *pushString = nil;
                 
                 
-                pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&invoicename=%@&invoicetype=%@",memberid,token,tf.text,invoicetype];
-                NSLog(@"%@",pushString);
+                pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&invoicename=%@&invoicetype=%@",[self getMemberId],token,tf.text,invoicetype];
                 
                 conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddInvoiceTag delegate:self];
                 NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/AddInvoice.html?"];
@@ -292,7 +300,6 @@
                 NSString *token = [DCFCustomExtra md5:string];
                 
                 NSString *pushString = [NSString stringWithFormat:@"token=%@&invoicename=%@&invoicetype=%@&invoiceid=%@",token,tf.text,invoicetype,_invoiceid];
-                NSLog(@"%@",pushString);
                 
                 conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditInvoiceTag delegate:self];
                 NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/EditInvoice.html?"];

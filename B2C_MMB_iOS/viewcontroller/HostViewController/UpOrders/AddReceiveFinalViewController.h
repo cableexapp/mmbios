@@ -12,6 +12,7 @@
 #import "DCFTopLabel.h"
 #import "DCFMyTextField.h"
 #import "DCFConnectionUtil.h"
+#import "B2CAddressData.h"
 
 @interface AddReceiveFinalViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate>
 {
@@ -25,6 +26,8 @@
     DCFConnectionUtil *conn;
     
     BOOL isEditOrAdd;   //判断是编辑还是新增地址,为0表示编辑，为1表示新增
+    
+    B2CAddressData *b2cAddressData;
 }
 //@property (strong,nonatomic) NSDictionary *myDic;
 @property (strong,nonatomic) NSString *provinceAndCityAndStreet;
@@ -35,6 +38,6 @@
 - (id) initWithAddress:(NSString *) address WithCode:(NSString *) code WithSwithStatus:(BOOL) status;
 
 //用于编辑地址
-- (id) initWithMsgDic:(NSDictionary *) dic;
+- (id) initWithAddressData:(B2CAddressData *) addressData;
 
 @end

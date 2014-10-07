@@ -10,12 +10,13 @@
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
 #import "LoginNaviViewController.h"
+#import "UpOrderViewController.h"
 
 @implementation AddReceiveFinalViewController
 {
     NSMutableArray *dataArray;
     NSString *finalAddress;
-    UISwitch *swith;
+//    UISwitch *swith;
     
     NSMutableArray *textFieldArray;
     
@@ -28,6 +29,8 @@
     DCFMyTextField *zipTf;
     
     DCFMyTextField *mobileTf;
+    
+    DCFMyTextField *fixedLineTelephone;   //固定电话
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,19 +42,17 @@
     return self;
 }
 
-- (id) initWithMsgDic:(NSDictionary *) dic
+- (id) initWithAddressData:(B2CAddressData *) addressData;
 {
     if(self = [super init])
     {
-        _msgDic = [[NSDictionary alloc] initWithDictionary:dic];
-        NSLog(@"_msgDic = %@",_msgDic);
+        b2cAddressData = addressData;
+
+        chooseCity = b2cAddressData.city;
+        chooseProvince = b2cAddressData.province;
+        chooseAddress = b2cAddressData.area;
         
-        
-        
-        chooseCode = [_msgDic objectForKey:@"code"];
-        NSLog(@"chooseCode = %@",chooseCode);
-        
-        swith.on = [[_msgDic objectForKey:@"swithStatus"] boolValue];
+//        swith.on = [[_msgDic objectForKey:@"swithStatus"] boolValue];
         
         DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"编辑收货地址"];
         self.navigationItem.titleView = top;
@@ -73,19 +74,7 @@
         
         isEditOrAdd = YES;
         
-        //        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-        //                             chooseProvince,@"province",
-        //                             chooseCity,@"city",
-        //                             chooseAddress,@"town",
-        //                             chooseAddressName,@"detailAddress",
-        //                             chooseCode,@"code",
-        //                             [NSNumber numberWithBool:swith.isOn],@"swithStatus",
-        //                             receiverTf.text,@"name",
-        //                             zipTf.text,@"zip",
-        //                             mobileTf.text,@"mobile",
-        //                             nil];
-        
-        swith.on = status;
+//        swith.on = status;
         
         self.navigationItem.titleView = top;
         
@@ -145,64 +134,61 @@
 {
     [self dismissKeyBoard];
     
+    receiverTf = [textFieldArray objectAtIndex:0];
+    
+    addressNameTf = [textFieldArray objectAtIndex:1];
+    chooseAddressName = addressNameTf.text;
+    
+    zipTf = [textFieldArray objectAtIndex:2];
+    
+    mobileTf = [textFieldArray objectAtIndex:3];
+    
+    fixedLineTelephone = [textFieldArray lastObject];
+    
+    if(receiverTf.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入收货人信息"];
+        return;
+    }
+    if(addressNameTf.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入详细地址"];
+        return;
+    }
+    //        if(zipTf.text.length == 0)
+    //        {
+    //            [DCFStringUtil showNotice:@"请输入邮编信息"];
+    //            return;
+    //        }
+    if(mobileTf.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入手机号码"];
+        return;
+    }
+    
+    BOOL validateTel = [DCFCustomExtra validateMobile:mobileTf.text];
+    if(validateTel == NO)
+    {
+        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+        return;
+    }
+    
     //新增
     if(isEditOrAdd == YES)
     {
         NSLog(@"新增");
+
+        NSString *memberid = [self getMemberId];
         
-        receiverTf = [textFieldArray objectAtIndex:0];
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
+        NSString *token = [DCFCustomExtra md5:string];
         
-        addressNameTf = [textFieldArray objectAtIndex:1];
-        chooseAddressName = addressNameTf.text;
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,fixedLineTelephone.text];
         
-        zipTf = [textFieldArray objectAtIndex:2];
-        
-        mobileTf = [textFieldArray lastObject];
-        
-        if(receiverTf.text.length == 0)
-        {
-            [DCFStringUtil showNotice:@"请输入收货人信息"];
-            return;
-        }
-        if(addressNameTf.text.length == 0)
-        {
-            [DCFStringUtil showNotice:@"请输入街道信息"];
-            return;
-        }
-        if(zipTf.text.length == 0)
-        {
-            [DCFStringUtil showNotice:@"请输入邮编信息"];
-            return;
-        }
-        if(mobileTf.text.length == 0)
-        {
-            [DCFStringUtil showNotice:@"请输入手机号码"];
-            return;
-        }
-        
-        DCFMyTextField *telTf = [textFieldArray lastObject];
-        BOOL validateTel = [DCFCustomExtra validateMobile:telTf.text];
-        if(validateTel == NO)
-        {
-            [DCFStringUtil showNotice:@"请输入正确的手机号码"];
-            return;
-        }
-        else
-        {
-            NSString *memberid = [self getMemberId];
-            
-            NSString *time = [DCFCustomExtra getFirstRunTime];
-            NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
-            NSString *token = [DCFCustomExtra md5:string];
-            
-            NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,@""];
-            
-            NSLog(@"%@",pushString);
-            
-            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
-            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
-            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        }
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
     //编辑
     else
@@ -215,9 +201,7 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"editMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text];
-        
-        NSLog(@"%@",pushString);
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&addressid=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,b2cAddressData.addressId];
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/editMemberAddress.html?"];
@@ -263,95 +247,94 @@
         else
         {
             [DCFStringUtil showNotice:msg];
-            //            [self.navigationController popViewControllerAnimated:YES];
+
             
-            [self setDefaultAddress];
+//            [self setDefaultAddress];
             
         }
     }
-    if(URLTag == URLSetDefaultMemberAddressTag)
-    {
-        NSLog(@"dic = %@",dicRespon);
-        
-        if(result == 1)
-        {
-            [DCFStringUtil showNotice:msg];
-            
-            if(![[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"])
-            {
-                NSMutableArray *receiveAddressArray = [[NSMutableArray alloc] init];
-                
-                NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:chooseProvince,@"province",
-                                     chooseCity,@"city",
-                                     chooseAddress,@"town",
-                                     chooseAddressName,@"detailAddress",
-                                     chooseCode,@"code",
-                                     [NSNumber numberWithBool:swith.isOn],@"swithStatus",
-                                     receiverTf.text,@"name",
-                                     zipTf.text,@"zip",
-                                     mobileTf.text,@"mobile",
-                                     nil];
-                
-                [receiveAddressArray addObject:dic];
-                
-                [[NSUserDefaults standardUserDefaults] setObject:receiveAddressArray forKey:@"receiveAddress"];
-            }
-            else
-            {
-                NSMutableArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"];
-                
-                NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                     chooseProvince,@"province",
-                                     chooseCity,@"city",
-                                     chooseAddress,@"town",
-                                     chooseAddressName,@"detailAddress",
-                                     chooseCode,@"code",
-                                     [NSNumber numberWithBool:swith.isOn],@"swithStatus",
-                                     receiverTf.text,@"name",
-                                     zipTf.text,@"zip",
-                                     mobileTf.text,@"mobile",
-                                     nil];
-                
-                
-                if(isEditOrAdd == 0)
-                {
-                    for(int i=0;i<array.count;i++)
-                    {
-                        NSDictionary *diction = [array objectAtIndex:i];
-                        
-                        
-                        NSString *code = [diction objectForKey:@"code"];
-                        if([code isEqualToString:chooseCode])
-                        {
-                            [array replaceObjectAtIndex:i withObject:dic];
-                        }
-                        
-                    }
-                    
-                }
-                else if (isEditOrAdd == 1)
-                {
-                    [array addObject:dic];
-                }
-                [[NSUserDefaults standardUserDefaults] setObject:array forKey:@"receiveAddress"];
-            }
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }
-        else if (result == 0)
-        {
-            if(msg.length == 0)
-            {
-                [DCFStringUtil showNotice:@"新增收货地址失败"];
-            }
-            else
-            {
-                [DCFStringUtil showNotice:msg];
-            }
-        }
-    }
+//    if(URLTag == URLSetDefaultMemberAddressTag)
+//    {
+//        NSLog(@"dic = %@",dicRespon);
+//        
+//        if(result == 1)
+//        {
+//            [DCFStringUtil showNotice:msg];
+//            
+//            if(![[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"])
+//            {
+//                NSMutableArray *receiveAddressArray = [[NSMutableArray alloc] init];
+//                
+//                NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:chooseProvince,@"province",
+//                                     chooseCity,@"city",
+//                                     chooseAddress,@"town",
+//                                     chooseAddressName,@"detailAddress",
+//                                     chooseCode,@"code",
+//                                     [NSNumber numberWithBool:swith.isOn],@"swithStatus",
+//                                     receiverTf.text,@"name",
+//                                     zipTf.text,@"zip",
+//                                     mobileTf.text,@"mobile",
+//                                     nil];
+//                
+//                [receiveAddressArray addObject:dic];
+//                
+//                [[NSUserDefaults standardUserDefaults] setObject:receiveAddressArray forKey:@"receiveAddress"];
+//            }
+//            else
+//            {
+//                NSMutableArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"];
+//                
+//                NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
+//                                     chooseProvince,@"province",
+//                                     chooseCity,@"city",
+//                                     chooseAddress,@"town",
+//                                     chooseAddressName,@"detailAddress",
+//                                     chooseCode,@"code",
+//                                     [NSNumber numberWithBool:swith.isOn],@"swithStatus",
+//                                     receiverTf.text,@"name",
+//                                     zipTf.text,@"zip",
+//                                     mobileTf.text,@"mobile",
+//                                     nil];
+//                
+//                
+//                if(isEditOrAdd == 0)
+//                {
+//                    for(int i=0;i<array.count;i++)
+//                    {
+//                        NSDictionary *diction = [array objectAtIndex:i];
+//                        
+//                        
+//                        NSString *code = [diction objectForKey:@"code"];
+//                        if([code isEqualToString:chooseCode])
+//                        {
+//                            [array replaceObjectAtIndex:i withObject:dic];
+//                        }
+//                        
+//                    }
+//                    
+//                }
+//                else if (isEditOrAdd == 1)
+//                {
+//                    [array addObject:dic];
+//                }
+//                [[NSUserDefaults standardUserDefaults] setObject:array forKey:@"receiveAddress"];
+//            }
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//        }
+//        else if (result == 0)
+//        {
+//            if(msg.length == 0)
+//            {
+//                [DCFStringUtil showNotice:@"新增收货地址失败"];
+//            }
+//            else
+//            {
+//                [DCFStringUtil showNotice:msg];
+//            }
+//        }
+//    }
     if(URLTag == URLEditMemberAddressTag)
     {
-        NSLog(@"dic = %@",dicRespon);
         if(result == 0)
         {
             if(msg.length == 0)
@@ -365,28 +348,28 @@
         }
         else if (result == 1)
         {
-            [DCFStringUtil showNotice:msg];
+            [DCFStringUtil showNotice:@"编辑成功"];
         }
     }
 }
 
-- (void) setDefaultAddress
-{
-    NSString *memberid = [self getMemberId];
-    
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"setDefaultMemberAddress",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&addressid=%@&status=%@",memberid,token,chooseCode,[NSString stringWithFormat:@"%d",swith.on]];
-    
-    NSLog(@"%@",pushString);
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSetDefaultMemberAddressTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/setDefaultMemberAddress.html?"];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
-}
+//- (void) setDefaultAddress
+//{
+//    NSString *memberid = [self getMemberId];
+//    
+//    NSString *time = [DCFCustomExtra getFirstRunTime];
+//    NSString *string = [NSString stringWithFormat:@"%@%@",@"setDefaultMemberAddress",time];
+//    NSString *token = [DCFCustomExtra md5:string];
+//    
+//    NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&addressid=%@&status=%@",memberid,token,chooseCode,[NSString stringWithFormat:@"%d",swith.on]];
+//    
+//    NSLog(@"%@",pushString);
+//    
+//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSetDefaultMemberAddressTag delegate:self];
+//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/setDefaultMemberAddress.html?"];
+//    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//    
+//}
 
 - (void) loadSubViews
 {
@@ -399,13 +382,14 @@
     
     UILabel *addressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(addressLabel_1.frame.origin.x + addressLabel_1.frame.size.width + 10, 20, 320-30-addressLabel_1.frame.size.width, 30)];
     
-    if([_msgDic.allKeys count] == 0 || !_msgDic)
+    if(!b2cAddressData)
     {
         [addressLabel_2 setText:finalAddress];
     }
     else
     {
-        [addressLabel_2 setText:[_msgDic objectForKey:@"province"]];
+        NSString *str = [NSString stringWithFormat:@"%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area];
+        [addressLabel_2 setText:str];
     }
     [addressLabel_2 setTextAlignment:NSTextAlignmentCenter];
     [addressLabel_2 setFont:[UIFont systemFontOfSize:13]];
@@ -416,7 +400,7 @@
     
     CGSize s1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"手机号码" WithSize:CGSizeMake(MAXFLOAT, 30)];
     
-    for(int i=0;i<4;i++)
+    for(int i=0;i<5;i++)
     {
         UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70+50*i, s1.width, 30)];
         [firstLabel setFont:[UIFont systemFontOfSize:13]];
@@ -426,7 +410,7 @@
                 [firstLabel setText:@"收货人"];
                 break;
             case 1:
-                [firstLabel setText:@"街道"];
+                [firstLabel setText:@"详细地址"];
                 break;
             case 2:
                 [firstLabel setText:@"邮编"];
@@ -434,6 +418,8 @@
             case 3:
                 [firstLabel setText:@"手机号码"];
                 break;
+            case 4:
+                [firstLabel setText:@"固定电话"];
             default:
                 break;
         }
@@ -444,10 +430,18 @@
         [tf setTag:i];
         if(i < 3)
         {
+            if(i == 2)
+            {
+                [tf setPlaceholder:@"选填"];
+            }
             [tf setReturnKeyType:UIReturnKeyNext];
         }
         else
         {
+            if(i == 4)
+            {
+                [tf setPlaceholder:@"选填，电话的格式：区号-电话号码-分机"];
+            }
             [tf setReturnKeyType:UIReturnKeyDone];
         }
         [self.view addSubview:tf];
@@ -455,7 +449,7 @@
         
         if(i == 0)
         {
-            if(!_msgDic || [[_msgDic allKeys] count] == 0)
+            if(!b2cAddressData)
             {
                 
             }
@@ -466,7 +460,7 @@
         }
         if(i == 1)
         {
-            if(!_msgDic || [[_msgDic allKeys] count] == 0)
+            if(!b2cAddressData)
             {
                 
             }
@@ -478,7 +472,7 @@
         if(i == 2)
         {
             [tf setKeyboardType:UIKeyboardTypeNumberPad];
-            if(!_msgDic || [[_msgDic allKeys] count] == 0)
+            if(!b2cAddressData)
             {
                 
             }
@@ -490,7 +484,7 @@
         if(i == 3)
         {
             [tf setKeyboardType:UIKeyboardTypeNumberPad];
-            if(!_msgDic || [[_msgDic allKeys] count] == 0)
+            if(!b2cAddressData)
             {
                 
             }
@@ -499,22 +493,34 @@
                 [tf setText:[_msgDic objectForKey:@"tel"]];
             }
         }
-        
-        
-        if(i == 3)
+        if(i == 4)
         {
-            UILabel *pretermissionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, tf.frame.origin.y + tf.frame.size.height + 20, 100, 30)];
-            [pretermissionLabel setText:@"是否为默认"];
-            [pretermissionLabel setTextAlignment:NSTextAlignmentLeft];
-            [pretermissionLabel setFont:[UIFont systemFontOfSize:13]];
-            [self.view addSubview:pretermissionLabel];
-            
-            swith = [[UISwitch alloc] initWithFrame:CGRectMake(pretermissionLabel.frame.origin.x + pretermissionLabel.frame.size.width + 20, pretermissionLabel.frame.origin.y, 40, 30)];
-            [swith setUserInteractionEnabled:YES];
-            [swith setOn:YES];
-            [swith addTarget:self action:@selector(swithChange:) forControlEvents:UIControlEventValueChanged];
-            [self.view addSubview:swith];
+//            [tf setKeyboardType:UIKeyboardTypeNumberPad];
+//            if(!_msgDic || [[_msgDic allKeys] count] == 0)
+//            {
+//                
+//            }
+//            else
+//            {
+//                [tf setText:[_msgDic objectForKey:@"tel"]];
+//            }
         }
+        
+        
+//        if(i == 3)
+//        {
+//            UILabel *pretermissionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, tf.frame.origin.y + tf.frame.size.height + 20, 100, 30)];
+//            [pretermissionLabel setText:@"是否为默认"];
+//            [pretermissionLabel setTextAlignment:NSTextAlignmentLeft];
+//            [pretermissionLabel setFont:[UIFont systemFontOfSize:13]];
+//            [self.view addSubview:pretermissionLabel];
+//            
+//            swith = [[UISwitch alloc] initWithFrame:CGRectMake(pretermissionLabel.frame.origin.x + pretermissionLabel.frame.size.width + 20, pretermissionLabel.frame.origin.y, 40, 30)];
+//            [swith setUserInteractionEnabled:YES];
+//            [swith setOn:YES];
+//            [swith addTarget:self action:@selector(swithChange:) forControlEvents:UIControlEventValueChanged];
+//            [self.view addSubview:swith];
+//        }
     }
 }
 
@@ -540,7 +546,7 @@
     [textField resignFirstResponder];
     if(tag < textFieldArray.count)
     {
-        if(tag == 3)
+        if(tag == 4)
         {
             //            DCFMyTextField *tf = [textFieldArray lastObject];
             //            [tf resignFirstResponder];
@@ -560,14 +566,20 @@
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
     
-    //    if(ScreenHeight <= 500)
-    //    {
-    if(textField.tag == 2 || textField.tag == 3)
+ 
+    if(textField.tag == 2 || textField.tag == 3 || textField.tag == 4)
     {
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.3];
         [UIView setAnimationDelegate:self];
-        [self.view setFrame:CGRectMake(0, -40, 320, ScreenHeight)];
+        if(ScreenHeight <= 500)
+        {
+            [self.view setFrame:CGRectMake(0, -40, 320, ScreenHeight)];
+        }
+        else
+        {
+            [self.view setFrame:CGRectMake(0, 0, 320, ScreenHeight)];
+        }
         [UIView commitAnimations];
     }
     //        if()

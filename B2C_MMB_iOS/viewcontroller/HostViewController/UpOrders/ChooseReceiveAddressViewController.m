@@ -11,6 +11,7 @@
 #import "AddReceiveAddressViewController.h"
 #import "AddReceiveFinalViewController.h"
 #import "DCFChenMoreCell.h"
+#import "B2CAddressData.h"
 
 @interface ChooseReceiveAddressViewController ()
 {
@@ -39,7 +40,6 @@
     if(self = [super init])
     {
         dataArray = [[NSMutableArray alloc] initWithArray:arr];
-        NSLog(@"dataArray = %@",dataArray);
         
         if(dataArray.count == 0)
         {
@@ -187,7 +187,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(dataArray.count == 0)
+    if(dataArray.count == 0 || !dataArray)
     {
         return 1;
     }
@@ -202,7 +202,8 @@
     }
     else
     {
-        NSString *address = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"address"];
+        B2CAddressData *addressData = [dataArray objectAtIndex:indexPath.row];
+        NSString *address = addressData.addressName;
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
         //    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 270, size_3.height)];
         //    [addressLabel setText:address];
@@ -236,7 +237,9 @@
     }
     else
     {
-        NSString *name = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+        B2CAddressData *addressData = [dataArray objectAtIndex:indexPath.row];
+
+        NSString *name = addressData.receiver;
         CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
         [nameLabel setText:name];
@@ -244,7 +247,7 @@
         [nameLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:nameLabel];
         
-        NSString *tel = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"tel"];
+        NSString *tel = addressData.tel;
         CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
         UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-50-size_2.width, 5, size_2.width, 30)];
         [telLabel setTextAlignment:NSTextAlignmentRight];
@@ -252,13 +255,17 @@
         [telLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:telLabel];
         
-        NSString *province = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"province"];
+        NSString *province = addressData.province;
+        NSString *city = addressData.city;
+        NSString *area = addressData.area;
+        NSString *str = [NSString stringWithFormat:@"%@%@%@",province,city,area];
         UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height, 270, 30)];
-        [provinceLabel setText:province];
+        [provinceLabel setText:str];
         [provinceLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:provinceLabel];
         
-        NSString *address = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"address"];
+        
+        NSString *address = addressData.addressName;
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
         UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
         [addressLabel setText:address];
@@ -291,13 +298,11 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"%d",indexPath.row);
-    
+{    
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
     if(btn.hidden == YES)
     {
-        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithMsgDic:[dataArray objectAtIndex:indexPath.row]];
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:[dataArray objectAtIndex:indexPath.row]];
         [self.navigationController pushViewController:final animated:YES];
         [self showButtomView];
     }

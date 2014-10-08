@@ -16,5 +16,11 @@
 {
     DCFConnectionUtil *conn;
     UITableView *tv;
+    
+    NSMutableArray *goodsListArray;
+    
+    float goodsMoney;
 }
+
+- (id) initWithDataArray:(NSMutableArray *) dataArray WithMoney:(float) money;
 @end

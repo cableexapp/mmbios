@@ -28,13 +28,14 @@
     _items = [[NSArray alloc] initWithArray:[dictionary objectForKey:@"items"]];
     
     NSDictionary *dic = nil;
-    if(_items.count == 0)
+    if([_items isKindOfClass:[NSNull class]] || _items.count == 0)
     {
         dic = [[NSDictionary alloc] init];
     }
     else
     {
-        dic = [[NSDictionary alloc] initWithDictionary:[_items objectAtIndex:0]];
+        dic = [_items objectAtIndex:0];
+        
     }
     
     _p1Path = [dic objectForKey:@"p1Path"];
@@ -144,7 +145,17 @@
     
     _shopId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopId"]];
     
-    _score = [NSString stringWithFormat:@"%@",[[dictionary objectForKey:@"score"] objectAtIndex:0]];
+//    _score = [NSString stringWithFormat:@"%@",[[dictionary objectForKey:@"score"] objectAtIndex:0]];
+    
+    NSArray *scoreArray = [dictionary objectForKey:@"score"];
+    if([scoreArray isKindOfClass:[NSNull class]] || scoreArray.count == 0)
+    {
+        _score = @"";
+    }
+    else
+    {
+        _score = [NSString stringWithFormat:@"%@",[scoreArray objectAtIndex:0]];
+    }
     
     _productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
 }

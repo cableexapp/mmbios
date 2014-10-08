@@ -40,19 +40,19 @@
 - (void)getResultFromUrlString:(NSString *)strUrl postBody:(NSString *)strPostBody method:(URLMethod)theMethod
 {
     strUrl = [strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    if(_isSpecialCharacter == YES)
-    {
+//    if(_isSpecialCharacter == YES)
+//    {
+//        strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//
+//
+//        NSString *str = [NSString stringWithFormat:@"%@20%@22%@%@22,%@0A%@20%@20%@22",@"%",@"%",self.specialString,@"%",@"%",@"%",@"%",@"%"];
+//        strPostBody = [strPostBody stringByReplacingOccurrencesOfString:@"%20%22%22,%0A%20%20%22" withString:str];
+//
+//    }
+//    else if (_isSpecialCharacter == NO)
+//    {
         strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-
-        NSString *str = [NSString stringWithFormat:@"%@20%@22%@%@22,%@0A%@20%@20%@22",@"%",@"%",self.specialString,@"%",@"%",@"%",@"%",@"%"];
-        strPostBody = [strPostBody stringByReplacingOccurrencesOfString:@"%20%22%22,%0A%20%20%22" withString:str];
-
-    }
-    else if (_isSpecialCharacter == NO)
-    {
-        strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    }
+//    }
     
     NSString *urlStr;
     if(strPostBody.length == 0 || [strPostBody isKindOfClass:[NSNull class]] || strPostBody == nil || strPostBody == NULL)

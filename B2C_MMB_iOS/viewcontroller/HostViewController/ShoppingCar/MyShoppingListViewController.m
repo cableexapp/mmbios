@@ -187,14 +187,14 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"dic = %@",dicRespon);
     
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
     if(URLTag == URLShopCarGoodsMsgTag)
     {
-        
+        NSLog(@"dic = %@",dicRespon);
+
         if(result == 1)
         {
             NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[B2CShopCarListData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -227,7 +227,6 @@
                 }
             }
             
-            NSLog(@"headLabelArray = %@",headLabelArray);
             
             headBtnArray = [[NSMutableArray alloc] init];
             for(int i=0;i<headLabelArray.count;i++)
@@ -514,7 +513,7 @@
 //            [DCFStringUtil showNotice:msg];
             
             [self setHidesBottomBarWhenPushed:YES];
-            UpOrderViewController *order = [[UpOrderViewController alloc] init];
+            UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney];
             [self.navigationController pushViewController:order animated:YES];
             
         }

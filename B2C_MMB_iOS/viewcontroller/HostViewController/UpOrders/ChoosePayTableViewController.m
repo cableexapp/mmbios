@@ -12,7 +12,10 @@
 #import "DCFTopLabel.h"
 
 @interface ChoosePayTableViewController ()
-
+{
+    NSString *myTotal;
+    NSString *myValue;
+}
 @end
 
 @implementation ChoosePayTableViewController
@@ -22,6 +25,16 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+- (id) initWithTotal:(NSString *) total WithValue:(NSString *) value
+{
+    if(self = [super init])
+    {
+        myTotal = [NSString stringWithFormat:@"%@",total];
+        myValue = [NSString stringWithFormat:@"%@",value];
     }
     return self;
 }
@@ -79,13 +92,13 @@
     [view addSubview:label_1];
     
     UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_1.frame.origin.y + label_1.frame.size.height, 250, 30)];
-    [label_2 setText:@"订单号:111111111111111111"];
+    [label_2 setText:[NSString stringWithFormat:@"订单号:%@",myValue]];
     [label_2 setTextAlignment:NSTextAlignmentLeft];
     [label_2 setFont:[UIFont systemFontOfSize:12]];
     [view addSubview:label_2];
     
     UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_2.frame.origin.y + label_2.frame.size.height, 250, 30)];
-    NSString *s = @"订单金额:¥  68998740.00";
+    NSString *s = [NSString stringWithFormat:@"订单金额:¥  %@",myTotal];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 8)];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(8, s.length-8)];

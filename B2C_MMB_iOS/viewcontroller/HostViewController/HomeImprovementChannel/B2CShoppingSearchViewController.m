@@ -103,7 +103,6 @@
 
 - (void) clear:(UIButton *) sender
 {
-    NSLog(@"清空");
 }
 
 - (void) sure:(UIButton *) sender
@@ -237,7 +236,6 @@
 -(void)headerClicked:(id)sender
 {
 	int sectionIndex = ((UIButton*)sender).tag;
-    NSLog(@"s = %d",sectionIndex);
     
 	UIButton *btn = (UIButton *)sender;
 	flag[sectionIndex] = !flag[sectionIndex];

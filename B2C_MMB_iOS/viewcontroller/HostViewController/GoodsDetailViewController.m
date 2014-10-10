@@ -19,9 +19,15 @@
 #import "B2CGoodsDetailData.h"
 #import "UIImageView+WebCache.h"
 #import "AppDelegate.h"
+#import "DCFChenMoreCell.h"
+#import "LoginNaviViewController.h"
+#import "UpOrderViewController.h"
+#import "B2CUpOrderData.h"
 
 @interface GoodsDetailViewController ()
 {
+    UIStoryboard *sb;
+    
     AppDelegate *app;
     
     NSMutableArray *cellBtnArray;
@@ -45,7 +51,17 @@
     NSString *itemid;
     NSString *num;
     
+    NSString *colorItemId;
+    
     NSArray *arr;   //传到购物车列表页的数组
+    
+    DCFChenMoreCell *moreCell;
+    
+    UIView *tableView;
+    
+    B2CUpOrderData *orderData;
+    
+    float chooseColorPrice;
 }
 @end
 
@@ -60,23 +76,70 @@
     return self;
 }
 
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    if(memberid.length == 0)
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
+
 - (void) btnClick:(UIButton *) sender
 {
     [self setHidesBottomBarWhenPushed:YES];
     int tag = [sender tag];
+    
+    if(num.length == 0 || [num intValue] == 0)
+    {
+        [DCFStringUtil showNotice:@"请选择数量"];
+        return;
+    }
+    if(itemid.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请选择颜色"];
+        return;
+    }
+    
     if(tag == 100)
     {
-#pragma mark - 购买
+#pragma mark - 立即购买
+
+        if(num.length == 0)
+        {
+            [DCFStringUtil showNotice:@"请选择数量"];
+            return;
+        }
+        if(chooseColorPrice <= 0.00)
+        {
+            [DCFStringUtil showNotice:@"请选择颜色"];
+            return;
+        }
         
-        AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
-        [self.navigationController pushViewController:ali animated:YES];
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
+        
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        //    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
+        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        
+
     }
     else
     {
         
 #pragma mark - 加入购物车
         [self setHidesBottomBarWhenPushed:YES];
-
+        
         NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
         NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
         
@@ -85,23 +148,13 @@
         NSString *token = [DCFCustomExtra md5:string];
         
         NSString *visitorid = [app getUdid];
-
+        
         NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
         
         
         BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-        NSLog(@"%d",hasLogin);
-
-        if(num.length == 0 || [num intValue] == 0)
-        {
-            [DCFStringUtil showNotice:@"请选择数量"];
-            return;
-        }
-        if(itemid.length == 0)
-        {
-            [DCFStringUtil showNotice:@"请选择颜色"];
-            return;
-        }
+        
+  
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
         
@@ -117,16 +170,16 @@
         {
             arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
             pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
-
+            
         }
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
-
+        
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         
-
+        
         
         num = @"0";
-
+        
     }
 }
 
@@ -201,7 +254,11 @@
     
     [self loadRequest];
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight - 50 - 64) style:0];
+    //    tableView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight-50-64)];
+    //    [tableView setBackgroundColor:[UIColor redColor]];
+    //    [self.view addSubview:tableView];
+    
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320,  ScreenHeight-50-64) style:0];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setBackgroundColor:[UIColor colorWithRed:229.0/255.0 green:227.0/255.0 blue:235.0/255.0 alpha:1.0]];
@@ -221,10 +278,10 @@
     
     cellBtnArray = [[NSMutableArray alloc] init];
     
-
     
-//    shop = [[MyShoppingListViewController alloc] init];
-
+    
+    //    shop = [[MyShoppingListViewController alloc] init];
+    
 }
 
 
@@ -236,10 +293,9 @@
     
     NSString *token = [DCFCustomExtra md5:string];
     
-//    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
-    NSLog(@"%@",_productid);
-    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"290",token];
-
+    //    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
+    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"144",token];
+    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -247,13 +303,11 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-
-    NSLog(@"%@",dicRespon);
+    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
-        NSLog(@"%@",dicRespon);
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 1)
@@ -276,7 +330,8 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
- 
+        NSLog(@"%@",dicRespon);
+        
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
@@ -296,8 +351,36 @@
                 [DCFStringUtil showNotice:@"加入购物车失败,请重试"];
             }
         }
-    
+        
     }
+    if(URLTag == URLDirectBuyTag)
+    {        
+        if(result == 1)
+        {
+            orderData = [[B2CUpOrderData alloc] initWithDataDic:dicRespon];
+            NSMutableArray *chooseGoodsArray = [[NSMutableArray alloc] initWithObjects:orderData, nil];
+
+            float totalMoney = [num intValue]*chooseColorPrice;
+//            UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData];
+            UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData WithTag:0];
+            [self.navigationController pushViewController:order animated:YES];
+
+//            AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
+//            [self.navigationController pushViewController:ali animated:YES];
+        }
+        else
+        {
+            if(msg.length == 0)
+            {
+                [DCFStringUtil showNotice:@"立即购买失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
+
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -307,6 +390,10 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if( [detailData.ctems isKindOfClass:[NSNull class]] ||  detailData.ctems.count == 0)
+    {
+        return 8;
+    }
     return 7 + detailData.ctems.count;
 }
 
@@ -332,11 +419,23 @@
             [label setFont:[UIFont systemFontOfSize:13]];
             return label.frame.size.height + 10;
         }
-
+        
     }
-    if(indexPath.row == 2 || indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 5 )
+    if(indexPath.row == 2 || indexPath.row == 3 ||indexPath.row == 5 )
     {
         return 44;
+    }
+    if(indexPath.row == 4)
+    {
+        NSString *discuss = detailData.score;
+        if(discuss.length == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return 44;
+        }
     }
     if(indexPath.row == 6)
     {
@@ -348,9 +447,9 @@
         {
             return 0;
         }
-
+        
     }
-   if (indexPath.row > 6)
+    if (indexPath.row > 6)
     {
         if(showCell == YES)
         {
@@ -358,38 +457,45 @@
         }
         else
         {
-            NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-7] objectForKey:@"judgementContent"];
-
-            if(s4.length == 0)
+            if([detailData.ctems isKindOfClass:[NSNull class]] || detailData.ctems.count == 0)
             {
-                return 0;
+                return 44;
             }
             else
             {
-                CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(320, MAXFLOAT)];
-                UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 30, 320, size_4.height)];
-                [contentLabel setText:s4];
-                [contentLabel setFont:[UIFont systemFontOfSize:12]];
-                [contentLabel setNumberOfLines:0];
-                return contentLabel.frame.size.height+30;
+                NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-7] objectForKey:@"judgementContent"];
+                
+                if(s4.length == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(320, MAXFLOAT)];
+                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, size_4.height)];
+                    [contentLabel setText:s4];
+                    [contentLabel setFont:[UIFont systemFontOfSize:12]];
+                    [contentLabel setNumberOfLines:0];
+                    return contentLabel.frame.size.height+30;
+                }
+                
             }
-  
+            
         }
-
+        
     }
     return 0;
 }
 
 -(void)EScrollerViewDidClicked:(NSUInteger)index
 {
-    NSLog(@"index--%lu",(unsigned long)index);
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [tableView setSeparatorStyle:0];
+    //    [tableView setSeparatorStyle:0];
     
-
+    
     
     NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
@@ -403,8 +509,7 @@
         {
             NSArray *imageArray = nil;
             
-            NSLog(@"%@",imageArray);
-    
+            
             
             if(detailData.picArray.count != 0)
             {
@@ -412,7 +517,7 @@
             }
             else
             {
-                imageArray = [[NSArray alloc] initWithObjects:@"sv_1.png",@"sv_2.png",@"sv_3.png", nil];
+                imageArray = [[NSArray alloc] initWithObjects:@"cabel.png",@"cabel.png",@"cabel.png", nil];
             }
             es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, 320, 160) ImageArray:imageArray TitleArray:nil WithTag:1];
             es.delegate = self;
@@ -436,7 +541,7 @@
             {
                 
             }
-          
+            
             
         }
         if(indexPath.row == 2)
@@ -471,7 +576,7 @@
             {
                 
             }
-     
+            
             
         }
         if(indexPath.row == 3)
@@ -518,7 +623,7 @@
                 
             }
             
-         
+            
             
         }
         if(indexPath.row == 5)
@@ -549,7 +654,7 @@
                     {
                         [btn setSelected:YES];
                     }
-                    [btn setTitle:@"商品评价(3)" forState:UIControlStateNormal];
+                    [btn setTitle:@"商品评价" forState:UIControlStateNormal];
                 }
                 [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                 [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
@@ -606,6 +711,18 @@
             }
             else
             {
+                if([detailData.ctems isKindOfClass:[NSNull class]] || detailData.ctems.count == 0)
+                {
+                    static NSString *moreCellId = @"moreCell";
+                    moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
+                    if(moreCell == nil)
+                    {
+                        moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+                        [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+                    }
+                    return moreCell;
+                }
+                
                 UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
                 [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
                 [cell.contentView addSubview:view];
@@ -651,7 +768,7 @@
                     [contentLabel setBackgroundColor:[UIColor whiteColor]];
                     [cell.contentView addSubview:contentLabel];
                 }
-     
+                
                 else
                 {
                     
@@ -660,11 +777,11 @@
             }
         }
     }
-//    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
-//        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-//    }
- 
-
+    //    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+    //        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    //    }
+    
+    
     return cell;
 }
 
@@ -678,12 +795,10 @@
 
 - (void) starViewTap:(UITapGestureRecognizer *) sender
 {
-    NSLog(@"starViewTap");
 }
 
 - (void) chatTap:(UITapGestureRecognizer *) sender
 {
-    NSLog(@"chatTap");
 }
 
 
@@ -691,9 +806,8 @@
 {
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
-    NSLog(@"tag = %d",[sender tag]);
     
-    if(btn.tag == 0)
+    if(btn.tag == 1000)
     {
         if(btn.selected == YES)
         {
@@ -705,7 +819,7 @@
             showCell = NO;
         }
     }
-    if(btn.tag == 1)
+    if(btn.tag == 1001)
     {
         if(btn.selected == YES)
         {
@@ -716,7 +830,7 @@
             showCell = YES;
         }
     }
-
+    
     for(UIButton *btn in cellBtnArray)
     {
         if(btn.tag == [sender tag])
@@ -728,6 +842,10 @@
             [btn setSelected:NO];
         }
     }
+    //    [tv setContentSize:CGSizeMake(320, MAXFLOAT)];
+    //    [tv setFrame:CGRectMake(0, 0, 320, ScreenHeight - 64)];
+    //    [tv setFrame:tableView.bounds];
+    //    NSLog(@"%f  %f",tv.frame.origin.y,tv.frame.size.height);
     [tv reloadData];
 }
 
@@ -735,21 +853,21 @@
 {
     if(indexPath.row == 3)
     {
-//        [self.view.window setBackgroundColor:[UIColor blackColor]];
-//        [self.view.window setAlpha:0.4];
+        //        [self.view.window setBackgroundColor:[UIColor blackColor]];
+        //        [self.view.window setAlpha:0.4];
         [self.view.window addSubview:[self loadChooseColorAndCount]];
-//        [self loadChooseColorAndCount];
+        //        [self loadChooseColorAndCount];
     }
 }
 
 #pragma mark - 加载选择颜色和数量界面
 - (UIView *) loadChooseColorAndCount
 {
-
+    
     
     if(detailData.coloritems.count == 0)
     {
-        
+        [DCFStringUtil showNotice:@"数据请求失败"];
     }
     else
     {
@@ -763,11 +881,11 @@
         [chooseColorAndCountView setBackgroundColor:[UIColor whiteColor]];
         
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
-//        [iv setImage:[UIImage imageNamed:@"cabel.png"]];
+        //        [iv setImage:[UIImage imageNamed:@"cabel.png"]];
         [iv setImage:cabelImage];
         [chooseColorAndCountView addSubview:iv];
         
-    
+        
         
         UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [closeBtn setFrame:CGRectMake(320-10-50, 30, 50, 50)];
@@ -787,7 +905,7 @@
         for(int i = 0;i < detailData.coloritems.count;i++)
         {
             NSString *colorName = [[detailData.coloritems objectAtIndex:i] objectForKey:@"colorName"];
-
+            
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             if(i >= 4)
             {
@@ -930,7 +1048,6 @@
     btn.selected = !btn.selected;
     
     int tag = btn.tag;
-    NSLog(@"tag = %d",tag);
     
     NSString *colorName = [[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorName"];
     NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorPrice"]];
@@ -970,18 +1087,19 @@
     }
     
     itemid = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"recordId"]];
+    
+    chooseColorPrice = [colorPrice floatValue];
 }
 
 - (void) chooseCountClick:(UIButton *) sender
 {
-    NSLog(@"chooseCountClick");
     
     int tag = [sender tag];
     
     UIButton *middleBtn = (UIButton *)[chooseCountBtnArray objectAtIndex:1];
     NSString *title = middleBtn.titleLabel.text;
-//    UIButton *leftBtn = (UIButton *)[chooseCountBtnArray objectAtIndex:0];
-//    UIButton *rightBtn = (UIButton *)[chooseCountBtnArray lastObject];
+    //    UIButton *leftBtn = (UIButton *)[chooseCountBtnArray objectAtIndex:0];
+    //    UIButton *rightBtn = (UIButton *)[chooseCountBtnArray lastObject];
     
     if(tag == 10)
     {
@@ -1036,14 +1154,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

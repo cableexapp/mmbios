@@ -169,8 +169,6 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    NSLog(@"%d",[[sender view] tag]);
-    
     [self setHidesBottomBarWhenPushed:YES];
 //    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:@""];
@@ -200,7 +198,6 @@
 
 - (void) textFieldDidEndEditing:(UITextField *)textField
 {
-    NSLog(@"123");
 }
 - (void)didReceiveMemoryWarning
 {

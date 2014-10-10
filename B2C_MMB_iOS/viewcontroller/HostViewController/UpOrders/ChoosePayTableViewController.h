@@ -10,4 +10,5 @@
 
 @interface ChoosePayTableViewController : UITableViewController
 
+- (id) initWithTotal:(NSString *) total WithValue:(NSString *) value;
 @end

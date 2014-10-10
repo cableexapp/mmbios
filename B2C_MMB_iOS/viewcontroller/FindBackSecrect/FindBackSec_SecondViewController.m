@@ -110,7 +110,7 @@
     [_tf_getValidate resignFirstResponder];
 }
 
-- (void) pickerView:(NSString *)title
+- (void) pickerView:(NSString *)title WithTag:(int)tag
 {
     [_getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     [_getValidateBtn setUserInteractionEnabled:YES];
@@ -221,7 +221,7 @@
 - (IBAction)chooseBtnClick:(id)sender
 {
     NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:@"已验证手机",@"已验证邮箱", nil];
-    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:arr];
+    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:arr WithTag:100];
     pickerView.delegate = self;
     [self.view.window setBackgroundColor:[UIColor blackColor]];
     [self.view.window addSubview:pickerView];

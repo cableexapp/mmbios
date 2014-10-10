@@ -316,7 +316,6 @@
 
 -(void)EScrollerViewDidClicked:(NSUInteger)index
 {
-    NSLog(@"index--%d",index);
 }
 
 - (void) timer:(NSTimer *) sender
@@ -326,7 +325,6 @@
 
 - (void) btnClick:(UIButton *) sender
 {
-    NSLog(@"tag = %d",[sender tag]);
     int tag = [sender tag];
     if(tag == 12)
     {
@@ -344,9 +342,7 @@
 
 
 - (void) tap:(UITapGestureRecognizer *) sender
-{
-    NSLog(@"tap = %d",[[sender view] tag]);
-    
+{    
   
 }
 

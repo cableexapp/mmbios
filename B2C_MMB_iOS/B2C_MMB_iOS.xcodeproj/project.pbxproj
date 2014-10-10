@@ -41,6 +41,7 @@
 		616A8E9519D4FA2A007E2526 /* BillMsgManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A8E9319D4FA2A007E2526 /* BillMsgManagerViewController.m */; };
 		616A8E9919D506CC007E2526 /* ChoosePayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A8E9819D506CC007E2526 /* ChoosePayTableViewController.m */; };
 		616A8E9C19D545BB007E2526 /* ShopHostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A8E9B19D545BB007E2526 /* ShopHostTableViewController.m */; };
+		616D7A0019E62DFC00D7A357 /* B2CUpOrderData.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D79FF19E62DFC00D7A357 /* B2CUpOrderData.m */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
 		6181A34E19CFC3F8000E2D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34D19CFC3F8000E2D14 /* UIKit.framework */; };
@@ -285,6 +286,8 @@
 		616A8E9819D506CC007E2526 /* ChoosePayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoosePayTableViewController.m; sourceTree = "<group>"; };
 		616A8E9A19D545BB007E2526 /* ShopHostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopHostTableViewController.h; sourceTree = "<group>"; };
 		616A8E9B19D545BB007E2526 /* ShopHostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopHostTableViewController.m; sourceTree = "<group>"; };
+		616D79FE19E62DFC00D7A357 /* B2CUpOrderData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CUpOrderData.h; sourceTree = "<group>"; };
+		616D79FF19E62DFC00D7A357 /* B2CUpOrderData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CUpOrderData.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6181A34919CFC3F8000E2D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -724,6 +727,15 @@
 			path = B2CShopCarListData;
 			sourceTree = "<group>";
 		};
+		616D79FD19E62DCD00D7A357 /* B2CUpOrderData */ = {
+			isa = PBXGroup;
+			children = (
+				616D79FE19E62DFC00D7A357 /* B2CUpOrderData.h */,
+				616D79FF19E62DFC00D7A357 /* B2CUpOrderData.m */,
+			);
+			path = B2CUpOrderData;
+			sourceTree = "<group>";
+		};
 		6181A33D19CFC3F8000E2D14 = {
 			isa = PBXGroup;
 			children = (
@@ -913,6 +925,7 @@
 		6181A3DF19CFC4C2000E2D14 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				616D79FD19E62DCD00D7A357 /* B2CUpOrderData */,
 				611C8C3D19E3BDA9000F4532 /* B2CAddressData */,
 				615B01AF19D7FFF20002592E /* B2CShopCarListData */,
 				612C909219D6560700430140 /* B2CGoodsDetailData */,
@@ -1548,6 +1561,7 @@
 				6181A36319CFC3F9000E2D14 /* ViewController.m in Sources */,
 				616A8E9C19D545BB007E2526 /* ShopHostTableViewController.m in Sources */,
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
+				616D7A0019E62DFC00D7A357 /* B2CUpOrderData.m in Sources */,
 				6181A4D219CFC4C2000E2D14 /* TestExecutor.m in Sources */,
 				6181A52919CFC4C2000E2D14 /* OneStepViewController.m in Sources */,
 				6181A4CE19CFC4C2000E2D14 /* DCFConnectionUtil.m in Sources */,

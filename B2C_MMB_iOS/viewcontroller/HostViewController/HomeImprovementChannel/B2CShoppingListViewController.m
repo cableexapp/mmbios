@@ -53,14 +53,12 @@
     if(self = [super init])
     {
         _use = string;
-        NSLog(@"_use = %@",_use);
     }
     return self;
 }
 
 - (void) searchBtnClick:(UIButton *) sender
 {
-    NSLog(@"筛选");
     
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
@@ -268,7 +266,6 @@
     
     NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d",use,_seq,@"",@"",@"",s,pageSize,intPage];
     
-    NSLog(@"%@",pushString);
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
     
@@ -290,7 +287,6 @@
         {
             
         }
-        NSLog(@"dic = %@",dicRespon);
         if([[dicRespon allKeys] count] == 0)
         {
             [moreCell noDataAnimation];

@@ -19,19 +19,41 @@
     return self;
 }
 
-- (id) initWithFrame:(CGRect)frame WithArray:(NSMutableArray *) array
+- (id) initWithFrame:(CGRect)frame WithArray:(NSMutableArray *) array WithTag:(int) tag
 {
     if(self = [super init])
     {
         self.frame = frame;
-
         
-        dataArray = [[NSMutableArray alloc] initWithArray:array];
-
+        pickTag = tag;
+        
+        
+        if(pickTag < 100)
+        {
+            dataArray = [[NSMutableArray alloc] initWithArray:[[array lastObject] objectForKey:@"children"]];
+        }
+        else
+        {
+            dataArray = [[NSMutableArray alloc] initWithArray:array];
+        }
         [self loadView];
     }
     return self;
 }
+
+//- (id) initWithFrame:(CGRect)frame WithArray:(NSMutableArray *) array
+//{
+//    if(self = [super init])
+//    {
+//        self.frame = frame;
+//
+//        
+//        dataArray = [[NSMutableArray alloc] initWithArray:array];
+//
+//        [self loadView];
+//    }
+//    return self;
+//}
 
 
 
@@ -69,17 +91,33 @@
 
 -(NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [dataArray count];
+    return dataArray.count;
 }
 
 - (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    title = [dataArray objectAtIndex:row];
+    if(pickTag < 100)
+    {
+        NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:row] objectForKey:@"name"]];
+        title = str;
+    }
+    else
+    {
+        title = [dataArray objectAtIndex:row];
+    }
 }
 
 - (NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *pickerTitle = [dataArray objectAtIndex:row];
+    NSString *pickerTitle = nil;
+    if(pickTag < 100)
+    {
+        pickerTitle  = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:row] objectForKey:@"name"]];
+    }
+    else
+    {
+        pickerTitle  = [dataArray objectAtIndex:row];
+    }
     return pickerTitle;
 }
 
@@ -90,14 +128,23 @@
 
 - (void) done
 {
-    if([self.delegate respondsToSelector:@selector(pickerView:)])
+    if([self.delegate respondsToSelector:@selector(pickerView:WithTag:)])
     {
+        //默认选中第一条数据
         if(title.length == 0)
         {
-            title = [dataArray objectAtIndex:0];
+            if(pickTag < 100)
+            {
+                title = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:0] objectForKey:@"name"]];
+            }
+            else
+            {
+                title = [dataArray objectAtIndex:0];
+            }
         }
 
-            [self.delegate pickerView:title];
+        
+        [self.delegate pickerView:title WithTag:pickTag];
         [self inAndOut];
     }
 

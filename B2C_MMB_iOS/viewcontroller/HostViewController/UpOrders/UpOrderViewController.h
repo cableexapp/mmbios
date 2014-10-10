@@ -11,16 +11,19 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFPickerView.h"
 #import "DCFConnectionUtil.h"
+#import "B2CUpOrderData.h"
 
-@interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickerView,ConnectionDelegate>
+@interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickerView,ConnectionDelegate,UITextFieldDelegate>
 {
     DCFConnectionUtil *conn;
     UITableView *tv;
     
-    NSMutableArray *goodsListArray;
+    NSMutableArray *goodsListArray;  //有几组商品
     
     float goodsMoney;
+    
+    B2CUpOrderData *b2cOrderData;
 }
 
-- (id) initWithDataArray:(NSMutableArray *) dataArray WithMoney:(float) money;
+- (id) initWithDataArray:(NSMutableArray *) dataArray WithMoney:(float) money WithOrderData:(B2CUpOrderData *) orderData WithTag:(int) tag;
 @end

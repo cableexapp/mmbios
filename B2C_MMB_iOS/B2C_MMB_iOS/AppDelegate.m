@@ -74,8 +74,7 @@
     if(URLTag == URLShopListTag)
     {
         
-        NSLog(@"dic = %@",dicRespon);
-        NSLog(@"msg = %@",[dicRespon objectForKey:@"message"]);
+
     }
 }
 
@@ -86,7 +85,6 @@
 {
     
    NSString *p = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
-    NSLog(@"p = %@",p);
 //    sqlite3 *dataBase;
 //    if(sqlite3_open([p UTF8String], &dataBase) != SQLITE_OK)
     
@@ -138,11 +136,9 @@
     }
     
     
-    NSLog(@"test");
 //    NSString *dbPath = [documentDirectory stringByAppendingPathComponent:@"MyDB.db"];
     
     NSString *dbPath = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
-    NSLog(@"%@",dbPath);
     
 //    self.db = [[FMDatabase alloc] initWithPath:dbPath];
     self.db = [FMDatabase databaseWithPath:dbPath];

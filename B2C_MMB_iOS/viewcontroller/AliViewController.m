@@ -227,7 +227,6 @@
     NSString* orderInfo = [self getOrderInfo:indexPath.row];
     NSString* signedStr = [self doRsa:orderInfo];
     
-    NSLog(@"%@",signedStr);
     
     NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
                              orderInfo, signedStr, @"RSA"];
@@ -281,7 +280,6 @@
 
 -(void)paymentResultDelegate:(NSString *)result
 {
-    NSLog(@"%@",result);
 }
 
 @end

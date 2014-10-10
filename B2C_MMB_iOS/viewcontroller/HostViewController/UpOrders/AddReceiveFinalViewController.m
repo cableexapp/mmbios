@@ -68,7 +68,6 @@
     {
         finalAddress = address;
         chooseCode = code;
-        NSLog(@"chooseCode = %@",chooseCode);
         
         DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
         
@@ -176,8 +175,6 @@
     //新增
     if(isEditOrAdd == YES)
     {
-        NSLog(@"新增");
-
         NSString *memberid = [self getMemberId];
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -193,8 +190,6 @@
     //编辑
     else
     {
-        NSLog(@"编辑");
-        
         NSString *memberid = [self getMemberId];
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -231,8 +226,6 @@
     
     if(URLTag == URLAddMemberAddressTag)
     {
-        NSLog(@"dic = %@",dicRespon);
-        
         if(result == 0)
         {
             if(msg.length == 0)
@@ -253,86 +246,6 @@
             
         }
     }
-//    if(URLTag == URLSetDefaultMemberAddressTag)
-//    {
-//        NSLog(@"dic = %@",dicRespon);
-//        
-//        if(result == 1)
-//        {
-//            [DCFStringUtil showNotice:msg];
-//            
-//            if(![[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"])
-//            {
-//                NSMutableArray *receiveAddressArray = [[NSMutableArray alloc] init];
-//                
-//                NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:chooseProvince,@"province",
-//                                     chooseCity,@"city",
-//                                     chooseAddress,@"town",
-//                                     chooseAddressName,@"detailAddress",
-//                                     chooseCode,@"code",
-//                                     [NSNumber numberWithBool:swith.isOn],@"swithStatus",
-//                                     receiverTf.text,@"name",
-//                                     zipTf.text,@"zip",
-//                                     mobileTf.text,@"mobile",
-//                                     nil];
-//                
-//                [receiveAddressArray addObject:dic];
-//                
-//                [[NSUserDefaults standardUserDefaults] setObject:receiveAddressArray forKey:@"receiveAddress"];
-//            }
-//            else
-//            {
-//                NSMutableArray *array = [[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"];
-//                
-//                NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                                     chooseProvince,@"province",
-//                                     chooseCity,@"city",
-//                                     chooseAddress,@"town",
-//                                     chooseAddressName,@"detailAddress",
-//                                     chooseCode,@"code",
-//                                     [NSNumber numberWithBool:swith.isOn],@"swithStatus",
-//                                     receiverTf.text,@"name",
-//                                     zipTf.text,@"zip",
-//                                     mobileTf.text,@"mobile",
-//                                     nil];
-//                
-//                
-//                if(isEditOrAdd == 0)
-//                {
-//                    for(int i=0;i<array.count;i++)
-//                    {
-//                        NSDictionary *diction = [array objectAtIndex:i];
-//                        
-//                        
-//                        NSString *code = [diction objectForKey:@"code"];
-//                        if([code isEqualToString:chooseCode])
-//                        {
-//                            [array replaceObjectAtIndex:i withObject:dic];
-//                        }
-//                        
-//                    }
-//                    
-//                }
-//                else if (isEditOrAdd == 1)
-//                {
-//                    [array addObject:dic];
-//                }
-//                [[NSUserDefaults standardUserDefaults] setObject:array forKey:@"receiveAddress"];
-//            }
-//            [[NSUserDefaults standardUserDefaults] synchronize];
-//        }
-//        else if (result == 0)
-//        {
-//            if(msg.length == 0)
-//            {
-//                [DCFStringUtil showNotice:@"新增收货地址失败"];
-//            }
-//            else
-//            {
-//                [DCFStringUtil showNotice:msg];
-//            }
-//        }
-//    }
     if(URLTag == URLEditMemberAddressTag)
     {
         if(result == 0)
@@ -348,7 +261,8 @@
         }
         else if (result == 1)
         {
-            [DCFStringUtil showNotice:@"编辑成功"];
+            [DCFStringUtil showNotice:msg];
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
 }
@@ -589,7 +503,6 @@
 - (void) swithChange:(UISwitch *) sender
 {
     BOOL flag = sender.on;
-    NSLog(@"flag = %d",flag);
 }
 
 - (void)didReceiveMemoryWarning

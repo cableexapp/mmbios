@@ -159,7 +159,6 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AddReceiveThirdViewController *third = [[AddReceiveThirdViewController alloc] initWithData:[dataArray objectAtIndex:indexPath.row] WithProvince:_province];
-    NSLog(@"_province=%@",_province);
     
     [self.navigationController pushViewController:third animated:YES];
 }

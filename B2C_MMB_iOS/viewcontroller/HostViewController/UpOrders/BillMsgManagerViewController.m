@@ -58,7 +58,6 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
-    NSLog(@"dic = %@",dicRespon);
     
     if(URLTag == URLAddInvoiceTag)
     {
@@ -77,10 +76,10 @@
         {
             [DCFStringUtil showNotice:msg];
             
-            NSString *myInvoiceid = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
             
             if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
             {
+                NSString *myInvoiceid = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
 //                NSMutableArray *dataArray = [[NSMutableArray alloc] init];
                 NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
 //                [dataArray addObject:arr];
@@ -88,23 +87,7 @@
             }
             else
             {
-//                NSMutableArray *a = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
-//                if(a && a.count != 0)
-//                {
-//                    for(NSMutableArray *localArray in a)
-//                    {
-//                        //判断该发票是否已经存在，如果存在就将其中信息替换成最新的
-//                        if([[localArray objectAtIndex:1] isEqualToString:myInvoiceid])
-//                        {
-//                            [localArray replaceObjectAtIndex:0 withObject:tf.text];
-//                            [localArray replaceObjectAtIndex:1 withObject:myInvoiceid];
-//                            [localArray replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:_billHeadTag]];
-//                        }
-//                    }
-//                }
-//                else
-//                {
-                    NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
+                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,_invoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
 //                    [a addObject:arr];
                 [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
 //                }
@@ -140,23 +123,7 @@
             }
             else
             {
-//                NSMutableArray *a = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
-//                if(a && a.count != 0)
-//                {
-//                    for(NSMutableArray *localArray in a)
-//                    {
-//                        //判断该发票是否已经存在，如果存在就将其中信息替换成最新的
-//                        if([[localArray objectAtIndex:1] isEqualToString:myInvoiceid])
-//                        {
-//                            [localArray replaceObjectAtIndex:0 withObject:tf.text];
-//                            [localArray replaceObjectAtIndex:1 withObject:myInvoiceid];
-//                            [localArray replaceObjectAtIndex:2 withObject:[NSNumber numberWithInt:_billHeadTag]];
-//                        }
-//                    }
-//                }
-//                else
-//                {
-                    NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
+                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,_invoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
                 [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
 
 //                    [a addObject:arr];

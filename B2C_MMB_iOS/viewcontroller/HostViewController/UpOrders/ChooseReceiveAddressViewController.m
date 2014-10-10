@@ -12,6 +12,8 @@
 #import "AddReceiveFinalViewController.h"
 #import "DCFChenMoreCell.h"
 #import "B2CAddressData.h"
+#import "LoginNaviViewController.h"
+#import "DCFStringUtil.h"
 
 @interface ChooseReceiveAddressViewController ()
 {
@@ -20,6 +22,12 @@
     UIButton *rightItemBtn;
     
     BOOL rightItemBtnHasClick;
+    
+    UIStoryboard *sb;
+    
+    NSMutableArray *addressListDataArray;
+    
+    DCFChenMoreCell *moreCell;
 }
 @end
 
@@ -35,49 +43,6 @@
 }
 
 
-- (id) initWithDataArray:(NSMutableArray *) arr
-{
-    if(self = [super init])
-    {
-        dataArray = [[NSMutableArray alloc] initWithArray:arr];
-        
-        if(dataArray.count == 0)
-        {
-            
-        }
-        else
-        {
-            //            for(int i = 0; i < dataArray.count; i++)
-            //            {
-            //                NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-            //                                     @"二货",@"name",
-            //                                     @"13922326230",@"tel",
-            //                                     @"北京市市辖区海淀区万寿路街道",@"province",
-            //                                     @"北太平路31号51幼儿园北京市海淀区北太平路31",@"address",nil];
-            //                [dataArray addObject:dic];
-            //            }
-            
-            cellBtnArray = [[NSMutableArray alloc] init];
-            
-            for(int i=0;i<dataArray.count;i++)
-            {
-                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                [btn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
-                [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
-                [btn setSelected:NO];
-                [btn setTag:i];
-                [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                [cellBtnArray addObject:btn];
-            }
-            
-        }
-        if(tv)
-        {
-            [tv reloadData];
-        }
-    }
-    return self;
-}
 
 - (IBAction)buttomBtnClick:(id)sender
 {
@@ -146,8 +111,81 @@
         }
     }
     
+ 
+    
+#pragma mark - 收货地址
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+    moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+    [moreCell startAnimation];
 }
 
+- (NSString *) getMemberId
+{
+    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if(memberid.length == 0)
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if (URLTag == URLReceiveAddressTag)
+    {
+        int result= [[dicRespon objectForKey:@"result"] intValue];
+        NSString *msg = [dicRespon objectForKey:@"msg"];
+        
+        if(result == 0)
+        {
+            if(msg.length != 0)
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:@"获取收货地址失败"];
+            }
+        }
+        else if (result == 1)
+        {
+            addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
+            
+            cellBtnArray = [[NSMutableArray alloc] init];
+            
+            for(int i=0;i<addressListDataArray.count;i++)
+            {
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [btn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
+                [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+                [btn setSelected:NO];
+                [btn setTag:i];
+                [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                [cellBtnArray addObject:btn];
+            }
+            
+        }
+        if(tv)
+        {
+            [tv reloadData];
+        }
+    }
+
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -170,8 +208,7 @@
     [self.buttomView setFrame:CGRectMake(0, self.tvBackView.frame.size.height, 320, 49)];
     
     
-    
-    
+
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height) style:0];
     [tv setDataSource:self];
@@ -187,22 +224,22 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(dataArray.count == 0 || !dataArray)
+    if(addressListDataArray.count == 0 || !addressListDataArray)
     {
         return 1;
     }
-    return dataArray.count;
+    return addressListDataArray.count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(dataArray.count == 0)
+    if(addressListDataArray.count == 0)
     {
         return 44;
     }
     else
     {
-        B2CAddressData *addressData = [dataArray objectAtIndex:indexPath.row];
+        B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
         NSString *address = addressData.addressName;
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
         //    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 270, size_3.height)];
@@ -229,15 +266,14 @@
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
     
-    if(indexPath.row == dataArray.count)
+    if(indexPath.row == addressListDataArray.count)
     {
-        DCFChenMoreCell *moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
         [moreCell noDataAnimation];
         return moreCell;
     }
     else
     {
-        B2CAddressData *addressData = [dataArray objectAtIndex:indexPath.row];
+        B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
 
         NSString *name = addressData.receiver;
         CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
@@ -302,7 +338,7 @@
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
     if(btn.hidden == YES)
     {
-        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:[dataArray objectAtIndex:indexPath.row]];
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:[addressListDataArray objectAtIndex:indexPath.row]];
         [self.navigationController pushViewController:final animated:YES];
         [self showButtomView];
     }

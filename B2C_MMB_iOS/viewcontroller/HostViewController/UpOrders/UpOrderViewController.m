@@ -17,6 +17,7 @@
 #import "B2CAddressData.h"
 #import "B2CShopCarListData.h"
 #import "UIImageView+WebCache.h"
+#import "DCFMyTextField.h"
 
 @interface UpOrderViewController ()
 {
@@ -24,14 +25,11 @@
     
     DCFPickerView *pickerView;
     
-    NSMutableArray *contentArray;
-    
-    NSString *sendMethod;
-    
     NSString *billMsg;
+    NSString *billId;  //发票id
     
     UIStoryboard *sb;
-
+    
     NSMutableArray *addressListDataArray;   //收货地址数组
     
     
@@ -40,7 +38,18 @@
     UILabel *totalMoneyLabel;
     
     int totalSection;
-//    NSMutableArray *totalMoneyArray;
+    
+    NSMutableArray *cellTextFieldArray;
+    
+    NSDictionary *addressDic;
+    
+    NSMutableArray *chooseSendMethodArray;
+    NSMutableArray *chooseSendTitleArray;
+    //    NSMutableArray *totalMoneyArray;
+    
+    int totalMoney;
+    
+    int myTag;
 }
 @end
 
@@ -55,51 +64,140 @@
     return self;
 }
 
-- (id) initWithDataArray:(NSMutableArray *) dataArray WithMoney:(float) money
+#pragma mark - tag为1表示从购物车列表进来，0表示从商品详情页点击立即购买进来
+- (id) initWithDataArray:(NSMutableArray *) dataArray WithMoney:(float) money WithOrderData:(B2CUpOrderData *) orderData WithTag:(int)tag
 {
     if(self = [super init])
     {
-//        goodsListArray = [[NSMutableArray alloc] initWithArray:dataArray];
-        goodsListArray = [[NSMutableArray alloc] init];
+        //        goodsListArray = [[NSMutableArray alloc] initWithArray:dataArray];
         goodsMoney = money;
-        
-        NSMutableArray *tempArray = [[NSMutableArray alloc] init];
-        for(int i=0;i<dataArray.count;i++)
-        {
-            B2CShopCarListData *listData = [dataArray objectAtIndex:i];
-            [tempArray addObject:listData.shopId];
-        }
-        
-        NSSet *set = [NSSet setWithArray:tempArray];
+        goodsListArray = [[NSMutableArray alloc] init];
 
+        myTag = tag;
         
-        for(int i=0;i<[[set allObjects] count];i++)
+        //收货地址
+        b2cOrderData = orderData;
+        if(b2cOrderData.addressArray.count == 0)
         {
-            NSMutableArray *arr = [[NSMutableArray alloc] init];
-            for(B2CShopCarListData *data in dataArray)
+            
+        }
+        else
+        {
+            for(NSDictionary *dic in b2cOrderData.addressArray)
             {
-                if([data.shopId isEqualToString:[[set allObjects] objectAtIndex:i]])
+                if([dic.allKeys count] == 0)
                 {
-                    [arr addObject:data];
+                    
+                }
+                else
+                {
+                    if([[dic objectForKey:@"isDefault"] isEqualToString:@"1"])
+                    {
+                        addressDic = [[NSDictionary alloc] initWithDictionary:dic];
+                    }
                 }
             }
-            [goodsListArray addObject:arr];
         }
         
-        totalSection = goodsListArray.count+3;
+
+        //运费
+        if(b2cOrderData.summariesArray.count == 0)
+        {
+            
+        }
+        else
+        {
+            chooseSendMethodArray = [[NSMutableArray alloc] init];
+            chooseSendTitleArray = [[NSMutableArray alloc] init];
+            
+            for(int i=0;i<b2cOrderData.summariesArray.count;i++)
+            {
+                NSDictionary *dic = [b2cOrderData.summariesArray objectAtIndex:i];
+                NSString *freightType = [dic objectForKey:@"freightType"];
+                
+                NSMutableArray *sendMethodArray = nil;
+                if([freightType isEqualToString:@"1"])
+                {
+                    sendMethodArray = [[NSMutableArray alloc] init];
+                }
+                else if ([freightType isEqualToString:@"2"])
+                {
+                    sendMethodArray = [[NSMutableArray alloc] initWithArray:[dic objectForKey:@"normalFreight"]];
+                }
+                else if ([freightType isEqualToString:@"3"])
+                {
+                    sendMethodArray = [[NSMutableArray alloc] initWithArray:[dic objectForKey:@"templateFreight"]];
+                }
+                else
+                {
+                    sendMethodArray = [[NSMutableArray alloc] initWithArray:[dic objectForKey:@"mixFreight"]];
+                }
+                [chooseSendMethodArray addObject:sendMethodArray];
+                [chooseSendTitleArray addObject:@""];
+            }
+        }
+    
         
-//        totalMoneyArray = [[NSMutableArray alloc] init];
+        NSMutableArray *tempArray = [[NSMutableArray alloc] init];
         
-//        for(int i=0; i<goodsListArray.count;i++)
-//        {
-//            B2CShopCarListData *data = [goodsListArray objectAtIndex:i];
-//            NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",data.num]];
-//            int money = [number intValue] * [data.price intValue];
-//            [totalMoneyArray addObject:[NSNumber numberWithInt:money]];
-//        }
+        //购物车进来
+        if(myTag == 1)
+        {
+
+            for(int i=0;i<dataArray.count;i++)
+            {
+                B2CShopCarListData *listData = [dataArray objectAtIndex:i];
+                [tempArray addObject:listData.shopId];
+            }
+            
+            NSSet *set = [NSSet setWithArray:tempArray];
+            
+            
+            for(int i=0;i<[[set allObjects] count];i++)
+            {
+                NSMutableArray *arr = [[NSMutableArray alloc] init];
+                for(B2CShopCarListData *data in dataArray)
+                {
+                    if([data.shopId isEqualToString:[[set allObjects] objectAtIndex:i]])
+                    {
+                        [arr addObject:data];
+                    }
+                }
+                [goodsListArray addObject:arr];
+            }
+            
+            totalSection = goodsListArray.count+3;
+            
+            cellTextFieldArray = [[NSMutableArray alloc] init];
+            for(int i=0;i<goodsListArray.count;i++)
+            {
+                DCFMyTextField *tf = [[DCFMyTextField alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+                [tf setDelegate:self];
+                [tf setReturnKeyType:UIReturnKeyDone];
+                [cellTextFieldArray addObject:tf];
+            }
+        }
+        //立即购买进来
+        else if (myTag == 0)
+        {
+            [goodsListArray addObject:dataArray];
+            totalSection = 4;
+            
+            cellTextFieldArray = [[NSMutableArray alloc] init];
+            for(int i=0;i<goodsListArray.count;i++)
+            {
+                DCFMyTextField *tf = [[DCFMyTextField alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+                [tf setDelegate:self];
+                [tf setReturnKeyType:UIReturnKeyDone];
+                [cellTextFieldArray addObject:tf];
+            }
+        }
+        NSLog(@"goodsListArray = %@",goodsListArray);
         
-        [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%f",money]];
+
+
         
+        [tv reloadData];
     }
     return self;
 }
@@ -117,58 +215,94 @@
 {
     //商铺数组
     NSMutableArray *shopArray = [[NSMutableArray alloc] init];
-
+    
     for(int i=0;i<goodsListArray.count;i++)
     {
-        NSString *logo = @"logo";
-        NSString *remark = @"测试";
-        NSString *shopId = [[[goodsListArray objectAtIndex:i] lastObject] shopId];
-        NSString *shopName = [[[goodsListArray objectAtIndex:i] lastObject] sShopName];
+        NSString *logo = [self getNumFromString:[chooseSendTitleArray objectAtIndex:i]];
+
+        NSString *shopId = nil;
+        NSString *shopName = nil;
         
         //商品数组
         NSMutableArray *goodsArray = [[NSMutableArray alloc] init];
         
-        for(int j=0;j<[[goodsListArray objectAtIndex:i] count];j++)
+        if(myTag == 1)
         {
-            //行（每个商铺里面有几个商品）
-            B2CShopCarListData *carListData = [[goodsListArray objectAtIndex:i] objectAtIndex:j];
+            shopId = [[[goodsListArray objectAtIndex:i] lastObject] shopId];
+            shopName = [[[goodsListArray objectAtIndex:i] lastObject] sShopName];
+            
+            for(int j=0;j<[[goodsListArray objectAtIndex:i] count];j++)
+            {
+                //行（每个商铺里面有几个商品）
+                B2CShopCarListData *carListData = [[goodsListArray objectAtIndex:i] objectAtIndex:j];
+                
+                //商品字典
+                NSDictionary *goodsDic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                          carListData.colorId,@"colorId",
+                                          carListData.colorName,@"colorName",
+                                          carListData.recordId,@"recordId",
+                                          @"",@"createDate",
+                                          carListData.isAvaliable,@"isAvaliable",
+                                          carListData.itemId,@"itemId",
+                                          carListData.isDelete,@"isDelete",
+                                          carListData.num,@"count",
+                                          carListData.productItemPic,@"p1Path",
+                                          carListData.productId,@"productId",
+                                          carListData.productItemSku,@"productName",
+                                          carListData.price,@"productPrice",
+                                          carListData.productItmeTitle,@"productTitle",
+                                          nil];
+                
+                [goodsArray addObject:goodsDic];
+            }
+        }
+        else
+        {
+            NSArray *itemArray = [[[[[goodsListArray lastObject] lastObject] summariesArray] lastObject] objectForKey:@"items"];
+            NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemArray lastObject]];
+            
+            NSLog(@"itemArray = %@",itemArray);
+            
+            shopId = [[itemArray lastObject] objectForKey:@"shopId"];
+            shopName = [[itemArray lastObject] objectForKey:@"sShopName"];
             
             //商品字典
             NSDictionary *goodsDic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                               carListData.colorId,@"colorId",
-                               carListData.colorName,@"colorName",
-                               carListData.recordId,@"recordId",
-                               @"",@"createDate",
-                               carListData.isAvaliable,@"isAvaliable",
-                               carListData.itemId,@"itemId",
-                               carListData.isDelete,@"isDelete",
-                               carListData.num,@"count",
-                               carListData.productItemPic,@"p1Path",
-                               carListData.productId,@"productId",
-                               carListData.productItemSku,@"productName",
-                               carListData.price,@"productPrice",
-                               carListData.productItmeTitle,@"productTitle",
-                               nil];
+                                      [itemDic objectForKey:@"recordId"],@"colorId",
+                                      [itemDic objectForKey:@"colorName"],@"colorName",
+                                      [itemDic objectForKey:@"recordId"],@"recordId",
+                                      @"",@"createDate",
+                                      [itemDic objectForKey:@"isAvaliable"],@"isAvaliable",
+                                      [itemDic objectForKey:@"recordId"],@"itemId",
+                                      [itemDic objectForKey:@"isDelete"],@"isDelete",
+                                      [itemDic objectForKey:@"num"],@"count",
+                                      [itemDic objectForKey:@"productItemPic"],@"p1Path",
+                                      [itemDic objectForKey:@"productId"],@"productId",
+                                      [itemDic objectForKey:@"productItemSku"],@"productName",
+                                      [itemDic objectForKey:@"price"],@"productPrice",
+                                      [itemDic objectForKey:@"productItmeTitle"],@"productTitle",
+                                      nil];
             
             [goodsArray addObject:goodsDic];
         }
+
+        DCFMyTextField *tf = [cellTextFieldArray objectAtIndex:i];
         NSDictionary *shopDic  = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                     goodsArray,@"goodsList",
-                                     logo,@"logostocsPrice",
-                                     remark,@"remark",
-                                     shopId,@"shopId",
-                                     shopName,@"shopName",
-                                     nil];
+                                  goodsArray,@"goodsList",
+                                  logo,@"logostocsPrice",
+                                  tf.text,@"remark",
+                                  shopId,@"shopId",
+                                  shopName,@"shopName",
+                                  nil];
         [shopArray addObject:shopDic];
     }
-    NSLog(@"%@",shopArray);
     
     
     NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
                              shopArray,@"shopList",
-                             @"123",@"address",
-                             @"185",@"invonice",
-                             @"5128",@"memberid",
+                             [addressDic objectForKey:@"addressId"],@"address",
+                             billId,@"invonice",
+                             [self getMemberId],@"memberid",
                              nil];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -182,8 +316,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/SubOrder.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-//    ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] init];
-//    [self.navigationController pushViewController:pay animated:YES];
+
 }
 
 
@@ -206,39 +339,22 @@
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
-    NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     
     
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
     {
         billMsg = @"不需要发票";
+        billId = 0;
     }
     else
     {
         NSMutableArray *billMsgArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
         billMsg = [billMsgArray objectAtIndex:0];
+        billId = [billMsgArray objectAtIndex:1];
+
     }
-    NSLog(@"billMsg=%@",billMsg);
-    
-//    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"])
-//    {
-//        addressDic = [[NSDictionary alloc] init];
-//    }
-//    else
-//    {
-//        addressArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"receiveAddress"];
-//        addressDic = [addressArray lastObject];
-//    }
     
     if(tv)
     {
@@ -262,36 +378,12 @@
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
-    if (URLTag == URLReceiveAddressTag)
-    {
-        NSLog(@"%@",dicRespon);
-        
-        if(result == 0)
-        {
-            if(msg.length != 0)
-            {
-                [DCFStringUtil showNotice:msg];
-            }
-            else
-            {
-                [DCFStringUtil showNotice:@"获取收货地址失败"];
-            }
-        }
-        else if (result == 1)
-        {
-            [DCFStringUtil showNotice:msg];
-            
-            addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
-            
-            [tv reloadData];
-        }
-    }
     if(URLTag == URLSubOrderTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
-            
+            ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] initWithTotal:[dicRespon objectForKey:@"total"] WithValue:[dicRespon objectForKey:@"value"]];
+            [self.navigationController pushViewController:pay animated:YES];
         }
         else
         {
@@ -312,12 +404,7 @@
     [super viewDidLoad];
     
     [self pushAndPopStyle];
-    
-    
-    
-    contentArray = [[NSMutableArray alloc] initWithObjects:@"快递:¥8.00",@"平邮:¥5.00",@"物流:¥7.00 ", nil];
-    sendMethod = [contentArray objectAtIndex:0];
-    
+
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单提交"];
     self.navigationItem.titleView = top;
     
@@ -333,7 +420,7 @@
     [self.view addSubview:buttomView];
     
     totalMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 50)];
-    [totalMoneyLabel setText:@"总计(连运费):¥0.00"];
+    [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra notRounding:goodsMoney afterPoint:2]]];
     [totalMoneyLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [totalMoneyLabel setTextColor:[UIColor blackColor]];
     [totalMoneyLabel setBackgroundColor:[UIColor clearColor]];
@@ -359,20 +446,24 @@
 {
     if(section == 0)
     {
-        if(!addressListDataArray || addressListDataArray.count == 0)
-        {
+//        if(!b2cOrderData || b2cOrderData.addressArray == 0)
+//        {
             return 1;
-        }
-        else
-        {
-            return addressListDataArray.count;
-        }
+//        }
+//        else
+//        {
+//            return addressListDataArray.count;
+//        }
     }
     if(section == 1)
     {
         return 1;
     }
-    if(section >= 2 && section < totalSection-1)
+    if(section == 2)
+    {
+        return 0;
+    }
+    if(section > 2 && section <= totalSection-1)
     {
         if(!goodsListArray || goodsListArray.count == 0)
         {
@@ -380,15 +471,22 @@
         }
         else
         {
-            return [[goodsListArray objectAtIndex:section-2] count];
+            if(myTag == 1)
+            {
+                return [[goodsListArray objectAtIndex:section-3] count] + 2;
+            }
+            else
+            {
+                return 3;
+            }
         }
     }
-    return 2;
+    return 0;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section >= 2)
+    if(section > 2)
     {
         return 0;
     }
@@ -400,61 +498,90 @@
 {
     if(indexPath.section == 0)
     {
-//        if(indexPath.row == 0)
-//        {
-            if(!addressListDataArray || addressListDataArray.count == 0)
+
+        if(!addressDic || [addressDic allKeys].count == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            NSString *s1 = [addressDic objectForKey:@"province"];
+            NSString *s2 = [addressDic objectForKey:@"city"];
+            NSString *s3 = [addressDic objectForKey:@"area"];
+            NSString *s4 = [addressDic objectForKey:@"addressName"];
+            NSString *str = [NSString stringWithFormat:@"%@%@%@\n%@",s1,s2,s3,s4];
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
+   
+            return 30+size.height + 10;
+            
+        }
+        //        }
+    }
+    if(indexPath.section == 2)
+    {
+        return 0;
+    }
+    if(indexPath.section > 2 && indexPath.section <= totalSection -1)
+    {
+        if(myTag == 1)
+        {
+            if(indexPath.row < [[goodsListArray objectAtIndex:indexPath.section-3] count])
+            {
+                NSString *str = [[[goodsListArray objectAtIndex:indexPath.section-3] objectAtIndex:indexPath.row] productItmeTitle];
+                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
+                
+                
+                CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"¥500" WithSize:CGSizeMake(MAXFLOAT, 20)];
+                
+                
+                CGFloat height = size_3.height+size_4.height;
+                if(height <= 40)
+                {
+                    return 85;
+                }
+                else
+                {
+                    return 35+height+10;
+                    
+                }
+            }
+            else
             {
                 return 44;
-            }
-            else
-            {
-                NSString *s1 = [[addressListDataArray objectAtIndex:indexPath.row] province];
-                NSString  *s2 = [[addressListDataArray objectAtIndex:indexPath.row] city];
-                NSString *s3 = [[addressListDataArray objectAtIndex:indexPath.row] area];
-                NSString *s4 = [[addressListDataArray objectAtIndex:indexPath.row] addressName];
-                NSString *str = [NSString stringWithFormat:@"%@%@%@\n%@",s1,s2,s3,s4];
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
-                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 35, 260, size.height)];
-                [addressLabel setText:str];
-                [addressLabel setFont:[UIFont systemFontOfSize:12]];
-                [addressLabel setNumberOfLines:0];
-                
-                
-                return 30+size.height + 10;
-                
-            }
-//        }
-    }
-    if(indexPath.section >= 2 && indexPath.section < totalSection -1)
-    {
-        if(indexPath.row < [[goodsListArray objectAtIndex:indexPath.section-2] count])
-        {
-//            NSString *str = @"［五月团购］远东电缆BV2.5平方搭配套餐300米";
-//            CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
-            NSString *str = [[[goodsListArray objectAtIndex:indexPath.section-2] objectAtIndex:indexPath.row] productItmeTitle];
-            CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
-//            UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, iv.frame.origin.y, 220, size.height)];
-//            [titleLabel setText:str];
-//            [titleLabel setFont:[UIFont systemFontOfSize:12]];
-            
-            CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"¥500" WithSize:CGSizeMake(MAXFLOAT, 20)];
-            
-            
-            CGFloat height = size_3.height+size_4.height;
-            if(height <= 40)
-            {
-                return 85;
-            }
-            else
-            {
-                return 35+height+10;
-                
             }
         }
         else
         {
-            return 44;
+            if(indexPath.row == 0)
+            {
+
+                NSArray *itemArray = [[[[[goodsListArray lastObject] lastObject] summariesArray] lastObject] objectForKey:@"items"];
+                NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemArray lastObject]];
+                
+                NSString *str = [itemDic objectForKey:@"productItmeTitle"];
+                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
+                
+                
+                CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"¥500" WithSize:CGSizeMake(MAXFLOAT, 20)];
+                
+                
+                CGFloat height = size_3.height+size_4.height;
+                if(height <= 40)
+                {
+                    return 85;
+                }
+                else
+                {
+                    return 35+height+10;
+                    
+                }
+            }
+            else
+            {
+                return 44;
+            }
         }
+
     }
     return 44;
 }
@@ -481,7 +608,7 @@
     label.layer.borderColor = [UIColor blueColor].CGColor;
     label.layer.borderWidth = 1.5f;
     return label;
-
+    
     if(section > 2 )
     {
         return nil;
@@ -504,7 +631,7 @@
         if(indexPath.section == 0)
         {
             
-            if(!addressListDataArray || [addressListDataArray count] == 0)
+            if(!b2cOrderData || [b2cOrderData.addressArray count] == 0)
             {
                 UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
                 [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
@@ -517,17 +644,16 @@
                 UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 20, 30)];
                 [iv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
                 
-       
                 
-                NSString *name = [[addressListDataArray objectAtIndex:indexPath.row] receiver];
+                
+                NSString *name = [addressDic objectForKey:@"receiver"];
                 CGSize size_name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
                 UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, size_name.width, 30)];
                 [nameLabel setText:name];
                 [nameLabel setTextAlignment:NSTextAlignmentLeft];
                 [nameLabel setFont:[UIFont systemFontOfSize:13]];
                 
-                
-                NSString *tel = [[addressListDataArray objectAtIndex:indexPath.row] tel];
+                NSString *tel = [addressDic objectForKey:@"mobile"];
                 CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
                 UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-20-size_tel.width, 5, size_tel.width, 30)];
                 [telLabel setText:tel];
@@ -535,11 +661,11 @@
                 [telLabel setTextAlignment:NSTextAlignmentRight];
                 [cell.contentView addSubview:telLabel];
                 
-                
-                NSString *s1 = [[addressListDataArray objectAtIndex:indexPath.row] province];
-                NSString  *s2 = [[addressListDataArray objectAtIndex:indexPath.row] city];
-                NSString *s3 = [[addressListDataArray objectAtIndex:indexPath.row] area];
-                NSString *s4 = [[addressListDataArray objectAtIndex:indexPath.row] addressName];
+                NSString *s1 = [addressDic objectForKey:@"province"];
+                NSString *s2 = [addressDic objectForKey:@"city"];
+                NSString *s3 = [addressDic objectForKey:@"area"];
+                NSString *s4 = [addressDic objectForKey:@"addressName"];
+
                 NSString *str = [NSString stringWithFormat:@"%@%@%@\n%@",s1,s2,s3,s4];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
                 UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, nameLabel.frame.origin.y + nameLabel.frame.size.height, 260, size.height)];
@@ -563,96 +689,297 @@
             [cell.contentView addSubview:view];
             [cell.textLabel setText:billMsg];
         }
-        if(indexPath.section >= 2 && indexPath.section < totalSection -1)
+        if(indexPath.section == 2)
         {
-            if(indexPath.row < [[goodsListArray objectAtIndex:indexPath.section-2] count])
+            
+        }
+        if(indexPath.section > 2 && indexPath.section <= totalSection -1)
+        {
+            if(myTag == 1)
             {
-                B2CShopCarListData *data = [[goodsListArray objectAtIndex:indexPath.section-2] objectAtIndex:indexPath.row];
-                
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 200, 20)];
-                [label setText:data.sShopName];
-                [label setFont:[UIFont systemFontOfSize:12]];
-                
-                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(20, label.frame.origin.y + label.frame.size.height + 10, 40, 40)];
-                NSURL *url = [NSURL URLWithString:data.productItemPic];
-                [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
-                
-                NSString *str = [data productItmeTitle];
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
-                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, iv.frame.origin.y, 220, size.height)];
-                [titleLabel setText:str];
-                [titleLabel setFont:[UIFont systemFontOfSize:12]];
-                [titleLabel setNumberOfLines:0];
-                
-                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:data.price WithSize:CGSizeMake(MAXFLOAT, 20)];
-                UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, titleLabel.frame.origin.y + titleLabel.frame.size.height, size_1.width, 20)];
-                [priceLabel setText:data.price];
-                [priceLabel setFont:[UIFont systemFontOfSize:12]];
-                
-                NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",data.num]];
-                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"*%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
-                UILabel *countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 20, priceLabel.frame.origin.y, size_2.width, 20)];
-                [countlabel setText:[NSString stringWithFormat:@"*%@",number]];
-                [countlabel setFont:[UIFont systemFontOfSize:12]];
-                
-                int money = [number intValue] * [data.price intValue];
-                NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%d",money];
-                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
-                UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
-                [totalLabel setText:smallCal];
-                [totalLabel setFont:[UIFont systemFontOfSize:12]];
-                
-                
-                UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-                CGFloat height = size.height+size_1.height;
-                if(height <= 40)
+                if(indexPath.row < [[goodsListArray objectAtIndex:indexPath.section-3] count])
                 {
-                    [view setFrame:CGRectMake(0, 0, 320, 85)];
+                    B2CShopCarListData *data = [[goodsListArray objectAtIndex:indexPath.section-3] objectAtIndex:indexPath.row];
+                    
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 200, 20)];
+                    [label setText:data.sShopName];
+                    [label setFont:[UIFont systemFontOfSize:12]];
+                    
+                    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(20, label.frame.origin.y + label.frame.size.height + 10, 40, 40)];
+                    NSURL *url = [NSURL URLWithString:data.productItemPic];
+                    [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
+                    
+                    NSString *str = [data productItmeTitle];
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
+                    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, iv.frame.origin.y, 220, size.height)];
+                    [titleLabel setText:str];
+                    [titleLabel setFont:[UIFont systemFontOfSize:12]];
+                    [titleLabel setNumberOfLines:0];
+                    
+                    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:data.price WithSize:CGSizeMake(MAXFLOAT, 20)];
+                    UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, titleLabel.frame.origin.y + titleLabel.frame.size.height, size_1.width, 20)];
+                    [priceLabel setText:data.price];
+                    [priceLabel setFont:[UIFont systemFontOfSize:12]];
+                    
+                    NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",data.num]];
+                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"*%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
+                    UILabel *countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 20, priceLabel.frame.origin.y, size_2.width, 20)];
+                    [countlabel setText:[NSString stringWithFormat:@"*%@",number]];
+                    [countlabel setFont:[UIFont systemFontOfSize:12]];
+                    
+                    float money = [number intValue] * [data.price floatValue];
+                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
+                    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
+                    UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
+                    [totalLabel setText:smallCal];
+                    [totalLabel setFont:[UIFont systemFontOfSize:12]];
+                    
+                    
+                    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    CGFloat height = size.height+size_1.height;
+                    if(height <= 40)
+                    {
+                        [view setFrame:CGRectMake(0, 0, 320, 85)];
+                    }
+                    else
+                    {
+                        [view setFrame:CGRectMake(0, 0, 320, 35+height+10)];
+                    }
+                    [cell.contentView addSubview:view];
+                    [cell.contentView addSubview:label];
+                    [cell.contentView addSubview:iv];
+                    [cell.contentView addSubview:titleLabel];
+                    [cell.contentView addSubview:priceLabel];
+                    [cell.contentView addSubview:countlabel];
+                    [cell.contentView addSubview:totalLabel];
                 }
                 else
                 {
-                    [view setFrame:CGRectMake(0, 0, 320, 35+height+10)];
+                    if(indexPath.row == [[goodsListArray objectAtIndex:indexPath.section-3] count])
+                    {
+                        //                    [cell.textLabel setText:@"商品备注"];
+                        DCFMyTextField *tf = [cellTextFieldArray objectAtIndex:indexPath.section-3];
+                        [tf setFrame:CGRectMake(0, 0, 320, cell.contentView.frame.size.height)];
+                        [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                        [tf setPlaceholder:@"商品备注"];
+                        [cell addSubview:tf];
+                    }
+                    else
+                    {
+                        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+                        [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                        [cell.contentView addSubview:view];
+                        
+                        NSString *str = nil;
+                        if(b2cOrderData.summariesArray.count == 0 || [[[b2cOrderData.summariesArray objectAtIndex:indexPath.section - 3] allKeys] count] == 0)
+                        {
+                            str = [NSString stringWithFormat:@"配送费:%@",@""];
+                        }
+                        else
+                        {
+                            if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
+                            {
+                                str = @"配送费由商家承担";
+                            }
+                            else
+                            {
+                                if(chooseSendTitleArray.count == 0)
+                                {
+                                    str = [NSString stringWithFormat:@"配送费:%@",@""];
+                                    
+                                }
+                                else
+                                {
+                                    if([[chooseSendTitleArray objectAtIndex:indexPath.section-3] length] == 0)
+                                    {
+                                        str = [NSString stringWithFormat:@"配送费:%@",@""];
+                                    }
+                                    else
+                                    {
+                                        str = [chooseSendTitleArray objectAtIndex:indexPath.section-3];
+                                    }
+                                }
+                            }
+                            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(MAXFLOAT,20)];
+                            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size.width, 7, size.width, 30)];
+                            [label setText:str];
+                            [label setTextAlignment:NSTextAlignmentRight];
+                            [label setFont:[UIFont systemFontOfSize:12]];
+                            [cell.contentView addSubview:label];
+                        }
+                        
+                        
+                    }
                 }
-                [cell.contentView addSubview:view];
-                [cell.contentView addSubview:label];
-                [cell.contentView addSubview:iv];
-                [cell.contentView addSubview:titleLabel];
-                [cell.contentView addSubview:priceLabel];
-                [cell.contentView addSubview:countlabel];
-                [cell.contentView addSubview:totalLabel];
             }
+            else
+            {
+                if(indexPath.row == 0)
+                {
+                    NSArray *itemArray = [[[[[goodsListArray lastObject] lastObject] summariesArray] lastObject] objectForKey:@"items"];
+                    NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemArray lastObject]];
+                    
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 200, 20)];
+                    [label setText:[itemDic objectForKey:@"sShopName"]];
+                    [label setFont:[UIFont systemFontOfSize:12]];
+                    
+                    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(20, label.frame.origin.y + label.frame.size.height + 10, 40, 40)];
+                    NSURL *url = [NSURL URLWithString:[itemDic objectForKey:@"productItemPic"]];
+                    [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
+                    
+                    UILabel *titleLabel = nil;
+                    NSString *str = [itemDic objectForKey:@"productItmeTitle"];
+                    CGSize size = CGSizeZero;
+                    if(str.length == 0)
+                    {
+                        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, iv.frame.origin.y, 220, 30)];
+                        [titleLabel setText:str];
       
-        }
-        if(indexPath.section == totalSection-1)
-        {
-//            if(indexPath.row == goodsListArray.count)
-//            {
-            if(indexPath.row == 0)
-            {
-                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-                [cell.contentView addSubview:view];
-                [cell.textLabel setText:@"商品备注"];
-                [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+                    }
+                    else
+                    {
+                        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
+                        titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, iv.frame.origin.y, 220, size.height)];
+                        [titleLabel setText:str];
+                  
+                    }
+                    [titleLabel setFont:[UIFont systemFontOfSize:12]];
+                    [titleLabel setNumberOfLines:0];
+                    
+                    NSString *price = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"price"]];
+                    UILabel *priceLabel = nil;
+                    CGSize size_1 = CGSizeZero;
+                    if(price.length == 0)
+                    {
+                        priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, titleLabel.frame.origin.y + titleLabel.frame.size.height,40, 20)];
+                        [priceLabel setText:@""];
+//                        [priceLabel setFont:[UIFont systemFontOfSize:12]];
+                    }
+                    else
+                    {
+                        size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:price WithSize:CGSizeMake(MAXFLOAT, 20)];
+                        priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, titleLabel.frame.origin.y + titleLabel.frame.size.height, size_1.width, 20)];
+                        [priceLabel setText:price];
+                    }
+                    [priceLabel setFont:[UIFont systemFontOfSize:12]];
+
+                    
+                    NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[itemDic objectForKey:@"num"]]];
+                    UILabel *countlabel = nil;
+                    if(number.length == 0)
+                    {
+                        countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 20, priceLabel.frame.origin.y, 30, 20)];
+                        [countlabel setText:[NSString stringWithFormat:@"*%@",@""]];
+                    }
+                    else
+                    {
+                        CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"*%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
+                        countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 20, priceLabel.frame.origin.y, size_2.width, 20)];
+                        [countlabel setText:[NSString stringWithFormat:@"*%@",number]];
+                    }
+                    [countlabel setFont:[UIFont systemFontOfSize:12]];
+
+                    
+                    float money = [number intValue] * [price floatValue];
+                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
+                    UILabel *totalLabel = nil;
+                    if(smallCal.length == 0)
+                    {
+                        totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-30, countlabel.frame.origin.y, 30, 20)];
+                        [totalLabel setText:@""];
+                    }
+                    else
+                    {
+                        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
+                        totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
+                        [totalLabel setText:smallCal];
+                    }
+                    [totalLabel setFont:[UIFont systemFontOfSize:12]];
+
+                    
+                    
+                    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    CGFloat height = size.height+size_1.height;
+                    if(height <= 40)
+                    {
+                        [view setFrame:CGRectMake(0, 0, 320, 85)];
+                    }
+                    else
+                    {
+                        [view setFrame:CGRectMake(0, 0, 320, 35+height+10)];
+                    }
+                    [cell.contentView addSubview:view];
+                    [cell.contentView addSubview:label];
+                    [cell.contentView addSubview:iv];
+                    [cell.contentView addSubview:titleLabel];
+                    [cell.contentView addSubview:priceLabel];
+                    [cell.contentView addSubview:countlabel];
+                    [cell.contentView addSubview:totalLabel];
+                }
+                else
+                {
+                    if(indexPath.row == 1)
+                    {
+                        //                    [cell.textLabel setText:@"商品备注"];
+                        DCFMyTextField *tf = [cellTextFieldArray lastObject];
+                        [tf setFrame:CGRectMake(0, 0, 320, cell.contentView.frame.size.height)];
+                        [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                        [tf setPlaceholder:@"商品备注"];
+                        [cell addSubview:tf];
+                    }
+                    else
+                    {
+                        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+                        [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                        [cell.contentView addSubview:view];
+                        
+                        NSString *str = nil;
+                        if(b2cOrderData.summariesArray.count == 0 || [[[b2cOrderData.summariesArray objectAtIndex:indexPath.section - 3] allKeys] count] == 0)
+                        {
+                            str = [NSString stringWithFormat:@"配送费:%@",@""];
+                        }
+                        else
+                        {
+                            if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
+                            {
+                                str = @"配送费由商家承担";
+                            }
+                            else
+                            {
+                                if(chooseSendTitleArray.count == 0)
+                                {
+                                    str = [NSString stringWithFormat:@"配送费:%@",@""];
+                                    
+                                }
+                                else
+                                {
+                                    if([[chooseSendTitleArray objectAtIndex:indexPath.section-3] length] == 0)
+                                    {
+                                        str = [NSString stringWithFormat:@"配送费:%@",@""];
+                                    }
+                                    else
+                                    {
+                                        str = [chooseSendTitleArray objectAtIndex:indexPath.section-3];
+                                    }
+                                }
+                            }
+                            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(MAXFLOAT,20)];
+                            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size.width, 7, size.width, 30)];
+                            [label setText:str];
+                            [label setTextAlignment:NSTextAlignmentRight];
+                            [label setFont:[UIFont systemFontOfSize:12]];
+                            [cell.contentView addSubview:label];
+                        }
+                        
+                        
+                    }
+                }
             }
-            
-            if(indexPath.row == 1)
-            {
-                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-                [cell.contentView addSubview:view];
-                
-                NSString *str = [NSString stringWithFormat:@"配送费:%@",sendMethod];
-                
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(MAXFLOAT,20)];
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size.width, 7, size.width, 30)];
-                [label setText:str];
-                [label setTextAlignment:NSTextAlignmentRight];
-                [label setFont:[UIFont systemFontOfSize:12]];
-                [cell.contentView addSubview:label];
-            }
+   
         }
+
     }
     return cell;
 }
@@ -661,18 +988,19 @@
 {
     if(indexPath.section == 0)
     {
-        if(!addressListDataArray || addressListDataArray.count == 0)
+        if(!b2cOrderData || b2cOrderData.addressArray.count == 0)
         {
             
         }
         else
         {
-            myAddressId = [[addressListDataArray objectAtIndex:indexPath.row] addressId];
+//            myAddressId = [[addressListDataArray objectAtIndex:indexPath.row] addressId];
             
-            ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] initWithDataArray:addressListDataArray];
+//            ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] initWithDataArray:addressListDataArray];
+            ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
             [self.navigationController pushViewController:chooseAddress animated:YES];
         }
-
+        
     }
     if(indexPath.section == 1 && indexPath.row == 0)
     {
@@ -697,9 +1025,9 @@
             headTag = [billMsgArray objectAtIndex:2];
             billManager.editOrAddBill = YES;
             billManager.naviTitle = @"编辑发票";
-
+            
         }
- 
+        
         
         billManager.tfContent = billMsg;
         billManager.invoiceid = invoId;
@@ -707,21 +1035,119 @@
         
         [self.navigationController pushViewController:billManager animated:YES];
     }
-    if(indexPath.section == 2 && indexPath.row == 2)
+    if(indexPath.section == 2)
     {
-        pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:contentArray];
-        pickerView.delegate = self;
-        [self.view.window setBackgroundColor:[UIColor blackColor]];
-        [self.view.window addSubview:pickerView];
+        
+    }
+    if(indexPath.section > 2 && indexPath.section <= totalSection -1)
+    {
+        if(myTag == 1)
+        {
+            if(indexPath.row < [[goodsListArray objectAtIndex:indexPath.section-3] count])
+            {
+                
+            }
+            if(indexPath.row == [[goodsListArray objectAtIndex:indexPath.section-3] count])
+            {
+                //商品备注
+                NSLog(@"test");
+            }
+            else
+            {
+                if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
+                {
+                    
+                }
+                else
+                {
+                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
+                    pickerView.delegate = self;
+                    [self.view.window setBackgroundColor:[UIColor blackColor]];
+                    [self.view.window addSubview:pickerView];
+                }
+                
+                
+            }
+        }
+        else
+        {
+            if(indexPath.row == 0)
+            {
+                
+            }
+            if(indexPath.row == 1)
+            {
+                //商品备注
+                NSLog(@"test");
+            }
+            else
+            {
+                if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
+                {
+                    
+                }
+                else
+                {
+                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
+                    pickerView.delegate = self;
+                    [self.view.window setBackgroundColor:[UIColor blackColor]];
+                    [self.view.window addSubview:pickerView];
+                }
+                
+                
+            }
+        }
     }
 }
 
-
-
-- (void) pickerView:(NSString *)title
+- (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    sendMethod = title;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.3f];
+    [self.view setFrame:CGRectMake(0, -64, 320, ScreenHeight)];
+    [UIView commitAnimations];
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.3f];
+    [self.view setFrame:CGRectMake(0, 64, 320, ScreenHeight)];
+    [UIView commitAnimations];
+    return YES;
+}
+
+- (void) textFieldDidEndEditing:(UITextField *)textField
+{
+    
+}
+
+- (void) pickerView:(NSString *)title WithTag:(int)tag
+{
+
+    [chooseSendTitleArray replaceObjectAtIndex:tag withObject:title];
     [tv reloadData];
+    
+
+    goodsMoney = goodsMoney + [[self getNumFromString:title] floatValue];
+    [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra notRounding:goodsMoney afterPoint:2]]];
+}
+
+- (NSString *) getNumFromString:(NSString *) string
+{
+    NSString *price = @"";
+    for(int i=0;i<string.length;i++)
+    {
+        char c = [string characterAtIndex:i];
+        if(c == '.' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9')
+        {
+            price = [price stringByAppendingFormat:@"%c",c];
+        }
+    }
+    return price;
 }
 
 - (void)didReceiveMemoryWarning

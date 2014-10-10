@@ -10,11 +10,12 @@
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFTopLabel.h"
+#import "DCFConnectionUtil.h"
 
-@interface ChooseReceiveAddressViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface ChooseReceiveAddressViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate>
 {
     UITableView *tv;
-    
+    DCFConnectionUtil *conn;
     NSMutableArray *dataArray;
 }
 @property (weak, nonatomic) IBOutlet UIView *tvBackView;

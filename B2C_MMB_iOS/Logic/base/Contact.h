@@ -61,6 +61,8 @@ enum {
     URLEditMemberAddressTag,    //编辑收货地址
     
     URLSubOrderTag,    //提交
+    
+    URLDirectBuyTag,  //立即购买
 };
 typedef NSUInteger URLTag;
 

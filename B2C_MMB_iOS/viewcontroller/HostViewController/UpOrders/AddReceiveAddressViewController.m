@@ -64,7 +64,6 @@
             NSString *name = [rs stringForColumn:@"name"];
             NSString *code = [rs stringForColumn:@"code"];
             NSString *parentId = [rs stringForColumn:@"parentId"];
-            NSLog(@"%@  %@  %@",name,code,parentId);
             
             NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  name,@"name",
@@ -76,7 +75,6 @@
     }
     [rs close];
     
-    NSLog(@"%@",dataArray);
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight-64)];
     [tv setDataSource:self];

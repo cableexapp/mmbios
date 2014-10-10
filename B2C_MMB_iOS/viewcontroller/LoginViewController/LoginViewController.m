@@ -14,10 +14,12 @@
 #import "DCFCustomExtra.h"
 #import "MCDefine.h"
 #import "DCFStringUtil.h"
+#import "AppDelegate.h"
 
 @interface LoginViewController ()
 {
     DCFTopLabel *top;
+    AppDelegate *app;
 }
 @end
 
@@ -50,6 +52,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     [self pushAndPopStyle];
     
@@ -187,7 +191,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
     NSString *des = [MCdes encryptUseDES:self.tf_Secrect.text key:@"cableex_app*#!Key"];
     
-    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.tf_Account.text,des,token];
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@",self.tf_Account.text,des,token,[app getUdid]];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     
@@ -201,7 +205,6 @@
     {
         [HUD hide:YES];
         
-        NSLog(@"%@",dicRespon);
         int reslut = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(reslut == 0)
@@ -230,7 +233,6 @@
 
 - (IBAction)forgetBtnClick:(id)sender
 {
-    NSLog(@"忘记密码");
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField

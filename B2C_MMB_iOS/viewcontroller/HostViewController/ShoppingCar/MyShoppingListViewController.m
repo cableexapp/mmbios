@@ -18,7 +18,7 @@
 #import "UpOrderViewController.h"
 #import "B2CShopCarListData.h"
 #import "UIImageView+WebCache.h"
-
+#import "B2CUpOrderData.h"
 
 #pragma mark - 在家修改
 
@@ -90,6 +90,10 @@
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     
+    if(chooseGoodsArray.count != 0)
+    {
+        [chooseGoodsArray removeAllObjects];
+    }
     if(btn.selected == YES)
     {
         for(int i=0;i<headLabelArray.count;i++)
@@ -101,11 +105,7 @@
             {
                 [btn setSelected:YES];
             }
-            
-            if(chooseGoodsArray.count != 0)
-            {
-                [chooseGoodsArray removeAllObjects];
-            }
+         
             NSMutableArray *goosArray = [dataArray objectAtIndex:i];
             for(B2CShopCarListData *carList in goosArray)
             {
@@ -133,7 +133,6 @@
         
     }
     [tv reloadData];
-    
     [self calculateTotalMoney];
     [self payBtnChange];
 }
@@ -193,8 +192,6 @@
     
     if(URLTag == URLShopCarGoodsMsgTag)
     {
-        NSLog(@"dic = %@",dicRespon);
-
         if(result == 1)
         {
             NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[B2CShopCarListData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -370,8 +367,6 @@
     }
     if(URLTag == URLShopCarAddTag)
     {
-        NSLog(@"%@",[dicRespon objectForKey:@"msg"]);
-        
         if(result == 0)
         {
             addNum = addNum -1;
@@ -403,7 +398,6 @@
     }
     if(URLTag == URLShopCarDeleteTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
@@ -506,14 +500,13 @@
     if(URLTag == URLCartConfirmTag)
     {
         NSLog(@"%@",dicRespon);
-
         
         if(result == 1)
         {
 //            [DCFStringUtil showNotice:msg];
-            
+            B2CUpOrderData *orderData = [[B2CUpOrderData alloc] initWithDataDic:dicRespon];
             [self setHidesBottomBarWhenPushed:YES];
-            UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney];
+            UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData WithTag:1];
             [self.navigationController pushViewController:order animated:YES];
             
         }
@@ -596,7 +589,6 @@
         addNum = [carListData.num intValue];
         addNum = addNum + 1;
         
-        NSLog(@"number = %d",addNum);
         
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -610,13 +602,11 @@
         NSString *pushNum = [NSString stringWithFormat:@"%d",addNum];
         
         NSString  *pushString = [NSString stringWithFormat:@"cartid=%@&itemnum=%@&token=%@",carListData.itemId,pushNum,token];
-        NSLog(@"%@",pushString);
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarAddTag delegate:self];
         
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
-    NSLog(@"row = %d  se = %d",addBtnRow,addBtnSection);
     
    
     
@@ -723,7 +713,6 @@
     
     if(btn.selected == YES)
     {
-        [buttomBtn setSelected:YES];
         for(UIButton *b in array)
         {
             [b setSelected:YES];
@@ -768,7 +757,7 @@
             }
             
         }
-        
+ 
     }
     else
     {
@@ -805,6 +794,14 @@
         
     }
     
+    if(chooseGoodsArray.count == total)
+    {
+        [buttomBtn setSelected:YES];
+    }
+    else
+    {
+        [buttomBtn setSelected:NO];
+    }
     [self calculateTotalMoney];
     [self payBtnChange];
 }
@@ -816,10 +813,11 @@
         [DCFStringUtil showNotice:@"您尚未选择商品"];
         return;
     }
-    NSLog(@"chooseGoodsArray = %@",chooseGoodsArray);
     
     
     NSString *items = nil;
+    
+    
     if(chooseGoodsArray && chooseGoodsArray.count != 0)
     {
         for(int i=0;i<chooseGoodsArray.count;i++)
@@ -835,7 +833,6 @@
             }
         }
         items = [items substringWithRange:NSMakeRange(0, items.length-1)];
-        NSLog(@"items = %@",items);
     }
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -917,7 +914,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     else
     {
-        NSLog(@"%@",chooseGoodsArray);
         
         NSString *items = nil;
         if(chooseGoodsArray && chooseGoodsArray.count != 0)
@@ -935,7 +931,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
                 }
             }
             items = [items substringWithRange:NSMakeRange(0, items.length-1)];
-            NSLog(@"items = %@",items);
         }
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -1282,13 +1277,18 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     if(count == [[dataArray objectAtIndex:section] count])
     {
-        [DCFStringUtil showNotice:@"ok"];
         [[headBtnArray objectAtIndex:section] setSelected:YES];
     }
     else
     {
         [[headBtnArray objectAtIndex:section] setSelected:NO];
     }
+    
+
+    
+    NSLog(@"chooseGoodsArray = %@",chooseGoodsArray);
+    [self calculateTotalMoney];
+    [self payBtnChange];
     
     for(UIButton *btn in headBtnArray)
     {
@@ -1299,13 +1299,9 @@ NSComparator cmptr = ^(id obj1, id obj2){
         else if (btn.selected == NO)
         {
             [buttomBtn setSelected:NO];
+            return;
         }
     }
-    
-    NSLog(@"%@",chooseGoodsArray);
-    
-    [self calculateTotalMoney];
-    [self payBtnChange];
 }
 
 #pragma mark - 计算总价

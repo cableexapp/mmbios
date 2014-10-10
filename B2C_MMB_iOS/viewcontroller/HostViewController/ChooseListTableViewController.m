@@ -41,7 +41,6 @@
 - (void) exeuteCabelList
 {
     NSString *userId = [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
-    NSLog(@"userId = %@",userId);
     
     cabelNameArray = [[NSMutableArray alloc] init];
 
@@ -51,7 +50,6 @@
         NSString *cabelName = [rs stringForColumn:@"SearchCabelName"];
         [cabelNameArray addObject:cabelName];
     }
-    NSLog(@"%@",cabelNameArray);
     [rs close];
 
 }
@@ -145,14 +143,14 @@
     {
         [mySearchBar resignFirstResponder];
     }
-        pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:contentArray];
+        pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:contentArray WithTag:1000];
         pickerView.delegate = self;
         [self.view.window setBackgroundColor:[UIColor blackColor]];
         [self.view.window addSubview:pickerView];
 }
 
 
-- (void) pickerView:(NSString *) title
+- (void) pickerView:(NSString *) title WithTag:(int)tag
 {
     [leftBtn setTitle:title forState:UIControlStateNormal];
     

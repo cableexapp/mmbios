@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 @protocol PickerView <NSObject>
-
-- (void) pickerView:(NSString *) title;
+@required
+- (void) pickerView:(NSString *) title WithTag:(int) tag;
 
 @end
 
@@ -19,8 +19,15 @@
     UIPickerView *pickerView;
     NSMutableArray *dataArray;
     NSString *title;
+    
+    int pickTag;
+    
+    int number;
 }
 @property (assign,nonatomic) id<PickerView> delegate;
 
-- (id) initWithFrame:(CGRect)frame WithArray:(NSMutableArray *) array;
+//- (id) initWithFrame:(CGRect)frame WithArray:(NSMutableArray *) array;
+
+- (id) initWithFrame:(CGRect)frame WithArray:(NSMutableArray *) array WithTag:(int) tag;
+
 @end

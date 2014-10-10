@@ -107,7 +107,6 @@
     
     NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d",@"",@"",@"",@"",_shopId,s,pageSize,intPage];
     
-    NSLog(@"%@",pushString);
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
     
@@ -167,7 +166,6 @@
         {
             
         }
-        NSLog(@"dic = %@",dicRespon);
         if([[dicRespon allKeys] count] == 0)
         {
             [moreCell noDataAnimation];
@@ -318,8 +316,7 @@
 - (void) tap:(UITapGestureRecognizer *) sender
 {
     int tag = [[sender view] tag];
-    NSLog(@"tag = %d",tag);
-    NSLog(@"%@",dataArray);
+
     NSString *productId = [[dataArray objectAtIndex:tag] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     [self.navigationController pushViewController:detail animated:YES];

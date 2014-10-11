@@ -81,14 +81,14 @@
 	NSArray *array3 = [[NSArray alloc] initWithObjects:@"关羽",@"赵云",nil];
 	NSArray *array4 = [[NSArray alloc] initWithObjects:@"马呆",@"张合",nil];
 	
-	myDic = [[NSDictionary alloc] initWithObjectsAndKeys:array1,@"我的兄弟",
+	_myDic = [[NSDictionary alloc] initWithObjectsAndKeys:array1,@"我的兄弟",
 			 array2,@"魏国大将",
 			 array3,@"我的最爱",
 			 array4,@"最爱小兵",nil];
 	
     ivArray = [[NSMutableArray alloc] init];
     
-    for(int i=0;i<[[myDic allKeys] count];i++)
+    for(int i=0;i<[[_myDic allKeys] count];i++)
     {
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 1, 23, 27)];
         [iv setImage:[UIImage imageNamed:@"next.png"]];
@@ -96,7 +96,7 @@
         [ivArray addObject:iv];
     }
     
-    flag = (BOOL*)malloc([[myDic allKeys] count]*sizeof(BOOL*));
+    flag = (BOOL*)malloc([[_myDic allKeys] count]*sizeof(BOOL*));
     memset(flag, NO, sizeof(flag));
 
 }
@@ -129,7 +129,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[myDic allKeys] count];
+    return [[_myDic allKeys] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -197,12 +197,12 @@
     
 	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, 70, 30)];
 	label1.backgroundColor = [UIColor clearColor];
-	label1.text = [[myDic allKeys] objectAtIndex:section];
+	label1.text = [[_myDic allKeys] objectAtIndex:section];
     [abtn addSubview:label1];
 	
 	UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(110, 0, 50, 30)];
 	label2.backgroundColor = [UIColor clearColor];
-	label2.text = [NSString stringWithFormat:@"(%d/%d)",section,[[myDic valueForKey:[[myDic allKeys] objectAtIndex:section]] count]];
+	label2.text = [NSString stringWithFormat:@"(%d/%d)",section,[[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:section]] count]];
 	[abtn addSubview:label2];
 	return view1;
 
@@ -222,7 +222,7 @@
     {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-	NSString *str = [[myDic valueForKey:[[myDic allKeys] objectAtIndex:[indexPath section]]] objectAtIndex:indexPath.row];
+	NSString *str = [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:[indexPath section]]] objectAtIndex:indexPath.row];
 	//label = (UILabel *)[cell.contentView viewWithTag:101];
 	cell.imageView.image = [UIImage imageNamed:@"102.png"];
 	cell.textLabel.text = str;
@@ -260,7 +260,7 @@
 - (int)numberOfRowsInSection:(NSInteger)section
 {
 	if (flag[section]) {
-		return [[myDic valueForKey:[[myDic allKeys] objectAtIndex:section]] count];
+		return [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:section]] count];
 	}
 	else {
 		return 0;

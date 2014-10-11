@@ -10,7 +10,7 @@
 
 @interface B2CShoppingSearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
-    NSDictionary *myDic;
+//    NSDictionary *myDic;
 	BOOL *flag;
 	
 	UIView *view1;

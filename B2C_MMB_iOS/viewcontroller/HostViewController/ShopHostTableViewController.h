@@ -22,5 +22,5 @@
 @property (strong,nonatomic) NSString *myTitle;
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 
-- (id) initWithHeadTitle:(NSString *) title;
+- (id) initWithHeadTitle:(NSString *) title WithShopId:(NSString *) shopId;
 @end

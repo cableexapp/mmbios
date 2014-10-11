@@ -57,7 +57,6 @@
     
     DCFChenMoreCell *moreCell;
     
-    UIView *tableView;
     
     B2CUpOrderData *orderData;
     
@@ -94,16 +93,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     int tag = [sender tag];
     
-    if(num.length == 0 || [num intValue] == 0)
-    {
-        [DCFStringUtil showNotice:@"请选择数量"];
-        return;
-    }
-    if(itemid.length == 0)
-    {
-        [DCFStringUtil showNotice:@"请选择颜色"];
-        return;
-    }
+
     
     if(tag == 100)
     {
@@ -114,11 +104,20 @@
             [DCFStringUtil showNotice:@"请选择数量"];
             return;
         }
-        if(chooseColorPrice <= 0.00)
+
+        for(UIButton *btn in chooseColorBtnArray)
         {
-            [DCFStringUtil showNotice:@"请选择颜色"];
-            return;
+            if(btn.selected == YES)
+            {
+                break;
+            }
+            else
+            {
+                [DCFStringUtil showNotice:@"请选择颜色"];
+                return;
+            }
         }
+
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
         
@@ -136,7 +135,16 @@
     }
     else
     {
-        
+        if(num.length == 0 || [num intValue] == 0)
+        {
+            [DCFStringUtil showNotice:@"请选择数量"];
+            return;
+        }
+        if(itemid.length == 0)
+        {
+            [DCFStringUtil showNotice:@"请选择颜色"];
+            return;
+        }
 #pragma mark - 加入购物车
         [self setHidesBottomBarWhenPushed:YES];
         
@@ -308,6 +316,8 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
+        NSLog(@"%@",dicRespon);
+        
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 1)
@@ -361,7 +371,6 @@
             NSMutableArray *chooseGoodsArray = [[NSMutableArray alloc] initWithObjects:orderData, nil];
 
             float totalMoney = [num intValue]*chooseColorPrice;
-//            UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData];
             UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData WithTag:0];
             [self.navigationController pushViewController:order animated:YES];
 
@@ -594,10 +603,10 @@
                 UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
                 [firstIv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
                 
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"远东电缆旗舰店" WithSize:CGSizeMake(MAXFLOAT,30)];
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,30)];
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, size.width, 30)];
                 [label setFont:[UIFont systemFontOfSize:12]];
-                [label setText:@"远东电缆旗舰店"];
+                [label setText:[detailData shopName]];
                 [label setTextAlignment:NSTextAlignmentLeft];
                 [label setTextColor:[UIColor blueColor]];
                 
@@ -789,7 +798,9 @@
 {
     UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
     
-    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:label.text];
+//    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:label.text];
+    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:detailData.shopName WithShopId:detailData.shopId];
+
     [self.navigationController pushViewController:shopHost animated:YES];
 }
 
@@ -1027,6 +1038,8 @@
         sureBtn.layer.cornerRadius = 5;
         [chooseColorAndCountView addSubview:sureBtn];
         
+        NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:0] objectForKey:@"colorPrice"]];
+        chooseColorPrice = [colorPrice floatValue];
         return chooseColorAndCountView;
     }
     
@@ -1048,7 +1061,6 @@
     btn.selected = !btn.selected;
     
     int tag = btn.tag;
-    
     NSString *colorName = [[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorName"];
     NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorPrice"]];
     NSString *productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"productNum"]];

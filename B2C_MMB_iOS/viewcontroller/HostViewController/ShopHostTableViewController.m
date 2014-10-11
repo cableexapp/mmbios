@@ -16,6 +16,7 @@
 #import "B2CGoodsListData.h"
 #import "DCFCustomExtra.h"
 #import "GoodsDetailViewController.h"
+#import "DCFStringUtil.h"
 
 @interface ShopHostTableViewController ()
 {
@@ -27,6 +28,8 @@
     int pageSize; //每页条数
     
     BOOL _reloading;
+    
+    NSArray *scoreArray;
 }
 @end
 
@@ -41,11 +44,14 @@
     return self;
 }
 
-- (id) initWithHeadTitle:(NSString *) title
+- (id) initWithHeadTitle:(NSString *) title WithShopId:(NSString *) shopId
 {
     if(self = [super init])
     {
         _myTitle = title;
+//        _shopId = shopId;
+        _shopId = @"263";
+        NSLog(@"shopId = %@",shopId);
     }
     return self;
 }
@@ -84,7 +90,6 @@
     [self.tableView addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
     
-    _shopId = @"263";
     [self loadRequest:_shopId];
     
 
@@ -158,6 +163,8 @@
 {
     if(URLTag == URLB2CGoodsListTag)
     {
+        NSLog(@"%@",dicRespon);
+        
         if(_reloading == YES)
         {
             [self doneLoadingViewData];
@@ -181,6 +188,8 @@
                     [dataArray removeAllObjects];
                 }
                 [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
+                
+                scoreArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"score"]];
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
@@ -219,12 +228,36 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    [headView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    
     UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 250, 40)];
     [headLabel setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     [headLabel setText:[NSString stringWithFormat:@"   %@",_myTitle]];
     [headLabel setTextColor:[UIColor blueColor]];
     [headLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    return headLabel;
+    [headView addSubview:headLabel];
+    
+    UIButton *preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [preBtn setFrame:CGRectMake(320-40, 5, 30, 30)];
+    [preBtn setBackgroundImage:[UIImage imageNamed:@"Set.png"] forState:UIControlStateNormal];
+    [preBtn addTarget:self action:@selector(preBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [headView addSubview:preBtn];
+    
+    return headView;
+}
+
+- (void) preBtnClick:(UIButton *) sender
+{
+    if(!scoreArray || scoreArray.count == 0)
+    {
+        [DCFStringUtil showNotice:@"数据正在读取中"];
+        return;
+    }
+    else
+    {
+        
+    }
 }
 
 #pragma mark - Table view data source

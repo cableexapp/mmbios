@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ThirdTableViewController : UITableViewController
+@property (weak, nonatomic) IBOutlet UIButton *logOutBtn;
 
 @end

@@ -33,6 +33,10 @@
 		612A242119D2926800E544E0 /* ChooseReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 612A241F19D2926800E544E0 /* ChooseReceiveAddressViewController.m */; };
 		612A242219D2926800E544E0 /* ChooseReceiveAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */; };
 		612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 612C909419D6561900430140 /* B2CGoodsDetailData.m */; };
+		614FFFC519E8BF36000D83BE /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614FFFC019E8BF36000D83BE /* AboutViewController.m */; };
+		614FFFC619E8BF36000D83BE /* HotLineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614FFFC219E8BF36000D83BE /* HotLineViewController.m */; };
+		614FFFC719E8BF36000D83BE /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614FFFC419E8BF36000D83BE /* SettingViewController.m */; };
+		614FFFCA19E8E02A000D83BE /* ShopHostPreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614FFFC919E8E02A000D83BE /* ShopHostPreTableViewController.m */; };
 		615B01B219D8000A0002592E /* B2CShopCarListData.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B01B119D8000A0002592E /* B2CShopCarListData.m */; };
 		6166ED5519D2B06800D9A219 /* addAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5419D2B06800D9A219 /* addAddress.png */; };
 		6166ED5819D2B44D00D9A219 /* AddReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6166ED5719D2B44D00D9A219 /* AddReceiveAddressViewController.m */; };
@@ -273,6 +277,14 @@
 		612A242019D2926800E544E0 /* ChooseReceiveAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseReceiveAddressViewController.xib; sourceTree = "<group>"; };
 		612C909319D6561900430140 /* B2CGoodsDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGoodsDetailData.h; sourceTree = "<group>"; };
 		612C909419D6561900430140 /* B2CGoodsDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGoodsDetailData.m; sourceTree = "<group>"; };
+		614FFFBF19E8BF36000D83BE /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		614FFFC019E8BF36000D83BE /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		614FFFC119E8BF36000D83BE /* HotLineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotLineViewController.h; sourceTree = "<group>"; };
+		614FFFC219E8BF36000D83BE /* HotLineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotLineViewController.m; sourceTree = "<group>"; };
+		614FFFC319E8BF36000D83BE /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		614FFFC419E8BF36000D83BE /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		614FFFC819E8E02A000D83BE /* ShopHostPreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopHostPreTableViewController.h; sourceTree = "<group>"; };
+		614FFFC919E8E02A000D83BE /* ShopHostPreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopHostPreTableViewController.m; sourceTree = "<group>"; };
 		615B01B019D8000A0002592E /* B2CShopCarListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShopCarListData.h; sourceTree = "<group>"; };
 		615B01B119D8000A0002592E /* B2CShopCarListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShopCarListData.m; sourceTree = "<group>"; };
 		6166ED5419D2B06800D9A219 /* addAddress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addAddress.png; sourceTree = "<group>"; };
@@ -1304,6 +1316,8 @@
 				61CCBCEB19D0142C0008A46B /* GoodsDetailTableViewCell.xib */,
 				616A8E9A19D545BB007E2526 /* ShopHostTableViewController.h */,
 				616A8E9B19D545BB007E2526 /* ShopHostTableViewController.m */,
+				614FFFC819E8E02A000D83BE /* ShopHostPreTableViewController.h */,
+				614FFFC919E8E02A000D83BE /* ShopHostPreTableViewController.m */,
 				6181A49C19CFC4C2000E2D14 /* HomeImprovementChannel */,
 				6181A4A119CFC4C2000E2D14 /* HostNaviViewController.h */,
 				6181A4A219CFC4C2000E2D14 /* HostNaviViewController.m */,
@@ -1381,6 +1395,12 @@
 		6181A4B619CFC4C2000E2D14 /* ThirdViewController */ = {
 			isa = PBXGroup;
 			children = (
+				614FFFBF19E8BF36000D83BE /* AboutViewController.h */,
+				614FFFC019E8BF36000D83BE /* AboutViewController.m */,
+				614FFFC119E8BF36000D83BE /* HotLineViewController.h */,
+				614FFFC219E8BF36000D83BE /* HotLineViewController.m */,
+				614FFFC319E8BF36000D83BE /* SettingViewController.h */,
+				614FFFC419E8BF36000D83BE /* SettingViewController.m */,
 				6181A4B719CFC4C2000E2D14 /* ThirdNaviViewController.h */,
 				6181A4B819CFC4C2000E2D14 /* ThirdNaviViewController.m */,
 				6181A4B919CFC4C2000E2D14 /* ThirdTableViewController.h */,
@@ -1615,6 +1635,7 @@
 				6181A53A19CFC4C2000E2D14 /* ThirdTableViewController.m in Sources */,
 				6122713E19CFC81500FE4DFF /* SBJSON.m in Sources */,
 				6181A50219CFC4C2000E2D14 /* ELCAssetCell.m in Sources */,
+				614FFFC519E8BF36000D83BE /* AboutViewController.m in Sources */,
 				6181A51919CFC4C2000E2D14 /* UIImage+WebP.m in Sources */,
 				6181A4F919CFC4C2000E2D14 /* JSONKit.m in Sources */,
 				6181A53219CFC4C2000E2D14 /* MyShoppingListViewController.m in Sources */,
@@ -1629,6 +1650,7 @@
 				6181A4FD19CFC4C2000E2D14 /* CKRefreshArrowView.m in Sources */,
 				6181A52719CFC4C2000E2D14 /* OneStepCell.m in Sources */,
 				6181A4CA19CFC4C2000E2D14 /* DCFRootNaviController.m in Sources */,
+				614FFFC619E8BF36000D83BE /* HotLineViewController.m in Sources */,
 				6181A4CB19CFC4C2000E2D14 /* DCFTabBarCtrl.m in Sources */,
 				6181A51019CFC4C2000E2D14 /* SDWebImageCompat.m in Sources */,
 				611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */,
@@ -1637,6 +1659,7 @@
 				6181A52E19CFC4C2000E2D14 /* B2CShoppingListViewController.m in Sources */,
 				6181A50119CFC4C2000E2D14 /* ELCAsset.m in Sources */,
 				6181A4D119CFC4C2000E2D14 /* BaseExecutor.m in Sources */,
+				614FFFC719E8BF36000D83BE /* SettingViewController.m in Sources */,
 				6181A4C219CFC4C2000E2D14 /* SetNavigationBar.m in Sources */,
 				6181A4BD19CFC4C2000E2D14 /* DCFColorUtil.m in Sources */,
 				6181A50E19CFC4C2000E2D14 /* NSData+GIF.m in Sources */,
@@ -1647,6 +1670,7 @@
 				6181A53019CFC4C2000E2D14 /* HostNaviViewController.m in Sources */,
 				6181A52C19CFC4C2000E2D14 /* ChooseListTableViewController.m in Sources */,
 				6181A50A19CFC4C2000E2D14 /* NSDictionary+exp.m in Sources */,
+				614FFFCA19E8E02A000D83BE /* ShopHostPreTableViewController.m in Sources */,
 				611A7D1B19D3E80C0033A433 /* AddReceiveAddressSecondViewController.m in Sources */,
 				6181A4C019CFC4C2000E2D14 /* DCFStringUtil.m in Sources */,
 				6181A4C319CFC4C2000E2D14 /* CustomAlertView.m in Sources */,

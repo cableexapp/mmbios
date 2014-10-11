@@ -100,12 +100,30 @@
     //启动页滞留2秒
     [NSThread sleepForTimeInterval:2.0];
     
-    //开启推送
-    [application setApplicationIconBadgeNumber:0];
-    [application registerForRemoteNotificationTypes:
-     UIRemoteNotificationTypeAlert
-     | UIRemoteNotificationTypeBadge
-     | UIRemoteNotificationTypeSound];
+    //接收关闭推送
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"closeOrOpenPush"])
+    {
+        [application registerForRemoteNotificationTypes:
+         UIRemoteNotificationTypeAlert
+         | UIRemoteNotificationTypeBadge
+         | UIRemoteNotificationTypeSound];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"closeOrOpenPush"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    else
+    {
+        if([[[NSUserDefaults standardUserDefaults] objectForKey:@"closeOrOpenPush"] boolValue] == YES)
+        {
+            [application registerForRemoteNotificationTypes:
+             UIRemoteNotificationTypeAlert
+             | UIRemoteNotificationTypeBadge
+             | UIRemoteNotificationTypeSound];
+        }
+        else
+        {
+            [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+        }
+    }
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     

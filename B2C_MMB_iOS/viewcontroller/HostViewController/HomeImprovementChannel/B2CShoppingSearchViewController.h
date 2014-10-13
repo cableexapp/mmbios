@@ -17,9 +17,19 @@
 	UIView *view2;
 
     UITableView *tv;
+    
+    CGRect myRect;
 }
 
+- (id) initWithFrame:(CGRect) rect;
+
+- (void) addHeadView;
+
 @property (nonatomic,retain) NSDictionary *myDic;
+
+@property (strong,nonatomic) UIButton *clearBtn;
+@property (strong,nonatomic) UIView *lineView;
+@property (strong,nonatomic) UIButton *sureBtn;
 
 @end
 

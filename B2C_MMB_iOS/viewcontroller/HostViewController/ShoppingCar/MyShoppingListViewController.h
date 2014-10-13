@@ -15,7 +15,6 @@
 {
     UITableView *tv;
     
-    NSArray *parameterArray;
     
     DCFConnectionUtil *conn;
 }

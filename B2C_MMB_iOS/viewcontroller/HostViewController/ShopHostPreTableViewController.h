@@ -8,6 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShopHostPreTableViewController : UITableViewController
+@protocol PushText <NSObject>
 
+- (void) pushText:(NSString *) text;
+
+@end
+
+@interface ShopHostPreTableViewController : UITableViewController<UIGestureRecognizerDelegate>
+{
+    NSMutableArray *discussArray;
+    NSArray *ListArray;
+    NSString *headTitle;
+}
+
+@property (nonatomic,retain) NSDictionary *myDic;
+@property (assign,nonatomic) id<PushText> delegate;
+
+- (id) initWithScoreArray:(NSArray *) scoreArray WithListArray:(NSArray *) listArray WithTitle:(NSString *) title;
 @end

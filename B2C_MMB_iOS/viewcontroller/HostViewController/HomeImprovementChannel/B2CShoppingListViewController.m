@@ -64,26 +64,30 @@
     btn.selected = !btn.selected;
     [btn setUserInteractionEnabled:YES];
     
-    if(!searchView)
-    {
-        searchView = [[UIView alloc] initWithFrame:CGRectMake(320, 0, 200, ScreenHeight-60)];
-//        [searchView setBackgroundColor:[UIColor redColor]];
+//    if(!searchView)
+//    {
+    searchView = [[UIView alloc] init];
+    [searchView setFrame:CGRectMake(100, 0, ScreenWidth-100, ScreenHeight-60)];
+
         [self.view addSubview:searchView];
-    }
-    if(!search)
-    {
-        search = [[B2CShoppingSearchViewController alloc] init];
-        [self addChildViewController:search];
-//        [search.view setBackgroundColor:[UIColor redColor]];
-        search.view.frame = searchView.bounds;
-    }
+//    }
+//    if(!search)
+//    {
+
+//    }
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDuration:0.3];
-    
-    [searchView setFrame:CGRectMake(100, 0, 220, ScreenHeight-60)];
+    search = [[B2CShoppingSearchViewController alloc] initWithFrame:searchView.bounds];
+//    search.view.frame = searchView.bounds;
+    [self addChildViewController:search];
     [searchView addSubview:search.view];
+
+    
     [UIView commitAnimations];
+    
+    [search addHeadView];
+
 }
 
 - (void) viewWillDisappear:(BOOL)animated

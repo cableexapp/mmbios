@@ -30,6 +30,10 @@
     BOOL _reloading;
     
     NSArray *scoreArray;
+    
+    NSArray *typeArray;
+    
+    ShopHostPreTableViewController *preVC;
 }
 @end
 
@@ -44,14 +48,15 @@
     return self;
 }
 
-- (id) initWithHeadTitle:(NSString *) title WithShopId:(NSString *) shopId
+- (id) initWithHeadTitle:(NSString *) title WithShopId:(NSString *) shopId WithUse:(NSString *) use
 {
     if(self = [super init])
     {
         _myTitle = title;
 //        _shopId = shopId;
         _shopId = @"263";
-        NSLog(@"shopId = %@",shopId);
+        
+        shopUse = use;
     }
     return self;
 }
@@ -77,6 +82,7 @@
     
     [self pushAndPopStyle];
 
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
     self.navigationItem.titleView = top;
     
@@ -90,12 +96,51 @@
     [self.tableView addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
     
-    [self loadRequest:_shopId];
+    [self loadRequest:_shopId WithUse:shopUse];
     
 
 }
 
-- (void) loadRequest:(NSString *) seq
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    // 输出点击的view的类名
+    NSLog(@"%@", NSStringFromClass([touch.view class]));
+    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    if([NSStringFromClass([touch.view class]) isEqualToString:@"DCFNavigationBar"])
+    {
+        [self preViewTap];
+        [self.navigationController popViewControllerAnimated:YES];
+        return NO;
+    }
+    if([NSStringFromClass([touch.view class]) isEqualToString:@"UITabBarButton"])
+    {
+        return NO;
+    }
+    return  YES;
+}
+
+- (void) preViewTap
+{
+    if(preVC)
+    {
+        [preVC.view removeFromSuperview];
+        preVC.view = nil;
+        
+        [preVC removeFromParentViewController];
+        preVC = nil;
+    }
+    if(preView)
+    {
+        [preView removeFromSuperview];
+        preView = nil;
+    }
+}
+
+- (void) loadRequest:(NSString *) shopId WithUse:(NSString *) use
 {
 //    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 //    [HUD setDelegate:self];
@@ -108,9 +153,9 @@
     
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductList",time];
     
-    NSString *s = [DCFCustomExtra md5:string];
+    NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d",@"",@"",@"",@"",_shopId,s,pageSize,intPage];
+    NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d",use,@"",@"",@"",_shopId,token,pageSize,intPage];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
@@ -161,9 +206,11 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    
     if(URLTag == URLB2CGoodsListTag)
     {
-        NSLog(@"%@",dicRespon);
+//        NSLog(@"%@",dicRespon);
         
         if(_reloading == YES)
         {
@@ -179,8 +226,7 @@
         }
         else
         {
-            NSString *result = [dicRespon objectForKey:@"result"];
-            if([result isEqualToString:@"1"])
+            if(result == 1)
             {
                 
                 if(intPage == 1)
@@ -202,6 +248,19 @@
                     [moreCell stopAnimation];
                 }
                 intPage++;
+                
+                NSString *time = [DCFCustomExtra getFirstRunTime];
+                
+                NSString *string = [NSString stringWithFormat:@"%@%@",@"getShopProductType",time];
+                
+                NSString *token = [DCFCustomExtra md5:string];
+                
+                NSString *pushString = [NSString stringWithFormat:@"token=%@&shopid=%@",token,_shopId];
+                
+                NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShopProductType.html?"];
+
+                conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGetShopProductTypeTag delegate:self];
+                [conn getResultFromUrlString:urlString postBody:pushString method:POST];
             }
             else
             {
@@ -211,6 +270,17 @@
         
         [self.tableView reloadData];
         
+    }
+    if(URLTag == URLB2CGetShopProductTypeTag)
+    {
+        if(result == 1)
+        {
+            typeArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"types"]];
+        }
+        else
+        {
+            
+        }
     }
 }
 
@@ -249,16 +319,32 @@
 
 - (void) preBtnClick:(UIButton *) sender
 {
-    if(!scoreArray || scoreArray.count == 0)
+    if(!scoreArray || scoreArray.count == 0 || !typeArray || typeArray.count == 0)
     {
         [DCFStringUtil showNotice:@"数据正在读取中"];
         return;
     }
     else
     {
+        preView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, ScreenHeight)];
+        [preView setBackgroundColor:[UIColor colorWithRed:203.0/255.0 green:203.0/255.0 blue:203.0/255.0 alpha:0.6]];
+        [self.view.window addSubview:preView];
         
+        preVC = [[ShopHostPreTableViewController alloc] initWithScoreArray:scoreArray WithListArray:typeArray WithTitle:_myTitle];
+        preVC.delegate = self;
+        [preVC.view setFrame:CGRectMake(preView.frame.size.width-200, 0, 200, preView.frame.size.height)];
+
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(preViewTap)];
+        [tap setDelegate:self];
+        [self.view.window addGestureRecognizer:tap];
+
+        
+        [preView addSubview:preVC.view];
+        [self addChildViewController:preVC];
     }
 }
+
+
 
 #pragma mark - Table view data source
 
@@ -346,6 +432,26 @@
     return nil;
 }
 
+#pragma mark - 筛选代理
+- (void) pushText:(NSString *)text
+{
+    shopUse = text;
+    if(text.length == 0)
+    {
+        
+    }
+    else
+    {
+        if(dataArray && dataArray.count != 0)
+        {
+            [dataArray removeAllObjects];
+        }
+        [self.tableView reloadData];
+        [self loadRequest:_shopId WithUse:shopUse];
+    }
+    [self preViewTap];
+}
+
 - (void) tap:(UITapGestureRecognizer *) sender
 {
     int tag = [[sender view] tag];
@@ -366,7 +472,7 @@
             {
                 if ((intPage-1) * pageSize < intTotal )
                 {
-                    [self loadRequest:_shopId];
+                    [self loadRequest:_shopId WithUse:shopUse];
                 }
             }
         }
@@ -390,7 +496,7 @@
     
     _reloading = YES;
     intPage = 1;
-    [self loadRequest:_shopId];
+    [self loadRequest:_shopId WithUse:shopUse];
 }
 //
 - (void)doneLoadingViewData

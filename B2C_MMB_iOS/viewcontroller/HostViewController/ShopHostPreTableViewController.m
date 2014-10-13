@@ -7,6 +7,7 @@
 //
 
 #import "ShopHostPreTableViewController.h"
+#import "MCDefine.h"
 
 @interface ShopHostPreTableViewController ()
 
@@ -23,15 +24,32 @@
     return self;
 }
 
+- (id) initWithScoreArray:(NSArray *) scoreArray WithListArray:(NSArray *) listArray WithTitle:(NSString *) title
+{
+    if(self = [super init])
+    {
+        discussArray = [[NSMutableArray alloc] init];
+        if(scoreArray.count != 0)
+        {
+            for(int i=0;i<4;i++)
+            {
+                [discussArray addObject:[scoreArray objectAtIndex:i]];
+            }
+        }
+        NSLog(@"%@",discussArray);
+        
+        ListArray = [[NSArray alloc] initWithArray:listArray];
+        NSLog(@"%@",ListArray);
+        
+        headTitle = title;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,76 +62,94 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+
+    return 1;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row == 0)
+    {
+        return 190;
+    }
+    return 30;
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    [headLabel setText:headTitle];
+    [headLabel setTextAlignment:NSTextAlignmentCenter];
+    [headLabel setFont:[UIFont systemFontOfSize:20]];
+    [headLabel setBackgroundColor:[UIColor whiteColor]];
+    return headLabel;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 1 + ListArray.count;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString *cellId = @"cellId";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if(!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+    }
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+    {
+        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    }
     
-    // Configure the cell...
-    
+    if(indexPath.row == 0)
+    {
+        for(int i=0;i<discussArray.count+1;i++)
+        {
+            UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20+30*i, self.view.frame.size.width, 30)];
+            [cellLabel setTextAlignment:NSTextAlignmentCenter];
+            if(i == 0 || i == 1)
+            {
+                [cellLabel setText:[discussArray objectAtIndex:0]];
+            }
+            else
+            {
+                [cellLabel setText:[discussArray objectAtIndex:i-1]];
+            }
+            [cell.contentView addSubview:cellLabel];
+        }
+    }
+    else
+    {
+        [cell.textLabel setText:[ListArray objectAtIndex:indexPath.row-1]];
+    }
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+
+
+
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    NSString *str = nil;
+    if(indexPath.row == 0)
+    {
+        str = @"";
+    }
+    else
+    {
+        str = [ListArray objectAtIndex:indexPath.row-1];
+    }
+    [self.delegate pushText:str];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

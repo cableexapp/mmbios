@@ -194,6 +194,7 @@
 - (void)rightItemClick:(id) sender
 {
     [self setHidesBottomBarWhenPushed:YES];
+    shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
     [self.navigationController pushViewController:shop animated:YES];
 }
 
@@ -288,7 +289,6 @@
     
     
     
-    //    shop = [[MyShoppingListViewController alloc] init];
     
 }
 
@@ -316,8 +316,6 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
-        NSLog(@"%@",dicRespon);
-        
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 1)
@@ -346,9 +344,7 @@
         {
             [DCFStringUtil showNotice:msg];
             
-            shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
-            
-            [self.navigationController pushViewController:shop animated:YES];
+
         }
         else
         {
@@ -799,7 +795,8 @@
     UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
     
 //    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:label.text];
-    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:detailData.shopName WithShopId:detailData.shopId];
+    [self setHidesBottomBarWhenPushed:YES];
+    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:detailData.shopName WithShopId:detailData.shopId WithUse:@""];
 
     [self.navigationController pushViewController:shopHost animated:YES];
 }

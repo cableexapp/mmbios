@@ -10,7 +10,6 @@
 #import "DCFMyTextField.h"
 #import "DCFConnectionUtil.h"
 
-//这个类，购物车列表类MyShoppingListViewController,UpOrderViewController
 
 @interface BillMsgManagerViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate>
 {

@@ -19,11 +19,12 @@
 #import "B2CShopCarListData.h"
 #import "UIImageView+WebCache.h"
 #import "B2CUpOrderData.h"
-
-#pragma mark - 在家修改
+#import "AppDelegate.h"
 
 @interface MyShoppingListViewController ()
 {
+    AppDelegate *app;
+
     DCFChenMoreCell *moreCell;
     
     NSMutableArray *cellBtnArray;   //cell前面选择的按钮
@@ -141,7 +142,7 @@
 {
     if(self = [super init])
     {
-        parameterArray = [[NSArray alloc] initWithArray:arr];
+     
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
         
@@ -153,13 +154,18 @@
         NSString *pushString = nil;
         
         BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+        
+        NSString *visitorid = [app getUdid];
+        
+        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+   
         if(hasLogin == YES)
         {
-            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",[parameterArray lastObject],token];
+            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
         }
         else
         {
-            pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",[parameterArray lastObject],token];
+            pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
         }
         
         
@@ -192,6 +198,7 @@
     
     if(URLTag == URLShopCarGoodsMsgTag)
     {
+        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[B2CShopCarListData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -454,11 +461,8 @@
                 total = total + array.count;
             }
             
-            if(total == 0)
-            {
-                [dataArray removeAllObjects];
-                dataArray = nil;
-            }
+            NSLog(@"dataArray = %@",dataArray);
+            
             
             for(int i=dataArray.count-1;i>=0;i--)
             {
@@ -470,16 +474,17 @@
                 }
             }
             
-//            totalMoney = 0;
-//            for(int i=0;i<dataArray.count;i++)
-//            {
-//                NSString *money = [dataArray objectAtIndex:i];
-//                NSString *number = [[chooseGoodsArray objectAtIndex:i] num];
-//                
-//                total = total + [money floatValue]*[number floatValue];
-//                
-                [moneyLabel setText:[DCFCustomExtra notRounding:0.00 afterPoint:2]];
-//            }
+            NSLog(@"headLabelArray = %@",headLabelArray);
+            
+            if(total == 0)
+            {
+                [dataArray removeAllObjects];
+                dataArray = nil;
+            }
+            
+  
+            
+            [moneyLabel setText:[DCFCustomExtra notRounding:0.00 afterPoint:2]];
             
             [buttomBtn setSelected:NO];
             [tv reloadData];
@@ -628,6 +633,7 @@
     
     [self pushAndPopStyle];
     
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     //    [moreCell startAnimation];
     
@@ -981,6 +987,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
                 return 0;
             }
         }
+        if(dataArray.count == 0)
+        {
+            return 0;
+        }
     }
     
     if(!dataArray)
@@ -992,7 +1002,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!dataArray)
+    if(!dataArray || dataArray.count == 0)
     {
         return ScreenHeight - 34;
     }
@@ -1024,7 +1034,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    if(!dataArray)
+    if(!dataArray || dataArray.count == 0)
     {
         return 1;
     }
@@ -1033,7 +1043,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (!dataArray)
+    if(!dataArray || dataArray.count == 0)
     {
         return nil;
     }

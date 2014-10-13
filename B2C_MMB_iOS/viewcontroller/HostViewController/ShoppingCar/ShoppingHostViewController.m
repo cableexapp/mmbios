@@ -110,7 +110,7 @@
 - (void) rightBtnClick:(UIButton *) sender
 {
     [self setHidesBottomBarWhenPushed:YES];
-    MyShoppingListViewController *shoppingList = [[MyShoppingListViewController alloc] init];
+    MyShoppingListViewController *shoppingList = [[MyShoppingListViewController alloc] initWithDataArray:nil];
     [self.navigationController pushViewController:shoppingList animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

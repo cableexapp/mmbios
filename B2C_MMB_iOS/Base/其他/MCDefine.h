@@ -10,6 +10,8 @@
 #define coin_MCDefine_h
 
 #define ScreenHeight self.view.frame.size.height
+#define ScreenWidth self.view.frame.size.width
+
 #define IS_IOS_7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
 #define MainScreenHeight [UIScreen mainScreen].bounds.size.height
 

@@ -129,6 +129,8 @@
     
     DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
     self.window.rootViewController = tabbar;
+//    [tabbar.view.window setBackgroundColor:[UIColor blackColor]];
+//    [tabbar.view.window setOpaque:NO];
     
     [PhoneHelper sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];

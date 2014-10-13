@@ -13,14 +13,21 @@
 #import "CKRefreshControl.h"
 #import "EGORefreshTableHeaderView.h"
 #import "B2CShoppingSearchViewController.h"
+#import "ShopHostPreTableViewController.h"
 
-@interface ShopHostTableViewController : UITableViewController<ConnectionDelegate,EGORefreshTableHeaderDelegate>
+@interface ShopHostTableViewController : UITableViewController<ConnectionDelegate,EGORefreshTableHeaderDelegate,UIGestureRecognizerDelegate,PushText>
 {
     DCFConnectionUtil *conn;
+    
+    UIView *preView;
+    
+    UIView *preBackView;
+    
+    NSString *shopUse;
 }
 @property (strong,nonatomic) NSString *shopId;
 @property (strong,nonatomic) NSString *myTitle;
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 
-- (id) initWithHeadTitle:(NSString *) title WithShopId:(NSString *) shopId;
+- (id) initWithHeadTitle:(NSString *) title WithShopId:(NSString *) shopId WithUse:(NSString *) use;
 @end

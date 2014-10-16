@@ -11,8 +11,7 @@
 #import "HostTableViewController.h"
 #import "SecondTableViewController.h"
 #import "ThirdTableViewController.h"
-#import "FourthTableViewController.h"
-
+#import "FourthHostViewController.h"
 //#import "DCFParentschoolViewCtrl.h"
 //#import "DCFHomeSchoolViewCtrl.h"
 //#import "DCFStudyGardenViewCtrl.h"
@@ -56,12 +55,13 @@
     
     [self initCutomBar];
     
-    //设置tabbar图片文字颜色
-//    [[UITabBar appearance] setTintColor:[UIColor redColor]];
-    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:30/255.0 green:35/255.0 blue:32/255.0 alpha:1.0]];
-
     //设置tabbar背景颜色
-    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:99/255.0 green:170/255.0 blue:20/255.0 alpha:1.0]];
+//    [[UITabBar appearance] setTintColor:[UIColor redColor]];
+//    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:30/255.0 green:35/255.0 blue:32/255.0 alpha:1.0]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+
+    //设置tabbar图片文字颜色
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:18/255.0 green:104/255.0 blue:253/255.0 alpha:1.0]];
 //    [[UITabBar appearance] setBarTintColor:[UIColor orangeColor]];
 
 }

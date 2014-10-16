@@ -1136,6 +1136,7 @@
     [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra notRounding:goodsMoney afterPoint:2]]];
 }
 
+#pragma mark - 从字符串中取出数字
 - (NSString *) getNumFromString:(NSString *) string
 {
     NSString *price = @"";

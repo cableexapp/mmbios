@@ -9,16 +9,37 @@
 #import "B2CShoppingSearchViewController.h"
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
+#import "DCFStringUtil.h"
 
 @interface B2CShoppingSearchViewController ()
 {
     NSMutableArray *ivArray;
-
+    
     
     NSMutableArray *array1;
     NSMutableArray *array2;
     NSMutableArray *array3;
     NSMutableArray *array4;
+    
+    
+    UIImageView *useCloseIV;  //用途右上角关闭
+    
+    NSString *useString;  //用途
+    NSString *brandString; //品牌
+    NSString *specString;   //横截面
+    NSString *modelString;  //型号
+    
+    NSMutableArray *headBtnArray;   //第一组（显示筛选条件的按钮）数组
+    
+    BOOL showUseCell;
+    BOOL showModelCell;
+    BOOL showSpecCell;
+    BOOL showBrandCell;
+    
+    NSMutableArray *brandsArray;
+    NSMutableArray *modelsArray;
+    NSMutableArray *specsArray;
+    NSMutableArray *uses;
 }
 @end
 
@@ -31,6 +52,381 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
+}
+
+- (void) loadRequestWithUse:(NSString *) requestUse WithModel:(NSString *) model WithSpec:(NSString *) spec WithBrand:(NSString *) brand WithRequestName:(NSString *) name WithTag:(int) tag
+{
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [HUD setLabelText:@"加载中..."];
+    [HUD setDelegate:self];
+    
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",name,time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&spec=%@&brand=%@",token,requestUse,model,spec,brand];
+    
+    NSString *urlString = nil;
+    if(tag == 0)
+    {
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLScreeningConditionTag delegate:self];
+
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ScreeningCondition.html?"];
+    }
+    else if (tag == 1)
+    {
+
+    }
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLScreeningConditionTag delegate:self];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    if(URLTag == URLScreeningConditionTag)
+    {
+        if(result == 1)
+        {
+            brandsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"brands"]]];
+            modelsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"models"]]];
+            specsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"specs"]]];
+            
+            for(UIButton *btn in array2)
+            {
+                NSString *str = btn.titleLabel.text;
+                for(int i=0;i<brandsArray.count;i++)
+                {
+                    if([str isEqualToString:[brandsArray objectAtIndex:i]])
+                    {
+                        [btn setEnabled:YES];
+                        break;
+                    }
+                    else
+                    {
+                        [btn setEnabled:NO];
+                    }
+                }
+                if(brandsArray.count == 0)
+                {
+                    [btn setEnabled:NO];
+                }
+            }
+            for(UIButton *btn in array3)
+            {
+                NSString *str = btn.titleLabel.text;
+                for(int i=0;i<modelsArray.count;i++)
+                {
+                    if([str isEqualToString:[modelsArray objectAtIndex:i]])
+                    {
+                        [btn setEnabled:YES];
+                        break;
+                    }
+                    else
+                    {
+                        [btn setEnabled:NO];
+                    }
+                }
+                if(modelsArray.count == 0)
+                {
+                    [btn setEnabled:NO];
+                }
+            }
+            for(UIButton *btn in array4)
+            {
+                NSString *str = btn.titleLabel.text;
+                str = [self getNumFromString:str];
+                for(int i=0;i<specsArray.count;i++)
+                {
+                    if([str isEqualToString:[specsArray objectAtIndex:i]])
+                    {
+                        [btn setEnabled:YES];
+                        break;
+                    }
+                    else
+                    {
+                        [btn setEnabled:NO];
+                    }
+                }
+                if(specsArray.count == 0)
+                {
+                    [btn setEnabled:NO];
+                }
+            }
+        }
+        else
+        {
+            [DCFStringUtil showNotice:msg];
+        }
+        [tv reloadData];
+    }
+}
+
+- (NSString *) getNumFromString:(NSString *) string
+{
+    NSString *price = @"";
+    for(int i=0;i<string.length;i++)
+    {
+        char c = [string characterAtIndex:i];
+        if(c == '.' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9')
+        {
+            price = [price stringByAppendingFormat:@"%c",c];
+        }
+    }
+    return price;
+}
+
+#pragma mark - 去除重复元素
+- (NSMutableArray *) dealArray:(NSMutableArray *) arr
+{
+    NSSet *set = [NSSet setWithArray:arr];
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    for(int i=0;i<[[set allObjects] count];i++)
+    {
+        [array addObject:[[set allObjects] objectAtIndex:i]];
+    }
+    return array;
+}
+
+#pragma mark - 用途按钮选中点击
+- (void) useBtnClick:(UIButton *) sender
+{
+    useString = sender.titleLabel.text;
+
+    [self upDateHeadBtnArray:1];
+    
+    UIButton *useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [useBtn setTitle:useString forState:UIControlStateNormal];
+    [useBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [useBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    useBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    useBtn.layer.borderWidth = 1.0f;
+    [useBtn setTag:1];
+    [headBtnArray addObject:useBtn];
+    
+    showUseCell = NO;
+    
+
+    [self setHeadBtnFrame];
+ 
+
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+ 
+}
+
+#pragma mark - 品牌按钮点击
+- (void) brandBtnClick:(UIButton *) sender
+{
+    brandString = sender.titleLabel.text;
+    
+    [self upDateHeadBtnArray:4];
+    
+    UIButton *brandBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [brandBtn setTitle:brandString forState:UIControlStateNormal];
+    [brandBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [brandBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    brandBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    brandBtn.layer.borderWidth = 1.0f;
+    [brandBtn setTag:4];
+    [headBtnArray addObject:brandBtn];
+    
+    showBrandCell = NO;
+    
+    [self setHeadBtnFrame];
+    
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+}
+
+#pragma mark - 型号按钮点击
+- (void) modelBtnClick:(UIButton *) sender
+{
+    modelString = sender.titleLabel.text;
+    
+    [self upDateHeadBtnArray:2];
+    
+    UIButton *modelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [modelBtn setTitle:modelString forState:UIControlStateNormal];
+    [modelBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [modelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    modelBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    modelBtn.layer.borderWidth = 1.0f;
+    [modelBtn setTag:2];
+    [headBtnArray addObject:modelBtn];
+    
+    showModelCell = NO;
+    
+
+    [self setHeadBtnFrame];
+    
+    
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+}
+
+#pragma mark - 横截面按钮点击
+- (void) specBtnClick:(UIButton *) sender
+{
+    specString = sender.titleLabel.text;
+    
+    [self upDateHeadBtnArray:3];
+    
+    UIButton *specBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [specBtn setTitle:specString forState:UIControlStateNormal];
+    [specBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [specBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    specBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    specBtn.layer.borderWidth = 1.0f;
+    [specBtn setTag:3];
+    [headBtnArray addObject:specBtn];
+    
+    showSpecCell = NO;
+    
+    [self setHeadBtnFrame];
+    
+    specString = [self getNumFromString:specString];
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+}
+
+#pragma mark - 更新第一组里面的按钮
+- (void) upDateHeadBtnArray:(int) btnTag
+{
+    if(headBtnArray && headBtnArray.count != 0)
+    {
+        for(int i=0;i<headBtnArray.count;i++)
+        {
+            UIButton *B  = [headBtnArray objectAtIndex:i];
+            if(B.tag == btnTag)
+            {
+                [headBtnArray removeObject:B];
+            }
+        }
+    }
+}
+
+#pragma mark - 第一组按钮点击事件
+- (void) headBtnClick:(UIButton *) sender
+{
+    if(headBtnArray && headBtnArray.count != 0)
+    {
+
+        UIButton *btn = sender;
+        if(btn.tag == 1)
+        {
+            showUseCell = YES;
+            useString = @"";
+        }
+        if(btn.tag == 2)
+        {
+            modelString = @"";
+            showModelCell = YES;
+            
+        }
+        if(btn.tag == 3)
+        {
+            specString = @"";
+            showSpecCell = YES;
+        }
+        if(btn.tag == 4)
+        {
+            brandString = @"";
+            showBrandCell = YES;
+        }
+        if(btn.tag == sender.tag)
+        {
+            [headBtnArray removeObject:btn];
+        }
+ 
+        [self setHeadBtnFrame];
+    }
+    if(headBtnArray.count == 0)
+    {
+        for(UIButton *btn in array2)
+        {
+            [btn setEnabled:YES];
+        }
+        for(UIButton *btn in array3)
+        {
+            [btn setEnabled:YES];
+        }
+        for(UIButton *btn in array4)
+        {
+            [btn setEnabled:YES];
+        }
+    }
+    
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+    
+    if(headBtnArray.count != 0)
+    {
+        for(UIButton *btn in headBtnArray)
+        {
+            if(btn.tag == 1)
+            {
+                
+            }
+        }
+    }
+}
+
+#pragma mark - 设置第一组按钮frame
+- (void) setHeadBtnFrame
+{
+    if(headBtnArray && headBtnArray.count != 0)
+    {
+        for(int i=0;i<headBtnArray.count;i++)
+        {
+            float width = (myRect.size.width-20)/2;
+            UIButton *B  = [headBtnArray objectAtIndex:i];
+            [B setTitle:B.titleLabel.text forState:UIControlStateNormal];
+            [B addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            
+            switch (i)
+            {
+                case 0:
+                    [B setFrame:CGRectMake(5, 5, width, 30)];
+                    break;
+                case 1:
+                    [B setFrame:CGRectMake(15+width, 5, width, 30)];
+                    break;
+                case 2:
+                    [B setFrame:CGRectMake(5, 40, width, 30)];
+                    break;
+                case 3:
+                    [B setFrame:CGRectMake(15+width, 40, width, 30)];
+                    break;
+                default:
+                    break;
+            }
+            
+            useCloseIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
+            [useCloseIV setFrame:CGRectMake(B.frame.size.width-10, 5, 20, 20)];
+            [B addSubview:useCloseIV];
+     
+        }
+    }
+    [tv reloadData];
+}
+
+#pragma mark - 单独刷新第一组
+- (void) reloadSection
+{
+    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSArray *arr = [NSArray arrayWithObjects:path, nil];
+    [tv reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void) addHeadView
@@ -68,7 +464,7 @@
     //    sectionArray = [[NSArray alloc] initWithObjects:@"品牌",@"用途",@"型号",@"横截面",@"颜色",@"芯数",@"单位", nil];
     
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, myRect.size.width, ScreenHeight -  40 - 100) style:0];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, myRect.size.width, myRect.size.height-40) style:0];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
@@ -146,12 +542,13 @@
             [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*5 + 30*4, btnWidth, 30)];
             [btn setTitle:@"音频" forState:UIControlStateNormal];
         }
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
-        
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(useBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+        [btn setEnabled:YES];
         [array1 addObject:btn];
     }
     
@@ -207,11 +604,13 @@
         }
         
         
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+        [btn setEnabled:YES];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(brandBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [array2 addObject:btn];
     }
     
@@ -285,15 +684,17 @@
             [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*5 + 30*4, btnWidth, 30)];
             [btn setTitle:@"HSYV-5" forState:UIControlStateNormal];
         }
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+        [btn setEnabled:YES];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [array3 addObject:btn];
     }
     
-#pragma MARK - 横截面数组
+#pragma mark - 横截面数组
     array4 = [[NSMutableArray alloc] init];
     for(int i=0;i<11;i++)
     {
@@ -354,12 +755,14 @@
             [btn setTitle:@"35平方" forState:UIControlStateNormal];
         }
         
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
-        
+        [btn setEnabled:YES];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(specBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+
         [array4 addObject:btn];
     }
     _myDic = [[NSDictionary alloc] initWithObjectsAndKeys:array1,@"按用途筛选",
@@ -378,8 +781,8 @@
     }
     
     flag = (BOOL*)malloc([[_myDic allKeys] count]*sizeof(BOOL*));
-    memset(flag, NO, sizeof(flag));
-
+    memset(flag, YES, sizeof(flag));
+    
 }
 
 - (id) initWithFrame:(CGRect) rect
@@ -390,33 +793,75 @@
         myRect = rect;
         self.view.frame = rect;
         
+        headBtnArray = [[NSMutableArray alloc] init];
         
-
+        useString = @"";
+        brandString = @"";
+        specString = @"";
+        modelString = @"";
+        
+        showUseCell = YES;
+        showModelCell = YES;
+        showSpecCell = YES;
+        showBrandCell = YES;
     }
     return self;
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(HUD)
+    {
+        [HUD hide:YES];
+        HUD = nil;
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-   
+    
+    
 }
 
 - (void) clear:(UIButton *) sender
 {
+    if(headBtnArray && headBtnArray.count != 0)
+    {
+        [headBtnArray removeAllObjects];
+        
+        showUseCell = YES;
+        showModelCell = YES;
+        showSpecCell = YES;
+        showBrandCell = YES;
+        
+        useString = @"";
+        modelString = @"";
+        specString = @"";
+        brandString = @"";
+        
+        [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+    }
+    
+    [self.view.superview removeFromSuperview];
+    [self.view removeFromSuperview];
+    self.view = nil;
+    [self removeFromParentViewController];
 }
 
 - (void) sure:(UIButton *) sender
 {
-    sender.selected = !sender.selected;
     
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:0.3];
-    [[self.view superview] setFrame:CGRectMake(myRect.size.width, 0, 220, ScreenHeight-100)];
-    [UIView commitAnimations];
-
+    if([self.delegate respondsToSelector:@selector(requestStringWithUse:WithBrand:WithSpec:WithModel:WithSeq:)])
+    {
+        [self.delegate requestStringWithUse:useString WithBrand:brandString WithSpec:specString WithModel:modelString WithSeq:@""];
+    }
+    
+    
+    [self.view.superview removeFromSuperview];
+    [self.view removeFromSuperview];
+    self.view = nil;
+    [self removeFromParentViewController];
     
 }
 
@@ -431,72 +876,186 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[_myDic allKeys] count];
+    return [[_myDic allKeys] count]+1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-	return [self numberOfRowsInSection:section];
+    if(section == 0)
+    {
+        if(!headBtnArray || headBtnArray.count == 0)
+        {
+            return 0;
+        }
+        return 1;
+    }
+	return [self numberOfRowsInSection:section-1];
 }
 
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section]] count];
-    
-    UIButton *btn = (UIButton *)[[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section]] lastObject];
+    if(indexPath.section == 0)
+    {
+        if(!headBtnArray || headBtnArray.count == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return [[headBtnArray lastObject] frame].origin.y + [[headBtnArray lastObject] frame].size.height + 5;
+        }
+    }
+    else
+    {
+        [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section-1]] count];
+        
+        UIButton *btn = (UIButton *)[[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section-1]] lastObject];
+//        if(indexPath.section == 0)
+//        {
+//            float btnWidth = (myRect.size.width-20)/3;
+//            UIButton *btn = [array1 objectAtIndex:0];
+//            
+//        }
+        if(indexPath.section == 1)
+        {
+            
+            if(showUseCell == YES)
+            {
+                for(UIButton *btn in array1)
+                {
+                    [btn setHidden:NO];
+                }
+            }
+            else
+            {
+                for(UIButton *btn in array1)
+                {
+                    [btn setHidden:YES];
+                }
+                return 0;
+            }
+        }
+        if(indexPath.section == 2)
+        {
+            if(showModelCell == YES)
+            {
+                for(UIButton *btn in array3)
+                {
+                    [btn setHidden:NO];
+                }
+            }
+            else
+            {
+                for(UIButton *btn in array3)
+                {
+                    [btn setHidden:YES];
+                }
+                return 0;
+            }
+        }
+        if(indexPath.section == 3)
+        {
+            if(showSpecCell == YES)
+            {
+                for(UIButton *btn in array4)
+                {
+                    [btn setHidden:NO];
+                }
+            }
+            else
+            {
+                for(UIButton *btn in array4)
+                {
+                    [btn setHidden:YES];
+                }
+                return 0;
+            }
+        }
+        if(indexPath.section == 4)
+        {
+            if(showBrandCell == YES)
+            {
+                for(UIButton *btn in array2)
+                {
+                    [btn setHidden:NO];
+                }
+            }
+            else
+            {
+                for(UIButton *btn in array2)
+                {
+                    [btn setHidden:YES];
+                }
+                return 0;
+            }
+        }
+        return btn.frame.origin.y + btn.frame.size.height +5;
+    }
 
-//    if(indexPath.section == 0)
-//    {
-//        if(indexPath.row == 0)
-//        {
-//            UIButton *btn = (UIButton *)[array1 lastObject];
-            return btn.frame.origin.y + btn.frame.size.height +5;
-//        }
-//    }
-//
-//    if(indexPath.section == 1)
-//    {
-//        if(indexPath.row == 0)
-//        {
-//            UIButton *btn = (UIButton *)[array2 lastObject];
-//            return btn.frame.origin.y + btn.frame.size.height +5;
-//        }
-//    }
-//
-//    
-//    if(indexPath.section == 2)
-//    {
-//        if(indexPath.row == 0)
-//        {
-//            UIButton *btn = (UIButton *)[array3 lastObject];
-//            return btn.frame.origin.y + btn.frame.size.height +5;
-//        }
-//    }
-//
-//    
-//    if(indexPath.section == 3)
-//    {
-//        if(indexPath.row == 0)
-//        {
-//            UIButton *btn = (UIButton *)[array4 lastObject];
-//            return btn.frame.origin.y + btn.frame.size.height +5;
-//        }
-//    }
-
-    return 40;
+    
+    return 0;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if(section == 0)
+    {
+        return 0;
+    }
+    if(section == 1)
+    {
+        if(showUseCell == YES)
+        {
+            
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    if(section == 2)
+    {
+        if(showModelCell == YES)
+        {
+            
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    if(section == 3)
+    {
+        if(showSpecCell == YES)
+        {
+            
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    if(section == 4)
+    {
+        if(showBrandCell == YES)
+        {
+            
+        }
+        else
+        {
+            return 0;
+        }
+    }
     return 32;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    
+    if(section == 0)
+    {
+        return nil;
+    }
     view1 = nil;
 	view2 = nil;
 	view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
@@ -511,10 +1070,10 @@
 	abtn.backgroundColor = [UIColor clearColor];
     abtn.frame = CGRectMake(0, 0,myRect.size.width, 32);
     
-    UIImageView *iv =[ivArray objectAtIndex:section];
+    UIImageView *iv =[ivArray objectAtIndex:section-1];
     [abtn addSubview:iv];
     
-	abtn.tag = section;
+	abtn.tag = section-1;
 	[abtn addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
 	[view2 addSubview:abtn];
     
@@ -522,12 +1081,12 @@
 	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, myRect.size.width, 30)];
 	label1.backgroundColor = [UIColor clearColor];
     [label1 setFont:[UIFont systemFontOfSize:13]];
-	label1.text = [[_myDic allKeys] objectAtIndex:section];
+	label1.text = [[_myDic allKeys] objectAtIndex:section-1];
     [abtn addSubview:label1];
 	
-
+    
 	return view1;
-
+    
 }
 
 
@@ -538,25 +1097,43 @@
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-//        [cell.contentView setBackgroundColor:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0]];
+        [cell setSelectionStyle:0];
+        //        [cell.contentView setBackgroundColor:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0]];
         [cell.contentView setBackgroundColor:[UIColor whiteColor]];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
     {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-//	NSString *str = [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:[indexPath section]]] objectAtIndex:indexPath.row];
-//	cell.imageView.image = [UIImage imageNamed:@"102.png"];
-//	cell.textLabel.text = str;
-//	cell.detailTextLabel.text = @"cocoaChina 会员";
+    //	NSString *str = [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:[indexPath section]]] objectAtIndex:indexPath.row];
+    //	cell.imageView.image = [UIImage imageNamed:@"102.png"];
+    //	cell.textLabel.text = str;
+    //	cell.detailTextLabel.text = @"cocoaChina 会员";
     
-    NSMutableArray *array = [_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section]];
-    for(UIButton *btn in array)
+    if(indexPath.section == 0)
     {
-        [cell.contentView addSubview:btn];
+        if(!headBtnArray || headBtnArray.count == 0)
+        {
+            
+        }
+        else
+        {
+            for(UIButton *btn in headBtnArray)
+            {
+                [cell.contentView addSubview:btn];
+            }
+        }
     }
+    else
+    {
+        NSMutableArray *array = [_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section-1]];
+        for(UIButton *btn in array)
+        {
+            [cell.contentView addSubview:btn];
+        }
+    }
+
     return cell;
-    
 }
 
 
@@ -587,7 +1164,7 @@
 - (int)numberOfRowsInSection:(NSInteger)section
 {
 	if (flag[section]) {
-//		return [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:section]] count];
+        //		return [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:section]] count];
         return 1;
 	}
 	else {

@@ -9,6 +9,7 @@
 #import "DCFCustomExtra.h"
 #import "MCDefine.h"
 #import <sys/utsname.h>
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation DCFCustomExtra
 

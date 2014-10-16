@@ -7,8 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
-@interface B2CShoppingSearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@protocol RequestString <NSObject>
+
+- (void) requestStringWithUse:(NSString *) myUse WithBrand:(NSString *) myBrand WithSpec:(NSString *) mySpec WithModel:(NSString *) myModel WithSeq:(NSString *) mySeq;
+
+@end
+
+
+@interface B2CShoppingSearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,MBProgressHUDDelegate>
 {
 //    NSDictionary *myDic;
 	BOOL *flag;
@@ -19,6 +28,10 @@
     UITableView *tv;
     
     CGRect myRect;
+    
+    DCFConnectionUtil *conn;
+    
+    MBProgressHUD *HUD;
 }
 
 - (id) initWithFrame:(CGRect) rect;
@@ -31,5 +44,5 @@
 @property (strong,nonatomic) UIView *lineView;
 @property (strong,nonatomic) UIButton *sureBtn;
 
+@property (strong,nonatomic) id<RequestString> delegate;
 @end
-

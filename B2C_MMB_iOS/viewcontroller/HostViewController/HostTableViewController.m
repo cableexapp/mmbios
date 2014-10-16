@@ -328,8 +328,10 @@
     int tag = [sender tag];
     if(tag == 12)
     {
+        [self setHidesBottomBarWhenPushed:YES];
         ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
         [self.navigationController pushViewController:shoppingHost animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
     }
 }
 

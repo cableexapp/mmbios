@@ -86,7 +86,7 @@
     
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height-44-44-25)];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height-44-20)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
@@ -112,7 +112,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     MyShoppingListViewController *shoppingList = [[MyShoppingListViewController alloc] initWithDataArray:nil];
     [self.navigationController pushViewController:shoppingList animated:YES];
-    [self setHidesBottomBarWhenPushed:NO];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) loadScrollview
@@ -173,7 +173,7 @@
 //    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:@""];
     [self.navigationController pushViewController:goodsDetail animated:YES];
-    [self setHidesBottomBarWhenPushed:NO];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
@@ -340,7 +340,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     B2CShoppingListViewController *shoppingList = [[B2CShoppingListViewController alloc] initWithUse:str];
     [self.navigationController pushViewController:shoppingList animated:YES];
-    [self setHidesBottomBarWhenPushed:NO];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 /*
  #pragma mark - Navigation

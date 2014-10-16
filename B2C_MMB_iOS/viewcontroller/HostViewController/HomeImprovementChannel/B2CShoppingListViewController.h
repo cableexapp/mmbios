@@ -14,7 +14,7 @@
 #import "EGORefreshTableHeaderView.h"
 #import "B2CShoppingSearchViewController.h"
 
-@interface B2CShoppingListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,ConnectionDelegate,MBProgressHUDDelegate,EGORefreshTableHeaderDelegate>
+@interface B2CShoppingListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,ConnectionDelegate,MBProgressHUDDelegate,EGORefreshTableHeaderDelegate,RequestString>
 {
     DCFConnectionUtil *conn;
     UITextField  *searchTextField;
@@ -23,7 +23,15 @@
     UIView *selectBtnView;
     
     MBProgressHUD *HUD;
+    
+    NSString *delegateMyUse;
+    NSString *delegateMyBrand;
+    NSString *delegateMySpec;
+    NSString *delegateMyModel;
+    
+    BOOL flag;
 }
+
 
 @property (strong,nonatomic) NSString *use;
 @property (strong,nonatomic) NSString *seq;

@@ -17,10 +17,11 @@
 #import "B2CGoodsListData.h"
 #import "DCFCustomExtra.h"
 
+#pragma mark - 少一个total字段,筛选部分
 @interface B2CShoppingListViewController ()
 {
     NSMutableArray *dataArray;
-
+    
     DCFChenMoreCell *moreCell;
     int intPage; //页数
     int intTotal; //总数
@@ -53,41 +54,86 @@
     if(self = [super init])
     {
         _use = string;
+        
+        flag = YES;
     }
     return self;
+}
+
+#pragma mark - delegate
+- (void) requestStringWithUse:(NSString *)myUse WithBrand:(NSString *)myBrand WithSpec:(NSString *)mySpec WithModel:(NSString *)myModel WithSeq:(NSString *)mySeq
+{
+    flag = NO;
+    
+    delegateMyUse = myUse;
+    delegateMyBrand = myBrand;
+    delegateMySpec = mySpec;
+    delegateMyModel = myModel;
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductListByCondition",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    intPage = 1;
+    pageSize = 10;
+
+    NSString *pushString = [NSString stringWithFormat:@"pagesize=%d&pageindex=%d&token=%@&use=%@&model=%@&spec=%@&brand=%@&seq=%@",pageSize,intPage,token,delegateMyUse,delegateMyModel,delegateMySpec,delegateMyBrand,_seq];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductListByCondition.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+
 }
 
 - (void) searchBtnClick:(UIButton *) sender
 {
     
+    for(int i=0;i<btnArray.count;i++)
+    {
+        UIButton *selectBtn = [btnArray objectAtIndex:i];
+        if(i == 0)
+        {
+            [selectBtn setSelected:YES];
+        }
+        else
+        {
+            [selectBtn setSelected:NO];
+        }
+    }
+    
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     [btn setUserInteractionEnabled:YES];
     
-//    if(!searchView)
-//    {
+    _seq = @"";
+    //    if(!searchView)
+    //    {
     searchView = [[UIView alloc] init];
-    [searchView setFrame:CGRectMake(100, 0, ScreenWidth-100, ScreenHeight-60)];
-
-        [self.view addSubview:searchView];
-//    }
-//    if(!search)
-//    {
-
-//    }
+    [searchView setFrame:CGRectMake(100, 0, ScreenWidth-100, ScreenHeight)];
+    [searchView setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:searchView];
+    //    }
+    //    if(!search)
+    //    {
+    
+    //    }
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDuration:0.3];
     search = [[B2CShoppingSearchViewController alloc] initWithFrame:searchView.bounds];
-//    search.view.frame = searchView.bounds;
+    search.delegate = self;
+    //    search.view.frame = searchView.bounds;
     [self addChildViewController:search];
     [searchView addSubview:search.view];
-
+    
     
     [UIView commitAnimations];
-    
     [search addHeadView];
-
+    
+    
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -106,6 +152,7 @@
     {
         [moreCell stopAnimation];
     }
+    flag = YES;
 }
 
 - (void) selectBtnClick:(UIButton *) sender
@@ -126,7 +173,7 @@
             intPage = 1;
             
             //价格product_price  销量:sale_num
-
+            
             if(i == 0)
             {
                 _seq = @"";
@@ -139,7 +186,14 @@
             {
                 _seq = @"sale_num";
             }
-            [self loadRequest:_seq WithUse:_use];
+            if(flag == YES)
+            {
+                [self loadRequest:_seq WithUse:_use];
+            }
+            else
+            {
+                [self requestStringWithUse:delegateMyUse WithBrand:delegateMyBrand WithSpec:delegateMySpec WithModel:delegateMyModel WithSeq:_seq];
+            }
         }
         else
         {
@@ -236,12 +290,12 @@
     [tv setShowsVerticalScrollIndicator:NO];
     [tv setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:tv];
-   
+    
     
     intPage = 1;
     
     dataArray = [[NSMutableArray alloc] init];
-
+    
     //ADD REFRESH VIEW
     _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, 320, 300)];
     [self.refreshView setDelegate:self];
@@ -251,7 +305,7 @@
     _seq = @"";
     [self loadRequest:_seq WithUse:_use];
     
-
+    
     
 }
 
@@ -260,7 +314,7 @@
     
     
     pageSize = 10;
-
+    
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     
@@ -283,6 +337,7 @@
 {
     if(URLTag == URLB2CGoodsListTag)
     {
+//        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];
@@ -324,9 +379,9 @@
                 [moreCell failAcimation];
             }
         }
-   
+        
         [tv reloadData];
-
+        
     }
 }
 
@@ -355,7 +410,7 @@
     {
         NSString *content = [[dataArray objectAtIndex:indexPath.row] productName];
         CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
-
+        
         
         CGFloat h = size_1.height + 30;
         
@@ -485,7 +540,14 @@
             {
                 if ((intPage-1) * pageSize < intTotal )
                 {
-                    [self loadRequest:_seq WithUse:_use];
+                    if(flag == YES)
+                    {
+                        [self loadRequest:_seq WithUse:_use];
+                    }
+                    else
+                    {
+                        [self requestStringWithUse:delegateMyUse WithBrand:delegateMyBrand WithSpec:delegateMySpec WithModel:delegateMyModel WithSeq:_seq];
+                    }
                 }
             }
         }
@@ -509,7 +571,14 @@
     
     _reloading = YES;
     intPage = 1;
-    [self loadRequest:_seq WithUse:_use];
+    if(flag == YES)
+    {
+        [self loadRequest:_seq WithUse:_use];
+    }
+    else
+    {
+        [self requestStringWithUse:delegateMyUse WithBrand:delegateMyBrand WithSpec:delegateMySpec WithModel:delegateMyModel WithSeq:_seq];
+    }
 }
 //
 - (void)doneLoadingViewData

@@ -198,7 +198,6 @@
     
     if(URLTag == URLShopCarGoodsMsgTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[B2CShopCarListData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -461,7 +460,6 @@
                 total = total + array.count;
             }
             
-            NSLog(@"dataArray = %@",dataArray);
             
             
             for(int i=dataArray.count-1;i>=0;i--)
@@ -474,7 +472,6 @@
                 }
             }
             
-            NSLog(@"headLabelArray = %@",headLabelArray);
             
             if(total == 0)
             {

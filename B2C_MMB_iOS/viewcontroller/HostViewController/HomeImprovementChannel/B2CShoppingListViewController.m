@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "B2CGoodsListData.h"
 #import "DCFCustomExtra.h"
+#import "GoodsDetailViewController.h"
 
 #pragma mark - 少一个total字段,筛选部分
 @interface B2CShoppingListViewController ()
@@ -74,7 +75,7 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductListByCondition",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    intPage = 1;
+//    intPage = 1;
     pageSize = 10;
 
     NSString *pushString = [NSString stringWithFormat:@"pagesize=%d&pageindex=%d&token=%@&use=%@&model=%@&spec=%@&brand=%@&seq=%@",pageSize,intPage,token,delegateMyUse,delegateMyModel,delegateMySpec,delegateMyBrand,_seq];
@@ -85,7 +86,7 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-
+    [moreCell startAnimation];
 }
 
 - (void) searchBtnClick:(UIButton *) sender
@@ -109,6 +110,9 @@
     [btn setUserInteractionEnabled:YES];
     
     _seq = @"";
+    intPage = 1;
+//    [self loadRequest:_seq WithUse:_use];
+    
     //    if(!searchView)
     //    {
     searchView = [[UIView alloc] init];
@@ -337,7 +341,6 @@
 {
     if(URLTag == URLB2CGoodsListTag)
     {
-//        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];
@@ -467,6 +470,7 @@
         {
             cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
             [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+            [cell setSelectionStyle:0];
         }
         while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
         {
@@ -552,6 +556,14 @@
             }
         }
     }
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *productId = [[dataArray objectAtIndex:indexPath.row] productId];
+    GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
+    [self.navigationController pushViewController:detail animated:YES];
+
 }
 //
 //

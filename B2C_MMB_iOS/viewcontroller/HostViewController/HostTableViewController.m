@@ -316,6 +316,7 @@
 
 -(void)EScrollerViewDidClicked:(NSUInteger)index
 {
+    
 }
 
 - (void) timer:(NSTimer *) sender

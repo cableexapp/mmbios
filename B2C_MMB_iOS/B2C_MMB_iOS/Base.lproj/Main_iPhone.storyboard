@@ -31,7 +31,7 @@
         <scene sceneID="eXN-yW-uQ2">
             <objects>
                 <navigationController storyboardIdentifier="hostNaviViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ptt-Oq-nc4" customClass="HostNaviViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="News.png" id="WYf-s0-lAz"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="" id="WYf-s0-lAz"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="XUk-e0-Ah6" customClass="DCFNavigationBar">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
@@ -45,12 +45,12 @@
             </objects>
             <point key="canvasLocation" x="72" y="-1268"/>
         </scene>
-        <!--Host Table View Controller - Item-->
+        <!--Host Table View Controller-->
         <scene sceneID="W5H-Tl-Wfd">
             <objects>
                 <tableViewController storyboardIdentifier="hostTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ddM-jv-iAs" customClass="HostTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="151" sectionHeaderHeight="22" sectionFooterHeight="22" id="DpM-Hg-ZrQ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -68,8 +68,9 @@
                             <outlet property="delegate" destination="ddM-jv-iAs" id="zc5-Ry-WqP"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Item" image="Learn.png" id="uQN-dM-Nei"/>
+                    <tabBarItem key="tabBarItem" title="" image="HomeSelect.png" id="uQN-dM-Nei"/>
                     <navigationItem key="navigationItem" id="onY-j0-NQR"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <segue destination="mOx-sH-1zd" kind="push" id="DA5-qO-DQf"/>
                     </connections>
@@ -107,11 +108,11 @@
             </objects>
             <point key="canvasLocation" x="541" y="-537"/>
         </scene>
-        <!--Second Navi View Controller - Item-->
+        <!--Second Navi View Controller-->
         <scene sceneID="RDK-67-FtU">
             <objects>
                 <navigationController storyboardIdentifier="secondNaviViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tdu-7S-iTW" customClass="SecondNaviViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="1" title="Item" image="News.png" id="r9b-PG-eHh"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="" id="r9b-PG-eHh"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="isc-7i-B8b">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
@@ -122,11 +123,11 @@
             </objects>
             <point key="canvasLocation" x="87" y="-562"/>
         </scene>
-        <!--Third Navi View Controller - Item-->
+        <!--Third Navi View Controller-->
         <scene sceneID="FYO-Jt-SL6">
             <objects>
                 <navigationController storyboardIdentifier="thirdNaviViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jNK-cB-Mak" customClass="ThirdNaviViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="Item" image="Parents.png" id="mKO-Rt-zIk"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="" id="mKO-Rt-zIk"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="fcG-Yk-BSr">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
@@ -140,11 +141,11 @@
             </objects>
             <point key="canvasLocation" x="108" y="248"/>
         </scene>
-        <!--Fourth Navi View Controller - Item-->
+        <!--Fourth Navi View Controller-->
         <scene sceneID="1N9-b5-gNj">
             <objects>
                 <navigationController storyboardIdentifier="fourthNaviViewController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qmx-4k-yju" customClass="FourthNaviViewController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="3" title="Item" image="Set.png" id="4nc-ng-GmS"/>
+                    <tabBarItem key="tabBarItem" tag="4" title="" id="4nc-ng-GmS"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="kJ3-eE-9jj">
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
@@ -163,7 +164,7 @@
             <objects>
                 <viewController storyboardIdentifier="shoppingHostViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mOx-sH-1zd" customClass="ShoppingHostViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GbZ-DC-X3X">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -182,7 +183,7 @@
             <objects>
                 <viewController storyboardIdentifier="myShoppingListViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="q9J-6k-2KV" customClass="MyShoppingListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="foU-Jw-NEd">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1509,9 +1510,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Learn.png" width="22" height="22"/>
+        <image name="HomeSelect.png" width="33" height="33"/>
         <image name="News.png" width="22" height="22"/>
-        <image name="Parents.png" width="22" height="22"/>
         <image name="Set.png" width="22" height="22"/>
         <image name="cabel.png" width="148" height="148"/>
     </resources>

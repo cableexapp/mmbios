@@ -116,10 +116,10 @@
         [self.navigationController popViewControllerAnimated:YES];
         return NO;
     }
-    if([NSStringFromClass([touch.view class]) isEqualToString:@"UITabBarButton"])
-    {
-        return NO;
-    }
+//    if([NSStringFromClass([touch.view class]) isEqualToString:@"UITabBarButton"])
+//    {
+//        return NO;
+//    }
     return  YES;
 }
 
@@ -147,7 +147,7 @@
 //    [HUD setLabelText:@"正在登陆....."];
     
     pageSize = 10;
-    intPage = 1;
+//    intPage = 1;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     
@@ -238,7 +238,7 @@
                 scoreArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"score"]];
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
-                
+                NSLog(@"total = %d",intTotal);
                 if(intTotal == 0)
                 {
                     [moreCell noDataAnimation];
@@ -326,6 +326,8 @@
     }
     else
     {
+        intPage = 1;
+
         preView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, ScreenHeight)];
         [preView setBackgroundColor:[UIColor colorWithRed:203.0/255.0 green:203.0/255.0 blue:203.0/255.0 alpha:0.6]];
         [self.view.window addSubview:preView];
@@ -336,7 +338,7 @@
 
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(preViewTap)];
         [tap setDelegate:self];
-        [self.view.window addGestureRecognizer:tap];
+        [self.view addGestureRecognizer:tap];
 
         
         [preView addSubview:preVC.view];

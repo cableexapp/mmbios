@@ -67,6 +67,9 @@ enum {
     URLDirectBuyTag,  //立即购买
     
     URLScreeningConditionTag,  //筛选条件关联
+    
+    
+    ULRGetOrderListTag,   //订单列表
 };
 typedef NSUInteger URLTag;
 

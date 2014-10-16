@@ -39,9 +39,24 @@
 - (void)initCutomBar
 {
     HostNaviViewController *hostNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"hostNaviViewController"];
+    UIImage *homeImg = [UIImage imageNamed:@"HomeSelect.png"];
+    hostNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:homeImg tag:1];
+    [hostNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
+    
     SecondNaviViewController *secondNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"secondNaviViewController"];
+    UIImage *newsImg = [UIImage imageNamed:@"News.png"];
+    secondNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:newsImg tag:2];
+    [secondNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
+    
     ThirdNaviViewController *thirdNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"thirdNaviViewController"];
+    UIImage *parentsImg = [UIImage imageNamed:@"Parents.png"];
+    thirdNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:parentsImg tag:3];
+    [thirdNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
+    
     FourthNaviViewController *fourthNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
+    UIImage *setImg = [UIImage imageNamed:@"Set.png"];
+    fourthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:setImg tag:4];
+    [fourthNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     //set the tab bar items
     NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi, nil];

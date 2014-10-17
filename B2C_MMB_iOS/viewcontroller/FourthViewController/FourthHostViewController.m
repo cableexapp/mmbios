@@ -26,11 +26,11 @@
     UIStoryboard *sb;
     
     NSMutableArray *dataArray;
-
+    
     NSMutableArray *btnArray;
     
     DCFChenMoreCell *moreCell;
-
+    
     int intPage; //页数
     int intTotal; //总数
     int pageSize; //每页条数
@@ -126,7 +126,7 @@
 
 - (void) loadRequest:(NSString *) sender
 {
-    pageSize = 3;
+    pageSize = 2;
     //    intPage = 1;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -217,43 +217,9 @@
     }
 }
 
-
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (dataArray.count == 0)
-    {
-        return 1;
-    }
-    else
-    {
-        int row = [[[dataArray objectAtIndex:section] myItems] count];
-        if ((intPage-1)*pageSize < intTotal )
-        {
-            return row+2;
-        }
-        return row+1;
-    }
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(!dataArray || dataArray.count == 0)
-    {
-        return 44;
-    }
-    if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
-    {
-        return 90;
-    }
-    if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
-    {
-        return 42;
-    }
-    return 42;
-}
-
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
+    NSLog(@"numberOfSectionsInTableView");
     if(!dataArray || dataArray.count == 0)
     {
         return 1;
@@ -265,8 +231,74 @@
     return 1;
 }
 
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    NSLog(@"numberOfRowsInSection");
+    if (dataArray.count == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        int row = [[[dataArray objectAtIndex:section] myItems] count];
+        if ((intPage-1)*pageSize < intTotal )
+        {
+            if(section == dataArray.count-1)
+            {
+                return row+2;
+            }
+            else
+            {
+                return row + 1;
+            }
+        }
+        return row+1;
+    }
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"heightForRowAtIndexPath");
+    if(!dataArray || dataArray.count == 0)
+    {
+        return 44;
+    }
+    if(indexPath.section < dataArray.count-1)
+    {
+        if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+        {
+            return 90;
+        }
+        if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+        {
+            return 42;
+        }
+    }
+    if(indexPath.section == dataArray.count-1)
+    {
+        if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+        {
+            return 90;
+        }
+        if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+        {
+            return 42;
+        }
+        else if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count] + 1)
+        {
+            return 44;
+        }
+    }
+    return 42;
+}
+
+
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return 0;
+    }
     return 56;
 }
 
@@ -326,77 +358,113 @@
             [headView addSubview:label];
         }
     }
-
+    
     
     return headView;
 }
 
+- (UITableViewCell *) returnMoreCell:(UITableView *) tv
+{
+    static NSString *moreCellId = @"moreCell";
+    moreCell = (DCFChenMoreCell *)[tv dequeueReusableCellWithIdentifier:moreCellId];
+    if(moreCell == nil)
+    {
+        moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+        [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+    }
+    return moreCell;
+}
+
+- (UITableViewCell *) returnNormalCell:(UITableView *) tv WithPath:(NSIndexPath *) path
+{
+    static NSString *cellId = @"myOrderHostTableViewCell";
+    MyOrderHostTableViewCell *cell = (MyOrderHostTableViewCell *)[tv dequeueReusableCellWithIdentifier:cellId];
+    if(cell == nil)
+    {
+        cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+    }
+    
+    NSArray *itemsArray = [[dataArray objectAtIndex:path.section] myItems];
+    NSDictionary *itemDic = [itemsArray objectAtIndex:path.row];
+    
+    NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
+    NSURL *url = [NSURL URLWithString:picString];
+    [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
+    
+    [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
+    
+    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
+    
+    [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
+    
+    return cell;
+    
+}
+
+- (UITableViewCell *) returnBtnCell:(UITableView *) tv WithPath:(NSIndexPath *) path
+{
+    static NSString *cellId = @"myOrderHostBtnTableViewCell";
+    MyOrderHostBtnTableViewCell *cell = (MyOrderHostBtnTableViewCell *)[tv dequeueReusableCellWithIdentifier:cellId];
+    if(cell == nil)
+    {
+        cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+    }
+    [cell.lookForCustomBtn setTag:0];
+    [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell.discussBtn setTag:1];
+    [cell.discussBtn addTarget:self action:@selector(discussBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell.lookForTradeBtn setTag:2];
+    [cell.lookForTradeBtn addTarget:self action:@selector(lookForTradeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell.cancelOrderBtn setTag:3];
+    [cell.cancelOrderBtn addTarget:self action:@selector(cancelOrderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return cell;
+    
+}
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == dataArray.count)
+    if(!dataArray || dataArray.count == 0)
     {
-        static NSString *moreCellId = @"moreCell";
-        moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
-        if(moreCell == nil)
-        {
-            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-        }
-        return moreCell;
+        return [self returnMoreCell:tableView];
     }
-    if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+    
+    if(indexPath.section < dataArray.count-1)
     {
-        static NSString *cellId = @"myOrderHostTableViewCell";
-        MyOrderHostTableViewCell *cell = (MyOrderHostTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
-        if(cell == nil)
+        if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
-            cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+            return [self returnNormalCell:tableView WithPath:indexPath];
         }
-        
-        NSArray *itemsArray = [[dataArray objectAtIndex:indexPath.section] myItems];
-        NSDictionary *itemDic = [itemsArray objectAtIndex:indexPath.row];
-        
-        NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
-        NSURL *url = [NSURL URLWithString:picString];
-        [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
-        
-        [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
-        
-        [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
-        
-        [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
-        
-        return cell;
+        else if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+        {
+            return [self returnBtnCell:tableView WithPath:indexPath];
+        }
     }
-    if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+    if(indexPath.section == dataArray.count-1)
     {
-        static NSString *cellId = @"myOrderHostBtnTableViewCell";
-        MyOrderHostBtnTableViewCell *cell = (MyOrderHostBtnTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
-        if(cell == nil)
+        if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
-            cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+            return [self returnNormalCell:tableView WithPath:indexPath];
         }
-        [cell.lookForCustomBtn setTag:0];
-        [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [cell.discussBtn setTag:1];
-        [cell.discussBtn addTarget:self action:@selector(discussBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [cell.lookForTradeBtn setTag:2];
-        [cell.lookForTradeBtn addTarget:self action:@selector(lookForTradeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [cell.cancelOrderBtn setTag:3];
-        [cell.cancelOrderBtn addTarget:self action:@selector(cancelOrderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-        return cell;
+        else if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+        {
+            return [self returnBtnCell:tableView WithPath:indexPath];
+        }
+        if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count]+1)
+        {
+            return [self returnMoreCell:tableView];
+        }
     }
-
-
+    
+    
     return nil;
-//    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
-//    {
-//        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-//    }
+    //    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+    //    {
+    //        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    //    }
     
 }
 
@@ -545,22 +613,22 @@
 }
 //- (IBAction)allBtnClick:(id)sender
 //{
-//    
+//
 //}
 //
 //- (IBAction)waitForBtnClick:(id)sender
 //{
-//    
+//
 //}
 //
 //- (IBAction)waitForSureBtnClick:(id)sender
 //{
-//    
+//
 //}
 //
 //- (IBAction)waitForDiscussBtnClick:(id)sender
 //{
-//    
+//
 //}
 
 - (void)didReceiveMemoryWarning
@@ -570,14 +638,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

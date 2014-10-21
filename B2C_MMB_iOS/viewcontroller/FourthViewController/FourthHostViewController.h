@@ -20,6 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *allBtn;
 @property (weak, nonatomic) IBOutlet UIButton *waitForPayBtn;
+@property (weak, nonatomic) IBOutlet UIButton *waitForSend;
+
 @property (weak, nonatomic) IBOutlet UIButton *waitForSureBtn;
 @property (weak, nonatomic) IBOutlet UIButton *waitForDiscussBtn;
 @property (weak, nonatomic) IBOutlet UITableView *tv;

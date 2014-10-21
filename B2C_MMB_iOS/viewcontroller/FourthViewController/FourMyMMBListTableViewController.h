@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
 
-@interface FourMyMMBListTableViewController : UITableViewController
+@interface FourMyMMBListTableViewController : UITableViewController<ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
 
 @property (weak, nonatomic) IBOutlet UIButton *btn_1;
 @property (weak, nonatomic) IBOutlet UIButton *btn_2;
@@ -22,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_8;
 @property (weak, nonatomic) IBOutlet UIButton *btn_9;
 @property (weak, nonatomic) IBOutlet UIButton *btn_10;
+@property (weak, nonatomic) IBOutlet UIButton *btn_11;
 
 
 @end

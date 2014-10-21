@@ -20,6 +20,7 @@
 #import "LoginNaviViewController.h"
 #import "B2CMyOrderData.h"
 #import "UIImageView+WebCache.h"
+#import "FourOrderDetailViewController.h"
 
 @interface FourthHostViewController ()
 {
@@ -68,7 +69,34 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    if(!btnArray)
+    {
+        btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSend,self.waitForSureBtn,self.waitForDiscussBtn, nil];
+    }
+    NSLog(@"%@",_myStatus);
+
+    for(int i=0;i<btnArray.count;i++)
+    {
+        UIButton *btn = (UIButton *)[btnArray objectAtIndex:i];
+        [btn setTitleColor:[UIColor colorWithRed:83.0/255.0 green:83.0/255.0 blue:83.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithRed:240.0/255.0 green:241.0/255.0 blue:223.0/255.0 alpha:1.0] forState:UIControlStateSelected];
+        
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:83.0/255.0 green:83.0/255.0 blue:83.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+        
+        [btn setTag:i];
+        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        NSLog(@"btn.titleLabel.text = %@",btn.titleLabel.text);
+        if([btn.titleLabel.text isEqualToString:_myStatus])
+        {
+            [btn setSelected:YES];
+        }
+        else
+        {
+            [btn setSelected:NO];
+        }
+    }
     [self loadRequest:_myStatus];
 }
 
@@ -93,19 +121,8 @@
     [self.tv addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
     
-    btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSureBtn,self.waitForDiscussBtn, nil];
-    for(int i=0;i<btnArray.count;i++)
-    {
-        UIButton *btn = (UIButton *)[btnArray objectAtIndex:i];
-        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor colorWithRed:97.0/255.0 green:93.0/255.0 blue:94.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-        
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:83.0/255.0 green:83.0/255.0 blue:83.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:238.0/255.0 green:234.0/255.0 blue:241.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        
-        [btn setTag:i];
-        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-    }
+ 
+
     
     [self.tv setDataSource:self];
     [self.tv setDelegate:self];
@@ -126,7 +143,7 @@
 
 - (void) loadRequest:(NSString *) sender
 {
-    pageSize = 2;
+    pageSize = 20;
     //    intPage = 1;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -149,7 +166,6 @@
 {
     if(URLTag == ULRGetOrderListTag)
     {
-        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];
@@ -215,11 +231,27 @@
             [b setSelected:NO];
         }
     }
+    
+    NSString *title = [btn.titleLabel text];
+    NSLog(@"title = %@",title);
+    _myStatus = title;
+    
+    
+    
+    if(dataArray && dataArray.count != 0)
+    {
+        [dataArray removeAllObjects];
+    }
+
+    intPage = 1;
+    [self.tv reloadData];
+
+    [self loadRequest:_myStatus];
+
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"numberOfSectionsInTableView");
     if(!dataArray || dataArray.count == 0)
     {
         return 1;
@@ -233,7 +265,6 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"numberOfRowsInSection");
     if (dataArray.count == 0)
     {
         return 1;
@@ -258,7 +289,6 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"heightForRowAtIndexPath");
     if(!dataArray || dataArray.count == 0)
     {
         return 44;
@@ -468,7 +498,27 @@
     
 }
 
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
 
+
+    NSString *s1 = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"month"];
+    NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
+    
+    NSString *date = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"date"];
+    
+    NSString *hours = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"hours"];
+    
+    NSString *minutes = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"minutes"];
+    
+    NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    FourOrderDetailViewController *fourOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
+    fourOrderDetailViewController.myOrderNum = [[dataArray objectAtIndex:indexPath.section] orderNum];
+    fourOrderDetailViewController.myTime = time;
+    [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
+}
 - (NSString *) dealPic:(NSString *) picString
 {
     NSString *pic = picString;

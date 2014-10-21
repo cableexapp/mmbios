@@ -570,4 +570,35 @@
             result[12], result[13], result[14], result[15]
             ];
 }
+
++ (NSString *) compareStatus:(NSString *) status
+{
+    NSString *myStatus = nil;
+    int statusInt = [status intValue];
+    switch (statusInt)
+    {
+        case 1:
+            myStatus = @"买家待付款";
+            break;
+        case 2:
+            myStatus = @"买家已付款";
+            break;
+        case 3:
+            myStatus = @"卖家已发货";
+            break;
+        case 5:
+            myStatus = @"申请取消";
+            break;
+        case 6:
+            myStatus = @"交易成功";
+            break;
+        case 7:
+            myStatus = @"订单取消";
+            break;
+        default:
+            break;
+    }
+    return myStatus;
+}
+
 @end

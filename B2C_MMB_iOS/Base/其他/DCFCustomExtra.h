@@ -40,4 +40,5 @@
 
 +(NSDate *)changeSpToTime:(NSString*)spString;
 
++ (NSString *) compareStatus:(NSString *) status;
 @end

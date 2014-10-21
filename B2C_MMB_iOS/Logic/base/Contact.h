@@ -70,6 +70,10 @@ enum {
     
     
     ULRGetOrderListTag,   //订单列表
+    
+    URLGetCountNumTag,   //订单badge
+    
+    URLGetOrderDetailTag, //我的订单详情
 };
 typedef NSUInteger URLTag;
 

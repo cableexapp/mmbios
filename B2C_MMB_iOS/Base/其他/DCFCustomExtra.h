@@ -41,4 +41,7 @@
 +(NSDate *)changeSpToTime:(NSString*)spString;
 
 + (NSString *) compareStatus:(NSString *) status;
+
++ (UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize;
+
 @end

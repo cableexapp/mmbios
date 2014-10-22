@@ -11,6 +11,7 @@
 #import "ChooseListTableViewController.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "ShoppingHostViewController.h"
+#import "SpeedAskPriceFirstViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -19,6 +20,7 @@
     
     NSArray *categoryDataArray;
     NSArray *listDataArray;
+    
 }
 @end
 
@@ -37,10 +39,10 @@
 {
     [super viewWillAppear:YES];
     
-//    if(searchBar)
-//    {
-//        [searchBar resignFirstResponder];
-//    }
+    //    if(searchBar)
+    //    {
+    //        [searchBar resignFirstResponder];
+    //    }
     
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
@@ -83,7 +85,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [self pushAndPopStyle];
     
     UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mmb" ofType:@"png"]];
@@ -93,7 +95,7 @@
     [self.navigationController.navigationBar addSubview:naviImageView];
     
     UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y+5, 200, 34)];
-//    searchImageView setImage:<#(UIImage *)#>
+    //    searchImageView setImage:<#(UIImage *)#>
     [searchImageView setUserInteractionEnabled:YES];
     [searchImageView setTag:101];
     [self.navigationController.navigationBar addSubview:searchImageView];
@@ -115,7 +117,7 @@
                          @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
                          @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
                          @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                   
+                         
                          nil];
     
     moneyDataArray = [[NSArray alloc] initWithObjects:@"98",@"99",@"100",@"101",@"102",@"103",@"104",@"105",@"106",@"107", nil];
@@ -133,8 +135,13 @@
                      @"装潢明线",
                      @"电源连接线",
                      @"",nil];
+    
 }
 
+- (void) section1BtnClick:(UIButton *) sender
+{
+    NSLog(@"tag = %d",[sender tag]);
+}
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -166,7 +173,8 @@
     }
     else if (indexPath.section == 1)
     {
-        return 200;
+        return 185;
+        //        return 200;
     }
     return 260;
 }
@@ -208,6 +216,24 @@
     return headBackView;
 }
 
+- (void) HostSection1BtnClick:(UIButton *)btn
+{
+    NSLog(@"btn = %d  %@",btn.tag,btn.titleLabel.text);
+    if(btn.tag == 0)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
+        [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+    if(btn.tag == 2)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
+        [self.navigationController pushViewController:shoppingHost animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+}
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -227,38 +253,45 @@
             es.delegate = self;
             [cell.contentView addSubview:es];
         }
-
+        
     }
     if(indexPath.section == 1)
     {
-        UIView *section_two = [[UIView alloc] initWithFrame:CGRectMake(5, 0, 310, 200)];
-        [section_two setBackgroundColor:[UIColor lightGrayColor]];
-        [cell.contentView addSubview:section_two];
-        
-        for(int i=0;i<3;i++)
+        HostSection1TableViewCell *section1 = (HostSection1TableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"HostTableViewSecondCell"];
+        if(section1 == nil)
         {
-            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [btn setShowsTouchWhenHighlighted:NO];
-            switch (i) {
-                case 0:
-                    [btn setFrame:CGRectMake(10, 10, 145, 180)];
-                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_1.png"] forState:UIControlStateNormal];
-                    break;
-                case 1:
-                    [btn setFrame:CGRectMake(165, 10, 135, 60)];
-                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_2.png"] forState:UIControlStateNormal];
-                    break;
-                case 2:
-                    [btn setFrame:CGRectMake(165, 80, 135, 110)];
-                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_3.png"] forState:UIControlStateNormal];
-                    break;
-                default:
-                    break;
-            }
-            [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [btn setTag:i+10];
-            [section_two addSubview:btn];
+            section1 = [[HostSection1TableViewCell alloc] initWithStyle:0 reuseIdentifier:@"HostTableViewSecondCell"];
         }
+        section1.delegate = self;
+        return section1;
+        //        UIView *section_two = [[UIView alloc] initWithFrame:CGRectMake(5, 0, 310, 200)];
+        //        [section_two setBackgroundColor:[UIColor lightGrayColor]];
+        //        [cell.contentView addSubview:section_two];
+        //
+        //        for(int i=0;i<3;i++)
+        //        {
+        //            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        //            [btn setShowsTouchWhenHighlighted:NO];
+        //            switch (i) {
+        //                case 0:
+        //                    [btn setFrame:CGRectMake(10, 10, 145, 180)];
+        //                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_1.png"] forState:UIControlStateNormal];
+        //                    break;
+        //                case 1:
+        //                    [btn setFrame:CGRectMake(165, 10, 135, 60)];
+        //                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_2.png"] forState:UIControlStateNormal];
+        //                    break;
+        //                case 2:
+        //                    [btn setFrame:CGRectMake(165, 80, 135, 110)];
+        //                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_3.png"] forState:UIControlStateNormal];
+        //                    break;
+        //                default:
+        //                    break;
+        //            }
+        //            [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+        //            [btn setTag:i+10];
+        //            [section_two addSubview:btn];
+        //        }
     }
     if(indexPath.section == 2)
     {
@@ -309,7 +342,7 @@
             [cabelShowView addSubview:moneyLabel];
         }
     }
- 
+    
     [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
     return cell;
 }
@@ -329,10 +362,10 @@
     int tag = [sender tag];
     if(tag == 12)
     {
-        [self setHidesBottomBarWhenPushed:YES];
-        ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
-        [self.navigationController pushViewController:shoppingHost animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
+        //        [self setHidesBottomBarWhenPushed:YES];
+        //        ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
+        //        [self.navigationController pushViewController:shoppingHost animated:YES];
+        //        [self setHidesBottomBarWhenPushed:NO];
     }
 }
 
@@ -346,7 +379,7 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {    
-  
+    
 }
 
 - (void)didReceiveMemoryWarning

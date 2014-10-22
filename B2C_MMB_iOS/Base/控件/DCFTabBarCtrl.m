@@ -41,27 +41,31 @@
     HostNaviViewController *hostNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"hostNaviViewController"];
     UIImage *homeImg = [UIImage imageNamed:@"HomeSelect.png"];
     hostNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:homeImg tag:1];
-    [hostNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
+    [hostNavi.tabBarItem setTitle:@"首页"];
+    //    [hostNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     SecondNaviViewController *secondNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"secondNaviViewController"];
     UIImage *newsImg = [UIImage imageNamed:@"News.png"];
     secondNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:newsImg tag:2];
-    [secondNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
+    [secondNavi.tabBarItem setTitle:@"分类"];
+    //    [secondNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     ThirdNaviViewController *thirdNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"thirdNaviViewController"];
     UIImage *parentsImg = [UIImage imageNamed:@"Parents.png"];
     thirdNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:parentsImg tag:3];
-    [thirdNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
+    [thirdNavi.tabBarItem setTitle:@"在线咨询"];
+    //    [thirdNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     FourthNaviViewController *fourthNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
     UIImage *setImg = [UIImage imageNamed:@"Set.png"];
     fourthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:setImg tag:4];
-    [fourthNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
+    [fourthNavi.tabBarItem setTitle:@"个人中心"];
+    //    [fourthNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     //set the tab bar items
     NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi, nil];
     self.viewControllers = tabbarItems;
-        
+    
 }
 - (void)viewDidLoad
 {
@@ -71,14 +75,14 @@
     [self initCutomBar];
     
     //设置tabbar背景颜色
-//    [[UITabBar appearance] setTintColor:[UIColor redColor]];
-//    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:30/255.0 green:35/255.0 blue:32/255.0 alpha:1.0]];
+    //    [[UITabBar appearance] setTintColor:[UIColor redColor]];
+    //    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:30/255.0 green:35/255.0 blue:32/255.0 alpha:1.0]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-
+    
     //设置tabbar图片文字颜色
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:18/255.0 green:104/255.0 blue:253/255.0 alpha:1.0]];
-//    [[UITabBar appearance] setBarTintColor:[UIColor orangeColor]];
-
+    //    [[UITabBar appearance] setBarTintColor:[UIColor orangeColor]];
+    
 }
 - (BOOL)shouldAutorotate
 {
@@ -95,14 +99,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

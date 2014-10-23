@@ -200,7 +200,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    
+    NSLog(@"%@",dicRespon);
     if(URLTag == URLLoginTag)
     {
         [HUD hide:YES];
@@ -224,8 +224,9 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"memberId"];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];
+            [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            
+
             [self dismissViewControllerAnimated:YES completion:nil];
         }
     }

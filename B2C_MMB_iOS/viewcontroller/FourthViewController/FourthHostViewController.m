@@ -143,7 +143,7 @@
 
 - (void) loadRequest:(NSString *) sender
 {
-    pageSize = 20;
+    pageSize = 40;
     //    intPage = 1;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -439,16 +439,33 @@
     {
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
-    [cell.lookForCustomBtn setTag:0];
-    [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    //隐藏售后按钮
+//    if([[[dataArray objectAtIndex:path.section] afterStatus] intValue] == 0)
+//    {
+//        [cell.lookForCustomBtn setHidden:YES];
+//        [cell.discussBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/3, 30)];
+//        [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+//        [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+//    }
+//    else
+//    {
+        [cell.lookForCustomBtn setHidden:NO];
+        [cell.lookForCustomBtn setTag:path.section*10];
+        [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+
+        [cell.lookForCustomBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/4, 30)];
+        [cell.discussBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
+        [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
+        [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
+//    }
     
-    [cell.discussBtn setTag:1];
+    [cell.discussBtn setTag:path.section*10+1];
     [cell.discussBtn addTarget:self action:@selector(discussBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [cell.lookForTradeBtn setTag:2];
+    [cell.lookForTradeBtn setTag:path.section*10+2];
     [cell.lookForTradeBtn addTarget:self action:@selector(lookForTradeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    [cell.cancelOrderBtn setTag:3];
+    [cell.cancelOrderBtn setTag:path.section*10+3];
     [cell.cancelOrderBtn addTarget:self action:@selector(cancelOrderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
@@ -519,6 +536,7 @@
     fourOrderDetailViewController.myTime = time;
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
 }
+
 - (NSString *) dealPic:(NSString *) picString
 {
     NSString *pic = picString;
@@ -561,10 +579,10 @@
 
 - (void) lookForCustomBtnClick:(UIButton *) sender
 {
-    NSLog(@"%d",sender.tag);
     
     [self setHidesBottomBarWhenPushed:YES];
     LookForCustomViewController *custom = [self.storyboard instantiateViewControllerWithIdentifier:@"lookForCustomViewController"];
+    custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
     [self.navigationController pushViewController:custom animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -572,10 +590,13 @@
 
 - (void) discussBtnClick:(UIButton *) sender
 {
-    NSLog(@"%d",sender.tag);
-    
     [self setHidesBottomBarWhenPushed:YES];
     DiscussViewController *disCuss = [self.storyboard instantiateViewControllerWithIdentifier:@"discussViewController"];
+    disCuss.itemArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:sender.tag/10] myItems]];
+    disCuss.shopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] shopId]];
+    disCuss.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:sender.tag/10] subDate]];
+    
     [self.navigationController pushViewController:disCuss animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

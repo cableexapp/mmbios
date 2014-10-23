@@ -74,6 +74,10 @@ enum {
     URLGetCountNumTag,   //订单badge
     
     URLGetOrderDetailTag, //我的订单详情
+    
+    URLGetAfterSaleInfoTag,  //查看售后信息
+    
+    URLJudgeProductTag,    //查看评论
 };
 typedef NSUInteger URLTag;
 

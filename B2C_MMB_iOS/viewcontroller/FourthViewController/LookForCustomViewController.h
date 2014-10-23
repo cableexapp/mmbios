@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
 #pragma mark - 查看售后
 
-@interface LookForCustomViewController : UIViewController
-
+@interface LookForCustomViewController : UIViewController<ConnectionDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate>
+{
+    DCFConnectionUtil *conn;
+    MBProgressHUD *HUD;
+}
+@property (strong,nonatomic) UITableView *tv;
+@property (strong,nonatomic) NSString *orderNum;
 @end

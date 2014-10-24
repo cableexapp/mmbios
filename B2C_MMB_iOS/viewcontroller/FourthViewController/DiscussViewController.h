@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 
-@interface DiscussViewController : UIViewController<ConnectionDelegate>
+@interface DiscussViewController : UIViewController<ConnectionDelegate,UITextViewDelegate>
 {
     DCFConnectionUtil *conn;
 }

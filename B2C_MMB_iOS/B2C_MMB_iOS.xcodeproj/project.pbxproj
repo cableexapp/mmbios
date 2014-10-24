@@ -40,6 +40,7 @@
 		612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 612C909419D6561900430140 /* B2CGoodsDetailData.m */; };
 		6139BA8119EF6C5700B44032 /* HomeSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 6139BA8019EF6C5700B44032 /* HomeSelect.png */; };
 		6139BA8519EFBBDD00B44032 /* B2CMyOrderData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139BA8419EFBBDD00B44032 /* B2CMyOrderData.m */; };
+		614EB7F219F9F79400E4207F /* CancelOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614EB7F119F9F79400E4207F /* CancelOrderViewController.m */; };
 		614FFFC519E8BF36000D83BE /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614FFFC019E8BF36000D83BE /* AboutViewController.m */; };
 		614FFFC619E8BF36000D83BE /* HotLineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614FFFC219E8BF36000D83BE /* HotLineViewController.m */; };
 		614FFFC719E8BF36000D83BE /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614FFFC419E8BF36000D83BE /* SettingViewController.m */; };
@@ -327,6 +328,8 @@
 		6139BA8019EF6C5700B44032 /* HomeSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HomeSelect.png; sourceTree = "<group>"; };
 		6139BA8319EFBBDD00B44032 /* B2CMyOrderData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CMyOrderData.h; sourceTree = "<group>"; };
 		6139BA8419EFBBDD00B44032 /* B2CMyOrderData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CMyOrderData.m; sourceTree = "<group>"; };
+		614EB7F019F9F79400E4207F /* CancelOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CancelOrderViewController.h; sourceTree = "<group>"; };
+		614EB7F119F9F79400E4207F /* CancelOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CancelOrderViewController.m; sourceTree = "<group>"; };
 		614FFFBF19E8BF36000D83BE /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		614FFFC019E8BF36000D83BE /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		614FFFC119E8BF36000D83BE /* HotLineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotLineViewController.h; sourceTree = "<group>"; };
@@ -1446,6 +1449,8 @@
 				61C8DBA919F206EC00E2A17D /* ModifyTelViewController.m */,
 				6116A22119EE1006005C3572 /* DiscussViewController.h */,
 				6116A22219EE1006005C3572 /* DiscussViewController.m */,
+				614EB7F019F9F79400E4207F /* CancelOrderViewController.h */,
+				614EB7F119F9F79400E4207F /* CancelOrderViewController.m */,
 				6116A22519EE1006005C3572 /* LookForCustomViewController.h */,
 				6116A22619EE1006005C3572 /* LookForCustomViewController.m */,
 				6116A22319EE1006005C3572 /* FourthHostViewController.h */,
@@ -1891,6 +1896,7 @@
 				6181A4BF19CFC4C2000E2D14 /* DCFImageUtil.m in Sources */,
 				612A242119D2926800E544E0 /* ChooseReceiveAddressViewController.m in Sources */,
 				6181A4FD19CFC4C2000E2D14 /* CKRefreshArrowView.m in Sources */,
+				614EB7F219F9F79400E4207F /* CancelOrderViewController.m in Sources */,
 				6116A22919EE1006005C3572 /* LookForCustomViewController.m in Sources */,
 				6181A52719CFC4C2000E2D14 /* OneStepCell.m in Sources */,
 				6181A4CA19CFC4C2000E2D14 /* DCFRootNaviController.m in Sources */,

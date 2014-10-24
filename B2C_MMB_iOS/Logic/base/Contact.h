@@ -78,6 +78,8 @@ enum {
     URLGetAfterSaleInfoTag,  //查看售后信息
     
     URLJudgeProductTag,    //查看评论
+    
+    URLCanncelOrderTag,  //取消订单（未付款）
 };
 typedef NSUInteger URLTag;
 

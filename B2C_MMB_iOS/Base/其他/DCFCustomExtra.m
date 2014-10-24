@@ -17,29 +17,36 @@
 + (CGSize) adjustWithFont:(UIFont*) font WithText:(NSString *) text WithSize:(CGSize) size
 {
     CGSize actualsize;
-    
-    if(IS_IOS_7)
+    if(text.length == 0)
     {
-        //    获取当前文本的属性
         
-        NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil];
-        
-        //ios7方法，获取文本需要的size，限制宽度
-        
-        actualsize =[text boundingRectWithSize:actualsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
-        NSAttributedString *attributedText = [[NSAttributedString alloc]
-                                              initWithString:text
-                                              attributes:@{NSFontAttributeName:font}];
-        actualsize = [attributedText boundingRectWithSize:size
-                                                  options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
-                                                  context:nil].size;
     }
     else
     {
-        // ios7之前使用方法获取文本需要的size，7.0已弃用下面的方法。此方法要求font，与breakmode与之前设置的完全一致
-        actualsize = [text sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
+        if(IS_IOS_7)
+        {
+            //    获取当前文本的属性
+            
+            NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil];
+            
+            //ios7方法，获取文本需要的size，限制宽度
+            
+            actualsize =[text boundingRectWithSize:actualsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
+            NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                                  initWithString:text
+                                                  attributes:@{NSFontAttributeName:font}];
+            actualsize = [attributedText boundingRectWithSize:size
+                                                      options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
+                                                      context:nil].size;
+        }
+        else
+        {
+            // ios7之前使用方法获取文本需要的size，7.0已弃用下面的方法。此方法要求font，与breakmode与之前设置的完全一致
+            actualsize = [text sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
+        }
+        return actualsize;
     }
-    return actualsize;
+    return CGSizeZero;
 }
 
 #pragma mark - 截取小数点后2位，四舍五入，如果不要，修改NSRoundUp

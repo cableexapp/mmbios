@@ -120,15 +120,15 @@
     }
     
     
-    NSString *memberid = [self getMemberId];
+//    NSString *memberid = [self getMemberId];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getAfterSaleInfo",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-//    NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@",token,self.orderNum];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@",token,self.orderNum];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@",@"bc2e98e1423b9fbac5119fa438812cb3",@"201404258079343759"];
+//    NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@",@"bc2e98e1423b9fbac5119fa438812cb3",@"201404258079343759"];
 
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetAfterSaleInfoTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getAfterSaleInfo.html?"];
@@ -165,9 +165,18 @@
             }
             if(i == 1)
             {
-                NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[[dataDic objectForKey:@"createdate"] objectForKey:@"time"] doubleValue]/1000];
-                NSString *time = [DCFCustomExtra nsdateToString:confromTimesp];
-                [anotherLabel setText:time];
+//                NSDictionary *diction = (NSDictionary *)[dataDic objectForKey:@"createdate"];
+                if([[dataDic objectForKey:@"createdate"] isKindOfClass:[NSNull class]])
+                {
+                    NSLog(@"空");
+                }
+                else
+                {
+                    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[[dataDic objectForKey:@"createdate"] objectForKey:@"time"] doubleValue]/1000];
+                    NSString *time = [DCFCustomExtra nsdateToString:confromTimesp];
+                    [anotherLabel setText:time];
+                }
+             
             }
             if(i == 2)
             {
@@ -231,13 +240,21 @@
             if(i == 4)
             {
                 NSString *productItmeTitle = [[[dataDic objectForKey:@"productlist"] lastObject] objectForKey:@"productItmeTitle"];
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:productItmeTitle WithSize:CGSizeMake(ScreenWidth-20-label.frame.size.width-10, MAXFLOAT)];
-                UILabel *testLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 5, label.frame.origin.y, ScreenWidth-20-label.frame.size.width-10,size.height)];
-                [testLabel setNumberOfLines:0];
-                [testLabel setFont:[UIFont systemFontOfSize:12]];
-                
-                [anotherLabel setFrame:testLabel.frame];
-                [anotherLabel setText:productItmeTitle];
+                if(productItmeTitle.length == 0)
+                {
+                    
+                }
+                else
+                {
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:productItmeTitle WithSize:CGSizeMake(ScreenWidth-20-label.frame.size.width-10, MAXFLOAT)];
+                    UILabel *testLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 5, label.frame.origin.y, ScreenWidth-20-label.frame.size.width-10,size.height)];
+                    [testLabel setNumberOfLines:0];
+                    [testLabel setFont:[UIFont systemFontOfSize:12]];
+                    
+                    [anotherLabel setFrame:testLabel.frame];
+                    [anotherLabel setText:productItmeTitle];
+                }
+        
             }
             if(i == 5)
             {
@@ -323,8 +340,16 @@
     {
         B2CAfterSaleData *data = [dataArray objectAtIndex:indexPath.row];
         NSString *remark = [data remark];
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:remark WithSize:CGSizeMake(ScreenWidth-40, MAXFLOAT)];
-        return size.height+35;
+        if(remark.length == 0)
+        {
+            return 35;
+        }
+        else
+        {
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:remark WithSize:CGSizeMake(ScreenWidth-40, MAXFLOAT)];
+            return size.height+35;
+        }
+
     }
     return 44;
 }
@@ -357,11 +382,19 @@
     B2CAfterSaleData *data = [dataArray objectAtIndex:indexPath.row];
     
     NSString *name = [data operateUsername];
-    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:name WithSize:CGSizeMake(MAXFLOAT, 20)];
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, size_1.width, 20)];
-    [nameLabel setText:name];
-    [nameLabel setFont:[UIFont systemFontOfSize:12]];
-    [cell.contentView addSubview:nameLabel];
+    if(name.length == 0)
+    {
+        
+    }
+    else
+    {
+        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:name WithSize:CGSizeMake(MAXFLOAT, 20)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, size_1.width, 20)];
+        [nameLabel setText:name];
+        [nameLabel setFont:[UIFont systemFontOfSize:12]];
+        [cell.contentView addSubview:nameLabel];
+    }
+
     
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[[data operateDate] objectForKey:@"time"] doubleValue]/1000];
     NSString *time = [DCFCustomExtra nsdateToString:confromTimesp];
@@ -373,12 +406,20 @@
     [cell.contentView addSubview:timeLabel];
     
     NSString *remark = [data remark];
-    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:remark WithSize:CGSizeMake(cell.contentView.frame.size.width-10, MAXFLOAT)];
-    UILabel *remarkLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, timeLabel.frame.origin.y+timeLabel.frame.size.height+5, size_3.width, size_3.height)];
-    [remarkLabel setText:remark];
-    [remarkLabel setFont:[UIFont systemFontOfSize:12]];
-    [remarkLabel setNumberOfLines:0];
-    [cell.contentView addSubview:remarkLabel];
+    if(remark.length == 0)
+    {
+        
+    }
+    else
+    {
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:remark WithSize:CGSizeMake(cell.contentView.frame.size.width-10, MAXFLOAT)];
+        UILabel *remarkLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, timeLabel.frame.origin.y+timeLabel.frame.size.height+5, size_3.width, size_3.height)];
+        [remarkLabel setText:remark];
+        [remarkLabel setFont:[UIFont systemFontOfSize:12]];
+        [remarkLabel setNumberOfLines:0];
+        [cell.contentView addSubview:remarkLabel];
+    }
+
     
     return cell;
 }
@@ -394,9 +435,7 @@
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
-{
-    NSLog(@"%@",dicRespon);
-    
+{    
     if(HUD)
     {
         [HUD hide:YES];
@@ -408,6 +447,8 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLGetAfterSaleInfoTag)
     {
+        [moreCell stopAnimation];
+
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CAfterSaleData getListArray:[dicRespon objectForKey:@"loglist"]]];
@@ -416,6 +457,7 @@
         }
         else
         {
+            [moreCell stopAnimation];
             if(msg.length == 0)
             {
                 [DCFStringUtil showNotice:@"查看售后信息失败"];
@@ -425,6 +467,7 @@
                 [DCFStringUtil showNotice:msg];
             }
         }
+        [self.tv reloadData];
     }
 }
 

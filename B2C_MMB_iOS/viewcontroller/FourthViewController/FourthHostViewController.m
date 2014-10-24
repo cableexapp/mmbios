@@ -21,6 +21,7 @@
 #import "B2CMyOrderData.h"
 #import "UIImageView+WebCache.h"
 #import "FourOrderDetailViewController.h"
+#import "CancelOrderViewController.h"
 
 @interface FourthHostViewController ()
 {
@@ -74,7 +75,7 @@
         btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSend,self.waitForSureBtn,self.waitForDiscussBtn, nil];
     }
     NSLog(@"%@",_myStatus);
-
+    
     for(int i=0;i<btnArray.count;i++)
     {
         UIButton *btn = (UIButton *)[btnArray objectAtIndex:i];
@@ -121,8 +122,8 @@
     [self.tv addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
     
- 
-
+    
+    
     
     [self.tv setDataSource:self];
     [self.tv setDelegate:self];
@@ -153,6 +154,8 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,[self getMemberId],pageSize,intPage,_myStatus];
+    
+//    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,@"600",pageSize,intPage,_myStatus];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getOrderList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:ULRGetOrderListTag delegate:self];
@@ -242,12 +245,12 @@
     {
         [dataArray removeAllObjects];
     }
-
+    
     intPage = 1;
     [self.tv reloadData];
-
+    
     [self loadRequest:_myStatus];
-
+    
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -440,24 +443,24 @@
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     //隐藏售后按钮
-//    if([[[dataArray objectAtIndex:path.section] afterStatus] intValue] == 0)
-//    {
-//        [cell.lookForCustomBtn setHidden:YES];
-//        [cell.discussBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/3, 30)];
-//        [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
-//        [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
-//    }
-//    else
-//    {
-        [cell.lookForCustomBtn setHidden:NO];
-        [cell.lookForCustomBtn setTag:path.section*10];
-        [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
-        [cell.lookForCustomBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/4, 30)];
-        [cell.discussBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
-        [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
-        [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
-//    }
+    //    if([[[dataArray objectAtIndex:path.section] afterStatus] intValue] == 0)
+    //    {
+    //        [cell.lookForCustomBtn setHidden:YES];
+    //        [cell.discussBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/3, 30)];
+    //        [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+    //        [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+    //    }
+    //    else
+    //    {
+    [cell.lookForCustomBtn setHidden:NO];
+    [cell.lookForCustomBtn setTag:path.section*10];
+    [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell.lookForCustomBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/4, 30)];
+    [cell.discussBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
+    [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
+    [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
+    //    }
     
     [cell.discussBtn setTag:path.section*10+1];
     [cell.discussBtn addTarget:self action:@selector(discussBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -517,8 +520,8 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-
+    
+    
     NSString *s1 = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"month"];
     NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
     
@@ -609,6 +612,12 @@
 - (void) cancelOrderBtnClick:(UIButton *) sender
 {
     NSLog(@"%d",sender.tag);
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    CancelOrderViewController *cancelOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cancelOrderViewController"];
+    cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    [self.navigationController pushViewController:cancelOrderViewController animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

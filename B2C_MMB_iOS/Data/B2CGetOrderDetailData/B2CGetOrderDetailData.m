@@ -15,7 +15,6 @@
     if(self = [super init])
     {
         _myItems = [[NSArray alloc] initWithArray:[dic objectForKey:@"items"]];
-        NSLog(@"_items = %@",_myItems);
         
         _invoiceType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"invoiceType"]];
         
@@ -38,6 +37,8 @@
         _orderTotal = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderTotal"]];
         
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
+        
+        _snapId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"snapId"]];
     }
     return self;
 }

@@ -28,6 +28,8 @@
 
 @property (strong,nonatomic) NSString *status;
 
+@property (strong,nonatomic) NSString *snapId;
+
 - (id) initWithDic:(NSDictionary *) dic;
 
 + (NSMutableArray *) getListArray:(NSMutableArray *) array;

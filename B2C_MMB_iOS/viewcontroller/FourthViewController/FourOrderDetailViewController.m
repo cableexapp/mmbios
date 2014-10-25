@@ -13,6 +13,8 @@
 #import "LoginNaviViewController.h"
 #import "DCFCustomExtra.h"
 #import "B2CGetOrderDetailData.h"
+#import "UIImageView+WebCache.h"
+#import "GoodsPicFastViewController.h"
 
 @interface FourOrderDetailViewController ()
 {
@@ -83,8 +85,8 @@
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetOrderDetailTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getOrderDetail.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height) style:0];
+    
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height-53) style:0];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [self.tableBackView addSubview:tv];
@@ -93,19 +95,13 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
-//    NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLGetOrderDetailTag)
     {
-        NSLog(@"%@",dicRespon);
         
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CGetOrderDetailData getListArray:[dicRespon objectForKey:@"items"]]];
-            NSLog(@"data = %@",dataArray);
             [tv reloadData];
-            
-//            dataArray addObjectsFromArray:[B2CGetOrderDetailData getListArray:[dicRespon ]]
-//            dataArray = [NSMutableArray ];
         }
     }
 }
@@ -161,7 +157,7 @@
         }
         else
         {
-
+            
             NSString *s = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItmeTitle"];
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:s WithSize:CGSizeMake(ScreenWidth-70-5, MAXFLOAT)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, ScreenWidth-70-5, size.height)];
@@ -209,6 +205,47 @@
         [label setText:@" 发票信息"];
     }
     return label;
+}
+
+
+- (NSString *) dealPic:(NSString *) picString
+{
+    NSString *pic = picString;
+    //.的下标
+    int docIndex = pic.length-4;
+    if([pic characterAtIndex:docIndex] == '.')
+    {
+        
+        NSString *s1 = [pic substringToIndex:docIndex];
+        
+        NSString *s2 = [s1 stringByAppendingString:@"_100"];
+        
+        NSString *pre = [pic substringFromIndex:docIndex];
+        
+        s2 = [s2 stringByAppendingString:pre];
+        
+        NSString *has = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,s2];
+        
+        pic = [NSString stringWithFormat:@"%@",has];
+        
+    }
+    else
+    {
+        docIndex = pic.length - 5;
+        
+        NSString *s3 = [pic substringToIndex:docIndex];
+        
+        NSString *s4 = [s3 stringByAppendingString:@"_100"];
+        
+        NSString *pre = [pic substringFromIndex:docIndex];
+        
+        s4 = [s4 stringByAppendingString:pre];
+        
+        NSString *has = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,s4];
+        
+        pic = [NSString stringWithFormat:@"%@",has];
+    }
+    return pic;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -266,8 +303,6 @@
             }
             else if(indexPath.row > 0 && indexPath.row <= [[[dataArray lastObject] myItems] count])
             {
-                NSLog(@"row = %d",indexPath.row);
-
                 NSString *s = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItmeTitle"];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:s WithSize:CGSizeMake(ScreenWidth-70-5, MAXFLOAT)];
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, ScreenWidth-70-5, size.height)];
@@ -297,6 +332,14 @@
                 [countLabel setTextAlignment:NSTextAlignmentRight];
                 [countLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:countLabel];
+                
+                UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(5, label.frame.size.height/2, 60, 60)];
+                NSString *picStr = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItemPic"];
+                picStr = [self dealPic:picStr];
+                NSURL *picUrl = [NSURL URLWithString:picStr];
+                [cellIv setImageWithURL:picUrl placeholderImage:[UIImage imageNamed:@"cabel.png"]];
+                [cell.contentView addSubview:cellIv];
+                
             }
         }
         if(indexPath.section == 1)
@@ -333,11 +376,29 @@
                 [label setText:str];
                 [cell.contentView addSubview:label];
             }
-
+            
         }
     }
-
+    
     return cell;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+    {
+        if(indexPath.row > 0 && indexPath.row <= [[[dataArray lastObject] myItems] count])
+        {
+            GoodsPicFastViewController *goodsPicFastViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"goodsPicFastViewController"];
+            
+            NSString *snapId = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"snapId"];
+            
+            goodsPicFastViewController.mySnapId = snapId;
+            goodsPicFastViewController.myShopName = [[dataArray lastObject] shopName];
+            
+            [self.navigationController pushViewController:goodsPicFastViewController animated:YES];
+        }
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -357,14 +418,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

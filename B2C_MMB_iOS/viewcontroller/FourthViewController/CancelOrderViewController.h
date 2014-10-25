@@ -16,6 +16,8 @@
     MBProgressHUD *HUD;
 }
 
+@property (strong,nonatomic) NSString *myStatus;
+
 @property (strong,nonatomic) NSString *myOrderNum;
 
 @property (weak, nonatomic) IBOutlet UITableView *tv;

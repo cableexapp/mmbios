@@ -25,5 +25,4 @@
 @property (weak, nonatomic) IBOutlet UIButton *tradeBtn;
 
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
-@property (weak, nonatomic) IBOutlet UITableView *tv;
 @end

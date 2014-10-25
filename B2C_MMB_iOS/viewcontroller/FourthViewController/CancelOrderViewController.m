@@ -21,7 +21,7 @@
     UITextView *myTextView;
     
     UILabel *label;
-
+    
     NSString *str;
 }
 @end
@@ -73,12 +73,12 @@
     myTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 5, ScreenWidth-10, 60-10)];
     [myTextView setDelegate:self];
     [myTextView setReturnKeyType:UIReturnKeyDone];
-
+    
     label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, myTextView.frame.size.width-10, 20)];
     [label setText:@"请简述取消原因,100字以内"];
     [label setTextColor:[UIColor lightGrayColor]];
     [myTextView addSubview:label];
-
+    
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setTitle:@"完成" forState:UIControlStateNormal];
@@ -110,6 +110,33 @@
     [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
     [UIView commitAnimations];
     
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    
+    
+    int statusInt = [self.myStatus intValue];
+    
+#pragma mark - 1：未付款  2:已付款
+    
+    NSString *string = nil;
+    NSString *urlString = nil;
+    
+    if(statusInt == 1)
+    {
+        string = [NSString stringWithFormat:@"%@%@",@"CanncelOrder",time];
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/CanncelOrder.html?"];
+    }
+    else if (statusInt == 2)
+    {
+        string = [NSString stringWithFormat:@"%@%@",@"CanncelOrderPay",time];
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/CanncelOrderPay.html?"];
+    }
+    else
+    {
+        [DCFStringUtil showNotice:@"该状态下不能取消订单"];
+        return;
+    }
+    
     if(!HUD)
     {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -117,20 +144,12 @@
         [HUD setDelegate:self];
     }
     
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    
-//    NSString *string = [NSString stringWithFormat:@"%@%@",@"CanncelOrder",time];
-    
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"CanncelOrderPay",time];
-
     
     NSString *token = [DCFCustomExtra md5:string];
-        
+    
     NSString *pushString = [NSString stringWithFormat:@"token=%@&reason=%@&memberid=%@&ordernum=%@",token,str,[self getMemberId],self.myOrderNum];
     
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/CanncelOrder.html?"];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/CanncelOrderPay.html?"];
-
+    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCanncelOrderTag delegate:self];
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -153,7 +172,7 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     NSLog(@"%@",dicRespon);
-
+    
     if(HUD)
     {
         [HUD hide:YES];
@@ -324,14 +343,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

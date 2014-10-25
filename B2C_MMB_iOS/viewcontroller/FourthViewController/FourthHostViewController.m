@@ -74,7 +74,6 @@
     {
         btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSend,self.waitForSureBtn,self.waitForDiscussBtn, nil];
     }
-    NSLog(@"%@",_myStatus);
     
     for(int i=0;i<btnArray.count;i++)
     {
@@ -88,7 +87,6 @@
         [btn setTag:i];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        NSLog(@"btn.titleLabel.text = %@",btn.titleLabel.text);
         if([btn.titleLabel.text isEqualToString:_myStatus])
         {
             [btn setSelected:YES];
@@ -155,7 +153,7 @@
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,[self getMemberId],pageSize,intPage,_myStatus];
     
-//    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,@"600",pageSize,intPage,_myStatus];
+    //    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,@"600",pageSize,intPage,_myStatus];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getOrderList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:ULRGetOrderListTag delegate:self];
@@ -192,6 +190,7 @@
                     [dataArray removeAllObjects];
                 }
                 [dataArray addObjectsFromArray:[B2CMyOrderData getListArray:[dicRespon objectForKey:@"items"]]];
+                
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
@@ -236,7 +235,6 @@
     }
     
     NSString *title = [btn.titleLabel text];
-    NSLog(@"title = %@",title);
     _myStatus = title;
     
     
@@ -442,25 +440,67 @@
     {
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
+    
+    
+    BOOL showCancelBtn;
+    //当订单状态为1，2时显示取消按钮
+    if([[[dataArray objectAtIndex:path.section] status] intValue] == 1 || [[[dataArray objectAtIndex:path.section] status] intValue] == 2)
+    {
+        showCancelBtn = YES;
+    }
+    else
+    {
+        showCancelBtn = NO;
+    }
+    
     //隐藏售后按钮
     //    if([[[dataArray objectAtIndex:path.section] afterStatus] intValue] == 0)
     //    {
-    //        [cell.lookForCustomBtn setHidden:YES];
-    //        [cell.discussBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/3, 30)];
-    //        [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
-    //        [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+    //        if(showCancelBtn == YES)
+    //        {
+    //            [cell.lookForCustomBtn setHidden:YES];
+    //            [cell.cancelOrderBtn setHidden:NO];
+    //
+    //            [cell.discussBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/3, 30)];
+    //            [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+    //            [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+    //        }
+    //        else if (showCancelBtn == NO)
+    //        {
+    //            [cell.lookForCustomBtn setHidden:YES];
+    //            [cell.cancelOrderBtn setHidden:YES];
+    //
+    //            [cell.discussBtn setFrame:CGRectMake(5, 5, (ScreenWidth-15)/2, 30)];
+    //            [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-15)/2, 30)];
+    //        }
     //    }
+    //显示售后按钮
     //    else
     //    {
+    //        if(showCancelBtn == YES)
+    //        {
     [cell.lookForCustomBtn setHidden:NO];
+    [cell.cancelOrderBtn setHidden:NO];
+    
+    [cell.lookForCustomBtn setFrame:CGRectMake(5, 5, (ScreenWidth-25)/4, 30)];
+    [cell.discussBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, (ScreenWidth-25)/4, 30)];
+    [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-25)/4, 30)];
+    [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-25)/4, 30)];
+    //        }
+    //        else if (showCancelBtn == NO)
+    //        {
+    //            [cell.lookForCustomBtn setHidden:NO];
+    //            [cell.cancelOrderBtn setHidden:YES];
+    //
+    //            [cell.lookForCustomBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/3, 30)];
+    //            [cell.discussBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+    //            [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/3, 30)];
+    //        }
+    
+    //    }
+    
     [cell.lookForCustomBtn setTag:path.section*10];
     [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [cell.lookForCustomBtn setFrame:CGRectMake(5, 5, (ScreenWidth-20)/4, 30)];
-    [cell.discussBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
-    [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
-    [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-20)/4, 30)];
-    //    }
     
     [cell.discussBtn setTag:path.section*10+1];
     [cell.discussBtn addTarget:self action:@selector(discussBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -606,16 +646,15 @@
 
 - (void) lookForTradeBtnClick:(UIButton *) sender
 {
-    NSLog(@"%d",sender.tag);
 }
 
 - (void) cancelOrderBtnClick:(UIButton *) sender
 {
-    NSLog(@"%d",sender.tag);
     
     [self setHidesBottomBarWhenPushed:YES];
     CancelOrderViewController *cancelOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cancelOrderViewController"];
     cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    cancelOrderViewController.myStatus = [[dataArray objectAtIndex:sender.tag/10] status];
     [self.navigationController pushViewController:cancelOrderViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

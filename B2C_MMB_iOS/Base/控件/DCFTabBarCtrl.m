@@ -12,6 +12,8 @@
 #import "SecondTableViewController.h"
 #import "ThirdTableViewController.h"
 #import "FourthHostViewController.h"
+#import "FifthNaviViewController.h"
+
 //#import "DCFParentschoolViewCtrl.h"
 //#import "DCFHomeSchoolViewCtrl.h"
 //#import "DCFStudyGardenViewCtrl.h"
@@ -39,31 +41,52 @@
 - (void)initCutomBar
 {
     HostNaviViewController *hostNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"hostNaviViewController"];
-    UIImage *homeImg = [UIImage imageNamed:@"HomeSelect.png"];
-    hostNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:homeImg tag:1];
-    [hostNavi.tabBarItem setTitle:@"首页"];
+    UIImage *selecthomeImg = [UIImage imageNamed:@"HomeSelect.png"];
+    UIImage *unSelecthomeImg = [UIImage imageNamed:@"HomeUnSelect.png"];
+    selecthomeImg = [UIImage imageWithCGImage:selecthomeImg.CGImage scale:1.5 orientation:selecthomeImg.imageOrientation];
+    unSelecthomeImg = [UIImage imageWithCGImage:unSelecthomeImg.CGImage scale:1.5 orientation:unSelecthomeImg.imageOrientation];
+    hostNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"首页" image:unSelecthomeImg selectedImage:selecthomeImg];
+    [hostNavi.tabBarItem setTag:1];
     //    [hostNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     SecondNaviViewController *secondNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"secondNaviViewController"];
-    UIImage *newsImg = [UIImage imageNamed:@"News.png"];
-    secondNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:newsImg tag:2];
-    [secondNavi.tabBarItem setTitle:@"分类"];
+    UIImage *selectClassifySelectImg = [UIImage imageNamed:@"classifySelect.png"];
+    UIImage *unClassifyUnSelectImImg = [UIImage imageNamed:@"classifyUnSelect.png"];
+    selectClassifySelectImg = [UIImage imageWithCGImage:selectClassifySelectImg.CGImage scale:1.5 orientation:selectClassifySelectImg.imageOrientation];
+    unClassifyUnSelectImImg = [UIImage imageWithCGImage:unClassifyUnSelectImImg.CGImage scale:1.5 orientation:unClassifyUnSelectImImg.imageOrientation];
+    secondNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"分类" image:unClassifyUnSelectImImg selectedImage:selectClassifySelectImg];
+    [secondNavi.tabBarItem setTag:2];
     //    [secondNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     ThirdNaviViewController *thirdNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"thirdNaviViewController"];
-    UIImage *parentsImg = [UIImage imageNamed:@"Parents.png"];
-    thirdNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:parentsImg tag:3];
-    [thirdNavi.tabBarItem setTitle:@"在线咨询"];
+    UIImage *selectImImg = [UIImage imageNamed:@"imSelect.png"];
+    UIImage *unSelectImImg = [UIImage imageNamed:@"imUnSelect.png"];
+    selectImImg = [UIImage imageWithCGImage:selectImImg.CGImage scale:1.5 orientation:selectImImg.imageOrientation];
+    unSelectImImg = [UIImage imageWithCGImage:unSelectImImg.CGImage scale:1.5 orientation:unSelectImImg.imageOrientation];
+    thirdNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"在线咨询" image:unSelectImImg selectedImage:selectImImg];
+    [thirdNavi.tabBarItem setTag:3];
     //    [thirdNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     FourthNaviViewController *fourthNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
-    UIImage *setImg = [UIImage imageNamed:@"Set.png"];
-    fourthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:setImg tag:4];
-    [fourthNavi.tabBarItem setTitle:@"个人中心"];
+    UIImage *selectp_centerSelectImg = [UIImage imageNamed:@"p_centerSelect.png"];
+    UIImage *unSelectp_centerUnSelectImg = [UIImage imageNamed:@"p_centerUnSelect.png"];
+    selectp_centerSelectImg = [UIImage imageWithCGImage:selectp_centerSelectImg.CGImage scale:1.5 orientation:selectp_centerSelectImg.imageOrientation];
+    unSelectp_centerUnSelectImg = [UIImage imageWithCGImage:unSelectp_centerUnSelectImg.CGImage scale:1.5 orientation:unSelectp_centerUnSelectImg.imageOrientation];
+    fourthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"个人中心" image:unSelectp_centerUnSelectImg selectedImage:selectp_centerSelectImg];
+    [fourthNavi.tabBarItem setTag:4];
     //    [fourthNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
+    FifthNaviViewController *fifthNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"fifthNaviViewController"];
+    UIImage *selectmoreSelectImg = [UIImage imageNamed:@"moreSelectpng"];
+    UIImage *unSelectmoreUnSelectImg = [UIImage imageNamed:@"moreUnSelect.png"];
+    selectmoreSelectImg = [UIImage imageWithCGImage:selectmoreSelectImg.CGImage scale:1.5 orientation:selectmoreSelectImg.imageOrientation];
+    unSelectmoreUnSelectImg = [UIImage imageWithCGImage:unSelectmoreUnSelectImg.CGImage scale:1.5 orientation:unSelectmoreUnSelectImg.imageOrientation];
+    fifthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"更多" image:unSelectmoreUnSelectImg selectedImage:selectmoreSelectImg];
+    [fifthNavi.tabBarItem setTag:5];
+//    [fifthNavi.tabBarItem setTitle:@"分类"];
+    
     //set the tab bar items
-    NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi, nil];
+    NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi,fifthNavi, nil];
     self.viewControllers = tabbarItems;
     
 }

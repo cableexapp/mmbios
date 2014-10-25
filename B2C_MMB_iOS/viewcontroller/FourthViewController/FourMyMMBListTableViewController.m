@@ -39,7 +39,6 @@
 - (void) headBtnClick:(UIButton *) sender
 {
     int tag = sender.tag;
-    NSLog(@"tag = %d",tag);
     
     if(tag == 2)
     {
@@ -88,8 +87,6 @@
 //    NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLGetCountNumTag)
     {
-        NSLog(@"%@",dicRespon);
-        
         
         if(result == 1)
         {

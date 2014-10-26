@@ -44,7 +44,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQ9-4P-kRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-492" y="-1292"/>
+            <point key="canvasLocation" x="-402" y="-1482"/>
         </scene>
         <!--Second Table View Controller - Item-->
         <scene sceneID="Rlp-Wd-gnl">
@@ -73,7 +73,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0xY-Zp-Kde" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="81" y="-929"/>
+            <point key="canvasLocation" x="-65" y="-909"/>
         </scene>
         <!--Second Navi View Controller-->
         <scene sceneID="RDK-67-FtU">
@@ -88,7 +88,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qmz-Lh-qb8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-477" y="-779"/>
+            <point key="canvasLocation" x="-423" y="-869"/>
         </scene>
         <!--Fourth Navi View Controller-->
         <scene sceneID="1N9-b5-gNj">
@@ -233,7 +233,7 @@
                         <outlet property="tf_Account" destination="JWY-o5-6yr" id="XN3-de-UXV"/>
                         <outlet property="tf_BackView" destination="M9I-8E-EBs" id="ReD-Sj-6Kj"/>
                         <outlet property="tf_Secrect" destination="mnh-GL-LJc" id="etk-K2-imr"/>
-                        <segue destination="YOG-hx-pSc" kind="push" id="0fK-0s-0yx"/>
+                        <segue destination="UDZ-DK-vQ1" kind="push" id="8ge-XB-OwX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J99-85-ihD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -386,95 +386,6 @@
             </objects>
             <point key="canvasLocation" x="3436" y="-2112"/>
         </scene>
-        <!--Register View Controller-->
-        <scene sceneID="Zcv-Nj-LCU">
-            <objects>
-                <viewController storyboardIdentifier="registerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YOG-hx-pSc" customClass="RegisterViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="qYA-ed-xfu">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" id="Z04-G0-jPn">
-                                <rect key="frame" x="10" y="82" width="300" height="124"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账  号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zfy-MY-vqp">
-                                        <rect key="frame" x="10" y="11" width="70" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密  码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ErA-BE-RJA">
-                                        <rect key="frame" x="10" y="50" width="70" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="确认密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dck-hw-7kw">
-                                        <rect key="frame" x="10" y="88" width="77" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="syO-Br-RhP">
-                                        <rect key="frame" x="95" y="84" width="192" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="YOG-hx-pSc" id="jDc-EH-0xj"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="Tbp-iW-t2X">
-                                        <rect key="frame" x="95" y="45" width="192" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="YOG-hx-pSc" id="o5B-ig-Qfs"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="c5u-VG-KIU">
-                                        <rect key="frame" x="95" y="7" width="192" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="YOG-hx-pSc" id="sUC-0L-fBt"/>
-                                        </connections>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3jr-lC-AB2">
-                                <rect key="frame" x="10" y="220" width="300" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.10980392160000001" green="0.2666666667" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="注册">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="registerBtnClick:" destination="YOG-hx-pSc" eventType="touchUpInside" id="iP2-nJ-IYE"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.92549019610000005" green="0.92156862750000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="PqD-l6-Zk5"/>
-                    <connections>
-                        <outlet property="registerBtn" destination="3jr-lC-AB2" id="jxf-KT-bW6"/>
-                        <outlet property="tf_account" destination="c5u-VG-KIU" id="QCC-47-dKX"/>
-                        <outlet property="tf_confirm" destination="syO-Br-RhP" id="RTU-gs-GN7"/>
-                        <outlet property="tf_sec" destination="Tbp-iW-t2X" id="veR-gw-rJL"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kOs-90-fMl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2568" y="-2063"/>
-        </scene>
         <!--Goods Detail View Controller-->
         <scene sceneID="wgx-MJ-1Lu">
             <objects>
@@ -621,7 +532,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="远东电线电缆bvr6平方国际铜芯电线单芯50米" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ib0-Al-F3k">
-                                                    <rect key="frame" x="87.999998930865033" y="15" width="212" height="44"/>
+                                                    <rect key="frame" x="87.999998342265997" y="15" width="212" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <nil key="highlightedColor"/>
@@ -759,7 +670,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014-08-15 18:05" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hzj-JB-Wh0">
-                                        <rect key="frame" x="204" y="7" width="107" height="21"/>
+                                        <rect key="frame" x="204.0000000927493" y="7" width="107" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <nil key="highlightedColor"/>
@@ -783,7 +694,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Rda-ts-tjW">
-                                        <rect key="frame" x="205.00000052256127" y="12" width="95" height="30"/>
+                                        <rect key="frame" x="205.00000052256132" y="12" width="95" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="物流跟踪">
                                             <color key="titleColor" red="0.078431372550000003" green="0.3921568627" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -914,7 +825,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="nud-pC-Tco">
                                         <rect key="frame" x="10" y="1" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -924,7 +835,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="t2P-fQ-qnJ">
                                         <rect key="frame" x="40" y="1" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -934,7 +845,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hnU-4L-hqg">
                                         <rect key="frame" x="70" y="0.0" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -944,7 +855,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xMr-oW-PNb">
                                         <rect key="frame" x="100" y="0.0" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -954,7 +865,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gjP-qa-iK4">
                                         <rect key="frame" x="130" y="0.0" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -964,7 +875,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7gw-gH-QX9">
                                         <rect key="frame" x="10" y="32" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -974,7 +885,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1Bp-es-kzd">
                                         <rect key="frame" x="40" y="32" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -984,7 +895,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ppc-ZE-cfp">
                                         <rect key="frame" x="70" y="29" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -994,7 +905,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mxR-B8-HwY">
                                         <rect key="frame" x="100" y="29" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1004,7 +915,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="O2S-4r-ABJ">
                                         <rect key="frame" x="130" y="29" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1014,7 +925,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="srL-XB-tdX">
                                         <rect key="frame" x="10" y="62" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1024,7 +935,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Wmf-9q-cLz">
                                         <rect key="frame" x="40" y="62" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1034,7 +945,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uJI-wE-aDD">
                                         <rect key="frame" x="70" y="60" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1044,7 +955,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZAR-xq-FvS">
                                         <rect key="frame" x="100" y="60" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1054,7 +965,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="klh-cg-mzW">
                                         <rect key="frame" x="130" y="60" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1064,7 +975,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vEu-Jo-dLX">
                                         <rect key="frame" x="10" y="88" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1074,7 +985,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gBX-0J-h9n">
                                         <rect key="frame" x="40" y="88" width="22" height="23"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1084,7 +995,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="huS-8t-eQn">
                                         <rect key="frame" x="70" y="87" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1094,7 +1005,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uMh-2t-2k9">
                                         <rect key="frame" x="100" y="87" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1104,7 +1015,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Ddd-s2-JbI">
                                         <rect key="frame" x="130" y="87" width="22" height="22"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A">
+                                        <state key="normal" image="3CFC9661-DFB3-46AD-80D1-CB4A4C243671">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -1242,7 +1153,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mH2-dB-hz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-34" y="-205"/>
+            <point key="canvasLocation" x="-22" y="-217"/>
         </scene>
         <!--Four MyMMB List Table View Controller-->
         <scene sceneID="4jU-pD-aTg">
@@ -1489,7 +1400,7 @@
                                                             <color key="backgroundColor" red="0.25490196079999999" green="0.38431372549999998" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Set.png" id="57k-l2-yH4">
-                                                            <rect key="frame" x="273.99999908327402" y="7" width="26" height="31"/>
+                                                            <rect key="frame" x="273.9999988616849" y="7" width="26" height="31"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="修改登陆密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HHn-BC-eEg">
@@ -1525,7 +1436,7 @@
                                                             <color key="backgroundColor" red="0.25490196079999999" green="0.38431372549999998" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                                                         </view>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Set.png" id="LF5-Yr-6FN">
-                                                            <rect key="frame" x="273.99999972034277" y="7" width="26" height="31"/>
+                                                            <rect key="frame" x="273.99999954122495" y="7" width="26" height="31"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="修改绑定手机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HCc-bc-H5b">
@@ -1892,7 +1803,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Pe8-jN-EL5">
-                                <rect key="frame" x="20" y="384" width="275" height="40"/>
+                                <rect key="frame" x="20" y="390" width="275" height="40"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="提交">
                                     <color key="titleColor" red="0.078431372550000003" green="0.3921568627" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1903,7 +1814,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Lgr-dw-WTa">
-                                <rect key="frame" x="20" y="294" width="80" height="80"/>
+                                <rect key="frame" x="20" y="295" width="80" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="icon_addpic_unfocused.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1944,7 +1855,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您的询价单需求已提交成功,稍后会有客服和您核对询价单信息,请保持手机畅通" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WQd-ao-vHC">
-                                <rect key="frame" x="58" y="20" width="242.00000029802322" height="64"/>
+                                <rect key="frame" x="58.000000298023238" y="20" width="242" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <nil key="highlightedColor"/>
@@ -2413,7 +2324,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="Mvk-1A-5Ic">
-                                <rect key="frame" x="20" y="154" width="280.00002421017325" height="54"/>
+                                <rect key="frame" x="20" y="154" width="280.00000799618772" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Set.png" id="guk-Hs-1Qv">
@@ -2421,7 +2332,7 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="清除本地缓存图片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="j23-ux-GYi">
-                                        <rect key="frame" x="38" y="12" width="146.00001921024594" height="30"/>
+                                        <rect key="frame" x="38" y="12" width="146.00000634480151" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.17254901959999999" green="0.47843137250000001" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -2445,9 +2356,198 @@
             </objects>
             <point key="canvasLocation" x="1281" y="1163"/>
         </scene>
+        <!--Register View Controller-->
+        <scene sceneID="kpM-Yz-S1J">
+            <objects>
+                <viewController storyboardIdentifier="registerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UDZ-DK-vQ1" customClass="RegisterViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LIa-od-P1X">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="WD0-Fc-36b">
+                                <rect key="frame" x="0.0" y="64" width="320" height="62"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Io1-cT-QrZ">
+                                        <rect key="frame" x="94" y="17" width="133" height="29"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <segments>
+                                            <segment title="快速注册"/>
+                                            <segment title="普通注册"/>
+                                        </segments>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" id="WNj-dV-EZr">
+                                <rect key="frame" x="0.0" y="122" width="320" height="446"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" id="3Rc-uq-7Sn">
+                                        <rect key="frame" x="320" y="0.0" width="320" height="434"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账  号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wjn-di-HrK">
+                                                <rect key="frame" x="20" y="20" width="70" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密  码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FW0-Bu-Qlo">
+                                                <rect key="frame" x="20" y="59" width="70" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="确认密码" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A7R-NT-z8q">
+                                                <rect key="frame" x="20" y="97" width="77" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="Xhx-CK-QKK">
+                                                <rect key="frame" x="105" y="93" width="192" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="UDZ-DK-vQ1" id="iG4-ge-hGJ"/>
+                                                </connections>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="UXd-k5-WWG">
+                                                <rect key="frame" x="105" y="54" width="192" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="UDZ-DK-vQ1" id="g8F-1j-9pB"/>
+                                                </connections>
+                                            </textField>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="uRF-Lf-ia7">
+                                                <rect key="frame" x="105" y="16" width="192" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="UDZ-DK-vQ1" id="0lF-ht-j9G"/>
+                                                </connections>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rBz-rf-JDt">
+                                                <rect key="frame" x="10" y="137" width="300" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="0.10980392160000001" green="0.2666666667" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" title="注册">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="registerBtnClick:" destination="UDZ-DK-vQ1" eventType="touchUpInside" id="v12-re-9nr"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="jQq-Kq-KkQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="446"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="输入手机号,点击“获取密码”后，系统自动向您de手机发送一条默认密码短信" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="88Q-ss-GEy">
+                                                <rect key="frame" x="20" y="26" width="280" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder=" 请输入您的手机号" minimumFontSize="17" id="1Z5-sM-FGu">
+                                                <rect key="frame" x="20" y="84" width="280" height="39"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="UDZ-DK-vQ1" id="0j5-UY-fUs"/>
+                                                </connections>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dOu-fe-DmX">
+                                                <rect key="frame" x="20" y="131" width="30" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="Set.png">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="speedAgreeBtnClick:" destination="UDZ-DK-vQ1" eventType="touchUpInside" id="tfn-Is-Eea"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="同意《电缆买卖宝用户注册协议》" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k89-G3-IpT">
+                                                <rect key="frame" x="58" y="135" width="242" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZY0-Nc-4Zn">
+                                                <rect key="frame" x="20" y="164" width="280" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="0.17254901959999999" green="0.47843137250000001" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" title="获取密码">
+                                                    <color key="titleColor" red="0.92549019610000005" green="0.91764705879999997" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="speedGetSecBtnClick:" destination="UDZ-DK-vQ1" eventType="touchUpInside" id="7SE-Fx-dgU"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[提示]" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IwV-Vf-pf2">
+                                                <rect key="frame" x="20" y="207" width="242" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.使用手机号免费注册" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A2z-rm-mOE">
+                                                <rect key="frame" x="20" y="230" width="242" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.使用手机号登陆电缆买卖宝" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bA8-iT-TaA">
+                                                <rect key="frame" x="20" y="253" width="242" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <connections>
+                                    <outlet property="delegate" destination="UDZ-DK-vQ1" id="xnV-nh-eQh"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.92549019610000005" green="0.92156862750000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dtO-wj-QIh"/>
+                    <connections>
+                        <outlet property="mySegment" destination="Io1-cT-QrZ" id="JCd-yz-eXB"/>
+                        <outlet property="normalAccountTf" destination="uRF-Lf-ia7" id="O8l-Yi-NQ7"/>
+                        <outlet property="normalSecTf" destination="UXd-k5-WWG" id="96j-le-Oz9"/>
+                        <outlet property="normalSureSecTf" destination="Xhx-CK-QKK" id="ZoY-f4-ex1"/>
+                        <outlet property="speedAgreeBtn" destination="ZY0-Nc-4Zn" id="H8m-ag-5VW"/>
+                        <outlet property="speedGetSecBtn" destination="ZY0-Nc-4Zn" id="inP-D7-wFN"/>
+                        <outlet property="speedRegisterTf" destination="1Z5-sM-FGu" id="xA8-9v-YHX"/>
+                        <outlet property="sv" destination="WNj-dV-EZr" id="oUo-PL-SlC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xIv-yf-BR2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2539" y="-2005"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="BD6CF0D1-18EE-4E1E-B671-BF4BE8A5747A" width="45" height="45">
+        <image name="3CFC9661-DFB3-46AD-80D1-CB4A4C243671" width="45" height="45">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

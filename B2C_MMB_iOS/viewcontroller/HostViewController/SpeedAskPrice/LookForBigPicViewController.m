@@ -27,11 +27,10 @@
     return self;
 }
 
-- (id) initWithPicArray:(NSMutableArray *) arr
+- (id) initWithPicArray:(NSMutableArray *) picBtnArray WithImageArray:(NSMutableArray *) imageArray
 {
     if(self = [super init])
     {
-        
 
     }
     return self;
@@ -41,7 +40,6 @@
 {
     CGFloat pageWidth = self.view.frame.size.width;
     page = floor((scrollView.contentOffset.x - pageWidth/2)/pageWidth) + 1;
-    NSLog(@"**********   %d",page);
 }
 
 - (void)viewDidLoad
@@ -52,7 +50,24 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"照片预览"];
     self.navigationItem.titleView = top;
     
+    
     page = 0;
+    
+
+    
+    [_sv setContentSize:CGSizeMake(ScreenWidth*_myPicBtnArray.count, self.sv.frame.size.height-40)];
+    [_sv setBounces:NO];
+    [_sv setScrollEnabled:YES];
+    [_sv setPagingEnabled:YES];
+    
+    for(int i=0;i<_myImageArray.count;i++)
+    {
+        UIImage *image = [_myImageArray objectAtIndex:i];
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth*i, 0, ScreenWidth, self.sv.frame.size.height)];
+        [iv setImage:image];
+        iv.contentMode = UIViewContentModeScaleAspectFit;
+        [self.sv addSubview:iv];
+    }
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 50, 50)];
@@ -63,50 +78,43 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    [_sv setContentSize:CGSizeMake(ScreenWidth*_picArray.count, self.sv.frame.size.height)];
-    [_sv setBounces:NO];
-    [_sv setScrollEnabled:YES];
-    [_sv setPagingEnabled:YES];
-    
-    for(int i=0;i<_picArray.count;i++)
-    {
-        UIImage *image = [_picArray objectAtIndex:i];
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth*i, 0, ScreenWidth, self.sv.frame.size.height)];
-        [iv setImage:image];
-        iv.contentMode = UIViewContentModeScaleAspectFit;
-        [self.sv addSubview:iv];
-    }
+
 }
 
 - (void) rightItemClick:(UIButton *) sender
 {
-    NSLog(@"阐述");
-    
-    if(_picArray && _picArray.count != 0)
+    if(_myPicBtnArray && _myPicBtnArray.count != 0)
     {
-        [_picArray removeObjectAtIndex:page];
+        [_myPicBtnArray removeObjectAtIndex:page];
+    }
+
+    
+    if(_myImageArray && _myImageArray.count != 0)
+    {
+        [_myImageArray removeObjectAtIndex:page];
 
         for(UIImageView *iv in _sv.subviews)
         {
             [iv removeFromSuperview];
         }
-        [_sv setContentSize:CGSizeMake(ScreenWidth*_picArray.count, self.sv.frame.size.height)];
+        [_sv setContentSize:CGSizeMake(ScreenWidth*_myPicBtnArray.count, self.sv.frame.size.height)];
 
-        for(int i=0;i<_picArray.count;i++)
+        for(int i=0;i<_myImageArray.count;i++)
         {
-            UIImage *image = [_picArray objectAtIndex:i];
+            UIImage *image = [_myImageArray objectAtIndex:i];
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth*i, 0, ScreenWidth, self.sv.frame.size.height)];
             [iv setImage:image];
             iv.contentMode = UIViewContentModeScaleAspectFit;
             [self.sv addSubview:iv];
         }
     }
-    if(_picArray.count == 0)
+    if(_myImageArray.count == 0)
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
+   
     NSLog(@"page = %d",page);
-    [self.delegate deletePic:page];
+    [self.delegate deleteWithPicBtn:_myPicBtnArray WithImageArray:_myImageArray];
 }
 
 - (void)didReceiveMemoryWarning

@@ -10,19 +10,21 @@
 
 @protocol DeletePic <NSObject>
 
-- (void) deletePic:(int) tag;
+- (void) deleteWithPicBtn:(NSMutableArray *) btnArray WithImageArray:(NSMutableArray *) imageArray;;
 
 @end
 
 @interface LookForBigPicViewController : UIViewController<UIScrollViewDelegate>
 {
+    
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 
-@property (strong,nonatomic) NSMutableArray *picArray;
+@property (strong,nonatomic) NSMutableArray *myPicBtnArray;
+@property (strong,nonatomic) NSMutableArray *myImageArray;
 
 @property (assign,nonatomic) id<DeletePic> delegate;
 
-- (id) initWithPicArray:(NSMutableArray *) arr;
+- (id) initWithPicArray:(NSMutableArray *) picBtnArray WithImageArray:(NSMutableArray *) imageArray;
 @end
 

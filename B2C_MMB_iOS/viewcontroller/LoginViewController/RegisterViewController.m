@@ -16,6 +16,10 @@
 @interface RegisterViewController ()
 {
     DCFConnectionUtil *conn;
+    int currentPageIndex;
+    
+    NSTimer *timer;
+    int timeCount_tel;     //倒计时
 }
 @end
 
@@ -42,6 +46,20 @@
     {
         [HUD hide:YES];
     }
+    if(timer)
+    {
+        [timer invalidate];
+        timer = nil;
+    }
+    [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    timeCount_tel = 60;
+}
+
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    timeCount_tel = 60;
 }
 
 - (void)viewDidLoad
@@ -53,29 +71,97 @@
     DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"电缆买卖宝注册"];
     self.navigationItem.titleView = TOP;
     
-    [self.tf_account setReturnKeyType:UIReturnKeyNext];
-    [self.tf_sec setReturnKeyType:UIReturnKeyNext];
-    [self.tf_confirm setReturnKeyType:UIReturnKeyDone];
+    [self.sv setContentSize:CGSizeMake(ScreenWidth*2, self.sv.frame.size.height)];
+    [self.sv setDelegate:self];
+    [self.sv setPagingEnabled:YES];
+    [self.sv setBounces:NO];
+    
+    [self.mySegment addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
+    
+    [self.normalAccountTf setReturnKeyType:UIReturnKeyNext];
+    [self.normalSecTf setReturnKeyType:UIReturnKeyNext];
+    [self.normalSureSecTf setReturnKeyType:UIReturnKeyDone];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
 }
 
+- (IBAction)speedAgreeBtnClick:(id)sender
+{
+    NSLog(@"1111");
+}
+
+- (IBAction)speedGetSecBtnClick:(id)sender
+{
+    [self.speedRegisterTf resignFirstResponder];
+    
+    if(self.speedRegisterTf.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入手机号码"];
+        return;
+    }
+    if([DCFCustomExtra validateMobile:self.speedRegisterTf.text] == NO)
+    {
+        [DCFStringUtil showNotice:@"手机号码不正确"];
+        return;
+    }
+    if(!timer)
+    {
+        timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
+        [timer fire];
+    }
+}
+
+
+- (void) timer:(NSTimer *) sender
+{
+    if(timeCount_tel == 0)
+    {
+        [self.speedGetSecBtn setUserInteractionEnabled:YES];
+        [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [timer invalidate];
+        timer = nil;
+        timeCount_tel = 60;
+    }
+    else
+    {
+        timeCount_tel = timeCount_tel - 1;
+        if(timeCount_tel == 0)
+        {
+            [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        }
+        else
+        {
+            NSString *timeString = [NSString stringWithFormat:@"剩余%d秒",timeCount_tel];
+            [self.speedGetSecBtn setTitle:timeString forState:UIControlStateNormal];
+        }
+        [self.speedGetSecBtn setUserInteractionEnabled:NO];
+        
+    }
+}
+
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    [_tf_account resignFirstResponder];
-    [_tf_sec resignFirstResponder];
-    [_tf_confirm resignFirstResponder];
+    if(currentPageIndex == 0)
+    {
+        [self.speedRegisterTf resignFirstResponder];
+    }
+    else
+    {
+        [_normalAccountTf resignFirstResponder];
+        [_normalSecTf resignFirstResponder];
+        [_normalSureSecTf resignFirstResponder];
+    }
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    [self.tf_account resignFirstResponder];
-    [self.tf_sec resignFirstResponder];
-    [self.tf_confirm resignFirstResponder];
+    [self.normalAccountTf resignFirstResponder];
+    [self.normalSecTf resignFirstResponder];
+    [self.normalSureSecTf resignFirstResponder];
     
-
-    if(textField == self.tf_confirm)
+    
+    if(textField == self.normalSureSecTf)
     {
         [self regester];
     }
@@ -84,21 +170,22 @@
 
 - (void) regester
 {
-    [_tf_account resignFirstResponder];
-    [_tf_sec resignFirstResponder];
-    [_tf_confirm resignFirstResponder];
+    [_normalAccountTf resignFirstResponder];
+    [_normalSecTf resignFirstResponder];
+    [_normalSureSecTf resignFirstResponder];
+
     
-    if(_tf_account.text.length == 0)
+    if(_normalAccountTf.text.length == 0)
     {
         [DCFStringUtil showNotice:@"请输入账号"];
         return;
     }
-    if(_tf_sec.text.length == 0 || _tf_confirm.text.length == 0)
+    if(_normalSecTf.text.length == 0 || _normalSureSecTf.text.length == 0)
     {
         [DCFStringUtil showNotice:@"请输入密码"];
         return;
     }
-    if(![_tf_sec.text isEqualToString:_tf_confirm.text])
+    if(![_normalSecTf.text isEqualToString:_normalSureSecTf.text])
     {
         [DCFStringUtil showNotice:@"输入密码不一致,请检查"];
         return;
@@ -115,10 +202,9 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
-    NSString *des = [MCdes encryptUseDES:self.tf_sec.text key:@"cableex_app*#!Key"];
+    NSString *des = [MCdes encryptUseDES:self.normalSecTf.text key:@"cableex_app*#!Key"];
     
-    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.tf_account.text,des,token];
-    
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.normalAccountTf.text,des,token];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -126,8 +212,18 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    [_speedGetSecBtn setUserInteractionEnabled:YES];
+    [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    if(timer)
+    {
+        [timer invalidate];
+        timer = nil;
+        timeCount_tel = 60;
+    }
+    
     if(URLTag == URLRegesterTag)
     {
+        NSLog(@"%@",dicRespon);
         [HUD hide:YES];
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
@@ -152,6 +248,63 @@
 - (IBAction)registerBtnClick:(id)sender
 {
     [self regester];
+}
+
+- (void) segmentChange:(UISegmentedControl *) sender
+{
+    int index = self.mySegment.selectedSegmentIndex;
+    if(index == 0)
+    {
+        if(currentPageIndex == 0)
+        {
+            [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
+        }
+        else if (currentPageIndex == 1)
+        {
+            [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
+        }
+    }
+    if(index == 1)
+    {
+        [_speedGetSecBtn setUserInteractionEnabled:YES];
+        [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        if(timer)
+        {
+            [timer invalidate];
+            timer = nil;
+            timeCount_tel = 60;
+        }
+        
+        if(currentPageIndex == 0)
+        {
+            [self.sv setContentOffset:CGPointMake(ScreenWidth, 0) animated:YES];
+        }
+        else if (currentPageIndex == 1)
+        {
+            [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
+        }
+    }
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat pageWidth = scrollView.frame.size.width;
+    int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    currentPageIndex=page;
+    
+    if(currentPageIndex == 1)
+    {
+        [_speedGetSecBtn setUserInteractionEnabled:YES];
+        [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        if(timer)
+        {
+            [timer invalidate];
+            timer = nil;
+            timeCount_tel = 60;
+        }
+    }
+    
+    [self.mySegment setSelectedSegmentIndex:currentPageIndex];
 }
 
 - (void) hudWasHidden:(MBProgressHUD *)hud

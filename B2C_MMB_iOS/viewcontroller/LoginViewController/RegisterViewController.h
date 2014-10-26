@@ -10,13 +10,25 @@
 #import "MBProgressHUD.h"
 #import "DCFConnectionUtil.h"
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate,MBProgressHUDDelegate,ConnectionDelegate>
+@interface RegisterViewController : UIViewController<UITextFieldDelegate,MBProgressHUDDelegate,ConnectionDelegate,UIScrollViewDelegate>
 {
     MBProgressHUD *HUD;
 }
-@property (weak, nonatomic) IBOutlet UITextField *tf_account;
-@property (weak, nonatomic) IBOutlet UITextField *tf_sec;
-@property (weak, nonatomic) IBOutlet UITextField *tf_confirm;
-@property (weak, nonatomic) IBOutlet UIButton *registerBtn;
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *mySegment;
+
+@property (weak, nonatomic) IBOutlet UIScrollView *sv;
+
+
+@property (weak, nonatomic) IBOutlet UITextField *speedRegisterTf;
+@property (weak, nonatomic) IBOutlet UIButton *speedAgreeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *speedGetSecBtn;
+
+@property (weak, nonatomic) IBOutlet UITextField *normalAccountTf;
+
+@property (weak, nonatomic) IBOutlet UITextField *normalSecTf;
+
+@property (weak, nonatomic) IBOutlet UITextField *normalSureSecTf;
+
 
 @end

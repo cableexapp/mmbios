@@ -333,7 +333,7 @@
     {
         str = @"插座";
     }
-    else
+    else if(tag != 0 && tag != 3)
     {
         str = label.text;
     }

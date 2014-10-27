@@ -50,6 +50,10 @@
     int totalMoney;
     
     int myTag;
+    
+    NSString *orderNum;
+    
+    NSString *totalPrice;
 }
 @end
 
@@ -219,7 +223,10 @@
     for(int i=0;i<goodsListArray.count;i++)
     {
         NSString *logo = [self getNumFromString:[chooseSendTitleArray objectAtIndex:i]];
-
+        if(logo.length == 0 || [logo isKindOfClass:[NSNull class]])
+        {
+            logo = @"0";
+        }
         NSString *shopId = nil;
         NSString *shopName = nil;
         
@@ -261,7 +268,6 @@
             NSArray *itemArray = [[[[[goodsListArray lastObject] lastObject] summariesArray] lastObject] objectForKey:@"items"];
             NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemArray lastObject]];
             
-            NSLog(@"itemArray = %@",itemArray);
             
             shopId = [[itemArray lastObject] objectForKey:@"shopId"];
             shopName = [[itemArray lastObject] objectForKey:@"sShopName"];
@@ -296,22 +302,26 @@
                                   nil];
         [shopArray addObject:shopDic];
     }
-    
-    
+    if(billId.length == 0)
+    {
+        billId = @"";
+    }
+    else
+    {
+        
+    }
     NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
                              shopArray,@"shopList",
                              [addressDic objectForKey:@"addressId"],@"address",
                              billId,@"invonice",
                              [self getMemberId],@"memberid",
                              nil];
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"SubOrder",time];
     NSString *token = [DCFCustomExtra md5:string];
     
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&items=%@",token,[self dictoJSON:pushDic]];
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubOrderTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/SubOrder.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -376,14 +386,33 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
+    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLSubOrderTag)
     {
         if(result == 1)
         {
-            ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] initWithTotal:[dicRespon objectForKey:@"total"] WithValue:[dicRespon objectForKey:@"value"]];
-            [self.navigationController pushViewController:pay animated:YES];
+            orderNum = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
+            orderNum = [orderNum stringByReplacingOccurrencesOfString:@"'" withString:@""];
+
+            totalPrice = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"total"]];
+            totalPrice = [totalPrice stringByReplacingOccurrencesOfString:@"'" withString:@""];
+            NSLog(@"%@",totalPrice);
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"SubOrder",time];
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            
+            NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@&total=%@",token,orderNum,totalPrice];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLOrderConfirmTag delegate:self];
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/OrderConfirm.html?"];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+
+            
+
         }
         else
         {
@@ -396,6 +425,14 @@
                 [DCFStringUtil showNotice:msg];
             }
         }
+    }
+    
+    if(URLTag == URLOrderConfirmTag)
+    {
+        NSLog(@"%@",dicRespon);
+        
+        ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] initWithTotal:totalPrice WithValue:orderNum];
+        [self.navigationController pushViewController:pay animated:YES];
     }
 }
 
@@ -501,7 +538,7 @@
 
         if(!addressDic || [addressDic allKeys].count == 0)
         {
-            return 0;
+            return 44;
         }
         else
         {
@@ -988,18 +1025,18 @@
 {
     if(indexPath.section == 0)
     {
-        if(!b2cOrderData || b2cOrderData.addressArray.count == 0)
-        {
-            
-        }
-        else
-        {
+//        if(!b2cOrderData || b2cOrderData.addressArray.count == 0)
+//        {
+//            
+//        }
+//        else
+//        {
 //            myAddressId = [[addressListDataArray objectAtIndex:indexPath.row] addressId];
             
 //            ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] initWithDataArray:addressListDataArray];
             ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
             [self.navigationController pushViewController:chooseAddress animated:YES];
-        }
+//        }
         
     }
     if(indexPath.section == 1 && indexPath.row == 0)
@@ -1041,18 +1078,27 @@
     }
     if(indexPath.section > 2 && indexPath.section <= totalSection -1)
     {
+        
         if(myTag == 1)
         {
-            if(indexPath.row < [[goodsListArray objectAtIndex:indexPath.section-3] count])
+//            if(indexPath.row < [[goodsListArray objectAtIndex:indexPath.section-3] count])
+//            {
+//                
+//            }
+//            if(indexPath.row == [[goodsListArray objectAtIndex:indexPath.section-3] count])
+//            {
+//                //商品备注
+//                NSLog(@"test");
+//            }
+            if(indexPath.row == 0)
             {
                 
             }
-            if(indexPath.row == [[goodsListArray objectAtIndex:indexPath.section-3] count])
+            if(indexPath.row == 1)
             {
-                //商品备注
-                NSLog(@"test");
+                
             }
-            else
+            else if(indexPath.row == 2)
             {
                 if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
                 {
@@ -1080,7 +1126,7 @@
                 //商品备注
                 NSLog(@"test");
             }
-            else
+            else if(indexPath.row == 2)
             {
                 if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
                 {

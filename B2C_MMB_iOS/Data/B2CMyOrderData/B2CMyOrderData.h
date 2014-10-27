@@ -30,7 +30,9 @@
 @property (strong,nonatomic) NSString *shopName;
 @property (strong,nonatomic) NSString *status;
 
+@property (strong,nonatomic) NSString *logisticsNum;
 
+@property (strong,nonatomic) NSString *logisticsId;
 
 - (id) initWithDic:(NSDictionary *) dic;
 

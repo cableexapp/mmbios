@@ -22,6 +22,8 @@
 #import "UIImageView+WebCache.h"
 #import "FourOrderDetailViewController.h"
 #import "CancelOrderViewController.h"
+#import "logisticsTrackingViewController.h"
+
 
 @interface FourthHostViewController ()
 {
@@ -165,6 +167,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
     if(URLTag == ULRGetOrderListTag)
     {
         if(_reloading == YES)
@@ -644,8 +647,16 @@
     [self setHidesBottomBarWhenPushed:NO];
 }
 
+
+#pragma mark - 物流跟踪
 - (void) lookForTradeBtnClick:(UIButton *) sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
+    logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
+    logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsId]];
+    logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsNum]];
+    [self.navigationController pushViewController:logisticsTrackingView animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) cancelOrderBtnClick:(UIButton *) sender

@@ -247,6 +247,9 @@
 		61CCBCE819D00C880008A46B /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE719D00C880008A46B /* star.png */; };
 		61CCBCEC19D0142C0008A46B /* GoodsDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CCBCEA19D0142C0008A46B /* GoodsDetailTableViewCell.m */; };
 		61CCBCED19D0142C0008A46B /* GoodsDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCEB19D0142C0008A46B /* GoodsDetailTableViewCell.xib */; };
+		61D6698119FE1D5300908016 /* LogisticsTrackingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6698019FE1D5300908016 /* LogisticsTrackingTableViewCell.m */; };
+		61D6698719FE54B000908016 /* logisticsTrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6698619FE54B000908016 /* logisticsTrackingViewController.m */; };
+		61D6698A19FE55E100908016 /* LogisticsTrackingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6698919FE55E100908016 /* LogisticsTrackingTableViewController.m */; };
 		61DF89D319FB83E400D47430 /* B2CGoodsFastPicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF89D219FB83E400D47430 /* B2CGoodsFastPicData.m */; };
 		61DF89D619FB841500D47430 /* GoodsPicFastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF89D519FB841500D47430 /* GoodsPicFastViewController.m */; };
 		61DF89DF19FB8FCD00D47430 /* GoodsFastPicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF89DD19FB8FCD00D47430 /* GoodsFastPicTableViewCell.m */; };
@@ -681,6 +684,12 @@
 		61CCBCE919D0142C0008A46B /* GoodsDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailTableViewCell.h; sourceTree = "<group>"; };
 		61CCBCEA19D0142C0008A46B /* GoodsDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailTableViewCell.m; sourceTree = "<group>"; };
 		61CCBCEB19D0142C0008A46B /* GoodsDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoodsDetailTableViewCell.xib; sourceTree = "<group>"; };
+		61D6697F19FE1D5300908016 /* LogisticsTrackingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsTrackingTableViewCell.h; sourceTree = "<group>"; };
+		61D6698019FE1D5300908016 /* LogisticsTrackingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsTrackingTableViewCell.m; sourceTree = "<group>"; };
+		61D6698519FE54B000908016 /* logisticsTrackingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logisticsTrackingViewController.h; sourceTree = "<group>"; };
+		61D6698619FE54B000908016 /* logisticsTrackingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = logisticsTrackingViewController.m; sourceTree = "<group>"; };
+		61D6698819FE55E100908016 /* LogisticsTrackingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsTrackingTableViewController.h; sourceTree = "<group>"; };
+		61D6698919FE55E100908016 /* LogisticsTrackingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsTrackingTableViewController.m; sourceTree = "<group>"; };
 		61DF89D119FB83E400D47430 /* B2CGoodsFastPicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGoodsFastPicData.h; sourceTree = "<group>"; };
 		61DF89D219FB83E400D47430 /* B2CGoodsFastPicData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGoodsFastPicData.m; sourceTree = "<group>"; };
 		61DF89D419FB841500D47430 /* GoodsPicFastViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsPicFastViewController.h; sourceTree = "<group>"; };
@@ -1090,6 +1099,8 @@
 				6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */,
 				6181A3DA19CFC4C2000E2D14 /* EScrollerView.h */,
 				6181A3DB19CFC4C2000E2D14 /* EScrollerView.m */,
+				61D6697F19FE1D5300908016 /* LogisticsTrackingTableViewCell.h */,
+				61D6698019FE1D5300908016 /* LogisticsTrackingTableViewCell.m */,
 			);
 			path = "视图";
 			sourceTree = "<group>";
@@ -1500,6 +1511,10 @@
 				6116A22219EE1006005C3572 /* DiscussViewController.m */,
 				614EB7F019F9F79400E4207F /* CancelOrderViewController.h */,
 				614EB7F119F9F79400E4207F /* CancelOrderViewController.m */,
+				61D6698519FE54B000908016 /* logisticsTrackingViewController.h */,
+				61D6698619FE54B000908016 /* logisticsTrackingViewController.m */,
+				61D6698819FE55E100908016 /* LogisticsTrackingTableViewController.h */,
+				61D6698919FE55E100908016 /* LogisticsTrackingTableViewController.m */,
 				6116A22519EE1006005C3572 /* LookForCustomViewController.h */,
 				6116A22619EE1006005C3572 /* LookForCustomViewController.m */,
 				6116A22319EE1006005C3572 /* FourthHostViewController.h */,
@@ -1973,6 +1988,7 @@
 				6181A4F719CFC4C2000E2D14 /* Base64.m in Sources */,
 				6181A4FE19CFC4C2000E2D14 /* CKRefreshControl.m in Sources */,
 				616AE63719F111B70028FBDB /* FourMyMMBListTableViewController.m in Sources */,
+				61D6698119FE1D5300908016 /* LogisticsTrackingTableViewCell.m in Sources */,
 				6181A4C119CFC4C2000E2D14 /* MCdes.m in Sources */,
 				6181A52219CFC4C2000E2D14 /* FindBackSec_SecondViewController.m in Sources */,
 				61DF89D619FB841500D47430 /* GoodsPicFastViewController.m in Sources */,
@@ -1981,6 +1997,7 @@
 				612A242119D2926800E544E0 /* ChooseReceiveAddressViewController.m in Sources */,
 				6181A4FD19CFC4C2000E2D14 /* CKRefreshArrowView.m in Sources */,
 				614EB7F219F9F79400E4207F /* CancelOrderViewController.m in Sources */,
+				61D6698A19FE55E100908016 /* LogisticsTrackingTableViewController.m in Sources */,
 				6116A22919EE1006005C3572 /* LookForCustomViewController.m in Sources */,
 				6181A52719CFC4C2000E2D14 /* OneStepCell.m in Sources */,
 				61DF8A0719FBA33C00D47430 /* HotLineViewController.m in Sources */,
@@ -2013,6 +2030,7 @@
 				614FFFCA19E8E02A000D83BE /* ShopHostPreTableViewController.m in Sources */,
 				611A7D1B19D3E80C0033A433 /* AddReceiveAddressSecondViewController.m in Sources */,
 				6181A4C019CFC4C2000E2D14 /* DCFStringUtil.m in Sources */,
+				61D6698719FE54B000908016 /* logisticsTrackingViewController.m in Sources */,
 				6181A4C319CFC4C2000E2D14 /* CustomAlertView.m in Sources */,
 				61A197C719F7509400909C6F /* QBImagePickerFooterView.m in Sources */,
 				6181A53119CFC4C2000E2D14 /* HostTableViewController.m in Sources */,

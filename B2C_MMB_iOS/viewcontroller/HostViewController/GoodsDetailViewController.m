@@ -90,43 +90,34 @@
 
 - (void) btnClick:(UIButton *) sender
 {
+    if(num.length == 0 || [num intValue] == 0)
+    {
+        [DCFStringUtil showNotice:@"请选择数量"];
+        return;
+    }
+    if(itemid.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请选择颜色"];
+        return;
+    }
+    
     [self setHidesBottomBarWhenPushed:YES];
     int tag = [sender tag];
-    
 
     
     if(tag == 100)
     {
 #pragma mark - 立即购买
 
-        if(num.length == 0)
-        {
-            [DCFStringUtil showNotice:@"请选择数量"];
-            return;
-        }
-
-        for(UIButton *btn in chooseColorBtnArray)
-        {
-            if(btn.selected == YES)
-            {
-                break;
-            }
-            else
-            {
-                [DCFStringUtil showNotice:@"请选择颜色"];
-                return;
-            }
-        }
-
-        
         NSString *time = [DCFCustomExtra getFirstRunTime];
         
         NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
         
         NSString *token = [DCFCustomExtra md5:string];
         
-        //    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
-        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+//        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
+
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -135,16 +126,7 @@
     }
     else
     {
-        if(num.length == 0 || [num intValue] == 0)
-        {
-            [DCFStringUtil showNotice:@"请选择数量"];
-            return;
-        }
-        if(itemid.length == 0)
-        {
-            [DCFStringUtil showNotice:@"请选择颜色"];
-            return;
-        }
+
 #pragma mark - 加入购物车
         [self setHidesBottomBarWhenPushed:YES];
         
@@ -187,7 +169,6 @@
         
         
         num = @"0";
-        
     }
 }
 
@@ -215,6 +196,13 @@
         [conn stopConnection];
         conn = nil;
     }
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    num = @"0";
 }
 
 - (void)viewDidLoad
@@ -344,7 +332,6 @@
         {
             [DCFStringUtil showNotice:msg];
             
-
         }
         else
         {
@@ -1062,6 +1049,7 @@
     NSString *colorName = [[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorName"];
     NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorPrice"]];
     NSString *productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"productNum"]];
+    
     for(int i=0; i< 3; i++)
     {
         UILabel *label = (UILabel *)[colorLabelArray objectAtIndex:i];

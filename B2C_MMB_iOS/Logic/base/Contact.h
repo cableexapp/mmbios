@@ -64,6 +64,8 @@ enum {
     
     URLSubOrderTag,    //提交
     
+    URLOrderConfirmTag,  //支付宝校验
+    
     URLDirectBuyTag,  //立即购买
     
     URLScreeningConditionTag,  //筛选条件关联
@@ -82,6 +84,8 @@ enum {
     URLCanncelOrderTag,  //取消订单
     
     URLGetProductSnapTag,   //商品快照
+    
+    URLLogisticsTrackingTag,  //物流跟踪
 };
 typedef NSUInteger URLTag;
 

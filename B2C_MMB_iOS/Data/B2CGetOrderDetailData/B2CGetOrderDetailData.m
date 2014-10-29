@@ -39,6 +39,8 @@
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
         
         _snapId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"snapId"]];
+        
+        _shopId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopId"]];
     }
     return self;
 }

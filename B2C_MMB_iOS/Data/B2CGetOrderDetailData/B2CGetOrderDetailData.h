@@ -30,6 +30,8 @@
 
 @property (strong,nonatomic) NSString *snapId;
 
+@property (strong,nonatomic) NSString *shopId;
+
 - (id) initWithDic:(NSDictionary *) dic;
 
 + (NSMutableArray *) getListArray:(NSMutableArray *) array;

@@ -49,7 +49,8 @@
     [hostNavi.tabBarItem setTag:1];
     //    [hostNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
-    SecondNaviViewController *secondNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"secondNaviViewController"];
+    UIStoryboard *secondSB = [UIStoryboard storyboardWithName:@"SecondSB" bundle:nil];
+    SecondNaviViewController *secondNavi = [secondSB instantiateViewControllerWithIdentifier:@"secondNaviViewController"];
     UIImage *selectClassifySelectImg = [UIImage imageNamed:@"classifySelect.png"];
     UIImage *unClassifyUnSelectImImg = [UIImage imageNamed:@"classifyUnSelect.png"];
     selectClassifySelectImg = [UIImage imageWithCGImage:selectClassifySelectImg.CGImage scale:1.5 orientation:selectClassifySelectImg.imageOrientation];
@@ -58,7 +59,8 @@
     [secondNavi.tabBarItem setTag:2];
     //    [secondNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
-    ThirdNaviViewController *thirdNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"thirdNaviViewController"];
+    UIStoryboard *thirdSB = [UIStoryboard storyboardWithName:@"ThirdSB" bundle:nil];
+    ThirdNaviViewController *thirdNavi = [thirdSB instantiateViewControllerWithIdentifier:@"thirdNaviViewController"];
     UIImage *selectImImg = [UIImage imageNamed:@"imSelect.png"];
     UIImage *unSelectImImg = [UIImage imageNamed:@"imUnSelect.png"];
     selectImImg = [UIImage imageWithCGImage:selectImImg.CGImage scale:1.5 orientation:selectImImg.imageOrientation];
@@ -67,7 +69,8 @@
     [thirdNavi.tabBarItem setTag:3];
     //    [thirdNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
-    FourthNaviViewController *fourthNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
+    UIStoryboard *fourthSB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
+    FourthNaviViewController *fourthNavi = [fourthSB instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
     UIImage *selectp_centerSelectImg = [UIImage imageNamed:@"p_centerSelect.png"];
     UIImage *unSelectp_centerUnSelectImg = [UIImage imageNamed:@"p_centerUnSelect.png"];
     selectp_centerSelectImg = [UIImage imageWithCGImage:selectp_centerSelectImg.CGImage scale:1.5 orientation:selectp_centerSelectImg.imageOrientation];
@@ -76,7 +79,8 @@
     [fourthNavi.tabBarItem setTag:4];
     //    [fourthNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
-    FifthNaviViewController *fifthNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"fifthNaviViewController"];
+    UIStoryboard *fifthSB = [UIStoryboard storyboardWithName:@"FifthSB" bundle:nil];
+    FifthNaviViewController *fifthNavi = [fifthSB instantiateViewControllerWithIdentifier:@"fifthNaviViewController"];
     UIImage *selectmoreSelectImg = [UIImage imageNamed:@"moreSelectpng"];
     UIImage *unSelectmoreUnSelectImg = [UIImage imageNamed:@"moreUnSelect.png"];
     selectmoreSelectImg = [UIImage imageWithCGImage:selectmoreSelectImg.CGImage scale:1.5 orientation:selectmoreSelectImg.imageOrientation];
@@ -98,13 +102,14 @@
     [self initCutomBar];
     
     //设置tabbar背景颜色
-    //    [[UITabBar appearance] setTintColor:[UIColor redColor]];
-    //    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:30/255.0 green:35/255.0 blue:32/255.0 alpha:1.0]];
+//    [[UITabBar appearance] setBarTintColor:[UIColor redColor]];
+
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
     
     //设置tabbar图片文字颜色
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:18/255.0 green:104/255.0 blue:253/255.0 alpha:1.0]];
-    //    [[UITabBar appearance] setBarTintColor:[UIColor orangeColor]];
+//    [[UITabBar appearance] setTintColor:[UIColor orangeColor]];
+
     
 }
 - (BOOL)shouldAutorotate

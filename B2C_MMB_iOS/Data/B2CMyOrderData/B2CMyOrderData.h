@@ -12,6 +12,7 @@
 
 @property (strong,nonatomic) NSArray *myItems;   //商铺下面的商品数组
 @property (strong,nonatomic) NSString *afterStatus;  //售后状态
+@property (strong,nonatomic) NSString *juderstatus;  //评价状态
 @property (strong,nonatomic) NSDictionary *subDate; //商铺信息数组
 @property (strong,nonatomic) NSString *orderId;
 @property (strong,nonatomic) NSString *orderMergeId;

@@ -86,6 +86,10 @@ enum {
     URLGetProductSnapTag,   //商品快照
     
     URLLogisticsTrackingTag,  //物流跟踪
+    
+    
+#pragma mark - b2b
+    URLGetProductTypeTag,   //b2b一级分类
 };
 typedef NSUInteger URLTag;
 

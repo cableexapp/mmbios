@@ -50,6 +50,10 @@
 
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
 
+        _afterStatus = [NSString stringWithFormat:@"%@",[dic objectForKey:@"afterStatus"]];
+        
+        _juderstatus = [NSString stringWithFormat:@"%@",[dic objectForKey:@"juderstatus"]];
+
         _logisticsId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsId"]];
 
         _logisticsNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsNum"]];

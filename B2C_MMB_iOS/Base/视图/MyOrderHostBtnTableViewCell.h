@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface MyOrderHostBtnTableViewCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIButton *onLinePayBtn;
 @property (weak, nonatomic) IBOutlet UIButton *lookForCustomBtn;
 @property (weak, nonatomic) IBOutlet UIButton *discussBtn;
 @property (weak, nonatomic) IBOutlet UIButton *lookForTradeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *cancelOrderBtn;
+@property (weak, nonatomic) IBOutlet UIButton *receiveBtn;
 
 @end

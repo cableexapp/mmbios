@@ -254,8 +254,10 @@
     {
         [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
     }
-    else
+#pragma mark - 支付宝校验
+    else if(result == 2)
     {
+        [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
 //        AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
 //        [appDel logOutMethod];
     }

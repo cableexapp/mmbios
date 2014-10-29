@@ -34,28 +34,28 @@
         NSLog(@"%f %f %f",btn.frame.origin.y,btn.frame.size.height,btn.frame.size.width);
         switch (i) {
             case 0:
-                [iv setImage:[UIImage imageNamed:@"askPrice_host.png"]];
+                [iv setImage:[UIImage imageNamed:@"快速查询.png"]];
                 break;
             case 1:
-                [iv setImage:[UIImage imageNamed:@"chooseCabel.png"]];
+                [iv setImage:[UIImage imageNamed:@"电缆选购.png"]];
                 break;
             case 2:
-                [iv setImage:[UIImage imageNamed:@"B2CEntrance.png"]];
+                [iv setImage:[UIImage imageNamed:@"家装线专卖.png"]];
                 break;
             case 3:
-                [iv setImage:[UIImage imageNamed:@"askPrice_host.png"]];
+                [iv setImage:[UIImage imageNamed:@"热门型号.png"]];
                 break;
             case 4:
-                [iv setImage:[UIImage imageNamed:@"askPrice_host.png"]];
+                [iv setImage:[UIImage imageNamed:@"热门分类.png"]];
                 break;
             case 5:
-                [iv setImage:[UIImage imageNamed:@"askPrice_host.png"]];
+                [iv setImage:[UIImage imageNamed:@"场合选择.png"]];
                 break;
             case 6:
-                [iv setImage:[UIImage imageNamed:@"askPrice_host.png"]];
+                [iv setImage:[UIImage imageNamed:@"在线客服.png"]];
                 break;
             case 7:
-                [iv setImage:[UIImage imageNamed:@"askPrice_host.png"]];
+                [iv setImage:[UIImage imageNamed:@"电话服务.png"]];
                 break;
 
             default:

@@ -143,6 +143,7 @@
     if(self = [super init])
     {
      
+        app = (AppDelegate *)[UIApplication sharedApplication].delegate;
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
         
@@ -501,11 +502,8 @@
     }
     if(URLTag == URLCartConfirmTag)
     {
-        NSLog(@"%@",dicRespon);
-        
         if(result == 1)
         {
-//            [DCFStringUtil showNotice:msg];
             B2CUpOrderData *orderData = [[B2CUpOrderData alloc] initWithDataDic:dicRespon];
             [self setHidesBottomBarWhenPushed:YES];
             UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData WithTag:1];
@@ -847,21 +845,22 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
     NSString *pushString = nil;
     
-    
-//    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-//    if(hasLogin == YES)
-//    {
-    pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
-//    }
-//    else
-//    {
-//        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&coloritem=%@",[parameterArray lastObject],token,items];
-//    }
-    
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+
+    if([[self getMemberId] length] == 0 || [[self getMemberId] isKindOfClass:[NSNull class]])
+    {
+        
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
+        
+        
+        
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
+        
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
+  
     
     
 }

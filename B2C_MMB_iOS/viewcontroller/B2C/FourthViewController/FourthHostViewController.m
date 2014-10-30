@@ -326,7 +326,6 @@
     }
     if(indexPath.section == dataArray.count-1)
     {
-        NSLog(@"%@",[[dataArray objectAtIndex:indexPath.section] orderTotal]);
         if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
             return 90;
@@ -519,13 +518,16 @@
                 [cell.lookForCustomBtn setHidden:NO];
                 [cell.lookForTradeBtn setHidden:NO];
                 
-                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/3, 30)];
-                [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
-                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
-                
                 [cell.onLinePayBtn setHidden:YES];
                 [cell.cancelOrderBtn setHidden:YES];
                 [cell.receiveBtn setHidden:YES];
+                
+                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/3, 30)];
+                NSLog(@" %f %f",cell.discussBtn.frame.origin.x,cell.discussBtn.frame.size.width);
+                [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
+                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
+                
+               
             }
             else
             {
@@ -570,9 +572,7 @@
             }
         }
     }
-    
-    [cell.lookForCustomBtn setHidden:NO];
-    [cell.cancelOrderBtn setHidden:NO];
+
     
     [cell.lookForCustomBtn setFrame:CGRectMake(5, 5, (ScreenWidth-25)/4, 30)];
     [cell.discussBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, (ScreenWidth-25)/4, 30)];

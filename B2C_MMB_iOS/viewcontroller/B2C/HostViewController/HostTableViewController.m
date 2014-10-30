@@ -13,6 +13,7 @@
 #import "ShoppingHostViewController.h"
 #import "SpeedAskPriceFirstViewController.h"
 #import "MCDefine.h"
+#import "HotClasscifyViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -23,6 +24,8 @@
     
     NSArray *typeArray;  //一级分类数组
     NSMutableArray *typeBtnArray;  //一级分类按钮
+    
+    UIStoryboard *sb;
 }
 @end
 
@@ -162,6 +165,8 @@
     [super viewDidLoad];
     
     [self pushAndPopStyle];
+    
+    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductType",time];
@@ -348,20 +353,27 @@
 - (void) HostSection1BtnClick:(UIButton *)btn
 {
     NSLog(@"btn = %d  %@",btn.tag,btn.titleLabel.text);
+    [self setHidesBottomBarWhenPushed:YES];
     if(btn.tag == 0)
     {
-        [self setHidesBottomBarWhenPushed:YES];
         SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
         [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
     }
     if(btn.tag == 2)
     {
-        [self setHidesBottomBarWhenPushed:YES];
+//        [self setHidesBottomBarWhenPushed:YES];
         ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
         [self.navigationController pushViewController:shoppingHost animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
+//        [self setHidesBottomBarWhenPushed:NO];
     }
+    if(btn.tag == 3)
+    {
+//        [self setHidesBottomBarWhenPushed:YES];
+        HotClasscifyViewController *hot = [sb instantiateViewControllerWithIdentifier:@"hotClasscifyViewController" ];
+        [self.navigationController pushViewController:hot animated:YES];
+//        [self setHidesBottomBarWhenPushed:NO];
+    }
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -544,6 +556,13 @@
 {
     
 }
+
+#pragma mark - 热门型号
+- (IBAction)hotModelBtnClick:(id)sender
+{
+  
+}
+
 
 - (void) btnClick:(UIButton *) sender
 {

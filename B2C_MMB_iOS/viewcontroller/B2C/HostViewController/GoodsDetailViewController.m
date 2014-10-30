@@ -60,6 +60,9 @@
     B2CUpOrderData *orderData;
     
     float chooseColorPrice;
+    
+    
+    NSString *productNum;  //库存数量
 }
 @end
 
@@ -288,8 +291,7 @@
     
     NSString *token = [DCFCustomExtra md5:string];
     
-    //    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
-    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"144",token];
+    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
@@ -297,8 +299,7 @@
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
-{
-    
+{    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
@@ -874,8 +875,16 @@
         [chooseColorAndCountView setBackgroundColor:[UIColor whiteColor]];
         
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
-        //        [iv setImage:[UIImage imageNamed:@"cabel.png"]];
-        [iv setImage:cabelImage];
+        if(detailData.picArray.count != 0)
+        {
+            NSURL *url = [NSURL URLWithString:[detailData.picArray objectAtIndex:0]];
+            [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
+        }
+        else
+        {
+            [iv setImage:[UIImage imageNamed:@"cabel.png"]];
+        }
+//        [iv setImage:cabelImage];
         [chooseColorAndCountView addSubview:iv];
         
         
@@ -956,8 +965,8 @@
                 }
                 case 2:
                 {
-                    NSString *productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:0] objectForKey:@"productNum"]];
-                    [label setText:[NSString stringWithFormat:@"库存%@",productNum]];
+                    productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:0] objectForKey:@"productNum"]];
+                    [label setText:[NSString stringWithFormat:@"库存:%@",productNum]];
                     [label setTextColor:[UIColor lightGrayColor]];
                     break;
                 }
@@ -1043,9 +1052,11 @@
     btn.selected = !btn.selected;
     
     int tag = btn.tag;
+    
     NSString *colorName = [[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorName"];
     NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorPrice"]];
-    NSString *productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"productNum"]];
+    productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"productNum"]];
+    
     
     for(int i=0; i< 3; i++)
     {
@@ -1065,7 +1076,7 @@
         }
         if(i == 2)
         {
-            [label setText:[NSString stringWithFormat:@"库存%@",productNum]];
+            [label setText:[NSString stringWithFormat:@"库存:%@",productNum]];
         }
     }
     
@@ -1115,6 +1126,13 @@
     }
     
     num = middleBtn.titleLabel.text;
+    if([num intValue] > [productNum intValue])
+    {
+        num = productNum;
+        [middleBtn setTitle:num forState:UIControlStateNormal];
+        [DCFStringUtil showNotice:@"选择数目不能超过库存"];
+        return;
+    }
 }
 
 - (void) sureBtnClick:(UIButton *) sender

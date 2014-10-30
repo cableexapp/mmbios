@@ -382,6 +382,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLSubOrderTag)
@@ -414,7 +415,7 @@
     
     if(URLTag == URLOrderConfirmTag)
     {
-        if(result == 2)
+        if(result == 1)
         {
             NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[b2cOrderData.summariesArray lastObject]];
             NSArray *itemsArray = [dic objectForKey:@"items"];

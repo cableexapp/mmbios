@@ -29,6 +29,10 @@
 		6122714619CFC81500FE4DFF /* title_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6122713519CFC81500FE4DFF /* title_logo.png */; };
 		612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 612C909419D6561900430140 /* B2CGoodsDetailData.m */; };
 		6139BA8519EFBBDD00B44032 /* B2CMyOrderData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139BA8419EFBBDD00B44032 /* B2CMyOrderData.m */; };
+		6140E7C91A01DE4C00E349E3 /* hotModelSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */; };
+		6140E7CA1A01DE4C00E349E3 /* hotModelSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C71A01DE4C00E349E3 /* hotModelSelected@2x.png */; };
+		6140E7CB1A01DE4C00E349E3 /* hotModelSelected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C81A01DE4C00E349E3 /* hotModelSelected@3x.png */; };
+		6140E7CD1A02189A00E349E3 /* KindsPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7CC1A02189A00E349E3 /* KindsPlist.plist */; };
 		615B01B219D8000A0002592E /* B2CShopCarListData.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B01B119D8000A0002592E /* B2CShopCarListData.m */; };
 		615C8F8A19F8A7E400A2B8CD /* B2CAfterSaleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 615C8F8919F8A7E400A2B8CD /* B2CAfterSaleData.m */; };
 		615C8F8E19F8EFDF00A2B8CD /* ratingbar_selected_low.png in Resources */ = {isa = PBXBuildFile; fileRef = 615C8F8B19F8EFDF00A2B8CD /* ratingbar_selected_low.png */; };
@@ -336,6 +340,10 @@
 		612C909419D6561900430140 /* B2CGoodsDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGoodsDetailData.m; sourceTree = "<group>"; };
 		6139BA8319EFBBDD00B44032 /* B2CMyOrderData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CMyOrderData.h; sourceTree = "<group>"; };
 		6139BA8419EFBBDD00B44032 /* B2CMyOrderData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CMyOrderData.m; sourceTree = "<group>"; };
+		6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotModelSelected.png; sourceTree = "<group>"; };
+		6140E7C71A01DE4C00E349E3 /* hotModelSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotModelSelected@2x.png"; sourceTree = "<group>"; };
+		6140E7C81A01DE4C00E349E3 /* hotModelSelected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotModelSelected@3x.png"; sourceTree = "<group>"; };
+		6140E7CC1A02189A00E349E3 /* KindsPlist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KindsPlist.plist; sourceTree = "<group>"; };
 		615B01B019D8000A0002592E /* B2CShopCarListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShopCarListData.h; sourceTree = "<group>"; };
 		615B01B119D8000A0002592E /* B2CShopCarListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShopCarListData.m; sourceTree = "<group>"; };
 		615C8F8819F8A7E400A2B8CD /* B2CAfterSaleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CAfterSaleData.h; sourceTree = "<group>"; };
@@ -882,6 +890,16 @@
 			path = B2CMyOrderData;
 			sourceTree = "<group>";
 		};
+		6140E7C51A01DE4C00E349E3 /* hotModelSelected */ = {
+			isa = PBXGroup;
+			children = (
+				6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */,
+				6140E7C71A01DE4C00E349E3 /* hotModelSelected@2x.png */,
+				6140E7C81A01DE4C00E349E3 /* hotModelSelected@3x.png */,
+			);
+			path = hotModelSelected;
+			sourceTree = "<group>";
+		};
 		615B01AF19D7FFF20002592E /* B2CShopCarListData */ = {
 			isa = PBXGroup;
 			children = (
@@ -1187,6 +1205,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6140E7C51A01DE4C00E349E3 /* hotModelSelected */,
 				61B710F419FF67A1001CC3BD /* 首页 */,
 				61DF89F519FB9D4900D47430 /* HomeSelect.png */,
 				61DF89EE19FB9CD700D47430 /* HomeUnSelect.png */,
@@ -1508,6 +1527,7 @@
 			children = (
 				61B7102A19FF3B53001CC3BD /* HotClasscifyViewController.h */,
 				61B7102B19FF3B53001CC3BD /* HotClasscifyViewController.m */,
+				6140E7CC1A02189A00E349E3 /* KindsPlist.plist */,
 			);
 			path = B2B;
 			sourceTree = "<group>";
@@ -1877,6 +1897,7 @@
 				61C8DBB019F260F400E2A17D /* msg_bq@2x.png in Resources */,
 				6181A4EC19CFC4C2000E2D14 /* Parents.png in Resources */,
 				6181A4DB19CFC4C2000E2D14 /* next.png in Resources */,
+				6140E7CA1A01DE4C00E349E3 /* hotModelSelected@2x.png in Resources */,
 				61DF89F819FB9EB500D47430 /* p_centerUnSelect.png in Resources */,
 				6181A4C519CFC4C2000E2D14 /* DCFChenMoreCell.xib in Resources */,
 				619A62541A00C09900556B90 /* ThirdSB.storyboard in Resources */,
@@ -1901,6 +1922,7 @@
 				6181A4D919CFC4C2000E2D14 /* click2.png in Resources */,
 				61B7110419FF67A2001CC3BD /* 电话服务.png in Resources */,
 				6181A4DF19CFC4C2000E2D14 /* cabel.png in Resources */,
+				6140E7CD1A02189A00E349E3 /* KindsPlist.plist in Resources */,
 				61B7110019FF67A2001CC3BD /* 快速查询.png in Resources */,
 				6181A35D19CFC3F9000E2D14 /* Main_iPhone.storyboard in Resources */,
 				6181A4D619CFC4C2000E2D14 /* arrow.png in Resources */,
@@ -1914,6 +1936,7 @@
 				6122714619CFC81500FE4DFF /* title_logo.png in Resources */,
 				61DF89EC19FB9AD000D47430 /* p_centerSelect.png in Resources */,
 				61DF89EA19FB9AD000D47430 /* imSelect.png in Resources */,
+				6140E7CB1A01DE4C00E349E3 /* hotModelSelected@3x.png in Resources */,
 				619A62511A00C09900556B90 /* FifthSB.storyboard in Resources */,
 				6181A4EA19CFC4C2000E2D14 /* News.png in Resources */,
 				61A197DB19F752B100909C6F /* icon_addpic_unfocused.png in Resources */,
@@ -1929,6 +1952,7 @@
 				61DF89F219FB9CD700D47430 /* HomeUnSelect.png in Resources */,
 				61C8DBAF19F260F400E2A17D /* msg_bq.png in Resources */,
 				6181A4D519CFC4C2000E2D14 /* 102.png in Resources */,
+				6140E7C91A01DE4C00E349E3 /* hotModelSelected.png in Resources */,
 				6181A4E119CFC4C2000E2D14 /* cell_1.png in Resources */,
 				61C8DBB219F260F400E2A17D /* msg_bqy@2x.png in Resources */,
 				619A62521A00C09900556B90 /* FourthSB.storyboard in Resources */,

@@ -105,30 +105,30 @@
     
     [self setHidesBottomBarWhenPushed:YES];
     int tag = [sender tag];
-
+    
     
     if(tag == 100)
     {
 #pragma mark - 立即购买
-
+        
         NSString *time = [DCFCustomExtra getFirstRunTime];
         
         NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
         
         NSString *token = [DCFCustomExtra md5:string];
         
-//        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
         NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
-
+        
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         
-
+        
     }
     else
     {
-
+        
 #pragma mark - 加入购物车
         [self setHidesBottomBarWhenPushed:YES];
         
@@ -146,7 +146,7 @@
         
         BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
         
-  
+        
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
         
@@ -197,6 +197,11 @@
     {
         [conn stopConnection];
         conn = nil;
+    }
+    if(chooseColorAndCountView)
+    {
+        [chooseColorAndCountView removeFromSuperview];
+        chooseColorAndCountView = nil;
     }
 }
 
@@ -299,7 +304,7 @@
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
-{    
+{
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
@@ -347,16 +352,16 @@
         
     }
     if(URLTag == URLDirectBuyTag)
-    {        
+    {
         if(result == 1)
         {
             orderData = [[B2CUpOrderData alloc] initWithDataDic:dicRespon];
             NSMutableArray *chooseGoodsArray = [[NSMutableArray alloc] initWithObjects:orderData, nil];
-
+            
             float totalMoney = [num intValue]*chooseColorPrice;
             UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData WithTag:0];
             [self.navigationController pushViewController:order animated:YES];
-
+            
         }
         else
         {
@@ -370,7 +375,7 @@
             }
         }
     }
-
+    
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -780,10 +785,10 @@
 {
     UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
     
-//    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:label.text];
+    //    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:label.text];
     [self setHidesBottomBarWhenPushed:YES];
     ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:detailData.shopName WithShopId:detailData.shopId WithUse:@""];
-
+    
     [self.navigationController pushViewController:shopHost animated:YES];
 }
 
@@ -884,7 +889,7 @@
         {
             [iv setImage:[UIImage imageNamed:@"cabel.png"]];
         }
-//        [iv setImage:cabelImage];
+        //        [iv setImage:cabelImage];
         [chooseColorAndCountView addSubview:iv];
         
         

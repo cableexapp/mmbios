@@ -131,14 +131,14 @@
     NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     NSLog(@"dic = %@",dic);
     
-    NSDictionary *d = [dic objectForKey:@"YJV"];
-    NSLog(@"%@",d.allValues);
-    for(int i=0;i<3;i++)
-    {
-        NSLog(@"%@",[d.allValues objectAtIndex:i]);
-        NSLog(@"%@",[d.allKeys objectAtIndex:i]);
-
-    }
+    NSDictionary *d = [dic objectForKey:@"AF-200"];
+    NSLog(@"d = %@",d);
+    
+    NSLog(@"oneKind=%@",[d objectForKey:@"oneKind"]);
+    NSLog(@"threeKind=%@",[d objectForKey:@"threeKind"]);
+    NSLog(@"twoKind=%@",[d objectForKey:@"twoKind"]);
+    
+    
 //    for(UIButton *btn in arr)
 //    {
 //        NSString *title = [btn titleLabel].text;

@@ -37,6 +37,16 @@
     self.cancelOrderBtn.layer.borderWidth = 1.0f;
     self.cancelOrderBtn.layer.cornerRadius = 5;
 
+    
+    self.onLinePayBtn.layer.borderColor = [UIColor colorWithRed:65.0/255.0 green:99.0/255.0 blue:114.0/255.0 alpha:1.0].CGColor;
+    self.onLinePayBtn.layer.borderWidth = 1.0f;
+    self.onLinePayBtn.layer.cornerRadius = 5;
+    
+    
+    self.receiveBtn.layer.borderColor = [UIColor colorWithRed:65.0/255.0 green:99.0/255.0 blue:114.0/255.0 alpha:1.0].CGColor;
+    self.receiveBtn.layer.borderWidth = 1.0f;
+    self.receiveBtn.layer.cornerRadius = 5;
+
     // Initialization code
     
 }

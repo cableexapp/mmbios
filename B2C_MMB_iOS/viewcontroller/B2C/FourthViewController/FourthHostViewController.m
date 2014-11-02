@@ -23,7 +23,7 @@
 #import "FourOrderDetailViewController.h"
 #import "CancelOrderViewController.h"
 #import "logisticsTrackingViewController.h"
-
+#import "AliViewController.h"
 
 @interface FourthHostViewController ()
 {
@@ -40,6 +40,7 @@
     int pageSize; //每页条数
     
     BOOL _reloading;
+    
 }
 @end
 
@@ -77,6 +78,12 @@
         btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSend,self.waitForSureBtn,self.waitForDiscussBtn, nil];
     }
     
+    [self.allBtn setSelected:YES];
+    [self.waitForPayBtn setSelected:NO];
+    [self.waitForSend setSelected:NO];
+    [self.waitForSureBtn setSelected:NO];
+    [self.waitForDiscussBtn setSelected:NO];
+
     for(int i=0;i<btnArray.count;i++)
     {
         UIButton *btn = (UIButton *)[btnArray objectAtIndex:i];
@@ -89,16 +96,17 @@
         [btn setTag:i];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        if([btn.titleLabel.text isEqualToString:_myStatus])
-        {
-            [btn setSelected:YES];
-        }
-        else
-        {
-            [btn setSelected:NO];
-        }
+//        if([btn.titleLabel.text isEqualToString:_myStatus])
+//        {
+//            [btn setSelected:YES];
+//        }
+//        else
+//        {
+//            [btn setSelected:NO];
+//        }
     }
-    [self loadRequest:_myStatus];
+//    [self loadRequest:_myStatus];
+    [self loadRequest:@"全部订单"];
 }
 
 - (void)viewDidLoad
@@ -167,7 +175,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     if(URLTag == ULRGetOrderListTag)
     {
         if(_reloading == YES)
@@ -193,7 +200,6 @@
                     [dataArray removeAllObjects];
                 }
                 [dataArray addObjectsFromArray:[B2CMyOrderData getListArray:[dicRespon objectForKey:@"items"]]];
-                
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
@@ -464,6 +470,8 @@
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     
+    
+    
     int status = [[[dataArray objectAtIndex:path.section] status] intValue];
     if(status == 1)
     {
@@ -478,7 +486,7 @@
         [cell.lookForTradeBtn setHidden:YES];
         [cell.receiveBtn setHidden:YES];
     }
-
+    
     if(status == 2)
     {
         [cell.cancelOrderBtn setHidden:NO];
@@ -523,11 +531,13 @@
                 [cell.receiveBtn setHidden:YES];
                 
                 [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/3, 30)];
-                NSLog(@" %f %f",cell.discussBtn.frame.origin.x,cell.discussBtn.frame.size.width);
+                
+                //                [cell.lookForCustomBtn setFrame:CGRectMake(200, 5, 100, 30)];
                 [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
                 [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
                 
-               
+                
+                
             }
             else
             {
@@ -572,13 +582,7 @@
             }
         }
     }
-
     
-    [cell.lookForCustomBtn setFrame:CGRectMake(5, 5, (ScreenWidth-25)/4, 30)];
-    [cell.discussBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, (ScreenWidth-25)/4, 30)];
-    [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, (ScreenWidth-25)/4, 30)];
-    [cell.cancelOrderBtn setFrame:CGRectMake(cell.lookForTradeBtn.frame.origin.x + cell.lookForTradeBtn.frame.size.width + 5, 5, (ScreenWidth-25)/4, 30)];
-
     
     [cell.lookForCustomBtn setTag:path.section*10];
     [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -707,9 +711,9 @@
     return pic;
 }
 
+#pragma mark - 查看售后
 - (void) lookForCustomBtnClick:(UIButton *) sender
 {
-    
     [self setHidesBottomBarWhenPushed:YES];
     LookForCustomViewController *custom = [self.storyboard instantiateViewControllerWithIdentifier:@"lookForCustomViewController"];
     custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
@@ -717,7 +721,7 @@
     [self setHidesBottomBarWhenPushed:NO];
 }
 
-
+#pragma mark - 评价
 - (void) discussBtnClick:(UIButton *) sender
 {
     [self setHidesBottomBarWhenPushed:YES];
@@ -743,6 +747,7 @@
     [self setHidesBottomBarWhenPushed:NO];
 }
 
+#pragma mark - 取消
 - (void) cancelOrderBtnClick:(UIButton *) sender
 {
     
@@ -754,11 +759,43 @@
     [self setHidesBottomBarWhenPushed:NO];
 }
 
+#pragma mark - 在线支付
 - (void) onLinePayBtnClick:(UIButton *) sender
 {
-    NSLog(@"onLinePayBtnClick");
+    
+    NSString *shopName = [[dataArray objectAtIndex:sender.tag/10] shopName];
+    
+    NSString *productTitle = @"";
+    NSString *total = nil;
+    float shopPrice = 0.00;
+    
+    NSArray *itemsArray = [[dataArray objectAtIndex:sender.tag/10] myItems];
+    if(itemsArray.count != 0)
+    {
+        for(NSDictionary *dic in itemsArray)
+        {
+            NSString *productItmeTitle = [dic objectForKey:@"productItmeTitle"];
+            productTitle = [productTitle stringByAppendingString:productItmeTitle];
+            
+            shopPrice = shopPrice + [[dic objectForKey:@"price"] floatValue];
+        }
+        total = [NSString stringWithFormat:@"%.2f",shopPrice];
+    }
+
+//
+    [self setHidesBottomBarWhenPushed:YES];
+
+    AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
+//
+    ali.shopName = shopName;
+    ali.productName = productTitle;
+    ali.productPrice = total;
+    
+    [self.navigationController pushViewController:ali animated:YES];
 }
 
+
+#pragma mark - 确认接收
 - (void) receiveBtnClick:(UIButton *) sender
 {
     NSLog(@"receiveBtnClick");

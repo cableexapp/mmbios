@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
 
-@interface ChoosePayTableViewController : UITableViewController
-
+@interface ChoosePayTableViewController : UITableViewController<ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
 - (id) initWithTotal:(NSString *) total WithValue:(NSString *) value WithShopName:(NSString *) shopName WithProductTitle:(NSString *) productTitle;
 @end

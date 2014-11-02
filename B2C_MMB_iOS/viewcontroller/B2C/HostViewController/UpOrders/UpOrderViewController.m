@@ -382,23 +382,27 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLSubOrderTag)
     {
         if(result == 1)
         {
+            NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[b2cOrderData.summariesArray lastObject]];
+            NSArray *itemsArray = [dic objectForKey:@"items"];
+            NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemsArray lastObject]];
+            NSString *sShopName = [itemDic objectForKey:@"sShopName"];
+            NSString *productItemSku = [itemDic objectForKey:@"productItemSku"];
+            
             orderNum = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
             orderNum = [orderNum stringByReplacingOccurrencesOfString:@"'" withString:@""];
-
+            
             totalPrice = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"total"]];
             totalPrice = [totalPrice stringByReplacingOccurrencesOfString:@"'" withString:@""];
-            NSLog(@"%@",totalPrice);
             
- 
-#pragma mark - 支付宝校验
-            [self aliValidate:orderNum With:totalPrice];
+            ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] initWithTotal:totalPrice WithValue:orderNum WithShopName:sShopName WithProductTitle:productItemSku];
+            [self.navigationController pushViewController:pay animated:YES];
+
         }
         else
         {
@@ -412,45 +416,8 @@
             }
         }
     }
-    
-    if(URLTag == URLOrderConfirmTag)
-    {
-        if(result == 1)
-        {
-            NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[b2cOrderData.summariesArray lastObject]];
-            NSArray *itemsArray = [dic objectForKey:@"items"];
-            NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemsArray lastObject]];
-            NSString *sShopName = [itemDic objectForKey:@"sShopName"];
-            NSString *productItemSku = [itemDic objectForKey:@"productItemSku"];
-            
-            ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] initWithTotal:totalPrice WithValue:orderNum WithShopName:sShopName WithProductTitle:productItemSku];
-            [self.navigationController pushViewController:pay animated:YES];
-        }
-        else
-        {
-            if(msg.length == 0)
-            {
-                [DCFStringUtil showNotice:@"请求失败"];
-            }
-            else
-            {
-                [DCFStringUtil showNotice:msg];
-            }
-        }
-    }
 }
 
-- (void) aliValidate:(NSString *) order With:(NSString *) price
-{
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"OrderConfirm",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@&total=%@",token,order,price];
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLOrderConfirmTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/OrderConfirm.html?"];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-}
 
 - (void)viewDidLoad
 {

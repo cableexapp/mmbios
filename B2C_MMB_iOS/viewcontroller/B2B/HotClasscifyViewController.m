@@ -76,7 +76,7 @@
     self.addToAskPriceBtn.layer.borderWidth = 1.0f;
     self.addToAskPriceBtn.layer.cornerRadius = 2.0f;
     
-    [_sv setContentSize:CGSizeMake(ScreenWidth*6, self.sv.frame.size.height-200)];
+    [_sv setContentSize:CGSizeMake(ScreenWidth*7, self.sv.frame.size.height-200)];
     [_sv setBounces:NO];
     
     
@@ -99,13 +99,14 @@
     btnArray = [[NSMutableArray alloc] init];
     for(UIView *view in self.sv.subviews)
     {
-        if(view.frame.origin.x >= 1600)
+        if(view.frame.origin.x >= 1820)
         {
         }
         else
         {
             for(UIButton *subBtn in view.subviews)
             {
+                NSLog(@"%@",subBtn.titleLabel.text);
                 //图片拉伸自适应
                 [subBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor whiteColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
                 UIImage *image = [UIImage imageNamed:@"hotModelSelected.png"];
@@ -116,9 +117,10 @@
                 [btnArray addObject:subBtn];
             }
         }
-
+        
     }
     
+    NSLog(@"btn = %d",btnArray.count);
     
     [self allKinds:btnArray];
 }
@@ -129,31 +131,33 @@
     //读取plist文件
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"KindsPlist" ofType:@"plist"];
     NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    NSLog(@"dic = %@",dic);
+    NSLog(@"%d",[[dic allKeys] count]);
     
-    NSDictionary *d = [dic objectForKey:@"AF-200"];
-    NSLog(@"d = %@",d);
+    //    NSLog(@"dic = %@",dic);
     
-    NSLog(@"oneKind=%@",[d objectForKey:@"oneKind"]);
-    NSLog(@"threeKind=%@",[d objectForKey:@"threeKind"]);
-    NSLog(@"twoKind=%@",[d objectForKey:@"twoKind"]);
+    //    NSDictionary *d = [dic objectForKey:@"AF-200"];
+    //    NSLog(@"d = %@",d);
+    //
+    //    NSLog(@"oneKind=%@",[d objectForKey:@"oneKind"]);
+    //    NSLog(@"threeKind=%@",[d objectForKey:@"threeKind"]);
+    //    NSLog(@"twoKind=%@",[d objectForKey:@"twoKind"]);
     
     
-//    for(UIButton *btn in arr)
-//    {
-//        NSString *title = [btn titleLabel].text;
-//        NSLog(@"title = %@",title);
-//        
-//        NSMutableArray *array = [[NSMutableArray alloc] init];
-//        
-//        if([title isEqualToString:@"YJV"])
-//        {
-//            for(int i=0;i<3;i++)
-//            {
-//                if()
-//            }
-//        }
-//    }
+    //    for(UIButton *btn in arr)
+    //    {
+    //        NSString *title = [btn titleLabel].text;
+    //        NSLog(@"title = %@",title);
+    //
+    //        NSMutableArray *array = [[NSMutableArray alloc] init];
+    //
+    //        if([title isEqualToString:@"YJV"])
+    //        {
+    //            for(int i=0;i<3;i++)
+    //            {
+    //                if()
+    //            }
+    //        }
+    //    }
 }
 
 - (void) hotModelBtnClick:(UIButton *) sender
@@ -182,7 +186,7 @@
 - (IBAction)nextBtnClick:(id)sender
 {
     NSLog(@"下一页page=%d",page);
-    if(page >= 5)
+    if(page >= 6)
     {
         NSLog(@"到顶了");
         return;

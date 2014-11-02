@@ -11,6 +11,8 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFTopLabel.h"
 #import "AliViewController.h"
+#import "DCFCustomExtra.h"
+#import "DCFStringUtil.h"
 
 @interface ChoosePayTableViewController ()
 {
@@ -129,16 +131,69 @@
     return cell;
 }
 
+- (void) aliValidate:(NSString *) order With:(NSString *) price
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"OrderConfirm",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@&total=%@",token,order,price];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLOrderConfirmTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/OrderConfirm.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
-    
-    ali.shopName = myShopName;
-    ali.productName = myProductTitle;
-    ali.productPrice = myTotal;
-    
-    [self.navigationController pushViewController:ali animated:YES];
+#pragma mark - 支付宝校验
+    NSLog(@"value = %@   tot=%@",myValue,myTotal);
+    [self aliValidate:myValue With:myTotal];
 
+
+}
+
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    
+    if(URLTag == URLOrderConfirmTag)
+    {
+        [DCFStringUtil showNotice:msg];
+        
+        if(result == 1)
+        {
+            [self setHidesBottomBarWhenPushed:YES];
+            AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
+            
+            ali.shopName = myShopName;
+            ali.productName = myProductTitle;
+            ali.productPrice = myTotal;
+            
+            [self.navigationController pushViewController:ali animated:YES];
+        }
+        else
+        {
+            if(result == 2)
+            {
+                return;
+            }
+            if(result == 3)
+            {
+                [self setHidesBottomBarWhenPushed:YES];
+
+                AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
+                
+                ali.shopName = myShopName;
+                ali.productName = myProductTitle;
+                ali.productPrice = myTotal;
+                
+                [self.navigationController pushViewController:ali animated:YES];
+            }
+            
+        }
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

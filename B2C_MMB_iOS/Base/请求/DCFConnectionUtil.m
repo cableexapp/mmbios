@@ -255,7 +255,7 @@
         [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
     }
 #pragma mark - 支付宝校验
-    else if(result == 2)
+    else if(result == 2 || result == 3)
     {
         [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
 //        AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;

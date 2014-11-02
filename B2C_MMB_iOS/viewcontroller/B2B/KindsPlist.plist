@@ -452,15 +452,6 @@
 		<key>threeKind</key>
 		<string>耐热硅橡胶绝缘电缆</string>
 	</dict>
-	<key>60245IEC57(YZW)</key>
-	<dict>
-		<key>oneKind</key>
-		<string>电气装备电缆</string>
-		<key>twoKind</key>
-		<string>橡套电缆</string>
-		<key>threeKind</key>
-		<string>中型</string>
-	</dict>
 	<key>60245IEC53(YZ)</key>
 	<dict>
 		<key>oneKind</key>

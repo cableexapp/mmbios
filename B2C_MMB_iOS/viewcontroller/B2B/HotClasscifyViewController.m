@@ -106,7 +106,6 @@
         {
             for(UIButton *subBtn in view.subviews)
             {
-                NSLog(@"%@",subBtn.titleLabel.text);
                 //图片拉伸自适应
                 [subBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor whiteColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
                 UIImage *image = [UIImage imageNamed:@"hotModelSelected.png"];
@@ -120,8 +119,6 @@
         
     }
     
-    NSLog(@"btn = %d",btnArray.count);
-    
     [self allKinds:btnArray];
 }
 
@@ -132,32 +129,6 @@
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"KindsPlist" ofType:@"plist"];
     NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     NSLog(@"%d",[[dic allKeys] count]);
-    
-    //    NSLog(@"dic = %@",dic);
-    
-    //    NSDictionary *d = [dic objectForKey:@"AF-200"];
-    //    NSLog(@"d = %@",d);
-    //
-    //    NSLog(@"oneKind=%@",[d objectForKey:@"oneKind"]);
-    //    NSLog(@"threeKind=%@",[d objectForKey:@"threeKind"]);
-    //    NSLog(@"twoKind=%@",[d objectForKey:@"twoKind"]);
-    
-    
-    //    for(UIButton *btn in arr)
-    //    {
-    //        NSString *title = [btn titleLabel].text;
-    //        NSLog(@"title = %@",title);
-    //
-    //        NSMutableArray *array = [[NSMutableArray alloc] init];
-    //
-    //        if([title isEqualToString:@"YJV"])
-    //        {
-    //            for(int i=0;i<3;i++)
-    //            {
-    //                if()
-    //            }
-    //        }
-    //    }
 }
 
 - (void) hotModelBtnClick:(UIButton *) sender

@@ -13,6 +13,7 @@
 #import "DataVerifier.h"
 #import "AlixPayOrder.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "MCDefine.h"
 
 @implementation Product
 @synthesize price = _price;
@@ -265,25 +266,29 @@
 	order.productName = product.subject; //商品标题
 	order.productDescription = product.body; //商品描述
 	order.amount = [NSString stringWithFormat:@"%.2f",product.price]; //商品价格
-	order.notifyURL =  @"http%3A%2F%2Fwwww.xxx.com"; //回调URL
+
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/payment/alipay/alipay_notify_url.html"];
+
+	order.notifyURL =  urlString; //回调URL
 	
 	return [order description];
 }
 
 - (NSString *)generateTradeNO
 {
-	const int N = 15;
+//	const int N = 15;
 	
-	NSString *sourceString = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	NSMutableString *result = [[NSMutableString alloc] init] ;
-	srand(time(0));
-	for (int i = 0; i < N; i++)
-	{
-		unsigned index = rand() % [sourceString length];
-		NSString *s = [sourceString substringWithRange:NSMakeRange(index, 1)];
-		[result appendString:s];
-	}
-	return result;
+	NSString *sourceString = self.productOrderNum;
+    return sourceString;
+//	NSMutableString *result = [[NSMutableString alloc] init] ;
+//	srand(time(0));
+//	for (int i = 0; i < N; i++)
+//	{
+//		unsigned index = rand() % [sourceString length];
+//		NSString *s = [sourceString substringWithRange:NSMakeRange(index, 1)];
+//		[result appendString:s];
+//	}
+//	return result;
 }
 
 -(NSString*)doRsa:(NSString*)orderInfo
@@ -296,6 +301,7 @@
 
 -(void)paymentResultDelegate:(NSString *)result
 {
+    
 }
 
 @end

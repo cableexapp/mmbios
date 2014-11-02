@@ -11,7 +11,7 @@
 #import "CKRefreshControl.h"
 #import "EGORefreshTableHeaderView.h"
 
-@interface FourthHostViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,ConnectionDelegate,EGORefreshTableHeaderDelegate>
+@interface FourthHostViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,ConnectionDelegate,EGORefreshTableHeaderDelegate,UIAlertViewDelegate>
 {
     DCFConnectionUtil *conn;
 }

@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LogisticsTrackingTableViewController : UITableViewController
+@property (strong,nonatomic) NSMutableArray *myArray;
 
+@property (assign,nonatomic) BOOL isRequest;  //判断是否正在请求数据
 @end

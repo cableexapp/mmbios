@@ -5,6 +5,15 @@
 @interface logisticsTrackingViewController : UIViewController<UIWebViewDelegate,ConnectionDelegate>
 {
     DCFConnectionUtil *conn;
+    NSString *com;
+    NSString *comcontact;
+    NSString *comurl;
+    NSString *condition;
+    NSString *ischeck;
+    NSString *message;
+    NSString *nu;
+    NSString *state;
+    NSString *status;
 }
 @property (strong,nonatomic) UIWebView *wv;
 

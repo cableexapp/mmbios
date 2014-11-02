@@ -165,7 +165,6 @@
             }
             if(i == 1)
             {
-//                NSDictionary *diction = (NSDictionary *)[dataDic objectForKey:@"createdate"];
                 if([[dataDic objectForKey:@"createdate"] isKindOfClass:[NSNull class]])
                 {
                     NSLog(@"空");
@@ -309,6 +308,7 @@
         _tv.layer.borderWidth = 1.0f;
         [self.view addSubview:_tv];
     }
+    [_tv reloadData];
     
     UILabel *buttomLabel = [[UILabel alloc] initWithFrame:CGRectMake(_tv.frame.origin.x, _tv.frame.size.height+_tv.frame.origin.y + 5,_tv.frame.size.width, 30)];
     [buttomLabel setText:@"详细操作以及凭证请登录电脑后查看"];
@@ -364,6 +364,10 @@
         {
             moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
             [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+        }
+        if(!dataArray || dataArray.count == 0)
+        {
+            [moreCell noDataAnimation];
         }
         return moreCell;
     }
@@ -452,7 +456,10 @@
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CAfterSaleData getListArray:[dicRespon objectForKey:@"loglist"]]];
-            
+            if(!dataArray || dataArray.count == 0)
+            {
+                [moreCell noDataAnimation];
+            }
             [self refreshView];
         }
         else

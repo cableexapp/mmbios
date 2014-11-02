@@ -146,7 +146,6 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 #pragma mark - 支付宝校验
-    NSLog(@"value = %@   tot=%@",myValue,myTotal);
     [self aliValidate:myValue With:myTotal];
 
 
@@ -170,7 +169,8 @@
             ali.shopName = myShopName;
             ali.productName = myProductTitle;
             ali.productPrice = myTotal;
-            
+            ali.productOrderNum = myValue;
+
             [self.navigationController pushViewController:ali animated:YES];
         }
         else
@@ -188,6 +188,7 @@
                 ali.shopName = myShopName;
                 ali.productName = myProductTitle;
                 ali.productPrice = myTotal;
+                ali.productOrderNum = myValue;
                 
                 [self.navigationController pushViewController:ali animated:YES];
             }

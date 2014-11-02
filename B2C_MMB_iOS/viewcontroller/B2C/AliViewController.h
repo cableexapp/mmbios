@@ -34,6 +34,7 @@
 @property (strong,nonatomic) NSString *shopName;
 @property (strong,nonatomic) NSString *productName;
 @property (strong,nonatomic) NSString *productPrice;
+@property (strong,nonatomic) NSString *productOrderNum;;
 
 -(void)paymentResult:(NSString *)result;
 @end

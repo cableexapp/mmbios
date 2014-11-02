@@ -87,6 +87,7 @@ enum {
     
     URLLogisticsTrackingTag,  //物流跟踪
     
+    URLSureReceiveTag,   //确认收货
     
 #pragma mark - b2b
     URLGetProductTypeTag,   //b2b一级分类

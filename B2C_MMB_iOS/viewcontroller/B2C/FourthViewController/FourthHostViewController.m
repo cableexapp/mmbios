@@ -41,6 +41,8 @@
     
     BOOL _reloading;
     
+    
+    NSString *sureReceiveNumber; //确认收货
 }
 @end
 
@@ -163,8 +165,6 @@
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,[self getMemberId],pageSize,intPage,_myStatus];
     
-    //    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,@"600",pageSize,intPage,_myStatus];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getOrderList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:ULRGetOrderListTag delegate:self];
     
@@ -175,6 +175,9 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    
     if(URLTag == ULRGetOrderListTag)
     {
         if(_reloading == YES)
@@ -191,8 +194,7 @@
         }
         else
         {
-            NSString *result = [dicRespon objectForKey:@"result"];
-            if([result isEqualToString:@"1"])
+            if(result == 1)
             {
                 
                 if(intPage == 1)
@@ -221,6 +223,19 @@
         
         [self.tv reloadData];
         
+    }
+    if(URLTag == URLSureReceiveTag)
+    {
+        NSLog(@"%@",dicRespon);
+        [DCFStringUtil showNotice:msg];
+        if(result == 1)
+        {
+            
+        }
+        else
+        {
+            
+        }
     }
 }
 
@@ -716,7 +731,10 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     LookForCustomViewController *custom = [self.storyboard instantiateViewControllerWithIdentifier:@"lookForCustomViewController"];
-    custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+//    custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    
+    //这部分暂时写死了
+    custom.orderNum = @"201404234998770799";
     [self.navigationController pushViewController:custom animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -743,6 +761,7 @@
     logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
     logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsId]];
     logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsNum]];
+    NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -790,15 +809,51 @@
     ali.shopName = shopName;
     ali.productName = productTitle;
     ali.productPrice = total;
-    
+    ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    NSLog(@"%@  %@  %@  %@",ali.shopName,ali.productName,ali.productPrice,ali.productOrderNum);
+
     [self.navigationController pushViewController:ali animated:YES];
 }
 
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"取消");
+            break;
+        case 1:
+        {
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"ReceiveProduct",time];
+            
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&ordernum=%@",token,[self getMemberId],sureReceiveNumber];
+            
+            NSLog(@"push%@",pushString);
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ReceiveProduct.html?"];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSureReceiveTag delegate:self];
+            
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 #pragma mark - 确认接收
 - (void) receiveBtnClick:(UIButton *) sender
 {
     NSLog(@"receiveBtnClick");
+    
+    sureReceiveNumber = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    
+    UIAlertView *sureAlert = [[UIAlertView alloc] initWithTitle:nil message:@"您确认要收货嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    [sureAlert show];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

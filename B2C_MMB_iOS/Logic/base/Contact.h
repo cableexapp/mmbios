@@ -90,7 +90,11 @@ enum {
     URLSureReceiveTag,   //确认收货
     
 #pragma mark - b2b
-    URLGetProductTypeTag,   //b2b一级分类
+    URLGetProductTypeTag,   //b2b一级分类(首页)
+    
+    URLBatchJoinInquiryCartTag,  //热门型号加入询价车
+    
+    URLInquiryCartListTag,   //询价车明细
 };
 typedef NSUInteger URLTag;
 

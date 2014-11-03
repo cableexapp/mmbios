@@ -337,6 +337,7 @@
 //    
 //}
 
+//字典转字符串
 - (NSString *)dictoJSON:(NSDictionary *)theDic
 {
     NSError *error;

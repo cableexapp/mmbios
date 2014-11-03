@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
-@interface HotClasscifyViewController : UIViewController<UIScrollViewDelegate>
-
+@interface HotClasscifyViewController : UIViewController<UIScrollViewDelegate,ConnectionDelegate,MBProgressHUDDelegate>
+{
+    DCFConnectionUtil *conn;
+    MBProgressHUD *HUD;
+}
 @property (weak, nonatomic) IBOutlet UIButton *nextBtn;
 @property (weak, nonatomic) IBOutlet UIButton *upBtn;
 @property (weak, nonatomic) IBOutlet UIButton *serchBtn;

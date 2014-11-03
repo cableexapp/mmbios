@@ -8,6 +8,7 @@
 
 @interface NSDictionary (Extension)
 
+//字典转字符串
 - (NSString *)toUrlString;
 
 - (NSString *)toJSONString;

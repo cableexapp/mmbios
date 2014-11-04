@@ -14,6 +14,7 @@
 #import "DCFCustomExtra.h"
 #import "DCFChenMoreCell.h"
 #import "AppDelegate.h"
+#import "B2BAskPriceDetailData.h"
 
 @interface B2BAskPriceCarViewController ()
 {
@@ -27,6 +28,8 @@
     NSMutableArray *headBtnArray;
     NSMutableArray *headArrowArray;
     NSMutableArray *headLabelArray;
+    
+    NSMutableArray *dataArray;
 }
 @end
 
@@ -156,13 +159,6 @@
     btn.selected = !btn.selected;
 }
 
-- (void) headArrowBtnClick:(UIButton *) sender
-{
-    NSLog(@"headArrowBtnClick");
-    
-    UIButton *btn = (UIButton *) sender;
-    btn.selected = !btn.selected;
-}
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
@@ -170,46 +166,44 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLInquiryCartListTag)
     {
-        NSLog(@"%@",dicRespon);
-        NSLog(@"msg = %@",msg);
-        
+        dataArray = [[NSMutableArray alloc] init];
         headBtnArray = [[NSMutableArray alloc] init];
         headArrowArray = [[NSMutableArray alloc] init];
-        headLabelArray = [[NSMutableArray alloc] init];
 
-        UIButton *headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [headBtn setFrame:CGRectMake(10, 20, 20, 20)];
-        [headBtn setBackgroundImage:[UIImage imageNamed:@"Set.png"] forState:UIControlStateNormal];
-        [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [headBtn setTag:0];
-        [headBtnArray addObject:headBtn];
-        
-        UIButton *headArrowBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [headArrowBtn setFrame:CGRectMake(ScreenWidth-30, 20, 20, 20)];
-        [headArrowBtn setBackgroundImage:[UIImage imageNamed:@"arrow.png"] forState:UIControlStateNormal];
-        [headArrowBtn addTarget:self action:@selector(headArrowBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [headArrowBtn setTag:10];
-        [headArrowArray addObject:headArrowBtn];
+        [DCFStringUtil showNotice:msg];
+        if(result == 1)
+        {
+            [dataArray addObjectsFromArray:[B2BAskPriceDetailData getListArray:[dicRespon objectForKey:@"items"]]];
+            
+            for(int i=0;i<dataArray.count;i++)
+            {
+                UIButton *headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [headBtn setFrame:CGRectMake(10, 20, 20, 20)];
+                [headBtn setBackgroundImage:[UIImage imageNamed:@"Set.png"] forState:UIControlStateNormal];
+                [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                [headBtn setTag:0];
+                [headBtnArray addObject:headBtn];
+                
+                UIImageView *headArrowIv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow.png"]];
+                [headArrowIv setFrame:CGRectMake(ScreenWidth-30, 20, 20, 20)];
+                [headArrowArray addObject:headArrowIv];
+            }
+        }
+        else
+        {
+            
+        }
 
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        UILabel *headModelLabel = [[UILabel alloc] initWithFrame:CGRectMake(headBtn.frame.origin.x + headBtn.frame.size.width+5, 5, ScreenWidth-70, 25)];
-        [headModelLabel setText:@"型号: 远东电缆bv线远东电缆bv线远东电缆bv线"];
-        [headModelLabel setFont:[UIFont systemFontOfSize:12]];
-        [array addObject:headModelLabel];
-        
-        UILabel *headKindLabel = [[UILabel alloc] initWithFrame:CGRectMake(headBtn.frame.origin.x + headBtn.frame.size.width+5, headModelLabel.frame.origin.y + headModelLabel.frame.size.height, ScreenWidth-80, 25)];
-        [headKindLabel setText:@"型号: 电力装备电缆 布电线 B系列"];
-        [headKindLabel setFont:[UIFont systemFontOfSize:11]];
-        [array addObject:headKindLabel];
-        
-        [headLabelArray addObject:array];
-        
         [tv reloadData];
     }
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return nil;
+    }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 60)];
     [view setBackgroundColor:[UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0]];
     
@@ -226,9 +220,14 @@
     
     return view;
 }
+
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if(!dataArray || dataArray.count == 0)
+    {
+        return 0;
+    }
+    return dataArray.count;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

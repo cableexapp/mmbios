@@ -86,71 +86,6 @@
 
 - (void) askPriceBtnClick:(UIButton *) sender
 {
-    NSLog(@"加入询价车");
-    
-    NSLog(@"%@",addToCarArray);
-    
-
-    
-    if(!addToCarArray || addToCarArray.count == 0)
-    {
-        [DCFStringUtil showNotice:@"您尚未选择型号"];
-        return;
-    }
-    
-    NSMutableArray *modelListArray = [[NSMutableArray alloc] init];
-    for(UIButton *btn in addToCarArray)
-    {
-        NSString *s = [btn titleLabel].text;
-        
-        NSDictionary *d = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:s]];
-        
-        NSString *oneKind = [d objectForKey:@"oneKind"];
-        NSString *twoKind = [d objectForKey:@"twoKind"];
-        NSString *threeKind = [d objectForKey:@"threeKind"];
-        
-        NSDictionary *senderDic = [[NSDictionary alloc] initWithObjectsAndKeys:s,@"model",oneKind,@"firsttype",twoKind,@"secondtype",threeKind,@"thirdtype", nil];
-        
-        [modelListArray addObject:senderDic];
-    }
-    NSLog(@"modelListArray = %@",modelListArray);
-    NSLog(@"%@",[[modelListArray lastObject] allObjects]);
-    for(NSString *str in [[modelListArray lastObject] allObjects])
-    {
-        NSLog(@"str = %@",str);
-    }
-    
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"BatchJoinInquiryCart",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
-    NSString *visitorid = [app getUdid];
-    
-    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
-    NSString *pushString = nil;
-    if(hasLogin == YES)
-    {
-        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&modellist=%@",memberid,token,modelListArray];
-    }
-    else
-    {
-        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&modellist=%@",visitorid,token,modelListArray];
-    }
-    
-    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [HUD setLabelText:@"正在加入询价车..."];
-    [HUD setDelegate:self];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLBatchJoinInquiryCartTag delegate:self];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/BatchJoinInquiryCart.html?"];
-    
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -163,19 +98,19 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLBatchJoinInquiryCartTag)
     {
-//        NSLog(@"%@",dicRespon);
-//        if(result == 1)
-//        {
-//            
-//        }
-//        else
-//        {
-//            [DCFStringUtil showNotice:msg];
-//        }
+        [DCFStringUtil showNotice:msg];
+        if(result == 1)
+        {
+            [self setHidesBottomBarWhenPushed:YES];
+            B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+            [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
+
+        }
+        else
+        {
+            [DCFStringUtil showNotice:msg];
+        }
         
-        [self setHidesBottomBarWhenPushed:YES];
-        B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
-        [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
     }
 }
 - (void)viewDidLoad
@@ -275,50 +210,62 @@
 {
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
-    
-    UILabel *b = (UILabel *)[btn.subviews  objectAtIndex:1];
-
+    UILabel *b = nil;
+    for(UIView *view in btn.subviews)
+    {
+        if([view isKindOfClass:[UILabel class]])
+        {
+            b = (UILabel *)view;
+        }
+    }
     
     if(btn.selected == YES)
     {
         [addToCarArray addObject:btn];
         
-        //加入购物车动画效果
-        CALayer *transitionLayer = [[CALayer alloc] init];
-        [CATransaction begin];
-        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-        transitionLayer.opacity = 1.0;
-        transitionLayer.contents = b.layer.contents;
-        
-        //修改动画路线宽度
-        transitionLayer.frame = [[UIApplication sharedApplication].keyWindow convertRect:CGRectMake(0, 0, 20, 20) fromView:btn.titleLabel];
-        [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer];
-        [CATransaction commit];
-        
-        //路径曲线
-        UIBezierPath *movePath = [UIBezierPath bezierPath];
-        [movePath moveToPoint:transitionLayer.position];
-        
-        CGPoint toPoint = CGPointMake(askPriceBtn.center.x, askPriceBtn.center.y);
-        [movePath addQuadCurveToPoint:toPoint
-                         controlPoint:CGPointMake(askPriceBtn.center.x,transitionLayer.position.y)];
-        //关键帧
-        CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-        positionAnimation.path = movePath.CGPath;
-        positionAnimation.removedOnCompletion = YES;
-        
-        CAAnimationGroup *group = [CAAnimationGroup animation];
-        group.beginTime = CACurrentMediaTime();
-        group.duration = 0.7;
-        group.animations = [NSArray arrayWithObjects:positionAnimation,nil];
-        group.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-        group.delegate = self;
-        group.fillMode = kCAFillModeForwards;
-        group.removedOnCompletion = NO;
-        group.autoreverses= NO;
-        
-        [transitionLayer addAnimation:group forKey:@"opacity"];
-        [self performSelector:@selector(addShopFinished:) withObject:transitionLayer afterDelay:0.5f];
+//        //加入购物车动画效果
+//        CALayer *transitionLayer = [[CALayer alloc] init];
+//        [CATransaction begin];
+//        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+//        transitionLayer.opacity = 1.0;
+//        transitionLayer.contents = b.layer.contents;
+//        
+//        //修改动画路线宽度
+//        transitionLayer.frame = [[UIApplication sharedApplication].keyWindow convertRect:CGRectMake(0, 0, 20, 20) fromView:btn.titleLabel];
+//        [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer];
+//        [CATransaction commit];
+//        
+//        //路径曲线
+//        UIBezierPath *movePath = [UIBezierPath bezierPath];
+//        [movePath moveToPoint:transitionLayer.position];
+//        
+//        CGPoint toPoint = CGPointMake(askPriceBtn.center.x, askPriceBtn.center.y);
+//        [movePath addQuadCurveToPoint:toPoint
+//                         controlPoint:CGPointMake(askPriceBtn.center.x,transitionLayer.position.y)];
+//        
+//        UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+//        UIGraphicsEndImageContext();
+//        
+//        UIImageView *imgView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+//        imgView.image = img;
+//        [self.view addSubview:imgView];
+//        //关键帧
+//        CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+//        positionAnimation.path = movePath.CGPath;
+//        positionAnimation.removedOnCompletion = YES;
+//        
+//        CAAnimationGroup *group = [CAAnimationGroup animation];
+//        group.beginTime = CACurrentMediaTime();
+//        group.duration = 0.7;
+//        group.animations = [NSArray arrayWithObjects:positionAnimation,nil];
+//        group.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+//        group.delegate = self;
+//        group.fillMode = kCAFillModeForwards;
+//        group.removedOnCompletion = NO;
+//        group.autoreverses= NO;
+//        
+//        [transitionLayer addAnimation:group forKey:@"opacity"];
+//        [self performSelector:@selector(addShopFinished:) withObject:transitionLayer afterDelay:0.5f];
     }
     else
     {
@@ -343,51 +290,51 @@
 
 
 //加入购物车 步骤2
-- (void)addShopFinished:(CALayer*)transitionLayer{
-    
-    transitionLayer.opacity = 0;
-
-        allPrice = allPrice + addPrice;
-        NSString *str = [NSString stringWithFormat:@"询价车 +%i",allPrice];
-        [askPriceBtn setTitle:str forState:UIControlStateNormal];
-        
-        //加入购物车动画效果
-//        UILabel *addLabel = (UILabel*)[self.view viewWithTag:66];
-//        [addLabel setText:[NSString stringWithFormat:@"询价车 +%i",addPrice]];
-//        [addLabel  setTextColor:[UIColor redColor]];
-    
-        CALayer *transitionLayer1 = [[CALayer alloc] init];
-        [CATransaction begin];
-        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-        transitionLayer1.opacity = 1.0;
-        transitionLayer1.contents = (id)askPriceBtn.layer.contents;
-        transitionLayer1.frame = [[UIApplication sharedApplication].keyWindow convertRect:askPriceBtn.bounds fromView:askPriceBtn];
-        [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer1];
-        [CATransaction commit];
-        
-        CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-        positionAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(askPriceBtn.frame.origin.x+30, askPriceBtn.frame.origin.y+20)];
-        positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(askPriceBtn.frame.origin.x+30, askPriceBtn.frame.origin.y)];
-        
-        CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        opacityAnimation.fromValue = [NSNumber numberWithFloat:1.0];
-        opacityAnimation.toValue = [NSNumber numberWithFloat:0];
-        
-        CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
-        rotateAnimation.fromValue = [NSNumber numberWithFloat:0 * M_PI];
-        rotateAnimation.toValue = [NSNumber numberWithFloat:2 * M_PI];
-        
-        CAAnimationGroup *group = [CAAnimationGroup animation];
-        group.beginTime = CACurrentMediaTime();
-        group.duration = 1.5;
-        group.animations = [NSArray arrayWithObjects:positionAnimation,opacityAnimation,nil];
-        group.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        group.delegate = self;
-        group.fillMode = kCAFillModeForwards;
-        group.removedOnCompletion = NO;
-        group.autoreverses= NO;
-        [transitionLayer1 addAnimation:group forKey:@"opacity"];
-}
+//- (void)addShopFinished:(CALayer*)transitionLayer{
+//    
+//    transitionLayer.opacity = 0;
+//
+//        allPrice = allPrice + addPrice;
+//        NSString *str = [NSString stringWithFormat:@"询价车 +%i",allPrice];
+//        [askPriceBtn setTitle:str forState:UIControlStateNormal];
+//        
+//        //加入购物车动画效果
+////        UILabel *addLabel = (UILabel*)[self.view viewWithTag:66];
+////        [addLabel setText:[NSString stringWithFormat:@"询价车 +%i",addPrice]];
+////        [addLabel  setTextColor:[UIColor redColor]];
+//    
+//        CALayer *transitionLayer1 = [[CALayer alloc] init];
+//        [CATransaction begin];
+//        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+//        transitionLayer1.opacity = 1.0;
+//        transitionLayer1.contents = (id)askPriceBtn.layer.contents;
+//        transitionLayer1.frame = [[UIApplication sharedApplication].keyWindow convertRect:askPriceBtn.bounds fromView:askPriceBtn];
+//        [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer1];
+//        [CATransaction commit];
+//        
+//        CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+//        positionAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(askPriceBtn.frame.origin.x+30, askPriceBtn.frame.origin.y+20)];
+//        positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(askPriceBtn.frame.origin.x+30, askPriceBtn.frame.origin.y)];
+//        
+//        CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+//        opacityAnimation.fromValue = [NSNumber numberWithFloat:1.0];
+//        opacityAnimation.toValue = [NSNumber numberWithFloat:0];
+//        
+//        CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
+//        rotateAnimation.fromValue = [NSNumber numberWithFloat:0 * M_PI];
+//        rotateAnimation.toValue = [NSNumber numberWithFloat:2 * M_PI];
+//        
+//        CAAnimationGroup *group = [CAAnimationGroup animation];
+//        group.beginTime = CACurrentMediaTime();
+//        group.duration = 1.5;
+//        group.animations = [NSArray arrayWithObjects:positionAnimation,opacityAnimation,nil];
+//        group.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//        group.delegate = self;
+//        group.fillMode = kCAFillModeForwards;
+//        group.removedOnCompletion = NO;
+//        group.autoreverses= NO;
+//        [transitionLayer1 addAnimation:group forKey:@"opacity"];
+//}
 
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
@@ -397,9 +344,81 @@
     
 }
 
+- (NSString *)dictoJSON:(NSDictionary *)theDic
+{
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theDic options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *strP = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    //    return [Rsa rsaEncryptString:strP];
+    return strP;
+}
+
 - (IBAction)addToAskPriceCarBtnClick:(id)sender
 {
     NSLog(@"加入询价车");
+    
+    NSLog(@"加入询价车");
+    
+    NSLog(@"%@",addToCarArray);
+    
+    
+    
+    if(!addToCarArray || addToCarArray.count == 0)
+    {
+        [DCFStringUtil showNotice:@"您尚未选择型号"];
+        return;
+    }
+    
+    NSMutableArray *modelListArray = [[NSMutableArray alloc] init];
+    for(UIButton *btn in addToCarArray)
+    {
+        NSString *s = [btn titleLabel].text;
+        
+        NSDictionary *d = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:s]];
+        
+        NSString *oneKind = [d objectForKey:@"oneKind"];
+        NSString *twoKind = [d objectForKey:@"twoKind"];
+        NSString *threeKind = [d objectForKey:@"threeKind"];
+        
+        NSDictionary *senderDic = [[NSDictionary alloc] initWithObjectsAndKeys:s,@"model",oneKind,@"firsttype",twoKind,@"secondtype",threeKind,@"thirdtype", nil];
+        
+        [modelListArray addObject:senderDic];
+    }
+
+    NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:modelListArray,@"modellist", nil];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"BatchJoinInquiryCart",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&items=%@",memberid,token,[self dictoJSON:pushDic]];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&items=%@",visitorid,token,[self dictoJSON:pushDic]];
+    }
+    
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [HUD setLabelText:@"正在加入询价车..."];
+    [HUD setDelegate:self];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLBatchJoinInquiryCartTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/BatchJoinInquiryCart.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+
 }
 
 - (IBAction)searchBtnClick:(id)sender

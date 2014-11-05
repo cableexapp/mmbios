@@ -8,6 +8,7 @@
 
 #import "B2BAskPriceDetailData.h"
 
+
 @implementation B2BAskPriceDetailData
 
 - (id) initWithDic:(NSDictionary *) dic

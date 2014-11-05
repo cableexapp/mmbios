@@ -151,6 +151,8 @@
     {
         [subViewBtn removeFromSuperview];
         subViewBtn = nil;
+        
+        
     }
 }
 

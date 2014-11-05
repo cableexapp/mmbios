@@ -14,6 +14,7 @@
 #import "SpeedAskPriceFirstViewController.h"
 #import "MCDefine.h"
 #import "HotClasscifyViewController.h"
+#import "HotKindFirstViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -375,8 +376,10 @@
     }
     if(btn.tag == 4)
     {
-#pragma mark - 这里进入热门分类
-        
+        #pragma mark - 热门分类
+        [self setHidesBottomBarWhenPushed:YES];
+          HotKindFirstViewController *hotKindFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindFirstViewController"];
+        [self.navigationController pushViewController:hotKindFirstViewController animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];
 }

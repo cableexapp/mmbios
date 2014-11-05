@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D8491B31A0A3BF000E9C81B /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D8491B21A0A3BF000E9C81B /* HotKindFirstViewController.m */; };
 		6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */; };
 		6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */; };
 		611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */; };
@@ -302,6 +303,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D8491B11A0A3BF000E9C81B /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
+		0D8491B21A0A3BF000E9C81B /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
 		6116A22A19EE1099005C3572 /* MyOrderHostBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostBtnTableViewCell.h; sourceTree = "<group>"; };
 		6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOrderHostBtnTableViewCell.m; sourceTree = "<group>"; };
 		6116A22C19EE1099005C3572 /* MyOrderHostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostTableViewCell.h; sourceTree = "<group>"; };
@@ -810,6 +813,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D8491B01A0A3BBE00E9C81B /* HotKind */ = {
+			isa = PBXGroup;
+			children = (
+				0D8491B11A0A3BF000E9C81B /* HotKindFirstViewController.h */,
+				0D8491B21A0A3BF000E9C81B /* HotKindFirstViewController.m */,
+			);
+			path = HotKind;
+			sourceTree = "<group>";
+		};
 		611C8C3D19E3BDA9000F4532 /* B2CAddressData */ = {
 			isa = PBXGroup;
 			children = (
@@ -1660,6 +1672,7 @@
 		61B7106419FF3B53001CC3BD /* HostViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0D8491B01A0A3BBE00E9C81B /* HotKind */,
 				61B7106519FF3B53001CC3BD /* AskPrice */,
 				61B7107119FF3B53001CC3BD /* ChooseListTableViewController.h */,
 				61B7107219FF3B53001CC3BD /* ChooseListTableViewController.m */,
@@ -2157,6 +2170,7 @@
 				6181A4D319CFC4C2000E2D14 /* BaseTask.m in Sources */,
 				61A197CC19F750C100909C6F /* HostSection1TableViewCell.m in Sources */,
 				6181A50719CFC4C2000E2D14 /* FMDatabaseAdditions.m in Sources */,
+				0D8491B31A0A3BF000E9C81B /* HotKindFirstViewController.m in Sources */,
 				61B710E219FF3B53001CC3BD /* SpeedAskPriceFirstViewController.m in Sources */,
 				6139BA8519EFBBDD00B44032 /* B2CMyOrderData.m in Sources */,
 				6181A50A19CFC4C2000E2D14 /* NSDictionary+exp.m in Sources */,

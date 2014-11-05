@@ -16,7 +16,7 @@
 @property (strong,nonatomic) NSString *cartSpec;
 @property (strong,nonatomic) NSString *cartVoltage;  //5
 
-@property (strong,nonatomic) NSString *color;
+@property (strong,nonatomic) NSString *cartColor;
 @property (strong,nonatomic) NSDictionary *createDate;
 @property (strong,nonatomic) NSString *deliver;
 @property (strong,nonatomic) NSString *feature;

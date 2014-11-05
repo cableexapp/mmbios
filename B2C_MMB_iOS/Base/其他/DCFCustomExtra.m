@@ -30,7 +30,6 @@
             NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil];
             
             //ios7方法，获取文本需要的size，限制宽度
-            
             actualsize =[text boundingRectWithSize:actualsize options:NSStringDrawingUsesLineFragmentOrigin  attributes:tdic context:nil].size;
             NSAttributedString *attributedText = [[NSAttributedString alloc]
                                                   initWithString:text

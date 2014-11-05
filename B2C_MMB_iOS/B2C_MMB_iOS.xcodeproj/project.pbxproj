@@ -33,6 +33,7 @@
 		6140E7C91A01DE4C00E349E3 /* hotModelSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */; };
 		6140E7CA1A01DE4C00E349E3 /* hotModelSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C71A01DE4C00E349E3 /* hotModelSelected@2x.png */; };
 		6140E7CB1A01DE4C00E349E3 /* hotModelSelected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C81A01DE4C00E349E3 /* hotModelSelected@3x.png */; };
+		614E8E0A1A09EEEB00A643E8 /* B2BAskPriceCarEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614E8E091A09EEEB00A643E8 /* B2BAskPriceCarEditViewController.m */; };
 		615B01B219D8000A0002592E /* B2CShopCarListData.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B01B119D8000A0002592E /* B2CShopCarListData.m */; };
 		615C8F8A19F8A7E400A2B8CD /* B2CAfterSaleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 615C8F8919F8A7E400A2B8CD /* B2CAfterSaleData.m */; };
 		615C8F8E19F8EFDF00A2B8CD /* ratingbar_selected_low.png in Resources */ = {isa = PBXBuildFile; fileRef = 615C8F8B19F8EFDF00A2B8CD /* ratingbar_selected_low.png */; };
@@ -347,6 +348,8 @@
 		6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotModelSelected.png; sourceTree = "<group>"; };
 		6140E7C71A01DE4C00E349E3 /* hotModelSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotModelSelected@2x.png"; sourceTree = "<group>"; };
 		6140E7C81A01DE4C00E349E3 /* hotModelSelected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotModelSelected@3x.png"; sourceTree = "<group>"; };
+		614E8E081A09EEEB00A643E8 /* B2BAskPriceCarEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BAskPriceCarEditViewController.h; sourceTree = "<group>"; };
+		614E8E091A09EEEB00A643E8 /* B2BAskPriceCarEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BAskPriceCarEditViewController.m; sourceTree = "<group>"; };
 		615B01B019D8000A0002592E /* B2CShopCarListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShopCarListData.h; sourceTree = "<group>"; };
 		615B01B119D8000A0002592E /* B2CShopCarListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShopCarListData.m; sourceTree = "<group>"; };
 		615C8F8819F8A7E400A2B8CD /* B2CAfterSaleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CAfterSaleData.h; sourceTree = "<group>"; };
@@ -1551,6 +1554,8 @@
 		61B7102919FF3B53001CC3BD /* B2B */ = {
 			isa = PBXGroup;
 			children = (
+				614E8E081A09EEEB00A643E8 /* B2BAskPriceCarEditViewController.h */,
+				614E8E091A09EEEB00A643E8 /* B2BAskPriceCarEditViewController.m */,
 				619C10091A07730E002E9DF8 /* B2BAskPriceCarViewController.h */,
 				619C100A1A07730E002E9DF8 /* B2BAskPriceCarViewController.m */,
 				619C10031A0772EA002E9DF8 /* HotModel */,
@@ -2138,6 +2143,7 @@
 				61B710C419FF3B53001CC3BD /* DiscussViewController.m in Sources */,
 				611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */,
 				6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */,
+				614E8E0A1A09EEEB00A643E8 /* B2BAskPriceCarEditViewController.m in Sources */,
 				6181A50119CFC4C2000E2D14 /* ELCAsset.m in Sources */,
 				6181A4D119CFC4C2000E2D14 /* BaseExecutor.m in Sources */,
 				6181A4C219CFC4C2000E2D14 /* SetNavigationBar.m in Sources */,

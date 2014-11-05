@@ -86,6 +86,9 @@
 
 - (void) askPriceBtnClick:(UIButton *) sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
+    B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+    [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode

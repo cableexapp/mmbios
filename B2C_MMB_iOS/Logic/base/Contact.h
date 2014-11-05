@@ -95,6 +95,8 @@ enum {
     URLBatchJoinInquiryCartTag,  //热门型号加入询价车
     
     URLInquiryCartListTag,   //询价车明细
+    
+    URLDeleteInquiryCartItemTag,  //询价车删除
 };
 typedef NSUInteger URLTag;
 

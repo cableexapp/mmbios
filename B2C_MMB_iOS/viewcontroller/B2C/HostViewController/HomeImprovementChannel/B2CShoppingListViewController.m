@@ -129,7 +129,6 @@
     [UIView setAnimationDuration:0.3];
     search = [[B2CShoppingSearchViewController alloc] initWithFrame:searchView.bounds];
     search.delegate = self;
-    //    search.view.frame = searchView.bounds;
     [self addChildViewController:search];
     [searchView addSubview:search.view];
     

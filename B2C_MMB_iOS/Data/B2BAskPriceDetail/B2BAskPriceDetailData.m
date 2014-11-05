@@ -24,7 +24,7 @@
         
         _cartVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"cartVoltage"]];
         
-        _color = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]];
+        _cartColor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]];
         
         _createDate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"createDate"]];
         

@@ -373,6 +373,11 @@
         [self.navigationController pushViewController:hot animated:YES];
 //        [self setHidesBottomBarWhenPushed:NO];
     }
+    if(btn.tag == 4)
+    {
+#pragma mark - 这里进入热门分类
+        
+    }
     [self setHidesBottomBarWhenPushed:NO];
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="H55-N4-BNn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="H55-N4-BNn">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -37,7 +37,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mQ9-4P-kRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-478" y="-1602"/>
+            <point key="canvasLocation" x="-562" y="-1830"/>
         </scene>
         <!--Shopping Host View Controller-->
         <scene sceneID="yKc-JR-8B7">
@@ -572,6 +572,39 @@
             </objects>
             <point key="canvasLocation" x="-980" y="-687"/>
         </scene>
+        <!--Hot Kind First View Controller-->
+        <scene sceneID="Ym8-Iv-2ir">
+            <objects>
+                <viewController storyboardIdentifier="hotKindFirstViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="JUJ-sD-auo" customClass="HotKindFirstViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8Ei-lm-Ow1">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Vi7-N5-MGs"/>
+                    <connections>
+                        <segue destination="9e9-Xp-npG" kind="push" id="EK2-MG-C95"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MPi-ho-Vn5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="398" y="-654"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ig9-2l-bJD">
+            <objects>
+                <viewController id="9e9-Xp-npG" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Rib-1T-VQp">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="H9e-lX-dRC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cgv-DE-OAL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="880" y="-370"/>
+        </scene>
         <!--Ask Price Car View Controller-->
         <scene sceneID="QXs-H8-4E5">
             <objects>
@@ -883,11 +916,12 @@
                         <segue destination="mOx-sH-1zd" kind="push" id="bPi-I5-cvv"/>
                         <segue destination="vkr-sp-uH6" kind="push" id="tUS-if-yO2"/>
                         <segue destination="dpQ-Sr-v00" kind="push" id="ohe-k1-NID"/>
+                        <segue destination="JUJ-sD-auo" kind="push" id="lPE-9w-Tbe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2UE-5O-SKY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="105" y="-1380"/>
+            <point key="canvasLocation" x="41" y="-1332"/>
         </scene>
         <!--Look For Big Pic View Controller-->
         <scene sceneID="63w-Vc-oc9">
@@ -1345,7 +1379,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0ui-Ir-8d0">
-                                        <rect key="frame" x="270.00000061591459" y="8" width="30" height="35"/>
+                                        <rect key="frame" x="270" y="8" width="30" height="35"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="Set.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1358,7 +1392,7 @@
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="IAV-yq-JM3">
-                                <rect key="frame" x="10" y="448" width="300.00000061591464" height="49"/>
+                                <rect key="frame" x="10" y="448" width="300" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="加入询价车">

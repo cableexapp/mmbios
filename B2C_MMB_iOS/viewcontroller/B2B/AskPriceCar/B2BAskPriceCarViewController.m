@@ -15,7 +15,7 @@
 #import "DCFChenMoreCell.h"
 #import "AppDelegate.h"
 #import "B2BAskPriceDetailData.h"
-#import "B2BAskPriceCarEditViewController.h"
+#import "B2BAskPriceInquirySheetViewController.h"
 
 @interface B2BAskPriceCarViewController ()
 {
@@ -42,6 +42,8 @@
     
     UIButton *subViewBtn;   //加载编辑界面的按钮
     B2BAskPriceCarEditViewController *b2bAskPriceCarEditViewController;
+    
+    int deleteBtnTag;
 }
 @end
 
@@ -59,7 +61,11 @@
 
 - (void) upBtnClick:(UIButton *) sender
 {
-    NSLog(@"上传");
+    
+    B2BAskPriceInquirySheetViewController *b2bAskPriceInquirySheetViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceInquirySheetViewController"];
+    b2bAskPriceInquirySheetViewController.dataArray = [[NSMutableArray alloc] initWithArray:chooseArray];
+    b2bAskPriceInquirySheetViewController.heightArray = [[NSMutableArray alloc] initWithArray:cellHeightArray];
+    [self.navigationController pushViewController:b2bAskPriceInquirySheetViewController animated:YES];
 }
 
 - (void) backToHostBtnClick:(UIButton *) sender
@@ -67,43 +73,8 @@
     NSLog(@"回到首页");
 }
 
-- (void)viewDidLoad
+- (void) loadRequest
 {
-    [super viewDidLoad];
-    
-    chooseArray = [[NSMutableArray alloc] init];
-    
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"询价车"];
-    self.navigationItem.titleView = top;
-    
-    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
- 
-    if(!buttomView || !upBtn || !backToHostBtn)
-    {
-        buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, MainScreenHeight-60-64, ScreenWidth, 60)];
-        [self.view addSubview:buttomView];
-
-        
-        upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [upBtn setTitle:@"提交" forState:UIControlStateNormal];
-        [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [upBtn setBackgroundColor:[UIColor blueColor]];
-        [upBtn setFrame:CGRectMake(ScreenWidth-120, 15, 100, 30)];
-        [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [buttomView addSubview:upBtn];
-
-    }
-    
-    if(!tv)
-    {
-        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-buttomView.frame.size.height-64)];
-        [tv setDataSource:self];
-        [tv setDelegate:self];
-        [tv setShowsHorizontalScrollIndicator:NO];
-        [tv setShowsVerticalScrollIndicator:NO];
-        [self.view addSubview:tv];
-    }
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartList",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -123,7 +94,7 @@
     {
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
     }
-
+    
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartListTag delegate:self];
     
@@ -131,12 +102,56 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-
+    
     
     static NSString *moreCellId = @"moreCell";
     moreCell = (DCFChenMoreCell *)[tv dequeueReusableCellWithIdentifier:moreCellId];
     
     [moreCell startAnimation];
+
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self pushAndPopStyle];
+    
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"询价车"];
+    self.navigationItem.titleView = top;
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    if(!buttomView || !upBtn || !backToHostBtn)
+    {
+        buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, MainScreenHeight-60-64, ScreenWidth, 60)];
+        [self.view addSubview:buttomView];
+        
+        
+        upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [upBtn setTitle:@"提交" forState:UIControlStateNormal];
+        [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [upBtn setBackgroundColor:[UIColor colorWithRed:224.0/225.0 green:99.0/255.0 blue:0 alpha:1.0]];
+        upBtn.layer.borderColor = [UIColor colorWithRed:224.0/225.0 green:99.0/255.0 blue:0 alpha:1.0].CGColor;
+        upBtn.layer.borderWidth = 1.0f;
+        upBtn.layer.cornerRadius = 5.0f;
+        [upBtn setFrame:CGRectMake(ScreenWidth-120, 15, 100, 30)];
+        [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [buttomView addSubview:upBtn];
+        
+    }
+    
+    if(!tv)
+    {
+        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-buttomView.frame.size.height-64)];
+        [tv setDataSource:self];
+        [tv setDelegate:self];
+        [tv setShowsHorizontalScrollIndicator:NO];
+        [tv setShowsVerticalScrollIndicator:NO];
+        [self.view addSubview:tv];
+    }
+   
+    [self loadRequest];
 }
 
 - (void) subViewBtnClick:(UIButton *) sender
@@ -147,59 +162,110 @@
         [b2bAskPriceCarEditViewController removeFromParentViewController];
         b2bAskPriceCarEditViewController = nil;
     }
+    
     if(subViewBtn)
     {
         [subViewBtn removeFromSuperview];
         subViewBtn = nil;
-        
-        
     }
+}
+
+- (void) removeSubView
+{
+    if(b2bAskPriceCarEditViewController)
+    {
+        [b2bAskPriceCarEditViewController.view removeFromSuperview];
+        [b2bAskPriceCarEditViewController removeFromParentViewController];
+        b2bAskPriceCarEditViewController = nil;
+    }
+    
+    if(subViewBtn)
+    {
+        [subViewBtn removeFromSuperview];
+        subViewBtn = nil;
+    }
+}
+
+- (void) reloadData
+{
+    [self loadRequest];
+    [tv reloadData];
 }
 
 #pragma mark - 编辑
 - (void) edit:(UIButton *) sender
 {
     UIButton *btn = (UIButton *) sender;
-    NSLog(@"btn.tag = %d",btn.tag);
+    
+    data = [dataArray objectAtIndex:btn.tag];
     
     subViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [subViewBtn setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-    [subViewBtn setBackgroundColor:[UIColor blackColor]];
-    [subViewBtn setAlpha:0.6];
+    
+#pragma mark - 防止父视图的透明度影响子视图
+    [subViewBtn setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]];
     [subViewBtn addTarget:self action:@selector(subViewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:subViewBtn];
     
+    
     b2bAskPriceCarEditViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarEditViewController"];
-    b2bAskPriceCarEditViewController.view.frame = subViewBtn.bounds;
+    b2bAskPriceCarEditViewController.myModel = data.cartModel;
+    b2bAskPriceCarEditViewController.myCartId = data.cartId;
+    b2bAskPriceCarEditViewController.view.frame = CGRectMake(20, 20, subViewBtn.frame.size.width-40, subViewBtn.frame.size.height-70);
+    b2bAskPriceCarEditViewController.delegate = self;
     [self addChildViewController:b2bAskPriceCarEditViewController];
     [subViewBtn addSubview:b2bAskPriceCarEditViewController.view];
 }
 
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            
+            break;
+        case 1:
+        {
+      
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"DeleteInquiryCartItem",time];
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            data = [dataArray objectAtIndex:deleteBtnTag];
+            NSString *pushString = [NSString stringWithFormat:@"token=%@&cartid=%@",token,[data cartId]];
+            
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteInquiryCartItemTag delegate:self];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/DeleteInquiryCartItem.html?"];
+            
+            
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        }
+            break;
+        default:
+            break;
+    }
+}
 #pragma mark - 删除
 - (void) del:(UIButton *) sender
 {
+
+    
     if(chooseArray.count == 0)
     {
-        [DCFStringUtil showNotice:@"您尚未选择商品"];
+//        [DCFStringUtil showNotice:@"您尚未选择商品"];
         return;
     }
     
+    
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您确定要删除嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [av show];
+    
     UIButton *btn = (UIButton *) sender;
-    NSLog(@"tag = %d",btn.tag);
+    deleteBtnTag = btn.tag;
     
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"DeleteInquiryCartItem",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    data = [dataArray objectAtIndex:btn.tag];
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&cartid=%@",token,[data cartId]];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteInquiryCartItemTag delegate:self];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/DeleteInquiryCartItem.html?"];
-    
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    NSLog(@"tag = %d",deleteBtnTag);
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -210,12 +276,15 @@
     if(URLTag == URLInquiryCartListTag)
     {
         dataArray = [[NSMutableArray alloc] init];
-
+        
         sectionHeadBtnArray = [[NSMutableArray alloc] init];
         
         cellHeightArray = [[NSMutableArray alloc] init];
         
         editAndDelBtnArray = [[NSMutableArray alloc] init];
+        
+        chooseArray = [[NSMutableArray alloc] init];
+
         
         NSLog(@"%@",dicRespon);
         
@@ -233,9 +302,11 @@
             {
                 for(int i=0;i<dataArray.count;i++)
                 {
+                    [chooseArray addObject:[dataArray objectAtIndex:i]];
+                    
                     UIImageView *headBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 20, 20, 20)];
                     [headBtnIv setImage:[UIImage imageNamed:@"unchoose.png"]];
-
+                    
                     UIButton *sectionHeadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                     [sectionHeadBtn setFrame:CGRectMake(0, 0, ScreenWidth, 60)];
                     
@@ -279,11 +350,11 @@
                     CGSize size;
                     if(require.length == 0 || [require isKindOfClass:[NSNull class]])
                     {
-                        size = CGSizeMake(ScreenWidth/2-20, 20);
+                        size = CGSizeMake(ScreenWidth-20, 20);
                     }
                     else
                     {
-                        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(ScreenWidth/2-20, MAXFLOAT)];
+                        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                     }
                     if(size.height < 20)
                     {
@@ -297,12 +368,12 @@
                 }
                 [moreCell stopAnimation];
             }
-  
+            
         }
         else
         {
             
-            [moreCell failAcimation];
+            [moreCell noClasses];
         }
         
         [tv reloadData];
@@ -330,7 +401,10 @@
             [cellHeightArray removeObjectAtIndex:index];
             [editAndDelBtnArray removeObjectAtIndex:index];
             [dataArray removeObjectAtIndex:index];
-
+            
+            [self resetBtnTag:sectionHeadBtnArray];
+            [self resetBtnTag:editAndDelBtnArray];
+            
             if(dataArray.count == 0)
             {
                 [moreCell noDataAnimation];
@@ -351,13 +425,36 @@
     }
 }
 
+#pragma mark - 重新设置tag
+- (void) resetBtnTag:(NSMutableArray *) array
+{
+    
+    for(int i=0;i<array.count;i++)
+    {
+        id object = [array objectAtIndex:i];
+        if([object isKindOfClass:[UIButton class]])
+        {
+            UIButton *b = [array objectAtIndex:i];
+            [b setTag:i];
+        }
+        if([object isKindOfClass:[NSArray class]])
+        {
+            for(UIButton *btn in object)
+            {
+                [btn setTag:i];
+            }
+        }
+    }
+    
+}
+
 - (void) sectionHeadBtnClick:(UIButton *) sender
 {
-    if(chooseArray || chooseArray.count != 0)
-    {
-        [chooseArray removeAllObjects];
-    }
-
+//    if(chooseArray || chooseArray.count != 0)
+//    {
+//        [chooseArray removeAllObjects];
+//    }
+    
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     for(UIButton *b in sectionHeadBtnArray)
@@ -367,9 +464,9 @@
             [b setSelected:btn.selected];
             if(b.selected == YES)
             {
-                int tag = b.tag;
-                data = [dataArray objectAtIndex:tag];
-                [chooseArray addObject:data];
+//                int tag = b.tag;
+//                data = [dataArray objectAtIndex:tag];
+//                [chooseArray addObject:data];
             }
         }
         else
@@ -379,11 +476,11 @@
             
         }
         
-
+        
     }
-
+    
     [tv reloadData];
-
+    
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -392,23 +489,23 @@
     {
         return nil;
     }
-
+    
     UIButton *sectionHeadBtn = (UIButton *)[sectionHeadBtnArray objectAtIndex:section];
     if([sectionHeadBtn.subviews count] != 0)
     {
-//        NSLog(@"已经有了");
-//        UIImageView *headIv = [headImageArray objectAtIndex:section];
-
-//        UIButton *b = [sectionHeadBtnArray objectAtIndex:section];
-//        if(b.selected == YES)
-//        {
-//            [headIv setImage:[UIImage imageNamed:@"choose.png"]];
-//        }
-//        else
-//        {
-//            [headIv setImage:[UIImage imageNamed:@"unchoose.png"]];
-//        }
-
+        //        NSLog(@"已经有了");
+        //        UIImageView *headIv = [headImageArray objectAtIndex:section];
+        
+        //        UIButton *b = [sectionHeadBtnArray objectAtIndex:section];
+        //        if(b.selected == YES)
+        //        {
+        //            [headIv setImage:[UIImage imageNamed:@"choose.png"]];
+        //        }
+        //        else
+        //        {
+        //            [headIv setImage:[UIImage imageNamed:@"unchoose.png"]];
+        //        }
+        
     }
     else
     {
@@ -427,7 +524,7 @@
         
         CGFloat height = modelLabel.frame.size.height + size.height+10;
         [sectionHeadBtn setFrame:CGRectMake(0, 0,ScreenWidth, height)];
-
+        
         
         UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];
         [firstLine setBackgroundColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
@@ -438,7 +535,7 @@
         [secondLine setBackgroundColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
         [sectionHeadBtn addSubview:secondLine];
     }
-   
+    
     
     return sectionHeadBtn;
 }
@@ -513,7 +610,7 @@
     
     if(!dataArray || dataArray.count == 0)
     {
- 
+        
         if(moreCell == nil)
         {
             moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
@@ -522,7 +619,7 @@
         return moreCell;
     }
     
-
+    
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if(!cell)
@@ -667,7 +764,7 @@
             {
                 [cellLabel setFrame:CGRectMake(10, 25, size_3.width, 20)];
                 [cellLabel setAttributedText:myCartSpec];
-
+                
             }
             if(i == 3)
             {
@@ -715,9 +812,9 @@
         }
         else
         {
-            
+            NSLog(@"test");
         }
-
+        
     }
     
     if(indexPath.row == 1)
@@ -729,8 +826,8 @@
         }
     }
     return cell;
-
-
+    
+    
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -749,14 +846,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

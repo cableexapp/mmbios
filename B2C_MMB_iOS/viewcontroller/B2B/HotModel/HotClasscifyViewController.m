@@ -274,21 +274,23 @@
     {
         [addToCarArray removeObject:btn];
         
-        allPrice = allPrice -1;
-        NSString *str = nil;
-        if(allPrice == 0)
-        {
-            str = [NSString stringWithFormat:@"%@",@"询价车"];
-        }
-        else
-        {
-            str = [NSString stringWithFormat:@"询价车 +%i",allPrice];
-        }
-        [askPriceBtn setTitle:str forState:UIControlStateNormal];
+   
     }
     
     
-   
+//    allPrice = allPrice -1;
+    
+    int badge = addToCarArray.count;
+    NSString *str = nil;
+    if(badge <= 0)
+    {
+        str = [NSString stringWithFormat:@"%@",@"询价车"];
+    }
+    else
+    {
+        str = [NSString stringWithFormat:@"询价车 +%i",badge];
+    }
+    [askPriceBtn setTitle:str forState:UIControlStateNormal];
 }
 
 

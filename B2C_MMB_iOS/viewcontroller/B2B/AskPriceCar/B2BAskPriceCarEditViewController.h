@@ -7,8 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFPickerView.h"
+#import "DCFConnectionUtil.h"
 
-@interface B2BAskPriceCarEditViewController : UIViewController
+@protocol RemoveSubView <NSObject>
+
+- (void) removeSubView;
+- (void) reloadData;
+@end
+
+@interface B2BAskPriceCarEditViewController : UIViewController<PickerView,UITextFieldDelegate,ConnectionDelegate,UITextViewDelegate>
+{
+    DCFConnectionUtil *conn;
+}
+@property (strong,nonatomic) NSString *myModel;
+@property (strong,nonatomic) NSString *myCartId;
+
+@property (assign,nonatomic) float width;
+@property (assign,nonatomic) float height;
 
 @property (weak, nonatomic) IBOutlet UILabel *modelLabel;
 @property (weak, nonatomic) IBOutlet UITextField *numTF;
@@ -18,9 +34,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *volTF;
 @property (weak, nonatomic) IBOutlet UITextField *colorTF;
 @property (weak, nonatomic) IBOutlet UITextField *featureTF;
-@property (weak, nonatomic) IBOutlet UITextField *requestTF;
 @property (weak, nonatomic) IBOutlet UILabel *requestLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
+@property (weak, nonatomic) IBOutlet UITextView *requestTF;
 
+@property (weak, nonatomic) IBOutlet UIButton *sureBtn;
+
+
+@property (assign,nonatomic) id<RemoveSubView> delegate;
 @end

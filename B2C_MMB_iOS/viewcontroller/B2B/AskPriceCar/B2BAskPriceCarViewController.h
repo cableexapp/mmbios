@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
+#import "B2BAskPriceCarEditViewController.h"
 
-@interface B2BAskPriceCarViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate>
+@interface B2BAskPriceCarViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,RemoveSubView,UIAlertViewDelegate>
 {
     UITableView *tv;
     DCFConnectionUtil *conn;

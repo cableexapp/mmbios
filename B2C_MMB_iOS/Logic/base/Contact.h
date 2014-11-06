@@ -97,6 +97,14 @@ enum {
     URLInquiryCartListTag,   //询价车明细
     
     URLDeleteInquiryCartItemTag,  //询价车删除
+    
+    URLGetSpecVoltageByModelTag, //根据型号查询规格电压
+    
+    URLEditInquiryItemTag,  //询价单信息编辑
+    
+    URLAddressListTag,    //b2b收货地址
+    
+    URLSubInquiryTag,  //提交询价单
 };
 typedef NSUInteger URLTag;
 

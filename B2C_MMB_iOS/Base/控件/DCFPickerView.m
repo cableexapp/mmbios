@@ -7,6 +7,7 @@
 //
 
 #import "DCFPickerView.h"
+#import "DCFCustomExtra.h"
 
 @implementation DCFPickerView
 
@@ -70,12 +71,31 @@
     toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     toolBar.barStyle = 0;
     
-    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target: nil action: nil];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target: self action: @selector(done)];
-    UIBarButtonItem *leftButton  = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target: self action: @selector(cancel)];
-    UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
-    NSArray *array = [[NSArray alloc] initWithObjects: leftButton,fixedButton, titleButton,fixedButton, rightButton, nil];
-    [toolBar setItems:array];
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelBtn setFrame:CGRectMake(20, 7, 60, 30)];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn setBackgroundColor:[UIColor blueColor]];
+    [cancelBtn addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
+    [toolBar addSubview:cancelBtn];
+    
+    
+    UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [doneBtn setFrame:CGRectMake(toolBar.frame.size.width-70, 7, 60, 30)];
+    [doneBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [doneBtn setBackgroundColor:[UIColor blueColor]];
+    [doneBtn addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
+    [toolBar addSubview:doneBtn];
+    
+//    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target: nil action: nil];
+//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target: self action: @selector(done)];
+//    [rightButton setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal style:0 barMetrics:UIBarMetricsDefault];
+
+//    UIBarButtonItem *leftButton  = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target: self action: @selector(cancel)];
+//    [[UIBarButtonItem appearance] setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal style:0 barMetrics:UIBarMetricsDefault];
+    
+//    UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
+//    NSArray *array = [[NSArray alloc] initWithObjects: leftButton, rightButton, nil];
+//    [toolBar setItems:array];
     [view addSubview:toolBar];
     
     pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, toolBar.frame.origin.y + toolBar.frame.size.height, 320, 216)];
@@ -96,15 +116,23 @@
 
 - (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if(pickTag < 100)
+    if(dataArray.count == 0 || [dataArray isKindOfClass:[NSNull class]])
     {
-        NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:row] objectForKey:@"name"]];
-        title = str;
+        title = @" ";
     }
     else
     {
-        title = [dataArray objectAtIndex:row];
+        if(pickTag < 100)
+        {
+            NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:row] objectForKey:@"name"]];
+            title = str;
+        }
+        else
+        {
+            title = [dataArray objectAtIndex:row];
+        }
     }
+
 }
 
 - (NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -130,18 +158,26 @@
 {
     if([self.delegate respondsToSelector:@selector(pickerView:WithTag:)])
     {
-        //默认选中第一条数据
-        if(title.length == 0)
+        if(dataArray.count == 0 || [dataArray isKindOfClass:[NSNull class]])
         {
-            if(pickTag < 100)
+            title = @" ";
+        }
+        else
+        {
+            //默认选中第一条数据
+            if(title.length == 0)
             {
-                title = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:0] objectForKey:@"name"]];
-            }
-            else
-            {
-                title = [dataArray objectAtIndex:0];
+                if(pickTag < 100)
+                {
+                    title = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:0] objectForKey:@"name"]];
+                }
+                else
+                {
+                    title = [dataArray objectAtIndex:0];
+                }
             }
         }
+   
 
         
         [self.delegate pickerView:title WithTag:pickTag];

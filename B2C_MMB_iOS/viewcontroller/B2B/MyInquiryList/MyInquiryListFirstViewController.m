@@ -10,11 +10,15 @@
 #import "DCFTopLabel.h"
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "NormalInquiryListTableViewController.h"
+#import "SpeedInquiryListTableViewController.h"
 
 @interface MyInquiryListFirstViewController ()
 {
     int currentPageIndex;
 
+    NormalInquiryListTableViewController *normal;
+    SpeedInquiryListTableViewController *speed;
 }
 @end
 
@@ -41,6 +45,19 @@
     [self.segment addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     
     [self.sv setContentSize:CGSizeMake(ScreenWidth*2, self.sv.frame.size.height-200)];
+    [self.sv setBounces:NO];
+    [self.sv setShowsHorizontalScrollIndicator:NO];
+    [self.sv setShowsVerticalScrollIndicator:NO];
+    
+    normal = [self.storyboard instantiateViewControllerWithIdentifier:@"normalInquiryListTableViewController"];
+    normal.view.frame = self.firstView.bounds;
+    [self addChildViewController:normal];
+    [self.firstView addSubview:normal.view];
+    
+    speed = [self.storyboard instantiateViewControllerWithIdentifier:@"speedInquiryListTableViewController"];
+    speed.view.frame = self.secondView.bounds;
+    [self addChildViewController:speed];
+    [self.secondView addSubview:speed.view];
 }
 
 - (void) segmentChange:(UISegmentedControl *) sender

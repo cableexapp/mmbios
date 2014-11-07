@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "CKRefreshControl.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface NormalInquiryListTableViewController : UITableViewController
+@interface NormalInquiryListTableViewController : UITableViewController<ConnectionDelegate,EGORefreshTableHeaderDelegate>
+{
+    DCFConnectionUtil *conn;
+}
+@property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 
 @end

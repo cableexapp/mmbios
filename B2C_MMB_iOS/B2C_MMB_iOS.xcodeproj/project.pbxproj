@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D8491B31A0A3BF000E9C81B /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D8491B21A0A3BF000E9C81B /* HotKindFirstViewController.m */; };
 		6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */; };
 		6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */; };
 		611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */; };
@@ -181,6 +180,7 @@
 		6181A55F19CFC6EF000E2D14 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A55E19CFC6EF000E2D14 /* libstdc++.dylib */; };
 		6181A56119CFC6F5000E2D14 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A56019CFC6F5000E2D14 /* libiconv.dylib */; };
 		618459DA19D414A8000A3F4E /* delete_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 618459D919D414A8000A3F4E /* delete_1.png */; };
+		6195F5F31A0C58B00036D168 /* B2BMyInquiryListNormalData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6195F5F21A0C58B00036D168 /* B2BMyInquiryListNormalData.m */; };
 		619A62511A00C09900556B90 /* FifthSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624D1A00C09900556B90 /* FifthSB.storyboard */; };
 		619A62521A00C09900556B90 /* FourthSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624E1A00C09900556B90 /* FourthSB.storyboard */; };
 		619A62531A00C09900556B90 /* SecondSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624F1A00C09900556B90 /* SecondSB.storyboard */; };
@@ -589,6 +589,8 @@
 		6181A55E19CFC6EF000E2D14 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		6181A56019CFC6F5000E2D14 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		618459D919D414A8000A3F4E /* delete_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_1.png; sourceTree = "<group>"; };
+		6195F5F11A0C58B00036D168 /* B2BMyInquiryListNormalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BMyInquiryListNormalData.h; sourceTree = "<group>"; };
+		6195F5F21A0C58B00036D168 /* B2BMyInquiryListNormalData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BMyInquiryListNormalData.m; sourceTree = "<group>"; };
 		619A62451A00BE3800556B90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
 		619A624D1A00C09900556B90 /* FifthSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FifthSB.storyboard; sourceTree = "<group>"; };
 		619A624E1A00C09900556B90 /* FourthSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FourthSB.storyboard; sourceTree = "<group>"; };
@@ -1214,6 +1216,7 @@
 		6181A3DF19CFC4C2000E2D14 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				6195F5F01A0C58B00036D168 /* B2BMyInquiryListNormalData */,
 				61551E921A0B675F004F50FF /* B2BAddressData */,
 				61222AD01A087DA800B8A686 /* B2BAskPriceDetail */,
 				61DF89D019FB83E400D47430 /* B2CGoodsFastPicData */,
@@ -1563,6 +1566,15 @@
 				61B710B319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m */,
 			);
 			path = viewcontroller;
+			sourceTree = "<group>";
+		};
+		6195F5F01A0C58B00036D168 /* B2BMyInquiryListNormalData */ = {
+			isa = PBXGroup;
+			children = (
+				6195F5F11A0C58B00036D168 /* B2BMyInquiryListNormalData.h */,
+				6195F5F21A0C58B00036D168 /* B2BMyInquiryListNormalData.m */,
+			);
+			path = B2BMyInquiryListNormalData;
 			sourceTree = "<group>";
 		};
 		619A624C1A00C09900556B90 /* storyBoard */ = {
@@ -2178,6 +2190,7 @@
 				61B710B719FF3B53001CC3BD /* AboutViewController.m in Sources */,
 				61B710E519FF3B53001CC3BD /* AddReceiveAddressViewController.m in Sources */,
 				61B710C319FF3B53001CC3BD /* CancelOrderViewController.m in Sources */,
+				6195F5F31A0C58B00036D168 /* B2BMyInquiryListNormalData.m in Sources */,
 				6181A51619CFC4C2000E2D14 /* UIButton+WebCache.m in Sources */,
 				61B710C119FF3B53001CC3BD /* SendEmailViewController.m in Sources */,
 				61B710F319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m in Sources */,

@@ -105,6 +105,9 @@ enum {
     URLAddressListTag,    //b2b收货地址
     
     URLSubInquiryTag,  //提交询价单
+    
+    //个人中心
+    URLInquiryListTag,  //我的询价单查询（普通）
 };
 typedef NSUInteger URLTag;
 

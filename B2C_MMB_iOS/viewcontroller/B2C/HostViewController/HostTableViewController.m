@@ -14,7 +14,7 @@
 #import "SpeedAskPriceFirstViewController.h"
 #import "MCDefine.h"
 #import "HotClasscifyViewController.h"
-#import "HotKindFirstViewController.h"
+#import "HotKindHostViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -379,8 +379,8 @@
     {
         #pragma mark - 热门分类
         [self setHidesBottomBarWhenPushed:YES];
-          HotKindFirstViewController *hotKindFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindFirstViewController"];
-        [self.navigationController pushViewController:hotKindFirstViewController animated:YES];
+          HotKindHostViewController *hotKindHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindHostViewController"];
+        [self.navigationController pushViewController:hotKindHostViewController animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];
 }

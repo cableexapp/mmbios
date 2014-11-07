@@ -29,6 +29,7 @@
             _time = [DCFCustomExtra nsdateToString:confromTimesp];
         }
 
+        NSLog(@"time = %@",_time);
         _inquiryid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryid"]];
 
         _inquiryserial = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryserial"]];
@@ -38,6 +39,30 @@
         _myItems = [[NSArray alloc] initWithArray:[dic objectForKey:@"items"]];
         
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
+        if([_status isEqualToString:@"1"])
+        {
+            _status = @"待审核";
+        }
+        if([_status isEqualToString:@"2"])
+        {
+            _status = @"询价中";
+        }
+        if([_status isEqualToString:@"3"])
+        {
+            _status = @"待接受";
+        }
+        if([_status isEqualToString:@"4"])
+        {
+            _status = @"完成询价";
+        }
+        if([_status isEqualToString:@"5"])
+        {
+            _status = @"已关闭";
+        }
+        if([_status isEqualToString:@"6"])
+        {
+            _status = @"部分完成";
+        }
     }
     return self;
 }

@@ -25,6 +25,7 @@
 
     NSMutableArray *dataArray;
     NSMutableArray *lookBtnArray;  //查看按钮数组
+    NSMutableArray *upTimeLabelArray;  //提交时间数组
 }
 @end
 
@@ -72,6 +73,8 @@
     
     dataArray = [[NSMutableArray alloc] init];
     
+    upTimeLabelArray = [[NSMutableArray alloc] init];
+    
     intPage = 1;
     
     
@@ -98,7 +101,6 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryList.html?"];
     
-    pageSize = 10;
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
@@ -110,7 +112,6 @@
 {
     if(URLTag == URLInquiryListTag)
     {
-        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];
@@ -137,14 +138,14 @@
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
-//                if(intTotal == 0)
-//                {
-//                    [moreCell noDataAnimation];
-//                }
-//                else
-//                {
-//                    [moreCell stopAnimation];
-//                }
+                if(intTotal == 0)
+                {
+                    [moreCell noDataAnimation];
+                }
+                else
+                {
+                    [moreCell stopAnimation];
+                }
                 intPage++;
             }
             else
@@ -157,16 +158,27 @@
         {
             [lookBtnArray removeAllObjects];
         }
-        
+        if(upTimeLabelArray.count != 0)
+        {
+            [upTimeLabelArray removeAllObjects];
+        }
         for(int i=0;i<dataArray.count;i++)
         {
             UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             [lookBtn setTitle:@"查看" forState:UIControlStateNormal];
+            [lookBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
             [lookBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            [lookBtn setFrame:CGRectMake(ScreenWidth-40, 5, 30, 30)];
+            [lookBtn setFrame:CGRectMake(ScreenWidth-50, 5, 40, 30)];
             [lookBtn setTag:i];
             [lookBtn addTarget:self action:@selector(lookBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [lookBtnArray addObject:lookBtn];
+            
+            NSString *upTime = [[dataArray objectAtIndex:i] time];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 250, 30)];
+            [label setText:[NSString stringWithFormat:@" 提交时间:%@",upTime]];
+            [label setFont:[UIFont systemFontOfSize:13]];
+            [upTimeLabelArray addObject:label];
         }
         
         [self.tableView reloadData];
@@ -202,6 +214,14 @@
     {
         return 1;
     }
+    if(section == dataArray.count)
+    {
+        if ((intPage-1)*pageSize < intTotal )
+        {
+            return 1;
+        }
+        return 0;
+    }
     return [[[dataArray objectAtIndex:section] myItems] count] + 1;
 }
 
@@ -211,7 +231,52 @@
     {
         return 0;
     }
+    if(section == dataArray.count)
+    {
+        return 0;
+    }
     return 40;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(!dataArray || dataArray.count == 0)
+    {
+        return 44;
+    }
+    if(indexPath.section == dataArray.count)
+    {
+        return 44;
+    }
+    NSArray *myItems = [NSArray arrayWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
+    if(indexPath.row < myItems.count)
+    {
+        CGSize size_Kind;
+        NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[myItems objectAtIndex:indexPath.row]];
+
+        NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
+        NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
+        NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
+        NSString *kind = [NSString stringWithFormat:@"%@%@%@",firtKind,secondKind,thirdKind];
+        if(kind.length == 0 || [kind isKindOfClass:[NSNull class]])
+        {
+            size_Kind = CGSizeMake(10, 30);
+        }
+        else
+        {
+            size_Kind = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:kind WithSize:CGSizeMake(ScreenWidth-65, MAXFLOAT)];
+        }
+//        if(size_Kind.height <= 30)
+//        {
+//            return 70;
+//        }
+        return size_Kind.height+40;
+    }
+    else
+    {
+        return 40;
+    }
+    return 0;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -220,7 +285,10 @@
     {
         return nil;
     }
-
+    if(section == dataArray.count)
+    {
+        return nil;
+    }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
     [view setBackgroundColor:[UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0]];
     
@@ -276,17 +344,186 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"cellId";
+    if(indexPath.section == dataArray.count)
+    {
+        static NSString *moreCellId = @"moreCell";
+        moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
+        
+        if(moreCell == nil)
+        {
+            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+        }
+        return moreCell;
+    }
+    
+
+    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        
+        NSArray *myItems = [NSArray arrayWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
+        
+        if(indexPath.row < myItems.count)
+        {
+            //        [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section*10,indexPath.row*10]];
+            NSString *model = nil;
+            CGSize size_model;
+            
+            NSString *unitString = nil;
+            CGSize size_unitString;
+            
+            NSString *priceString = nil;
+            CGSize size_priceString;
+            
+            
+            NSString *kind = nil;
+            CGSize size_Kind;
+            
+            if(myItems.count == 0 || [myItems isKindOfClass:[NSNull class]])
+            {
+                model = @"";
+                size_model = CGSizeMake(10, 30);
+                
+                unitString = @"";
+                size_unitString = CGSizeMake(cell.contentView.frame.size.width-40, 30);
+                
+                priceString = @"";
+                size_priceString = CGSizeMake(cell.contentView.frame.size.width-70, 30);
+                
+                kind = @"";
+                size_Kind = CGSizeMake(cell.contentView.frame.size.width-20, 30);
+            }
+            else
+            {
+                NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[myItems objectAtIndex:indexPath.row]];
+                
+                model = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryModel"]];
+
+                if(model.length == 0 || [model isKindOfClass:[NSNull class]])
+                {
+                    size_model = CGSizeMake(40, 30);
+                }
+                else
+                {
+                    size_model = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:model WithSize:CGSizeMake(MAXFLOAT, 30)];
+                }
+                
+                unitString = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
+
+                if(unitString.length == 0 || [unitString isKindOfClass:[NSNull class]])
+                {
+                    size_unitString = CGSizeMake(30, 30);
+                }
+                else
+                {
+                    size_unitString = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:unitString WithSize:CGSizeMake(MAXFLOAT, 30)];
+                }
+                
+                priceString = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
+
+                if(priceString.length == 0 || [priceString isKindOfClass:[NSNull class]])
+                {
+                    size_priceString = CGSizeMake(30, 30);
+                }
+                else
+                {
+                    size_priceString = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:priceString WithSize:CGSizeMake(MAXFLOAT, 30)];
+                }
+                
+                NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
+                NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
+                NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
+                kind = [NSString stringWithFormat:@"%@%@%@",firtKind,secondKind,thirdKind];
+                if(kind.length == 0 || [kind isKindOfClass:[NSNull class]])
+                {
+                    size_Kind = CGSizeMake(10, 30);
+                }
+                else
+                {
+                    size_Kind = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:kind WithSize:CGSizeMake(cell.contentView.frame.size.width-65, MAXFLOAT)];
+                }
+
+            }
+            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_model.width+40, 30)];
+            if(model.length == 0 || [model isKindOfClass:[NSNull class]])
+            {
+//                [modelLabel setText:[NSString stringWithFormat:@"%@",model]];
+            }
+            else
+            {
+//                [modelLabel setText:[NSString stringWithFormat:@"型号:%@",model]];
+            }
+            [modelLabel setText:[NSString stringWithFormat:@"型号:%@",model]];
+            [modelLabel setFont:[UIFont systemFontOfSize:12]];
+            [cell.contentView addSubview:modelLabel];
+            
+            UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-10-size_unitString.width-20, 5, size_unitString.width+20, 30)];
+            if(unitString.length == 0 || [unitString isKindOfClass:[NSNull class]])
+            {
+                [unitLabel setText:unitString];
+            }
+            else
+            {
+                [unitLabel setText:[NSString stringWithFormat:@"元/%@",unitString]];
+            }
+            [unitLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-10-unitLabel.frame.size.width-size_priceString.width-20, 5, size_priceString.width+20, 30)];
+            if(priceString.length == 0 || [priceString isKindOfClass:[NSNull class]])
+            {
+                [priceLabel setText:priceString];
+            }
+            else
+            {
+                [priceLabel setText:[NSString stringWithFormat:@"¥%@",priceString]];
+            }
+            [priceLabel setTextColor:[UIColor redColor]];
+            [priceLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            if([[[dataArray objectAtIndex:indexPath.section] status] isEqualToString:@"4"] || [[[dataArray objectAtIndex:indexPath.section] status] isEqualToString:@"6"])
+            {
+//                [priceLabel setHidden:YES];
+//                [unitLabel setHidden:YES];
+            }
+            else
+            {
+                [cell.contentView addSubview:priceLabel];
+                [cell.contentView addSubview:unitLabel];
+            }
+            
+            UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, modelLabel.frame.origin.y+modelLabel.frame.size.height, cell.contentView.frame.size.width-65, size_Kind.height)];
+            [kindLabel setFont:[UIFont systemFontOfSize:12]];
+            [kindLabel setText:kind];
+            [kindLabel setNumberOfLines:0];
+            [cell.contentView addSubview:kindLabel];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, kindLabel.frame.origin.y, 40, kindLabel.frame.size.height)];
+            [label setText:@"分类:"];
+            [label setFont:[UIFont systemFontOfSize:12]];
+            [cell.contentView addSubview:label];
+        }
+        if(indexPath.row == myItems.count)
+        {
+            UILabel *firstLabel = (UILabel *)[upTimeLabelArray objectAtIndex:indexPath.section];
+            [firstLabel setTag:10];
+            [cell.contentView addSubview:firstLabel];
+            
+            UIButton *lookBtn = (UIButton *)[lookBtnArray objectAtIndex:indexPath.section];
+            [lookBtn setTag:11];
+            [cell.contentView addSubview:lookBtn];
+        }
+        
+
     }
-    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
-        [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-    }
-//    [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section*10,indexPath.row*10]];
     return cell;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -298,6 +535,7 @@
         {
             if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
             {
+                NSLog(@"intpage = %d  pageSize = %d",intPage,pageSize);
                 if ((intPage-1) * pageSize < intTotal )
                 {
                     [self loadRequest];

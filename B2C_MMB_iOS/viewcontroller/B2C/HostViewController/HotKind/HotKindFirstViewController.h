@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
 
-@interface HotKindFirstViewController : UIViewController
-
+@interface HotKindFirstViewController : UIViewController<ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
 @end

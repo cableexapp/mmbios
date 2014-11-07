@@ -309,8 +309,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D7660AA1A0BA0DC00E2EE46 /* Hotkind.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Hotkind.plist; sourceTree = "<group>"; };
 		0D8491B11A0A3BF000E9C81B /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
 		0D8491B21A0A3BF000E9C81B /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
+		0D8491B41A0B89E700E9C81B /* HotSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotSecondViewController.h; sourceTree = "<group>"; };
+		0D8491B51A0B89E700E9C81B /* HotSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotSecondViewController.m; sourceTree = "<group>"; };
 		6116A22A19EE1099005C3572 /* MyOrderHostBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostBtnTableViewCell.h; sourceTree = "<group>"; };
 		6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOrderHostBtnTableViewCell.m; sourceTree = "<group>"; };
 		6116A22C19EE1099005C3572 /* MyOrderHostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostTableViewCell.h; sourceTree = "<group>"; };
@@ -838,6 +841,9 @@
 			children = (
 				0D8491B11A0A3BF000E9C81B /* HotKindFirstViewController.h */,
 				0D8491B21A0A3BF000E9C81B /* HotKindFirstViewController.m */,
+				0D8491B41A0B89E700E9C81B /* HotSecondViewController.h */,
+				0D8491B51A0B89E700E9C81B /* HotSecondViewController.m */,
+				0D7660AA1A0BA0DC00E2EE46 /* Hotkind.plist */,
 			);
 			path = HotKind;
 			sourceTree = "<group>";
@@ -2079,6 +2085,7 @@
 				6181A4DD19CFC4C2000E2D14 /* up.png in Resources */,
 				6181A4F019CFC4C2000E2D14 /* Set@2x.png in Resources */,
 				6181A4E319CFC4C2000E2D14 /* cell_3.png in Resources */,
+				0D7660AB1A0BA0DC00E2EE46 /* Hotkind.plist in Resources */,
 				619C10081A0772EA002E9DF8 /* KindsPlist.plist in Resources */,
 				6166ED5519D2B06800D9A219 /* addAddress.png in Resources */,
 				61CCBCE119CFFF150008A46B /* Icon-40@2x.png in Resources */,
@@ -2126,6 +2133,7 @@
 				61B710C719FF3B53001CC3BD /* FourthHostViewController.m in Sources */,
 				61B710E919FF3B53001CC3BD /* BillMsgManagerViewController.m in Sources */,
 				6181A4CE19CFC4C2000E2D14 /* DCFConnectionUtil.m in Sources */,
+				0D8491B61A0B89E700E9C81B /* HotSecondViewController.m in Sources */,
 				61B710C019FF3B53001CC3BD /* FindBackSec_SecondViewController.m in Sources */,
 				61B710B919FF3B53001CC3BD /* FifthTableViewController.m in Sources */,
 				6181A4C419CFC4C2000E2D14 /* DCFChenMoreCell.m in Sources */,

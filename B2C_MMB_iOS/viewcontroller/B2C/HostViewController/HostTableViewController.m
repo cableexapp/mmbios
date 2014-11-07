@@ -190,6 +190,7 @@
     [self.navigationController.navigationBar addSubview:naviImageView];
     
     UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y+5, 200, 34)];
+    
     //    searchImageView setImage:<#(UIImage *)#>
     [searchImageView setUserInteractionEnabled:YES];
     [searchImageView setTag:101];

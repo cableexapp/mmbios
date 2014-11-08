@@ -12,6 +12,7 @@
 #import "LoginNaviViewController.h"
 #import "DCFChenMoreCell.h"
 #import "B2BMyInquiryListNormalData.h"
+#import "MyNormalInquiryDetailController.h"
 
 @interface NormalInquiryListTableViewController ()
 {
@@ -523,7 +524,27 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    MyNormalInquiryDetailController *myNormalInquiryDetailController = [self.storyboard instantiateViewControllerWithIdentifier:@"myNormalInquiryDetailController"];
     
+    NSString *orderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] inquiryserial]];
+    myNormalInquiryDetailController.myOrderNum = orderNum;
+    
+    
+    NSString *status = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] status]];
+    myNormalInquiryDetailController.myStatus = status;
+    
+    
+    NSString *upTime = [[dataArray objectAtIndex:indexPath.section] time];
+    myNormalInquiryDetailController.myTime = upTime;
+    
+    
+    NSString *Inquiryid = [[dataArray objectAtIndex:indexPath.section] inquiryid];
+    myNormalInquiryDetailController.myInquiryid = Inquiryid;
+    
+    NSDictionary *dic = [[dataArray objectAtIndex:indexPath.section] pushDic];
+    myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:dic];
+    
+    [self.navigationController pushViewController:myNormalInquiryDetailController animated:YES];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

@@ -63,6 +63,23 @@
         {
             _status = @"部分完成";
         }
+        
+        _address = [NSString stringWithFormat:@"%@",[dic objectForKey:@"address"]];
+        
+        _city = [NSString stringWithFormat:@"%@",[dic objectForKey:@"city"]];
+
+        _district = [NSString stringWithFormat:@"%@",[dic objectForKey:@"district"]];
+
+        _province = [NSString stringWithFormat:@"%@",[dic objectForKey:@"province"]];
+
+        _fullAddress = [NSString stringWithFormat:@"%@%@%@%@",_province,_city,_district,_address];
+        
+        _recipint = [NSString stringWithFormat:@"%@",[dic objectForKey:@"recipint"]];
+
+        _tel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"tel"]];
+
+        _pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:_fullAddress,@"fullAddress",_tel,@"tel",_recipint,@"name", nil];
+
     }
     return self;
 }

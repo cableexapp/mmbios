@@ -24,6 +24,22 @@
 
 @property (strong,nonatomic) NSString *time;
 
+@property (strong,nonatomic) NSString *address;
+
+@property (strong,nonatomic) NSString *city;
+
+@property (strong,nonatomic) NSString *district;
+
+@property (strong,nonatomic) NSString *province;
+
+@property (strong,nonatomic) NSString *recipint;
+
+@property (strong,nonatomic) NSString *fullAddress;
+
+@property (strong,nonatomic) NSString *tel;
+
+@property (strong,nonatomic) NSDictionary *pushDic;
+
 - (id) initWithDic:(NSDictionary *) dic;
 
 + (NSMutableArray *) getListArray:(NSMutableArray *) array;

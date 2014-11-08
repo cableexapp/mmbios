@@ -181,6 +181,8 @@
 		6181A56119CFC6F5000E2D14 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A56019CFC6F5000E2D14 /* libiconv.dylib */; };
 		618459DA19D414A8000A3F4E /* delete_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 618459D919D414A8000A3F4E /* delete_1.png */; };
 		6195F5F31A0C58B00036D168 /* B2BMyInquiryListNormalData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6195F5F21A0C58B00036D168 /* B2BMyInquiryListNormalData.m */; };
+		6195F5F61A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6195F5F51A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m */; };
+		6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6195F5F81A0CCE6B0036D168 /* MyNormalInquiryDetailController.m */; };
 		619A62511A00C09900556B90 /* FifthSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624D1A00C09900556B90 /* FifthSB.storyboard */; };
 		619A62521A00C09900556B90 /* FourthSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624E1A00C09900556B90 /* FourthSB.storyboard */; };
 		619A62531A00C09900556B90 /* SecondSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624F1A00C09900556B90 /* SecondSB.storyboard */; };
@@ -596,6 +598,10 @@
 		618459D919D414A8000A3F4E /* delete_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_1.png; sourceTree = "<group>"; };
 		6195F5F11A0C58B00036D168 /* B2BMyInquiryListNormalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BMyInquiryListNormalData.h; sourceTree = "<group>"; };
 		6195F5F21A0C58B00036D168 /* B2BMyInquiryListNormalData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BMyInquiryListNormalData.m; sourceTree = "<group>"; };
+		6195F5F41A0CC5AA0036D168 /* MyInquiryDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInquiryDetailTableViewController.h; sourceTree = "<group>"; };
+		6195F5F51A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInquiryDetailTableViewController.m; sourceTree = "<group>"; };
+		6195F5F71A0CCE6B0036D168 /* MyNormalInquiryDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNormalInquiryDetailController.h; sourceTree = "<group>"; };
+		6195F5F81A0CCE6B0036D168 /* MyNormalInquiryDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNormalInquiryDetailController.m; sourceTree = "<group>"; };
 		619A62451A00BE3800556B90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
 		619A624D1A00C09900556B90 /* FifthSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FifthSB.storyboard; sourceTree = "<group>"; };
 		619A624E1A00C09900556B90 /* FourthSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FourthSB.storyboard; sourceTree = "<group>"; };
@@ -1000,6 +1006,10 @@
 				61551E9E1A0BA18A004F50FF /* NormalInquiryListTableViewController.m */,
 				61551EA01A0BA1A2004F50FF /* SpeedInquiryListTableViewController.h */,
 				61551EA11A0BA1A2004F50FF /* SpeedInquiryListTableViewController.m */,
+				6195F5F71A0CCE6B0036D168 /* MyNormalInquiryDetailController.h */,
+				6195F5F81A0CCE6B0036D168 /* MyNormalInquiryDetailController.m */,
+				6195F5F41A0CC5AA0036D168 /* MyInquiryDetailTableViewController.h */,
+				6195F5F51A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m */,
 			);
 			path = MyInquiryList;
 			sourceTree = "<group>";
@@ -2097,7 +2107,6 @@
 				6181A4DD19CFC4C2000E2D14 /* up.png in Resources */,
 				6181A4F019CFC4C2000E2D14 /* Set@2x.png in Resources */,
 				6181A4E319CFC4C2000E2D14 /* cell_3.png in Resources */,
-				0D7660AB1A0BA0DC00E2EE46 /* Hotpst.plist in Resources */,
 				619C10081A0772EA002E9DF8 /* KindsPlist.plist in Resources */,
 				6166ED5519D2B06800D9A219 /* addAddress.png in Resources */,
 				61CCBCE119CFFF150008A46B /* Icon-40@2x.png in Resources */,
@@ -2137,16 +2146,15 @@
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
 				61551E911A0B4D6D004F50FF /* B2BAskPriceInquirySheetViewController.m in Sources */,
 				616D7A0019E62DFC00D7A357 /* B2CUpOrderData.m in Sources */,
+				6195F5F61A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m in Sources */,
 				61B710BA19FF3B53001CC3BD /* HotLineViewController.m in Sources */,
 				6181A4D219CFC4C2000E2D14 /* TestExecutor.m in Sources */,
-				0DACD8281A0CB9C000F6E025 /* HotKindHostViewController.m in Sources */,
 				61B710BC19FF3B53001CC3BD /* ThirdNaviViewController.m in Sources */,
 				61551E951A0B676C004F50FF /* B2BAddressData.m in Sources */,
 				61A197C619F7509400909C6F /* QBImagePickerController.m in Sources */,
 				61B710C719FF3B53001CC3BD /* FourthHostViewController.m in Sources */,
 				61B710E919FF3B53001CC3BD /* BillMsgManagerViewController.m in Sources */,
 				6181A4CE19CFC4C2000E2D14 /* DCFConnectionUtil.m in Sources */,
-				0D8491B61A0B89E700E9C81B /* HotSecondViewController.m in Sources */,
 				61B710C019FF3B53001CC3BD /* FindBackSec_SecondViewController.m in Sources */,
 				61B710B919FF3B53001CC3BD /* FifthTableViewController.m in Sources */,
 				6181A4C419CFC4C2000E2D14 /* DCFChenMoreCell.m in Sources */,
@@ -2192,7 +2200,6 @@
 				61A197C919F7509400909C6F /* QBImagePickerVideoInfoView.m in Sources */,
 				61B710C219FF3B53001CC3BD /* AccountManagerTableViewController.m in Sources */,
 				615C8F8A19F8A7E400A2B8CD /* B2CAfterSaleData.m in Sources */,
-				0DACD7DB1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m in Sources */,
 				61551E9F1A0BA18A004F50FF /* NormalInquiryListTableViewController.m in Sources */,
 				615B01B219D8000A0002592E /* B2CShopCarListData.m in Sources */,
 				6181A50519CFC4C2000E2D14 /* ELCImagePickerDemoViewController.m in Sources */,
@@ -2204,6 +2211,7 @@
 				6181A4FF19CFC4C2000E2D14 /* EGORefreshTableHeaderView.m in Sources */,
 				61B710BB19FF3B53001CC3BD /* SettingViewController.m in Sources */,
 				6181A35A19CFC3F9000E2D14 /* AppDelegate.m in Sources */,
+				6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */,
 				6181A4C919CFC4C2000E2D14 /* DCFPickerView.m in Sources */,
 				612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */,
 				6181A51A19CFC4C2000E2D14 /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */,

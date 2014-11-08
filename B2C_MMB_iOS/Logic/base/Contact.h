@@ -108,6 +108,7 @@ enum {
     
     //个人中心
     URLInquiryListTag,  //我的询价单查询（普通）
+    URLInquiryDetailTag, //询价单详情(普通)
     URLInquiryListSpeedTag  //我的询价单查询（快速）
 };
 typedef NSUInteger URLTag;

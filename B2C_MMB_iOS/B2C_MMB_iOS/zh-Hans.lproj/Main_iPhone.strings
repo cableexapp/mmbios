@@ -1,102 +1,219 @@
 
-/* Class = "IBUILabel"; text = "确认密码:"; ObjectID = "08f-i2-Bfm"; */
-"08f-i2-Bfm.text" = "确认密码:";
+/* Class = "IBUIButton"; normalTitle = "VV"; ObjectID = "0MH-qL-Wkh"; */
+"0MH-qL-Wkh.normalTitle" = "VV";
 
 /* Class = "IBUIButton"; normalTitle = "快速询价"; ObjectID = "0Nd-Bl-FEC"; */
 "0Nd-Bl-FEC.normalTitle" = "快速询价";
 
-/* Class = "IBUIButton"; normalTitle = "直接填写型号"; ObjectID = "1UQ-Pa-UHB"; */
-"1UQ-Pa-UHB.normalTitle" = "直接填写型号";
+/* Class = "IBUIButton"; normalTitle = "JKLGY"; ObjectID = "0XW-tT-1PM"; */
+"0XW-tT-1PM.normalTitle" = "JKLGY";
+
+/* Class = "IBUIButton"; normalTitle = "BTTZ"; ObjectID = "0bj-ZF-mM9"; */
+"0bj-ZF-mM9.normalTitle" = "BTTZ";
+
+/* Class = "IBUIButton"; normalTitle = "KYJV"; ObjectID = "0iW-rk-7ei"; */
+"0iW-rk-7ei.normalTitle" = "KYJV";
 
 /* Class = "IBUITextField"; placeholder = " 请输入您的手机号"; ObjectID = "1Z5-sM-FGu"; */
 "1Z5-sM-FGu.placeholder" = " 请输入您的手机号";
 
-/* Class = "IBUILabel"; text = "Label"; ObjectID = "1rP-2i-fpL"; */
-"1rP-2i-fpL.text" = "Label";
+/* Class = "IBUIButton"; normalTitle = "RVSP"; ObjectID = "1am-sj-Rat"; */
+"1am-sj-Rat.normalTitle" = "RVSP";
 
-/* Class = "IBUILabel"; text = "周一至周日,电缆买卖宝客服7x12小时竭诚为您服务"; ObjectID = "3aY-5f-N5d"; */
-"3aY-5f-N5d.text" = "周一至周日,电缆买卖宝客服7x12小时竭诚为您服务";
+/* Class = "IBUIButton"; normalTitle = "SYV-75-5-5"; ObjectID = "1nr-Dg-NVw"; */
+"1nr-Dg-NVw.normalTitle" = "SYV-75-5-5";
+
+/* Class = "IBUIButton"; normalTitle = "BV"; ObjectID = "2Qe-yb-Iub"; */
+"2Qe-yb-Iub.normalTitle" = "BV";
+
+/* Class = "IBUILabel"; text = "在线客服咨询,时间:8:00-22:00"; ObjectID = "2jo-4h-Aiq"; */
+"2jo-4h-Aiq.text" = "在线客服咨询,时间:8:00-22:00";
+
+/* Class = "IBUIButton"; normalTitle = "JKLYJ"; ObjectID = "493-AM-wAP"; */
+"493-AM-wAP.normalTitle" = "JKLYJ";
+
+/* Class = "IBUIButton"; normalTitle = "YJLV"; ObjectID = "4UT-pn-gp9"; */
+"4UT-pn-gp9.normalTitle" = "YJLV";
+
+/* Class = "IBUITextView"; text = "Lorem"; ObjectID = "4W6-2o-VGf"; */
+"4W6-2o-VGf.text" = "Lorem";
+
+/* Class = "IBUIButton"; normalTitle = "SDJ"; ObjectID = "4fN-x7-XWZ"; */
+"4fN-x7-XWZ.normalTitle" = "SDJ";
+
+/* Class = "IBUIButton"; normalTitle = "JLRX/T(ACCC/TW)"; ObjectID = "4jM-jc-gdG"; */
+"4jM-jc-gdG.normalTitle" = "JLRX/T(ACCC/TW)";
+
+/* Class = "IBUIButton"; normalTitle = "WTTEZ"; ObjectID = "4nI-iu-at3"; */
+"4nI-iu-at3.normalTitle" = "WTTEZ";
 
 /* Class = "IBUILabel"; text = "以数字或者字母开头长度在6-18个字符之间,只能包含字母、数字和下划线。不能为纯数字"; ObjectID = "4sb-Af-8E9"; */
 "4sb-Af-8E9.text" = "以数字或者字母开头长度在6-18个字符之间,只能包含字母、数字和下划线。不能为纯数字";
 
-/* Class = "IBUIButton"; normalTitle = "拨打热线电话"; ObjectID = "5HS-lp-8Ci"; */
-"5HS-lp-8Ci.normalTitle" = "拨打热线电话";
+/* Class = "IBUILabel"; text = "如有特殊需求请备注"; ObjectID = "5Ma-pZ-Uo6"; */
+"5Ma-pZ-Uo6.text" = "如有特殊需求请备注";
 
-/* Class = "IBUIButton"; normalTitle = "400-828-0188"; ObjectID = "5O6-oB-WM2"; */
-"5O6-oB-WM2.normalTitle" = "400-828-0188";
-
-/* Class = "IBUILabel"; text = "＊10"; ObjectID = "5d6-Ej-meQ"; */
-"5d6-Ej-meQ.text" = "＊10";
-
-/* Class = "IBUILabel"; text = "Copyright © 2010-2014"; ObjectID = "6CO-Rf-FZm"; */
-"6CO-Rf-FZm.text" = "Copyright © 2010-2014";
+/* Class = "IBUIButton"; normalTitle = "VY"; ObjectID = "5Oo-xH-aPV"; */
+"5Oo-xH-aPV.normalTitle" = "VY";
 
 /* Class = "IBUIButton"; normalTitle = "场和选择"; ObjectID = "6xO-bp-mEl"; */
 "6xO-bp-mEl.normalTitle" = "场和选择";
 
-/* Class = "IBUIButton"; normalTitle = "评价"; ObjectID = "73u-2K-ymF"; */
-"73u-2K-ymF.normalTitle" = "评价";
+/* Class = "IBUIButton"; normalTitle = "GYTA53"; ObjectID = "7WG-eO-Q2b"; */
+"7WG-eO-Q2b.normalTitle" = "GYTA53";
 
-/* Class = "IBUITableViewSection"; headerTitle = "Section-2"; ObjectID = "74x-MN-KkW"; */
-"74x-MN-KkW.headerTitle" = "Section-2";
-
-/* Class = "IBUILabel"; text = "咨询电话热线"; ObjectID = "7QO-qY-hrN"; */
-"7QO-qY-hrN.text" = "咨询电话热线";
+/* Class = "IBUIButton"; normalTitle = "HSQRYV-3"; ObjectID = "7v2-z1-xaq"; */
+"7v2-z1-xaq.normalTitle" = "HSQRYV-3";
 
 /* Class = "IBUILabel"; text = "输入手机号,点击“获取密码”后，系统自动向您de手机发送一条默认密码短信"; ObjectID = "88Q-ss-GEy"; */
 "88Q-ss-GEy.text" = "输入手机号,点击“获取密码”后，系统自动向您de手机发送一条默认密码短信";
 
-/* Class = "IBUIButton"; normalTitle = "评价"; ObjectID = "8Be-Wq-58T"; */
-"8Be-Wq-58T.normalTitle" = "评价";
+/* Class = "IBUIButton"; normalTitle = "免费电话咨询,400-828-0188"; ObjectID = "8Hl-ch-cqk"; */
+"8Hl-ch-cqk.normalTitle" = "免费电话咨询,400-828-0188";
 
-/* Class = "IBUILabel"; text = "1234567890"; ObjectID = "8G3-vl-ncu"; */
-"8G3-vl-ncu.text" = "1234567890";
+/* Class = "IBUILabel"; text = "0/500"; ObjectID = "8Wg-nO-CfQ"; */
+"8Wg-nO-CfQ.text" = "0/500";
+
+/* Class = "IBUIButton"; normalTitle = "HYA"; ObjectID = "8dR-dH-wSc"; */
+"8dR-dH-wSc.normalTitle" = "HYA";
+
+/* Class = "IBUIButton"; normalTitle = "VV22"; ObjectID = "8hj-bv-iG2"; */
+"8hj-bv-iG2.normalTitle" = "VV22";
+
+/* Class = "IBUIButton"; normalTitle = "YC"; ObjectID = "8wT-ag-eFM"; */
+"8wT-ag-eFM.normalTitle" = "YC";
+
+/* Class = "IBUIButton"; normalTitle = "YTF"; ObjectID = "9b4-mR-OWb"; */
+"9b4-mR-OWb.normalTitle" = "YTF";
+
+/* Class = "IBUIButton"; normalTitle = "JKLHYJ/Q"; ObjectID = "9dy-yt-ygC"; */
+"9dy-yt-ygC.normalTitle" = "JKLHYJ/Q";
 
 /* Class = "IBUILabel"; text = "新密码"; ObjectID = "9eb-gl-oZl"; */
 "9eb-gl-oZl.text" = "新密码";
 
-/* Class = "IBUILabel"; text = "Label"; ObjectID = "9sv-RJ-2eY"; */
-"9sv-RJ-2eY.text" = "Label";
+/* Class = "IBUIButton"; normalTitle = "LGJ"; ObjectID = "9vl-Vt-CIh"; */
+"9vl-Vt-CIh.normalTitle" = "LGJ";
+
+/* Class = "IBUIButton"; normalTitle = "GYFXF"; ObjectID = "9xD-36-sGB"; */
+"9xD-36-sGB.normalTitle" = "GYFXF";
 
 /* Class = "IBUILabel"; text = "1.使用手机号免费注册"; ObjectID = "A2z-rm-mOE"; */
 "A2z-rm-mOE.text" = "1.使用手机号免费注册";
 
+/* Class = "IBUIButton"; normalTitle = "上一批"; ObjectID = "A3R-Br-2uR"; */
+"A3R-Br-2uR.normalTitle" = "上一批";
+
 /* Class = "IBUILabel"; text = "确认密码"; ObjectID = "A7R-NT-z8q"; */
 "A7R-NT-z8q.text" = "确认密码";
 
-/* Class = "IBUITabBarItem"; title = "Item"; ObjectID = "Eha-Pp-wUk"; */
-"Eha-Pp-wUk.title" = "Item";
+/* Class = "IBUIButton"; normalTitle = "JLB20A"; ObjectID = "AmK-ep-L0m"; */
+"AmK-ep-L0m.normalTitle" = "JLB20A";
 
-/* Class = "IBUILabel"; text = "邮箱地址:中国江苏省宜兴高塍远东大道"; ObjectID = "FMa-qq-VPY"; */
-"FMa-qq-VPY.text" = "邮箱地址:中国江苏省宜兴高塍远东大道";
+/* Class = "IBUIButton"; normalTitle = "ZC-TC90(-40)"; ObjectID = "At1-T3-r3R"; */
+"At1-T3-r3R.normalTitle" = "ZC-TC90(-40)";
+
+/* Class = "IBUIButton"; normalTitle = "VV32"; ObjectID = "BIv-eA-3t9"; */
+"BIv-eA-3t9.normalTitle" = "VV32";
+
+/* Class = "IBUIButton"; normalTitle = "HJYV-C"; ObjectID = "BNR-TN-yfP"; */
+"BNR-TN-yfP.normalTitle" = "HJYV-C";
+
+/* Class = "IBUIButton"; normalTitle = "YJLV23"; ObjectID = "Bq7-wh-L4i"; */
+"Bq7-wh-L4i.normalTitle" = "YJLV23";
+
+/* Class = "IBUIButton"; normalTitle = "KVVP2"; ObjectID = "CQy-wg-ZAN"; */
+"CQy-wg-ZAN.normalTitle" = "KVVP2";
+
+/* Class = "IBUIButton"; normalTitle = "YJVR"; ObjectID = "D6T-1f-3NN"; */
+"D6T-1f-3NN.normalTitle" = "YJVR";
+
+/* Class = "IBUIButton"; normalTitle = "JEFR"; ObjectID = "DDR-z8-Nr3"; */
+"DDR-z8-Nr3.normalTitle" = "JEFR";
+
+/* Class = "IBUIButton"; normalTitle = "JLB20B"; ObjectID = "DVC-Qv-Asy"; */
+"DVC-Qv-Asy.normalTitle" = "JLB20B";
+
+/* Class = "IBUIButton"; normalTitle = "YCW"; ObjectID = "DXj-ha-0QU"; */
+"DXj-ha-0QU.normalTitle" = "YCW";
+
+/* Class = "IBUIButton"; normalTitle = "CTAH"; ObjectID = "EY7-HS-dKK"; */
+"EY7-HS-dKK.normalTitle" = "CTAH";
+
+/* Class = "IBUIButton"; normalTitle = "CJPF96/SC"; ObjectID = "EfT-AY-Kmq"; */
+"EfT-AY-Kmq.normalTitle" = "CJPF96/SC";
+
+/* Class = "IBUIButton"; normalTitle = "GYXTW"; ObjectID = "Emu-vs-vKv"; */
+"Emu-vs-vKv.normalTitle" = "GYXTW";
+
+/* Class = "IBUIButton"; normalTitle = "KVVP"; ObjectID = "Ewq-AM-SZv"; */
+"Ewq-AM-SZv.normalTitle" = "KVVP";
+
+/* Class = "IBUILabel"; text = "你是不是需要找这些型号?"; ObjectID = "FDk-eL-vOp"; */
+"FDk-eL-vOp.text" = "你是不是需要找这些型号?";
+
+/* Class = "IBUIButton"; normalTitle = "JTMH"; ObjectID = "FIx-aC-yNM"; */
+"FIx-aC-yNM.normalTitle" = "JTMH";
+
+/* Class = "IBUIButton"; normalTitle = "确定"; ObjectID = "FOA-OT-iv1"; */
+"FOA-OT-iv1.normalTitle" = "确定";
+
+/* Class = "IBUIButton"; normalTitle = "YJY"; ObjectID = "FSm-zu-gQ5"; */
+"FSm-zu-gQ5.normalTitle" = "YJY";
 
 /* Class = "IBUILabel"; text = "密  码"; ObjectID = "FW0-Bu-Qlo"; */
 "FW0-Bu-Qlo.text" = "密  码";
 
-/* Class = "IBUILabel"; text = "服务态度:"; ObjectID = "Fbp-G8-mpS"; */
-"Fbp-G8-mpS.text" = "服务态度:";
+/* Class = "IBUIButton"; normalTitle = "YGC"; ObjectID = "GD7-SR-UAb"; */
+"GD7-SR-UAb.normalTitle" = "YGC";
 
-/* Class = "IBUILabel"; text = "订单编号:"; ObjectID = "FiR-b2-OhO"; */
-"FiR-b2-OhO.text" = "订单编号:";
+/* Class = "IBUIButton"; normalTitle = "RVB"; ObjectID = "GKa-Sb-GeW"; */
+"GKa-Sb-GeW.normalTitle" = "RVB";
 
-/* Class = "IBUILabel"; text = "2014-08-10"; ObjectID = "Flq-fc-3Fn"; */
-"Flq-fc-3Fn.text" = "2014-08-10";
+/* Class = "IBUIButton"; normalTitle = "SYWV-75-5"; ObjectID = "GOX-ox-Tea"; */
+"GOX-ox-Tea.normalTitle" = "SYWV-75-5";
 
-/* Class = "IBUILabel"; text = "修改绑定手机"; ObjectID = "HCc-bc-H5b"; */
-"HCc-bc-H5b.text" = "修改绑定手机";
+/* Class = "IBUIButton"; normalTitle = "YJLV32"; ObjectID = "GUr-U2-ANH"; */
+"GUr-U2-ANH.normalTitle" = "YJLV32";
 
-/* Class = "IBUILabel"; text = "修改登陆密码"; ObjectID = "HHn-BC-eEg"; */
-"HHn-BC-eEg.text" = "修改登陆密码";
+/* Class = "IBUIButton"; normalTitle = "BVR"; ObjectID = "GUs-wV-Thx"; */
+"GUs-wV-Thx.normalTitle" = "BVR";
 
-/* Class = "IBUIButton"; normalTitle = "下一批"; ObjectID = "HaS-7C-i8v"; */
-"HaS-7C-i8v.normalTitle" = "下一批";
+/* Class = "IBUIButton"; normalTitle = "TMY"; ObjectID = "Ghb-Xh-Xw7"; */
+"Ghb-Xh-Xw7.normalTitle" = "TMY";
 
-/* Class = "IBUILabel"; text = "0分"; ObjectID = "HtK-lP-PgP"; */
-"HtK-lP-PgP.text" = "0分";
+/* Class = "IBUIButton"; normalTitle = "YJV22"; ObjectID = "Gk4-eX-kyI"; */
+"Gk4-eX-kyI.normalTitle" = "YJV22";
 
-/* Class = "IBUILabel"; text = "远东电线电缆bvr6平方国际铜芯电线单芯50米"; ObjectID = "Ib0-Al-F3k"; */
-"Ib0-Al-F3k.text" = "远东电线电缆bvr6平方国际铜芯电线单芯50米";
+/* Class = "IBUIButton"; normalTitle = "60245IEC81(YH)"; ObjectID = "Gof-uc-9T5"; */
+"Gof-uc-9T5.normalTitle" = "60245IEC81(YH)";
+
+/* Class = "IBUILabel"; text = "您还可以："; ObjectID = "GwD-E2-mrd"; */
+"GwD-E2-mrd.text" = "您还可以：";
+
+/* Class = "IBUIButton"; normalTitle = "JG1A"; ObjectID = "H9N-We-1tL"; */
+"H9N-We-1tL.normalTitle" = "JG1A";
+
+/* Class = "IBUIButton"; normalTitle = "60245IEC57(YZW)"; ObjectID = "HGT-EZ-Qmc"; */
+"HGT-EZ-Qmc.normalTitle" = "60245IEC57(YZW)";
+
+/* Class = "IBUIButton"; normalTitle = "MYJV42"; ObjectID = "Hne-CK-xkH"; */
+"Hne-CK-xkH.normalTitle" = "MYJV42";
+
+/* Class = "IBUIButton"; normalTitle = "YJV42"; ObjectID = "Hxc-bJ-Uy2"; */
+"Hxc-bJ-Uy2.normalTitle" = "YJV42";
+
+/* Class = "IBUIButton"; normalTitle = "加入询价车"; ObjectID = "IAV-yq-JM3"; */
+"IAV-yq-JM3.normalTitle" = "加入询价车";
+
+/* Class = "IBUIButton"; normalTitle = "KVV"; ObjectID = "IGC-ru-jdB"; */
+"IGC-ru-jdB.normalTitle" = "KVV";
+
+/* Class = "IBUILabel"; text = "您还可以:"; ObjectID = "IYI-QD-yhP"; */
+"IYI-QD-yhP.text" = "您还可以:";
+
+/* Class = "IBUIButton"; normalTitle = "LJ"; ObjectID = "IiJ-Q8-Qyq"; */
+"IiJ-Q8-Qyq.normalTitle" = "LJ";
 
 /* Class = "IBUISegmentedControl"; Io1-cT-QrZ.segmentTitles[0] = "快速注册"; ObjectID = "Io1-cT-QrZ"; */
 "Io1-cT-QrZ.segmentTitles[0]" = "快速注册";
@@ -104,50 +221,71 @@
 /* Class = "IBUISegmentedControl"; Io1-cT-QrZ.segmentTitles[1] = "普通注册"; ObjectID = "Io1-cT-QrZ"; */
 "Io1-cT-QrZ.segmentTitles[1]" = "普通注册";
 
-/* Class = "IBUILabel"; text = "当前版本号:For iOS V1.1.0"; ObjectID = "Ivf-ka-LrI"; */
-"Ivf-ka-LrI.text" = "当前版本号:For iOS V1.1.0";
+/* Class = "IBUIButton"; normalTitle = "清空"; ObjectID = "Iu1-0c-mPg"; */
+"Iu1-0c-mPg.normalTitle" = "清空";
 
 /* Class = "IBUILabel"; text = "[提示]"; ObjectID = "IwV-Vf-pf2"; */
 "IwV-Vf-pf2.text" = "[提示]";
 
-/* Class = "IBUIButton"; normalTitle = "待发货"; ObjectID = "JLI-6j-eQy"; */
-"JLI-6j-eQy.normalTitle" = "待发货";
+/* Class = "IBUIButton"; normalTitle = "FF4-7"; ObjectID = "J2r-ba-csd"; */
+"J2r-ba-csd.normalTitle" = "FF4-7";
 
 /* Class = "IBUITextField"; placeholder = "请输入帐号"; ObjectID = "JWY-o5-6yr"; */
 "JWY-o5-6yr.placeholder" = "请输入帐号";
 
-/* Class = "IBUILabel"; text = "已绑定手机:"; ObjectID = "JmB-Nq-b56"; */
-"JmB-Nq-b56.text" = "已绑定手机:";
+/* Class = "IBUIButton"; normalTitle = "RVVB"; ObjectID = "Jdn-9z-zsi"; */
+"Jdn-9z-zsi.normalTitle" = "RVVB";
 
-/* Class = "IBUILabel"; text = "验证码:"; ObjectID = "KuC-gc-ClL"; */
-"KuC-gc-ClL.text" = "验证码:";
+/* Class = "IBUIButton"; normalTitle = "GJAFJV"; ObjectID = "Jfp-zD-Uz3"; */
+"Jfp-zD-Uz3.normalTitle" = "GJAFJV";
 
-/* Class = "IBUIButton"; normalTitle = "询价中"; ObjectID = "L3c-od-fP7"; */
-"L3c-od-fP7.normalTitle" = "询价中";
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "KFJ-gR-Qxu"; */
+"KFJ-gR-Qxu.text" = "Label";
 
-/* Class = "IBUIButton"; normalTitle = "待评价"; ObjectID = "LRR-E8-rFB"; */
-"LRR-E8-rFB.normalTitle" = "待评价";
+/* Class = "IBUIButton"; normalTitle = "HCTAYZ-50-22"; ObjectID = "KWa-xl-1k6"; */
+"KWa-xl-1k6.normalTitle" = "HCTAYZ-50-22";
 
-/* Class = "IBUILabel"; text = "以数字或字母开头，长度在6-18个字符之间，只能包含字母、数字和下划线，不能为纯数字"; ObjectID = "LX2-68-uOw"; */
-"LX2-68-uOw.text" = "以数字或字母开头，长度在6-18个字符之间，只能包含字母、数字和下划线，不能为纯数字";
+/* Class = "IBUIButton"; normalTitle = "BYJ"; ObjectID = "Kcq-3u-WJ2"; */
+"Kcq-3u-WJ2.normalTitle" = "BYJ";
 
-/* Class = "IBUILabel"; text = "0分"; ObjectID = "MKr-Te-55s"; */
-"MKr-Te-55s.text" = "0分";
+/* Class = "IBUIButton"; normalTitle = "BS1-JKLYJ"; ObjectID = "KtZ-FZ-Rgq"; */
+"KtZ-FZ-Rgq.normalTitle" = "BS1-JKLYJ";
 
-/* Class = "IBUIButton"; normalTitle = "快速询价单"; ObjectID = "N78-wT-H4L"; */
-"N78-wT-H4L.normalTitle" = "快速询价单";
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Le3-nB-Y4l"; */
+"Le3-nB-Y4l.text" = "Label";
 
-/* Class = "IBUIButton"; normalTitle = "获取验证码"; ObjectID = "Nuv-y1-oh0"; */
-"Nuv-y1-oh0.normalTitle" = "获取验证码";
+/* Class = "IBUIButton"; normalTitle = "YJVRP2"; ObjectID = "M4V-tl-WrF"; */
+"M4V-tl-WrF.normalTitle" = "YJVRP2";
 
-/* Class = "IBUIButton"; normalTitle = "待发货"; ObjectID = "Oeu-n0-r7E"; */
-"Oeu-n0-r7E.normalTitle" = "待发货";
+/* Class = "IBUIButton"; normalTitle = "GYFTZY"; ObjectID = "M9R-Wp-HdE"; */
+"M9R-Wp-HdE.normalTitle" = "GYFTZY";
 
-/* Class = "IBUILabel"; text = "关于"; ObjectID = "P8t-an-iYL"; */
-"P8t-an-iYL.text" = "关于";
+/* Class = "IBUIButton"; normalTitle = "JKLGYJ/Q"; ObjectID = "Mrs-Se-W3M"; */
+"Mrs-Se-W3M.normalTitle" = "JKLGYJ/Q";
+
+/* Class = "IBUIButton"; normalTitle = "HCAAYZ-50-12"; ObjectID = "Mw3-rz-XwH"; */
+"Mw3-rz-XwH.normalTitle" = "HCAAYZ-50-12";
+
+/* Class = "IBUIButton"; normalTitle = "YJV23"; ObjectID = "Ni9-Bs-zF0"; */
+"Ni9-Bs-zF0.normalTitle" = "YJV23";
+
+/* Class = "IBUIButton"; normalTitle = "JKLY"; ObjectID = "Nmo-FG-cc6"; */
+"Nmo-FG-cc6.normalTitle" = "JKLY";
+
+/* Class = "IBUILabel"; text = "特殊要求"; ObjectID = "OI9-ul-9Pf"; */
+"OI9-ul-9Pf.text" = "特殊要求";
+
+/* Class = "IBUIButton"; normalTitle = "在线咨询"; ObjectID = "OVK-wy-Mc8"; */
+"OVK-wy-Mc8.normalTitle" = "在线咨询";
 
 /* Class = "IBUIButton"; normalTitle = "提交"; ObjectID = "Pe8-jN-EL5"; */
 "Pe8-jN-EL5.normalTitle" = "提交";
+
+/* Class = "IBUIButton"; normalTitle = "HSYV-5e"; ObjectID = "PwI-hO-BAQ"; */
+"PwI-hO-BAQ.normalTitle" = "HSYV-5e";
+
+/* Class = "IBUIButton"; normalTitle = "JL/G1A"; ObjectID = "Q4w-2d-r68"; */
+"Q4w-2d-r68.normalTitle" = "JL/G1A";
 
 /* Class = "IBUIButton"; normalTitle = "再提交一单"; ObjectID = "Q5D-y2-Ilg"; */
 "Q5D-y2-Ilg.normalTitle" = "再提交一单";
@@ -155,35 +293,59 @@
 /* Class = "IBUILabel"; text = "选择找回密码方式"; ObjectID = "QPj-Jw-cOO"; */
 "QPj-Jw-cOO.text" = "选择找回密码方式";
 
-/* Class = "IBUIButton"; normalTitle = "待确认收货"; ObjectID = "R5u-bJ-Hw2"; */
-"R5u-bJ-Hw2.normalTitle" = "待确认收货";
+/* Class = "IBUIButton"; normalTitle = "VVRP"; ObjectID = "Qtc-bz-CZc"; */
+"Qtc-bz-CZc.normalTitle" = "VVRP";
 
-/* Class = "IBUILabel"; text = "快递"; ObjectID = "RbW-qY-mgv"; */
-"RbW-qY-mgv.text" = "快递";
+/* Class = "IBUIButton"; normalTitle = "BVV"; ObjectID = "Rog-V5-f8d"; */
+"Rog-V5-f8d.normalTitle" = "BVV";
 
-/* Class = "IBUIButton"; normalTitle = "物流跟踪"; ObjectID = "Rda-ts-tjW"; */
-"Rda-ts-tjW.normalTitle" = "物流跟踪";
-
-/* Class = "IBUILabel"; text = "客服传真:0510-87240069"; ObjectID = "Rtu-ob-IF2"; */
-"Rtu-ob-IF2.text" = "客服传真:0510-87240069";
+/* Class = "IBUIButton"; normalTitle = "KFG"; ObjectID = "RpV-y2-eHi"; */
+"RpV-y2-eHi.normalTitle" = "KFG";
 
 /* Class = "IBUIButton"; normalTitle = "电缆选购"; ObjectID = "Rys-GM-VR2"; */
 "Rys-GM-VR2.normalTitle" = "电缆选购";
 
-/* Class = "IBUILabel"; text = "设置"; ObjectID = "SrN-q7-si6"; */
-"SrN-q7-si6.text" = "设置";
+/* Class = "IBUIButton"; normalTitle = "KFFRP2"; ObjectID = "SCm-RM-aZy"; */
+"SCm-RM-aZy.normalTitle" = "KFFRP2";
 
-/* Class = "IBUILabel"; text = "如果您想开启或关闭接收,请在iPhone的\"设置\"-\"通知中心\"里找到\"电缆买卖宝\"进行修改"; ObjectID = "UJd-j8-xLV"; */
-"UJd-j8-xLV.text" = "如果您想开启或关闭接收,请在iPhone的\"设置\"-\"通知中心\"里找到\"电缆买卖宝\"进行修改";
+/* Class = "IBUIButton"; normalTitle = "YJHLV"; ObjectID = "Sfy-KR-kMx"; */
+"Sfy-KR-kMx.normalTitle" = "YJHLV";
 
-/* Class = "IBUILabel"; text = "如果您没有收到验证码，可以直接联系买卖宝在线客服，或者拨打客服服务热线:4008280188"; ObjectID = "Uqz-KQ-T4S"; */
-"Uqz-KQ-T4S.text" = "如果您没有收到验证码，可以直接联系买卖宝在线客服，或者拨打客服服务热线:4008280188";
+/* Class = "IBUIButton"; normalTitle = "QZN-2B"; ObjectID = "Sfz-wL-Fab"; */
+"Sfz-wL-Fab.normalTitle" = "QZN-2B";
 
-/* Class = "IBUILabel"; text = "服务热线:8:30-21:00"; ObjectID = "VZS-iT-Z6b"; */
-"VZS-iT-Z6b.text" = "服务热线:8:30-21:00";
+/* Class = "IBUIButton"; normalTitle = "JL/LHA1"; ObjectID = "TsB-jI-zxH"; */
+"TsB-jI-zxH.normalTitle" = "JL/LHA1";
+
+/* Class = "IBUIButton"; normalTitle = "RV"; ObjectID = "UbB-ej-aYX"; */
+"UbB-ej-aYX.normalTitle" = "RV";
+
+/* Class = "IBUIButton"; normalTitle = "浏览更多型号"; ObjectID = "V4P-Bj-rMF"; */
+"V4P-Bj-rMF.normalTitle" = "浏览更多型号";
+
+/* Class = "IBUIButton"; normalTitle = "DJVVRP"; ObjectID = "VGe-4p-fPx"; */
+"VGe-4p-fPx.normalTitle" = "DJVVRP";
+
+/* Class = "IBUIButton"; normalTitle = "RVVP-90"; ObjectID = "VTD-na-BSZ"; */
+"VTD-na-BSZ.normalTitle" = "RVVP-90";
+
+/* Class = "IBUIButton"; normalTitle = "JKYJ"; ObjectID = "Vl8-l3-hOm"; */
+"Vl8-l3-hOm.normalTitle" = "JKYJ";
 
 /* Class = "IBUIButton"; normalTitle = "热门分类"; ObjectID = "VnU-ZL-IyH"; */
 "VnU-ZL-IyH.normalTitle" = "热门分类";
+
+/* Class = "IBUIButton"; normalTitle = "HYAT"; ObjectID = "Vu1-9k-Xlh"; */
+"Vu1-9k-Xlh.normalTitle" = "HYAT";
+
+/* Class = "IBUIButton"; normalTitle = "MKVV"; ObjectID = "VvG-ch-BlL"; */
+"VvG-ch-BlL.normalTitle" = "MKVV";
+
+/* Class = "IBUIButton"; normalTitle = "HBYV"; ObjectID = "WA2-Z8-Imi"; */
+"WA2-Z8-Imi.normalTitle" = "HBYV";
+
+/* Class = "IBUIButton"; normalTitle = "YJV72"; ObjectID = "WI3-OI-Zz8"; */
+"WI3-OI-Zz8.normalTitle" = "YJV72";
 
 /* Class = "IBUILabel"; text = "您的询价单需求已提交成功,稍后会有客服和您核对询价单信息,请保持手机畅通"; ObjectID = "WQd-ao-vHC"; */
 "WQd-ao-vHC.text" = "您的询价单需求已提交成功,稍后会有客服和您核对询价单信息,请保持手机畅通";
@@ -191,86 +353,164 @@
 /* Class = "IBUILabel"; text = "账  号"; ObjectID = "Wjn-di-HrK"; */
 "Wjn-di-HrK.text" = "账  号";
 
-/* Class = "IBUILabel"; text = "您还可以："; ObjectID = "Wwe-Hd-ntx"; */
-"Wwe-Hd-ntx.text" = "您还可以：";
-
-/* Class = "IBUILabel"; text = "相符描述:"; ObjectID = "X1l-qb-AcQ"; */
-"X1l-qb-AcQ.text" = "相符描述:";
+/* Class = "IBUIButton"; normalTitle = "AGR"; ObjectID = "Woy-Ae-YLo"; */
+"Woy-Ae-YLo.normalTitle" = "AGR";
 
 /* Class = "IBUIButton"; normalTitle = "返回登陆页面"; ObjectID = "X7q-Wy-GmW"; */
 "X7q-Wy-GmW.normalTitle" = "返回登陆页面";
 
-/* Class = "IBUILabel"; text = "快递"; ObjectID = "YT3-tc-8hc"; */
-"YT3-tc-8hc.text" = "快递";
+/* Class = "IBUIButton"; normalTitle = "KX-G-VVP"; ObjectID = "Yuv-z0-os0"; */
+"Yuv-z0-os0.normalTitle" = "KX-G-VVP";
 
-/* Class = "IBUIButton"; normalTitle = "退出登陆"; ObjectID = "Yez-JY-rEQ"; */
-"Yez-JY-rEQ.normalTitle" = "退出登陆";
+/* Class = "IBUIButton"; normalTitle = "HJYYZP-B"; ObjectID = "YyK-ea-q6A"; */
+"YyK-ea-q6A.normalTitle" = "HJYYZP-B";
 
-/* Class = "IBUIButton"; normalTitle = "全部订单"; ObjectID = "Yf8-Te-PCB"; */
-"Yf8-Te-PCB.normalTitle" = "全部订单";
+/* Class = "IBUIButton"; normalTitle = "PV1-F"; ObjectID = "Z1n-tT-46g"; */
+"Z1n-tT-46g.normalTitle" = "PV1-F";
 
-/* Class = "IBUIButton"; normalTitle = "提交"; ObjectID = "Yvm-vO-ArU"; */
-"Yvm-vO-ArU.normalTitle" = "提交";
+/* Class = "IBUILabel"; text = "外观颜色"; ObjectID = "Z3M-Ph-8si"; */
+"Z3M-Ph-8si.text" = "外观颜色";
 
 /* Class = "IBUIButton"; normalTitle = "登陆"; ObjectID = "Z3t-2b-TD8"; */
 "Z3t-2b-TD8.normalTitle" = "登陆";
 
-/* Class = "IBUIButton"; normalTitle = "上一批"; ObjectID = "ZBG-Q4-wUO"; */
-"ZBG-Q4-wUO.normalTitle" = "上一批";
+/* Class = "IBUIButton"; normalTitle = "YZW"; ObjectID = "Z6K-Jb-Zac"; */
+"Z6K-Jb-Zac.normalTitle" = "YZW";
 
-/* Class = "IBUILabel"; text = "0分"; ObjectID = "ZBn-Wd-cc9"; */
-"ZBn-Wd-cc9.text" = "0分";
+/* Class = "IBUIButton"; normalTitle = "60227IEC52(RVV)"; ObjectID = "Z9T-Bi-dGX"; */
+"Z9T-Bi-dGX.normalTitle" = "60227IEC52(RVV)";
+
+/* Class = "IBUIButton"; normalTitle = "CHJPFP96/SC"; ObjectID = "ZFk-ER-g0U"; */
+"ZFk-ER-g0U.normalTitle" = "CHJPFP96/SC";
+
+/* Class = "IBUIButton"; normalTitle = "NRLH58GJ"; ObjectID = "ZIg-tG-kBv"; */
+"ZIg-tG-kBv.normalTitle" = "NRLH58GJ";
+
+/* Class = "IBUIButton"; normalTitle = "提交"; ObjectID = "ZVq-FE-bno"; */
+"ZVq-FE-bno.normalTitle" = "提交";
 
 /* Class = "IBUIButton"; normalTitle = "获取密码"; ObjectID = "ZY0-Nc-4Zn"; */
 "ZY0-Nc-4Zn.normalTitle" = "获取密码";
 
-/* Class = "IBUILabel"; text = "是否接受推送"; ObjectID = "a9J-7Z-wkP"; */
-"a9J-7Z-wkP.text" = "是否接受推送";
+/* Class = "IBUIButton"; normalTitle = "YJV73"; ObjectID = "Zej-QP-mTV"; */
+"Zej-QP-mTV.normalTitle" = "YJV73";
 
-/* Class = "IBUIButton"; normalTitle = "待确认"; ObjectID = "acb-gU-022"; */
-"acb-gU-022.normalTitle" = "待确认";
+/* Class = "IBUIButton"; normalTitle = "LBR"; ObjectID = "ZnV-5t-pqN"; */
+"ZnV-5t-pqN.normalTitle" = "LBR";
 
-/* Class = "IBUIButton"; normalTitle = "浏览更多型号"; ObjectID = "b60-uy-lv7"; */
-"b60-uy-lv7.normalTitle" = "浏览更多型号";
+/* Class = "IBUIButton"; normalTitle = "BS1-JKLV"; ObjectID = "acr-LQ-xxO"; */
+"acr-LQ-xxO.normalTitle" = "BS1-JKLV";
+
+/* Class = "IBUIButton"; normalTitle = "CEV/DA"; ObjectID = "b76-mS-9tg"; */
+"b76-mS-9tg.normalTitle" = "CEV/DA";
 
 /* Class = "IBUILabel"; text = "2.使用手机号登陆电缆买卖宝"; ObjectID = "bA8-iT-TaA"; */
 "bA8-iT-TaA.text" = "2.使用手机号登陆电缆买卖宝";
 
-/* Class = "IBUIButton"; normalTitle = "待付款"; ObjectID = "c1g-Bx-dbj"; */
-"c1g-Bx-dbj.normalTitle" = "待付款";
+/* Class = "IBUIButton"; normalTitle = "KVVP2-22"; ObjectID = "bKa-gn-fdi"; */
+"bKa-gn-fdi.normalTitle" = "KVVP2-22";
 
-/* Class = "IBUIButton"; normalTitle = "待付款"; ObjectID = "cjw-Vo-hxl"; */
-"cjw-Vo-hxl.normalTitle" = "待付款";
+/* Class = "IBUIButton"; normalTitle = "BTTVZ"; ObjectID = "bMB-H0-HoI"; */
+"bMB-H0-HoI.normalTitle" = "BTTVZ";
 
-/* Class = "IBUIButton"; normalTitle = "加入询价车"; ObjectID = "cmj-S7-Et9"; */
-"cmj-S7-Et9.normalTitle" = "加入询价车";
+/* Class = "IBUILabel"; text = "交货期"; ObjectID = "bQT-wS-uWJ"; */
+"bQT-wS-uWJ.text" = "交货期";
+
+/* Class = "IBUIButton"; normalTitle = "KYJVP"; ObjectID = "bbc-vH-5wi"; */
+"bbc-vH-5wi.normalTitle" = "KYJVP";
+
+/* Class = "IBUIButton"; normalTitle = "查看我的询价单"; ObjectID = "cAv-rj-uhr"; */
+"cAv-rj-uhr.normalTitle" = "查看我的询价单";
+
+/* Class = "IBUIButton"; normalTitle = "YJLW02"; ObjectID = "cJB-i6-Xbr"; */
+"cJB-i6-Xbr.normalTitle" = "YJLW02";
+
+/* Class = "IBUIButton"; normalTitle = "JL/LB1A"; ObjectID = "cog-Jw-VO6"; */
+"cog-Jw-VO6.normalTitle" = "JL/LB1A";
+
+/* Class = "IBUIButton"; normalTitle = "GYFXTY"; ObjectID = "cva-cp-LvW"; */
+"cva-cp-LvW.normalTitle" = "GYFXTY";
 
 /* Class = "IBUIButton"; normalTitle = "电话服务"; ObjectID = "cvr-5H-4P1"; */
 "cvr-5H-4P1.normalTitle" = "电话服务";
 
-/* Class = "IBUILabel"; text = "提交时间:"; ObjectID = "e8M-nj-st4"; */
-"e8M-nj-st4.text" = "提交时间:";
+/* Class = "IBUIButton"; normalTitle = "60227IEC01(BV)"; ObjectID = "cwM-ew-Cwz"; */
+"cwM-ew-Cwz.normalTitle" = "60227IEC01(BV)";
 
-/* Class = "IBUITableViewSection"; headerTitle = "Section-3"; ObjectID = "ebV-ZT-jpL"; */
-"ebV-ZT-jpL.headerTitle" = "Section-3";
+/* Class = "IBUIButton"; normalTitle = "GG"; ObjectID = "czL-oM-0nF"; */
+"czL-oM-0nF.normalTitle" = "GG";
 
-/* Class = "IBUILabel"; text = "物流速度:"; ObjectID = "eg4-0Y-Agz"; */
-"eg4-0Y-Agz.text" = "物流速度:";
+/* Class = "IBUIButton"; normalTitle = "JLHA2/G2A"; ObjectID = "dH3-rB-bKP"; */
+"dH3-rB-bKP.normalTitle" = "JLHA2/G2A";
 
-/* Class = "IBUILabel"; text = "是否匿名"; ObjectID = "fFy-SG-bjN"; */
-"fFy-SG-bjN.text" = "是否匿名";
+/* Class = "IBUIButton"; normalTitle = "SYWV-75-7"; ObjectID = "dQ1-cs-itK"; */
+"dQ1-cs-itK.normalTitle" = "SYWV-75-7";
 
-/* Class = "IBUITableViewSection"; headerTitle = "Section-5"; ObjectID = "fHz-r9-aVp"; */
-"fHz-r9-aVp.headerTitle" = "Section-5";
+/* Class = "IBUIButton"; normalTitle = "YZ"; ObjectID = "dri-vg-Wtt"; */
+"dri-vg-Wtt.normalTitle" = "YZ";
+
+/* Class = "IBUIButton"; normalTitle = "BLVVB"; ObjectID = "dt1-xd-PSK"; */
+"dt1-xd-PSK.normalTitle" = "BLVVB";
+
+/* Class = "IBUIButton"; normalTitle = "GJYS"; ObjectID = "dyl-M1-OhT"; */
+"dyl-M1-OhT.normalTitle" = "GJYS";
+
+/* Class = "IBUIButton"; normalTitle = "GGR"; ObjectID = "dyo-BH-gwH"; */
+"dyo-BH-gwH.normalTitle" = "GGR";
+
+/* Class = "IBUIButton"; normalTitle = "KVVR"; ObjectID = "eKG-NS-3Rk"; */
+"eKG-NS-3Rk.normalTitle" = "KVVR";
+
+/* Class = "IBUIButton"; normalTitle = "JKLGYJ"; ObjectID = "eO8-bh-7ok"; */
+"eO8-bh-7ok.normalTitle" = "JKLGYJ";
+
+/* Class = "IBUIButton"; normalTitle = "RVVSP"; ObjectID = "efM-7W-YYf"; */
+"efM-7W-YYf.normalTitle" = "RVVSP";
+
+/* Class = "IBUIButton"; normalTitle = "YH"; ObjectID = "es4-aj-fc2"; */
+"es4-aj-fc2.normalTitle" = "YH";
+
+/* Class = "IBUIButton"; normalTitle = "KFFP"; ObjectID = "ezl-X4-4tr"; */
+"ezl-X4-4tr.normalTitle" = "KFFP";
+
+/* Class = "IBUIButton"; normalTitle = "UTP-5"; ObjectID = "f5L-Zu-qJ5"; */
+"f5L-Zu-qJ5.normalTitle" = "UTP-5";
+
+/* Class = "IBUIButton"; normalTitle = "GJYFJV"; ObjectID = "f6w-HD-wck"; */
+"f6w-HD-wck.normalTitle" = "GJYFJV";
+
+/* Class = "IBUIButton"; normalTitle = "JLHA1/G1A"; ObjectID = "fMu-0L-xau"; */
+"fMu-0L-xau.normalTitle" = "JLHA1/G1A";
+
+/* Class = "IBUIButton"; normalTitle = "CKJPJ/SC"; ObjectID = "fRj-fD-NDZ"; */
+"fRj-fD-NDZ.normalTitle" = "CKJPJ/SC";
+
+/* Class = "IBUIButton"; normalTitle = "HJYV-75-2.5-1"; ObjectID = "feF-d5-xht"; */
+"feF-d5-xht.normalTitle" = "HJYV-75-2.5-1";
 
 /* Class = "IBUILabel"; text = "用户名:"; ObjectID = "feR-CP-xVu"; */
 "feR-CP-xVu.text" = "用户名:";
 
+/* Class = "IBUIButton"; normalTitle = "YJV32"; ObjectID = "fjo-eF-c8k"; */
+"fjo-eF-c8k.normalTitle" = "YJV32";
+
+/* Class = "IBUIButton"; normalTitle = "DJYVP22"; ObjectID = "g2T-at-Nrc"; */
+"g2T-at-Nrc.normalTitle" = "DJYVP22";
+
 /* Class = "IBUILabel"; text = "免费电话咨询:"; ObjectID = "g43-eA-va0"; */
 "g43-eA-va0.text" = "免费电话咨询:";
 
-/* Class = "IBUIButton"; normalTitle = "待付款"; ObjectID = "gAA-MC-cIU"; */
-"gAA-MC-cIU.normalTitle" = "待付款";
+/* Class = "IBUILabel"; text = "电压"; ObjectID = "g9e-QQ-Yof"; */
+"g9e-QQ-Yof.text" = "电压";
+
+/* Class = "IBUIButton"; normalTitle = "CEF/SA"; ObjectID = "gRz-Z4-4P4"; */
+"gRz-Z4-4P4.normalTitle" = "CEF/SA";
+
+/* Class = "IBUIButton"; normalTitle = "HJYZV-A"; ObjectID = "gT2-mv-CVf"; */
+"gT2-mv-CVf.normalTitle" = "HJYZV-A";
+
+/* Class = "IBUIButton"; normalTitle = "RVV"; ObjectID = "gWS-1z-qat"; */
+"gWS-1z-qat.normalTitle" = "RVV";
 
 /* Class = "IBUILabel"; text = "验证邮件已经发送，请前往邮箱验证，进行密码重置"; ObjectID = "grH-CR-6DV"; */
 "grH-CR-6DV.text" = "验证邮件已经发送，请前往邮箱验证，进行密码重置";
@@ -278,101 +518,185 @@
 /* Class = "IBUILabel"; text = "上传照片:(最多上传3张)"; ObjectID = "gtm-Lu-jLL"; */
 "gtm-Lu-jLL.text" = "上传照片:(最多上传3张)";
 
-/* Class = "IBUILabel"; text = "1234567896541231"; ObjectID = "gwI-qb-spL"; */
-"gwI-qb-spL.text" = "1234567896541231";
+/* Class = "IBUIButton"; normalTitle = "直接填写型号"; ObjectID = "hAM-Mc-bNT"; */
+"hAM-Mc-bNT.normalTitle" = "直接填写型号";
 
 /* Class = "IBUILabel"; text = "联系电话:"; ObjectID = "hMt-MI-mTl"; */
 "hMt-MI-mTl.text" = "联系电话:";
 
+/* Class = "IBUIButton"; normalTitle = "KVV22"; ObjectID = "hVK-gZ-y8N"; */
+"hVK-gZ-y8N.normalTitle" = "KVV22";
+
+/* Class = "IBUIButton"; normalTitle = "GJYXFCH"; ObjectID = "hgl-yC-zQ6"; */
+"hgl-yC-zQ6.normalTitle" = "GJYXFCH";
+
+/* Class = "IBUIButton"; normalTitle = "RVVP"; ObjectID = "hjC-bi-veb"; */
+"hjC-bi-veb.normalTitle" = "RVVP";
+
 /* Class = "IBUITextField"; placeholder = "请输入用户名/邮箱/已验证手机"; ObjectID = "hot-LE-ozJ"; */
 "hot-LE-ozJ.placeholder" = "请输入用户名/邮箱/已验证手机";
 
-/* Class = "IBUILabel"; text = "2014-08-15 18:05"; ObjectID = "hzj-JB-Wh0"; */
-"hzj-JB-Wh0.text" = "2014-08-15 18:05";
+/* Class = "IBUIButton"; normalTitle = "YJV62"; ObjectID = "hyH-iX-rbp"; */
+"hyH-iX-rbp.normalTitle" = "YJV62";
 
-/* Class = "IBUILabel"; text = "0分"; ObjectID = "iql-2n-hAB"; */
-"iql-2n-hAB.text" = "0分";
+/* Class = "IBUIButton"; normalTitle = "SYV-50-3-3"; ObjectID = "i3y-w9-VoS"; */
+"i3y-w9-VoS.normalTitle" = "SYV-50-3-3";
 
-/* Class = "IBUILabel"; text = "清除本地缓存图片"; ObjectID = "j23-ux-GYi"; */
-"j23-ux-GYi.text" = "清除本地缓存图片";
+/* Class = "IBUIButton"; normalTitle = "DJVP2VP2-22"; ObjectID = "i8O-At-ZrQ"; */
+"i8O-At-ZrQ.normalTitle" = "DJVP2VP2-22";
+
+/* Class = "IBUIButton"; normalTitle = "JKY"; ObjectID = "iY9-HH-GGh"; */
+"iY9-HH-GGh.normalTitle" = "JKY";
+
+/* Class = "IBUIButton"; normalTitle = "YJY22"; ObjectID = "j5r-gV-K4R"; */
+"j5r-gV-K4R.normalTitle" = "YJY22";
 
 /* Class = "IBUIButton"; normalTitle = "家装线专卖"; ObjectID = "jEU-ML-6al"; */
 "jEU-ML-6al.normalTitle" = "家装线专卖";
 
-/* Class = "IBUIButton"; normalTitle = "完成询价"; ObjectID = "jYD-p5-QN7"; */
-"jYD-p5-QN7.normalTitle" = "完成询价";
+/* Class = "IBUISegmentedControl"; jNv-Of-UEa.segmentTitles[0] = "询价单"; ObjectID = "jNv-Of-UEa"; */
+"jNv-Of-UEa.segmentTitles[0]" = "询价单";
+
+/* Class = "IBUISegmentedControl"; jNv-Of-UEa.segmentTitles[1] = "快速询价单"; ObjectID = "jNv-Of-UEa"; */
+"jNv-Of-UEa.segmentTitles[1]" = "快速询价单";
 
 /* Class = "IBUIButton"; normalTitle = "忘记密码?"; ObjectID = "jaK-Hz-OUs"; */
 "jaK-Hz-OUs.normalTitle" = "忘记密码?";
 
-/* Class = "IBUILabel"; text = "远东电线电缆BRV 1平方国际单芯多股铜线100米"; ObjectID = "jnc-WX-fSU"; */
-"jnc-WX-fSU.text" = "远东电线电缆BRV 1平方国际单芯多股铜线100米";
-
 /* Class = "IBUILabel"; text = "同意《电缆买卖宝用户注册协议》"; ObjectID = "k89-G3-IpT"; */
 "k89-G3-IpT.text" = "同意《电缆买卖宝用户注册协议》";
 
-/* Class = "IBUIButton"; normalTitle = "待确认收货"; ObjectID = "kKa-bL-7Fg"; */
-"kKa-bL-7Fg.normalTitle" = "待确认收货";
+/* Class = "IBUIButton"; normalTitle = "DJYVP"; ObjectID = "kEO-mi-jQy"; */
+"kEO-mi-jQy.normalTitle" = "DJYVP";
 
-/* Class = "IBUIButton"; normalTitle = "待确认收货"; ObjectID = "l3v-Av-9M7"; */
-"l3v-Av-9M7.normalTitle" = "待确认收货";
-
-/* Class = "IBUILabel"; text = "设置是否接受推送"; ObjectID = "lCv-Ro-j05"; */
-"lCv-Ro-j05.text" = "设置是否接受推送";
+/* Class = "IBUIButton"; normalTitle = "YJHLV22"; ObjectID = "l71-ln-IZ3"; */
+"l71-ln-IZ3.normalTitle" = "YJHLV22";
 
 /* Class = "IBUIButton"; normalTitle = "热门型号"; ObjectID = "lKr-Cc-HkJ"; */
 "lKr-Cc-HkJ.normalTitle" = "热门型号";
 
+/* Class = "IBUIButton"; normalTitle = "60245IEC82(YHF)"; ObjectID = "lOb-oO-TMI"; */
+"lOb-oO-TMI.normalTitle" = "60245IEC82(YHF)";
+
 /* Class = "IBUIButton"; normalTitle = "400-828-0188"; ObjectID = "lgN-s1-rv7"; */
 "lgN-s1-rv7.normalTitle" = "400-828-0188";
 
-/* Class = "IBUILabel"; text = "快递"; ObjectID = "mh7-E2-0Xe"; */
-"mh7-E2-0Xe.text" = "快递";
+/* Class = "IBUIButton"; normalTitle = "YJLW03"; ObjectID = "m1e-RK-TYb"; */
+"m1e-RK-TYb.normalTitle" = "YJLW03";
+
+/* Class = "IBUIButton"; normalTitle = "VLV23"; ObjectID = "m54-yf-WHR"; */
+"m54-yf-WHR.normalTitle" = "VLV23";
+
+/* Class = "IBUIButton"; normalTitle = "GJXFH"; ObjectID = "mS0-ZB-S5s"; */
+"mS0-ZB-S5s.normalTitle" = "GJXFH";
+
+/* Class = "IBUIButton"; normalTitle = "VVR"; ObjectID = "mVR-bw-n5b"; */
+"mVR-bw-n5b.normalTitle" = "VVR";
+
+/* Class = "IBUIButton"; normalTitle = "RVS"; ObjectID = "mZy-Rx-9v9"; */
+"mZy-Rx-9v9.normalTitle" = "RVS";
+
+/* Class = "IBUIButton"; normalTitle = "CHJPFP96/NC"; ObjectID = "mao-OE-7FH"; */
+"mao-OE-7FH.normalTitle" = "CHJPFP96/NC";
+
+/* Class = "IBUIButton"; normalTitle = "60227IEC02(RV)"; ObjectID = "mfo-G6-TtG"; */
+"mfo-G6-TtG.normalTitle" = "60227IEC02(RV)";
+
+/* Class = "IBUIButton"; normalTitle = "下一批"; ObjectID = "mkh-Fi-OMz"; */
+"mkh-Fi-OMz.normalTitle" = "下一批";
+
+/* Class = "IBUIButton"; normalTitle = "BVVB"; ObjectID = "mll-uC-SLu"; */
+"mll-uC-SLu.normalTitle" = "BVVB";
 
 /* Class = "IBUITextField"; placeholder = "请输入密码"; ObjectID = "mnh-GL-LJc"; */
 "mnh-GL-LJc.placeholder" = "请输入密码";
 
-/* Class = "IBUILabel"; text = "还没有找到想要的型号吗？"; ObjectID = "nRq-Nd-Fef"; */
-"nRq-Nd-Fef.text" = "还没有找到想要的型号吗？";
+/* Class = "IBUIButton"; normalTitle = "60227IEC06(RV)"; ObjectID = "mpB-Ip-BoX"; */
+"mpB-Ip-BoX.normalTitle" = "60227IEC06(RV)";
 
-/* Class = "IBUILabel"; text = "¥900.00"; ObjectID = "ovy-V3-Cas"; */
-"ovy-V3-Cas.text" = "¥900.00";
+/* Class = "IBUIButton"; normalTitle = "VLV"; ObjectID = "mqi-mZ-r4z"; */
+"mqi-mZ-r4z.normalTitle" = "VLV";
 
-/* Class = "IBUITableViewSection"; headerTitle = "Section-6"; ObjectID = "pHm-62-y6H"; */
-"pHm-62-y6H.headerTitle" = "Section-6";
+/* Class = "IBUIButton"; normalTitle = "YJLV22"; ObjectID = "mzT-Vx-z0J"; */
+"mzT-Vx-z0J.normalTitle" = "YJLV22";
 
-/* Class = "IBUILabel"; text = "发货速度:"; ObjectID = "pKT-vi-1EN"; */
-"pKT-vi-1EN.text" = "发货速度:";
+/* Class = "IBUIButton"; normalTitle = "GJYXCH"; ObjectID = "nWS-j7-913"; */
+"nWS-j7-913.normalTitle" = "GJYXCH";
 
-/* Class = "IBUILabel"; text = "该商品已下架"; ObjectID = "pjc-Uj-2hb"; */
-"pjc-Uj-2hb.text" = "该商品已下架";
+/* Class = "IBUIButton"; normalTitle = "JKLGV"; ObjectID = "oJB-y6-26p"; */
+"oJB-y6-26p.normalTitle" = "JKLGV";
 
-/* Class = "IBUITableViewSection"; headerTitle = "Section-1"; ObjectID = "qAP-Iu-CHA"; */
-"qAP-Iu-CHA.headerTitle" = "Section-1";
+/* Class = "IBUIButton"; normalTitle = "ZA-AC90(-40)"; ObjectID = "oNd-jw-o3m"; */
+"oNd-jw-o3m.normalTitle" = "ZA-AC90(-40)";
 
-/* Class = "IBUILabel"; text = "电缆买卖宝版权所有"; ObjectID = "r6N-Yh-THA"; */
-"r6N-Yh-THA.text" = "电缆买卖宝版权所有";
+/* Class = "IBUIButton"; normalTitle = "QVR-105"; ObjectID = "pEg-L1-Lfu"; */
+"pEg-L1-Lfu.normalTitle" = "QVR-105";
+
+/* Class = "IBUIButton"; normalTitle = "HJYVP-A"; ObjectID = "pYs-9n-HbV"; */
+"pYs-9n-HbV.normalTitle" = "HJYVP-A";
+
+/* Class = "IBUILabel"; text = "天"; ObjectID = "phq-ii-5xG"; */
+"phq-ii-5xG.text" = "天";
+
+/* Class = "IBUIButton"; normalTitle = "YJLW02-Z"; ObjectID = "piG-Fa-rpf"; */
+"piG-Fa-rpf.normalTitle" = "YJLW02-Z";
+
+/* Class = "IBUIButton"; normalTitle = "CKJ86/SC"; ObjectID = "pl9-hd-USh"; */
+"pl9-hd-USh.normalTitle" = "CKJ86/SC";
+
+/* Class = "IBUIButton"; normalTitle = "HYAT53"; ObjectID = "qCC-83-d5f"; */
+"qCC-83-d5f.normalTitle" = "HYAT53";
+
+/* Class = "IBUIButton"; normalTitle = "QVR"; ObjectID = "qX1-4t-AGC"; */
+"qX1-4t-AGC.normalTitle" = "QVR";
+
+/* Class = "IBUIButton"; normalTitle = "YGCB"; ObjectID = "qy8-sr-jQm"; */
+"qy8-sr-jQm.normalTitle" = "YGCB";
+
+/* Class = "IBUIButton"; normalTitle = "RS485"; ObjectID = "r0v-Z1-XUt"; */
+"r0v-Z1-XUt.normalTitle" = "RS485";
 
 /* Class = "IBUIButton"; normalTitle = "注册"; ObjectID = "rBz-rf-JDt"; */
 "rBz-rf-JDt.normalTitle" = "注册";
 
-/* Class = "IBUIButton"; normalTitle = "物流跟踪"; ObjectID = "rDt-bL-7cu"; */
-"rDt-bL-7cu.normalTitle" = "物流跟踪";
-
 /* Class = "IBUILabel"; text = "您还可以"; ObjectID = "rWH-rr-B1O"; */
 "rWH-rr-B1O.text" = "您还可以";
 
-/* Class = "IBUIButton"; normalTitle = "待审核"; ObjectID = "sSS-wM-27i"; */
-"sSS-wM-27i.normalTitle" = "待审核";
+/* Class = "IBUIButton"; normalTitle = "RVP-90"; ObjectID = "s9q-ND-RQx"; */
+"s9q-ND-RQx.normalTitle" = "RVP-90";
+
+/* Class = "IBUIButton"; normalTitle = "UTP-5e"; ObjectID = "sMC-eT-Uto"; */
+"sMC-eT-Uto.normalTitle" = "UTP-5e";
+
+/* Class = "IBUIButton"; normalTitle = "KVVRP"; ObjectID = "sR6-ei-ehx"; */
+"sR6-ei-ehx.normalTitle" = "KVVRP";
+
+/* Class = "IBUIButton"; normalTitle = "BLV"; ObjectID = "sW3-Sk-V9i"; */
+"sW3-Sk-V9i.normalTitle" = "BLV";
 
 /* Class = "IBUIButton"; normalTitle = "回到首页"; ObjectID = "sWk-W1-9bW"; */
 "sWk-W1-9bW.normalTitle" = "回到首页";
 
-/* Class = "IBUILabel"; text = "邮编:214257"; ObjectID = "sZ7-Fq-D6x"; */
-"sZ7-Fq-D6x.text" = "邮编:214257";
+/* Class = "IBUIButton"; normalTitle = "VLV22"; ObjectID = "sau-La-Ee6"; */
+"sau-La-Ee6.normalTitle" = "VLV22";
 
-/* Class = "IBUILabel"; text = "你是不是需要找这些型号?"; ObjectID = "tkb-6Y-nr5"; */
-"tkb-6Y-nr5.text" = "你是不是需要找这些型号?";
+/* Class = "IBUIButton"; normalTitle = "AF-200"; ObjectID = "sf8-zn-o1D"; */
+"sf8-zn-o1D.normalTitle" = "AF-200";
+
+/* Class = "IBUIButton"; normalTitle = "TJR1"; ObjectID = "sme-gf-9uY"; */
+"sme-gf-9uY.normalTitle" = "TJR1";
+
+/* Class = "IBUILabel"; text = "规格"; ObjectID = "sux-K1-R9m"; */
+"sux-K1-R9m.text" = "规格";
+
+/* Class = "IBUIButton"; normalTitle = "KYJV22"; ObjectID = "tIk-dz-vsb"; */
+"tIk-dz-vsb.normalTitle" = "KYJV22";
+
+/* Class = "IBUIButton"; normalTitle = "QZ(G)B-2/155"; ObjectID = "tQq-wM-9Xu"; */
+"tQq-wM-9Xu.normalTitle" = "QZ(G)B-2/155";
+
+/* Class = "IBUIButton"; normalTitle = "拨打热线电话"; ObjectID = "tXO-Cz-vto"; */
+"tXO-Cz-vto.normalTitle" = "拨打热线电话";
 
 /* Class = "IBUILabel"; text = "在线客服咨询:"; ObjectID = "tmN-b9-WLy"; */
 "tmN-b9-WLy.text" = "在线客服咨询:";
@@ -380,41 +704,62 @@
 /* Class = "IBUIButton"; normalTitle = "在线客服"; ObjectID = "ttp-SP-GQQ"; */
 "ttp-SP-GQQ.normalTitle" = "在线客服";
 
-/* Class = "IBUIButton"; normalTitle = "在线咨询"; ObjectID = "uS3-5q-K4L"; */
-"uS3-5q-K4L.normalTitle" = "在线咨询";
-
-/* Class = "IBUILabel"; text = "传真/邮箱信息"; ObjectID = "ugK-US-dYC"; */
-"ugK-US-dYC.text" = "传真/邮箱信息";
+/* Class = "IBUIButton"; normalTitle = "60227IEC53(RVV)"; ObjectID = "ujo-AC-ZaT"; */
+"ujo-AC-ZaT.normalTitle" = "60227IEC53(RVV)";
 
 /* Class = "IBUIButton"; normalTitle = "点击咨询"; ObjectID = "v6O-KL-uhV"; */
 "v6O-KL-uhV.normalTitle" = "点击咨询";
 
-/* Class = "IBUIButton"; normalTitle = "取消订单"; ObjectID = "vFs-eM-hDc"; */
-"vFs-eM-hDc.normalTitle" = "取消订单";
+/* Class = "IBUIButton"; normalTitle = "DZ-YJV"; ObjectID = "vAz-2r-fej"; */
+"vAz-2r-fej.normalTitle" = "DZ-YJV";
 
-/* Class = "IBUILabel"; text = "订单编号:"; ObjectID = "vbu-p4-Yjo"; */
-"vbu-p4-Yjo.text" = "订单编号:";
+/* Class = "IBUILabel"; text = "采购数量"; ObjectID = "vUc-sV-L1I"; */
+"vUc-sV-L1I.text" = "采购数量";
+
+/* Class = "IBUILabel"; text = "阻燃特性"; ObjectID = "vXu-eq-5pM"; */
+"vXu-eq-5pM.text" = "阻燃特性";
+
+/* Class = "IBUIButton"; normalTitle = "JHS"; ObjectID = "vaf-x4-lKi"; */
+"vaf-x4-lKi.normalTitle" = "JHS";
+
+/* Class = "IBUILabel"; text = "还没有找到想要的型号吗？"; ObjectID = "wTM-Tl-oX6"; */
+"wTM-Tl-oX6.text" = "还没有找到想要的型号吗？";
+
+/* Class = "IBUILabel"; text = "您的询价单已提交成功,稍后会有客服和您联系核对询价单信息,请保持手机畅通"; ObjectID = "wXb-0a-vGQ"; */
+"wXb-0a-vGQ.text" = "您的询价单已提交成功,稍后会有客服和您联系核对询价单信息,请保持手机畅通";
 
 /* Class = "IBUILabel"; text = "询价需求:"; ObjectID = "wZx-zL-RG7"; */
 "wZx-zL-RG7.text" = "询价需求:";
 
-/* Class = "IBUILabel"; text = "客服热线"; ObjectID = "xEA-As-vyb"; */
-"xEA-As-vyb.text" = "客服热线";
+/* Class = "IBUIButton"; normalTitle = "RYJVSP"; ObjectID = "xBE-Ur-Rwy"; */
+"xBE-Ur-Rwy.normalTitle" = "RYJVSP";
 
-/* Class = "IBUIButton"; normalTitle = "查看售后"; ObjectID = "xMT-mT-bdZ"; */
-"xMT-mT-bdZ.normalTitle" = "查看售后";
+/* Class = "IBUILabel"; text = "33"; ObjectID = "xVh-l3-cxE"; */
+"xVh-l3-cxE.text" = "33";
+
+/* Class = "IBUIButton"; normalTitle = "KGGRP"; ObjectID = "xeJ-vA-4cv"; */
+"xeJ-vA-4cv.normalTitle" = "KGGRP";
+
+/* Class = "IBUIButton"; normalTitle = "KGGP"; ObjectID = "xmx-4H-pBw"; */
+"xmx-4H-pBw.normalTitle" = "KGGP";
+
+/* Class = "IBUIButton"; normalTitle = "YJV"; ObjectID = "xpb-7o-m08"; */
+"xpb-7o-m08.normalTitle" = "YJV";
 
 /* Class = "IBUITextField"; placeholder = "请输入短信验证码"; ObjectID = "y4x-tT-OFX"; */
 "y4x-tT-OFX.placeholder" = "请输入短信验证码";
 
-/* Class = "IBUITableViewSection"; headerTitle = "Section-4"; ObjectID = "y6G-HL-Ydf"; */
-"y6G-HL-Ydf.headerTitle" = "Section-4";
+/* Class = "IBUIButton"; normalTitle = "CAT7"; ObjectID = "yGa-5L-RQh"; */
+"yGa-5L-RQh.normalTitle" = "CAT7";
+
+/* Class = "IBUILabel"; text = "已经选中的分类"; ObjectID = "ySE-gC-VKF"; */
+"ySE-gC-VKF.text" = "已经选中的分类";
 
 /* Class = "IBUIButton"; normalTitle = "获取验证码"; ObjectID = "yTb-rW-uU0"; */
 "yTb-rW-uU0.normalTitle" = "获取验证码";
 
-/* Class = "IBUIButton"; normalTitle = "待评价"; ObjectID = "ydB-py-1I1"; */
-"ydB-py-1I1.normalTitle" = "待评价";
+/* Class = "IBUIButton"; normalTitle = "GYTA"; ObjectID = "yqb-RI-9ag"; */
+"yqb-RI-9ag.normalTitle" = "GYTA";
 
-/* Class = "IBUILabel"; text = "新密码:"; ObjectID = "zcX-YP-KjQ"; */
-"zcX-YP-KjQ.text" = "新密码:";
+/* Class = "IBUIButton"; normalTitle = "SYWY-75-9"; ObjectID = "z7n-UM-ZHR"; */
+"z7n-UM-ZHR.normalTitle" = "SYWY-75-9";

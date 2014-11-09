@@ -29,6 +29,8 @@
 		6122714519CFC81500FE4DFF /* PayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6122713119CFC81500FE4DFF /* PayViewController.xib */; };
 		6122714619CFC81500FE4DFF /* title_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6122713519CFC81500FE4DFF /* title_logo.png */; };
 		612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 612C909419D6561900430140 /* B2CGoodsDetailData.m */; };
+		61383A9E1A0F32AC00AD3446 /* CableChoosemodelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61383A9D1A0F32AC00AD3446 /* CableChoosemodelViewController.m */; };
+		61383AA51A0F540200AD3446 /* B2BGetModelByIdData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61383AA41A0F540200AD3446 /* B2BGetModelByIdData.m */; };
 		6139BA8519EFBBDD00B44032 /* B2CMyOrderData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139BA8419EFBBDD00B44032 /* B2CMyOrderData.m */; };
 		6140E7C91A01DE4C00E349E3 /* hotModelSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */; };
 		6140E7CA1A01DE4C00E349E3 /* hotModelSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C71A01DE4C00E349E3 /* hotModelSelected@2x.png */; };
@@ -272,6 +274,9 @@
 		61B7110219FF67A2001CC3BD /* 热门型号.png in Resources */ = {isa = PBXBuildFile; fileRef = 61B710FA19FF67A2001CC3BD /* 热门型号.png */; };
 		61B7110319FF67A2001CC3BD /* 电缆选购.png in Resources */ = {isa = PBXBuildFile; fileRef = 61B710FB19FF67A2001CC3BD /* 电缆选购.png */; };
 		61B7110419FF67A2001CC3BD /* 电话服务.png in Resources */ = {isa = PBXBuildFile; fileRef = 61B710FC19FF67A2001CC3BD /* 电话服务.png */; };
+		61C686D91A0DE11C00477622 /* CableSecondAndThirdStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C686D81A0DE11C00477622 /* CableSecondAndThirdStepViewController.m */; };
+		61C686DC1A0DE1B500477622 /* CableSecondStepTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C686DB1A0DE1B500477622 /* CableSecondStepTableViewController.m */; };
+		61C686E21A0E2A4300477622 /* CableThirdStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C686E11A0E2A4300477622 /* CableThirdStepViewController.m */; };
 		61C8DBAF19F260F400E2A17D /* msg_bq.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C8DBAB19F260F400E2A17D /* msg_bq.png */; };
 		61C8DBB019F260F400E2A17D /* msg_bq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C8DBAC19F260F400E2A17D /* msg_bq@2x.png */; };
 		61C8DBB119F260F400E2A17D /* msg_bqy.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C8DBAD19F260F400E2A17D /* msg_bqy.png */; };
@@ -359,6 +364,11 @@
 		6122713519CFC81500FE4DFF /* title_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title_logo.png; sourceTree = "<group>"; };
 		612C909319D6561900430140 /* B2CGoodsDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGoodsDetailData.h; sourceTree = "<group>"; };
 		612C909419D6561900430140 /* B2CGoodsDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGoodsDetailData.m; sourceTree = "<group>"; };
+		61383A9C1A0F32AC00AD3446 /* CableChoosemodelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CableChoosemodelViewController.h; sourceTree = "<group>"; };
+		61383A9D1A0F32AC00AD3446 /* CableChoosemodelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CableChoosemodelViewController.m; sourceTree = "<group>"; };
+		61383A9F1A0F4E2F00AD3446 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
+		61383AA31A0F540200AD3446 /* B2BGetModelByIdData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BGetModelByIdData.h; sourceTree = "<group>"; };
+		61383AA41A0F540200AD3446 /* B2BGetModelByIdData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BGetModelByIdData.m; sourceTree = "<group>"; };
 		6139BA8319EFBBDD00B44032 /* B2CMyOrderData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CMyOrderData.h; sourceTree = "<group>"; };
 		6139BA8419EFBBDD00B44032 /* B2CMyOrderData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CMyOrderData.m; sourceTree = "<group>"; };
 		6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotModelSelected.png; sourceTree = "<group>"; };
@@ -602,7 +612,6 @@
 		6195F5F51A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInquiryDetailTableViewController.m; sourceTree = "<group>"; };
 		6195F5F71A0CCE6B0036D168 /* MyNormalInquiryDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNormalInquiryDetailController.h; sourceTree = "<group>"; };
 		6195F5F81A0CCE6B0036D168 /* MyNormalInquiryDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNormalInquiryDetailController.m; sourceTree = "<group>"; };
-		619A62451A00BE3800556B90 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
 		619A624D1A00C09900556B90 /* FifthSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FifthSB.storyboard; sourceTree = "<group>"; };
 		619A624E1A00C09900556B90 /* FourthSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FourthSB.storyboard; sourceTree = "<group>"; };
 		619A624F1A00C09900556B90 /* SecondSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SecondSB.storyboard; sourceTree = "<group>"; };
@@ -763,6 +772,12 @@
 		61B710FA19FF67A2001CC3BD /* 热门型号.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "热门型号.png"; sourceTree = "<group>"; };
 		61B710FB19FF67A2001CC3BD /* 电缆选购.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "电缆选购.png"; sourceTree = "<group>"; };
 		61B710FC19FF67A2001CC3BD /* 电话服务.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "电话服务.png"; sourceTree = "<group>"; };
+		61C686D71A0DE11C00477622 /* CableSecondAndThirdStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CableSecondAndThirdStepViewController.h; sourceTree = "<group>"; };
+		61C686D81A0DE11C00477622 /* CableSecondAndThirdStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CableSecondAndThirdStepViewController.m; sourceTree = "<group>"; };
+		61C686DA1A0DE1B500477622 /* CableSecondStepTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CableSecondStepTableViewController.h; sourceTree = "<group>"; };
+		61C686DB1A0DE1B500477622 /* CableSecondStepTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CableSecondStepTableViewController.m; sourceTree = "<group>"; };
+		61C686E01A0E2A4300477622 /* CableThirdStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CableThirdStepViewController.h; sourceTree = "<group>"; };
+		61C686E11A0E2A4300477622 /* CableThirdStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CableThirdStepViewController.m; sourceTree = "<group>"; };
 		61C8DBAB19F260F400E2A17D /* msg_bq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = msg_bq.png; sourceTree = "<group>"; };
 		61C8DBAC19F260F400E2A17D /* msg_bq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "msg_bq@2x.png"; sourceTree = "<group>"; };
 		61C8DBAD19F260F400E2A17D /* msg_bqy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = msg_bqy.png; sourceTree = "<group>"; };
@@ -952,6 +967,15 @@
 				612C909419D6561900430140 /* B2CGoodsDetailData.m */,
 			);
 			path = B2CGoodsDetailData;
+			sourceTree = "<group>";
+		};
+		61383AA21A0F53F700AD3446 /* B2BGetModelByIdData */ = {
+			isa = PBXGroup;
+			children = (
+				61383AA31A0F540200AD3446 /* B2BGetModelByIdData.h */,
+				61383AA41A0F540200AD3446 /* B2BGetModelByIdData.m */,
+			);
+			path = B2BGetModelByIdData;
 			sourceTree = "<group>";
 		};
 		6139BA8219EFBBD100B44032 /* B2CMyOrderData */ = {
@@ -1244,6 +1268,7 @@
 		6181A3DF19CFC4C2000E2D14 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				61383AA21A0F53F700AD3446 /* B2BGetModelByIdData */,
 				6195F5F01A0C58B00036D168 /* B2BMyInquiryListNormalData */,
 				61551E921A0B675F004F50FF /* B2BAddressData */,
 				61222AD01A087DA800B8A686 /* B2BAskPriceDetail */,
@@ -1662,6 +1687,7 @@
 		61B7102919FF3B53001CC3BD /* B2B */ = {
 			isa = PBXGroup;
 			children = (
+				61C686D61A0DE0FC00477622 /* CableKind */,
 				61551E991A0B9922004F50FF /* MyInquiryList */,
 				61551E881A0B4D21004F50FF /* AskPriceCar */,
 				619C10031A0772EA002E9DF8 /* HotModel */,
@@ -1916,6 +1942,21 @@
 			path = "首页";
 			sourceTree = "<group>";
 		};
+		61C686D61A0DE0FC00477622 /* CableKind */ = {
+			isa = PBXGroup;
+			children = (
+				61C686D71A0DE11C00477622 /* CableSecondAndThirdStepViewController.h */,
+				61C686D81A0DE11C00477622 /* CableSecondAndThirdStepViewController.m */,
+				61C686DA1A0DE1B500477622 /* CableSecondStepTableViewController.h */,
+				61C686DB1A0DE1B500477622 /* CableSecondStepTableViewController.m */,
+				61C686E01A0E2A4300477622 /* CableThirdStepViewController.h */,
+				61C686E11A0E2A4300477622 /* CableThirdStepViewController.m */,
+				61383A9C1A0F32AC00AD3446 /* CableChoosemodelViewController.h */,
+				61383A9D1A0F32AC00AD3446 /* CableChoosemodelViewController.m */,
+			);
+			path = CableKind;
+			sourceTree = "<group>";
+		};
 		61CCBCDA19CFFF150008A46B /* icon */ = {
 			isa = PBXGroup;
 			children = (
@@ -2151,6 +2192,7 @@
 				6181A4D219CFC4C2000E2D14 /* TestExecutor.m in Sources */,
 				61B710BC19FF3B53001CC3BD /* ThirdNaviViewController.m in Sources */,
 				61551E951A0B676C004F50FF /* B2BAddressData.m in Sources */,
+				61C686E21A0E2A4300477622 /* CableThirdStepViewController.m in Sources */,
 				61A197C619F7509400909C6F /* QBImagePickerController.m in Sources */,
 				61B710C719FF3B53001CC3BD /* FourthHostViewController.m in Sources */,
 				61B710E919FF3B53001CC3BD /* BillMsgManagerViewController.m in Sources */,
@@ -2186,15 +2228,19 @@
 				6122714119CFC81500FE4DFF /* SBJsonWriter.m in Sources */,
 				6181A4D419CFC4C2000E2D14 /* TestTask.m in Sources */,
 				6181A4CF19CFC4C2000E2D14 /* B2CGoodsListData.m in Sources */,
+				61C686D91A0DE11C00477622 /* CableSecondAndThirdStepViewController.m in Sources */,
 				6181A51719CFC4C2000E2D14 /* UIImage+GIF.m in Sources */,
 				61B710C519FF3B53001CC3BD /* FourMyMMBListTableViewController.m in Sources */,
 				61551E8E1A0B4D21004F50FF /* B2BAskPriceCarViewController.m in Sources */,
+				61383AA51A0F540200AD3446 /* B2BGetModelByIdData.m in Sources */,
 				6181A4CC19CFC4C2000E2D14 /* DCFTopLabel.m in Sources */,
 				61551E9C1A0BA00C004F50FF /* MyInquiryListFirstViewController.m in Sources */,
 				6181A51C19CFC4C2000E2D14 /* UIImage (fixOrientation).m in Sources */,
 				6181A51519CFC4C2000E2D14 /* SDWebImagePrefetcher.m in Sources */,
 				61B710EB19FF3B53001CC3BD /* ChooseReceiveAddressViewController.m in Sources */,
 				61B710D619FF3B53001CC3BD /* GoodsDetailTableViewCell.m in Sources */,
+				61C686DC1A0DE1B500477622 /* CableSecondStepTableViewController.m in Sources */,
+				61383A9E1A0F32AC00AD3446 /* CableChoosemodelViewController.m in Sources */,
 				61B710E019FF3B53001CC3BD /* ShoppingHostViewController.m in Sources */,
 				6181A50619CFC4C2000E2D14 /* FMDatabase.m in Sources */,
 				61A197C919F7509400909C6F /* QBImagePickerVideoInfoView.m in Sources */,
@@ -2337,7 +2383,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				6181A35C19CFC3F9000E2D14 /* Base */,
-				619A62451A00BE3800556B90 /* zh-Hans */,
+				61383A9F1A0F4E2F00AD3446 /* zh-Hans */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";

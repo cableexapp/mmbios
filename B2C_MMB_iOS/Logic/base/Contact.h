@@ -106,6 +106,11 @@ enum {
     
     URLSubInquiryTag,  //提交询价单
     
+    URLJoinInquiryCartTag,  //分类加入询价车
+    
+    URLGetProductTypeByidTag,  //二级三级分类
+    URLGetModelByidTag,   //获取分类下的型号
+    
     //个人中心
     URLInquiryListTag,  //我的询价单查询（普通）
     URLInquiryDetailTag, //询价单详情(普通)

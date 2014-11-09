@@ -15,6 +15,7 @@
 #import "MCDefine.h"
 #import "HotClasscifyViewController.h"
 #import "HotKindHostViewController.h"
+#import "CableSecondAndThirdStepViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -27,6 +28,8 @@
     NSMutableArray *typeBtnArray;  //一级分类按钮
     
     UIStoryboard *sb;
+    
+    NSMutableArray *typeIdArray;
 }
 @end
 
@@ -98,20 +101,25 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     //    NSString *msg = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"msg"]];
     if(URLTag == URLGetProductTypeTag)
     {
+        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+            
+            typeIdArray = [[NSMutableArray alloc] init];
             
             for(int i=0;i<[(NSArray *)[dicRespon objectForKey:@"items"] count];i++)
             {
                 NSDictionary *dic = [[dicRespon objectForKey:@"items"] objectAtIndex:i];
                 NSString  *typeName = [dic objectForKey:@"typeName"];
                 [dataArray addObject:typeName];
+                
+                NSString *typeId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"typeId"]];
+                [typeIdArray addObject:typeId];
             }
             
             
@@ -158,7 +166,15 @@
 
 - (void) typeBtnClick:(UIButton *) sender
 {
+    UIButton *btn = (UIButton *) sender;
+    int tag = [btn tag];
     
+    [self setHidesBottomBarWhenPushed:YES];
+    CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
+    cableSecondAndThirdStepViewController.myTitle = btn.titleLabel.text;
+    cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:tag];
+    [self.navigationController pushViewController:cableSecondAndThirdStepViewController animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void)viewDidLoad

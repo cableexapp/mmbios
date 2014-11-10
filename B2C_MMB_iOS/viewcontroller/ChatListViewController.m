@@ -244,6 +244,8 @@
 -(void)goToFirstPage:(NSNotification *)newMessage
 {
 //    [self.tabBarController setSelectedIndex:0];
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

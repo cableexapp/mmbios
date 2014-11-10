@@ -443,7 +443,6 @@ double secondsCountDown =0;
         }
         else
         {
-//            [self.tabBarController setSelectedIndex:0];
              [self.navigationController popToRootViewControllerAnimated:YES];
             [self.navigationController.tabBarController.tabBar setHidden:NO];
         }

@@ -331,7 +331,7 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
-        NSLog(@"%@",dicRespon);
+
         
         if(result == 1)
         {

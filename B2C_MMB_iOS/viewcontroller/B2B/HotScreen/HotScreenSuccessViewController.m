@@ -44,8 +44,13 @@
 
 - (IBAction)anotherBtnClick:(id)sender
 {
-    HotScreenFirstViewController *hotScreenFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotScreenFirstViewController"];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+
+    HotScreenFirstViewController *hotScreenFirstViewController = [[self.navigationController viewControllers] objectAtIndex:1];
+
     [self.navigationController popToViewController:hotScreenFirstViewController animated:YES];
+    
+    
 }
 
 - (IBAction)serviceBtnClick:(id)sender

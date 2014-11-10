@@ -286,7 +286,6 @@
         chooseArray = [[NSMutableArray alloc] init];
 
         
-        NSLog(@"%@",dicRespon);
         
         
         
@@ -380,7 +379,6 @@
     }
     if(URLTag == URLDeleteInquiryCartItemTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             int index = 0;

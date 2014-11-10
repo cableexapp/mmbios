@@ -74,7 +74,6 @@
     {
         
         
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             addressArray = [[NSMutableArray alloc] initWithArray:[B2BAddressData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -99,7 +98,6 @@
     [tv reloadData];
     if(URLTag == URLSubInquiryTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             B2BAskPriceUpSuccessViewController *b2bAskPriceUpSuccessViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceUpSuccessViewController"];

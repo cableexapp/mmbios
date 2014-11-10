@@ -13,6 +13,7 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "LoginNaviViewController.h"
+#import "HotScreenSuccessViewController.h"
 
 @interface HotScreenSecondViewController ()
 
@@ -35,9 +36,14 @@
     
     self.upBtn.layer.borderColor = [UIColor blueColor].CGColor;
     self.upBtn.layer.borderWidth = 1.0f;
-    
+    self.upBtn.layer.cornerRadius = 5.0f;
     
     [self.topLabel setText:self.screen];
+    
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交所选场合"];
+    self.navigationItem.titleView = top;
+    
+    [self pushAndPopStyle];
 }
 
 - (NSString *) getMemberId
@@ -69,6 +75,15 @@
 
 - (IBAction)upBtnClick:(id)sender
 {
+    if([self.myTextView isFirstResponder])
+    {
+        [self.myTextView resignFirstResponder];
+    }
+    if([self.myTextField isFirstResponder])
+    {
+        [self.myTextField resignFirstResponder];
+    }
+    
     if(self.myTextView.text.length > 1000)
     {
         [DCFStringUtil showNotice:@"备注文字不能长于1000字"];
@@ -89,16 +104,16 @@
     }
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"SubOem",time];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *content = [NSString stringWithFormat:@"%@%@",self.topLabel.text,self.myTextView.text];
 #pragma mark - 一级分类
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&membername=%@&phone=%@&linkman=%@&content=%@",token,[self getMemberId],[self getUserName],self.myTextField.text,[self getUserName],content];
     
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubOemTag delegate:self];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -106,9 +121,27 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    if(URLTag == URLSubOemTag)
+    int reslut = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    
+    if(URLTag == URLSubHotTypeTag)
     {
-        NSLog(@"%@",dicRespon);
+        if(reslut == 1)
+        {
+            HotScreenSuccessViewController *hotScreenSuccessViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotScreenSuccessViewController"];
+            [self.navigationController pushViewController:hotScreenSuccessViewController animated:YES];
+        }
+        else
+        {
+            if(msg.length == 0)
+            {
+                [DCFStringUtil showNotice:@"提交失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
     }
 }
 
@@ -128,55 +161,33 @@
     return YES;
 }
 
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+}
+
 
 - (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if (self.myTextView.text.length==0){//textview长度为0
-        if ([text isEqualToString:@""]) {//判断是否为删除键
-            self.textViewLabel.hidden=NO;//隐藏文字
-        }else{
-            self.textViewLabel.hidden=YES;
-        }
-    }else{//textview长度不为0
-        if (self.myTextView.text.length==1){//textview长度为1时候
-            if ([text isEqualToString:@""]) {//判断是否为删除键
-                self.textViewLabel.hidden=NO;
-            }else{//不是删除
-                self.textViewLabel.hidden=YES;
-            }
-        }else{//长度不为1时候
-            self.textViewLabel.hidden=YES;
-        }
-    }
+
     
     if([text isEqualToString:@"\n"])
     {
         [self.myTextView resignFirstResponder];
-        
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-        [UIView setAnimationDelegate:self];
-        [self.view setFrame:CGRectMake(20, 20, ScreenWidth, ScreenHeight)];
-        [UIView commitAnimations];
-        
-        if(self.myTextView.text.length <= 0)
-        {
-            [self.textViewLabel setHidden:NO];
-        }
-        else
-        {
-            [self.textViewLabel setHidden:YES];
-        }
-        [textView resignFirstResponder];
-        return NO;
     }
     return YES;
 }
 
+
 - (void) textViewDidChange:(UITextView *)textView
 {
-    NSLog(@"length = %d",textView.text.length);
-
+    if(self.myTextView.text.length == 0)
+    {
+        [self.textViewLabel setHidden:NO];
+    }
+    else
+    {
+        [self.textViewLabel setHidden:YES];
+    }
 }
 - (void)didReceiveMemoryWarning
 {

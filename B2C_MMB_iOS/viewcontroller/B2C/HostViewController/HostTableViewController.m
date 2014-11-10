@@ -17,6 +17,7 @@
 #import "HotKindHostViewController.h"
 #import "CableSecondAndThirdStepViewController.h"
 #import "ChatListViewController.h"
+#import "HotScreenFirstViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -106,7 +107,7 @@
     //    NSString *msg = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"msg"]];
     if(URLTag == URLGetProductTypeTag)
     {
-        NSLog(@"%@",dicRespon);
+
         if(result == 1)
         {
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
@@ -398,6 +399,12 @@
         [self setHidesBottomBarWhenPushed:YES];
           HotKindHostViewController *hotKindHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindHostViewController"];
         [self.navigationController pushViewController:hotKindHostViewController animated:YES];
+    }
+    if(btn.tag == 5)
+    {
+#pragma mark - 场景选择
+        HotScreenFirstViewController *hotScreenFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotScreenFirstViewController"];
+        [self.navigationController pushViewController:hotScreenFirstViewController animated:YES];
     }
     if (btn.tag == 6)
     {

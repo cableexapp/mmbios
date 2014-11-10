@@ -226,7 +226,7 @@
     }
     if(URLTag == URLSureReceiveTag)
     {
-        NSLog(@"%@",dicRespon);
+
         [DCFStringUtil showNotice:msg];
         if(result == 1)
         {

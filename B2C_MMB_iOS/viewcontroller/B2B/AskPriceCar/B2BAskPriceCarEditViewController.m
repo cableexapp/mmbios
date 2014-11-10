@@ -84,7 +84,6 @@
     
     if(URLTag == URLGetSpecVoltageByModelTag)
     {
-        NSLog(@"%@",dicRespon);
         
         specArray = [[NSMutableArray alloc] init];
         voltageArray = [[NSMutableArray alloc] init];
@@ -153,7 +152,6 @@
         {
             
         }
-        NSLog(@"%@",dicRespon);
     }
 }
 

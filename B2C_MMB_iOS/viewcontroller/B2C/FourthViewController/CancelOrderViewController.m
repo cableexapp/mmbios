@@ -172,7 +172,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
+
     
     if(HUD)
     {

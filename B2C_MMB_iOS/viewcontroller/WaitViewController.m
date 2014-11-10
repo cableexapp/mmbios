@@ -122,8 +122,6 @@ double secondsCountDown =0;
     label3.font = [UIFont systemFontOfSize:16];
     label3.textAlignment  = 1;
     label3.text = NSLocalizedString(@"您正在进入队列，请稍后...", nil);
-//    label3.text = @"您正在进入队列，请稍后...";
-//    [self.view addSubview:label3];
     shimmeringView.contentView = label3;
     shimmeringView.shimmering = YES;
     
@@ -159,6 +157,9 @@ double secondsCountDown =0;
     //接收网络连接消息通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (NetisConnection:) name:@"NetisConnect" object:nil];
     
+    //接收返回在线咨询入口页
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToAskPrice:) name:@"goToAskPricePage" object:nil];
+    
     [self sendJoinRequest];
 }
 
@@ -169,13 +170,19 @@ double secondsCountDown =0;
     [self.appDelegate goOffline];
     [self.appDelegate disconnect];
     [self.appDelegate reConnect];
-//    if ([self.tempFrom isEqualToString:@"来自快速询价客服"])
-//    {
-//        SpeedAskPriceSecondViewController *VC = [[SpeedAskPriceSecondViewController alloc] init];
-//        [self.navigationController popToViewController:VC animated:YES];
-//        NSLog(@"回到快速询价");
-//    }
-    [self.navigationController popToRootViewControllerAnimated:NO];
+    if ([self.tempFrom isEqualToString:@"首页在线客服"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
+    {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+    }
+    else
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController.tabBarController.tabBar setHidden:NO];
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
 }
 
@@ -200,6 +207,7 @@ double secondsCountDown =0;
 -(void)backToFront:(NSNotification *)newMessage
 {
     [self.navigationController popToRootViewControllerAnimated:NO];
+    [super.navigationController.tabBarController.tabBar setHidden:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
 }
 
@@ -425,12 +433,30 @@ double secondsCountDown =0;
     }
     else if (buttonIndex == 0)
     {
-        [self.navigationController.tabBarController.tabBar setHidden:NO];
-//        [self.navigationController popToRootViewControllerAnimated:NO];
+        if ([self.tempFrom isEqualToString:@"首页在线客服"])
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
+        {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+        }
+        else
+        {
+//            [self.tabBarController setSelectedIndex:0];
+             [self.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController.tabBarController.tabBar setHidden:NO];
+        }
+        
+      
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
     }
 }
 
+-(void)goToAskPrice:(NSNotification *)newMessage
+{
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+}
 - (AppDelegate *)appDelegate
 {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];

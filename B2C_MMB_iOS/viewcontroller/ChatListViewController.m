@@ -243,17 +243,36 @@
 
 -(void)goToFirstPage:(NSNotification *)newMessage
 {
-//    [self.tabBarController setSelectedIndex:0];
-    
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([self.fromString isEqualToString:@"首页在线客服"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if([self.fromString isEqualToString:@"来自快速询价客服"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self.tabBarController setSelectedIndex:0];
+    }
 }
+
 
 
 -(void)goBackAction
 {
-    [self.tabBarController setSelectedIndex:0];
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([self.fromString isEqualToString:@"首页在线客服"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if([self.fromString isEqualToString:@"来自快速询价客服"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self.tabBarController setSelectedIndex:0];
+    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated

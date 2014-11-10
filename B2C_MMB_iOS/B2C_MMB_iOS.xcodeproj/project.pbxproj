@@ -203,6 +203,9 @@
 		61A197DB19F752B100909C6F /* icon_addpic_unfocused.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A197D719F752B100909C6F /* icon_addpic_unfocused.png */; };
 		61A197DE19F75BBD00909C6F /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A197DC19F75BBD00909C6F /* Overlay.png */; };
 		61A197DF19F75BBD00909C6F /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61A197DD19F75BBD00909C6F /* Overlay@2x.png */; };
+		61ADE7DE1A10537A00D773B9 /* HotScreenFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ADE7DD1A10537A00D773B9 /* HotScreenFirstViewController.m */; };
+		61ADE7E11A108D0200D773B9 /* HotScreenSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ADE7E01A108D0200D773B9 /* HotScreenSecondViewController.m */; };
+		61ADE7E41A10959F00D773B9 /* HotScreenSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61ADE7E31A10959F00D773B9 /* HotScreenSuccessViewController.m */; };
 		61B710B519FF3B53001CC3BD /* AliViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7102E19FF3B53001CC3BD /* AliViewController.m */; };
 		61B710B619FF3B53001CC3BD /* AliViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B7102F19FF3B53001CC3BD /* AliViewController.xib */; };
 		61B710B719FF3B53001CC3BD /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7103319FF3B53001CC3BD /* AboutViewController.m */; };
@@ -642,6 +645,12 @@
 		61A197D719F752B100909C6F /* icon_addpic_unfocused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_addpic_unfocused.png; sourceTree = "<group>"; };
 		61A197DC19F75BBD00909C6F /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		61A197DD19F75BBD00909C6F /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		61ADE7DC1A10537A00D773B9 /* HotScreenFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotScreenFirstViewController.h; sourceTree = "<group>"; };
+		61ADE7DD1A10537A00D773B9 /* HotScreenFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotScreenFirstViewController.m; sourceTree = "<group>"; };
+		61ADE7DF1A108D0200D773B9 /* HotScreenSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotScreenSecondViewController.h; sourceTree = "<group>"; };
+		61ADE7E01A108D0200D773B9 /* HotScreenSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotScreenSecondViewController.m; sourceTree = "<group>"; };
+		61ADE7E21A10959F00D773B9 /* HotScreenSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotScreenSuccessViewController.h; sourceTree = "<group>"; };
+		61ADE7E31A10959F00D773B9 /* HotScreenSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotScreenSuccessViewController.m; sourceTree = "<group>"; };
 		61B7102D19FF3B53001CC3BD /* AliViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliViewController.h; sourceTree = "<group>"; };
 		61B7102E19FF3B53001CC3BD /* AliViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliViewController.m; sourceTree = "<group>"; };
 		61B7102F19FF3B53001CC3BD /* AliViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AliViewController.xib; sourceTree = "<group>"; };
@@ -1684,9 +1693,23 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		61ADE7DB1A10532800D773B9 /* HotScreen */ = {
+			isa = PBXGroup;
+			children = (
+				61ADE7DC1A10537A00D773B9 /* HotScreenFirstViewController.h */,
+				61ADE7DD1A10537A00D773B9 /* HotScreenFirstViewController.m */,
+				61ADE7DF1A108D0200D773B9 /* HotScreenSecondViewController.h */,
+				61ADE7E01A108D0200D773B9 /* HotScreenSecondViewController.m */,
+				61ADE7E21A10959F00D773B9 /* HotScreenSuccessViewController.h */,
+				61ADE7E31A10959F00D773B9 /* HotScreenSuccessViewController.m */,
+			);
+			path = HotScreen;
+			sourceTree = "<group>";
+		};
 		61B7102919FF3B53001CC3BD /* B2B */ = {
 			isa = PBXGroup;
 			children = (
+				61ADE7DB1A10532800D773B9 /* HotScreen */,
 				61C686D61A0DE0FC00477622 /* CableKind */,
 				61551E991A0B9922004F50FF /* MyInquiryList */,
 				61551E881A0B4D21004F50FF /* AskPriceCar */,
@@ -2258,6 +2281,7 @@
 				61B710BB19FF3B53001CC3BD /* SettingViewController.m in Sources */,
 				6181A35A19CFC3F9000E2D14 /* AppDelegate.m in Sources */,
 				6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */,
+				61ADE7DE1A10537A00D773B9 /* HotScreenFirstViewController.m in Sources */,
 				6181A4C919CFC4C2000E2D14 /* DCFPickerView.m in Sources */,
 				612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */,
 				6181A51A19CFC4C2000E2D14 /* UIImageView+UIActivityIndicatorForSDWebImage.m in Sources */,
@@ -2270,6 +2294,7 @@
 				6181A51619CFC4C2000E2D14 /* UIButton+WebCache.m in Sources */,
 				61B710C119FF3B53001CC3BD /* SendEmailViewController.m in Sources */,
 				61B710F319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m in Sources */,
+				61ADE7E11A108D0200D773B9 /* HotScreenSecondViewController.m in Sources */,
 				6181A51B19CFC4C2000E2D14 /* UIImageView+WebCache.m in Sources */,
 				61B710E819FF3B53001CC3BD /* AddReceiveThirdViewController.m in Sources */,
 				61B710B819FF3B53001CC3BD /* FifthNaviViewController.m in Sources */,
@@ -2340,6 +2365,7 @@
 				61222AD31A087DBB00B8A686 /* B2BAskPriceDetailData.m in Sources */,
 				6122713F19CFC81500FE4DFF /* SBJsonBase.m in Sources */,
 				6181A50D19CFC4C2000E2D14 /* MKAnnotationView+WebCache.m in Sources */,
+				61ADE7E41A10959F00D773B9 /* HotScreenSuccessViewController.m in Sources */,
 				61B710D819FF3B53001CC3BD /* GoodsDetailViewController.m in Sources */,
 				6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */,
 				61B710F119FF3B53001CC3BD /* SecondNaviViewController.m in Sources */,

@@ -111,6 +111,8 @@ enum {
     URLGetProductTypeByidTag,  //二级三级分类
     URLGetModelByidTag,   //获取分类下的型号
     
+    URLSubOemTag,   //快速询价
+    
     //个人中心
     URLInquiryListTag,  //我的询价单查询（普通）
     URLInquiryDetailTag, //询价单详情(普通)

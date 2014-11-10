@@ -9,6 +9,7 @@
 #import "SpeedAskPriceSecondViewController.h"
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "ChatListViewController.h"
 
 @interface SpeedAskPriceSecondViewController ()
 
@@ -76,7 +77,10 @@
 
 - (IBAction)askBtnClick:(id)sender
 {
-    
+    NSLog(@"来自快速询价客服");
+    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+    chatVC.fromString = @"来自快速询价客服";
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -18,18 +18,38 @@
 #import "DCFCustomExtra.h"
 #import <CommonCrypto/CommonDigest.h>
 
+//XMPP
+#import <AudioToolbox/AudioToolbox.h>
+#import "XMPPStream.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+#import "NSXMLElement+XMPP.h"
 
+#if DEBUG
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+#else
+static const int ddLogLevel = LOG_LEVEL_INFO;
+#endif
+
+NSString *strUserId = @"";
 @implementation AppDelegate
 {
     //李深望修改
     UIStoryboard *sb;
-    
-    //CESHI
-    
-    //陈晓测试
 }
 @synthesize mainQueue;
 @synthesize db;
+
+//XMPP
+@synthesize personName;
+@synthesize sendMessageInfo;
+@synthesize roster;
+@synthesize xmppRosterStorage;
+@synthesize xmppStream;
+@synthesize xmppRoom;
+@synthesize uesrID;
+@synthesize chatRequestJID;
+@synthesize roomJID;
 
 - (void) reachabilityChanged: (NSNotification* )note
 {
@@ -41,7 +61,8 @@
     switch (netStatus) {
         case NotReachable:  //无网络
         {
-            [DCFStringUtil showNotice:@"似乎断开了物联网连接"];
+            [DCFStringUtil showNotice:@"似乎断开了互联网连接"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"netErrorMessage" object:nil];
             
             //            curNetType=NETWORK_NO;
             //            NSLog(@"%@:NotReachable",NSStringFromSelector(_cmd));
@@ -51,12 +72,16 @@
         {
             //            curNetType=NETWORK_3G;
             //            NSLog(@"%@:ReachableViaWWAN 3g",NSStringFromSelector(_cmd));
+            [self reConnect];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NetisConnect" object:nil];
         }
             break;
         case ReachableViaWiFi:  //使用wifi网络
         {
             //            curNetType=NETWORK_WIFI;
             //            NSLog(@"%@:ReachableViaWiFi",NSStringFromSelector(_cmd));
+            [self reConnect];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NetisConnect" object:nil];
         }
             break;
         default:
@@ -88,6 +113,26 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //XMPP
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID])
+    {
+        NSString *tempUUID = [PhoneHelper getDeviceId];
+        tempUUID = [[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID];
+    }
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyPassword])
+    {
+        NSString *tempPassWord = @"123456";
+        tempPassWord = [[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyPassword];
+    }
+    self.roster  = [[NSMutableArray alloc] init];
+    
+    //xmpp初始化
+    [self setupStream];
+    //连接
+    [self connect];
+    
+    //数据库创建
+    [self SQLDataSteup];
     
    NSString *p = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
 //    sqlite3 *dataBase;
@@ -146,6 +191,8 @@
     
     [self loadFMDB];
     
+    //注册
+    [self registerInSide];
     // Override point for customization after application launch.
     return YES;
 }
@@ -196,9 +243,6 @@
 //        [self.db executeQuery:@"CREATE TABLE HostCabelCollection (SearchCabelName text,UserId text)"];
 //    }
     [self.db commit];
-    
-    
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -209,18 +253,21 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    //程序进入后台时将xmpp下线
+    [self goOffline];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [self reConnect];
+    [self queryRoster];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    //当程序恢复活跃的时候 连接上xmpp聊天服务器
+    [self reConnect];
+    [self queryRoster];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -232,5 +279,415 @@
     
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - Xmpp初始化
+- (void)setupStream
+{
+    NSAssert(xmppStream == nil, @"Method setupStream invoked multiple times");
+    // 初始化XmppStream
+    xmppStream = [[XMPPStream alloc] init];
+#if !TARGET_IPHONE_SIMULATOR
+    {
+        xmppStream.enableBackgroundingOnSocket = YES;
+    }
+#endif
+    // 初始化 reconnect
+    xmppStream.enableBackgroundingOnSocket = YES;
+    xmppReconnect = [[XMPPReconnect alloc] init];
+    
+    // 初始化roster
+    xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
+    xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:xmppRosterStorage];
+    xmppRoster.autoFetchRoster = YES;
+    xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;
+    
+    // 初始化 vCard support
+    xmppvCardStorage = [XMPPvCardCoreDataStorage sharedInstance];
+    xmppvCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:xmppvCardStorage];
+    xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:xmppvCardTempModule];
+    
+    // 初始化 capabilities
+    xmppCapabilitiesStorage = [XMPPCapabilitiesCoreDataStorage sharedInstance];
+    xmppCapabilities = [[XMPPCapabilities alloc] initWithCapabilitiesStorage:xmppCapabilitiesStorage];
+    xmppCapabilities.autoFetchHashedCapabilities = YES;
+    xmppCapabilities.autoFetchNonHashedCapabilities = NO;
+    
+    // 激活xmpp的模块
+    [xmppReconnect         activate:xmppStream];
+    [xmppRoster            activate:xmppStream];
+    [xmppvCardTempModule   activate:xmppStream];
+    [xmppvCardAvatarModule activate:xmppStream];
+    [xmppCapabilities      activate:xmppStream];
+    
+    [xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    // 域名和端口
+    [xmppStream setHostName:@"117.79.154.178"];
+    [xmppStream setHostPort:5222];
+}
+
+- (AppDelegate *)appDelegate
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+//注册
+- (void)registerInSide
+{
+    isRegister = YES;
+    NSError *error;
+    NSString *UUID = [PhoneHelper getDeviceId];
+    NSString *hostName = @"117.79.154.178";
+    NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",UUID,hostName];
+    if ([xmppStream isConnected])
+    {
+        if (![xmppStream registerWithPassword:@"123456" error:&error])
+        {
+            //            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
+            //                                                                message:[error localizedDescription]
+            //                                                               delegate:nil
+            //                                                      cancelButtonTitle:@"Ok"
+            //                                                      otherButtonTitles:nil];
+            //            [alertView show];
+        }
+    }
+    else
+    {
+        [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
+    }
+}
+
+- (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket
+{
+    DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
+}
+
+- (void)xmppStreamDidRegister:(XMPPStream *)sender
+{
+    //    registerSuccess = YES;
+    //    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号成功"
+    //                                                        message:@""
+    //                                                       delegate:self
+    //                                              cancelButtonTitle:@"Ok"
+    //                                              otherButtonTitles:nil];
+    //    [alertView show];
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error
+{
+    [self disconnect];
+    [self reConnect];
+    
+}
+
+//连接服务器
+- (void)xmppStreamDidConnect:(XMPPStream *)sender
+{
+	isXmppConnected = YES;
+	NSError *error = nil;
+	if (![[self xmppStream] authenticateWithPassword:@"123456" error:&error])
+	{
+        NSLog(@"Error authenticating: %@", error);
+        if (error != nil)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"errorMessage" object:nil];
+        }
+	}
+}
+
+//验证通过 上线、
+- (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
+{
+    //    NSLog(@"验证通过 上线");
+    [self goonline];
+}
+
+-(void)goonline
+{
+    //    NSLog(@"goonline");
+    if (self.roster.count > 0)
+    {
+        [self.roster removeAllObjects];
+    }
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
+    [xmppStream sendElement:presence];
+    [self queryRoster];
+}
+
+- (BOOL)connect
+{
+    //    NSLog(@"connect");
+	NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+	NSString *myPassword = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
+    
+	myJID = [NSString stringWithFormat:@"%@@%@",[PhoneHelper getDeviceId],@"fgame.com"];
+    myPassword = @"123456";
+	if (myJID == nil || myPassword == nil)
+    {
+		return NO;
+	}
+    XMPPJID *jid = [XMPPJID jidWithString:myJID resource:@"XMPP"];
+	[xmppStream setMyJID:jid];
+	password = myPassword;
+    
+	NSError *error = nil;
+    if (![xmppStream connect:&error])
+    {
+        return NO;
+    }
+	return YES;
+}
+
+//重新连接
+- (BOOL)reConnect
+{
+    //    NSLog(@"reConnect");
+    if (![xmppStream isDisconnected])
+    {
+        [self goonline];
+        return YES;
+    }
+    NSString *myJID =[NSString stringWithFormat:@"%@@fgame.com",[PhoneHelper getDeviceId]];
+    NSString *myPassword = @"123456";
+    if (myJID == nil || myPassword == nil)
+    {
+        return NO;
+    }
+    [xmppStream setMyJID:[XMPPJID jidWithString:myJID]];
+    strPassword = @"123456";
+    NSError *error = nil;
+    if (![xmppStream connect:&error])
+    {
+        return NO;
+    }
+    return YES;
+}
+
+//查询群组列表
+- (void)queryRoster
+{
+    NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
+    [iq addAttributeWithName:@"from" stringValue:self.personName];
+    [iq addAttributeWithName:@"id" stringValue:@"disco2"];
+    [iq addAttributeWithName:@"to"stringValue:@"workgroup.fgame.com"];
+    [iq addAttributeWithName:@"type"stringValue:@"get"];
+    NSXMLElement *query = [NSXMLElement elementWithName:@"query"];
+    [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
+    [iq addChild:query];
+    [[self xmppStream] sendElement:iq];
+    //    NSLog(@"iq = %@",iq);
+    //    NSLog(@"查询列表");
+}
+
+- (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
+{
+    DDLogVerbose(@"%@", [iq description]);
+    //    NSLog(@"[IQ description] = %@\n\n",[iq description]);
+    
+    if (self.roster.count == 0)
+    {
+        if ([@"result" isEqualToString:iq.type])
+        {
+            NSXMLElement *query = iq.childElement;
+            if ([@"query" isEqualToString:query.name])
+            {
+                NSArray *items = [query children];
+                for (NSXMLElement *item in items)
+                {
+                    NSString *jid = [item attributeStringValueForName:@"jid"];
+                    XMPPJID *xmppJID = [XMPPJID jidWithString:jid];
+                    [self.roster addObject:xmppJID];
+                }
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"memberGroupName" object:self.roster];
+            }
+        }
+        //        NSLog(@"self.roster = %@",self.roster);
+    }
+    return NO;
+}
+
+//收到消息
+- (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
+{
+    //    NSLog(@"接收++++message = %@\n\n",message);
+    //消息内容
+    NSString *msg = [[message elementForName:@"body"] stringValue];
+    
+    NSString *from = [[message attributeForName:@"from"] stringValue];
+    NSString *type= [[message attributeForName:@"type"] stringValue];
+    NSString *to= [[message attributeForName:@"to"] stringValue];
+    
+    //    NSLog(@"接收++++from = %@\n\n",from);
+    //    NSLog(@"接收++++to = %@\n\n",to);
+    if([from rangeOfString:@"workgroup"].location !=NSNotFound)
+    {
+        self.personName = to;
+        self.chatRequestJID = [PhoneHelper getDeviceId];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:msg];
+    }
+    else if([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound)
+    {
+        self.personName = to;
+        self.uesrID = from;
+    }
+    else if ([from rangeOfString:[PhoneHelper getDeviceId]].location ==NSNotFound)
+    {
+        //        self.messageInfo = msg;
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:msg];
+    }
+    
+    NSRange range=[from rangeOfString:@"@"];
+    if(range.length==0)
+    {
+        return;
+    }
+    NSString *fromSimple=[from substringToIndex:range.location];
+    
+    //    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
+}
+
+
+
+
+
+// 发送消息回调方法
+- (void)sendMessage:(NSString *)message toUser:(NSString *)user
+{
+    
+}
+
+- (void)XMPPAddFriendSubscribe:(NSString *)name
+{
+    XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@%@",name,@""]];
+    [xmppRoster subscribePresenceToUser:jid];
+}
+
+- (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
+{
+    //取得好友状态
+    NSString *presenceType = [NSString stringWithFormat:@"%@", [presence type]];
+    //    NSLog(@"好友状态 = %@",presenceType);
+    //请求的用户
+    NSString *presenceFromUser =[NSString stringWithFormat:@"%@", [[presence from] user]];
+    //    NSLog(@"请求的用户 = %@",presenceFromUser);
+    //请求的用户jid
+    XMPPJID *jid = [XMPPJID jidWithString:presenceFromUser];
+    //    NSLog(@"jid = %@",jid);
+    [xmppRoster acceptPresenceSubscriptionRequestFrom:jid andAddToRoster:YES];
+}
+
+//下线
+-(void)goOffline
+{
+    //    NSLog(@"goOffline");
+    if (self.roster.count > 0)
+    {
+        [self.roster removeAllObjects];
+    }
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+    [xmppStream sendElement:presence];
+}
+
+- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
+{
+    //    //取得好友状态
+    //    NSString *presenceType = [presence type]; //online/offline
+    ////    NSLog(@"presenceType = %@",presenceType);
+    //    //当前用户
+    //    NSString *userId = [[sender myJID] user];
+    ////    NSLog(@"请求的用户userId = %@",userId);
+    //    //在线用户
+    //    NSString *presenceFromUser = [[presence from] user];
+    ////    NSLog(@"presenceFromUser = %@",presenceFromUser);
+    //
+    //    //在线状态
+    //    if ([presenceType isEqualToString:@"available"])
+    //    {
+    //        if ([userId isEqualToString:presenceFromUser])
+    //        {
+    //           [self.nameArray removeObject:presenceFromUser];
+    //        }
+    //        else
+    //        {
+    //            [self.nameArray addObject:presenceFromUser];
+    //        }
+    //    }
+    //    else if ([presenceType isEqualToString:@"unavailable"])
+    //    {
+    //        [self.nameArray removeObject:presenceFromUser];
+    //    }
+    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"friendList" object:nil];
+    //    NSLog(@"self.nameArray = %@",self.nameArray);
+}
+
+- (void)disconnect
+{
+    //    NSLog(@"disconnect");
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+    [self.xmppStream sendElement:presence];
+    [self.xmppStream disconnect];
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
+{
+    //    NSLog(@"didNotAuthenticate");
+}
+
+#pragma mark - 数据库创建
+-(void)SQLDataSteup
+{
+    //创建数据库对象
+    sqlite3 * dataBase = NULL;
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documents = [paths objectAtIndex:0];
+    NSString *filePath = [documents stringByAppendingPathComponent:@"ChatMessageList.sqlite"];
+    //    NSLog(@"进入数据库创建方法");
+    
+    //打开数据库
+    int result = sqlite3_open([filePath UTF8String],&dataBase);
+    //    NSLog(@"result = %d",result);
+    
+    if (SQLITE_OK == result)
+    {
+        //创建一个名称为messageList的表
+        char * sqlCreate = "CREATE TABLE MESSAGELIST(id integer primary key AutoIncrement, rec_user_id varchar(30),user_id varchar(30),time varchar(30),message varchar(2000))";
+        char * error = NULL;
+        //执行sql语句
+        sqlite3_exec(dataBase, sqlCreate, nil, nil, &error);
+        
+        //        NSLog(@"创建数据库 错误信息---%s",error);
+        //2014-5-16 版本更新增加新字段creater
+        //字段增加
+        //        NSLog(@"进入数据库增加字段方法");
+        char * sqlAdd = "ALTER TABLE MESSAGELIST ADD creater varchar(30)";
+        sqlite3_exec(dataBase, sqlAdd, nil, nil, &error);
+        //        NSLog(@"增加字段错误信息----%s",error);
+        //数据库使用完成后关闭数据库
+        sqlite3_close(dataBase);
+    }
+}
+
+#pragma mark - 数据库 - 收到消息存储
+-(void)recUserId:(NSString *)recUserId toUserId:(NSString *)userId toTime:(NSString *)time toMessage:(NSString *)message
+{
+    sqlite3 * dataBase = NULL;
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documents = [paths objectAtIndex:0];
+    NSString *filePath = [documents stringByAppendingPathComponent:@"ChatMessageList.sqlite"];
+    //打开数据库
+    int result = sqlite3_open([filePath UTF8String],&dataBase);
+    if (SQLITE_OK == result)
+    {
+        NSString *insert = [NSString stringWithFormat:@"INSERT INTO MESSAGELIST(rec_user_id, user_id, time, message, creater) values ('%@','%@','%@','%@','%@')",recUserId,userId,time,message,strUserId];
+        char * error = NULL;
+        sqlite3_exec(dataBase, [insert UTF8String], nil, nil, &error);
+        sqlite3_close(dataBase);
+        //printf(error);
+    }
+}
+
 
 @end

@@ -24,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="-428" y="-217"/>
         </scene>
-        <!--View Controller-->
+        <!--Chat List View Controller-->
         <scene sceneID="FrG-HS-5A5">
             <objects>
-                <viewController id="KPb-Ga-6un" sceneMemberID="viewController">
+                <viewController id="KPb-Ga-6un" customClass="ChatListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y2q-el-ykS">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

@@ -16,6 +16,7 @@
 #import "HotClasscifyViewController.h"
 #import "HotKindHostViewController.h"
 #import "CableSecondAndThirdStepViewController.h"
+#import "ChatListViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -397,6 +398,13 @@
         [self setHidesBottomBarWhenPushed:YES];
           HotKindHostViewController *hotKindHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindHostViewController"];
         [self.navigationController pushViewController:hotKindHostViewController animated:YES];
+    }
+    if (btn.tag == 6)
+    {
+        #pragma mark - 在线客服
+        ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+        chatVC.fromString = @"首页在线客服";
+        [self.navigationController pushViewController:chatVC animated:NO];
     }
     [self setHidesBottomBarWhenPushed:NO];
 }

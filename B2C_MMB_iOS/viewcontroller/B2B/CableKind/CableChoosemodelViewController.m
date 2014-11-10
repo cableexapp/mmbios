@@ -33,6 +33,10 @@
     AppDelegate *app;
     
     int btnTag;
+    
+    int carCount;  //询价车数量
+    
+    int badge;
 }
 @end
 
@@ -51,10 +55,9 @@
 {
     [super viewWillAppear:YES];
     
-    [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartList",time];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
     NSString *token = [DCFCustomExtra md5:string];
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
@@ -74,9 +77,9 @@
     }
     
     
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartListTag delegate:self];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartList.html?"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -109,7 +112,7 @@
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
     [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-//    [askPriceBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [askPriceBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
     [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -338,6 +341,26 @@
             }
         }
     }
+    if(URLTag == URLInquiryCartCountTag)
+    {
+        NSLog(@"%@",dicRespon);
+        if(result == 1)
+        {
+            carCount = [[dicRespon objectForKey:@"value"] intValue];
+        }
+        else
+        {
+            carCount = 0;
+        }
+        if(carCount > 0)
+        {
+            [askPriceBtn setTitle:[NSString stringWithFormat:@"询价车 +%d",carCount] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (void) askPriceBtnClick:(UIButton *) sender
@@ -350,12 +373,11 @@
 - (void) cellBtnClick:(UIButton *) sender
 {
 
-    if(addToCarArray.count >= 50)
+    if(badge >= 50)
     {
         [DCFStringUtil showNotice:@"数目不能超过50个"];
         return;
     }
-    UIButton *btn = (UIButton *) sender;
 
     btnTag = sender.tag;
     
@@ -427,7 +449,7 @@
 - (void)addShopFinished:(CALayer*)transitionLayer
 {
 
-    int badge = addToCarArray.count;
+    badge = addToCarArray.count+carCount;
     NSString *str = nil;
     if(badge <= 0)
     {
@@ -435,7 +457,7 @@
     }
     else
     {
-        str = [NSString stringWithFormat:@"询价车 +%i",badge];
+        str = [NSString stringWithFormat:@"询价车 +%d",badge];
     }
     [askPriceBtn setTitle:str forState:UIControlStateNormal];
 

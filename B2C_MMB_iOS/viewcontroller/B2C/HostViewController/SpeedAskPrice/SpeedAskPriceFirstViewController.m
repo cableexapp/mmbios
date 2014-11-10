@@ -137,6 +137,11 @@
     [self refreshView];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 
 - (void) refreshView
 {

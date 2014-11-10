@@ -85,7 +85,7 @@
 {
     [super viewDidAppear:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 
@@ -415,6 +415,8 @@
     }
     [self setHidesBottomBarWhenPushed:NO];
 }
+
+
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

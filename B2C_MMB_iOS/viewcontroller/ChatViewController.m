@@ -216,7 +216,23 @@
     [self.appDelegate goOffline];
     [self.appDelegate disconnect];
     [self.appDelegate reConnect];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"disMissSelfPage" object:nil];
+    
+    if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"disMissSelfPage" object:nil];
+        [self.navigationController.tabBarController.tabBar setHidden:NO];
+    }
+    else if([self.fromStringFlag isEqualToString:@"来自快速询价客服"])
+    {
+        NSLog(@"来自快速询价客服返回。。。");
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"disMissSelfPage" object:nil];
+        [self.navigationController.tabBarController.tabBar setHidden:NO];
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCount" object:nil];
 }
 

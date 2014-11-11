@@ -192,6 +192,31 @@
     [tv reloadData];
 }
 
+- (void) hideKeyBoard:(NSArray *)array WithTextFieldOrTextView:(id)textFieldOrTextView
+{
+    NSLog(@"arr = %@",array);
+    
+    NSLog(@"***   %@   ****",textFieldOrTextView);
+
+    for(int i=0;i<array.count;i++)
+    {
+        id some = [array objectAtIndex:i];
+        if(textFieldOrTextView == some)
+        {
+            NSLog(@"第%d个",i);
+        }
+        else
+        {
+            [some resignFirstResponder];
+        }
+    }
+    if([textFieldOrTextView isKindOfClass:[UITextField class]] || [textFieldOrTextView isKindOfClass:[UITextView class]])
+    {
+//        [textFieldOrTextView ];
+    }
+
+}
+
 #pragma mark - 编辑
 - (void) edit:(UIButton *) sender
 {

@@ -54,10 +54,9 @@
     self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
     self.sureBtn.layer.cornerRadius = 5.0f;
     
-    textFieldArray = [[NSArray alloc] initWithObjects:self.numTF,self.unitTF,self.timeTF,self.specTF,self.volTF,self.colorTF,self.featureTF, nil];
+    textFieldArray = [[NSArray alloc] initWithObjects:self.numTF,self.unitTF,self.timeTF,self.specTF,self.volTF,self.colorTF,self.featureTF,self.requestTF, nil];
     
     [self.modelLabel setText:self.myModel];
-    NSLog(@"model = %@",self.myModel);
     
     self.requestTF.layer.borderColor = [UIColor blackColor].CGColor;
     self.requestTF.layer.borderWidth = 1.0f;
@@ -177,7 +176,8 @@
 
 - (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    
+    [self.delegate hideKeyBoard:textFieldArray WithTextFieldOrTextView:self.requestTF];
+
     
     if (self.requestTF.text.length==0){//textview长度为0
         if ([text isEqualToString:@""]) {//判断是否为删除键
@@ -259,6 +259,8 @@
 {
     if(textView == self.requestTF)
     {
+        [self.delegate hideKeyBoard:textFieldArray WithTextFieldOrTextView:textView];
+
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDuration:0.3];
@@ -314,11 +316,10 @@
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    
+    [self.delegate hideKeyBoard:textFieldArray WithTextFieldOrTextView:textField];
+
     if(textField == self.unitTF)
     {
-        [self.numTF resignFirstResponder];
-        [self.unitTF resignFirstResponder];
         arr = [[NSMutableArray alloc] initWithObjects:@"KM",@"吨", nil];
         
         //        [self loadSubTableViewWithWidth:self.unitTF.frame.size.width WithHeight:40 WithOriX:self.unitTF.frame.origin.x WithOriY:self.unitTF.frame.origin.y+self.unitTF.frame.size.height];

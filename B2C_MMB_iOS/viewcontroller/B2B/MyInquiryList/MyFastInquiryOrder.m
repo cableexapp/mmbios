@@ -13,6 +13,7 @@
 #import "DCFTopLabel.h"
 #import "SpeedAskPriceFirstViewController.h"
 #import "UIImageView+WebCache.h"
+#import "MyNormalInquiryDetailController.h"
 
 @implementation MyFastInquiryOrder
 
@@ -108,11 +109,11 @@
     int inquiryId = [[self.fastData inquiryId] intValue];
     if(inquiryId == 0)
     {
-        [self.lookBtn setHidden:YES];
+        [self.lookBtn setEnabled:NO];
     }
     else
     {
-        [self.lookBtn setHidden:NO];
+        [self.lookBtn setEnabled:YES];
     }
 }
 
@@ -130,6 +131,28 @@
 - (IBAction)lookBtnClick:(id)sender
 {
     NSLog(@"lookBtnClick");
+    
+    MyNormalInquiryDetailController *myNormalInquiryDetailController = [self.storyboard instantiateViewControllerWithIdentifier:@"myNormalInquiryDetailController"];
+    
+    NSString *orderNum = [NSString stringWithFormat:@"%@",[self.fastData oemId]];
+    myNormalInquiryDetailController.myOrderNum = orderNum;
+    
+    
+    NSString *status = [NSString stringWithFormat:@"%@",[self.fastData status]];
+    myNormalInquiryDetailController.myStatus = status;
+    
+    
+    NSString *upTime = [self.fastData myTime];
+    myNormalInquiryDetailController.myTime = upTime;
+    
+    
+    NSString *Inquiryid = [self.fastData inquiryId];
+    myNormalInquiryDetailController.myInquiryid = Inquiryid;
+    
+//    NSDictionary *dic = [self.fastData pushDic];
+//    myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:dic];
+    
+    [self.navigationController pushViewController:myNormalInquiryDetailController animated:YES];
 }
 
 

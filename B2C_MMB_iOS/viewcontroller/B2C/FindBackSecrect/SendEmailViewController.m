@@ -10,6 +10,7 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFTopLabel.h"
 #import "DCFStringUtil.h"
+#import "MCDefine.h"
 
 @interface SendEmailViewController ()
 

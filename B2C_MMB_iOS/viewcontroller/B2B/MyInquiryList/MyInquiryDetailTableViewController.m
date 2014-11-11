@@ -55,11 +55,10 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
-//    NSString *msg = [dicRespon objectForKey:@"msg"];
     
     if(URLTag == URLInquiryDetailTag)
     {
-        NSLog(@"%@",dicRespon);
+  
         if([[dicRespon allKeys] count] == 0)
         {
             [moreCell noDataAnimation];

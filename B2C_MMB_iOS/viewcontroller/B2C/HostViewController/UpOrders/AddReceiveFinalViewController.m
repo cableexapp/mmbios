@@ -307,9 +307,9 @@
     }
     [addressLabel_2 setTextAlignment:NSTextAlignmentCenter];
     [addressLabel_2 setFont:[UIFont systemFontOfSize:13]];
-    addressLabel_2.layer.borderColor = [UIColor blueColor].CGColor;
+    addressLabel_2.layer.borderColor = MYCOLOR.CGColor;
     addressLabel_2.layer.borderWidth = 1.0f;
-    [addressLabel_2 setTextColor:[UIColor blueColor]];
+    [addressLabel_2 setTextColor:MYCOLOR];
     [self.view addSubview:addressLabel_2];
     
     CGSize s1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"手机号码" WithSize:CGSizeMake(MAXFLOAT, 30)];

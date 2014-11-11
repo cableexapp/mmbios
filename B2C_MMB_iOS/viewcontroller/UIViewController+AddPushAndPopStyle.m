@@ -20,11 +20,12 @@
     
     if(systemVersion >= 7.0)
     {
-        [self.navigationController.navigationBar setTintColor:[UIColor colorWithRed:18.0/255.0 green:104.0/255.0 blue:253.0/255.0 alpha:1.0]];
+//        [self.navigationController.navigationBar setTintColor:[UIColor colorWithRed:18.0/255.0 green:104.0/255.0 blue:253.0/255.0 alpha:1.0]];
+        [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     }
     else
     {
-        [back setTintColor:[UIColor redColor]];
+        [back setTintColor:[UIColor whiteColor]];
     }
     self.navigationItem.backBarButtonItem = back;
 }

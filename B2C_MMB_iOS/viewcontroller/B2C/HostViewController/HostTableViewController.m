@@ -16,6 +16,8 @@
 #import "HotClasscifyViewController.h"
 #import "HotKindFirstViewController.h"
 #import "CableSecondAndThirdStepViewController.h"
+#import "ChatListViewController.h"
+#import "HotScreenFirstViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -83,7 +85,7 @@
 {
     [super viewDidAppear:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 
@@ -105,7 +107,7 @@
     //    NSString *msg = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"msg"]];
     if(URLTag == URLGetProductTypeTag)
     {
-        NSLog(@"%@",dicRespon);
+
         if(result == 1)
         {
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
@@ -399,8 +401,23 @@
         NSLog(@"%@",hotKindFirstViewController);
         [self.navigationController pushViewController:hotKindFirstViewController animated:YES];
     }
+    if(btn.tag == 5)
+    {
+#pragma mark - 场景选择
+        HotScreenFirstViewController *hotScreenFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotScreenFirstViewController"];
+        [self.navigationController pushViewController:hotScreenFirstViewController animated:YES];
+    }
+    if (btn.tag == 6)
+    {
+        #pragma mark - 在线客服
+        ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+        chatVC.fromString = @"首页在线客服";
+        [self.navigationController pushViewController:chatVC animated:NO];
+    }
     [self setHidesBottomBarWhenPushed:NO];
 }
+
+
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

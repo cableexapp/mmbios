@@ -74,7 +74,6 @@
     {
         
         
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             addressArray = [[NSMutableArray alloc] initWithArray:[B2BAddressData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -99,7 +98,6 @@
     [tv reloadData];
     if(URLTag == URLSubInquiryTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             B2BAskPriceUpSuccessViewController *b2bAskPriceUpSuccessViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceUpSuccessViewController"];
@@ -221,10 +219,10 @@
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
-    [headLabel setTextColor:[UIColor blueColor]];
+    [headLabel setTextColor:MYCOLOR];
     [headLabel setBackgroundColor:[UIColor whiteColor]];
     headLabel.layer.borderWidth = 1.0f;
-    headLabel.layer.borderColor = [UIColor blueColor].CGColor;
+    headLabel.layer.borderColor = MYCOLOR.CGColor;
     if(section == 0)
     {
         [headLabel setText:@" 收货地址"];
@@ -268,7 +266,7 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView setSeparatorColor:[UIColor blueColor]];
+    [tableView setSeparatorColor:MYCOLOR];
     
 
     

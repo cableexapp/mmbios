@@ -240,9 +240,9 @@
     [searchBtn setTitle:@"筛选" forState:UIControlStateNormal];
     [searchBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     searchBtn.layer.borderWidth = 1.0f;
-    searchBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    searchBtn.layer.borderColor = MYCOLOR.CGColor;
     searchBtn.layer.masksToBounds = YES;
-    [searchBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [searchBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:searchBtn];
     
@@ -271,15 +271,15 @@
                 break;
         }
         [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
         
-        [selctBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [selctBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
         [selctBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         
         [selctBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [selctBtn setTag:i];
         
-        selctBtn.layer.borderColor = [UIColor blueColor].CGColor;
+        selctBtn.layer.borderColor = MYCOLOR.CGColor;
         selctBtn.layer.borderWidth = 1.0f;
         selctBtn.layer.masksToBounds = YES;
         

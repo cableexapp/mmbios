@@ -33,6 +33,10 @@
     AppDelegate *app;
     
     int btnTag;
+    
+    int carCount;  //询价车数量
+    
+    int badge;
 }
 @end
 
@@ -51,7 +55,38 @@
 {
     [super viewWillAppear:YES];
     
-    [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
+    if(addToCarArray)
+    {
+        [addToCarArray removeAllObjects];
+    }
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -81,13 +116,13 @@
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
     [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [askPriceBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [askPriceBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
     [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:askPriceBtn];
     self.navigationItem.rightBarButtonItem = item;
-
+    
     
     if(!topLabel)
     {
@@ -119,8 +154,8 @@
     {
         mySearch = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topLabel.frame.origin.y+topLabel.frame.size.height, ScreenWidth, 44)];
         [mySearch setDelegate:self];
-   
-//        [mySearch setBarStyle:UIBarStyleBlackOpaque];
+        
+        //        [mySearch setBarStyle:UIBarStyleBlackOpaque];
         [mySearch setPlaceholder:@"搜索该分类下的型号"];
         [self.view addSubview:mySearch];
     }
@@ -155,7 +190,7 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     [moreCell startAnimation];
-
+    
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -216,10 +251,10 @@
             [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
             [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
             [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-            [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
             [btn setTag:i];
             [btn setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-            btn.layer.borderColor = [UIColor blueColor].CGColor;
+            btn.layer.borderColor = MYCOLOR.CGColor;
             btn.layer.borderWidth = 0.5f;
             btn.layer.cornerRadius = 5.0f;
             [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -310,6 +345,26 @@
             }
         }
     }
+    if(URLTag == URLInquiryCartCountTag)
+    {
+        NSLog(@"%@",dicRespon);
+        if(result == 1)
+        {
+            carCount = [[dicRespon objectForKey:@"value"] intValue];
+        }
+        else
+        {
+            carCount = 0;
+        }
+        if(carCount > 0)
+        {
+            [askPriceBtn setTitle:[NSString stringWithFormat:@"询价车 +%d",carCount] forState:UIControlStateNormal];
+        }
+        else
+        {
+            [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (void) askPriceBtnClick:(UIButton *) sender
@@ -321,14 +376,13 @@
 
 - (void) cellBtnClick:(UIButton *) sender
 {
-
-    if(addToCarArray.count >= 50)
+    
+    if(badge >= 50)
     {
         [DCFStringUtil showNotice:@"数目不能超过50个"];
         return;
     }
-    UIButton *btn = (UIButton *) sender;
-
+    
     btnTag = sender.tag;
     
     
@@ -363,7 +417,7 @@
     }
     
     NSString *text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:btnTag] theModel]];
-
+    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -391,15 +445,14 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-
+    
 }
 
 
 //加入购物车 步骤2
 - (void)addShopFinished:(CALayer*)transitionLayer
 {
-
-    int badge = addToCarArray.count;
+    badge = addToCarArray.count+carCount;
     NSString *str = nil;
     if(badge <= 0)
     {
@@ -407,13 +460,13 @@
     }
     else
     {
-        str = [NSString stringWithFormat:@"询价车 +%i",badge];
+        str = [NSString stringWithFormat:@"询价车 +%d",badge];
     }
     [askPriceBtn setTitle:str forState:UIControlStateNormal];
-
+    
     
     transitionLayer.opacity = 0;
-
+    
     CALayer *transitionLayer1 = [[CALayer alloc] init];
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -421,7 +474,7 @@
     transitionLayer1.frame = [[UIApplication sharedApplication].keyWindow convertRect:askPriceBtn.bounds fromView:askPriceBtn];
     [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer1];
     [CATransaction commit];
-
+    
 }
 
 #pragma mark - searchBar
@@ -447,7 +500,7 @@
             [cancel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
     }
-
+    
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -482,9 +535,9 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     return 44;
-
+    
 }
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -522,14 +575,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

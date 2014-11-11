@@ -26,11 +26,11 @@
 {
     if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
-        [self setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:244.0/255.0 green:243.0/255.0 blue:237.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
+        [self setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:17.0/255.0 green:66.0/255.0 blue:146.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
     }
     else
     {
-        [self setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:244.0/255.0 green:243.0/255.0 blue:237.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
+        [self setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:17.0/255.0 green:66.0/255.0 blue:146.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
     }
 }
 

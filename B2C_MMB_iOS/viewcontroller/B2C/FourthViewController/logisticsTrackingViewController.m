@@ -87,7 +87,7 @@
     
     if(URLTag == URLLogisticsTrackingTag)
     {
-        NSLog(@"%@",dicRespon);
+
         if(logistStatus == 1)
         {
             NSArray *arr = [[NSArray alloc] initWithObjects:[dicRespon objectForKey:@"data"], nil];

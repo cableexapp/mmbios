@@ -98,6 +98,8 @@ enum {
     
     URLDeleteInquiryCartItemTag,  //询价车删除
     
+    URLInquiryCartCountTag,  //询价车数量查询
+    
     URLGetSpecVoltageByModelTag, //根据型号查询规格电压
     
     URLEditInquiryItemTag,  //询价单信息编辑
@@ -112,6 +114,8 @@ enum {
     URLGetModelByidTag,   //获取分类下的型号
     
     URLSubOemTag,   //快速询价
+    
+    URLSubHotTypeTag,  //场景提交
     
     //个人中心
     URLInquiryListTag,  //我的询价单查询（普通）

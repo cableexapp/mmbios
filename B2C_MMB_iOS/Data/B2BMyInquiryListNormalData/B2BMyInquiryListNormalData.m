@@ -29,7 +29,6 @@
             _time = [DCFCustomExtra nsdateToString:confromTimesp];
         }
 
-        NSLog(@"time = %@",_time);
         _inquiryid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryid"]];
 
         _inquiryserial = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryserial"]];

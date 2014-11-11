@@ -67,9 +67,6 @@
     {
         for(UIButton *subBtn in view.subviews)
         {
-    
-            NSLog(@"tag = %d",subBtn.tag);
-            NSLog(@"%@",subBtn.titleLabel.text);
             [subBtn.titleLabel setNumberOfLines:0];
             [btnArray addObject:subBtn];
         }
@@ -85,7 +82,8 @@
 
 - (void) screenBtnClick:(UIButton *) sender
 {
-    HotScreenSecondViewController *hotScreenSecondViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"HotScreenSecondViewController"];
+    [self setHidesBottomBarWhenPushed:YES];
+    HotScreenSecondViewController *hotScreenSecondViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotScreenSecondViewController"];
     hotScreenSecondViewController.screen = sender.titleLabel.text;
     [self.navigationController pushViewController:hotScreenSecondViewController animated:YES];
 }
@@ -107,7 +105,7 @@
 
 - (IBAction)nextbtnClick:(id)sender
 {
-    if(page >= 4)
+    if(page >= 3)
     {
         NSLog(@"到底了");
         return;

@@ -51,7 +51,7 @@
     [self.view addGestureRecognizer:tap];
     
     self.sureBtn.layer.borderWidth = 1.0f;
-    self.sureBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
     self.sureBtn.layer.cornerRadius = 5.0f;
     
     textFieldArray = [[NSArray alloc] initWithObjects:self.numTF,self.unitTF,self.timeTF,self.specTF,self.volTF,self.colorTF,self.featureTF, nil];
@@ -84,7 +84,6 @@
     
     if(URLTag == URLGetSpecVoltageByModelTag)
     {
-        NSLog(@"%@",dicRespon);
         
         specArray = [[NSMutableArray alloc] init];
         voltageArray = [[NSMutableArray alloc] init];
@@ -153,7 +152,6 @@
         {
             
         }
-        NSLog(@"%@",dicRespon);
     }
 }
 

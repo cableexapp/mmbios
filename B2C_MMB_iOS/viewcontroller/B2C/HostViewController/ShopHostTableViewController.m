@@ -210,7 +210,7 @@
     
     if(URLTag == URLB2CGoodsListTag)
     {
-//        NSLog(@"%@",dicRespon);
+
         
         if(_reloading == YES)
         {
@@ -304,7 +304,7 @@
     UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 250, 40)];
     [headLabel setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     [headLabel setText:[NSString stringWithFormat:@"   %@",_myTitle]];
-    [headLabel setTextColor:[UIColor blueColor]];
+    [headLabel setTextColor:MYCOLOR];
     [headLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [headView addSubview:headLabel];
     

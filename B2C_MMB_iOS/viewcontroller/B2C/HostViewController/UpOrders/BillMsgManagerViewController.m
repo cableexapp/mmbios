@@ -432,9 +432,9 @@
             sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
             [sureBtn setFrame:CGRectMake((320-200)/2, billContentLabel.frame.origin.y+billContentLabel.frame.size.height+20, 200, 50)];
-            [sureBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [sureBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
             [sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
-            sureBtn.layer.borderColor = [UIColor blueColor].CGColor;
+            sureBtn.layer.borderColor = MYCOLOR.CGColor;
             sureBtn.layer.borderWidth = 1.0f;
             sureBtn.layer.cornerRadius = 5.0f;
             [self.view addSubview:sureBtn];

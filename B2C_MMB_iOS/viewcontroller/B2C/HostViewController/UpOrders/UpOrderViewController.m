@@ -448,10 +448,10 @@
     
     UIButton *upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [upBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [upBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [upBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [upBtn setFrame:CGRectMake(320-100, 5, 80, 40)];
     [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    upBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    upBtn.layer.borderColor = MYCOLOR.CGColor;
     upBtn.layer.borderWidth = 1.0f;
     upBtn.layer.cornerRadius = 5.0f;
     [buttomView addSubview:upBtn];
@@ -623,9 +623,9 @@
     {
         [label setText:@"  商品信息"];
     }
-    [label setTextColor:[UIColor blueColor]];
+    [label setTextColor:MYCOLOR];
     [label setFont:[UIFont boldSystemFontOfSize:14]];
-    label.layer.borderColor = [UIColor blueColor].CGColor;
+    label.layer.borderColor = MYCOLOR.CGColor;
     label.layer.borderWidth = 1.5f;
     return label;
     

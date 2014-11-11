@@ -10,6 +10,7 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MyInquiryListFirstViewController.h"
+#import "MCDefine.h"
 
 @interface B2BAskPriceUpSuccessViewController ()
 
@@ -35,7 +36,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交成功"];
     self.navigationItem.titleView = top;
     
-    self.lookForMyOrderBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.lookForMyOrderBtn.layer.borderColor = MYCOLOR.CGColor;
     self.lookForMyOrderBtn.layer.borderWidth = 1.0f;
     self.lookForMyOrderBtn.layer.cornerRadius = 5.0f;
 }

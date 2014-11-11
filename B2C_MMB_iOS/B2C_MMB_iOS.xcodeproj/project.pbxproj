@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */; };
+		0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */; };
 		6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */; };
 		6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */; };
 		611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */; };
@@ -324,8 +326,8 @@
 		0D8491B51A0B89E700E9C81B /* HotSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotSecondViewController.m; sourceTree = "<group>"; };
 		0DACD7D91A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewTableViewCell.h; sourceTree = "<group>"; };
 		0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewTableViewCell.m; sourceTree = "<group>"; };
-		0DACD8261A0CB9C000F6E025 /* HotKindHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindHostViewController.h; sourceTree = "<group>"; };
-		0DACD8271A0CB9C000F6E025 /* HotKindHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindHostViewController.m; sourceTree = "<group>"; };
+		0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
+		0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
 		6116A22A19EE1099005C3572 /* MyOrderHostBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostBtnTableViewCell.h; sourceTree = "<group>"; };
 		6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOrderHostBtnTableViewCell.m; sourceTree = "<group>"; };
 		6116A22C19EE1099005C3572 /* MyOrderHostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostTableViewCell.h; sourceTree = "<group>"; };
@@ -874,8 +876,8 @@
 				0D8491B41A0B89E700E9C81B /* HotSecondViewController.h */,
 				0D8491B51A0B89E700E9C81B /* HotSecondViewController.m */,
 				0D7660AA1A0BA0DC00E2EE46 /* Hotpst.plist */,
-				0DACD8261A0CB9C000F6E025 /* HotKindHostViewController.h */,
-				0DACD8271A0CB9C000F6E025 /* HotKindHostViewController.m */,
+				0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */,
+				0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */,
 			);
 			path = HotKind;
 			sourceTree = "<group>";
@@ -2202,6 +2204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */,
 				6181A50019CFC4C2000E2D14 /* ELCAlbumPickerController.m in Sources */,
 				61B710D019FF3B53001CC3BD /* OneStepCell.m in Sources */,
 				6181A51419CFC4C2000E2D14 /* SDWebImageManager.m in Sources */,
@@ -2251,6 +2254,7 @@
 				6122714119CFC81500FE4DFF /* SBJsonWriter.m in Sources */,
 				6181A4D419CFC4C2000E2D14 /* TestTask.m in Sources */,
 				6181A4CF19CFC4C2000E2D14 /* B2CGoodsListData.m in Sources */,
+				0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */,
 				61C686D91A0DE11C00477622 /* CableSecondAndThirdStepViewController.m in Sources */,
 				6181A51719CFC4C2000E2D14 /* UIImage+GIF.m in Sources */,
 				61B710C519FF3B53001CC3BD /* FourMyMMBListTableViewController.m in Sources */,

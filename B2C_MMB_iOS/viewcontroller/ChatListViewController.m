@@ -123,10 +123,12 @@ int flagPage = 0;
     
     //接收分组列表
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (memberGroupList:) name:@"memberGroupName" object:nil];
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
-{
+{    
     [super viewWillAppear:YES];
     [self checkNet];
     [self reloadMemberList];
@@ -178,8 +180,8 @@ int flagPage = 0;
     {
         self.tempArray = self.appDelegate.roster;
     }
-
 }
+
 //检查网络是否连接
 -(void)checkNet
 {

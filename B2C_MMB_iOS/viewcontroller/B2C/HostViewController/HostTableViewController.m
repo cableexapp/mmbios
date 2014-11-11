@@ -202,18 +202,29 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mmb" ofType:@"png"]];
-    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 7, 100, 30)];
     [naviImageView setImage:naviimage];
     [naviImageView setTag:100];
     [self.navigationController.navigationBar addSubview:naviImageView];
     
-    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y+5, 200, 34)];
-    
-    //    searchImageView setImage:<#(UIImage *)#>
+    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y-2, 200, 34)];
+
     [searchImageView setUserInteractionEnabled:YES];
     [searchImageView setTag:101];
+    searchImageView.layer.cornerRadius = 5;
+    searchImageView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    searchImageView.layer.borderWidth = 1;
     [self.navigationController.navigationBar addSubview:searchImageView];
-    [searchImageView setBackgroundColor:[UIColor greenColor]];
+
+    UIImageView *search = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 22, 22)];
+    search.image = [UIImage imageNamed:@"search"];
+    [searchImageView addSubview:search];
+    
+    UILabel *searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 7, 150, 20)];
+    searchLabel.text = @"输入搜索内容";
+    searchLabel.textColor = [UIColor lightGrayColor];
+    [searchImageView addSubview:searchLabel];
+    
     UITapGestureRecognizer *searchTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searchTap:)];
     [searchImageView addGestureRecognizer:searchTap];
     

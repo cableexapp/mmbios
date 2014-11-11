@@ -144,8 +144,10 @@ double secondsCountDown =0;
     //接收服务端自动回复
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (autoMessageToServer:) name:@"joinRoomMessage" object:nil];
     
+    //关闭当前模态视图
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (backToFront:) name:@"disMissSelfPage" object:nil];
     
+    //重置等待排队环形计时初值
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (resetSecondsCountDown:) name:@"resetCount" object:nil];
     
     //服务器忙消息通知
@@ -160,6 +162,7 @@ double secondsCountDown =0;
     //接收返回在线咨询入口页
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToAskPrice:) name:@"goToAskPricePage" object:nil];
     
+    //发起请求加入咨询队列
     [self sendJoinRequest];
 }
 
@@ -237,7 +240,6 @@ double secondsCountDown =0;
     {
         label4.text = memberCount;
         label3.frame = CGRectMake(0, shimmeringView.bounds.size.height-5, self.view.frame.size.width, 30);
-//        label3.text = @"您之前的用户数";
         label3.font = [UIFont systemFontOfSize:17];
         label3.text = NSLocalizedString(@"您之前的用户数", nil);
         shimmeringView.shimmering = YES;
@@ -280,8 +282,6 @@ double secondsCountDown =0;
     noNet.hidden = YES;
     noNetView.hidden = YES;
     noNetMessage.hidden = YES;
-//  [timeCountTimer setFireDate:[NSDate distantPast]];
-    
 }
 
 //网络未连接提示
@@ -375,7 +375,6 @@ double secondsCountDown =0;
                                                   otherButtonTitles:@"取消",@"好的",nil];
         [alertView show];
         naviTitle.text = @"暂无在线客服";
-//        label3.text = @"暂时没有客服在线!";
         label3.font = [UIFont systemFontOfSize:18];
         label3.frame = CGRectMake(0, shimmeringView.bounds.size.height-55, self.view.frame.size.width, 30);
         label3.text = NSLocalizedString(@"暂时没有客服在线!", nil);
@@ -391,7 +390,6 @@ double secondsCountDown =0;
                                                   otherButtonTitles:@"取消",@"好的",nil];
         [alertView show];
         naviTitle.text = @"暂无在线客服";
-//        label3.text = @"现在不是工作时间!";
         label3.font = [UIFont systemFontOfSize:18];
         label3.frame = CGRectMake(0, shimmeringView.bounds.size.height-55, self.view.frame.size.width, 30);
         label3.text = NSLocalizedString(@"现在不是工作时间!", nil);

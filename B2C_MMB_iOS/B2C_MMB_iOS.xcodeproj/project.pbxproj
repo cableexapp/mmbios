@@ -109,7 +109,6 @@
 		6181A4E519CFC4C2000E2D14 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A40619CFC4C2000E2D14 /* delete.png */; };
 		6181A4E619CFC4C2000E2D14 /* jxht_mr.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A40719CFC4C2000E2D14 /* jxht_mr.png */; };
 		6181A4E819CFC4C2000E2D14 /* Learn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A40919CFC4C2000E2D14 /* Learn@2x.png */; };
-		6181A4E919CFC4C2000E2D14 /* mmb.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A40A19CFC4C2000E2D14 /* mmb.png */; };
 		6181A4EA19CFC4C2000E2D14 /* News.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A40B19CFC4C2000E2D14 /* News.png */; };
 		6181A4EB19CFC4C2000E2D14 /* News@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A40C19CFC4C2000E2D14 /* News@2x.png */; };
 		6181A4EC19CFC4C2000E2D14 /* Parents.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A40D19CFC4C2000E2D14 /* Parents.png */; };
@@ -677,6 +676,9 @@
 		8BA7C31C1A10A93B00758B0F /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C3111A10A93B00758B0F /* ChatListViewController.m */; };
 		8BA7C31D1A10A93B00758B0F /* WaitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C3131A10A93B00758B0F /* WaitViewController.m */; };
 		8BA7C31E1A10A93B00758B0F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C3151A10A93B00758B0F /* ChatViewController.m */; };
+		8BBB28B71A11ABE1009AAEE8 /* mmb.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28B61A11ABE1009AAEE8 /* mmb.png */; };
+		8BBB28BA1A11AD23009AAEE8 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28B81A11AD23009AAEE8 /* search.png */; };
+		8BBB28BB1A11AD23009AAEE8 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28B91A11AD23009AAEE8 /* search@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -864,7 +866,6 @@
 		6181A40619CFC4C2000E2D14 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		6181A40719CFC4C2000E2D14 /* jxht_mr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jxht_mr.png; sourceTree = "<group>"; };
 		6181A40919CFC4C2000E2D14 /* Learn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Learn@2x.png"; sourceTree = "<group>"; };
-		6181A40A19CFC4C2000E2D14 /* mmb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mmb.png; sourceTree = "<group>"; };
 		6181A40B19CFC4C2000E2D14 /* News.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = News.png; sourceTree = "<group>"; };
 		6181A40C19CFC4C2000E2D14 /* News@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "News@2x.png"; sourceTree = "<group>"; };
 		6181A40D19CFC4C2000E2D14 /* Parents.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Parents.png; sourceTree = "<group>"; };
@@ -1694,6 +1695,9 @@
 		8BA7C3131A10A93B00758B0F /* WaitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitViewController.m; sourceTree = "<group>"; };
 		8BA7C3141A10A93B00758B0F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		8BA7C3151A10A93B00758B0F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		8BBB28B61A11ABE1009AAEE8 /* mmb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mmb.png; sourceTree = "<group>"; };
+		8BBB28B81A11AD23009AAEE8 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		8BBB28B91A11AD23009AAEE8 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2267,7 +2271,10 @@
 				6181A3F819CFC4C2000E2D14 /* click1.png */,
 				6181A3F919CFC4C2000E2D14 /* click2.png */,
 				6181A3FA19CFC4C2000E2D14 /* magnifying glass.png */,
+				8BBB28B81A11AD23009AAEE8 /* search.png */,
+				8BBB28B91A11AD23009AAEE8 /* search@2x.png */,
 				6181A3FB19CFC4C2000E2D14 /* next.png */,
+				8BBB28B61A11ABE1009AAEE8 /* mmb.png */,
 				6181A3FC19CFC4C2000E2D14 /* tel.png */,
 				6181A3FD19CFC4C2000E2D14 /* up.png */,
 				6181A3FE19CFC4C2000E2D14 /* 临时图片夹 */,
@@ -2288,7 +2295,6 @@
 				6181A40619CFC4C2000E2D14 /* delete.png */,
 				6181A40719CFC4C2000E2D14 /* jxht_mr.png */,
 				6181A40919CFC4C2000E2D14 /* Learn@2x.png */,
-				6181A40A19CFC4C2000E2D14 /* mmb.png */,
 				6181A40B19CFC4C2000E2D14 /* News.png */,
 				6181A40C19CFC4C2000E2D14 /* News@2x.png */,
 				6181A40D19CFC4C2000E2D14 /* Parents.png */,
@@ -3961,6 +3967,7 @@
 				8BA7C0CA1A10A85500758B0F /* 得意@2x.png in Resources */,
 				61DF89F319FB9CD700D47430 /* imUnSelect.png in Resources */,
 				8BA7C0591A10A85500758B0F /* chat_bottom_up_press.png in Resources */,
+				8BBB28B71A11ABE1009AAEE8 /* mmb.png in Resources */,
 				8BA7C0881A10A85500758B0F /* 刀@2x.png in Resources */,
 				8BA7C0721A10A85500758B0F /* faceKey.plist in Resources */,
 				8BA7C1301A10A85500758B0F /* 鄙视@2x.png in Resources */,
@@ -3994,6 +4001,7 @@
 				6181A4F519CFC4C2000E2D14 /* sv_3.png in Resources */,
 				8BA7C0A71A10A85500758B0F /* 啤酒.png in Resources */,
 				8BA7C0781A10A85500758B0F /* 乒乓@2x.png in Resources */,
+				8BBB28BB1A11AD23009AAEE8 /* search@2x.png in Resources */,
 				8BA7C0C81A10A85500758B0F /* 强@2x.png in Resources */,
 				8BA7C1361A10A85500758B0F /* 闭嘴@2x.png in Resources */,
 				8BA7C08A1A10A85500758B0F /* 勾引@2x.png in Resources */,
@@ -4073,6 +4081,7 @@
 				8BA7C0AE1A10A85500758B0F /* 困@2x.png in Resources */,
 				8BA7C13B1A10A85500758B0F /* 飞吻.png in Resources */,
 				8BA7C0861A10A85500758B0F /* 凋谢@2x.png in Resources */,
+				8BBB28BA1A11AD23009AAEE8 /* search.png in Resources */,
 				8BA7C0541A10A85500758B0F /* chat_bottom_keyboard_press.png in Resources */,
 				8BA7C05E1A10A85500758B0F /* chatfrom_bg_normal.png in Resources */,
 				8BA7C08C1A10A85500758B0F /* 发呆@2x.png in Resources */,
@@ -4099,7 +4108,6 @@
 				8BA7C0E01A10A85500758B0F /* 拥抱@2x.png in Resources */,
 				6181A4F119CFC4C2000E2D14 /* shoppingCar.png in Resources */,
 				8BA7C11B1A10A85500758B0F /* 菜刀.png in Resources */,
-				6181A4E919CFC4C2000E2D14 /* mmb.png in Resources */,
 				8BA7C0A51A10A85500758B0F /* 咖啡@2x.png in Resources */,
 				8BA7C0E41A10A85500758B0F /* 挥手@2x.png in Resources */,
 				8BA7C11D1A10A85500758B0F /* 蛋糕.png in Resources */,

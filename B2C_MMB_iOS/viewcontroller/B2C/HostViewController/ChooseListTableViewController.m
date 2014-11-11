@@ -80,19 +80,16 @@
     contentArray = [[NSMutableArray alloc] initWithObjects:@"电缆采购",@"家装线专卖", nil];
     
     leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setFrame:CGRectMake(0, 10, 80, 27)];
+    [leftBtn setFrame:CGRectMake(5, 10, 80, 27)];
     [leftBtn setBackgroundColor:[UIColor grayColor]];
     [leftBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [leftBtn setTitle:@"电缆采购" forState:UIControlStateNormal];
     [leftBtn setShowsTouchWhenHighlighted:NO];
     [leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(leftBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:leftBtn];
     
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
-    self.navigationItem.leftBarButtonItem = left;
-    
-
-    mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBtn.frame.origin.x + leftBtn.frame.size.width + 10, 4, 180, 35)];
+    mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBtn.frame.origin.x + leftBtn.frame.size.width + 10, 30, 180, 35)];
     [mySearchBar setDelegate:self];
     [mySearchBar setBarStyle:UIBarStyleBlackOpaque];
     [self.navigationController.navigationBar addSubview:mySearchBar];

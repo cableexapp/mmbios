@@ -36,7 +36,7 @@
     self.navigationItem.titleView = top;
     
     
-    _backToLoginBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    _backToLoginBtn.layer.borderColor = MYCOLOR.CGColor;
     _backToLoginBtn.layer.borderWidth = 1.0f;
     _backToLoginBtn.layer.cornerRadius = 5;
     _backToLoginBtn.layer.masksToBounds = YES;

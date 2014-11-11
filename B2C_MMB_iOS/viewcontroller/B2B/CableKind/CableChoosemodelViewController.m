@@ -116,7 +116,7 @@
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
     [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [askPriceBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [askPriceBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
     [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -251,10 +251,10 @@
             [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
             [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
             [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-            [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
             [btn setTag:i];
             [btn setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-            btn.layer.borderColor = [UIColor blueColor].CGColor;
+            btn.layer.borderColor = MYCOLOR.CGColor;
             btn.layer.borderWidth = 0.5f;
             btn.layer.cornerRadius = 5.0f;
             [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];

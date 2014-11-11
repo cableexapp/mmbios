@@ -271,7 +271,7 @@
                     [label setFont:[UIFont systemFontOfSize:13]];
                     [label setText:self.myShopName];
                     [label setTextAlignment:NSTextAlignmentLeft];
-                    [label setTextColor:[UIColor blueColor]];
+                    [label setTextColor:MYCOLOR];
                     
                     UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 7, label.frame.size.width+40, 30)];
                     [firstView addSubview:firstIv];
@@ -303,7 +303,7 @@
                 [label setFont:[UIFont systemFontOfSize:13]];
                 [label setText:@"商品详情快照"];
                 [label setTextAlignment:NSTextAlignmentLeft];
-                [label setTextColor:[UIColor blueColor]];
+                [label setTextColor:MYCOLOR];
                 [cell.contentView addSubview:label];
             }
             if(indexPath.row == 6)

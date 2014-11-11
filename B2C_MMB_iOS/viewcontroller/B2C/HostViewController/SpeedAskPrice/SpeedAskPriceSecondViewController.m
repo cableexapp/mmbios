@@ -10,6 +10,7 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "ChatListViewController.h"
+#import "MCDefine.h"
 
 @interface SpeedAskPriceSecondViewController ()
 
@@ -34,11 +35,11 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交成功"];
     self.navigationItem.titleView = top;
     
-    self.backToHostBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.backToHostBtn.layer.borderColor = MYCOLOR.CGColor;
     self.backToHostBtn.layer.borderWidth = 1.0f;
     
     self.anotherUpBtn.layer.borderWidth = 1.0f;
-    self.anotherUpBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.anotherUpBtn.layer.borderColor = MYCOLOR.CGColor;
     
     [self pushAndPopStyle];
 }

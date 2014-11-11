@@ -67,11 +67,11 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆订单详情"];
     self.navigationItem.titleView= top;
     
-    self.discussBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.discussBtn.layer.borderColor = MYCOLOR.CGColor;
     self.discussBtn.layer.borderWidth = 1.0f;
     self.discussBtn.layer.cornerRadius = 5;
     
-    self.tradeBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.tradeBtn.layer.borderColor = MYCOLOR.CGColor;
     self.tradeBtn.layer.borderWidth = 1.0f;
     self.tradeBtn.layer.cornerRadius = 5;
     
@@ -188,10 +188,10 @@
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(-1, 1, ScreenWidth+2, 28)];
-    label.layer.borderColor = [UIColor blueColor].CGColor;
+    label.layer.borderColor = MYCOLOR.CGColor;
     label.layer.borderWidth = 1.0f;
     [label setTextAlignment:NSTextAlignmentLeft];
-    [label setTextColor:[UIColor blueColor]];
+    [label setTextColor:MYCOLOR];
     [label setBackgroundColor:[UIColor whiteColor]];
     if(section == 0)
     {

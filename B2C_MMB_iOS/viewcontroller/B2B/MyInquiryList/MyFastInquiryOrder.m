@@ -11,6 +11,8 @@
 #import "DCFCustomExtra.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFTopLabel.h"
+#import "SpeedAskPriceFirstViewController.h"
+#import "UIImageView+WebCache.h"
 
 @implementation MyFastInquiryOrder
 
@@ -67,13 +69,22 @@
     [picTitleLabel setText:@"已传照片:"];
     [self.sv addSubview:picTitleLabel];
     
-    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 60)];
-    [iv setImage:[UIImage imageNamed:@"cabel.png"]];
+    UIImageView *iv = [[UIImageView alloc] init];
+    NSString *filePath = [NSString stringWithFormat:@"%@",[self.fastData filePath]];
+    if(filePath.length == 0 || [filePath isKindOfClass:[NSNull class]])
+    {
+        [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 0)];
+    }
+    else
+    {
+        [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 60)];
+        [iv setImageWithURL:[NSURL URLWithString:filePath]];
+        [iv setUserInteractionEnabled:YES];
+        UITapGestureRecognizer *ivTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ivTap:)];
+        [iv addGestureRecognizer:ivTap];
+    }
     [self.sv addSubview:iv];
-    [iv setUserInteractionEnabled:YES];
-    UITapGestureRecognizer *ivTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ivTap:)];
-    [iv addGestureRecognizer:ivTap];
-    
+
     UILabel *situationLabel = [[UILabel alloc] init];
     NSString *string = [NSString stringWithFormat:@"%@",self.fastData.operatior];
     NSString *situation = [NSString stringWithFormat:@"处理情况: %@",string];
@@ -93,6 +104,16 @@
     
     [self.sv setContentSize:CGSizeMake(ScreenWidth, situationLabel.frame.origin.y+situationLabel.frame.size.height+20)];
     [self.sv setUserInteractionEnabled:YES];
+    
+    int inquiryId = [[self.fastData inquiryId] intValue];
+    if(inquiryId == 0)
+    {
+        [self.lookBtn setHidden:YES];
+    }
+    else
+    {
+        [self.lookBtn setHidden:NO];
+    }
 }
 
 - (void) ivTap:(UITapGestureRecognizer *) sender
@@ -102,7 +123,8 @@
 
 - (IBAction)againAskBtnClick:(id)sender
 {
-    NSLog(@"againAskBtnClick");
+    SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
+    [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
 }
 
 - (IBAction)lookBtnClick:(id)sender

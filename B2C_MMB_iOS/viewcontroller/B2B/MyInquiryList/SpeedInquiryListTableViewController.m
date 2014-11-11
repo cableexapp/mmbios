@@ -114,7 +114,6 @@
 {
     if(URLTag == URLInquiryListSpeedTag)
     {
-        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];
@@ -169,7 +168,7 @@
             UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             [lookBtn setTitle:@"查看" forState:UIControlStateNormal];
             [lookBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-            [lookBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [lookBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
             [lookBtn setFrame:CGRectMake(ScreenWidth-50, 5, 50, 30)];
             [lookBtn setTag:i];
             [lookBtn addTarget:self action:@selector(lookBtnClick:) forControlEvents:UIControlEventTouchUpInside];

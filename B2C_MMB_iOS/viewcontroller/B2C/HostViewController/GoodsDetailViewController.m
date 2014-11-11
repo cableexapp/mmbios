@@ -238,8 +238,8 @@
         if(i == 0)
         {
             [btn setTitle:@"立即购买" forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-            btn.layer.borderColor = [UIColor blueColor].CGColor;
+            [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+            btn.layer.borderColor = MYCOLOR.CGColor;
             btn.layer.borderWidth = 1.0f;
             btn.layer.cornerRadius = 5;
         }
@@ -594,7 +594,7 @@
                 [label setFont:[UIFont systemFontOfSize:12]];
                 [label setText:[detailData shopName]];
                 [label setTextAlignment:NSTextAlignmentLeft];
-                [label setTextColor:[UIColor blueColor]];
+                [label setTextColor:MYCOLOR];
                 
                 UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 7, label.frame.size.width+40, 30)];
                 [firstView addSubview:firstIv];
@@ -651,11 +651,11 @@
                     }
                     [btn setTitle:@"商品评价" forState:UIControlStateNormal];
                 }
-                [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+                [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
                 [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
                 
                 [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-                [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+                [btn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
                 
                 [btn setTag:1000+i];
                 
@@ -927,13 +927,13 @@
                 [btn setSelected:YES];
             }
             [btn setTitle:colorName forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+            [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
             
             [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor whiteColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-            [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+            [btn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
             
-            btn.layer.borderColor = [UIColor blueColor].CGColor;
+            btn.layer.borderColor = MYCOLOR.CGColor;
             btn.layer.borderWidth = 0.5f;
             btn.layer.masksToBounds = YES;
             
@@ -1026,10 +1026,10 @@
         UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [sureBtn setFrame:CGRectMake((320-120)/2, 240, 120, 40)];
         [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
-        [sureBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [sureBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
         [sureBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        sureBtn.layer.borderColor = [UIColor blueColor].CGColor;
+        sureBtn.layer.borderColor = MYCOLOR.CGColor;
         sureBtn.layer.borderWidth = 1.0f;
         sureBtn.layer.cornerRadius = 5;
         [chooseColorAndCountView addSubview:sureBtn];

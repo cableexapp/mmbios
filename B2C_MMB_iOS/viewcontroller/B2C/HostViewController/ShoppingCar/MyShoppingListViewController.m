@@ -643,7 +643,7 @@
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateHighlighted];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [rightBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [rightBtn setFrame:CGRectMake(0, 13, 34, 25)];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -687,7 +687,7 @@
     payBtn.layer.cornerRadius = 2.0f;
     payBtn.layer.masksToBounds = YES;
     [self payBtnChange];
-    [payBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [payBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [buttomView addSubview:payBtn];
     
@@ -1093,9 +1093,9 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     UIButton *logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [logBtn setTitle:@"登陆" forState:UIControlStateNormal];
-    [logBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [logBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     logBtn.layer.borderWidth = 1.0F;
-    logBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    logBtn.layer.borderColor = MYCOLOR.CGColor;
     logBtn.layer.cornerRadius = 5;
     [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
     [logBtn addTarget:self action:@selector(logBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -1126,10 +1126,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
     UIButton *buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
     [buyBtn setTitle:@"选购商品" forState:UIControlStateNormal];
-    buyBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    buyBtn.layer.borderColor = MYCOLOR.CGColor;
     buyBtn.layer.borderWidth = 1.0f;
     buyBtn.layer.cornerRadius = 5.0f;
-    [buyBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [buyBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [buyBtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [noCell.contentView addSubview:buyBtn];
     

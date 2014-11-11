@@ -67,7 +67,7 @@
     UILabel *chooselabel = [[UILabel alloc] initWithFrame:CGRectMake((320-200)/2, 5, 200, 40)];
     [chooselabel setTextAlignment:NSTextAlignmentCenter];
     [chooselabel setText:@"一级分类选择"];
-    [chooselabel setTextColor:[UIColor blueColor]];
+    [chooselabel setTextColor:MYCOLOR];
     [chooselabel setFont:[UIFont systemFontOfSize:15]];
     [headView addSubview:chooselabel];
     

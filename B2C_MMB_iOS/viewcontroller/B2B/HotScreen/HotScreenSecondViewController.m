@@ -34,7 +34,7 @@
 {
     [super viewDidLoad];
     
-    self.upBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.upBtn.layer.borderColor = MYCOLOR.CGColor;
     self.upBtn.layer.borderWidth = 1.0f;
     self.upBtn.layer.cornerRadius = 5.0f;
     

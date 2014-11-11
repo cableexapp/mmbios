@@ -66,7 +66,7 @@
     
     [self pushAndPopStyle];
     
-    self.upBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    self.upBtn.layer.borderColor = MYCOLOR.CGColor;
     self.upBtn.layer.borderWidth = 1.0f;
     [self.upBtn setTitle:@"提交" forState:UIControlStateNormal];
     

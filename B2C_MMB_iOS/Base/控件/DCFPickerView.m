@@ -8,6 +8,7 @@
 
 #import "DCFPickerView.h"
 #import "DCFCustomExtra.h"
+#import "MCDefine.h"
 
 @implementation DCFPickerView
 
@@ -74,7 +75,7 @@
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelBtn setFrame:CGRectMake(20, 7, 60, 30)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBtn setBackgroundColor:[UIColor blueColor]];
+    [cancelBtn setBackgroundColor:MYCOLOR];
     [cancelBtn addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     [toolBar addSubview:cancelBtn];
     
@@ -82,7 +83,7 @@
     UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [doneBtn setFrame:CGRectMake(toolBar.frame.size.width-70, 7, 60, 30)];
     [doneBtn setTitle:@"完成" forState:UIControlStateNormal];
-    [doneBtn setBackgroundColor:[UIColor blueColor]];
+    [doneBtn setBackgroundColor:MYCOLOR];
     [doneBtn addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
     [toolBar addSubview:doneBtn];
     

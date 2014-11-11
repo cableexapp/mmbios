@@ -95,7 +95,7 @@
     [_chooseBtn setTitle:@"请选择已验证方式" forState:UIControlStateNormal];
     
     
-    _getValidateBtn.layer.borderColor = [UIColor blueColor].CGColor;
+    _getValidateBtn.layer.borderColor = MYCOLOR.CGColor;
     _getValidateBtn.layer.borderWidth = 1.0f;
     _getValidateBtn.layer.cornerRadius = 5;
     _getValidateBtn.layer.masksToBounds = YES;

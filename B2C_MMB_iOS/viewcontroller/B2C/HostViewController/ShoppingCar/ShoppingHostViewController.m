@@ -304,7 +304,7 @@
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + iv.frame.size.width + 10, iv.frame.origin.y, 100, 30)];
                 [label setText:[useArray objectAtIndex:indexPath.row*2 + i]];
-                [label setTextColor:[UIColor blueColor]];
+                [label setTextColor:MYCOLOR];
                 [label setBackgroundColor:[UIColor clearColor]];
                 [view addSubview:label];
                 

@@ -94,7 +94,7 @@
     UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, 250, 30)];
     [label_1 setText:@"您的订单已提交成功"];
     [label_1 setTextAlignment:NSTextAlignmentLeft];
-    [label_1 setTextColor:[UIColor blueColor]];
+    [label_1 setTextColor:MYCOLOR];
     [label_1 setFont:[UIFont systemFontOfSize:13]];
     [view addSubview:label_1];
     

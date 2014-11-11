@@ -14,6 +14,8 @@
 
 - (void) removeSubView;
 - (void) reloadData;
+- (void) hideKeyBoard:(NSArray *) array WithTextFieldOrTextView:(id) textFieldOrTextView;
+
 @end
 
 @interface B2BAskPriceCarEditViewController : UIViewController<PickerView,UITextFieldDelegate,ConnectionDelegate,UITextViewDelegate>
@@ -44,3 +46,6 @@
 
 @property (assign,nonatomic) id<RemoveSubView> delegate;
 @end
+
+
+

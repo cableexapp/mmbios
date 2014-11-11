@@ -445,17 +445,17 @@
     _clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_clearBtn setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 20, 10, 40, 20)];
     [_clearBtn setTitle:@"清空" forState:UIControlStateNormal];
-    [_clearBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [_clearBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [_clearBtn addTarget:self action:@selector(clear:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:_clearBtn];
     
     
     _lineView = [[UIView alloc] initWithFrame:CGRectMake(_clearBtn.frame.origin.x + _clearBtn.frame.size.width, _clearBtn.frame.origin.y, 1, 20)];
-    [_lineView setBackgroundColor:[UIColor blueColor]];
+    [_lineView setBackgroundColor:MYCOLOR];
     [topView addSubview:_lineView];
     
     _sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_sureBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [_sureBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [_sureBtn setTitle:@"确定" forState:UIControlStateNormal];
     [_sureBtn setFrame:CGRectMake(_lineView.frame.origin.x+_lineView.frame.size.width, _lineView.frame.origin.y, 40, 20)];
     [_sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];

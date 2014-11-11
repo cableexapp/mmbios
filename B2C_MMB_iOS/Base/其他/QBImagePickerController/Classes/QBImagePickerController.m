@@ -97,7 +97,7 @@
     }
     else
     {
-        [back setTintColor:[UIColor blueColor]];
+        [back setTintColor:MYCOLOR];
     }
     self.navigationItem.backBarButtonItem = back;
     
@@ -204,7 +204,7 @@
         }
         else
         {
-            [cancelButton setTintColor:[UIColor blueColor]];
+            [cancelButton setTintColor:MYCOLOR];
         }
         [cancelButton release];
     } else {

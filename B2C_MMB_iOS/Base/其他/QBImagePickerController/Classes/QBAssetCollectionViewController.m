@@ -85,7 +85,7 @@
     }
     else
     {
-        [back setTintColor:[UIColor blueColor]];
+        [back setTintColor:MYCOLOR];
     }
     self.navigationItem.backBarButtonItem = back;
     

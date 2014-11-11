@@ -29,7 +29,8 @@
         [self setBackgroundColor:[UIColor clearColor]];
         [self setText:string];
         [self setTextAlignment:NSTextAlignmentCenter];
-        [self setTextColor:[UIColor colorWithRed:18.0/255.0 green:104.0/255.0 blue:253.0/255.0 alpha:1.0]];
+//        [self setTextColor:[UIColor colorWithRed:18.0/255.0 green:104.0/255.0 blue:253.0/255.0 alpha:1.0]];
+        [self setTextColor:[UIColor whiteColor]];
         [self setFont:[UIFont systemFontOfSize:20]];
     }
     return self;

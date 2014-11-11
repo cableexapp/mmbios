@@ -225,7 +225,7 @@
         [cell.contentView addSubview:cellIv];
 
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-0.5, 0, 0.5, cell.contentView.frame.size.height)];
-        [lineView setBackgroundColor:[UIColor blueColor]];
+        [lineView setBackgroundColor:MYCOLOR];
         [cell.contentView addSubview:lineView];
         
         [cellIvArray addObject:cellIv];

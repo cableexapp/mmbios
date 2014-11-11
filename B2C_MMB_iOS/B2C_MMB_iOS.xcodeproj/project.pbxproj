@@ -582,7 +582,6 @@
 		8BA7C2921A10A8DD00758B0F /* XMPPResourceCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1B31A10A8DC00758B0F /* XMPPResourceCoreDataStorageObject.m */; };
 		8BA7C2931A10A8DD00758B0F /* XMPPRoster.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1B41A10A8DC00758B0F /* XMPPRoster.xcdatamodel */; };
 		8BA7C2941A10A8DD00758B0F /* XMPPRosterCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1B61A10A8DC00758B0F /* XMPPRosterCoreDataStorage.m */; };
-		8BA7C2951A10A8DD00758B0F /* XMPPUserCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1B81A10A8DC00758B0F /* XMPPUserCoreDataStorageObject.m */; };
 		8BA7C2961A10A8DD00758B0F /* XMPPResourceMemoryStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1BB1A10A8DC00758B0F /* XMPPResourceMemoryStorageObject.m */; };
 		8BA7C2971A10A8DD00758B0F /* XMPPRosterMemoryStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1BD1A10A8DC00758B0F /* XMPPRosterMemoryStorage.m */; };
 		8BA7C2981A10A8DD00758B0F /* XMPPUserMemoryStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1C01A10A8DC00758B0F /* XMPPUserMemoryStorageObject.m */; };
@@ -4662,6 +4661,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4692,10 +4692,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "badff7cd-00d2-42d7-abe1-1d37a5459f48";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -4703,6 +4704,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4727,16 +4729,19 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "badff7cd-00d2-42d7-abe1-1d37a5459f48";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;
 		};
 		6181A37C19CFC3F9000E2D14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4767,6 +4772,7 @@
 		6181A37D19CFC3F9000E2D14 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

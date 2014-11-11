@@ -249,7 +249,7 @@
 //服务器繁忙提示
 -(void)ServerisBusy:(NSNotification *)busyMessage
 {
-    //    noNetMessage.text = @"服务器忙，请稍后重试!";
+    //noNetMessage.text = @"服务器忙，请稍后重试!";
 }
 
 //网络已连接提示

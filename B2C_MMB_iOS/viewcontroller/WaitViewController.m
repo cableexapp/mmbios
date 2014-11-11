@@ -172,15 +172,21 @@ double secondsCountDown =0;
     [self.appDelegate reConnect];
     if ([self.tempFrom isEqualToString:@"首页在线客服"])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+        [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
     else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
     {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
     }
+    else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
+    {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+    }
     else
     {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.tabBarController setSelectedIndex:0];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
         [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
@@ -441,20 +447,29 @@ double secondsCountDown =0;
         {
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
         }
+        else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
+        {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+        }
         else
         {
-             [self.navigationController popToRootViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
             [self.navigationController.tabBarController.tabBar setHidden:NO];
         }
-        
-      
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
     }
 }
 
 -(void)goToAskPrice:(NSNotification *)newMessage
 {
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+    if([self.tempFrom isEqualToString:@"来自快速询价客服"])
+    {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+    }
+    else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
+    {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+    }
 }
 - (AppDelegate *)appDelegate
 {

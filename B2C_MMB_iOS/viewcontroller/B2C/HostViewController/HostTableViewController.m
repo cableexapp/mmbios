@@ -66,6 +66,7 @@
             [view setHidden:YES];
         }
     }
+     [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 - (void) viewWillDisappear:(BOOL)animated
 {
@@ -85,7 +86,6 @@
 {
     [super viewDidAppear:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 

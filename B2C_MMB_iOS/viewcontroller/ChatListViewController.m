@@ -19,6 +19,8 @@
 
 @end
 
+int flagPage = 0;
+
 @implementation ChatListViewController
 @synthesize memberTableView;
 @synthesize tempArray;
@@ -251,12 +253,23 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
+    else if([self.fromString isEqualToString:@"热门型号在线咨询"])
+    {
+        flagPage = 1;
+    }
     else
     {
         [self.tabBarController setSelectedIndex:0];
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (flagPage == 1)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 
 -(void)goBackAction
@@ -268,6 +281,10 @@
     else if([self.fromString isEqualToString:@"来自快速询价客服"])
     {
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if([self.fromString isEqualToString:@"热门型号在线咨询"])
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else
     {

@@ -14,6 +14,7 @@
 #import "AppDelegate.h"
 #import "DCFStringUtil.h"
 #import "B2BAskPriceCarViewController.h"
+#import "ChatListViewController.h"
 
 #define pi 3.14159265359
 #define   DEGREES_TO_RADIANS(degrees)  ((pi * degrees)/ 180)
@@ -64,6 +65,11 @@
     {
         [HUD hide:YES];
     }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -200,6 +206,7 @@
     }
     [self allKinds:btnArray];
 }
+
 
 #pragma mark - 所有型号的分类，一级，二级，三级
 - (void) allKinds:(NSMutableArray *) arr
@@ -468,7 +475,11 @@
 
 - (IBAction)imbtnClick:(id)sender
 {
-    NSLog(@"im");
+    NSLog(@"热门型号在线咨询");
+    [self setHidesBottomBarWhenPushed:YES];
+    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+    chatVC.fromString = @"热门型号在线咨询";
+    [self.navigationController pushViewController:chatVC animated:YES];
 }
 
 - (IBAction)moreModelBtnClick:(id)sender

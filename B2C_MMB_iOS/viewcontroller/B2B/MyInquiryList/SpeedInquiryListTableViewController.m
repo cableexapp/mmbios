@@ -114,7 +114,7 @@
 {
     if(URLTag == URLInquiryListSpeedTag)
     {
-        
+        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];

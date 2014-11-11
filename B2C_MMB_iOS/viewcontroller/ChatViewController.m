@@ -229,7 +229,6 @@
     }
     else if ([self.fromStringFlag isEqualToString:@"热门型号在线咨询"])
     {
-        NSLog(@"聊天界面- - 热门型号在线咨询");
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
     }

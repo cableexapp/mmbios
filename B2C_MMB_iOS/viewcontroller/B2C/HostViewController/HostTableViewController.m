@@ -18,6 +18,7 @@
 #import "CableSecondAndThirdStepViewController.h"
 #import "ChatListViewController.h"
 #import "HotScreenFirstViewController.h"
+#import "SearchViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -66,21 +67,20 @@
             [view setHidden:YES];
         }
     }
-     [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 - (void) viewWillDisappear:(BOOL)animated
 {
+
     [super viewWillDisappear:YES];
-    
     if(conn)
     {
         [conn stopConnection];
         conn = nil;
     }
-    
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
+        [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
+
 
 - (void) viewDidAppear:(BOOL)animated
 {
@@ -91,13 +91,18 @@
 
 - (void) searchTap:(UITapGestureRecognizer *) sender
 {
-    ChooseListTableViewController *choose = [[ChooseListTableViewController alloc] init];
-    [self.navigationController pushViewController:choose animated:YES];
+//    ChooseListTableViewController *choose = [[ChooseListTableViewController alloc] init];
+//    [self setHidesBottomBarWhenPushed:YES];
+//    [self.navigationController pushViewController:choose animated:YES];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    [self setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 - (void) search:(UIButton *) sender
 {
     ChooseListTableViewController *choose = [[ChooseListTableViewController alloc] init];
+     [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:choose animated:YES];
 }
 

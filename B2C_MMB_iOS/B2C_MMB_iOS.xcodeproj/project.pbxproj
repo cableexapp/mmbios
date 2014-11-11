@@ -35,6 +35,8 @@
 		6140E7C91A01DE4C00E349E3 /* hotModelSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */; };
 		6140E7CA1A01DE4C00E349E3 /* hotModelSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C71A01DE4C00E349E3 /* hotModelSelected@2x.png */; };
 		6140E7CB1A01DE4C00E349E3 /* hotModelSelected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6140E7C81A01DE4C00E349E3 /* hotModelSelected@3x.png */; };
+		614A83FB1A11ABCD00D4FE1F /* MyFastInquiryOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 614A83FA1A11ABCD00D4FE1F /* MyFastInquiryOrder.m */; };
+		614A84031A11AC5600D4FE1F /* B2BMyInquiryListFastData.m in Sources */ = {isa = PBXBuildFile; fileRef = 614A84021A11AC5600D4FE1F /* B2BMyInquiryListFastData.m */; };
 		61551E8D1A0B4D21004F50FF /* B2BAskPriceCarEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61551E8A1A0B4D21004F50FF /* B2BAskPriceCarEditViewController.m */; };
 		61551E8E1A0B4D21004F50FF /* B2BAskPriceCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61551E8C1A0B4D21004F50FF /* B2BAskPriceCarViewController.m */; };
 		61551E911A0B4D6D004F50FF /* B2BAskPriceInquirySheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61551E901A0B4D6D004F50FF /* B2BAskPriceInquirySheetViewController.m */; };
@@ -748,6 +750,10 @@
 		6140E7C61A01DE4C00E349E3 /* hotModelSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hotModelSelected.png; sourceTree = "<group>"; };
 		6140E7C71A01DE4C00E349E3 /* hotModelSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotModelSelected@2x.png"; sourceTree = "<group>"; };
 		6140E7C81A01DE4C00E349E3 /* hotModelSelected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hotModelSelected@3x.png"; sourceTree = "<group>"; };
+		614A83F91A11ABCD00D4FE1F /* MyFastInquiryOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFastInquiryOrder.h; sourceTree = "<group>"; };
+		614A83FA1A11ABCD00D4FE1F /* MyFastInquiryOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFastInquiryOrder.m; sourceTree = "<group>"; };
+		614A84011A11AC5600D4FE1F /* B2BMyInquiryListFastData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BMyInquiryListFastData.h; sourceTree = "<group>"; };
+		614A84021A11AC5600D4FE1F /* B2BMyInquiryListFastData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BMyInquiryListFastData.m; sourceTree = "<group>"; };
 		61551E891A0B4D21004F50FF /* B2BAskPriceCarEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BAskPriceCarEditViewController.h; sourceTree = "<group>"; };
 		61551E8A1A0B4D21004F50FF /* B2BAskPriceCarEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BAskPriceCarEditViewController.m; sourceTree = "<group>"; };
 		61551E8B1A0B4D21004F50FF /* B2BAskPriceCarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BAskPriceCarViewController.h; sourceTree = "<group>"; };
@@ -1884,6 +1890,15 @@
 			path = hotModelSelected;
 			sourceTree = "<group>";
 		};
+		614A84001A11AC5600D4FE1F /* B2BMyInquiryListFastData */ = {
+			isa = PBXGroup;
+			children = (
+				614A84011A11AC5600D4FE1F /* B2BMyInquiryListFastData.h */,
+				614A84021A11AC5600D4FE1F /* B2BMyInquiryListFastData.m */,
+			);
+			path = B2BMyInquiryListFastData;
+			sourceTree = "<group>";
+		};
 		61551E881A0B4D21004F50FF /* AskPriceCar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1917,6 +1932,8 @@
 				61551E9E1A0BA18A004F50FF /* NormalInquiryListTableViewController.m */,
 				61551EA01A0BA1A2004F50FF /* SpeedInquiryListTableViewController.h */,
 				61551EA11A0BA1A2004F50FF /* SpeedInquiryListTableViewController.m */,
+				614A83F91A11ABCD00D4FE1F /* MyFastInquiryOrder.h */,
+				614A83FA1A11ABCD00D4FE1F /* MyFastInquiryOrder.m */,
 				6195F5F71A0CCE6B0036D168 /* MyNormalInquiryDetailController.h */,
 				6195F5F81A0CCE6B0036D168 /* MyNormalInquiryDetailController.m */,
 				6195F5F41A0CC5AA0036D168 /* MyInquiryDetailTableViewController.h */,
@@ -2155,6 +2172,7 @@
 		6181A3DF19CFC4C2000E2D14 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				614A84001A11AC5600D4FE1F /* B2BMyInquiryListFastData */,
 				61383AA21A0F53F700AD3446 /* B2BGetModelByIdData */,
 				6195F5F01A0C58B00036D168 /* B2BMyInquiryListNormalData */,
 				61551E921A0B675F004F50FF /* B2BAddressData */,
@@ -4426,6 +4444,7 @@
 				6181A35A19CFC3F9000E2D14 /* AppDelegate.m in Sources */,
 				6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */,
 				61ADE7DE1A10537A00D773B9 /* HotScreenFirstViewController.m in Sources */,
+				614A83FB1A11ABCD00D4FE1F /* MyFastInquiryOrder.m in Sources */,
 				6181A4C919CFC4C2000E2D14 /* DCFPickerView.m in Sources */,
 				8BA7C2CE1A10A8DD00758B0F /* XMPPTime.m in Sources */,
 				612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */,
@@ -4464,6 +4483,7 @@
 				8BA7C2E51A10A8DD00758B0F /* XMPPIDTracker.m in Sources */,
 				8BA7C2851A10A8DD00758B0F /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				8BA7C2C81A10A8DD00758B0F /* XMPPMessageArchiving.m in Sources */,
+				614A84031A11AC5600D4FE1F /* B2BMyInquiryListFastData.m in Sources */,
 				6181A35619CFC3F9000E2D14 /* main.m in Sources */,
 				8BA7C2BE1A10A8DD00758B0F /* XMPPTransports.m in Sources */,
 				6181A51219CFC4C2000E2D14 /* SDWebImageDownloader.m in Sources */,

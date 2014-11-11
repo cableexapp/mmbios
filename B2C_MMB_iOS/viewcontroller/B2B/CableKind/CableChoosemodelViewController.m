@@ -55,6 +55,10 @@
 {
     [super viewWillAppear:YES];
     
+    if(addToCarArray)
+    {
+        [addToCarArray removeAllObjects];
+    }
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
@@ -118,7 +122,7 @@
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:askPriceBtn];
     self.navigationItem.rightBarButtonItem = item;
-
+    
     
     if(!topLabel)
     {
@@ -150,8 +154,8 @@
     {
         mySearch = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topLabel.frame.origin.y+topLabel.frame.size.height, ScreenWidth, 44)];
         [mySearch setDelegate:self];
-   
-//        [mySearch setBarStyle:UIBarStyleBlackOpaque];
+        
+        //        [mySearch setBarStyle:UIBarStyleBlackOpaque];
         [mySearch setPlaceholder:@"搜索该分类下的型号"];
         [self.view addSubview:mySearch];
     }
@@ -186,7 +190,7 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     [moreCell startAnimation];
-
+    
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -372,13 +376,13 @@
 
 - (void) cellBtnClick:(UIButton *) sender
 {
-
+    
     if(badge >= 50)
     {
         [DCFStringUtil showNotice:@"数目不能超过50个"];
         return;
     }
-
+    
     btnTag = sender.tag;
     
     
@@ -413,7 +417,7 @@
     }
     
     NSString *text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:btnTag] theModel]];
-
+    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -441,14 +445,13 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-
+    
 }
 
 
 //加入购物车 步骤2
 - (void)addShopFinished:(CALayer*)transitionLayer
 {
-
     badge = addToCarArray.count+carCount;
     NSString *str = nil;
     if(badge <= 0)
@@ -460,10 +463,10 @@
         str = [NSString stringWithFormat:@"询价车 +%d",badge];
     }
     [askPriceBtn setTitle:str forState:UIControlStateNormal];
-
+    
     
     transitionLayer.opacity = 0;
-
+    
     CALayer *transitionLayer1 = [[CALayer alloc] init];
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -471,7 +474,7 @@
     transitionLayer1.frame = [[UIApplication sharedApplication].keyWindow convertRect:askPriceBtn.bounds fromView:askPriceBtn];
     [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer1];
     [CATransaction commit];
-
+    
 }
 
 #pragma mark - searchBar
@@ -497,7 +500,7 @@
             [cancel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
     }
-
+    
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -532,9 +535,9 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     return 44;
-
+    
 }
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -572,14 +575,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

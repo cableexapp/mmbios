@@ -23,7 +23,7 @@
     int pageSize; //每页条数
     BOOL _reloading;
     BOOL flag;
-
+    
     NSMutableArray *dataArray;
     NSMutableArray *lookBtnArray;  //查看按钮数组
     NSMutableArray *upTimeLabelArray;  //提交时间数组
@@ -106,7 +106,7 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     [moreCell startAnimation];
-
+    
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -183,7 +183,7 @@
         }
         
         [self.tableView reloadData];
-
+        
     }
 }
 
@@ -254,7 +254,7 @@
     {
         CGSize size_Kind;
         NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[myItems objectAtIndex:indexPath.row]];
-
+        
         NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
         NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
         NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
@@ -267,10 +267,10 @@
         {
             size_Kind = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:kind WithSize:CGSizeMake(ScreenWidth-65, MAXFLOAT)];
         }
-//        if(size_Kind.height <= 30)
-//        {
-//            return 70;
-//        }
+        //        if(size_Kind.height <= 30)
+        //        {
+        //            return 70;
+        //        }
         return size_Kind.height+40;
     }
     else
@@ -358,7 +358,7 @@
         return moreCell;
     }
     
-
+    
     NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if(cell == nil)
@@ -402,7 +402,7 @@
                 NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[myItems objectAtIndex:indexPath.row]];
                 
                 model = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryModel"]];
-
+                
                 if(model.length == 0 || [model isKindOfClass:[NSNull class]])
                 {
                     size_model = CGSizeMake(40, 30);
@@ -413,7 +413,7 @@
                 }
                 
                 unitString = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
-
+                
                 if(unitString.length == 0 || [unitString isKindOfClass:[NSNull class]])
                 {
                     size_unitString = CGSizeMake(30, 30);
@@ -424,7 +424,7 @@
                 }
                 
                 priceString = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
-
+                
                 if(priceString.length == 0 || [priceString isKindOfClass:[NSNull class]])
                 {
                     size_priceString = CGSizeMake(30, 30);
@@ -446,16 +446,16 @@
                 {
                     size_Kind = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:kind WithSize:CGSizeMake(cell.contentView.frame.size.width-65, MAXFLOAT)];
                 }
-
+                
             }
             UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_model.width+40, 30)];
             if(model.length == 0 || [model isKindOfClass:[NSNull class]])
             {
-//                [modelLabel setText:[NSString stringWithFormat:@"%@",model]];
+                //                [modelLabel setText:[NSString stringWithFormat:@"%@",model]];
             }
             else
             {
-//                [modelLabel setText:[NSString stringWithFormat:@"型号:%@",model]];
+                //                [modelLabel setText:[NSString stringWithFormat:@"型号:%@",model]];
             }
             [modelLabel setText:[NSString stringWithFormat:@"型号:%@",model]];
             [modelLabel setFont:[UIFont systemFontOfSize:12]];
@@ -486,8 +486,8 @@
             
             if([[[dataArray objectAtIndex:indexPath.section] status] isEqualToString:@"4"] || [[[dataArray objectAtIndex:indexPath.section] status] isEqualToString:@"6"])
             {
-//                [priceLabel setHidden:YES];
-//                [unitLabel setHidden:YES];
+                //                [priceLabel setHidden:YES];
+                //                [unitLabel setHidden:YES];
             }
             else
             {
@@ -517,7 +517,7 @@
             [cell.contentView addSubview:lookBtn];
         }
         
-
+        
     }
     return cell;
 }

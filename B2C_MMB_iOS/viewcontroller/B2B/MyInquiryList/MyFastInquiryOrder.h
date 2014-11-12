@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "B2BMyInquiryListFastData.h"
+#import "DCFConnectionUtil.h"
 
-@interface MyFastInquiryOrder : UIViewController
-
+@interface MyFastInquiryOrder : UIViewController<ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
 @property (strong,nonatomic) B2BMyInquiryListFastData *fastData;
 
 @property (weak, nonatomic) IBOutlet UILabel *orderLabel;

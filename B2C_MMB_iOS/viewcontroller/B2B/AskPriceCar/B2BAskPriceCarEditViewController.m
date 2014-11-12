@@ -24,7 +24,6 @@
     
     NSString *str;  //textview内容
     
-    NSArray *textFieldArray;
     
     NSMutableArray *arr;
     
@@ -54,7 +53,6 @@
     self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
     self.sureBtn.layer.cornerRadius = 5.0f;
     
-    textFieldArray = [[NSArray alloc] initWithObjects:self.numTF,self.unitTF,self.timeTF,self.specTF,self.volTF,self.colorTF,self.featureTF,self.requestTF, nil];
     
     [self.modelLabel setText:self.myModel];
     
@@ -144,20 +142,47 @@
     {
         if(result == 1)
         {
+            [DCFStringUtil showNotice:@"编辑成功"];
             [self.delegate removeSubView];
             [self.delegate reloadData];
         }
         else
         {
-            
+            [DCFStringUtil showNotice:@"编辑失败"];
         }
     }
 }
 
+- (IBAction)unitBtnClick:(id)sender
+{
+    arr = [[NSMutableArray alloc] initWithObjects:@"KM",@"吨", nil];
+    [self loadPickerViewWithArray:arr WithTag:10000];
+}
+
+- (IBAction)specBtnClick:(id)sender
+{
+    [self loadPickerViewWithArray:specArray WithTag:10001];
+}
+
+- (IBAction)volBtnClick:(id)sender
+{
+    [self loadPickerViewWithArray:voltageArray WithTag:10002];
+}
+
+- (IBAction)colorBtnClick:(id)sender
+{
+    arr = [[NSMutableArray alloc] initWithObjects:@"红色",@"黄色",@"蓝色",@"绿色",@"黄绿色",@"白色",@"黑色",@"其他", nil];
+    [self loadPickerViewWithArray:arr WithTag:10003];
+}
+
+- (IBAction)featherBtnClick:(id)sender
+{
+    [self loadPickerViewWithArray:featureArray WithTag:10004];
+}
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    //    [self.delegate removeSubView];
+    [self.delegate removeSubView];
 }
 
 - (void) textViewDidChange:(UITextView *)textView
@@ -176,9 +201,6 @@
 
 - (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    [self.delegate hideKeyBoard:textFieldArray WithTextFieldOrTextView:self.requestTF];
-
-    
     if (self.requestTF.text.length==0){//textview长度为0
         if ([text isEqualToString:@""]) {//判断是否为删除键
             self.requestLabel.hidden=NO;//隐藏文字
@@ -259,8 +281,6 @@
 {
     if(textView == self.requestTF)
     {
-        [self.delegate hideKeyBoard:textFieldArray WithTextFieldOrTextView:textView];
-
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDuration:0.3];
@@ -268,20 +288,6 @@
         [UIView commitAnimations];
     }
 }
-
-//- (void) loadSubTableViewWithWidth:(float) width WithHeight:(float) height WithOriX:(float) x WithOriY:(float) y
-//{
-//    if(subTV)
-//    {
-//        [subTV removeFromSuperview];
-//        subTV = nil;
-//    }
-//    
-//    subTV = [[UITableView alloc] initWithFrame:CGRectMake(x, y, width, height)];
-//    [subTV setDataSource:self];
-//    [subTV setDelegate:self];
-//    [self.view addSubview:subTV];
-//}
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -316,50 +322,20 @@
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self.delegate hideKeyBoard:textFieldArray WithTextFieldOrTextView:textField];
-
-    if(textField == self.unitTF)
+    if(textField == self.numTF)
     {
-        arr = [[NSMutableArray alloc] initWithObjects:@"KM",@"吨", nil];
-        
-        //        [self loadSubTableViewWithWidth:self.unitTF.frame.size.width WithHeight:40 WithOriX:self.unitTF.frame.origin.x WithOriY:self.unitTF.frame.origin.y+self.unitTF.frame.size.height];
-        
-       [self loadPickerViewWithArray:arr WithTag:10000];
-    }
-    if(textField == self.specTF)
-    {
-        [self.specTF resignFirstResponder];
-        [self loadPickerViewWithArray:specArray WithTag:10001];
-    }
-    if(textField == self.volTF)
-    {
-        [self.volTF resignFirstResponder];
-        [self loadPickerViewWithArray:voltageArray WithTag:10002];
-    }
-    if(textField == self.colorTF)
-    {
-        [self.colorTF resignFirstResponder];
-        arr = [[NSMutableArray alloc] initWithObjects:@"红色",@"黄色",@"蓝色",@"绿色",@"黄绿色",@"白色",@"黑色",@"其他", nil];
-        [self loadPickerViewWithArray:arr WithTag:10003];
-    }
-    if(textField == self.featureTF)
-    {
-        [self.featureTF resignFirstResponder];
-        [self loadPickerViewWithArray:featureArray WithTag:10004];
-    }
-    
-    for(UITextField *text in textFieldArray)
-    {
-        if(text == textField)
+        if([self.timeTF isFirstResponder])
         {
-            
-        }
-        else
-        {
-            [text resignFirstResponder];
+            [self.timeTF resignFirstResponder];
         }
     }
-    
+    if(textField == self.timeTF)
+    {
+        if([self.numTF isFirstResponder])
+        {
+            [self.numTF resignFirstResponder];
+        }
+    }
 }
 
 - (void) loadPickerViewWithArray:(NSMutableArray *) array WithTag:(int) tag
@@ -377,23 +353,23 @@
     
     if(tag == 10000)
     {
-        [self.unitTF setText:title];
+        [self.unitBtn setTitle:title forState:UIControlStateNormal];
     }
     if(tag == 10001)
     {
-        [self.specTF setText:title];
+        [self.specBtn setTitle:title forState:UIControlStateNormal];
     }
     if(tag == 10002)
     {
-        [self.volTF setText:title];
+        [self.volBtn setTitle:title forState:UIControlStateNormal];
     }
     if(tag == 10003)
     {
-        [self.colorTF setText:title];
+        [self.colorBtn setTitle:title forState:UIControlStateNormal];
     }
     if(tag == 10004)
     {
-        [self.featureTF setText:title];
+        [self.featherBtn setTitle:title forState:UIControlStateNormal];
     }
     
 }
@@ -418,7 +394,7 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"EditInquiryItem",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&cartid=%@&spec=%@&voltage=%@&unit=%@&num=%@&color=%@&featureone=%@&require=%@&deliver=%@",token,self.myCartId,self.specTF.text,self.volTF.text,self.unitTF.text,self.numTF.text,self.colorTF.text,self.featureTF.text,self.requestTF.text,self.timeTF.text];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&cartid=%@&spec=%@&voltage=%@&unit=%@&num=%@&color=%@&featureone=%@&require=%@&deliver=%@",token,self.myCartId,self.specBtn.titleLabel.text,self.volBtn.titleLabel.text,self.unitBtn.titleLabel.text,self.numTF.text,self.colorBtn.titleLabel.text,self.featherBtn.titleLabel.text,self.requestTF.text,self.timeTF.text];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditInquiryItemTag delegate:self];
     

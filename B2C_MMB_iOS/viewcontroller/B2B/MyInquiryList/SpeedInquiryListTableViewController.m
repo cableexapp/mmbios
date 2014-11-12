@@ -112,7 +112,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     if(URLTag == URLInquiryListSpeedTag)
     {
         if(_reloading == YES)

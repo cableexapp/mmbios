@@ -108,7 +108,7 @@
     moreCell = (DCFChenMoreCell *)[tv dequeueReusableCellWithIdentifier:moreCellId];
     
     [moreCell startAnimation];
-
+    
 }
 
 - (void)viewDidLoad
@@ -150,7 +150,7 @@
         [tv setShowsVerticalScrollIndicator:NO];
         [self.view addSubview:tv];
     }
-   
+    
     [self loadRequest];
 }
 
@@ -192,30 +192,6 @@
     [tv reloadData];
 }
 
-- (void) hideKeyBoard:(NSArray *)array WithTextFieldOrTextView:(id)textFieldOrTextView
-{
-    NSLog(@"arr = %@",array);
-    
-    NSLog(@"***   %@   ****",textFieldOrTextView);
-
-    for(int i=0;i<array.count;i++)
-    {
-        id some = [array objectAtIndex:i];
-        if(textFieldOrTextView == some)
-        {
-            NSLog(@"第%d个",i);
-        }
-        else
-        {
-            [some resignFirstResponder];
-        }
-    }
-    if([textFieldOrTextView isKindOfClass:[UITextField class]] || [textFieldOrTextView isKindOfClass:[UITextView class]])
-    {
-//        [textFieldOrTextView ];
-    }
-
-}
 
 #pragma mark - 编辑
 - (void) edit:(UIButton *) sender
@@ -251,7 +227,7 @@
             break;
         case 1:
         {
-      
+            
             
             NSString *time = [DCFCustomExtra getFirstRunTime];
             NSString *string = [NSString stringWithFormat:@"%@%@",@"DeleteInquiryCartItem",time];
@@ -275,11 +251,11 @@
 #pragma mark - 删除
 - (void) del:(UIButton *) sender
 {
-
+    
     
     if(chooseArray.count == 0)
     {
-//        [DCFStringUtil showNotice:@"您尚未选择商品"];
+        //        [DCFStringUtil showNotice:@"您尚未选择商品"];
         return;
     }
     
@@ -309,7 +285,7 @@
         editAndDelBtnArray = [[NSMutableArray alloc] init];
         
         chooseArray = [[NSMutableArray alloc] init];
-
+        
         
         
         
@@ -473,10 +449,10 @@
 
 - (void) sectionHeadBtnClick:(UIButton *) sender
 {
-//    if(chooseArray || chooseArray.count != 0)
-//    {
-//        [chooseArray removeAllObjects];
-//    }
+    //    if(chooseArray || chooseArray.count != 0)
+    //    {
+    //        [chooseArray removeAllObjects];
+    //    }
     
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
@@ -487,9 +463,9 @@
             [b setSelected:btn.selected];
             if(b.selected == YES)
             {
-//                int tag = b.tag;
-//                data = [dataArray objectAtIndex:tag];
-//                [chooseArray addObject:data];
+                //                int tag = b.tag;
+                //                data = [dataArray objectAtIndex:tag];
+                //                [chooseArray addObject:data];
             }
         }
         else

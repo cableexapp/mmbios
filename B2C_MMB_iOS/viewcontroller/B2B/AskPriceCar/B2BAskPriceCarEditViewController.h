@@ -14,7 +14,6 @@
 
 - (void) removeSubView;
 - (void) reloadData;
-- (void) hideKeyBoard:(NSArray *) array WithTextFieldOrTextView:(id) textFieldOrTextView;
 
 @end
 
@@ -29,15 +28,18 @@
 @property (assign,nonatomic) float height;
 
 @property (weak, nonatomic) IBOutlet UILabel *modelLabel;
+
 @property (weak, nonatomic) IBOutlet UITextField *numTF;
-@property (weak, nonatomic) IBOutlet UITextField *unitTF;
 @property (weak, nonatomic) IBOutlet UITextField *timeTF;
-@property (weak, nonatomic) IBOutlet UITextField *specTF;
-@property (weak, nonatomic) IBOutlet UITextField *volTF;
-@property (weak, nonatomic) IBOutlet UITextField *colorTF;
-@property (weak, nonatomic) IBOutlet UITextField *featureTF;
 @property (weak, nonatomic) IBOutlet UILabel *requestLabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *unitBtn;
+@property (weak, nonatomic) IBOutlet UIButton *specBtn;
+@property (weak, nonatomic) IBOutlet UIButton *volBtn;
+@property (weak, nonatomic) IBOutlet UIButton *colorBtn;
+@property (weak, nonatomic) IBOutlet UIButton *featherBtn;
+
 
 @property (weak, nonatomic) IBOutlet UITextView *requestTF;
 

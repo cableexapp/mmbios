@@ -11,6 +11,8 @@
 #import "DCFTopLabel.h"
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
+#import "UIViewController+AddPushAndPopStyle.h"
+
 
 @interface HotKindFirstViewController ()
 {
@@ -61,6 +63,9 @@
     //初始化
     self.opend = NO;
     self.testSubTableView.hidden = YES;
+    
+    //每个界面都要加这句话
+    [self pushAndPopStyle];
     
     
     [super viewDidLoad];
@@ -165,7 +170,7 @@
         }
         // 去掉分割线
         [tableView setSeparatorStyle:0];
-        //         [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        //      [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         cell.contentView.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:228.0/255.0 blue:191.0/255.0 alpha:255.0/255.0];
         tableView.separatorColor = [ UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:255.0/255.0];
         //显示数据
@@ -248,7 +253,7 @@
 
 
 #pragma mark - 清空按钮
-- (IBAction)emptyBtn:(id)sender
+- (IBAction)clearBtn:(id)sender
 {
     //    UIAlertView *alter = [[UIAlertView alloc] initWithTitle:nil message:@"您确定要清空？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"您确定要清空吗？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -263,7 +268,8 @@
     self.opend = NO;
     [_testSubTableView setFrame:CGRectMake(_testSubTableView.frame.origin.x, _testSubTableView.frame.origin.y, _testSubTableView.frame.size.width, 0)];
     //   点击会返回上一个页面
-    //    [self.navigationController popToRootViewControllerAnimated:YES];
+    //  [self.navigationController popToRootViewControllerAnimated:YES];
+    
 }
 
 

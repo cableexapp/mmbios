@@ -15,7 +15,7 @@
 - (void) headerviewDidClickeNameview: (HotKindFirstViewController *)headerView;
 
 
-@end
+	@end
 
 @interface HotKindFirstViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 

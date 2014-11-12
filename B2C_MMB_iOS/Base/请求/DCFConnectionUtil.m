@@ -105,7 +105,7 @@
 
 
 //POST上传图片,strUrl表示服务器地址,dicText表示需要的参数,dicImage表示图片名字,strImageFileName表示上传到服务器的目录
-- (void)getResultFromUrlString:(NSString *)strUrl dicText:(NSDictionary *)dicText dicImage:(NSDictionary *)dicImage imageFilename:(NSString *)strImageFileName
+- (void)getResultFromUrlString:(NSString *)strUrl dicText:(NSDictionary *)dicText dicImage:(NSDictionary *)dicImage imageFilename:(NSMutableArray *)strImageFileName
 {
     NSString *url = strUrl;
     //分界线的标识符
@@ -130,20 +130,36 @@
     [body appendString:@"\r\n"];
     NSMutableArray *aryBody = [[NSMutableArray alloc]init];
     
-    for (NSString *strImageKey in [dicImage allKeys]) {
+    for(int i=0;i<[[dicImage allKeys] count];i++)
+    {
+        NSString *strImageKey = [NSString stringWithFormat:@"%@",[[dicImage allKeys] objectAtIndex:i]];
         NSMutableString *strBody = [[NSMutableString alloc]init];
-        
         [strBody appendFormat:@"\r\n%@\r\n",MPboundary];
+
+        NSString *S = [NSString stringWithFormat:@"%@",[strImageFileName objectAtIndex:i]];
+        
         //声明pic字段，文件名
-//        [strBody appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",strImageFileName,strImageKey];
-        [strBody appendFormat:@"Content-Disposition: form-data; name=%@; filename=%@\r\n",@"file",strImageKey];
+        [strBody appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",S,strImageKey];
+        //        [strBody appendFormat:@"Content-Disposition: form-data; name=%@; filename=%@\r\n",@"pic1",strImageKey];
         //声明上传文件的格式
-//        [strBody appendString:@"Content-Type: image/png\r\n\r\n"];
+        //        [strBody appendString:@"Content-Type: image/png\r\n\r\n"];
         [strBody appendString:@"Content-Type: multipart/form-data\r\n\r\n"];
         
         
         [aryBody addObject:strBody];
     }
+//    for (NSString *strImageKey in [dicImage allKeys]) {
+//        NSMutableString *strBody = [[NSMutableString alloc]init];
+//        
+//        [strBody appendFormat:@"\r\n%@\r\n",MPboundary];
+//        //声明pic字段，文件名
+//        [strBody appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",strImageFileName,strImageKey];
+//        //声明上传文件的格式
+//        [strBody appendString:@"Content-Type: multipart/form-data\r\n\r\n"];
+//        
+//        
+//        [aryBody addObject:strBody];
+//    }
     //声明结束符：--AaB03x--
     NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
     //声明myRequestData，用来放入http body

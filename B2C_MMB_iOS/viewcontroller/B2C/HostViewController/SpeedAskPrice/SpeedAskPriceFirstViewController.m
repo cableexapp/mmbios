@@ -14,6 +14,8 @@
 #import "SpeedAskPriceSecondViewController.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MCDefine.h"
+#import "LoginNaviViewController.h"
+#import "UIImage (fixOrientation).h"
 
 @interface SpeedAskPriceFirstViewController ()
 {
@@ -71,6 +73,21 @@
     [self.upBtn setTitle:@"提交" forState:UIControlStateNormal];
     
     [self.lastUpPicBtn setTag:100];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    [self.view addGestureRecognizer:tap];
+}
+
+- (void) tap:(UITapGestureRecognizer *) sender
+{
+   if([self.tel_Tf isFirstResponder])
+   {
+       [self.tel_Tf resignFirstResponder];
+   }
+    if([self.content_Tv isFirstResponder])
+    {
+        [self.content_Tv resignFirstResponder];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -316,43 +333,87 @@
     }
 }
 
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if(memberid.length == 0)
+    {
+        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
+
+- (NSString *) getUserName
+{
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+    
+    if(userName.length == 0)
+    {
+        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+    }
+    return userName;
+    
+}
+
 #pragma mark - 加载图片按钮
 - (void) loadImageBtn:(NSMutableArray *)ImageArray WithFlag:(BOOL)flag
 {
 }
 
--(void)procesPic:(UIImage*)img
+-(void)procesPic:(NSMutableArray*)imgarray
 {
-    //request server
+    NSMutableArray *imgArr = [[NSMutableArray alloc] init];
+    NSMutableArray *nameArr = [[NSMutableArray alloc] init];
+    NSMutableArray *strImageFileNameArray = [[NSMutableArray alloc] init];
+    NSString *strImageFileName = nil;
+
+    for(int i=0;i<chooseImageArray.count;i++)
+    {
+        UIImage *img = [chooseImageArray objectAtIndex:i];
+        
+        //图片压缩
+        NSData *data = UIImageJPEGRepresentation(img, 0.000000001);
+        UIImage *image = [UIImage imageWithData:data];
+        image = [image fixOrientation];
+
+        [imgArr addObject:img];
+//        imgArr = [NSArray arrayWithObject:img];
+        
+        NSString *nameString = [NSString stringWithFormat:@"%@",img.description];
+
+        NSRange range = NSMakeRange(1, nameString.length-2);
+        nameString = [nameString substringWithRange:range];
+        
+        NSRange range_1 = NSMakeRange(9, nameString.length-9);
+        nameString = [nameString substringWithRange:range_1];
+        
+        NSString *picName = [NSString stringWithFormat:@"%@.png",nameString];
+        
+        [nameArr addObject:picName];
+        
+        strImageFileName = [NSString stringWithFormat:@"pic%d",i+1];
+        [strImageFileNameArray addObject:strImageFileName];
+    }
+
     
-    //    NSString *tempStr = @"";
-    //    for(NSString *s in chooseClassArray)
-    //    {
-    //        if ([tempStr isEqualToString:@""])
-    //        {
-    //            tempStr = [NSString stringWithFormat:@"%@",s];
-    //        }
-    //        else
-    //        {
-    //            tempStr = [NSString stringWithFormat:@"%@,%@",tempStr,s];
-    //        }
-    //
-    //    }
-    //
-    //    conn = [[DCFConnectionUtil alloc]initWithURLTag:URLShareDymaticPicTag delegate:self];
-    //    NSString *userId = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]];
-    //
-    //    NSString *strRequest = [NSString stringWithFormat:@"userId=%@&dynamicId=%lld&classIds=%@&sessionKey=%@",userId,dynamicId,tempStr,[[NSUserDefaults standardUserDefaults] objectForKey:@"sessionKey"]];
-    //
-    //
-    //    NSString *urlStr = [NSString stringWithFormat:@"%@%@",URL_SHARE_PICTURE,strRequest];
-    //
-    //    NSArray *imgArr = [NSArray arrayWithObject:img];
-    //    NSArray *nameArr = [NSArray arrayWithObject:@"dymaticPhoto.png"];
-    //    NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"SubOem",time];
+    NSString *token = [DCFCustomExtra md5:string];
     
+    conn = [[DCFConnectionUtil alloc]initWithURLTag:URLUpImagePicTag delegate:self];
     
-    //    [conn getResultFromUrlString:urlStr dicText:nil dicImage:imgDic imageFilename:nil];
+    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@",[self getMemberId],token,[self getUserName],self.tel_Tf.text,[self getUserName],self.content_Tv.text];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?",strRequest];
+
+    
+    NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
+    
+    [conn getResultFromUrlString:urlString dicText:nil dicImage:imgDic imageFilename:strImageFileNameArray];
 }
 
 
@@ -390,11 +451,11 @@
                 NSDictionary *dic = (NSDictionary *)[mediaInfoArray objectAtIndex:i];
                 UIImage *img=[dic objectForKey:UIImagePickerControllerOriginalImage];
                 //图片压缩
-                CGSize imagesize = img.size;
-                imagesize.height =550;
-                imagesize.width = 550;
-                img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
-                NSData *imageData = UIImageJPEGRepresentation(img, 0.00001);
+//                CGSize imagesize = img.size;
+//                imagesize.height = 500;
+//                imagesize.width = 500;
+//                img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
+                NSData *imageData = UIImageJPEGRepresentation(img, 0.0000000001);
                 
                 UIImage *upLoadImage = nil;
                 if(upLoadImage == nil)
@@ -518,89 +579,54 @@
 
 - (IBAction)upBtnClick:(id)sender
 {
+    if(self.tel_Tf.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入手机号码"];
+        return;
+    }
+    BOOL validateTel = [DCFCustomExtra validateMobile:self.tel_Tf.text];
+    if(validateTel == NO)
+    {
+        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+        return;
+    }
     if(!HUD)
     {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [HUD setLabelText:@"发布中....."];
+        [HUD setLabelText:@"上传中....."];
         [HUD setDelegate:self];
     }
-    //    NSString *userId = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userId"]];
-    //
-    //    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-    //                         userId,@"userId",
-    //                         tv.text,@"content",
-    //                         chooseClassArray,@"classIds",
-    //                         nil];
-    //    NSString *pushString = [NSString stringWithFormat:@"jsonDynamicContent=%@&sessionKey=%@",[self dictoJSON:dic],[[NSUserDefaults standardUserDefaults] objectForKey:@"sessionKey"]];
-    //    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShareDymaticContentTag delegate:self];
-    //    [conn getResultFromUrlString:URL_SHARE_DYMATIC postBody:pushString method:POST];
-    //
-    [self setHidesBottomBarWhenPushed:YES];
-    SpeedAskPriceSecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceSecondViewController"];
-    [self.navigationController pushViewController:second animated:YES];
+
+
+    [self procesPic:chooseImageArray];
+    
+
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    //    if(URLTag == URLShareDymaticContentTag)
-    //    {
-    //        NSLog(@"%@",dicRespon);
-    //
-    //        if([result isEqualToString:@"1"])
-    //        {
-    //            NSDictionary *dataDic = [dicRespon objectForKey:@"data"];
-    //            dynamicId = [[dataDic objectForKey:@"dynamicId"] longLongValue];
-    //
-    //            if(hasClickPicBtn == YES)
-    //            {
-    //                for(int i = 0;i<chooseImageArray.count;i++)
-    //                {
-    //                    [self procesPic:[chooseImageArray objectAtIndex:i]];
-    //                }
-    //            }
-    //            else
-    //            {
-    //                //请求个人信息
-    //                //                    [self requestPersonMsg];
-    //            }
-    //
-    //        }
-    //        else
-    //        {
-    //            //                [DCFStringUtil showNotice:@"请求失败，请重试"];
-    //            //                return;
-    //        }
-    //    }
-    //    if(URLTag == URLShareDymaticPicTag)
-    //    {
-    //        NSLog(@"%@",dicRespon);
-    //
-    //        if([result isEqualToString:@"1"])
-    //        {
-    //            processPicCount++;
-    //            if(processPicCount >= chooseImageArray.count )
-    //            {
-    //                //请求个人信息
-    ////                [self requestPersonMsg];
-    //
-    //                [DCFStringUtil showNotice:@"上传成功"];
-    //            }
-    //
-    //            [self.lastUpPicBtn setEnabled:NO];
-    //
-    //
-    //        }
-    //        else
-    //        {
-    //            [self.lastUpPicBtn setEnabled:YES];
-    //            
-    //            [DCFStringUtil showNotice:@"上传失败"];
-    //            
-    //            [self.upBtn setEnabled:YES];
-    //        }
-    //    }
-    
+    if(URLTag == URLUpImagePicTag)
+    {
+        if(HUD)
+        {
+            [HUD hide:YES];
+        }
+        NSLog(@"%@",dicRespon);
+        int result = [[dicRespon objectForKey:@"result"] intValue];
+        if(result == 1)
+        {
+            [DCFStringUtil showNotice:@"上传成功"];
+            [self setHidesBottomBarWhenPushed:YES];
+            SpeedAskPriceSecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceSecondViewController"];
+            [self.navigationController pushViewController:second animated:YES];
+        }
+        else
+        {
+            [DCFStringUtil showNotice:@"上传失败"];
+        }
+    }
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -12,6 +12,7 @@
 #import "DCFCustomExtra.h"
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "MyCableOrderDetailViewController.h"
 
 @interface MyCableOrderHostViewController ()
 {
@@ -38,36 +39,54 @@
     [self.sv setContentOffset:CGPointMake(ScreenWidth*self.btnIndex, 0) animated:YES];
 }
 
+
+- (void) pushToDetailVCWithData:(B2BMyCableOrderListData *)data
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
+    myCableOrderDetailViewController.b2bMyCableOrderListData = data;
+    [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的电缆订单"];
+    self.navigationItem.titleView = top;
+    
+    [self pushAndPopStyle];
+    
     subTV_1 = [[MyCableHostSubTableViewController alloc] init];
     subTV_1.tag = 1;
+    subTV_1.delegate = self;
     [self addChildViewController:subTV_1];
     subTV_1.view.frame = self.firstView.bounds;
     [self.firstView addSubview:subTV_1.view];
     
     subTV_2 = [[MyCableHostSubTableViewController alloc] init];
     subTV_2.tag = 2;
+    subTV_2.delegate = self;
     [self addChildViewController:subTV_2];
     subTV_2.view.frame = self.secondView.bounds;
     [self.secondView addSubview:subTV_2.view];
     
     subTV_3 = [[MyCableHostSubTableViewController alloc] init];
     subTV_3.tag = 3;
+    subTV_3.delegate = self;
     [self addChildViewController:subTV_3];
     subTV_3.view.frame = self.thirdView.bounds;
     [self.thirdView addSubview:subTV_3.view];
     
     subTV_4 = [[MyCableHostSubTableViewController alloc] init];
     subTV_4.tag = 4;
+    subTV_4.delegate = self;
     [self addChildViewController:subTV_4];
     subTV_4.view.frame = self.fourView.bounds;
     [self.fourView addSubview:subTV_4.view];
     
     [self.sv setDelegate:self];
-    
+    [self.sv setContentSize:CGSizeMake(ScreenWidth*4, ScreenHeight-200)];
     
     topBtnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.sureBtn,self.payBtn,self.receiveBtn, nil];
     for(int i=0;i<topBtnArray.count;i++)
@@ -90,6 +109,21 @@
         {
             [btn setSelected:NO];
         }
+    }
+    if(_btnIndex == 1)
+    {
+        subTV_2.statusIndex = @"0";
+        [subTV_2 loadRequestWithStatus:@"0"];
+    }
+    if(_btnIndex == 2)
+    {
+        subTV_3.statusIndex = @"2";
+        [subTV_3 loadRequestWithStatus:@"2"];
+    }
+    if(_btnIndex == 3)
+    {
+        subTV_4.statusIndex = @"5";
+        [subTV_4 loadRequestWithStatus:@"5"];
     }
 }
 
@@ -118,8 +152,28 @@
     }
     
     int tag = btn.tag;
-    NSLog(@"tag = %d",tag);
     [self.sv setContentOffset:CGPointMake(ScreenWidth*tag, 0) animated:YES];
+    
+    if(tag == 0)
+    {
+        subTV_1.statusIndex = @"";
+        [subTV_1 loadRequestWithStatus:@""];
+    }
+    if(tag == 1)
+    {
+        subTV_2.statusIndex = @"0";
+        [subTV_2 loadRequestWithStatus:@"0"];
+    }
+    if(tag == 2)
+    {
+        subTV_3.statusIndex = @"2";
+        [subTV_3 loadRequestWithStatus:@"2"];
+    }
+    if(tag == 3)
+    {
+        subTV_4.statusIndex = @"5";
+        [subTV_4 loadRequestWithStatus:@"5"];
+    }
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
@@ -138,6 +192,36 @@
         {
             [btn setSelected:NO];
         }
+    }
+    
+
+}
+
+//- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+//{
+//    
+//}
+- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if(currentPageIndex == 0)
+    {
+        subTV_1.statusIndex = @"";
+        [subTV_1 loadRequestWithStatus:@""];
+    }
+    if(currentPageIndex == 1)
+    {
+        subTV_2.statusIndex = @"0";
+        [subTV_2 loadRequestWithStatus:@"0"];
+    }
+    if(currentPageIndex == 2)
+    {
+        subTV_3.statusIndex = @"2";
+        [subTV_3 loadRequestWithStatus:@"2"];
+    }
+    if(currentPageIndex == 3)
+    {
+        subTV_4.statusIndex = @"5";
+        [subTV_4 loadRequestWithStatus:@"5"];
     }
 }
 

@@ -14,7 +14,7 @@
 
 @property (strong,nonatomic) NSArray *myItems;
 
-@property (strong,nonatomic) NSString *myTime;
+@property (strong,nonatomic) NSString *cableOrderTime;
 
 @property (strong,nonatomic) NSString *orderid;
 
@@ -35,6 +35,9 @@
 @property (strong,nonatomic) NSString *receiveprovince;
 
 @property (strong,nonatomic) NSString *status;
+
+@property (strong,nonatomic) NSString *myStatus;
+
 
 @property (strong,nonatomic) NSString *tel;
 

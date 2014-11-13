@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MyCableHostSubTableViewController.h"
 
-@interface MyCableOrderHostViewController : UIViewController<UIScrollViewDelegate>
+@interface MyCableOrderHostViewController : UIViewController<UIScrollViewDelegate,UIGestureRecognizerDelegate,PushToDetailVC>
 {
     MyCableHostSubTableViewController *subTV_1;
     MyCableHostSubTableViewController *subTV_2;

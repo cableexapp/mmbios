@@ -124,7 +124,7 @@ enum {
     URLGetInquiryInfoTag,  //查询快速询价单对应的询价单详情
     
     URLOrderListTag,  //我的电缆订单列表
-
+    URLOrderDetailTag, //我的电缆订单详情查看
     
     URLUpImagePicTag
 };

@@ -10,6 +10,13 @@
 #import "DCFConnectionUtil.h"
 #import "CKRefreshControl.h"
 #import "EGORefreshTableHeaderView.h"
+#import "B2BMyCableOrderListData.h"
+
+@protocol PushToDetailVC <NSObject>
+
+- (void) pushToDetailVCWithData:(B2BMyCableOrderListData *) data;
+
+@end
 
 @interface MyCableHostSubTableViewController : UITableViewController<ConnectionDelegate,EGORefreshTableHeaderDelegate>
 {
@@ -18,4 +25,10 @@
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 
 @property (assign,nonatomic) int tag;
+@property (strong,nonatomic) NSString *statusIndex;
+@property (assign,nonatomic) id<PushToDetailVC> delegate;
+
+- (void) loadRequestWithStatus:(NSString *) sender;
 @end
+
+

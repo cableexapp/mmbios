@@ -557,10 +557,20 @@
         searchArray = [NSMutableArray arrayWithArray:[contentArray filteredArrayUsingPredicate:pred]];
         for(int i=0;i<searchArray.count;i++)
         {
+            NSString *textString = [searchArray objectAtIndex:i];
+            
+            NSMutableAttributedString *mytextString = [[NSMutableAttributedString alloc] initWithString:textString];
+            [mytextString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 1)];
+            [mytextString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, textString.length-3)];
+            
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, ScreenWidth-100, 30)];
             [label setText:[searchArray objectAtIndex:i]];
+            [label setTextColor:[UIColor redColor]];
             [label setFont:[UIFont systemFontOfSize:13]];
             [searchLabelArray addObject:label];
+            
+         
+            
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];

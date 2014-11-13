@@ -9,7 +9,7 @@
 #import "HotSecondViewController.h"
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
-//#import "MBProgressHUD+MJ.h"
+#import "MBProgressHUD.h"
 
 @interface HotSecondViewController ()
 
@@ -40,12 +40,11 @@
     self.navigationItem.titleView = top;
     [super viewDidLoad];
     
-    [self.PhoneNumber becomeFirstResponder];
-//    [self.PhoneNumber resignFirstResponder];
+    [self.PhoneNumber resignFirstResponder];
 //    [self.view endEditing:YES];
     
+//    数据加载到文本框
     NSString *str = @"";
-    
     for (NSDictionary *aDic in upArray) {
         str = [str stringByAppendingString:[NSString stringWithFormat:@"%@\n",[aDic objectForKey:@"typePls"]]];
     }
@@ -61,26 +60,16 @@
 }
 
 
-- (IBAction)TextField_DidEndOnExit:(id)sender {
-    // 隐藏键盘.
-    [sender resignFirstResponder];
-}
+
 
 - (IBAction)submitNews:(id)sender
 {
     
 //        UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@"友情提示" message:@"请登录后再提交" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
 //        [alter show];
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请登陆后再提交" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [sheet showInView:self.view];
-    
-//    if ([self.PhoneNumber.text isEqualToString:@"33"])
-//    {
-//        [MBProgressHUD showError:@"请输入正确的手机号码"];
-//    }
-    
-    
-    
+     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请登陆后再提交" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+      [sheet showInView:self.view];
+
 }
 
 

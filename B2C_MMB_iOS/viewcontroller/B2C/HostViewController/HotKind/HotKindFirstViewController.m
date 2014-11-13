@@ -8,6 +8,7 @@
 
 #import "HotKindFirstViewController.h"
 #import "HotKindFirstViewTableViewCell.h"
+#import "HotSecondViewController.h"
 #import "DCFTopLabel.h"
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
@@ -20,7 +21,7 @@
     NSMutableArray *selectArray;
 }
 
-
+- (IBAction)clickSubmit:(id)sender;
 
 
 @end
@@ -85,6 +86,7 @@
     }
       selectArray = [NSMutableArray arrayWithCapacity:dataArray.count];
      [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, 0)];
+    self.testSubTableView.hidden = YES;
     
 }
 
@@ -107,7 +109,15 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typePls"]];
+    NSString *str;
+    
+    if (tableView.tag == 33) {
+        str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typePls"]];
+    }
+    else
+    {
+        str = [NSString stringWithFormat:@"%@",[[selectArray objectAtIndex:indexPath.row] objectForKey:@"typePls"]];
+    }
     
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
     
@@ -174,7 +184,7 @@
         cell.contentView.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:228.0/255.0 blue:191.0/255.0 alpha:255.0/255.0];
         tableView.separatorColor = [ UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:255.0/255.0];
         //显示数据
-        NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
+        NSString *str = [NSString stringWithFormat:@"%@",[[selectArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
         [cell.textLabel setText:str];
         [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
         return cell;
@@ -200,13 +210,15 @@
     }
     [_testTableView reloadData];
     
+    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
+    
     if (self.isOpened) {
         [_testSubTableView reloadData];
         _testSubTableView.hidden = NO;
         
         //设置是控制tableview的最大高度
-        //        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
-        //        [self.tableview setFrame:CGRectMake(self.tableview.frame.origin.x, self.tableview.frame.origin.y, self.tableview.frame.size.width, height)];
+        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
+        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
     }
 }
 
@@ -240,12 +252,14 @@
         self.opend = NO;
 //        [ _testSubTableView setFrame:CGRectMake(_testSubTableView.frame.origin.x, _testSubTableView.frame.origin.y, _testSubTableView.frame.size.width, 0)];
         _testSubTableView.hidden = YES;
+        _testTableView.userInteractionEnabled = YES;
     }else
     {
         self.opend = YES;
         _testSubTableView.hidden = NO;
-        //        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
-        //        [self.tableview setFrame:CGRectMake(self.tableview.frame.origin.x, self.tableview.frame.origin.y, self.tableview.frame.size.width, height)];
+        _testTableView.userInteractionEnabled = NO;
+        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
+        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
         [_testSubTableView reloadData];
     }
     
@@ -255,21 +269,41 @@
 #pragma mark - 清空按钮
 - (IBAction)clearBtn:(id)sender
 {
+    NSLog(@"aaaaaa");
     //    UIAlertView *alter = [[UIAlertView alloc] initWithTitle:nil message:@"您确定要清空？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"您确定要清空吗？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [sheet showInView:self.view];
     
 }
 
+#pragma mark - 提交
+- (IBAction)clickSubmit:(id)sender
+{
+    HotSecondViewController *secCtr = [self.storyboard instantiateViewControllerWithIdentifier:@"hotSecondViewController"];
+    secCtr.upArray = selectArray;
+    [self.navigationController pushViewController:secCtr animated:YES];
+}
+
+
 #pragma mark - actionsheet的代理方法
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != 0) return;
     self.opend = NO;
+    _testSubTableView.hidden = YES;
+    _testTableView.userInteractionEnabled = YES;
     [_testSubTableView setFrame:CGRectMake(_testSubTableView.frame.origin.x, _testSubTableView.frame.origin.y, _testSubTableView.frame.size.width, 0)];
+    
     //   点击会返回上一个页面
     //  [self.navigationController popToRootViewControllerAnimated:YES];
     
+    [dataArray addObjectsFromArray:selectArray];
+    [selectArray removeAllObjects];
+    [_testTableView reloadData];
+    
+    
+    
+    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
 }
 
 

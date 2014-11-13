@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HotSecondViewController : UIViewController
+@interface HotSecondViewController : UIViewController<UIActionSheetDelegate>
 
-
+@property (strong, nonatomic) NSArray *upArray;
 
 @property (weak, nonatomic) IBOutlet UITextField *PhoneNumber;
+@property (weak, nonatomic) IBOutlet UITextView *markView;
+- (IBAction)TextField_DidEndOnExit:(id)sender;
 
+
+- (IBAction)submitNews:(id)sender;
 
 
 

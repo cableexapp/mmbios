@@ -123,9 +123,10 @@ enum {
     URLInquiryListSpeedTag,  //我的询价单查询（快速）
     URLGetInquiryInfoTag,  //查询快速询价单对应的询价单详情
     
+    URLOrderListTag,  //我的电缆订单列表
+
     
-    
-    URLUpImagePicTag,
+    URLUpImagePicTag
 };
 typedef NSUInteger URLTag;
 

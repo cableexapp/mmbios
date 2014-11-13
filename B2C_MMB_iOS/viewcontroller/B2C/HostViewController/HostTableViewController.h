@@ -10,6 +10,7 @@
 #import "EScrollerView.h"
 #import "HostSection1TableViewCell.h"
 #import "DCFConnectionUtil.h"
+#import "DCFColorUtil.h"
 
 @interface HostTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,EScrollerViewDelegate,HostSection1BtnClick,ConnectionDelegate>
 {

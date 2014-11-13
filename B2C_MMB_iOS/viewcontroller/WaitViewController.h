@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PICircularProgressView.h"
 #import "XMPPFramework.h"
+#import "DCFColorUtil.h"
 
 @interface WaitViewController : UIViewController<UIAlertViewDelegate>
 {

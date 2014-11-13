@@ -99,8 +99,6 @@ NSString *strUserId = @"";
     return udid;
 }
 
-
-
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     if(URLTag == URLShopListTag)
@@ -110,12 +108,10 @@ NSString *strUserId = @"";
     }
 }
 
-
-
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     //XMPP
     if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID])
     {
@@ -140,8 +136,6 @@ NSString *strUserId = @"";
    NSString *p = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
 //    sqlite3 *dataBase;
 //    if(sqlite3_open([p UTF8String], &dataBase) != SQLITE_OK)
-    
-   
     
     NSString *userId = [NSString stringWithFormat:@"%@",@"12345"];
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
@@ -381,7 +375,6 @@ NSString *strUserId = @"";
 {
     [self disconnect];
     [self reConnect];
-    
 }
 
 //连接服务器
@@ -391,7 +384,7 @@ NSString *strUserId = @"";
 	NSError *error = nil;
 	if (![[self xmppStream] authenticateWithPassword:@"123456" error:&error])
 	{
-        NSLog(@"Error authenticating: %@", error);
+//        NSLog(@"Error authenticating: %@", error);
         if (error != nil)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"errorMessage" object:nil];
@@ -408,14 +401,14 @@ NSString *strUserId = @"";
 
 -(void)goonline
 {
-    //    NSLog(@"goonline");
-    if (self.roster.count > 0)
-    {
-        [self.roster removeAllObjects];
-    }
+//    //    NSLog(@"goonline");
+
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
     [xmppStream sendElement:presence];
-    [self queryRoster];
+    if (self.roster.count == 0)
+    {
+        [self queryRoster];
+    }
 }
 
 - (BOOL)connect
@@ -479,15 +472,14 @@ NSString *strUserId = @"";
     [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
     [iq addChild:query];
     [[self xmppStream] sendElement:iq];
-    //    NSLog(@"iq = %@",iq);
-    //    NSLog(@"查询列表");
+   //NSLog(@"iq = %@",iq);
+   //NSLog(@"查询列表");
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-    //    NSLog(@"[IQ description] = %@\n\n",[iq description]);
-    
+//    NSLog(@"[IQ description] = %@\n\n",[iq description]);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])
@@ -505,7 +497,6 @@ NSString *strUserId = @"";
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"memberGroupName" object:self.roster];
             }
         }
-        //        NSLog(@"self.roster = %@",self.roster);
     }
     return NO;
 }
@@ -513,12 +504,11 @@ NSString *strUserId = @"";
 //收到消息
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    //    NSLog(@"接收++++message = %@\n\n",message);
+//      NSLog(@"接收++++message = %@\n\n",message);
     //消息内容
     NSString *msg = [[message elementForName:@"body"] stringValue];
-    
     NSString *from = [[message attributeForName:@"from"] stringValue];
-    NSString *type= [[message attributeForName:@"type"] stringValue];
+//    NSString *type= [[message attributeForName:@"type"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
     
     //    NSLog(@"接收++++from = %@\n\n",from);
@@ -545,14 +535,9 @@ NSString *strUserId = @"";
     {
         return;
     }
-    NSString *fromSimple=[from substringToIndex:range.location];
-    
-    //    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
+//    NSString *fromSimple=[from substringToIndex:range.location];
+//    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
 }
-
-
-
-
 
 // 发送消息回调方法
 - (void)sendMessage:(NSString *)message toUser:(NSString *)user
@@ -569,7 +554,7 @@ NSString *strUserId = @"";
 - (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
 {
     //取得好友状态
-    NSString *presenceType = [NSString stringWithFormat:@"%@", [presence type]];
+//    NSString *presenceType = [NSString stringWithFormat:@"%@", [presence type]];
     //    NSLog(@"好友状态 = %@",presenceType);
     //请求的用户
     NSString *presenceFromUser =[NSString stringWithFormat:@"%@", [[presence from] user]];
@@ -584,44 +569,26 @@ NSString *strUserId = @"";
 -(void)goOffline
 {
     //    NSLog(@"goOffline");
-    if (self.roster.count > 0)
-    {
-        [self.roster removeAllObjects];
-    }
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
     [xmppStream sendElement:presence];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
+//    NSLog(@"presence = %@",presence);
     //    //取得好友状态
-    //    NSString *presenceType = [presence type]; //online/offline
-    ////    NSLog(@"presenceType = %@",presenceType);
-    //    //当前用户
-    //    NSString *userId = [[sender myJID] user];
-    ////    NSLog(@"请求的用户userId = %@",userId);
-    //    //在线用户
-    //    NSString *presenceFromUser = [[presence from] user];
-    ////    NSLog(@"presenceFromUser = %@",presenceFromUser);
-    //
-    //    //在线状态
-    //    if ([presenceType isEqualToString:@"available"])
-    //    {
-    //        if ([userId isEqualToString:presenceFromUser])
-    //        {
-    //           [self.nameArray removeObject:presenceFromUser];
-    //        }
-    //        else
-    //        {
-    //            [self.nameArray addObject:presenceFromUser];
-    //        }
-    //    }
-    //    else if ([presenceType isEqualToString:@"unavailable"])
-    //    {
-    //        [self.nameArray removeObject:presenceFromUser];
-    //    }
-    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"friendList" object:nil];
-    //    NSLog(@"self.nameArray = %@",self.nameArray);
+        NSString *presenceType = [presence type]; //online/offline
+//        //当前用户
+//        NSString *userId = [[sender myJID] user];
+//        NSLog(@"请求的用户userId = %@",userId);
+//        //在线用户
+//        NSString *presenceFromUser = [[presence from] user];
+//        NSLog(@"presenceFromUser = %@",presenceFromUser);
+       //在线状态
+        if ([presenceType isEqualToString:@"unavailable"])
+        {
+           [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
+        }
 }
 
 - (void)disconnect

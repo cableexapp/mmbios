@@ -27,9 +27,9 @@
 	<key>012</key>
 	<string>[大哭]</string>
 	<key>013</key>
-	<string>[嘘]</string>
+	<string>[安静]</string>
 	<key>014</key>
-	<string>[酷]</string>
+	<string>[装酷]</string>
 	<key>015</key>
 	<string>[折磨]</string>
 	<key>016</key>
@@ -43,13 +43,13 @@
 	<key>020</key>
 	<string>[可爱]</string>
 	<key>021</key>
-	<string>[色]</string>
+	<string>[色色]</string>
 	<key>022</key>
 	<string>[害羞]</string>
 	<key>023</key>
 	<string>[得意]</string>
 	<key>024</key>
-	<string>[吐]</string>
+	<string>[呕吐]</string>
 	<key>025</key>
 	<string>[微笑]</string>
 	<key>026</key>
@@ -75,7 +75,7 @@
 	<key>036</key>
 	<string>[疑问]</string>
 	<key>037</key>
-	<string>[睡]</string>
+	<string>[睡觉]</string>
 	<key>038</key>
 	<string>[亲亲]</string>
 	<key>039</key>
@@ -83,7 +83,7 @@
 	<key>040</key>
 	<string>[爱情]</string>
 	<key>041</key>
-	<string>[衰]</string>
+	<string>[很衰]</string>
 	<key>042</key>
 	<string>[撇嘴]</string>
 	<key>043</key>
@@ -93,7 +93,7 @@
 	<key>045</key>
 	<string>[发呆]</string>
 	<key>046</key>
-	<string>[右哼哼]</string>
+	<string>[右哼]</string>
 	<key>047</key>
 	<string>[拥抱]</string>
 	<key>048</key>
@@ -103,15 +103,15 @@
 	<key>050</key>
 	<string>[鄙视]</string>
 	<key>051</key>
-	<string>[晕]</string>
+	<string>[晕了]</string>
 	<key>052</key>
 	<string>[大兵]</string>
 	<key>053</key>
 	<string>[可怜]</string>
 	<key>054</key>
-	<string>[强]</string>
+	<string>[很强]</string>
 	<key>055</key>
-	<string>[弱]</string>
+	<string>[很弱]</string>
 	<key>056</key>
 	<string>[握手]</string>
 	<key>057</key>
@@ -121,7 +121,7 @@
 	<key>059</key>
 	<string>[凋谢]</string>
 	<key>060</key>
-	<string>[饭]</string>
+	<string>[米饭]</string>
 	<key>061</key>
 	<string>[蛋糕]</string>
 	<key>062</key>
@@ -133,7 +133,7 @@
 	<key>065</key>
 	<string>[勾引]</string>
 	<key>066</key>
-	<string>[OK]</string>
+	<string>[好的]</string>
 	<key>067</key>
 	<string>[爱你]</string>
 	<key>068</key>
@@ -141,7 +141,7 @@
 	<key>069</key>
 	<string>[月亮]</string>
 	<key>070</key>
-	<string>[刀]</string>
+	<string>[小刀]</string>
 	<key>071</key>
 	<string>[发抖]</string>
 	<key>072</key>
@@ -165,7 +165,7 @@
 	<key>081</key>
 	<string>[饥饿]</string>
 	<key>082</key>
-	<string>[困]</string>
+	<string>[困了]</string>
 	<key>083</key>
 	<string>[咒骂]</string>
 	<key>084</key>
@@ -175,21 +175,21 @@
 	<key>086</key>
 	<string>[故障]</string>
 	<key>087</key>
-	<string>[糗大了]</string>
+	<string>[糗了]</string>
 	<key>088</key>
-	<string>[左哼哼]</string>
+	<string>[左哼]</string>
 	<key>089</key>
 	<string>[哈欠]</string>
 	<key>090</key>
-	<string>[快哭了]</string>
+	<string>[哭了]</string>
 	<key>091</key>
-	<string>[吓]</string>
+	<string>[恐吓]</string>
 	<key>092</key>
 	<string>[篮球]</string>
 	<key>093</key>
-	<string>乒乓]</string>
+	<string>[乒乓]</string>
 	<key>094</key>
-	<string>[NO]</string>
+	<string>[不行]</string>
 	<key>095</key>
 	<string>[跳跳]</string>
 	<key>096</key>
@@ -209,8 +209,8 @@
 	<key>103</key>
 	<string>[献吻]</string>
 	<key>104</key>
-	<string>[左太极]</string>
+	<string>[左极]</string>
 	<key>105</key>
-	<string>[右太极]</string>
+	<string>[太极]</string>
 </dict>
 </plist>

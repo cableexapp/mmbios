@@ -18,6 +18,7 @@
 #import "CableSecondAndThirdStepViewController.h"
 #import "ChatListViewController.h"
 #import "HotScreenFirstViewController.h"
+#import "SearchViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -49,7 +50,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
     //    if(searchBar)
     //    {
     //        [searchBar resignFirstResponder];
@@ -69,35 +70,38 @@
 }
 - (void) viewWillDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:YES];
     
+    [super viewWillDisappear:YES];
     if(conn)
     {
         [conn stopConnection];
         conn = nil;
     }
-    
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
 }
+
 
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 
 - (void) searchTap:(UITapGestureRecognizer *) sender
 {
-    ChooseListTableViewController *choose = [[ChooseListTableViewController alloc] init];
-    [self.navigationController pushViewController:choose animated:YES];
+//    ChooseListTableViewController *choose = [[ChooseListTableViewController alloc] init];
+//    [self setHidesBottomBarWhenPushed:YES];
+//    [self.navigationController pushViewController:choose animated:YES];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    [self setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 - (void) search:(UIButton *) sender
 {
     ChooseListTableViewController *choose = [[ChooseListTableViewController alloc] init];
+     [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:choose animated:YES];
 }
 
@@ -184,7 +188,7 @@
     [super viewDidLoad];
     
     [self pushAndPopStyle];
-    
+
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -202,18 +206,30 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mmb" ofType:@"png"]];
-    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 7, 100, 30)];
     [naviImageView setImage:naviimage];
     [naviImageView setTag:100];
     [self.navigationController.navigationBar addSubview:naviImageView];
     
-    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y+5, 200, 34)];
-    
-    //    searchImageView setImage:<#(UIImage *)#>
+    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y-2, 200, 30)];
     [searchImageView setUserInteractionEnabled:YES];
     [searchImageView setTag:101];
+    searchImageView.backgroundColor = [UIColor whiteColor];
+    searchImageView.layer.cornerRadius = 3;
+    searchImageView.layer.borderColor = [[UIColor clearColor] CGColor];
+    searchImageView.layer.borderWidth = 1;
     [self.navigationController.navigationBar addSubview:searchImageView];
-    [searchImageView setBackgroundColor:[UIColor greenColor]];
+
+    UIImageView *search = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 22, 22)];
+    search.image = [UIImage imageNamed:@"search"];
+    [searchImageView addSubview:search];
+    
+    UILabel *searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 5, 150, 20)];
+    searchLabel.text = @"输入搜索内容";
+    searchLabel.font = [UIFont systemFontOfSize:14];
+    searchLabel.textColor = [UIColor lightGrayColor];
+    [searchImageView addSubview:searchLabel];
+    
     UITapGestureRecognizer *searchTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searchTap:)];
     [searchImageView addGestureRecognizer:searchTap];
     
@@ -381,7 +397,7 @@
     }
     if(btn.tag == 2)
     {
-//        [self setHidesBottomBarWhenPushed:YES];
+       [self setHidesBottomBarWhenPushed:YES];
         ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
         [self.navigationController pushViewController:shoppingHost animated:YES];
 //        [self setHidesBottomBarWhenPushed:NO];
@@ -412,6 +428,13 @@
         #pragma mark - 在线客服
         ChatListViewController *chatVC = [[ChatListViewController alloc] init];
         chatVC.fromString = @"首页在线客服";
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.5f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:chatVC animated:NO];
     }
     [self setHidesBottomBarWhenPushed:NO];

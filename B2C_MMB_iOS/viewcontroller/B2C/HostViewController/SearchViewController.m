@@ -22,6 +22,12 @@
     UILabel *leftBtn;
     
     NSMutableArray *dataArray;
+    
+    UIButton *speakButton;
+    
+    UIImageView *sectionBtnIv;
+    
+    UISearchBar *mySearchBar;
 }
 @end
 
@@ -55,6 +61,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view isKindOfClass:[UIButton class]] || [view tag] == 101)
@@ -73,72 +80,65 @@
     
     //导航栏标题
     UILabel *naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,220, 44)];
-    naviTitle.textColor = [UIColor blackColor];
+    naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.textAlignment = NSTextAlignmentCenter;
     naviTitle.text = @"搜索";
     self.navigationItem.titleView = naviTitle;
     
+    mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(81, 0,self.view.frame.size.width-81, 45)];
+    [mySearchBar setDelegate:self];
+    [mySearchBar setBarStyle:0];
+    mySearchBar.placeholder = @"输入搜索内容";
+    [self.view addSubview:mySearchBar];
+    
     leftBtn = [[UILabel alloc] init];
-    leftBtn.frame = CGRectMake(0, 0, 95, 47);
-    leftBtn.backgroundColor = [UIColor clearColor];
-    leftBtn.font = [UIFont systemFontOfSize:13];
-    leftBtn.textAlignment = 1;
+    leftBtn.frame = CGRectMake(0, 0, 81, 45);
+    leftBtn.backgroundColor = [UIColor colorWithRed:198.0/255 green:198.0/255 blue:203.0/255 alpha:1.0];
+    leftBtn.font = [UIFont systemFontOfSize:12];
+    leftBtn.textAlignment = NSTextAlignmentCenter;
     leftBtn.text = @"电缆采购";
-    [self.view addSubview:leftBtn];
+    [self.view insertSubview:leftBtn aboveSubview:mySearchBar];
     
     UIView *tempview = [[UIView alloc] init];
-    tempview.frame = CGRectMake(0, 0, 80, 47);
+    tempview.frame = CGRectMake(0, 0, 81, 45);
     [self.view insertSubview:tempview aboveSubview:leftBtn];
     
     UITapGestureRecognizer *searchTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftBtnClick:)];
     [tempview addGestureRecognizer:searchTap];
     
-    UIImageView *sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(83,18.5,10,10)];
+     sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(68,16,10,10)];
     [sectionBtnIv setImage:[UIImage imageNamed:@"down_dark.png"]];
     [sectionBtnIv setContentMode:UIViewContentModeScaleToFill];
     sectionBtnIv.tag = 300;
     [tempview addSubview:sectionBtnIv];
     
-    mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBtn.frame.origin.x + leftBtn.frame.size.width + 5, 3.5, 215, 40)];
-    [mySearchBar setDelegate:self];
-    [mySearchBar setBarStyle:0];
-    mySearchBar.placeholder = @"输入搜索内容";
-    mySearchBar.layer.cornerRadius = 8;
-    mySearchBar.layer.borderWidth = 1;
-    mySearchBar.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    [self.view addSubview:mySearchBar];
-    
-    UIButton *speakButton = [[UIButton alloc] initWithFrame:CGRectMake(178, 7, 25, 25)];
+    speakButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width-116, 10, 25, 25)];
     [speakButton setBackgroundImage:[UIImage imageNamed:@"speak"] forState:UIControlStateNormal];
     [speakButton addTarget:self action:@selector(soundSrarch) forControlEvents:UIControlEventTouchUpInside];
     [mySearchBar addSubview:speakButton];
     
-    UIView *separateLine = [[UIView alloc] init];
-    separateLine.frame = CGRectMake(0, 47.5, self.view.frame.size.width, 0.5);
-    separateLine.backgroundColor = [UIColor lightGrayColor];
-    [self.view addSubview:separateLine];
-    
-    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 48, self.view.frame.size.width, self.view.frame.size.height-48) style:UITableViewStylePlain];
+    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-109) style:UITableViewStylePlain];
     self.serchResultView.dataSource = self;
     self.serchResultView.delegate = self;
     self.serchResultView.scrollEnabled = YES;
-    self.serchResultView.backgroundColor = [UIColor lightGrayColor];
+    self.serchResultView.backgroundColor = [UIColor whiteColor];
     self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
     self.serchResultView.separatorColor = [UIColor lightGrayColor];
+    self.serchResultView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.serchResultView];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundColor:[UIColor clearColor]];
-    [rightBtn setFrame:CGRectMake(mySearchBar.frame.origin.x + mySearchBar.frame.size.width + 10, 10, 60, 25)];
+    [rightBtn setFrame:CGRectMake(self.view.frame.size.width-25, 10, 60, 25)];
     [rightBtn setTitle:@"询价车" forState:UIControlStateNormal];
     rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [rightBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    dataArray = [[NSMutableArray alloc] initWithObjects:@"1",@"2",@"3", nil];
+    dataArray = [[NSMutableArray alloc] initWithObjects:@"1",@"2",@"3",@"2",@"3",@"2",@"3",@"2",@"3",@"2",@"3",@"2",@"3",@"", nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
 
@@ -146,6 +146,7 @@
 {
     NSLog(@"语音搜素");
 }
+
 
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -162,19 +163,41 @@
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    
+    NSLog(@"111");
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    
+    NSLog(@"222");
 }
+
 
 
 - (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
+    NSLog(@"333");
     return YES;
 }
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self.view endEditing:YES];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText;
+{
+    NSLog(@"444");
+    NSLog(@"searchText = %@",searchText);
+    if ([searchBar.text isEqualToString:@""])
+    {
+        speakButton.hidden = NO;
+    }
+    else
+    {
+        speakButton.hidden = YES;
+    }
+}
+//- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 
 - (void) leftBtnClick:(UITapGestureRecognizer *) sender
 {
@@ -209,6 +232,15 @@
 - (void) pushMenuItem:(id)sender
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dissMiss" object:nil];
+    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0] isEqualToString:@"家装线专卖"])
+    {
+        sectionBtnIv.frame = CGRectMake(72,17.5,10,10);
+    }
+    else
+    {
+        sectionBtnIv.frame = CGRectMake(68,17.5,10,10);
+    }
+    
     NSLog(@"%@",[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0]);
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     
@@ -296,7 +328,7 @@
 //        clearBtn.layer.cornerRadius = 5;
 //        clearBtn.layer.masksToBounds = YES;
 //        //        [cell.contentView addSubview:clearBtn];
-//        
+//
 //
 //    
 //
@@ -305,15 +337,31 @@
 //    return cell;
 }
 
-//- (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//    return [UIView new];
-//}
-//
-//- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 0.1;
-//}
+- (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *footer = [[UIView alloc] init];
+//    footer.backgroundColor = [UIColor brownColor];
+    [self.view addSubview:footer];
+    
+    UIButton *clearBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [clearBtn setFrame:CGRectMake(80, 5, 160, 40)];
+//    [clearBtn setBackgroundColor:[UIColor redColor]];
+    [clearBtn setTitle:@"清空历史纪录" forState:UIControlStateNormal];
+    [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    clearBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    clearBtn.layer.borderWidth = 1.0f;
+    clearBtn.layer.cornerRadius = 3;
+    [footer addSubview:clearBtn];
+
+    return footer;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 50;
+}
+
+
 
 
 @end

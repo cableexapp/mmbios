@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
-{
-    UISearchBar *mySearchBar;
-}
 
 @property (nonatomic,strong) UITableView *serchResultView;
 

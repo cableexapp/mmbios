@@ -13,6 +13,8 @@
 #import "FBShimmeringView.h"
 #import "SpeedAskPriceFirstViewController.h"
 #import "SpeedAskPriceSecondViewController.h"
+
+
 double secondsCountDown =0;
 
 @interface WaitViewController ()
@@ -50,10 +52,11 @@ double secondsCountDown =0;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:16.0/255 green:78.0/255 blue:139.0/255 alpha:1.0];
+    self.view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+
     //导航栏标题
     naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,190, 44)];
-    naviTitle.textColor = [UIColor blackColor];
+    naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.textAlignment = NSTextAlignmentCenter;
     naviTitle.text = @"等候咨询";
@@ -61,24 +64,29 @@ double secondsCountDown =0;
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(10, 24.5, 35, 35);
+    [btn setBackgroundImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(goBack) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = leftItem;
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = @"";
     self.navigationItem.backBarButtonItem = backButton;
     
     UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-140, self.view.frame.size.width, 2)];
-    separatorView.backgroundColor = [UIColor redColor];
+    separatorView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
     [self.view insertSubview:separatorView atIndex:1];
     
     UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-138, self.view.frame.size.width, 80)];
-    timeView.backgroundColor = [UIColor colorWithRed:54.0/255 green:54.0/255 blue:54.0/255 alpha:1.0];
+    timeView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     [self.view addSubview:timeView];
     
     UILabel *label1 = [[UILabel alloc] init];
     label1.frame = CGRectMake(0,3, self.view.frame.size.width, 30);
     label1.text = @"人工客服时间";
-    label1.textColor = [UIColor whiteColor];
+    label1.textColor = [DCFColorUtil colorFromHexRGB:@"#666666"];
     label1.textAlignment = NSTextAlignmentCenter;
     label1.font = [UIFont systemFontOfSize:16];
     [timeView addSubview:label1];
@@ -86,7 +94,7 @@ double secondsCountDown =0;
     UILabel *label2 = [[UILabel alloc] init];
     label2.frame = CGRectMake(0, 35, self.view.frame.size.width, 30);
     label2.text = @"09:00 - 21:00";
-    label2.textColor = [UIColor whiteColor];
+    label2.textColor = [DCFColorUtil colorFromHexRGB:@"#666666"];
     label2.textAlignment = NSTextAlignmentCenter;
     label2.font = [UIFont systemFontOfSize:22];
     [timeView addSubview:label2];
@@ -94,7 +102,7 @@ double secondsCountDown =0;
     //自定义网络状态通知视图
     noNet = [[UILabel alloc] init];
     noNet.frame = CGRectMake(0, 0, self.view.frame.size.width,32);
-    noNet.backgroundColor = [UIColor colorWithRed:255.0/255 green:160.0/255.0 blue:122.0/255.0 alpha:1.0];
+    noNet.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#fff3bb"];
     noNet.hidden = YES;
     [self.view insertSubview:noNet atIndex:1];
     
@@ -105,7 +113,7 @@ double secondsCountDown =0;
     
     noNetMessage = [[UILabel alloc] init];
     noNetMessage.frame = CGRectMake(55, 0, self.view.frame.size.width-55, 32);
-    noNetMessage.textColor = [UIColor whiteColor];
+    noNetMessage.textColor = [DCFColorUtil colorFromHexRGB:@"333333"];
     noNetMessage.font = [UIFont systemFontOfSize:15];
     noNetMessage.textAlignment = NSTextAlignmentLeft;
     noNetMessage.text = @"当前网络不可用，请检查网络设置!";
@@ -118,7 +126,7 @@ double secondsCountDown =0;
     
     label3 = [[UILabel alloc] init];
     label3.frame = shimmeringView.bounds;
-    label3.textColor = [UIColor whiteColor];
+    label3.textColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
     label3.font = [UIFont systemFontOfSize:16];
     label3.textAlignment  = 1;
     label3.text = NSLocalizedString(@"您正在进入队列，请稍后...", nil);
@@ -127,7 +135,7 @@ double secondsCountDown =0;
     
     label4 = [[UILabel alloc] init];
     label4.frame = CGRectMake(0, 140, self.view.frame.size.width, 60);
-    label4.textColor = [UIColor orangeColor];
+    label4.textColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
     label4.font = [UIFont systemFontOfSize:80];
     label4.textAlignment  = 1;
     [self.view addSubview:label4];
@@ -135,8 +143,8 @@ double secondsCountDown =0;
     self.progressView = [[PICircularProgressView alloc] init];
     self.progressView.frame = CGRectMake(20, 50, 280, 240);
     self.progressView.thicknessRatio = 0.09;
-    self.progressView.outerBackgroundColor = [UIColor whiteColor];
-    self.progressView.progressFillColor = [UIColor orangeColor];
+    self.progressView.outerBackgroundColor = [DCFColorUtil colorFromHexRGB:@"#dddddd"];
+    self.progressView.progressFillColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
     self.progressView.showText = NO;
     self.progressView.textColor = [UIColor whiteColor];
     [self.view addSubview:self.progressView];
@@ -356,7 +364,6 @@ double secondsCountDown =0;
     {
         [timeCountTimer invalidate];
         [self isBetweenFromHour:9 toHour:21];
-        NSLog(@"检测时间。。。。。。。");
     }
 }
 
@@ -367,7 +374,6 @@ double secondsCountDown =0;
     NSDate *currentDate = [NSDate date];
     if ([currentDate compare:dateFrom]==NSOrderedDescending && [currentDate compare:dateTo]==NSOrderedAscending)
     {
-        NSLog(@"当前时间在 %d:00-%d:00 之间！",fromHour,toHour);
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"电缆买卖宝提示"
                                                             message:@"尊敬的客户，现在暂时没有客服在线，请前往提交快速询价需求，我们将在收到需求的第一时间回复您!"
                                                            delegate:self
@@ -382,7 +388,6 @@ double secondsCountDown =0;
     }
     else
     {
-        NSLog(@"当前时间不在 %d:00-%d:00 之间！",fromHour,toHour);
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"电缆买卖宝提示"
                                                             message:@"尊敬的客户，客服工作时间为9：00-21:00，请前往提交快速询价需求，我们将在收到需求的第一时间回复您!"
                                                            delegate:self
@@ -439,7 +444,8 @@ double secondsCountDown =0;
     {
         if ([self.tempFrom isEqualToString:@"首页在线客服"])
         {
-            [self.navigationController popViewControllerAnimated:YES];
+            [self.tabBarController setSelectedIndex:0];
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
         }
         else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
         {
@@ -448,13 +454,14 @@ double secondsCountDown =0;
         else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
         {
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+           
         }
         else
         {
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            [self.navigationController.tabBarController.tabBar setHidden:NO];
+            [self.tabBarController setSelectedIndex:0];
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
     }
 }
 

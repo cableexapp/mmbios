@@ -81,7 +81,14 @@
     NSLog(@"来自快速询价客服");
     ChatListViewController *chatVC = [[ChatListViewController alloc] init];
     chatVC.fromString = @"来自快速询价客服";
-    [self.navigationController pushViewController:chatVC animated:YES];
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type =  kCATransitionMoveIn;
+    transition.subtype =  kCATransitionFromTop;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:chatVC animated:NO];
 }
 
 - (void)didReceiveMemoryWarning

@@ -108,6 +108,8 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     //XMPP
     if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID])
     {
@@ -380,7 +382,7 @@ NSString *strUserId = @"";
 	NSError *error = nil;
 	if (![[self xmppStream] authenticateWithPassword:@"123456" error:&error])
 	{
-        NSLog(@"Error authenticating: %@", error);
+//        NSLog(@"Error authenticating: %@", error);
         if (error != nil)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"errorMessage" object:nil];
@@ -475,7 +477,7 @@ NSString *strUserId = @"";
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-//  NSLog(@"[IQ description] = %@\n\n",[iq description]);
+//    NSLog(@"[IQ description] = %@\n\n",[iq description]);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])
@@ -500,11 +502,11 @@ NSString *strUserId = @"";
 //收到消息
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    //    NSLog(@"接收++++message = %@\n\n",message);
+//      NSLog(@"接收++++message = %@\n\n",message);
     //消息内容
     NSString *msg = [[message elementForName:@"body"] stringValue];
     NSString *from = [[message attributeForName:@"from"] stringValue];
-    NSString *type= [[message attributeForName:@"type"] stringValue];
+//    NSString *type= [[message attributeForName:@"type"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
     
     //    NSLog(@"接收++++from = %@\n\n",from);
@@ -531,8 +533,8 @@ NSString *strUserId = @"";
     {
         return;
     }
-    NSString *fromSimple=[from substringToIndex:range.location];
-    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
+//    NSString *fromSimple=[from substringToIndex:range.location];
+//    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
 }
 
 // 发送消息回调方法
@@ -571,34 +573,20 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
+//    NSLog(@"presence = %@",presence);
     //    //取得好友状态
-    //    NSString *presenceType = [presence type]; //online/offline
-    ////    NSLog(@"presenceType = %@",presenceType);
-    //    //当前用户
-    //    NSString *userId = [[sender myJID] user];
-    ////    NSLog(@"请求的用户userId = %@",userId);
-    //    //在线用户
-    //    NSString *presenceFromUser = [[presence from] user];
-    ////    NSLog(@"presenceFromUser = %@",presenceFromUser);
-    //
-    //    //在线状态
-    //    if ([presenceType isEqualToString:@"available"])
-    //    {
-    //        if ([userId isEqualToString:presenceFromUser])
-    //        {
-    //           [self.nameArray removeObject:presenceFromUser];
-    //        }
-    //        else
-    //        {
-    //            [self.nameArray addObject:presenceFromUser];
-    //        }
-    //    }
-    //    else if ([presenceType isEqualToString:@"unavailable"])
-    //    {
-    //        [self.nameArray removeObject:presenceFromUser];
-    //    }
-    //    [[NSNotificationCenter defaultCenter] postNotificationName:@"friendList" object:nil];
-    //    NSLog(@"self.nameArray = %@",self.nameArray);
+        NSString *presenceType = [presence type]; //online/offline
+//        //当前用户
+//        NSString *userId = [[sender myJID] user];
+//        NSLog(@"请求的用户userId = %@",userId);
+//        //在线用户
+//        NSString *presenceFromUser = [[presence from] user];
+//        NSLog(@"presenceFromUser = %@",presenceFromUser);
+       //在线状态
+        if ([presenceType isEqualToString:@"unavailable"])
+        {
+           [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
+        }
 }
 
 - (void)disconnect

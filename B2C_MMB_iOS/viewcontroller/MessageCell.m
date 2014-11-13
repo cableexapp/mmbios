@@ -50,6 +50,18 @@
     return self;
 }
 
+-(int)calc_charsetNum:(NSString*)_str
+{
+    unsigned result = 0;
+    const char *tchar=[_str UTF8String];
+    if (NULL == tchar)
+    {
+        return result;
+    }
+    result = strlen(tchar);
+    return result;
+}
+
 - (void)setMessageFrame:(MessageFrame *)messageFrame
 {
     _messageFrame = messageFrame;
@@ -78,20 +90,46 @@
     
     
     // 3、设置内容
-    _contentBtn.frame = _messageFrame.contentF;
+//    _contentBtn.frame = _messageFrame.contentF;
+    _contentBtn.frame = CGRectMake(_messageFrame.contentF.origin.x, _messageFrame.contentF.origin.y, _messageFrame.contentF.size.width-5, _messageFrame.contentF.size.height-10);
     if (message.type == MessageTypeMe)
     {
         _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentRight, kContentBottom, kContentLeft);
-        self.richTextView.frame = CGRectMake(10, 5, _contentBtn.frame.size.width-25, _contentBtn.frame.size.height-10);
+//        NSLog(@"length = %d",[self calc_charsetNum:message.content]);
+        if ([self calc_charsetNum:message.content] <= 33 && [message.content rangeOfString:@"["].location == NSNotFound)
+        {
+//           NSLog(@"111111");
+            _contentBtn.frame = CGRectMake(_messageFrame.contentF.origin.x+10, _messageFrame.contentF.origin.y+10, _messageFrame.contentF.size.width-5, _messageFrame.contentF.size.height-10);
+            self.richTextView.frame = CGRectMake(10, 7, _contentBtn.frame.size.width-25, _contentBtn.frame.size.height-10);
+        }
+        else if ([message.content rangeOfString:@"["].location != NSNotFound && [message.content rangeOfString:@"]"].location != NSNotFound)
+        {
+//           NSLog(@"22222");
+            int m = [message.content componentsSeparatedByString:@"["].count-1;
+            _contentBtn.frame = CGRectMake(_messageFrame.contentF.origin.x+22*m, _messageFrame.contentF.origin.y+10, _messageFrame.contentF.size.width-20*m, _messageFrame.contentF.size.height-10);
+            self.richTextView.frame = CGRectMake(10, 7, _contentBtn.frame.size.width-25, _contentBtn.frame.size.height-10);
+        }
+        else
+        {
+//           NSLog(@"33333");
+            _contentBtn.frame = CGRectMake(_messageFrame.contentF.origin.x+10, _messageFrame.contentF.origin.y, _messageFrame.contentF.size.width-5, _messageFrame.contentF.size.height-10);
+            self.richTextView.frame = CGRectMake(10, 5, _contentBtn.frame.size.width-25, _contentBtn.frame.size.height-10);
+        }
     }
     else
     {
         _contentBtn.contentEdgeInsets = UIEdgeInsetsMake(kContentTop, kContentLeft, kContentBottom, kContentRight);
-        self.richTextView.frame = CGRectMake(20, 5, _contentBtn.frame.size.width-25, _contentBtn.frame.size.height-10);
+        if ([self calc_charsetNum:message.content] <= 33)
+        {
+            self.richTextView.frame = CGRectMake(23, 7, _contentBtn.frame.size.width-25, _contentBtn.frame.size.height-10);
+        }
+        else
+        {
+            self.richTextView.frame = CGRectMake(23, 5, _contentBtn.frame.size.width-25, _contentBtn.frame.size.height-10);
+        }
     }
     self.richTextView.text = message.content;
     self.richTextView.font = kContentFont;
-    
     
     UIImage *normal , *focused;
     if (message.type == MessageTypeMe) {

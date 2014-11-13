@@ -467,7 +467,6 @@
 }
 
 
-
 - (IBAction)hotLineBtnClick:(id)sender
 {
     NSLog(@"热线");
@@ -479,7 +478,14 @@
     [self setHidesBottomBarWhenPushed:YES];
     ChatListViewController *chatVC = [[ChatListViewController alloc] init];
     chatVC.fromString = @"热门型号在线咨询";
-    [self.navigationController pushViewController:chatVC animated:YES];
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type =  kCATransitionMoveIn;
+    transition.subtype =  kCATransitionFromTop;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:chatVC animated:NO];
 }
 
 - (IBAction)moreModelBtnClick:(id)sender

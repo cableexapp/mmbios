@@ -57,12 +57,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     
     //自定义导航条
-    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 44)];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     nameLabel.textColor = [UIColor whiteColor];
-    nameLabel.backgroundColor = [UIColor colorWithRed:28.0/255.0 green:134.0/255.0 blue:238.0/255.0 alpha:1];
+    nameLabel.backgroundColor = [UIColor colorWithRed:17.0/255.0 green:66.0/255.0 blue:146.0/255.0 alpha:1.0];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view insertSubview:nameLabel atIndex:1];
     
@@ -82,8 +82,8 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chat_bg_default.jpg"]];
     [self.view addSubview:self.tableView];
     
     //下拉加载
@@ -99,9 +99,10 @@
     //聊天输入工具条
     toolBar = [[UIView alloc] init];
     toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
-    toolBar.backgroundColor = [UIColor lightGrayColor];
-//    toolBar.backgroundColor = [UIColor colorWithRed:28.0/255.0 green:134.0/255.0 blue:238.0/255.0 alpha:1];
+    toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
     [self.view addSubview:toolBar];
+    
+     [messageField becomeFirstResponder];
     
     //键盘按钮
     keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -114,8 +115,8 @@
     sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     sendButton.frame = CGRectMake(250, 6, 64, 32);
     [sendButton addTarget:self action:@selector(sendNewChatMessage) forControlEvents:UIControlEventTouchUpInside];
-    sendButton.layer.cornerRadius = 5;
-    sendButton.layer.backgroundColor = [[UIColor colorWithRed:28.0/255.0 green:134.0/255.0 blue:238.0/255.0 alpha:1] CGColor];
+    sendButton.layer.cornerRadius = 3;
+    sendButton.layer.backgroundColor = [[UIColor colorWithRed:18.0/255.0 green:90.0/255.0 blue:169.0/255.0 alpha:1] CGColor];
     [sendButton setTitle:@"发送" forState:UIControlStateNormal];
     [sendButton setTintColor:[UIColor whiteColor]];
     [toolBar addSubview:sendButton];
@@ -124,9 +125,11 @@
     messageField = [[UITextView alloc] init];
     messageField.frame = CGRectMake(46, 6, 196, 32);
     messageField.delegate = self;
-    messageField.layer.backgroundColor = [[UIColor whiteColor] CGColor];
+    messageField.layer.backgroundColor = [[DCFColorUtil colorFromHexRGB:@"#ffffff"] CGColor];
+    messageField.layer.borderWidth = 1;
+    messageField.layer.borderColor = [[DCFColorUtil colorFromHexRGB:@"#dddddd"] CGColor];
     [messageField setReturnKeyType:UIReturnKeyNext];
-    messageField.layer.cornerRadius =5;
+    messageField.layer.cornerRadius =3;
     [toolBar addSubview:messageField];
     
     //在线状态
@@ -137,23 +140,23 @@
     
     //自定义网络状态通知视图
     noNet = [[UILabel alloc] init];
-    noNet.frame = CGRectMake(0, 0, self.view.frame.size.width,32);
-    noNet.backgroundColor = [UIColor colorWithRed:255.0/255 green:160.0/255.0 blue:122.0/255.0 alpha:1.0];
+    noNet.frame = CGRectMake(0, 64, self.view.frame.size.width,32);
+    noNet.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#fff3bb"];
     noNet.hidden = YES;
-    [self.view insertSubview:noNet atIndex:1];
+    [self.view insertSubview:noNet aboveSubview:self.tableView];
     
     noNetView = [[UIImageView alloc] init];
-    noNetView.frame = CGRectMake(20, 6, 20, 20);
+    noNetView.frame = CGRectMake(20, 70, 20, 20);
     noNetView.image = [UIImage imageNamed:@"ico_error"];
-    [self.view insertSubview:noNetView atIndex:2];
+    [self.view insertSubview:noNetView aboveSubview:noNet];
     
     noNetMessage = [[UILabel alloc] init];
-    noNetMessage.frame = CGRectMake(55, 0, self.view.frame.size.width-55, 32);
-    noNetMessage.textColor = [UIColor whiteColor];
+    noNetMessage.frame = CGRectMake(55, 64, self.view.frame.size.width-55, 32);
+    noNetMessage.textColor = [DCFColorUtil colorFromHexRGB:@"#333333"];
     noNetMessage.font = [UIFont systemFontOfSize:15];
     noNetMessage.textAlignment = NSTextAlignmentLeft;
     noNetMessage.text = @"当前网络不可用，请检查网络设置!";
-    [self.view insertSubview:noNetMessage atIndex:2];
+    [self.view insertSubview:noNetMessage aboveSubview:noNet];
     
     if ( !faceBoard)
     {
@@ -183,9 +186,11 @@
     //接收网络连接消息通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (NetisConnection:) name:@"NetisConnect" object:nil];
     
+    //接收客服会话窗口关闭通知
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (noFriendOnLineMessage:) name:@"noFriendOnLine" object:nil];
+    
     ArrTimeCheck = [[NSMutableArray alloc]init];
 
-    [messageField becomeFirstResponder];
     [self firstPageMessageData];
 }
 
@@ -245,6 +250,17 @@
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+-(void)noFriendOnLineMessage:(NSNotification *)busyMessage
+{
+    noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
+    noNet.hidden = NO;
+    noNetView.hidden = NO;
+    noNetMessage.hidden = NO;
+    [messageField resignFirstResponder];
+    self.tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+    toolBar.hidden = YES;
+}
+
 //服务器繁忙提示
 -(void)ServerisBusy:(NSNotification *)busyMessage
 {
@@ -283,6 +299,7 @@
         }
     }
 }
+
 
 #pragma mark 键盘即将显示
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -552,7 +569,7 @@
             }
             messageField.text = @"";
             
-            [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
+//           [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
             
             //发送消息处理
             [self addMessageWithContent:message time:loctime];
@@ -639,12 +656,12 @@
 //新人加入群聊
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidJoin:(XMPPJID *)occupantJID
 {
-//    NSLog(@"新人加入群聊");
+    NSLog(@"新人加入群聊");
 }
 //有人退出群聊
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID
 {
-//    NSLog(@"有人退出群聊");
+    NSLog(@"有人退出群聊");
 }
 //有人在群里发言
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID
@@ -730,6 +747,7 @@
 //                   messageFrame.showTime = NO;
 //                   self.tempDate = nil;
 //                }
+                    messageFrame.showTime = NO;
                     messageFrame.message = message;
                    [_allMessagesFrame insertObject:messageFrame atIndex:0];
             }

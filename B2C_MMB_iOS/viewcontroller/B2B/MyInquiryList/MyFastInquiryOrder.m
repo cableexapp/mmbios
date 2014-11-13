@@ -16,6 +16,12 @@
 #import "MyNormalInquiryDetailController.h"
 
 @implementation MyFastInquiryOrder
+{
+    NSDictionary *myDic;
+    NSString *fullAddress;
+    NSString *inquiryserial;
+    NSString *inquiryid;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,6 +30,17 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
 }
 
 - (void) viewDidLoad
@@ -35,7 +52,6 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的快速询价单"];
     self.navigationItem.titleView = top;
     
-    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",self.fastData.oemId]];
     [self.statusLabel setText:[NSString stringWithFormat:@"状态:%@",self.fastData.status]];
     
     [self.upTimeLabel setText:[NSString stringWithFormat:@"提交时间:%@",self.fastData.myTime]];
@@ -109,11 +125,67 @@
     int inquiryId = [[self.fastData inquiryId] intValue];
     if(inquiryId == 0)
     {
-        [self.lookBtn setEnabled:NO];
+        [self.lookBtn setHidden:YES];
     }
     else
     {
-        [self.lookBtn setEnabled:YES];
+        [self.lookBtn setHidden:NO];
+    }
+    
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *s = [NSString stringWithFormat:@"%@%@",@"getInquiryInfo",time];
+    NSString *token = [DCFCustomExtra md5:s];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&inquiryid=%@",token,[self.fastData inquiryId]];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetInquiryInfoTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getInquiryInfo.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+//    int result = [[dicRespon objectForKey:@"result"] intValue];
+    if(URLTag == URLGetInquiryInfoTag)
+    {
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            myDic = [[NSDictionary alloc] init];
+        }
+        else
+        {
+            NSArray *ctems = [NSArray arrayWithArray:[dicRespon objectForKey:@"ctems"]];
+            if(ctems.count == 0 || [ctems isKindOfClass:[NSNull class]])
+            {
+                myDic = [[NSDictionary alloc] init];
+            }
+            else
+            {
+                NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[ctems lastObject]];
+                if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
+                {
+                    myDic = [[NSDictionary alloc] init];
+                }
+                else
+                {
+                    fullAddress = [NSString stringWithFormat:@"%@%@%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"],[dic objectForKey:@"district"],[dic objectForKey:@"address"]];
+                    NSString *tel = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系电话:%@",self.fastData.phone]];
+                    NSString *name = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系人:%@",self.fastData.linkman]];
+                    myDic = [NSDictionary dictionaryWithObjectsAndKeys:name,@"name",tel,@"tel",fullAddress,@"fullAddress", nil];
+                    
+                    inquiryserial = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryserial"]];
+                    
+                    inquiryid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryid"]];
+                    
+                    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",inquiryserial]];
+
+                }
+            }
+        }
     }
 }
 
@@ -130,12 +202,10 @@
 
 - (IBAction)lookBtnClick:(id)sender
 {
-    NSLog(@"lookBtnClick");
-    
     MyNormalInquiryDetailController *myNormalInquiryDetailController = [self.storyboard instantiateViewControllerWithIdentifier:@"myNormalInquiryDetailController"];
     
-    NSString *orderNum = [NSString stringWithFormat:@"%@",[self.fastData oemId]];
-    myNormalInquiryDetailController.myOrderNum = orderNum;
+#pragma mark - 这里暂时用oemid替换inquirId
+    myNormalInquiryDetailController.myOrderNum = inquiryserial;
     
     
     NSString *status = [NSString stringWithFormat:@"%@",[self.fastData status]];
@@ -146,11 +216,9 @@
     myNormalInquiryDetailController.myTime = upTime;
     
     
-    NSString *Inquiryid = [self.fastData inquiryId];
-    myNormalInquiryDetailController.myInquiryid = Inquiryid;
+    myNormalInquiryDetailController.myInquiryid = inquiryid;
     
-//    NSDictionary *dic = [self.fastData pushDic];
-//    myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:dic];
+    myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:myDic];
     
     [self.navigationController pushViewController:myNormalInquiryDetailController animated:YES];
 }

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D73C0C21A133F4C004A9B95 /* HotThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */; };
+		0DABE3291A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE3271A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m */; };
+		0DABE32C1A1306FB00C64FB7 /* HotSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */; };
+		0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */; };
+		0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */; };
 		6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */; };
 		6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */; };
 		611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */; };
@@ -558,7 +563,6 @@
 		8BA7C2921A10A8DD00758B0F /* XMPPResourceCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1B31A10A8DC00758B0F /* XMPPResourceCoreDataStorageObject.m */; };
 		8BA7C2931A10A8DD00758B0F /* XMPPRoster.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1B41A10A8DC00758B0F /* XMPPRoster.xcdatamodel */; };
 		8BA7C2941A10A8DD00758B0F /* XMPPRosterCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1B61A10A8DC00758B0F /* XMPPRosterCoreDataStorage.m */; };
-		8BA7C2951A10A8DD00758B0F /* XMPPUserCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1B81A10A8DC00758B0F /* XMPPUserCoreDataStorageObject.m */; };
 		8BA7C2961A10A8DD00758B0F /* XMPPResourceMemoryStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1BB1A10A8DC00758B0F /* XMPPResourceMemoryStorageObject.m */; };
 		8BA7C2971A10A8DD00758B0F /* XMPPRosterMemoryStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1BD1A10A8DC00758B0F /* XMPPRosterMemoryStorage.m */; };
 		8BA7C2981A10A8DD00758B0F /* XMPPUserMemoryStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C1C01A10A8DC00758B0F /* XMPPUserMemoryStorageObject.m */; };
@@ -691,13 +695,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D73C0C01A133F4C004A9B95 /* HotThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotThirdViewController.h; sourceTree = "<group>"; };
+		0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotThirdViewController.m; sourceTree = "<group>"; };
 		0D7660AA1A0BA0DC00E2EE46 /* Hotpst.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Hotpst.plist; sourceTree = "<group>"; };
-		0D8491B41A0B89E700E9C81B /* HotSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotSecondViewController.h; sourceTree = "<group>"; };
-		0D8491B51A0B89E700E9C81B /* HotSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotSecondViewController.m; sourceTree = "<group>"; };
+		0DABE3271A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPUserCoreDataStorageObject.m; sourceTree = "<group>"; };
+		0DABE3281A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPUserCoreDataStorageObject.h; sourceTree = "<group>"; };
+		0DABE32A1A1306FB00C64FB7 /* HotSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotSecondViewController.h; sourceTree = "<group>"; };
+		0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotSecondViewController.m; sourceTree = "<group>"; };
 		0DACD7D91A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewTableViewCell.h; sourceTree = "<group>"; };
 		0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewTableViewCell.m; sourceTree = "<group>"; };
-		0DACD8261A0CB9C000F6E025 /* HotKindHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindHostViewController.h; sourceTree = "<group>"; };
-		0DACD8271A0CB9C000F6E025 /* HotKindHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindHostViewController.m; sourceTree = "<group>"; };
+		0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
+		0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
 		6116A22A19EE1099005C3572 /* MyOrderHostBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostBtnTableViewCell.h; sourceTree = "<group>"; };
 		6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOrderHostBtnTableViewCell.m; sourceTree = "<group>"; };
 		6116A22C19EE1099005C3572 /* MyOrderHostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostTableViewCell.h; sourceTree = "<group>"; };
@@ -1472,8 +1480,6 @@
 		8BA7C1B41A10A8DC00758B0F /* XMPPRoster.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = XMPPRoster.xcdatamodel; sourceTree = "<group>"; };
 		8BA7C1B51A10A8DC00758B0F /* XMPPRosterCoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPRosterCoreDataStorage.h; sourceTree = "<group>"; };
 		8BA7C1B61A10A8DC00758B0F /* XMPPRosterCoreDataStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPRosterCoreDataStorage.m; sourceTree = "<group>"; };
-		8BA7C1B71A10A8DC00758B0F /* XMPPUserCoreDataStorageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPUserCoreDataStorageObject.h; sourceTree = "<group>"; };
-		8BA7C1B81A10A8DC00758B0F /* XMPPUserCoreDataStorageObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPUserCoreDataStorageObject.m; sourceTree = "<group>"; };
 		8BA7C1BA1A10A8DC00758B0F /* XMPPResourceMemoryStorageObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPResourceMemoryStorageObject.h; sourceTree = "<group>"; };
 		8BA7C1BB1A10A8DC00758B0F /* XMPPResourceMemoryStorageObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPResourceMemoryStorageObject.m; sourceTree = "<group>"; };
 		8BA7C1BC1A10A8DC00758B0F /* XMPPRosterMemoryStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPRosterMemoryStorage.h; sourceTree = "<group>"; };
@@ -1755,11 +1761,13 @@
 		0D8491B01A0A3BBE00E9C81B /* HotKind */ = {
 			isa = PBXGroup;
 			children = (
-				0D8491B41A0B89E700E9C81B /* HotSecondViewController.h */,
-				0D8491B51A0B89E700E9C81B /* HotSecondViewController.m */,
 				0D7660AA1A0BA0DC00E2EE46 /* Hotpst.plist */,
-				0DACD8261A0CB9C000F6E025 /* HotKindHostViewController.h */,
-				0DACD8271A0CB9C000F6E025 /* HotKindHostViewController.m */,
+				0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */,
+				0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */,
+				0DABE32A1A1306FB00C64FB7 /* HotSecondViewController.h */,
+				0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */,
+				0D73C0C01A133F4C004A9B95 /* HotThirdViewController.h */,
+				0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */,
 			);
 			path = HotKind;
 			sourceTree = "<group>";
@@ -3406,8 +3414,8 @@
 				8BA7C1B41A10A8DC00758B0F /* XMPPRoster.xcdatamodel */,
 				8BA7C1B51A10A8DC00758B0F /* XMPPRosterCoreDataStorage.h */,
 				8BA7C1B61A10A8DC00758B0F /* XMPPRosterCoreDataStorage.m */,
-				8BA7C1B71A10A8DC00758B0F /* XMPPUserCoreDataStorageObject.h */,
-				8BA7C1B81A10A8DC00758B0F /* XMPPUserCoreDataStorageObject.m */,
+				0DABE3271A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m */,
+				0DABE3281A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.h */,
 			);
 			path = CoreDataStorage;
 			sourceTree = "<group>";
@@ -4315,7 +4323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BA7C2951A10A8DD00758B0F /* XMPPUserCoreDataStorageObject.m in Sources */,
+				0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */,
 				6181A50019CFC4C2000E2D14 /* ELCAlbumPickerController.m in Sources */,
 				61B710D019FF3B53001CC3BD /* OneStepCell.m in Sources */,
 				8BA7C28F1A10A8DD00758B0F /* XMPPProcessOne.m in Sources */,
@@ -4348,6 +4356,7 @@
 				6181A4CE19CFC4C2000E2D14 /* DCFConnectionUtil.m in Sources */,
 				61B710C019FF3B53001CC3BD /* FindBackSec_SecondViewController.m in Sources */,
 				61B710B919FF3B53001CC3BD /* FifthTableViewController.m in Sources */,
+				0D73C0C21A133F4C004A9B95 /* HotThirdViewController.m in Sources */,
 				6181A4C419CFC4C2000E2D14 /* DCFChenMoreCell.m in Sources */,
 				8BA7C2C71A10A8DD00758B0F /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				61A197C319F7509400909C6F /* QBImagePickerAssetCell.m in Sources */,
@@ -4367,6 +4376,7 @@
 				61B710DF19FF3B53001CC3BD /* MyShoppingListViewController.m in Sources */,
 				8BA7C2CC1A10A8DD00758B0F /* XMPPPing.m in Sources */,
 				8BA7C2971A10A8DD00758B0F /* XMPPRosterMemoryStorage.m in Sources */,
+				0DABE32C1A1306FB00C64FB7 /* HotSecondViewController.m in Sources */,
 				8BA7C17F1A10A8CC00758B0F /* PICircularProgressView.m in Sources */,
 				619C10071A0772EA002E9DF8 /* HotClasscifyViewController.m in Sources */,
 				61B710EF19FF3B53001CC3BD /* LoginViewController.m in Sources */,
@@ -4383,6 +4393,7 @@
 				61A197C819F7509400909C6F /* QBImagePickerGroupCell.m in Sources */,
 				8BA7C2941A10A8DD00758B0F /* XMPPRosterCoreDataStorage.m in Sources */,
 				6181A4FB19CFC4C2000E2D14 /* OpenUDID.m in Sources */,
+				0DABE3291A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m in Sources */,
 				61551E981A0B8CAC004F50FF /* B2BAskPriceUpSuccessViewController.m in Sources */,
 				6181A4CD19CFC4C2000E2D14 /* EScrollerView.m in Sources */,
 				6122714119CFC81500FE4DFF /* SBJsonWriter.m in Sources */,
@@ -4391,6 +4402,7 @@
 				8BA7C2A71A10A8DD00758B0F /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
 				8BA7C3171A10A93B00758B0F /* Message.m in Sources */,
 				6181A4CF19CFC4C2000E2D14 /* B2CGoodsListData.m in Sources */,
+				0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */,
 				61C686D91A0DE11C00477622 /* CableSecondAndThirdStepViewController.m in Sources */,
 				6181A51719CFC4C2000E2D14 /* UIImage+GIF.m in Sources */,
 				8BA7C2961A10A8DD00758B0F /* XMPPResourceMemoryStorageObject.m in Sources */,
@@ -4667,6 +4679,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4697,10 +4710,11 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "badff7cd-00d2-42d7-abe1-1d37a5459f48";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -4708,6 +4722,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4732,16 +4747,19 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "badff7cd-00d2-42d7-abe1-1d37a5459f48";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Release;
 		};
 		6181A37C19CFC3F9000E2D14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4762,6 +4780,7 @@
 					"$(PROJECT_DIR)/Tools/Vendor/libidn",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s";
@@ -4772,6 +4791,7 @@
 		6181A37D19CFC3F9000E2D14 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4791,6 +4811,7 @@
 					"$(PROJECT_DIR)/Tools/BPush",
 					"$(PROJECT_DIR)/Tools/Vendor/libidn",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s";

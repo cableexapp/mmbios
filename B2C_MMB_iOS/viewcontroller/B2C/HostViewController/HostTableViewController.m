@@ -14,7 +14,7 @@
 #import "SpeedAskPriceFirstViewController.h"
 #import "MCDefine.h"
 #import "HotClasscifyViewController.h"
-#import "HotKindHostViewController.h"
+#import "HotKindFirstViewController.h"
 #import "CableSecondAndThirdStepViewController.h"
 #import "ChatListViewController.h"
 #import "HotScreenFirstViewController.h"
@@ -413,8 +413,9 @@
     {
         #pragma mark - 热门分类
         [self setHidesBottomBarWhenPushed:YES];
-          HotKindHostViewController *hotKindHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindHostViewController"];
-        [self.navigationController pushViewController:hotKindHostViewController animated:YES];
+          HotKindFirstViewController *hotKindFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindFirstViewController"];
+        NSLog(@"%@",hotKindFirstViewController);
+        [self.navigationController pushViewController:hotKindFirstViewController animated:YES];
     }
     if(btn.tag == 5)
     {

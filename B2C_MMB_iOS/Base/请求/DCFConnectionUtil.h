@@ -52,7 +52,7 @@ typedef NSUInteger URLTag;
 @property (strong,nonatomic) NSString *specialString;    //特殊字符
 - (id)initWithURLTag:(URLTag)theUrlTag delegate:(id<ConnectionDelegate>)theDelegate;
 - (void)getResultFromUrlString:(NSString *)strUrl postBody:(NSString *)strPostBody method:(URLMethod)theMethod;
-- (void)getResultFromUrlString:(NSString *)strUrl dicText:(NSDictionary *)dicText dicImage:(NSDictionary *)dicImage imageFilename:(NSString *)strImageFileName;
+- (void)getResultFromUrlString:(NSString *)strUrl dicText:(NSDictionary *)dicText dicImage:(NSDictionary *)dicImage imageFilename:(NSMutableArray *)strImageFileName;
 - (void)stopConnection;
 
 @end

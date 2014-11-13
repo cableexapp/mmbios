@@ -14,6 +14,7 @@
 #import "AccountManagerTableViewController.h"
 #import "LoginNaviViewController.h"
 #import "DCFCustomExtra.h"
+#import "MyInquiryListFirstViewController.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -22,6 +23,8 @@
     NSMutableArray *cellBtnArray;
     
     NSMutableArray *badgeArray;
+    
+    UIStoryboard *sb;
 }
 @end
 
@@ -84,6 +87,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
 //    NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLGetCountNumTag)
@@ -200,6 +204,8 @@
     
     [self pushAndPopStyle];
     
+    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;
     
@@ -280,7 +286,7 @@
         [headBtnArray addObject:btn];
     }
     
-    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_1,_btn_2,_btn_3,_btn_4,_btn_5,_btn_6,_btn_7,_btn_8,_btn_9,_btn_10,_btn_11, nil];
+    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_2,_btn_3,_btn_5,_btn_6,_btn_7,_btn_8,_btn_9,_btn_10,_btn_11, nil];
     
     for(int i=0;i<cellBtnArray.count;i++)
     {
@@ -345,20 +351,21 @@
     return btn;
 }
 
-- (IBAction)btn1click:(id)sender
-{
-    
-}
 
-- (IBAction)btn2Click:(id)sender {
+
+- (IBAction)btn2Click:(id)sender
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
+    [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 
 - (IBAction)btn3Click:(id)sender {
 }
 
-- (IBAction)btn4Click:(id)sender {
-}
+
 
 - (IBAction)btn5Click:(id)sender {
 }

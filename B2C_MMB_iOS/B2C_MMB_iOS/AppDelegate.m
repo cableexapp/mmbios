@@ -18,6 +18,8 @@
 #import "DCFCustomExtra.h"
 #import <CommonCrypto/CommonDigest.h>
 
+#import "UIImage (fixOrientation).h"
+
 //XMPP
 #import <AudioToolbox/AudioToolbox.h>
 #import "XMPPStream.h"

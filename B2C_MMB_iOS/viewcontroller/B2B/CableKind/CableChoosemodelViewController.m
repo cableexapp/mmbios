@@ -37,6 +37,14 @@
     int carCount;  //询价车数量
     
     int badge;
+    
+    BOOL flag; //判断是否是搜索状态
+    
+    NSMutableArray *searchArray;
+    
+    NSMutableArray *contentArray;
+    NSMutableArray *searchLabelArray;
+    NSMutableArray *searchBtnArray;
 }
 @end
 
@@ -55,6 +63,7 @@
 {
     [super viewWillAppear:YES];
     
+    flag = NO;
     if(addToCarArray)
     {
         [addToCarArray removeAllObjects];
@@ -109,6 +118,8 @@
     
     [self pushAndPopStyle];
     
+    searchBtnArray = [[NSMutableArray alloc] init];
+    searchLabelArray = [[NSMutableArray alloc] init];
     
     addToCarArray = [[NSMutableArray alloc] init];
     
@@ -200,6 +211,7 @@
     
     if(URLTag == URLGetModelByidTag)
     {
+        flag = NO;
         if([[dicRespon allKeys] count] == 0)
         {
             [moreCell failAcimation];
@@ -235,13 +247,19 @@
         {
             [btnArray removeAllObjects];
         }
-        
+        if(contentArray)
+        {
+            [contentArray removeAllObjects];
+        }
         
         labelArray = [[NSMutableArray alloc] init];
         btnArray = [[NSMutableArray alloc] init];
+        contentArray = [[NSMutableArray alloc] init];
+        
         for(int i=0;i<dataArray.count;i++)
         {
             NSString *text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:i] theModel]];
+            [contentArray addObject:text];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, ScreenWidth-100, 30)];
             [label setText:text];
             [label setFont:[UIFont systemFontOfSize:13]];
@@ -347,7 +365,6 @@
     }
     if(URLTag == URLInquiryCartCountTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             carCount = [[dicRespon objectForKey:@"value"] intValue];
@@ -416,7 +433,15 @@
         
     }
     
-    NSString *text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:btnTag] theModel]];
+    NSString *text = nil;
+    if(flag == NO)
+    {
+        text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:btnTag] theModel]];
+    }
+    else if (flag == YES)
+    {
+        text = [NSString stringWithFormat:@"%@",[searchArray objectAtIndex:btnTag]];
+    }
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
@@ -510,7 +535,67 @@
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    if(searchLabelArray)
+    {
+        [searchLabelArray removeAllObjects];
+    }
+    if(searchBtnArray)
+    {
+        [searchBtnArray removeAllObjects];
+    }
     
+    
+    NSString *str = [mySearch.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if(str.length == 0)
+    {
+        flag = NO;
+    }
+    else
+    {
+        flag = YES;
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF CONTAINS %@",searchText];
+        searchArray = [NSMutableArray arrayWithArray:[contentArray filteredArrayUsingPredicate:pred]];
+        for(int i=0;i<searchArray.count;i++)
+        {
+            NSString *textString = [searchArray objectAtIndex:i];
+            
+            NSMutableAttributedString *mytextString = [[NSMutableAttributedString alloc] initWithString:textString];
+            [mytextString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 1)];
+            [mytextString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, textString.length-3)];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, ScreenWidth-100, 30)];
+            [label setText:[searchArray objectAtIndex:i]];
+            [label setTextColor:[UIColor redColor]];
+            [label setFont:[UIFont systemFontOfSize:13]];
+            [searchLabelArray addObject:label];
+            
+         
+            
+            
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
+            [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
+            [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+            [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+            [btn setTag:i];
+            [btn setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+            btn.layer.borderColor = MYCOLOR.CGColor;
+            btn.layer.borderWidth = 0.5f;
+            btn.layer.cornerRadius = 5.0f;
+            [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            
+            UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+            [btnLabel setText:@"+1"];
+            [btnLabel setBackgroundColor:[UIColor clearColor]];
+            [btnLabel setTextColor:[UIColor redColor]];
+            [btnLabel setFont:[UIFont systemFontOfSize:23]];
+            [btnLabel setAlpha:0];
+            [btn addSubview:btnLabel];
+            
+            [searchBtnArray addObject:btn];
+        }
+    }
+    [myTv reloadData];
 }
 
 - (BOOL) searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -526,11 +611,23 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(!dataArray || dataArray.count == 0)
+    if(flag == NO)
     {
-        return 1;
+        if(!dataArray || dataArray.count == 0)
+        {
+            return 1;
+        }
+        return dataArray.count;
     }
-    return dataArray.count;
+    if(flag == YES)
+    {
+        if(!searchArray || searchArray.count == 0)
+        {
+            return 1;
+        }
+        return searchArray.count;
+    }
+    return 1;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -541,31 +638,66 @@
 }
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!dataArray || dataArray.count == 0)
+    if(flag == NO)
     {
-        
-        if(moreCell == nil)
+        if(!dataArray || dataArray.count == 0)
         {
-            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+            
+            if(moreCell == nil)
+            {
+                moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+                [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+            }
+            return moreCell;
         }
-        return moreCell;
+        
+        static NSString *cellId = @"cellId";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+        if(!cell)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        }
+        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+            [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+        }
+        
+        [cell.contentView addSubview:(UILabel *)[labelArray objectAtIndex:indexPath.row]];
+        [cell.contentView addSubview:(UIButton *)[btnArray objectAtIndex:indexPath.row]];
+        
+        return cell;
+        
     }
-    
-    static NSString *cellId = @"cellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(!cell)
+    if(flag == YES)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        if(!searchArray || searchArray.count == 0)
+        {
+            
+            if(moreCell == nil)
+            {
+                moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+                [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+            }
+            [moreCell noDataAnimation];
+            return moreCell;
+        }
+        
+        static NSString *cellId = @"cellId";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+        if(!cell)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        }
+        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+            [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+        }
+        
+        [cell.contentView addSubview:(UILabel *)[searchLabelArray objectAtIndex:indexPath.row]];
+        [cell.contentView addSubview:(UIButton *)[searchBtnArray objectAtIndex:indexPath.row]];
+        
+        return cell;
+        
     }
-    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
-        [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-    }
-    
-    [cell.contentView addSubview:(UILabel *)[labelArray objectAtIndex:indexPath.row]];
-    [cell.contentView addSubview:(UIButton *)[btnArray objectAtIndex:indexPath.row]];
-    
-    return cell;
+    return nil;
 }
 
 - (void)didReceiveMemoryWarning

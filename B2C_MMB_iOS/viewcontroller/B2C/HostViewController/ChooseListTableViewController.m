@@ -10,15 +10,14 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 //#import "FMDatabaseAdditions.h"
 #import "AppDelegate.h"
+#import "KxMenu.h"
+
+#define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
 
 @interface ChooseListTableViewController ()
 {
     AppDelegate *app;
     NSMutableArray *cabelNameArray;
-    
-    NSMutableArray *contentArray;
-    
-    DCFPickerView *pickerView;
     
     UIButton *leftBtn;
     
@@ -51,13 +50,11 @@
         [cabelNameArray addObject:cabelName];
     }
     [rs close];
-
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view isKindOfClass:[UIButton class]] || [view tag] == 101)
@@ -76,44 +73,72 @@
 //    [self.navigationItem setHidesBackButton:YES];
     
     [self exeuteCabelList];
-    
-    contentArray = [[NSMutableArray alloc] initWithObjects:@"电缆采购",@"家装线专卖", nil];
+
+    //导航栏标题
+    UILabel *naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,220, 44)];
+    naviTitle.textColor = [UIColor blackColor];
+    naviTitle.backgroundColor = [UIColor clearColor];
+    naviTitle.textAlignment = NSTextAlignmentCenter;
+    naviTitle.text = @"搜索";
+    self.navigationItem.titleView = naviTitle;
     
     leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftBtn setFrame:CGRectMake(0, 10, 80, 27)];
-    [leftBtn setBackgroundColor:[UIColor grayColor]];
+    [leftBtn setFrame:CGRectMake(-5, 10, 90, 37)];
+    [leftBtn setBackgroundColor:[UIColor clearColor]];
     [leftBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [leftBtn setTitle:@"电缆采购" forState:UIControlStateNormal];
     [leftBtn setShowsTouchWhenHighlighted:NO];
     [leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(leftBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:leftBtn];
     
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
-    self.navigationItem.leftBarButtonItem = left;
+    UIImageView *sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(75,13,10,10)];
+    [sectionBtnIv setImage:[UIImage imageNamed:@"down_dark.png"]];
+    [sectionBtnIv setContentMode:UIViewContentModeScaleToFill];
+    sectionBtnIv.tag = 300;
+    [leftBtn addSubview: sectionBtnIv];
     
-
-    mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBtn.frame.origin.x + leftBtn.frame.size.width + 10, 4, 180, 35)];
+    mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(leftBtn.frame.origin.x + leftBtn.frame.size.width + 5, 5, 180, 40)];
     [mySearchBar setDelegate:self];
-    [mySearchBar setBarStyle:UIBarStyleBlackOpaque];
-    [self.navigationController.navigationBar addSubview:mySearchBar];
+    [mySearchBar setBarStyle:0];
+    mySearchBar.placeholder = @"输入搜索内容";
+//    mySearchBar.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:mySearchBar];
     
+    UIButton *speakButton = [[UIButton alloc] initWithFrame:CGRectMake(leftBtn.frame.origin.x + leftBtn.frame.size.width + 193, 12.5, 33, 33)];
+    [speakButton setBackgroundImage:[UIImage imageNamed:@"speak"] forState:UIControlStateNormal];
+    [speakButton addTarget:self action:@selector(soundSrarch) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:speakButton];
+    
+    UIView *separateLine = [[UIView alloc] init];
+    separateLine.frame = CGRectMake(0, 47.5, self.view.frame.size.width, 0.5);
+    separateLine.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:separateLine];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundColor:[UIColor redColor]];
-    [rightBtn setFrame:CGRectMake(mySearchBar.frame.origin.x + mySearchBar.frame.size.width + 10, 10, 40, 25)];
-    [rightBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [rightBtn setBackgroundColor:[UIColor clearColor]];
+    [rightBtn setFrame:CGRectMake(mySearchBar.frame.origin.x + mySearchBar.frame.size.width + 10, 10, 60, 25)];
+    [rightBtn setTitle:@"询价车" forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [rightBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-//    [self.navigationController.navigationBar addSubview:rightBtn];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
 //    dataArray = [[NSMutableArray alloc] init];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
+
+-(void)soundSrarch
+{
+    NSLog(@"语音搜素");
+}
+
 
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
+   [self.navigationController.tabBarController.tabBar setHidden:NO];
     [mySearchBar resignFirstResponder];
 }
 
@@ -132,6 +157,7 @@
     
 }
 
+
 - (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
     return YES;
@@ -139,16 +165,51 @@
 
 - (void) leftBtnClick:(UIButton *) sender
 {
-    if(mySearchBar.isFirstResponder)
-    {
-        [mySearchBar resignFirstResponder];
-    }
-        pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:contentArray WithTag:1000];
-        pickerView.delegate = self;
-        [self.view.window setBackgroundColor:[UIColor blackColor]];
-        [self.view.window addSubview:pickerView];
+//    if(mySearchBar.isFirstResponder)
+//    {
+//        [mySearchBar resignFirstResponder];
+//    }
+//        pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:contentArray WithTag:1000];
+//        pickerView.delegate = self;
+//        [self.view.window setBackgroundColor:[UIColor blackColor]];
+//        [self.view.window addSubview:pickerView];
+    UIImageView *currentIV= (UIImageView *)[self.view viewWithTag:300];
+    [UIView animateWithDuration:0.3 animations:^{
+        currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
+    }];
+    NSArray *menuItems =
+    @[
+      
+      [KxMenuItem menuItem:@"电缆采购"
+                     image:nil
+                    target:self
+                    action:@selector(pushMenuItem:)],
+      
+      [KxMenuItem menuItem:@"家装线专卖"
+                     image:nil
+                    target:self
+                    action:@selector(pushMenuItem:)],
+    ];    
+    [KxMenu showMenuInView:self.view
+                  fromRect:sender.frame
+                 menuItems:menuItems];
+    
 }
 
+- (void) pushMenuItem:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"dissMiss" object:nil];
+    NSLog(@"%@", sender);
+    
+}
+
+-(void)changeClick:(NSNotification *)viewChanged
+{
+    UIImageView *currentIV= (UIImageView *)[self.view viewWithTag:300];
+    [UIView animateWithDuration:0.3 animations:^{
+        currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
+    }];
+}
 
 - (void) pickerView:(NSString *) title WithTag:(int)tag
 {
@@ -222,7 +283,7 @@
         clearBtn.layer.borderWidth = 1.0f;
         clearBtn.layer.cornerRadius = 5;
         clearBtn.layer.masksToBounds = YES;
-        [cell.contentView addSubview:clearBtn];
+//        [cell.contentView addSubview:clearBtn];
         
         return cell;
     }

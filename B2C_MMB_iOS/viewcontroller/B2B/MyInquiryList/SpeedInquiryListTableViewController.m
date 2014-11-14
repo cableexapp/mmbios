@@ -410,7 +410,8 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MyFastInquiryOrder *myFastInquiryOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    MyFastInquiryOrder *myFastInquiryOrder = [sb instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
     myFastInquiryOrder.fastData = [dataArray objectAtIndex:indexPath.section];
     [self.navigationController pushViewController:myFastInquiryOrder animated:YES];
 }

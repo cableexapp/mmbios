@@ -12,6 +12,7 @@
 #import <sqlite3.h>
 #import "XMPPFramework.h"
 #import <AVFoundation/AVFoundation.h>
+#import "DCFColorUtil.h"
 
 @interface ChatViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,FaceBoardDelegate,EGORefreshTableHeaderDelegate,UIAlertViewDelegate,XMPPRoomDelegate,XMPPMUCDelegate>
 {

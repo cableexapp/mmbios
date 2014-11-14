@@ -19,6 +19,8 @@
 
 @end
 
+int flagPage = 0;
+
 @implementation ChatListViewController
 @synthesize memberTableView;
 @synthesize tempArray;
@@ -36,16 +38,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:16.0/255 green:78.0/255 blue:139.0/255 alpha:1.0];
+    self.view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+    
     //导航栏标题
     UILabel *naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,190, 44)];
-    naviTitle.textColor = [UIColor blackColor];
+    naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.textAlignment = NSTextAlignmentCenter;
     naviTitle.text = @"客服分组";
     self.navigationItem.titleView = naviTitle;
    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"返回"] style:UIBarButtonItemStylePlain target:self action:@selector(goBackAction)];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(10, 24.5, 35, 35);
+    [btn setBackgroundImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(goBackAction) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = leftItem;
     
     self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-147) style:UITableViewStylePlain];
     self.memberTableView.dataSource = self;
@@ -64,17 +72,17 @@
     [self.view addSubview:self.memberTableView];
     
     UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-140, self.view.frame.size.width, 2)];
-    separatorView.backgroundColor = [UIColor redColor];
+    separatorView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
     [self.view insertSubview:separatorView atIndex:1];
     
     UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-138, self.view.frame.size.width, 80)];
-    timeView.backgroundColor = [UIColor colorWithRed:54.0/255 green:54.0/255 blue:54.0/255 alpha:1.0];
+    timeView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     [self.view insertSubview:timeView atIndex:1];
     
     UILabel *label1 = [[UILabel alloc] init];
     label1.frame = CGRectMake(0,3, self.view.frame.size.width, 30);
     label1.text = @"人工客服时间";
-    label1.textColor = [UIColor whiteColor];
+    label1.textColor = [DCFColorUtil colorFromHexRGB:@"#666666"];
     label1.textAlignment = NSTextAlignmentCenter;
     label1.font = [UIFont systemFontOfSize:16];
     [timeView addSubview:label1];
@@ -82,7 +90,7 @@
     UILabel *label2 = [[UILabel alloc] init];
     label2.frame = CGRectMake(0, 35, self.view.frame.size.width, 30);
     label2.text = @"09:00 - 21:00";
-    label2.textColor = [UIColor whiteColor];
+    label2.textColor = [DCFColorUtil colorFromHexRGB:@"#666666"];
     label2.textAlignment = NSTextAlignmentCenter;
     label2.font = [UIFont systemFontOfSize:22];
     [timeView addSubview:label2];
@@ -90,7 +98,7 @@
     //自定义网络状态提示视图
     noNet = [[UILabel alloc] init];
     noNet.frame = CGRectMake(0, 0, self.view.frame.size.width,32);
-    noNet.backgroundColor = [UIColor colorWithRed:255.0/255 green:160.0/255.0 blue:122.0/255.0 alpha:1.0];
+    noNet.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#fff3bb"];
     noNet.hidden = YES;
     [self.view insertSubview:noNet atIndex:1];
     
@@ -101,7 +109,7 @@
     
     noNetMessage = [[UILabel alloc] init];
     noNetMessage.frame = CGRectMake(55, 0, self.view.frame.size.width-55, 32);
-    noNetMessage.textColor = [UIColor whiteColor];
+    noNetMessage.textColor = [DCFColorUtil colorFromHexRGB:@"#333333"];
     noNetMessage.font = [UIFont systemFontOfSize:15];
     noNetMessage.textAlignment = NSTextAlignmentLeft;
     noNetMessage.text = @"当前网络不可用，请检查网络设置!";
@@ -121,10 +129,12 @@
     
     //接收分组列表
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (memberGroupList:) name:@"memberGroupName" object:nil];
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
-{
+{    
     [super viewWillAppear:YES];
     [self checkNet];
     [self reloadMemberList];
@@ -176,8 +186,8 @@
     {
         self.tempArray = self.appDelegate.roster;
     }
-
 }
+
 //检查网络是否连接
 -(void)checkNet
 {
@@ -245,11 +255,17 @@
 {
     if ([self.fromString isEqualToString:@"首页在线客服"])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+      [self.navigationController popViewControllerAnimated:YES];
+      [self.navigationController.tabBarController.tabBar setHidden:NO];
+        
     }
     else if([self.fromString isEqualToString:@"来自快速询价客服"])
     {
         [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if([self.fromString isEqualToString:@"热门型号在线咨询"])
+    {
+        flagPage = 1;
     }
     else
     {
@@ -257,7 +273,13 @@
     }
 }
 
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (flagPage == 1)
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 -(void)goBackAction
 {
@@ -269,9 +291,16 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
+    else if([self.fromString isEqualToString:@"热门型号在线咨询"])
+    {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
     else
     {
         [self.tabBarController setSelectedIndex:0];
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -309,10 +338,10 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
-        view.backgroundColor = [UIColor colorWithRed:16.0/255 green:78.0/255 blue:139.0/255 alpha:1.0];
+        view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
         [cell.contentView addSubview:view];
         cell.textLabel.textColor = [UIColor blackColor];
-        cell.backgroundColor = [UIColor colorWithRed:232.0/255 green:232.0/255 blue:232.0/255 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:250.0/255 green:250.0/255 blue:250.0/255 alpha:1.0];
         cell.textLabel.font = [UIFont systemFontOfSize:16];
         cell.textLabel.text = [NSString stringWithFormat:@"%@",self.tempArray[indexPath.row]];
     }

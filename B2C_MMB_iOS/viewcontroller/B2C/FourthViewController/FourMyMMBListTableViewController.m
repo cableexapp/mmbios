@@ -15,6 +15,7 @@
 #import "LoginNaviViewController.h"
 #import "DCFCustomExtra.h"
 #import "MyInquiryListFirstViewController.h"
+#import "MyCableOrderHostViewController.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -89,7 +90,7 @@
 {
     NSLog(@"%@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
-//    NSString *msg = [dicRespon objectForKey:@"msg"];
+    //    NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLGetCountNumTag)
     {
         
@@ -135,7 +136,7 @@
                         if(s.intValue < 99 && s.intValue > 0)
                         {
                             [btn setFrame:CGRectMake(self.btn_11.frame.size.width-5, self.btn_11.frame.origin.y-10, 20, 20)];
-
+                            
                         }
                         else
                         {
@@ -148,7 +149,7 @@
                         if(s.intValue < 99 && s.intValue > 0)
                         {
                             [btn setFrame:CGRectMake(self.btn_10.frame.size.width-5, self.btn_10.frame.origin.y-10, 20, 20)];
-
+                            
                         }
                         else
                         {
@@ -170,7 +171,7 @@
                         [self.btn_9 addSubview:btn];
                     }
                 }
-            
+                
             }
         }
         else
@@ -220,10 +221,10 @@
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(-1, 0, ScreenWidth+1, 40)];
-//        btn.layer.borderColor = [UIColor colorWithRed:216.0/255.0 green:232.0/255.0 blue:249.0/255.0 alpha:1.0].CGColor;
-//        btn.layer.borderColor = [UIColor redColor].CGColor;
-//        btn.layer.borderWidth = 1.0f;
-//        btn.layer.masksToBounds = YES;
+        //        btn.layer.borderColor = [UIColor colorWithRed:216.0/255.0 green:232.0/255.0 blue:249.0/255.0 alpha:1.0].CGColor;
+        //        btn.layer.borderColor = [UIColor redColor].CGColor;
+        //        btn.layer.borderWidth = 1.0f;
+        //        btn.layer.masksToBounds = YES;
         [btn setTag:i];
         [btn setTitle:@"" forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -245,7 +246,7 @@
         [label_2 setTextColor:[UIColor colorWithRed:44.0/255.0 green:122.0/255.0 blue:250.0/255.0 alpha:1.0]];
         [label_2 setTextAlignment:NSTextAlignmentRight];
         [label_2 setText:@"查看全部"];
-
+        
         if(i == 0)
         {
             [label_1 setText:@"我的买卖宝询价单"];
@@ -296,7 +297,7 @@
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((btn.frame.size.width-30)/2, 5, 30, 20)];
         [imageView setImage:[UIImage imageNamed:@"Set.png"]];
         [btn addSubview:imageView];
-
+        
     }
     
     
@@ -365,17 +366,28 @@
 - (IBAction)btn3Click:(id)sender {
 }
 
-
-
-- (IBAction)btn5Click:(id)sender {
+- (void) pushToMyCableWithTag:(int) tag
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
+    myCableOrder.btnIndex = tag;
+    [self.navigationController pushViewController:myCableOrder animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
-- (IBAction)btn6Click:(id)sender {
+- (IBAction)btn5Click:(id)sender
+{
+    [self pushToMyCableWithTag:1];
+}
+
+- (IBAction)btn6Click:(id)sender
+{
+    [self pushToMyCableWithTag:2];
 }
 
 - (IBAction)btn7Click:(id)sender
 {
-    
+    [self pushToMyCableWithTag:3];
 }
 
 - (IBAction)btn8Click:(id)sender
@@ -435,7 +447,7 @@
 {
     UIButton *btn = (UIButton *) sender;
     NSString *text = btn.titleLabel.text;
-
+    
     [self setHidesBottomBarWhenPushed:YES];
     FourthHostViewController *fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     fourthHostViewController.myStatus = text;
@@ -453,63 +465,63 @@
     return 0.1;
 }
 /*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
+ - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+ 
+ // Configure the cell...
+ 
+ return cell;
+ }
+ */
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

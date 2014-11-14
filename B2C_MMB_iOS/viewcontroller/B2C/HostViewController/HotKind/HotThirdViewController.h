@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface HotThirdViewController : UIViewController
+- (IBAction)backHome:(id)sender;
+- (IBAction)backSecond:(id)sender;
 
 @end

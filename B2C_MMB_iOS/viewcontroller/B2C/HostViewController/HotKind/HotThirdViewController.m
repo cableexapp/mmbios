@@ -9,6 +9,7 @@
 #import "HotThirdViewController.h"
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "HotKindFirstViewController.h"
 
 
 
@@ -46,15 +47,26 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+
+#pragma mark - 返回首页
+- (IBAction)backHome:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+  //  返回上一级
+//   [self.navigationController popViewControllerAnimated:YES];
+    
+ //  跳转到首页
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+//   隐藏底部
+    [self setHidesBottomBarWhenPushed:YES];
+    
 }
-*/
 
+#pragma mark - 再提交一单
+- (IBAction)backSecond:(id)sender
+{
+     //  倒退到页面2
+    [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+}
 @end

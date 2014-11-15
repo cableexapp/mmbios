@@ -4455,6 +4455,9 @@
                                             <color key="titleColor" red="0.08235294118" green="0.3921568627" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="backHome:" destination="r96-k1-JV8" eventType="touchUpInside" id="bRD-ts-roi"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zgA-SI-Rub">
                                         <rect key="frame" x="109" y="110" width="87" height="38"/>
@@ -4463,6 +4466,9 @@
                                             <color key="titleColor" red="0.08235294118" green="0.3921568627" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="backSecond:" destination="r96-k1-JV8" eventType="touchUpInside" id="WKk-n4-afI"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.92549019610000005" green="0.92549019610000005" blue="0.92549019610000005" alpha="1" colorSpace="calibratedRGB"/>

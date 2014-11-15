@@ -1791,13 +1791,13 @@
 		0D8491B01A0A3BBE00E9C81B /* HotKind */ = {
 			isa = PBXGroup;
 			children = (
-				0D7660AA1A0BA0DC00E2EE46 /* Hotpst.plist */,
 				0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */,
 				0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */,
 				0DABE32A1A1306FB00C64FB7 /* HotSecondViewController.h */,
 				0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */,
 				0D73C0C01A133F4C004A9B95 /* HotThirdViewController.h */,
 				0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */,
+				0D7660AA1A0BA0DC00E2EE46 /* Hotpst.plist */,
 			);
 			path = HotKind;
 			sourceTree = "<group>";

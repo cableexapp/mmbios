@@ -14,10 +14,12 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *PhoneNumber;
 @property (weak, nonatomic) IBOutlet UITextView *markView;
-- (IBAction)TextField_DidEndOnExit:(id)sender;
 
 
 - (IBAction)submitNews:(id)sender;
+
+
+
 
 
 

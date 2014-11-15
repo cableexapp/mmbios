@@ -22,4 +22,6 @@
 @property (strong,nonatomic) NSString *myOrderid;
 @property (strong,nonatomic) NSDictionary *addressDic;
 
+- (void) loadRequest;
+
 @end

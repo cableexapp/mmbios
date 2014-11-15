@@ -18,4 +18,5 @@
 
 - (void) changeColor;
 
+- (NSMutableArray *) changeChooseArray;
 @end

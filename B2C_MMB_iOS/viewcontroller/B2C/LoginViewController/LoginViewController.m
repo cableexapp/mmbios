@@ -227,6 +227,12 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSString *phone = [NSString stringWithFormat:@"%@",[iems objectForKey:@"phone"]];
+            [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"UserPhone"];
+            
+            NSString *email = [NSString stringWithFormat:@"%@",[iems objectForKey:@"email"]];
+            [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"UserEmail"];
 
             [self dismissViewControllerAnimated:YES completion:nil];
         }

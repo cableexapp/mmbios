@@ -27,6 +27,7 @@
     
     NSMutableArray *selectedArray;
 
+    NSMutableArray *chooseArray;
 }
 @end
 
@@ -90,7 +91,8 @@
         cellLabelArray = [[NSMutableArray alloc] init];
         cellAnotherLabelArray = [[NSMutableArray alloc] init];
 
-        NSLog(@"%@",dicRespon);
+        chooseArray = [[NSMutableArray alloc] init];
+        
         if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
         {
             [moreCell failAcimation];
@@ -108,7 +110,27 @@
                 
                 for(int i=0;i<dataArray.count;i++)
                 {
-                    
+//                    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+//                    {
+                    if(i == 0)
+                    {
+                        B2BManagBillData *data = (B2BManagBillData *)[dataArray objectAtIndex:0];
+                        if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+                        {
+                            
+                        }
+                        else
+                        {
+                            
+                        }
+                        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:data.headType,@"type",data.headName,@"name",data.invoiceId,@"invoiceId", nil];
+                        [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
+                    }
+//                    }
+//                    else
+//                    {
+//                        
+//                    }
                     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
                     [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
                     [cellImageArray addObject:iv];
@@ -156,7 +178,6 @@
                     [iv setFrame:CGRectMake(iv.frame.origin.x, (secondLabel.frame.size.height+10-30)/2, iv.frame.size.width, 30)];
                     [firstLabel setFrame:CGRectMake(firstLabel.frame.origin.x, (secondLabel.frame.size.height+10-30)/2, firstLabel.frame.size.width, 30)];
                     
-                    NSLog(@"%d",self.status);
                     
                     if(self.status == YES)
                     {
@@ -285,6 +306,8 @@
     {
         NSLog(@"能编辑");
 
+        B2BManagBillData *data = [dataArray objectAtIndex:indexPath.row];
+        
         if(cellImageArray)
         {
             UIImageView *iv = (UIImageView *)[cellImageArray objectAtIndex:indexPath.row];
@@ -292,19 +315,34 @@
             {
                 [selectedArray removeObject:indexPath];
                 [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
+                
+                [chooseArray removeObject:data];
             }
             else
             {
                 [selectedArray addObject:indexPath];
                 [iv setImage:[UIImage imageNamed:@"choose.png"]];
+                
+                [chooseArray addObject:data];
             }
         }
- 
+        
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:data.headType,@"type",data.headName,@"name",data.invoiceId,@"invoiceId", nil];
+        NSLog(@"dic = %@",dic);
+        [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
+
+//        NSLog(@"arr = %@",chooseArray);
+//        [self changeChooseArray];
     }
     else
     {
         NSLog(@"不能编辑");
     }
+}
+
+- (NSMutableArray *) changeChooseArray
+{
+    return chooseArray;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

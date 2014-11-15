@@ -34,6 +34,8 @@
 - (void) sureBtnClick:(UIButton *) sender
 {
     NSLog(@"sure");
+    
+    [myCableSureOrderTableViewController loadRequest];
 }
 
 - (void)viewDidLoad

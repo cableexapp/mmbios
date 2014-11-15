@@ -14,6 +14,7 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "LoginNaviViewController.h"
 #import "ManagerInvoiceSubTableViewController.h"
+#import "AddInvoiceViewController.h"
 
 
 @interface ManageInvoiceViewController ()
@@ -39,12 +40,31 @@
 
 - (void) sure:(UIButton *) sender
 {
-    NSLog(@"可以点击"); 
+    NSLog(@"可以点击");
+    
+    if(managerInvoiceSubTableViewController)
+    {
+        NSLog(@"***  %@",[managerInvoiceSubTableViewController changeChooseArray]);
+        
+        if([[managerInvoiceSubTableViewController changeChooseArray] count] > 1)
+        {
+            [DCFStringUtil showNotice:@"对不起,您只能选择一个发票"];
+            return;
+        }
+        if([[managerInvoiceSubTableViewController changeChooseArray] count] <= 0)
+        {
+            [DCFStringUtil showNotice:@"对不起,您尚未选择发票"];
+            return;
+        }
+        
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void) rightBtnclick:(UIButton *) sender
 {
-    
+    AddInvoiceViewController *addInvoiceViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"addInvoiceViewController"];
+    [self.navigationController pushViewController:addInvoiceViewController animated:YES];
 }
 
 - (void) viewWillAppear:(BOOL)animated

@@ -92,6 +92,8 @@ enum {
 #pragma mark - b2b
     URLGetProductTypeTag,   //b2b一级分类(首页)
     
+    URLSearchProductTypeTag, //搜索请求
+    
     URLBatchJoinInquiryCartTag,  //热门型号加入询价车
     
     URLInquiryCartListTag,   //询价车明细

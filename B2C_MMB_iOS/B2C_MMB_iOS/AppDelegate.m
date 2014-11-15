@@ -27,6 +27,9 @@
 #import "DDTTYLogger.h"
 #import "NSXMLElement+XMPP.h"
 
+//讯飞
+#import "iflyMSC/IFlySpeechUtility.h"
+
 #if DEBUG
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #else
@@ -108,9 +111,53 @@ NSString *strUserId = @"";
     }
 }
 
+-(NSManagedObjectModel *)managedObjectModel
+{
+    if(_managedObjectModel==nil)
+    {
+        _managedObjectModel=[NSManagedObjectModel mergedModelFromBundles:nil];
+    }
+    return _managedObjectModel;
+}
+
+-(NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if(_persistentStoreCoordinator==nil)
+    {
+        //数据存储文件的路径
+        NSString *storePath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSURL *storeURl=[NSURL fileURLWithPath:[storePath stringByAppendingPathComponent:@"SearchHistoryData.sqlite"]];
+        
+        //持久存储对象
+        _persistentStoreCoordinator=[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
+        
+        NSError *error;
+        if(![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURl options:nil error:&error])
+        {
+            NSLog(@"%@,%@",error,error.userInfo);
+        }
+    }
+    return _persistentStoreCoordinator;
+}
+
+//数据对象上下文 初始化
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if(_managedObjectContext==nil)
+    {
+        _managedObjectContext=[[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+    }
+    return _managedObjectContext;
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
+    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@",@"546454f4"];
+    [IFlySpeechUtility createUtility:initString];
     
     //XMPP
     if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID])
@@ -273,8 +320,25 @@ NSString *strUserId = @"";
     {
         [self.db close];
     }
-    
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self saveContext];
+}
+
+- (void)saveContext
+{
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil)
+    {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
+        {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        else
+        {
+             NSLog( @"数据成功插入");
+        }
+    }
 }
 
 #pragma mark - Xmpp初始化
@@ -575,20 +639,13 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
-//    NSLog(@"presence = %@",presence);
-    //    //取得好友状态
-        NSString *presenceType = [presence type]; //online/offline
-//        //当前用户
-//        NSString *userId = [[sender myJID] user];
-//        NSLog(@"请求的用户userId = %@",userId);
-//        //在线用户
-//        NSString *presenceFromUser = [[presence from] user];
-//        NSLog(@"presenceFromUser = %@",presenceFromUser);
-       //在线状态
-        if ([presenceType isEqualToString:@"unavailable"])
-        {
-           [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
-        }
+   //取得好友状态
+    NSString *presenceType = [presence type];
+   //在线状态
+    if ([presenceType isEqualToString:@"unavailable"])
+    {
+       [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
+    }
 }
 
 - (void)disconnect

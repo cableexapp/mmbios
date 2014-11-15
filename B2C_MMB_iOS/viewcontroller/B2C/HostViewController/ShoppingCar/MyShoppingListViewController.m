@@ -84,7 +84,10 @@
     return self;
 }
 
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
 
 - (void) buttomBtnClick:(UIButton *) sender
 {

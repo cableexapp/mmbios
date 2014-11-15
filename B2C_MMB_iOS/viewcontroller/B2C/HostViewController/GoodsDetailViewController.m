@@ -155,12 +155,13 @@
         if(hasLogin == YES)
         {
             arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
-            
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
             pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
         }
         else
         {
             arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
             pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
             
         }
@@ -208,7 +209,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     num = @"0";
 }
 

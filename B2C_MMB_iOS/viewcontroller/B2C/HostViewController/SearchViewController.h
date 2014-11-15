@@ -7,9 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "iflyMSC/IFlyRecognizerViewDelegate.h"
+#import <sqlite3.h>
+@class PopupView;
 
-@interface SearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
+@interface SearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,ConnectionDelegate,IFlyRecognizerViewDelegate,UIAlertViewDelegate>
+{
+    DCFConnectionUtil *conn;
+    IFlyRecognizerView *_iflyRecognizerView;
+    sqlite3 *contactDB;
+    NSString *databasePathB2B;
+    NSString *databasePathB2C;
+}
 
 @property (nonatomic,strong) UITableView *serchResultView;
+
+@property (nonatomic,strong) PopupView *popView;
 
 @end

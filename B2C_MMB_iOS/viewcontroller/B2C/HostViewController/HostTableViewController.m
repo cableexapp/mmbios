@@ -125,6 +125,7 @@
                 [dataArray addObject:typeName];
                 
                 NSString *typeId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"typeId"]];
+                NSLog(@"typeId = %@",typeId);
                 [typeIdArray addObject:typeId];
             }
             
@@ -174,7 +175,7 @@
 {
     UIButton *btn = (UIButton *) sender;
     int tag = [btn tag];
-    
+    NSLog(@"tag = %d",tag);
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = btn.titleLabel.text;

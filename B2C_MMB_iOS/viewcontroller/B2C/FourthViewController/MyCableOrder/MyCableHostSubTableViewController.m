@@ -19,7 +19,7 @@
 {
     DCFChenMoreCell *moreCell;
     
-    int intPage; //页数
+//    int intPage; //页数
     int intTotal; //总数
     int pageSize; //每页条数
     BOOL _reloading;
@@ -31,6 +31,8 @@
     
     UIStoryboard *sb;
     
+    
+    int index;  //确认收货时用到
 }
 @end
 
@@ -85,7 +87,7 @@
     
     upTimeLabelArray = [[NSMutableArray alloc] init];
     
-    intPage = 1;
+    _intPage = 1;
     
     
     //ADD REFRESH VIEW
@@ -106,7 +108,7 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *status = [NSString stringWithFormat:@"%@",sender];
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,@"668",pageSize,intPage,status];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,@"668",pageSize,_intPage,status];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLOrderListTag delegate:self];
     
@@ -121,11 +123,11 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    
     if(URLTag == URLOrderListTag)
     {
-        NSLog(@"%@",dicRespon);
-        
-        
         if(_reloading == YES)
         {
             [self doneLoadingViewData];
@@ -140,11 +142,10 @@
         }
         else
         {
-            NSString *result = [dicRespon objectForKey:@"result"];
-            if([result isEqualToString:@"1"])
+            if(result == 1)
             {
                 
-                if(intPage == 1)
+                if(_intPage == 1)
                 {
                     [dataArray removeAllObjects];
                 }
@@ -159,48 +160,43 @@
                 {
                     [moreCell stopAnimation];
                 }
-                intPage++;
+                _intPage++;
             }
             else
             {
+                if([[dicRespon objectForKey:@"items"] count] == 0 || [[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]])
+                {
+                    if(dataArray)
+                    {
+                        [dataArray removeAllObjects];
+                    }
+                }
                 [moreCell noClasses];
             }
         }
         
-//        if(lookBtnArray.count != 0)
-//        {
-//            [lookBtnArray removeAllObjects];
-//        }
-//        if(upTimeLabelArray.count != 0)
-//        {
-//            [upTimeLabelArray removeAllObjects];
-//        }
-//        for(int i=0;i<dataArray.count;i++)
-//        {
-//            UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            [lookBtn setTitle:@"查看" forState:UIControlStateNormal];
-//            [lookBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-//            [lookBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-//            [lookBtn setFrame:CGRectMake(ScreenWidth-50, 5, 50, 30)];
-//            [lookBtn setTag:i];
-//            [lookBtn addTarget:self action:@selector(lookBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//            [lookBtnArray addObject:lookBtn];
-//            
-//            NSString *upTime = @"123";
-//            
-//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, 250, 30)];
-//            [label setText:[NSString stringWithFormat:@" 提交时间:%@",upTime]];
-//            [label setFont:[UIFont systemFontOfSize:12]];
-//            [upTimeLabelArray addObject:label];
-//        }
-        
         [self.tableView reloadData];
-        
     }
-}
+    if(URLTag == URLConfirmReceiveTag)
+    {
+//        NSLog(@"%@",dicRespon);
+  
+        
 
-- (void) lookBtnClick:(UIButton *) sender
-{
+        if(result == 1)
+        {
+//            [self.tableView scrollsToTop] = YES;
+//            [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+            _intPage = 1;
+            [self loadRequestWithStatus:_statusIndex];
+        }
+        else
+        {
+            [DCFStringUtil showNotice:msg];
+        }
+    }
+    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -228,12 +224,13 @@
     }
     if(section == dataArray.count)
     {
-        if ((intPage-1)*pageSize < intTotal )
+        if ((_intPage-1)*pageSize < intTotal )
         {
             return 1;
         }
         return 0;
     }
+    NSLog(@"count = %d", [[[dataArray objectAtIndex:section] myItems] count]);
     return  [[[dataArray objectAtIndex:section] myItems] count] + 2;
 }
 
@@ -436,14 +433,26 @@
         return moreCell;
     }
     
-    
-    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
+    static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(cell == nil)
+    if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:0];
-        
+    }
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+    {
+        [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    }
+    
+//    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+//    if(cell == nil)
+//    {
+//        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+//        [cell setSelectionStyle:0];
+    
         CGFloat cellWidth = cell.contentView.frame.size.width;
         
         if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
@@ -645,7 +654,7 @@
             [cell.contentView addSubview:feathLabel];
             [cell.contentView addSubview:requestLabel];
         }
-        else if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+        if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
             NSString *time = [NSString stringWithFormat:@"生成时间: %@",[[dataArray objectAtIndex:indexPath.section] cableOrderTime]];
             UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cellWidth-20, 30)];
@@ -653,7 +662,7 @@
             [timeLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:timeLabel];
         }
-        else if (indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count] + 1)
+        if (indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count] + 1)
         {
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"状态" WithSize:CGSizeMake(MAXFLOAT, 30)];
             UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, 30)];
@@ -675,7 +684,14 @@
                 UIButton *statusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                 [statusBtn setFrame:CGRectMake(cellWidth-120, 5, 100, 30)];
                 [statusBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-                [statusBtn setTitle:@"确认订单" forState:UIControlStateNormal];
+                if([status intValue] == 0)
+                {
+                    [statusBtn setTitle:@"确认订单" forState:UIControlStateNormal];
+                }
+                if([status intValue] == 5)
+                {
+                    [statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+                }
                 statusBtn.layer.borderColor = MYCOLOR.CGColor;
                 statusBtn.layer.borderWidth = 1.0f;
                 statusBtn.layer.cornerRadius = 5.0f;
@@ -686,7 +702,7 @@
             }
             
         }
-    }
+//    }
     
     return cell;
 }
@@ -697,19 +713,86 @@
 {
     UIButton *btn = (UIButton *) sender;
     int tag = btn.tag;
-    NSLog(@"tag = %d",tag);
-    if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:)])
+    
+    NSString *title = [NSString stringWithFormat:@"%@",btn.titleLabel.text];
+    if([title isEqualToString:@"确认收货"])
     {
-        [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:tag]];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您确认要收货嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定收货", nil];
+        [av show];
+        
+        index = tag;
+//        [self sureReceiveRequest];
+    }
+    else
+    {
+        if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:)])
+        {
+            [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:tag]];
+        }
     }
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:)])
+    if(!dataArray || dataArray.count == 0)
     {
-        [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:indexPath.section]];
+        
     }
+    else
+    {
+        NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
+        NSLog(@"status = %@",status);
+        if([status intValue] == 5)
+        {
+            
+//            index = indexPath.section;
+            
+            
+        }
+        else
+        {
+            if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:)])
+            {
+                [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:indexPath.section]];
+            }
+        }
+
+    }
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            
+            break;
+        case 1:
+        {
+            [self sureReceiveRequest];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void) sureReceiveRequest
+{
+    
+
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"ConfirmReceive",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@",token,[NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:index] orderid]]];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmReceiveTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ConfirmReceive.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -721,7 +804,7 @@
         {
             if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
             {
-                if ((intPage-1) * pageSize < intTotal )
+                if ((_intPage-1) * pageSize < intTotal )
                 {
                     [self loadRequestWithStatus:_statusIndex];
                 }
@@ -742,7 +825,7 @@
 {
     
     _reloading = YES;
-    intPage = 1;
+    _intPage = 1;
     [self loadRequestWithStatus:_statusIndex];
 }
 //

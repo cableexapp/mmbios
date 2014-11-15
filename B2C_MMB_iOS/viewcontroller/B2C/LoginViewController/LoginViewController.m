@@ -204,7 +204,6 @@
     if(URLTag == URLLoginTag)
     {
         [HUD hide:YES];
-        
         int reslut = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(reslut == 0)
@@ -220,7 +219,9 @@
         }
         else
         {
-            NSString *memberId = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
+            NSDictionary *iems = [NSDictionary dictionaryWithDictionary:[dicRespon objectForKey:@"items"]];
+            
+            NSString *memberId = [NSString stringWithFormat:@"%@",[iems objectForKey:@"memberId"]];
             
             [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"memberId"];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];

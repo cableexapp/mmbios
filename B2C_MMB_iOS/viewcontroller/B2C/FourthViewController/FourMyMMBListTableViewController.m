@@ -76,9 +76,8 @@
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
-    if(memberid.length == 0)
+    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
     {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
         LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
         [self presentViewController:loginNavi animated:YES completion:nil];
         
@@ -88,7 +87,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     //    NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLGetCountNumTag)

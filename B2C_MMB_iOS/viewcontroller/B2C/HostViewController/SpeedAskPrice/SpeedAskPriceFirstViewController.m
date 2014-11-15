@@ -611,7 +611,6 @@
         {
             [HUD hide:YES];
         }
-        NSLog(@"%@",dicRespon);
         int result = [[dicRespon objectForKey:@"result"] intValue];
         if(result == 1)
         {

@@ -157,23 +157,29 @@
     if(tag == 0)
     {
         subTV_1.statusIndex = @"";
+        subTV_1.intPage = 1;
         [subTV_1 loadRequestWithStatus:@""];
     }
     if(tag == 1)
     {
         subTV_2.statusIndex = @"0";
+        subTV_2.intPage = 1;
         [subTV_2 loadRequestWithStatus:@"0"];
     }
     if(tag == 2)
     {
         subTV_3.statusIndex = @"2";
+        subTV_3.intPage = 1;
         [subTV_3 loadRequestWithStatus:@"2"];
     }
     if(tag == 3)
     {
         subTV_4.statusIndex = @"5";
+        subTV_4.intPage = 1;
         [subTV_4 loadRequestWithStatus:@"5"];
     }
+    
+    _btnIndex = tag;
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
@@ -206,21 +212,25 @@
     if(currentPageIndex == 0)
     {
         subTV_1.statusIndex = @"";
+        subTV_1.intPage = 1;
         [subTV_1 loadRequestWithStatus:@""];
     }
     if(currentPageIndex == 1)
     {
         subTV_2.statusIndex = @"0";
+        subTV_2.intPage = 1;
         [subTV_2 loadRequestWithStatus:@"0"];
     }
     if(currentPageIndex == 2)
     {
         subTV_3.statusIndex = @"2";
+        subTV_3.intPage = 1;
         [subTV_3 loadRequestWithStatus:@"2"];
     }
     if(currentPageIndex == 3)
     {
         subTV_4.statusIndex = @"5";
+        subTV_4.intPage = 1;
         [subTV_4 loadRequestWithStatus:@"5"];
     }
 }

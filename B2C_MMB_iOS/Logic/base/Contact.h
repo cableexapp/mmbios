@@ -126,7 +126,11 @@ enum {
     URLOrderListTag,  //我的电缆订单列表
     URLOrderDetailTag, //我的电缆订单详情查看
     
-    URLUpImagePicTag
+    URLConfirmReceiveTag, //确认收货
+
+    URLUpImagePicTag,
+    
+    URLInvoiceListTag  //B2B发票列表
 };
 typedef NSUInteger URLTag;
 

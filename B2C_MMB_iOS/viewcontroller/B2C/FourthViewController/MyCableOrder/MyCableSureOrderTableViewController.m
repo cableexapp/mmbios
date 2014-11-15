@@ -1,24 +1,25 @@
 //
-//  MyCableDetailTableViewController.m
+//  MyCableSureOrderTableViewController.m
 //  B2C_MMB_iOS
 //
-//  Created by App01 on 14-11-13.
+//  Created by xiaochen on 14-11-13.
 //  Copyright (c) 2014年 YUANDONG. All rights reserved.
 //
 
-#import "MyCableDetailTableViewController.h"
+#import "MyCableSureOrderTableViewController.h"
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
 #import "DCFChenMoreCell.h"
 
-@interface MyCableDetailTableViewController ()
+@interface MyCableSureOrderTableViewController ()
 {
     DCFChenMoreCell *moreCell;
     NSMutableArray *dataArray;
 }
+
 @end
 
-@implementation MyCableDetailTableViewController
+@implementation MyCableSureOrderTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,7 +33,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     
     [self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:229.0/255.0 blue:240.0/255.0 alpha:1.0]];
     [self.tableView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:229.0/255.0 blue:240.0/255.0 alpha:1.0]];
@@ -51,6 +51,8 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     [moreCell startAnimation];
+    
+  
 }
 
 
@@ -85,6 +87,7 @@
     [self.tableView reloadData];
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -99,7 +102,7 @@
     {
         return 1;
     }
-    return 2;
+    return 4;
 }
 
 
@@ -121,13 +124,24 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
     //    [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, ScreenWidth-20, 30)];
+//    [label setTextColor:MYCOLOR];
+//    label.layer.borderColor = MYCOLOR.CGColor;
+//    label.layer.borderWidth = 1.0f;
     [label setFont:[UIFont boldSystemFontOfSize:13]];
     if(section == 0)
     {
-        [label setText:@"收货地址"];
+        [label setText:@"发票信息"];
     }
     if(section == 1)
+    {
+        [label setText:@"发票邮寄地址"];
+    }
+    if(section == 2)
+    {
+        [label setText:@"收货地址"];
+    }
+    if(section == 3)
     {
         [label setText:@"型号信息"];
     }
@@ -138,7 +152,7 @@
     for(int i=0;i<2;i++)
     {
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5*i, ScreenWidth, 0.5)];
-        [lineView setBackgroundColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
+        [lineView setBackgroundColor:MYCOLOR];
         [view addSubview:lineView];
     }
     return view;
@@ -150,11 +164,11 @@
     {
         return 1;
     }
-    if(section == 0)
+    if(section == 0 || section == 1 || section == 2)
     {
         return 1;
     }
-    return dataArray.count;
+    return [_b2bMyCableOrderListData myItems].count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -164,6 +178,14 @@
         return 44;
     }
     if(indexPath.section == 0)
+    {
+        return 44;
+    }
+    if(indexPath.section == 1)
+    {
+        return 100;
+    }
+    if(indexPath.section == 2)
     {
         NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
         CGSize size;
@@ -216,7 +238,19 @@
         [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
         
+        
         if(indexPath.section == 0)
+        {
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [cell.textLabel setText:@"发票信息"];
+        }
+        if(indexPath.section == 1)
+        {
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [cell.textLabel setText:@"发票邮寄地址"];
+        }
+        
+        if(indexPath.section == 2)
         {
             if(indexPath.row == 0)
             {
@@ -245,7 +279,7 @@
                 [cell.contentView addSubview:addressLabel];
             }
         }
-        else
+        if(indexPath.section == 3)
         {
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 65)];
             [view setBackgroundColor:[UIColor whiteColor]];
@@ -253,7 +287,7 @@
             
             CGFloat width = cell.contentView.frame.size.width/2;
             
-            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[dataArray objectAtIndex:indexPath.row]];
+            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[[_b2bMyCableOrderListData myItems] objectAtIndex:indexPath.row]];
             
             CGSize size_model = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"型号:" WithSize:CGSizeMake(MAXFLOAT, 30)];
             UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_model.width, 30)];
@@ -292,7 +326,7 @@
             NSString *theInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]]; //规格
             NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
             NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
-//            NSString *thecolor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]]; //颜色
+            //            NSString *thecolor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]]; //颜色
             
             NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]]; //价格
             NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
@@ -343,7 +377,7 @@
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+60, width*2, 30)];
                         break;
                     }
-
+                        
                         
                     default:
                         break;
@@ -393,6 +427,28 @@
     }
     
     return cell;
+}
+
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+    {
+        manageInvoiceViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"manageInvoiceViewController"];
+        [self.navigationController pushViewController:manageInvoiceViewController animated:YES];
+    }
+    if(indexPath.section == 1)
+    {
+        
+    }
+    if(indexPath.section == 2)
+    {
+        
+    }
+    if(indexPath.section == 3)
+    {
+        
+    }
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

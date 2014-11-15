@@ -40,8 +40,8 @@
     self.navigationItem.titleView = top;
     [super viewDidLoad];
     
-    [self.PhoneNumber resignFirstResponder];
-//    [self.view endEditing:YES];
+//    [self.PhoneNumber resignFirstResponder];
+   [self.view endEditing:YES];
     
 //    数据加载到文本框
     NSString *str = @"";
@@ -53,13 +53,13 @@
 }
 
 
--(void)viewDidAppear:(BOOL)animated
+
+// 隐藏键盘
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [super viewDidAppear:animated];
-    [self.PhoneNumber becomeFirstResponder];
+    [self.PhoneNumber resignFirstResponder];
+    [self.markView resignFirstResponder];
 }
-
-
 
 
 - (IBAction)submitNews:(id)sender
@@ -81,7 +81,6 @@
     if (buttonIndex != 0) return;
     [self performSegueWithIdentifier:@"submit2win" sender:nil];
 //    [self.navigationController popToRootViewControllerAnimated:YES];
-//    [self performSegueWithIdentifier:@"login2contacts" sender:nil];
 
 }
 

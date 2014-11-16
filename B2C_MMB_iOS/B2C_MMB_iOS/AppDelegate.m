@@ -17,7 +17,7 @@
 #import "DCFTabBarCtrl.h"
 #import "DCFCustomExtra.h"
 #import <CommonCrypto/CommonDigest.h>
-
+#import "WelComeViewController.h"
 #import "UIImage (fixOrientation).h"
 
 //XMPP
@@ -90,6 +90,22 @@ NSString *strUserId = @"";
             break;
     }
     
+}
+
+#pragma mark - 屏幕旋转
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;//只支持这一个方向(正常的方向)
 }
 
 -(NSString*) getUdid
@@ -174,10 +190,10 @@ NSString *strUserId = @"";
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-    DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
-    self.window.rootViewController = tabbar;
-//    [tabbar.view.window setBackgroundColor:[UIColor blackColor]];
-//    [tabbar.view.window setOpaque:NO];
+//    DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
+//    self.window.rootViewController = tabbar;
+    WelComeViewController *welcome = [sb instantiateViewControllerWithIdentifier:@"welComeViewController"];
+    self.window.rootViewController = welcome;
     
     [PhoneHelper sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];

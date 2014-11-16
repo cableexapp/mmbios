@@ -12,6 +12,15 @@
 		0DABE32C1A1306FB00C64FB7 /* HotSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */; };
 		0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */; };
 		0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */; };
+		6114F7A41A187DFE007DAC39 /* AddBangDingMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6114F7A31A187DFE007DAC39 /* AddBangDingMobileViewController.m */; };
+		6114F7A71A18842C007DAC39 /* ModifyBangDingMobileSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6114F7A61A18842C007DAC39 /* ModifyBangDingMobileSuccessViewController.m */; };
+		6114F7AA1A188754007DAC39 /* ModifyBangDingMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6114F7A91A188754007DAC39 /* ModifyBangDingMobileViewController.m */; };
+		6114F7AD1A189A25007DAC39 /* WelComeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6114F7AC1A189A25007DAC39 /* WelComeViewController.m */; };
+		6114F7B21A189E54007DAC39 /* welcome_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6114F7AF1A189E54007DAC39 /* welcome_1.png */; };
+		6114F7B31A189E54007DAC39 /* welcome_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6114F7B01A189E54007DAC39 /* welcome_2.png */; };
+		6114F7B41A189E54007DAC39 /* welcome_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6114F7B11A189E54007DAC39 /* welcome_3.png */; };
+		6114F7B71A18A050007DAC39 /* tg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6114F7B51A18A050007DAC39 /* tg.png */; };
+		6114F7B81A18A050007DAC39 /* ty.png in Resources */ = {isa = PBXBuildFile; fileRef = 6114F7B61A18A050007DAC39 /* ty.png */; };
 		6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */; };
 		6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */; };
 		611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */; };
@@ -247,7 +256,6 @@
 		61B710CB19FF3B53001CC3BD /* logisticsTrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7105D19FF3B53001CC3BD /* logisticsTrackingViewController.m */; };
 		61B710CC19FF3B53001CC3BD /* LookForCustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7105F19FF3B53001CC3BD /* LookForCustomViewController.m */; };
 		61B710CD19FF3B53001CC3BD /* ModifyLoginSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7106119FF3B53001CC3BD /* ModifyLoginSecViewController.m */; };
-		61B710CE19FF3B53001CC3BD /* ModifyTelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7106319FF3B53001CC3BD /* ModifyTelViewController.m */; };
 		61B710CF19FF3B53001CC3BD /* ChooseTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7106719FF3B53001CC3BD /* ChooseTypeViewController.m */; };
 		61B710D019FF3B53001CC3BD /* OneStepCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7106919FF3B53001CC3BD /* OneStepCell.m */; };
 		61B710D119FF3B53001CC3BD /* OneStepCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B7106A19FF3B53001CC3BD /* OneStepCell.xib */; };
@@ -722,6 +730,19 @@
 		0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewTableViewCell.m; sourceTree = "<group>"; };
 		0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
 		0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
+		6114F7A21A187DFE007DAC39 /* AddBangDingMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBangDingMobileViewController.h; sourceTree = "<group>"; };
+		6114F7A31A187DFE007DAC39 /* AddBangDingMobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBangDingMobileViewController.m; sourceTree = "<group>"; };
+		6114F7A51A18842B007DAC39 /* ModifyBangDingMobileSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyBangDingMobileSuccessViewController.h; sourceTree = "<group>"; };
+		6114F7A61A18842C007DAC39 /* ModifyBangDingMobileSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyBangDingMobileSuccessViewController.m; sourceTree = "<group>"; };
+		6114F7A81A188754007DAC39 /* ModifyBangDingMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyBangDingMobileViewController.h; sourceTree = "<group>"; };
+		6114F7A91A188754007DAC39 /* ModifyBangDingMobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyBangDingMobileViewController.m; sourceTree = "<group>"; };
+		6114F7AB1A189A25007DAC39 /* WelComeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelComeViewController.h; sourceTree = "<group>"; };
+		6114F7AC1A189A25007DAC39 /* WelComeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelComeViewController.m; sourceTree = "<group>"; };
+		6114F7AF1A189E54007DAC39 /* welcome_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome_1.png; sourceTree = "<group>"; };
+		6114F7B01A189E54007DAC39 /* welcome_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome_2.png; sourceTree = "<group>"; };
+		6114F7B11A189E54007DAC39 /* welcome_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = welcome_3.png; sourceTree = "<group>"; };
+		6114F7B51A18A050007DAC39 /* tg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tg.png; sourceTree = "<group>"; };
+		6114F7B61A18A050007DAC39 /* ty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ty.png; sourceTree = "<group>"; };
 		6116A22A19EE1099005C3572 /* MyOrderHostBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostBtnTableViewCell.h; sourceTree = "<group>"; };
 		6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOrderHostBtnTableViewCell.m; sourceTree = "<group>"; };
 		6116A22C19EE1099005C3572 /* MyOrderHostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostTableViewCell.h; sourceTree = "<group>"; };
@@ -1119,8 +1140,6 @@
 		61B7105F19FF3B53001CC3BD /* LookForCustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookForCustomViewController.m; sourceTree = "<group>"; };
 		61B7106019FF3B53001CC3BD /* ModifyLoginSecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyLoginSecViewController.h; sourceTree = "<group>"; };
 		61B7106119FF3B53001CC3BD /* ModifyLoginSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyLoginSecViewController.m; sourceTree = "<group>"; };
-		61B7106219FF3B53001CC3BD /* ModifyTelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyTelViewController.h; sourceTree = "<group>"; };
-		61B7106319FF3B53001CC3BD /* ModifyTelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyTelViewController.m; sourceTree = "<group>"; };
 		61B7106619FF3B53001CC3BD /* ChooseTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseTypeViewController.h; sourceTree = "<group>"; };
 		61B7106719FF3B53001CC3BD /* ChooseTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseTypeViewController.m; sourceTree = "<group>"; };
 		61B7106819FF3B53001CC3BD /* OneStepCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneStepCell.h; sourceTree = "<group>"; };
@@ -1829,6 +1848,18 @@
 			path = HotKindCell;
 			sourceTree = "<group>";
 		};
+		6114F7AE1A189E25007DAC39 /* WelCome */ = {
+			isa = PBXGroup;
+			children = (
+				6114F7B51A18A050007DAC39 /* tg.png */,
+				6114F7B61A18A050007DAC39 /* ty.png */,
+				6114F7AF1A189E54007DAC39 /* welcome_1.png */,
+				6114F7B01A189E54007DAC39 /* welcome_2.png */,
+				6114F7B11A189E54007DAC39 /* welcome_3.png */,
+			);
+			path = WelCome;
+			sourceTree = "<group>";
+		};
 		611C8C3D19E3BDA9000F4532 /* B2CAddressData */ = {
 			isa = PBXGroup;
 			children = (
@@ -2367,6 +2398,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6114F7AE1A189E25007DAC39 /* WelCome */,
 				6140E7C51A01DE4C00E349E3 /* hotModelSelected */,
 				61B710F419FF67A1001CC3BD /* 首页 */,
 				61DF89F519FB9D4900D47430 /* HomeSelect.png */,
@@ -2646,6 +2678,8 @@
 				61B7102C19FF3B53001CC3BD /* B2C */,
 				61B710B219FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.h */,
 				61B710B319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m */,
+				6114F7AB1A189A25007DAC39 /* WelComeViewController.h */,
+				6114F7AC1A189A25007DAC39 /* WelComeViewController.m */,
 			);
 			path = viewcontroller;
 			sourceTree = "<group>";
@@ -2828,8 +2862,6 @@
 				61B7105F19FF3B53001CC3BD /* LookForCustomViewController.m */,
 				61B7106019FF3B53001CC3BD /* ModifyLoginSecViewController.h */,
 				61B7106119FF3B53001CC3BD /* ModifyLoginSecViewController.m */,
-				61B7106219FF3B53001CC3BD /* ModifyTelViewController.h */,
-				61B7106319FF3B53001CC3BD /* ModifyTelViewController.m */,
 			);
 			path = FourthViewController;
 			sourceTree = "<group>";
@@ -3033,6 +3065,12 @@
 				61E65DDB1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m */,
 				61E65DE01A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.h */,
 				61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */,
+				6114F7A21A187DFE007DAC39 /* AddBangDingMobileViewController.h */,
+				6114F7A31A187DFE007DAC39 /* AddBangDingMobileViewController.m */,
+				6114F7A81A188754007DAC39 /* ModifyBangDingMobileViewController.h */,
+				6114F7A91A188754007DAC39 /* ModifyBangDingMobileViewController.m */,
+				6114F7A51A18842B007DAC39 /* ModifyBangDingMobileSuccessViewController.h */,
+				6114F7A61A18842C007DAC39 /* ModifyBangDingMobileSuccessViewController.m */,
 				61E65DDD1A17815800E22E2E /* ModifyLogSecSuccessViewController.h */,
 				61E65DDE1A17815800E22E2E /* ModifyLogSecSuccessViewController.m */,
 			);
@@ -4116,6 +4154,7 @@
 				61B710B619FF3B53001CC3BD /* AliViewController.xib in Resources */,
 				8BA7C0CA1A10A85500758B0F /* 得意@2x.png in Resources */,
 				61DF89F319FB9CD700D47430 /* imUnSelect.png in Resources */,
+				6114F7B81A18A050007DAC39 /* ty.png in Resources */,
 				8BBB28B71A11ABE1009AAEE8 /* mmb.png in Resources */,
 				8BA7C0881A10A85500758B0F /* 小刀@2x.png in Resources */,
 				8BA7C0721A10A85500758B0F /* faceKey.plist in Resources */,
@@ -4168,6 +4207,7 @@
 				8BA7C0E81A10A85500758B0F /* 撇嘴@2x.png in Resources */,
 				8BA7C1211A10A85500758B0F /* 很衰.png in Resources */,
 				8BA7C0DF1A10A85500758B0F /* 拥抱.png in Resources */,
+				6114F7B31A189E54007DAC39 /* welcome_2.png in Resources */,
 				8BA7C0EE1A10A85500758B0F /* 晕了@2x.png in Resources */,
 				8BEBDDB71A132B65007D0B48 /* ico_error@2x.png in Resources */,
 				615C8F8F19F8EFDF00A2B8CD /* ratingbar_selected.png in Resources */,
@@ -4183,6 +4223,7 @@
 				8BA7C0A61A10A85500758B0F /* 哈欠.png in Resources */,
 				8BA7C0EB1A10A85500758B0F /* 敲打.png in Resources */,
 				8BA7C0DB1A10A85500758B0F /* 抠鼻.png in Resources */,
+				6114F7B71A18A050007DAC39 /* tg.png in Resources */,
 				8BA7C0EC1A10A85500758B0F /* 敲打@2x.png in Resources */,
 				8BA7C0D81A10A85500758B0F /* 憨笑@2x.png in Resources */,
 				8BA7C0E51A10A85500758B0F /* 握手.png in Resources */,
@@ -4285,6 +4326,7 @@
 				8BA7C0CC1A10A85500758B0F /* 微笑@2x.png in Resources */,
 				8BA7C12D1A10A85500758B0F /* 转圈.png in Resources */,
 				61A197DB19F752B100909C6F /* icon_addpic_unfocused.png in Resources */,
+				6114F7B21A189E54007DAC39 /* welcome_1.png in Resources */,
 				8BA7C1441A10A85500758B0F /* 鼓掌@2x.png in Resources */,
 				8BA7C10A1A10A85500758B0F /* 白眼@2x.png in Resources */,
 				8BA7C0831A10A85500758B0F /* 冷汗.png in Resources */,
@@ -4321,6 +4363,7 @@
 				8BA7C09A1A10A85500758B0F /* 太极@2x.png in Resources */,
 				61B710D119FF3B53001CC3BD /* OneStepCell.xib in Resources */,
 				8BA7C0CD1A10A85500758B0F /* 心碎.png in Resources */,
+				6114F7B41A189E54007DAC39 /* welcome_3.png in Resources */,
 				8BA7C0F11A10A85500758B0F /* 流汗.png in Resources */,
 				6181A4E619CFC4C2000E2D14 /* jxht_mr.png in Resources */,
 				8BA7C0C21A10A85500758B0F /* 左极@2x.png in Resources */,
@@ -4531,6 +4574,7 @@
 				6181A51719CFC4C2000E2D14 /* UIImage+GIF.m in Sources */,
 				8BA7C2961A10A8DD00758B0F /* XMPPResourceMemoryStorageObject.m in Sources */,
 				61B710C519FF3B53001CC3BD /* FourMyMMBListTableViewController.m in Sources */,
+				6114F7A71A18842C007DAC39 /* ModifyBangDingMobileSuccessViewController.m in Sources */,
 				61551E8E1A0B4D21004F50FF /* B2BAskPriceCarViewController.m in Sources */,
 				61383AA51A0F540200AD3446 /* B2BGetModelByIdData.m in Sources */,
 				6181A4CC19CFC4C2000E2D14 /* DCFTopLabel.m in Sources */,
@@ -4580,7 +4624,6 @@
 				61B710E719FF3B53001CC3BD /* AddReceiveFourthViewController.m in Sources */,
 				61FFC5A319F6405E00F16E64 /* B2CGetOrderDetailData.m in Sources */,
 				61B710CB19FF3B53001CC3BD /* logisticsTrackingViewController.m in Sources */,
-				61B710CE19FF3B53001CC3BD /* ModifyTelViewController.m in Sources */,
 				8BA7C1801A10A8CC00758B0F /* TQRichTextBaseRun.m in Sources */,
 				6181A50419CFC4C2000E2D14 /* ELCImagePickerController.m in Sources */,
 				8BA7C2991A10A8DD00758B0F /* XMPPRoster.m in Sources */,
@@ -4591,6 +4634,7 @@
 				6181A35A19CFC3F9000E2D14 /* AppDelegate.m in Sources */,
 				6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */,
 				61ADE7DE1A10537A00D773B9 /* HotScreenFirstViewController.m in Sources */,
+				6114F7AA1A188754007DAC39 /* ModifyBangDingMobileViewController.m in Sources */,
 				614A83FB1A11ABCD00D4FE1F /* MyFastInquiryOrder.m in Sources */,
 				6181A4C919CFC4C2000E2D14 /* DCFPickerView.m in Sources */,
 				8BA7C2CE1A10A8DD00758B0F /* XMPPTime.m in Sources */,
@@ -4649,6 +4693,7 @@
 				8BA7C2E41A10A8DD00758B0F /* RFImageToDataTransformer.m in Sources */,
 				8BA7C2D71A10A8DD00758B0F /* DDTTYLogger.m in Sources */,
 				8BA7C2B21A10A8DD00758B0F /* XMPPvCardTempAdr.m in Sources */,
+				6114F7A41A187DFE007DAC39 /* AddBangDingMobileViewController.m in Sources */,
 				6181A4F919CFC4C2000E2D14 /* JSONKit.m in Sources */,
 				61DF89D319FB83E400D47430 /* B2CGoodsFastPicData.m in Sources */,
 				6181A4F719CFC4C2000E2D14 /* Base64.m in Sources */,
@@ -4689,6 +4734,7 @@
 				6181A4C219CFC4C2000E2D14 /* SetNavigationBar.m in Sources */,
 				8BA7C2A01A10A8DD00758B0F /* XMPPRoomMessageCoreDataStorageObject.m in Sources */,
 				8BA7C2901A10A8DD00758B0F /* XMPPReconnect.m in Sources */,
+				6114F7AD1A189A25007DAC39 /* WelComeViewController.m in Sources */,
 				61DF89DF19FB8FCD00D47430 /* GoodsFastPicTableViewCell.m in Sources */,
 				8BA7C2FE1A10A90800758B0F /* XMPPMessage.m in Sources */,
 				61222AE11A089DFB00B8A686 /* AlixPayOrder.m in Sources */,

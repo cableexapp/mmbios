@@ -10,7 +10,7 @@
 #import "DCFConnectionUtil.h"
 #import "MBProgressHUD.h"
 
-@interface HotClasscifyViewController : UIViewController<UIScrollViewDelegate,ConnectionDelegate,MBProgressHUDDelegate>
+@interface HotClasscifyViewController : UIViewController<UIScrollViewDelegate,ConnectionDelegate,MBProgressHUDDelegate,UIAlertViewDelegate>
 {
     DCFConnectionUtil *conn;
     MBProgressHUD *HUD;

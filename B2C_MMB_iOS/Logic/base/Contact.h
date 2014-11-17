@@ -90,6 +90,7 @@ enum {
     URLSureReceiveTag,   //确认收货
     
 #pragma mark - b2b
+        
     URLGetProductTypeTag,   //b2b一级分类(首页)
     
     URLSearchProductTypeTag, //搜索请求

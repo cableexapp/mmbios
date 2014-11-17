@@ -7,17 +7,33 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
 
-@interface HotSecondViewController : UIViewController<UIActionSheetDelegate>
+@interface HotSecondViewController : UIViewController<UIActionSheetDelegate,ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
 
+//传过来的数组属性
 @property (strong, nonatomic) NSArray *upArray;
-
+//手机号码文本输入框属性
 @property (weak, nonatomic) IBOutlet UITextField *PhoneNumber;
+//接收数据的文本框属性
 @property (weak, nonatomic) IBOutlet UITextView *markView;
-- (IBAction)TextField_DidEndOnExit:(id)sender;
+//提交属性
+@property (weak, nonatomic) IBOutlet UIButton *submit;
+
+//提交信息
+- (IBAction)submitNews:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *labelText;
+
+@property (weak, nonatomic) IBOutlet UITextView *secondTextView;
 
 
-- (IBAction)submitNews:(id)sender;
+//手机号码文本框
+- (IBAction)phoneText:(id)sender;
+
+
 
 
 

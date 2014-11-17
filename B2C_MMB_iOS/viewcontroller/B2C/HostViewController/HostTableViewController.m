@@ -419,7 +419,6 @@
     if(btn.tag == 4)
     {
         #pragma mark - 热门分类
-        [self setHidesBottomBarWhenPushed:YES];
           HotKindFirstViewController *hotKindFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindFirstViewController"];
         NSLog(@"%@",hotKindFirstViewController);
         [self.navigationController pushViewController:hotKindFirstViewController animated:YES];

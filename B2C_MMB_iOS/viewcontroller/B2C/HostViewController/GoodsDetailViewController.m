@@ -514,7 +514,7 @@
             {
                 imageArray = [[NSArray alloc] initWithObjects:@"cabel.png",@"cabel.png",@"cabel.png", nil];
             }
-            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, 320, 160) ImageArray:imageArray TitleArray:nil WithTag:1];
+            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 160) ImageArray:imageArray TitleArray:nil WithTag:1];
             es.delegate = self;
             [cell.contentView addSubview:es];
         }

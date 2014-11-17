@@ -62,7 +62,7 @@
             
             s2 = [s2 stringByAppendingString:pre];
             
-            NSString *has = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,s2];
+            NSString *has = [NSString stringWithFormat:@"%@%@",URL_PIC_DEV,s2];
             
             _productItemPic = [NSString stringWithFormat:@"%@",has];
             
@@ -79,7 +79,7 @@
             
             s4 = [s4 stringByAppendingString:pre];
             
-            NSString *has = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,s4];
+            NSString *has = [NSString stringWithFormat:@"%@%@",URL_PIC_DEV,s4];
             
             _productItemPic = [NSString stringWithFormat:@"%@",has];
         }

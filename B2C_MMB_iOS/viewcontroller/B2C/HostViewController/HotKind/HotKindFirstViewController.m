@@ -15,13 +15,16 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 
 
+
+
+
 @interface HotKindFirstViewController ()
 {
     NSMutableArray *dataArray;
     NSMutableArray *selectArray;
 }
 
-- (IBAction)clickSubmit:(id)sender;
+
 
 
 @end
@@ -64,6 +67,7 @@
     //初始化
     self.opend = NO;
     self.testSubTableView.hidden = YES;
+     self.clearBtn.hidden = YES;
     
     //每个界面都要加这句话
     [self pushAndPopStyle];
@@ -78,7 +82,9 @@
     
     
     //读取plist文件
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Hotpst" ofType:@"plist"];
+    NSString *filePath = [[NSString alloc] initWithFormat:@"%@",[[NSBundle mainBundle] pathForResource:@"Hotpst" ofType:@"plist"]];
+
+    
     dataArray = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
     if(_testTableView)
     {
@@ -187,6 +193,7 @@
         NSString *str = [NSString stringWithFormat:@"%@",[[selectArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
         [cell.textLabel setText:str];
         [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
     
@@ -210,7 +217,7 @@
     }
     [_testTableView reloadData];
     
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
+    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
     
     if (self.isOpened) {
         [_testSubTableView reloadData];
@@ -222,6 +229,10 @@
     }
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleInsert;
+}
 
 
 
@@ -243,24 +254,32 @@
 
 
 
-
 #pragma mark - 展开已选按钮
 - (IBAction)typeBtn:(id)sender
 {
+    UIButton *button = (UIButton * ) sender;
     if ( _opend )
     {
         self.opend = NO;
 //        [ _testSubTableView setFrame:CGRectMake(_testSubTableView.frame.origin.x, _testSubTableView.frame.origin.y, _testSubTableView.frame.size.width, 0)];
         _testSubTableView.hidden = YES;
         _testTableView.userInteractionEnabled = YES;
+        
     }else
     {
         self.opend = YES;
+        // 1.按钮旋转
+        [UIView animateWithDuration:0.25 animations:^{
+            button.imageView.transform = CGAffineTransformMakeRotation(-M_PI);
+        }];
+
         _testSubTableView.hidden = NO;
         _testTableView.userInteractionEnabled = NO;
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
         [_testSubTableView reloadData];
+        self.clearBtn.hidden = NO;
+
     }
     
 }
@@ -279,6 +298,8 @@
 #pragma mark - 提交
 - (IBAction)clickSubmit:(id)sender
 {
+    //   隐藏底部
+    [self setHidesBottomBarWhenPushed:YES];
     HotSecondViewController *secCtr = [self.storyboard instantiateViewControllerWithIdentifier:@"hotSecondViewController"];
     secCtr.upArray = selectArray;
     [self.navigationController pushViewController:secCtr animated:YES];
@@ -300,28 +321,8 @@
     [dataArray addObjectsFromArray:selectArray];
     [selectArray removeAllObjects];
     [_testTableView reloadData];
-    
-    
-    
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
+     self.clearBtn.hidden = YES;
+    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

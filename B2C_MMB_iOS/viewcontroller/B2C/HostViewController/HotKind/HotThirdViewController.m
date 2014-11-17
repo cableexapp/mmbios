@@ -58,8 +58,7 @@
  //  跳转到首页
     [self.navigationController popToRootViewControllerAnimated:YES];
     
-//   隐藏底部
-    [self setHidesBottomBarWhenPushed:YES];
+
     
 }
 
@@ -68,5 +67,13 @@
 {
      //  倒退到页面2
     [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+}
+
+- (IBAction)taPhone:(id)sender
+{
+           UIAlertView *alter = [[UIAlertView alloc] initWithTitle:nil message:@"您确定要拨打电话吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拨号", nil];
+            [alter show];
+
+    
 }
 @end

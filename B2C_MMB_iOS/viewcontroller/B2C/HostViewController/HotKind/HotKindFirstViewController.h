@@ -10,29 +10,34 @@
 
 @class HotKindFirstViewController;
 
+
 @protocol HotKindHostViewControllerDelegate <NSObject>
-@optional
-- (void) headerviewDidClickeNameview: (HotKindFirstViewController *)headerView;
 
 
 	@end
 
 @interface HotKindFirstViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
-
+//选中属性
 @property (weak, nonatomic) IBOutlet UIButton *typeBtn;
-
+//清空属性
 @property (weak, nonatomic) IBOutlet UIButton *clearBtn;
-
+//大的Tabview
 @property (weak, nonatomic) IBOutlet UITableView *testTableView;
-
+//小的Tabview
 @property (weak, nonatomic) IBOutlet UITableView *testSubTableView;
-
+//提交属性
 @property (weak, nonatomic) IBOutlet UIButton *upBtn;
-
+//提交按钮
+- (IBAction)clickSubmit:(id)sender;
+//展开选中
 @property (nonatomic, assign,getter = isOpened) BOOL opend;
 
 
-@property (nonatomic, weak) id <HotKindHostViewControllerDelegate> delegate;
+
+
+
+
+
 
 
 

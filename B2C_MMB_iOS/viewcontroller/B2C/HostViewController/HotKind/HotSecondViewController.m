@@ -10,6 +10,12 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MBProgressHUD.h"
+#import "DCFCustomExtra.h"
+#import "DCFStringUtil.h"
+#import "LoginNaviViewController.h"
+#import "MCDefine.h"
+
+#define kMaxLength 11
 
 @interface HotSecondViewController ()
 
@@ -28,12 +34,23 @@
     return self;
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-     //每个界面都要加这句话
+     //每个界面都要加这句话‘返回’
     [self pushAndPopStyle];
 
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交所选分类"];
@@ -57,33 +74,85 @@
 // 隐藏键盘
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self.PhoneNumber resignFirstResponder];
-    [self.markView resignFirstResponder];
+//    [self.PhoneNumber resignFirstResponder];
+//    [self.markView resignFirstResponder];
+    [self.view endEditing:YES];
+ [self.PhoneNumber resignFirstResponder];
+
 }
 
-
-- (IBAction)submitNews:(id)sender
+- (IBAction)phoneText:(id)sender
 {
-    
-//        UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@"友情提示" message:@"请登录后再提交" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        [alter show];
-     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请登陆后再提交" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
-      [sheet showInView:self.view];
+ 
 
 }
 
+- (NSString *) getMemberId
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    NSLog(@"%@",memberid);
+    if(memberid.length == 0)
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
 
 
+- (NSString *) getUserName
+{
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+    
+    if(userName.length == 0)
+    {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+    }
+    return userName;
+    
+}
 
 #pragma mark - actionsheet的代理方法
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != 0) return;
-    [self performSegueWithIdentifier:@"submit2win" sender:nil];
+    
+
+    
 //    [self.navigationController popToRootViewControllerAnimated:YES];
 
 }
 
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    
+    if(URLTag == URLSubHotTypeTag)
+    {
+        NSLog(@"%@",dicRespon);
+        
+        if(result == 1)
+        {
+            [self performSegueWithIdentifier:@"submit2win" sender:nil];
+        }
+        else
+        {
+            if(msg.length == 0)
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:@"提交失败"];
+            }
+        }
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -91,15 +160,41 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
+- (IBAction)submitNews:(UIButton *)sender {
+    
+    if(sender == self.submit)
+    {
+        [self.PhoneNumber resignFirstResponder];
+    }
+    
+    
+    if(self.PhoneNumber.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"手机号码不能为空"];
+        return;
+    }
+    if([DCFCustomExtra validateMobile:self.PhoneNumber.text] == NO)
+    {
+        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+        return;
+    }
+    
+    NSString *memberid = [self getMemberId];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@",memberid,token,[self getUserName],self.PhoneNumber.text,[self getUserName],self.markView.text];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请登陆后再提交" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [sheet showInView:self.view];
+    
+    
 }
-*/
-
 @end

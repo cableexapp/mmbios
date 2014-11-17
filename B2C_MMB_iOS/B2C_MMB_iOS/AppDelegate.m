@@ -17,9 +17,8 @@
 #import "DCFTabBarCtrl.h"
 #import "DCFCustomExtra.h"
 #import <CommonCrypto/CommonDigest.h>
-
 #import "UIImage (fixOrientation).h"
-
+#import "ChatViewController.h"
 //XMPP
 #import <AudioToolbox/AudioToolbox.h>
 #import "XMPPStream.h"
@@ -35,8 +34,8 @@ static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #else
 static const int ddLogLevel = LOG_LEVEL_INFO;
 #endif
-
 NSString *strUserId = @"";
+
 @implementation AppDelegate
 {
     //李深望修改
@@ -154,6 +153,7 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@",@"546454f4"];
@@ -298,13 +298,16 @@ NSString *strUserId = @"";
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     //程序进入后台时将xmpp下线
-    [self goOffline];
+//    [self goOffline];
+    NSLog(@"applicationDidEnterBackground");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self reConnect];
-    [self queryRoster];
+//    [self reConnect];
+//    [self queryRoster];
+    
+    NSLog(@"applicationWillEnterForeground");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -312,6 +315,9 @@ NSString *strUserId = @"";
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
     [self reConnect];
     [self queryRoster];
+//    ChatViewController *chatVC = [[ChatViewController alloc] init];
+//    [self.window.rootViewController presentModalViewController:chatVC animated:YES];
+    NSLog(@"applicationDidBecomeActive");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -572,7 +578,7 @@ NSString *strUserId = @"";
     //消息内容
     NSString *msg = [[message elementForName:@"body"] stringValue];
     NSString *from = [[message attributeForName:@"from"] stringValue];
-//    NSString *type= [[message attributeForName:@"type"] stringValue];
+    NSString *type= [[message attributeForName:@"type"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
     
     //    NSLog(@"接收++++from = %@\n\n",from);
@@ -599,8 +605,8 @@ NSString *strUserId = @"";
     {
         return;
     }
-//    NSString *fromSimple=[from substringToIndex:range.location];
-//    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
+    NSString *fromSimple=[from substringToIndex:range.location];
+    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
 }
 
 // 发送消息回调方法

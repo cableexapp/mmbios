@@ -319,6 +319,7 @@
 		61FFC5A319F6405E00F16E64 /* B2CGetOrderDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */; };
 		8B1F0FC81A16FCEA00F819D1 /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1F0FC61A16FCEA00F819D1 /* clock.png */; };
 		8B1F0FC91A16FCEA00F819D1 /* clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1F0FC71A16FCEA00F819D1 /* clock@2x.png */; };
+		8B1F0FCC1A174E6000F819D1 /* MyCableOrderSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */; };
 		8B28213F1A148F9100060534 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B28213E1A148F9100060534 /* AddressBook.framework */; };
 		8B2821411A148FA700060534 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B2821401A148FA700060534 /* AudioToolbox.framework */; };
 		8B2821501A1492D700060534 /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B28214C1A1492D700060534 /* iflyMSC.framework */; };
@@ -680,7 +681,8 @@
 		8BBB28C11A11E90F009AAEE8 /* down_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28C01A11E90F009AAEE8 /* down_dark.png */; };
 		8BBB28C41A11F3AB009AAEE8 /* speak.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28C21A11F3AB009AAEE8 /* speak.png */; };
 		8BBB28C51A11F3AB009AAEE8 /* speak@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28C31A11F3AB009AAEE8 /* speak@2x.png */; };
-		8BBB28C81A11FB41009AAEE8 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB28C71A11FB41009AAEE8 /* SearchViewController.m */; };
+		8BC2AD8B1A19B81F00E44BC2 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD8A1A19B81F00E44BC2 /* SearchViewController.m */; };
+		8BC2AD8D1A19CCAB00E44BC2 /* searchSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8BC2AD8C1A19CCAB00E44BC2 /* searchSound.wav */; };
 		8BD9B8AB1A1355330037FB65 /* icon01.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8AA1A1355330037FB65 /* icon01.png */; };
 		8BD9B8AE1A1355FA0037FB65 /* chatfrom_bg_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8AC1A1355FA0037FB65 /* chatfrom_bg_normal.png */; };
 		8BD9B8AF1A1355FA0037FB65 /* chatfrom_bg_focused.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8AD1A1355FA0037FB65 /* chatfrom_bg_focused.png */; };
@@ -1224,6 +1226,8 @@
 		61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGetOrderDetailData.m; sourceTree = "<group>"; };
 		8B1F0FC61A16FCEA00F819D1 /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		8B1F0FC71A16FCEA00F819D1 /* clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@2x.png"; sourceTree = "<group>"; };
+		8B1F0FCA1A174E6000F819D1 /* MyCableOrderSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderSearchViewController.h; sourceTree = "<group>"; };
+		8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableOrderSearchViewController.m; sourceTree = "<group>"; };
 		8B28213E1A148F9100060534 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8B2821401A148FA700060534 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8B28214C1A1492D700060534 /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
@@ -1722,8 +1726,9 @@
 		8BBB28C01A11E90F009AAEE8 /* down_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_dark.png; sourceTree = "<group>"; };
 		8BBB28C21A11F3AB009AAEE8 /* speak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speak.png; sourceTree = "<group>"; };
 		8BBB28C31A11F3AB009AAEE8 /* speak@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speak@2x.png"; sourceTree = "<group>"; };
-		8BBB28C61A11FB41009AAEE8 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		8BBB28C71A11FB41009AAEE8 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		8BC2AD891A19B81F00E44BC2 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		8BC2AD8A1A19B81F00E44BC2 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		8BC2AD8C1A19CCAB00E44BC2 /* searchSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = searchSound.wav; sourceTree = "<group>"; };
 		8BD9B8AA1A1355330037FB65 /* icon01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon01.png; sourceTree = "<group>"; };
 		8BD9B8AC1A1355FA0037FB65 /* chatfrom_bg_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatfrom_bg_normal.png; sourceTree = "<group>"; };
 		8BD9B8AD1A1355FA0037FB65 /* chatfrom_bg_focused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatfrom_bg_focused.png; sourceTree = "<group>"; };
@@ -2010,6 +2015,8 @@
 				616BE0B71A1447C60061C956 /* MyCableHostSubTableViewController.m */,
 				616BE0B81A1447C60061C956 /* MyCableOrderHostViewController.h */,
 				616BE0B91A1447C60061C956 /* MyCableOrderHostViewController.m */,
+				8B1F0FCA1A174E6000F819D1 /* MyCableOrderSearchViewController.h */,
+				8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */,
 				616BE0C01A14A4020061C956 /* MyCableOrderDetailViewController.h */,
 				616BE0C11A14A4020061C956 /* MyCableOrderDetailViewController.m */,
 				616BE0C31A14ABC60061C956 /* MyCableDetailTableViewController.h */,
@@ -2801,8 +2808,6 @@
 				61B7106519FF3B53001CC3BD /* AskPrice */,
 				61B7107119FF3B53001CC3BD /* ChooseListTableViewController.h */,
 				61B7107219FF3B53001CC3BD /* ChooseListTableViewController.m */,
-				8BBB28C61A11FB41009AAEE8 /* SearchViewController.h */,
-				8BBB28C71A11FB41009AAEE8 /* SearchViewController.m */,
 				61B7107319FF3B53001CC3BD /* GoodsDetailTableViewCell.h */,
 				61B7107419FF3B53001CC3BD /* GoodsDetailTableViewCell.m */,
 				61B7107519FF3B53001CC3BD /* GoodsDetailTableViewCell.xib */,
@@ -2813,6 +2818,8 @@
 				61B7107E19FF3B53001CC3BD /* HostNaviViewController.m */,
 				61B7107F19FF3B53001CC3BD /* HostTableViewController.h */,
 				61B7108019FF3B53001CC3BD /* HostTableViewController.m */,
+				8BC2AD891A19B81F00E44BC2 /* SearchViewController.h */,
+				8BC2AD8A1A19B81F00E44BC2 /* SearchViewController.m */,
 				61B7108119FF3B53001CC3BD /* ShopHostPreTableViewController.h */,
 				61B7108219FF3B53001CC3BD /* ShopHostPreTableViewController.m */,
 				61B7108319FF3B53001CC3BD /* ShopHostTableViewController.h */,
@@ -3059,6 +3066,7 @@
 				8BA7BF721A10A85500758B0F /* del_emoji_select@2x.png */,
 				8BA7BF731A10A85500758B0F /* inactive_page_image.png */,
 				8BA7BF741A10A85500758B0F /* inactive_page_image@2x.png */,
+				8BC2AD8C1A19CCAB00E44BC2 /* searchSound.wav */,
 				8BA7BF751A10A85500758B0F /* sms01.mp3 */,
 				8BD9B8B41A13573B0037FB65 /* icon02.png */,
 			);
@@ -4364,6 +4372,7 @@
 				8BA7C2DA1A10A8DD00758B0F /* README.txt in Resources */,
 				8BA7C0BE1A10A85500758B0F /* 尴尬@2x.png in Resources */,
 				8B1F0FC81A16FCEA00F819D1 /* clock.png in Resources */,
+				8BC2AD8D1A19CCAB00E44BC2 /* searchSound.wav in Resources */,
 				8BA7C1161A10A85500758B0F /* 糗了@2x.png in Resources */,
 				6181A4EE19CFC4C2000E2D14 /* Set.png in Resources */,
 				8BA7C07B1A10A85500758B0F /* 便便.png in Resources */,
@@ -4433,7 +4442,6 @@
 				8BA7C2D51A10A8DD00758B0F /* DDFileLogger.m in Sources */,
 				616D7A0019E62DFC00D7A357 /* B2CUpOrderData.m in Sources */,
 				6195F5F61A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m in Sources */,
-				8BBB28C81A11FB41009AAEE8 /* SearchViewController.m in Sources */,
 				8BA7C2B71A10A8DD00758B0F /* XMPPvCardTempModule.m in Sources */,
 				8BA7C2D11A10A8DD00758B0F /* XMPPMessage+XEP_0224.m in Sources */,
 				8BA7C2A91A10A8DD00758B0F /* XMPPMessage+XEP0045.m in Sources */,
@@ -4464,6 +4472,7 @@
 				8BA7C2B61A10A8DD00758B0F /* XMPPvCardTempLabel.m in Sources */,
 				8BA7C3161A10A93B00758B0F /* MessageCell.m in Sources */,
 				61B710DE19FF3B53001CC3BD /* ShopHostTableViewController.m in Sources */,
+				8B1F0FCC1A174E6000F819D1 /* MyCableOrderSearchViewController.m in Sources */,
 				6181A50819CFC4C2000E2D14 /* FMResultSet.m in Sources */,
 				61222AE21A089DFB00B8A686 /* AlixPayResult.m in Sources */,
 				61B710ED19FF3B53001CC3BD /* UpOrderViewController.m in Sources */,
@@ -4558,6 +4567,7 @@
 				6181A4FF19CFC4C2000E2D14 /* EGORefreshTableHeaderView.m in Sources */,
 				8BA7C3021A10A90800758B0F /* XMPPStream.m in Sources */,
 				61B710BB19FF3B53001CC3BD /* SettingViewController.m in Sources */,
+				8BC2AD8B1A19B81F00E44BC2 /* SearchViewController.m in Sources */,
 				8BA7C2A61A10A8DD00758B0F /* XMPPRoomMemoryStorage.m in Sources */,
 				6181A35A19CFC3F9000E2D14 /* AppDelegate.m in Sources */,
 				6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */,

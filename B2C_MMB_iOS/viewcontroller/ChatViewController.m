@@ -36,6 +36,8 @@
     UIImageView *noNetView;
     UILabel *noNetMessage;
     NSString *stringLabel;
+    NSString *roomMessage;
+    int messagePush;
 }
 
 @end
@@ -189,6 +191,9 @@
     //接收客服会话窗口关闭通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (noFriendOnLineMessage:) name:@"noFriendOnLine" object:nil];
     
+    //接收客服会话通知栏推送
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
+    
     ArrTimeCheck = [[NSMutableArray alloc]init];
 
     [self firstPageMessageData];
@@ -217,10 +222,10 @@
     [self dismissViewControllerAnimated:NO completion:nil];
     self.appDelegate.uesrID = nil;
     self.appDelegate.personName = nil;
-    [xmppRoom leaveRoom];
-    [self.appDelegate goOffline];
-    [self.appDelegate disconnect];
-    [self.appDelegate reConnect];
+//    [xmppRoom leaveRoom];
+//    [self.appDelegate goOffline];
+//    [self.appDelegate disconnect];
+//    [self.appDelegate reConnect];
     
     if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
     {
@@ -243,6 +248,26 @@
         [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCount" object:nil];
+    
+    messagePush = 1;
+}
+
+-(void)chatRoomMessage:(NSNotification *)chatRoomMessage
+{
+    UILocalNotification *_localNotification=[[UILocalNotification alloc] init];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        NSLog(@"running in the background");
+        
+        _localNotification.applicationIconBadgeNumber = 1;
+        _localNotification.timeZone = [NSTimeZone defaultTimeZone];
+        _localNotification.alertBody = roomMessage;
+        _localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+        _localNotification.soundName= UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
+    });
+//    self.appDelegate.me
+//     [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessagePushChatView" object:nil];
 }
 
 - (AppDelegate *)appDelegate
@@ -298,6 +323,8 @@
             [self creatRoom];
         }
     }
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    messagePush = 0;
 }
 
 
@@ -668,10 +695,15 @@
 {
     NSLog(@"有人在群里发言 = %@\n\n",message);
     tempJID =[NSString stringWithFormat:@"%@",occupantJID];
+   
     if (![[[tempJID componentsSeparatedByString:@"/"] objectAtIndex:1] isEqualToString:self.appDelegate.chatRequestJID])
     {
-      NSString *msg = [[message elementForName:@"body"] stringValue];
-      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:msg];
+       roomMessage = [[message elementForName:@"body"] stringValue];
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:roomMessage];
+        if (messagePush == 1)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
+        }
     }
 }
 

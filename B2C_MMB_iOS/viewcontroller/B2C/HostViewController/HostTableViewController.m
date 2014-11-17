@@ -51,16 +51,13 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    //    if(searchBar)
-    //    {
-    //        [searchBar resignFirstResponder];
-    //    }
-    
+    [self setHidesBottomBarWhenPushed:NO];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101)
         {
             [view setHidden:NO];
+            
         }
         if([view isKindOfClass:[UISearchBar class]])
         {
@@ -84,6 +81,7 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+//    [self.navigationController.tabBarController.tabBar setHidden:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
 }
 

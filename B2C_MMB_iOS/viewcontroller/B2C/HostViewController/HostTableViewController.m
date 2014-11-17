@@ -19,6 +19,7 @@
 #import "ChatListViewController.h"
 #import "HotScreenFirstViewController.h"
 #import "SearchViewController.h"
+#import "MCDefine.h"
 #import "ChatViewController.h"
 
 @interface HostTableViewController ()

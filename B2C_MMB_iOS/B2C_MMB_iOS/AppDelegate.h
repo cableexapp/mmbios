@@ -86,17 +86,6 @@
 @property (nonatomic,strong) NSMutableArray *roster;
 
 
-//数据对象上下文  -> 用户从该对象中操作托管对象
-@property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
-
-//持久性存储区 -> 设置存储文件
-@property (nonatomic,strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-//数据对象模型
-@property (nonatomic,strong) NSManagedObjectModel *managedObjectModel;
-
-- (void)saveContext;
-
 #pragma mark - XMPP方法
 -(BOOL)connect;
 

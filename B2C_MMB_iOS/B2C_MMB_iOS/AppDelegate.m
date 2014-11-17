@@ -132,46 +132,6 @@ NSString *strUserId = @"";
     }
 }
 
--(NSManagedObjectModel *)managedObjectModel
-{
-    if(_managedObjectModel==nil)
-    {
-        _managedObjectModel=[NSManagedObjectModel mergedModelFromBundles:nil];
-    }
-    return _managedObjectModel;
-}
-
--(NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    if(_persistentStoreCoordinator==nil)
-    {
-        //数据存储文件的路径
-        NSString *storePath=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSURL *storeURl=[NSURL fileURLWithPath:[storePath stringByAppendingPathComponent:@"SearchHistoryData.sqlite"]];
-        
-        //持久存储对象
-        _persistentStoreCoordinator=[[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
-        
-        NSError *error;
-        if(![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURl options:nil error:&error])
-        {
-            NSLog(@"%@,%@",error,error.userInfo);
-        }
-    }
-    return _persistentStoreCoordinator;
-}
-
-//数据对象上下文 初始化
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if(_managedObjectContext==nil)
-    {
-        _managedObjectContext=[[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
-    }
-    return _managedObjectContext;
-}
-
 
 #if SUPPORT_IOS8
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
@@ -405,23 +365,6 @@ NSString *strUserId = @"";
     [self saveContext];
 }
 
-- (void)saveContext
-{
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil)
-    {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
-        {
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-        else
-        {
-             NSLog( @"数据成功插入");
-        }
-    }
-}
 
 #pragma mark - Xmpp初始化
 - (void)setupStream

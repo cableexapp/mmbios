@@ -191,8 +191,8 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
     NSString *des = [MCdes encryptUseDES:self.tf_Secrect.text key:@"cableex_app*#!Key"];
     
-    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@",self.tf_Account.text,des,token,[app getUdid]];
-    
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",self.tf_Account.text,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
+    NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];

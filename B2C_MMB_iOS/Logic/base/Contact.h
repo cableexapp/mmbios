@@ -137,7 +137,10 @@ enum {
     
     URLInvoiceListTag,  //B2B发票列表
     
-    URLChangePasswordTag  //修改密码（未绑定手机或者邮箱）
+    URLChangePasswordTag,  //修改密码（未绑定手机或者邮箱）
+    URLSendEmailTag,  //发送验证码
+    URLSendMsgTag,   //发送验证码
+    URLChangeBindPhoneTag  //修改绑定手机
 };
 typedef NSUInteger URLTag;
 

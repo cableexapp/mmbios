@@ -88,7 +88,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"********   %@  ",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     
     if(URLTag == URLGetProductTypeByidTag)

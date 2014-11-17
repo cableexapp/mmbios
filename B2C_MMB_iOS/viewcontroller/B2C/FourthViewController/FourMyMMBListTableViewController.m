@@ -95,80 +95,98 @@
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
+            NSLog(@"badge = %@",badgeArray);
             
             for(int i =0;i<badgeArray.count;i++)
             {
+                UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
+                
                 NSString *s = [NSString stringWithFormat:@"%@",[badgeArray objectAtIndex:i]];
+                //                if(s.intValue == 0)
+                //                {
+                //
+                //                }
+                //                else
+                //                {
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                if(s.intValue < 99 && s.intValue > 0)
+                {
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 0, 20, 20)];
+                    [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
+                    [btn setTitle:s forState:UIControlStateNormal];
+                }
+                else if (s.intValue >= 99)
+                {
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 0, 40, 20)];
+                    [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
+                    [btn setTitle:@"99+" forState:UIControlStateNormal];
+                }
+                
+                [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+                
+                
+                
+                
                 if(s.intValue == 0)
                 {
                     
                 }
                 else
                 {
-                    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    if(s.intValue < 99 && s.intValue > 0)
-                    {
-                        [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
-                        [btn setTitle:s forState:UIControlStateNormal];
-                    }
-                    else if (s.intValue >= 99)
-                    {
-                        [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
-                        [btn setTitle:@"99+" forState:UIControlStateNormal];
-                    }
-                    [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-                    if(i == 0)
-                    {
-                        if(s.intValue < 99 && s.intValue > 0)
-                        {
-                            [btn setFrame:CGRectMake(self.btn_8.frame.size.width-5, self.btn_8.frame.origin.y-10, 20, 20)];
-                        }
-                        else
-                        {
-                            [btn setFrame:CGRectMake(self.btn_8.frame.size.width-5, self.btn_8.frame.origin.y-10, 40, 20)];
-                        }
-                        [self.btn_8 addSubview:btn];
-                    }
-                    if(i == 1)
-                    {
-                        if(s.intValue < 99 && s.intValue > 0)
-                        {
-                            [btn setFrame:CGRectMake(self.btn_11.frame.size.width-5, self.btn_11.frame.origin.y-10, 20, 20)];
-                            
-                        }
-                        else
-                        {
-                            [btn setFrame:CGRectMake(self.btn_11.frame.size.width-5, self.btn_11.frame.origin.y-10, 40, 20)];
-                        }
-                        [self.btn_11 addSubview:btn];
-                    }
-                    if(i == 2)
-                    {
-                        if(s.intValue < 99 && s.intValue > 0)
-                        {
-                            [btn setFrame:CGRectMake(self.btn_10.frame.size.width-5, self.btn_10.frame.origin.y-10, 20, 20)];
-                            
-                        }
-                        else
-                        {
-                            [btn setFrame:CGRectMake(self.btn_10.frame.size.width-5, self.btn_10.frame.origin.y-10, 40, 20)];
-                        }
-                        [self.btn_10 addSubview:btn];
-                    }
-                    if(i == 3)
-                    {
-                        if(s.intValue < 99 && s.intValue > 0)
-                        {
-                            [btn setFrame:CGRectMake(self.btn_9.frame.size.width-5, self.btn_9.frame.origin.y-10, 20, 20)];
-                            
-                        }
-                        else
-                        {
-                            [btn setFrame:CGRectMake(self.btn_9.frame.size.width-5, self.btn_9.frame.origin.y-10, 40, 20)];
-                        }
-                        [self.btn_9 addSubview:btn];
-                    }
+                    [cellBtn addSubview:btn];
                 }
+                //                    if(i == 0)
+                //                    {
+                //                        if(s.intValue < 99 && s.intValue > 0)
+                //                        {
+                //                            [btn setFrame:CGRectMake(self.btn_8.frame.size.width-5, self.btn_8.frame.origin.y-10, 20, 20)];
+                //                        }
+                //                        else
+                //                        {
+                //                            [btn setFrame:CGRectMake(self.btn_8.frame.size.width-5, self.btn_8.frame.origin.y-10, 40, 20)];
+                //                        }
+                //                        [self.btn_8 addSubview:btn];
+                //                    }
+                //                    if(i == 1)
+                //                    {
+                //                        if(s.intValue < 99 && s.intValue > 0)
+                //                        {
+                //                            [btn setFrame:CGRectMake(self.btn_11.frame.size.width-5, self.btn_11.frame.origin.y-10, 20, 20)];
+                //
+                //                        }
+                //                        else
+                //                        {
+                //                            [btn setFrame:CGRectMake(self.btn_11.frame.size.width-5, self.btn_11.frame.origin.y-10, 40, 20)];
+                //                        }
+                //                        [self.btn_11 addSubview:btn];
+                //                    }
+                //                    if(i == 2)
+                //                    {
+                //                        if(s.intValue < 99 && s.intValue > 0)
+                //                        {
+                //                            [btn setFrame:CGRectMake(self.btn_10.frame.size.width-5, self.btn_10.frame.origin.y-10, 20, 20)];
+                //
+                //                        }
+                //                        else
+                //                        {
+                //                            [btn setFrame:CGRectMake(self.btn_10.frame.size.width-5, self.btn_10.frame.origin.y-10, 40, 20)];
+                //                        }
+                //                        [self.btn_10 addSubview:btn];
+                //                    }
+                //                    if(i == 3)
+                //                    {
+                //                        if(s.intValue < 99 && s.intValue > 0)
+                //                        {
+                //                            [btn setFrame:CGRectMake(self.btn_9.frame.size.width-5, self.btn_9.frame.origin.y-10, 20, 20)];
+                //
+                //                        }
+                //                        else
+                //                        {
+                //                            [btn setFrame:CGRectMake(self.btn_9.frame.size.width-5, self.btn_9.frame.origin.y-10, 40, 20)];
+                //                        }
+                //                        [self.btn_9 addSubview:btn];
+                //                    }
+                //                }
                 
             }
         }
@@ -176,6 +194,7 @@
         {
             
         }
+        [self.tableView reloadData];
     }
 }
 
@@ -207,12 +226,6 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     headBtnArray = [[NSMutableArray alloc] init];
     for(int i=0;i<5;i++)
@@ -285,7 +298,7 @@
         [headBtnArray addObject:btn];
     }
     
-    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_2,_btn_3,_btn_5,_btn_6,_btn_7,_btn_8,_btn_9,_btn_10,_btn_11, nil];
+    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_9,_btn_10,_btn_11,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
     
     for(int i=0;i<cellBtnArray.count;i++)
     {
@@ -326,8 +339,16 @@
         [iv setImage:[UIImage imageNamed:@"Set.png"]];
         [view addSubview:iv];
         
+        NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2, 10, 200, 30)];
-        [label setText:@"米奇米奇"];
+        if(userName.length == 0 || [userName isKindOfClass:[NSNull class]] || userName == NULL || userName == nil)
+        {
+            [label setText:@""];
+        }
+        else
+        {
+            [label setText:userName];
+        }
         [label setFont:[UIFont boldSystemFontOfSize:20]];
         [label setTextAlignment:NSTextAlignmentCenter];
         [label setTextColor:[UIColor colorWithRed:44.0/255.0 green:122.0/255.0 blue:250.0/255.0 alpha:1.0]];
@@ -361,7 +382,12 @@
 }
 
 
-- (IBAction)btn3Click:(id)sender {
+- (IBAction)btn3Click:(id)sender
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
+    [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) pushToMyCableWithTag:(int) tag

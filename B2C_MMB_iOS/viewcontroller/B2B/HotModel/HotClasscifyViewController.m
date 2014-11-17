@@ -141,8 +141,8 @@
     askPriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
-    [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [askPriceBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
     [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -367,9 +367,6 @@
 
 - (IBAction)addToAskPriceCarBtnClick:(id)sender
 {
-    NSLog(@"加入询价车");
-    
-    NSLog(@"加入询价车");
     
     NSLog(@"%@",addToCarArray);
     
@@ -470,6 +467,24 @@
 - (IBAction)hotLineBtnClick:(id)sender
 {
     NSLog(@"热线");
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    [av show];
+}
+
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex)
+    {
+        case 0:
+            
+            break;
+        case 1:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            break;
+        default:
+            break;
+    }
 }
 
 - (IBAction)imbtnClick:(id)sender

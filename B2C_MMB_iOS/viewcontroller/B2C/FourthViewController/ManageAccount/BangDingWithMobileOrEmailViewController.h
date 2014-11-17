@@ -7,9 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "DCFPickerView.h"
 
-@interface BangDingWithMobileOrEmailViewController : UIViewController<UITextFieldDelegate>
+@interface BangDingWithMobileOrEmailViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate,PickerView>
+{
+    DCFConnectionUtil *conn;
+    DCFPickerView *pickerView;
+}
 
+@property (strong,nonatomic) NSString *myPhone;
+@property (strong,nonatomic) NSString *myEmail;
 
 @property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
 @property (weak, nonatomic) IBOutlet UILabel *chooseLabel;

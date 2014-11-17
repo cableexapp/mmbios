@@ -187,6 +187,7 @@
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
+            [self.navigationController popViewControllerAnimated:YES];
         }
         else
         {

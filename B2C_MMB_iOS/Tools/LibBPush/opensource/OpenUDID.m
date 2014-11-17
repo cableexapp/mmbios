@@ -220,7 +220,6 @@ static int const kOpenUDIDRedundancySlots = 100;
         return kOpenUDIDSessionCache;
     }
     
-    
   	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     // The AppUID will uniquely identify this app within the pastebins
@@ -234,7 +233,6 @@ static int const kOpenUDIDRedundancySlots = 100;
         CFRelease(uuid);
         [appUID autorelease];
     }
-  
     NSString* openUDID = nil;
     NSString* myRedundancySlotPBid = nil;
     NSDate* optedOutDate = nil;

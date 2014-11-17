@@ -470,8 +470,8 @@
 //        }
         [self setHidesBottomBarWhenPushed:YES];
         MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
-        NSLog(@"arr = %@",arr);
-        countLabel.hidden = NO;
+//        NSLog(@"arr = %@",arr);
+//        countLabel.hidden = NO;
         [self.navigationController pushViewController:shop animated:YES];
     }
     
@@ -561,7 +561,8 @@
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     [self readHistoryData];
-//    [self refreshTableView];
+    [self refreshTableView];
+    [self refreshClearButton];
     [self.serchResultView reloadData];
    
 }

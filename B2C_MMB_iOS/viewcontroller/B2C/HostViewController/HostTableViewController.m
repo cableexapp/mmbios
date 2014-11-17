@@ -19,6 +19,7 @@
 #import "ChatListViewController.h"
 #import "HotScreenFirstViewController.h"
 #import "SearchViewController.h"
+#import "ChatViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -258,7 +259,14 @@
                      @"装潢明线",
                      @"电源连接线",
                      @"",nil];
-    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
+}
+
+-(void)goToChatView:(NSNotification *)goToChat
+{
+    NSLog(@"11111");
+    ChatViewController *chatVC = [[ChatViewController alloc] init];
+    [self presentViewController:chatVC animated:YES completion:nil];
 }
 
 - (void) section1BtnClick:(UIButton *) sender

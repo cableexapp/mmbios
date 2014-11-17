@@ -20,7 +20,7 @@
 #import "WelComeViewController.h"
 #import "UIImage (fixOrientation).h"
 #import "BPush.h"
-
+#import "ChatViewController.h"
 #define SUPPORT_IOS8 0
 
 //XMPP
@@ -58,6 +58,7 @@ NSString *strUserId = @"";
 @synthesize uesrID;
 @synthesize chatRequestJID;
 @synthesize roomJID;
+@synthesize pushChatView;
 
 - (void) reachabilityChanged: (NSNotification* )note
 {
@@ -272,6 +273,7 @@ NSString *strUserId = @"";
     [PhoneHelper sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushChatViewController:) name:@"pushChatView" object:nil];
     
     mainQueue = [[NSOperationQueue alloc] init] ;
     [self.mainQueue setMaxConcurrentOperationCount:30];
@@ -342,15 +344,39 @@ NSString *strUserId = @"";
 {
     //程序进入后台时将xmpp下线
 //    [self goOffline];
+    //程序进入后台保持连接
+    UIApplication*   app = [UIApplication sharedApplication];
+    __block    UIBackgroundTaskIdentifier bgTask;
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    });
     NSLog(@"applicationDidEnterBackground");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-//    [self reConnect];
-//    [self queryRoster];
+   [self reConnect];
+   [self queryRoster];
     
     NSLog(@"applicationWillEnterForeground");
+}
+
+-(void)pushChatViewController:(NSNotification *)chatView
+{
+    self.pushChatView = chatView.object;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -358,8 +384,14 @@ NSString *strUserId = @"";
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
     [self reConnect];
     [self queryRoster];
-//    ChatViewController *chatVC = [[ChatViewController alloc] init];
-//    [self.window.rootViewController presentModalViewController:chatVC animated:YES];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
+    NSLog(@"self.pushChatView = %@",self.pushChatView);
+    if ([self.pushChatView isEqualToString:@"push"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+
+    }
     NSLog(@"applicationDidBecomeActive");
 }
 
@@ -616,7 +648,7 @@ NSString *strUserId = @"";
     //消息内容
     NSString *msg = [[message elementForName:@"body"] stringValue];
     NSString *from = [[message attributeForName:@"from"] stringValue];
-    NSString *type= [[message attributeForName:@"type"] stringValue];
+//    NSString *type= [[message attributeForName:@"type"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
     
     //    NSLog(@"接收++++from = %@\n\n",from);
@@ -643,8 +675,8 @@ NSString *strUserId = @"";
     {
         return;
     }
-    NSString *fromSimple=[from substringToIndex:range.location];
-    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
+//    NSString *fromSimple=[from substringToIndex:range.location];
+//    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
 }
 
 // 发送消息回调方法

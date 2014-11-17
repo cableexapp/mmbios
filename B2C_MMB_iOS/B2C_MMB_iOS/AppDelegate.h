@@ -50,6 +50,8 @@
     XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesStorage;
     XMPPCapabilities *xmppCapabilities;
     NSString *strPassword;
+    
+    NSString *pushChatView;
 }
 @property (strong, nonatomic) UIWindow *window;
 
@@ -62,6 +64,7 @@
 @property (strong, nonatomic) NSString *appId;
 @property (strong, nonatomic) NSString *channelId;
 @property (strong, nonatomic) NSString *baiduPushUserId;
+@property (nonatomic,strong) NSString *pushChatView;
 
 
 //@property (strong,nonatomic) NSString *udid;

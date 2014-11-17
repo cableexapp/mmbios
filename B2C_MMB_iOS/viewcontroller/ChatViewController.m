@@ -160,6 +160,15 @@
     noNetMessage.text = @"当前网络不可用，请检查网络设置!";
     [self.view insertSubview:noNetMessage aboveSubview:noNet];
     
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [rightBtn setBackgroundColor:[UIColor clearColor]];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightBtn setTitle:@"结束会话" forState:UIControlStateNormal];
+    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [rightBtn setFrame:CGRectMake(self.view.frame.size.width-65, 20, 60, 44)];
+    [rightBtn addTarget:self action:@selector(endChatConfrence) forControlEvents:UIControlEventTouchUpInside];
+    [self.view insertSubview:rightBtn aboveSubview:nameLabel];
+    
     if ( !faceBoard)
     {
         faceBoard = [[FaceBoard alloc] init];
@@ -197,6 +206,9 @@
     ArrTimeCheck = [[NSMutableArray alloc]init];
 
     [self firstPageMessageData];
+    
+    naviTitle.text = @"正在咨询";
+    imageView.image = image;
 }
 
 //检查网络是否连接
@@ -217,16 +229,30 @@
     }
 }
 
+-(void)endChatConfrence
+{
+    NSLog(@"endChatConfrence");
+   
+    [xmppRoom leaveRoom];
+    [self.appDelegate goOffline];
+    [self.appDelegate disconnect];
+    [self.appDelegate reConnect];
+     [self dismissViewControllerAnimated:NO completion:nil];
+    [self pageFromWhere];
+}
+
 -(void)goBackActionToHome
 {
     [self dismissViewControllerAnimated:NO completion:nil];
+    
+    [self pageFromWhere];
+    messagePush = 1;
+}
+
+-(void)pageFromWhere
+{
     self.appDelegate.uesrID = nil;
     self.appDelegate.personName = nil;
-//    [xmppRoom leaveRoom];
-//    [self.appDelegate goOffline];
-//    [self.appDelegate disconnect];
-//    [self.appDelegate reConnect];
-    
     if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"disMissSelfPage" object:nil];
@@ -235,7 +261,7 @@
     else if([self.fromStringFlag isEqualToString:@"来自快速询价客服"])
     {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
     }
     else if ([self.fromStringFlag isEqualToString:@"热门型号在线咨询"])
     {
@@ -248,8 +274,6 @@
         [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCount" object:nil];
-    
-    messagePush = 1;
 }
 
 -(void)chatRoomMessage:(NSNotification *)chatRoomMessage
@@ -266,8 +290,9 @@
         _localNotification.soundName= UILocalNotificationDefaultSoundName;
         [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
     });
-//    self.appDelegate.me
-//     [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessagePushChatView" object:nil];
+    self.appDelegate.pushChatView = @"push";
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
+    
 }
 
 - (AppDelegate *)appDelegate
@@ -609,7 +634,7 @@
 //创建房间
 -(void)creatRoom
 {
-    naviTitle.text = @"买卖宝客服";
+    naviTitle.text = @"正在咨询";
     imageView.image = image;
     //初始化聊天室
     XMPPRoomCoreDataStorage *roomMemory = [[XMPPRoomCoreDataStorage alloc] init];

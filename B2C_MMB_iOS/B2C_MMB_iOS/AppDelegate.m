@@ -17,8 +17,12 @@
 #import "DCFTabBarCtrl.h"
 #import "DCFCustomExtra.h"
 #import <CommonCrypto/CommonDigest.h>
+#import "WelComeViewController.h"
 #import "UIImage (fixOrientation).h"
-#import "ChatViewController.h"
+#import "BPush.h"
+
+#define SUPPORT_IOS8 0
+
 //XMPP
 #import <AudioToolbox/AudioToolbox.h>
 #import "XMPPStream.h"
@@ -167,6 +171,15 @@ NSString *strUserId = @"";
 }
 
 
+#if SUPPORT_IOS8
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    [application registerForRemoteNotifications];
+}
+#endif
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
@@ -174,6 +187,20 @@ NSString *strUserId = @"";
     
     NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@",@"546454f4"];
     [IFlySpeechUtility createUtility:initString];
+    
+    [application setApplicationIconBadgeNumber:0];
+#if SUPPORT_IOS8
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }else
+#endif
+    {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+    
     
     //XMPP
     if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID])

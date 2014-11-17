@@ -526,7 +526,7 @@
             [cellIv setFrame:CGRectMake(10, (size_1.height+30+20)/2 - 30, 60, 60)];
         }
         NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
-        
+        NSLog(@"picUrl = %@",picUrl);
         [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
         [cell.contentView addSubview:cellIv];
         

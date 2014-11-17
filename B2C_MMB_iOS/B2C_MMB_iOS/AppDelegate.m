@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.m
 //  Far_East_MMB_iOS
@@ -118,7 +119,7 @@ NSString *strUserId = @"";
 -(NSString*) getUdid
 {
     NSString *udid = [PhoneHelper getDeviceId];
-    
+    NSLog(@"%@",udid);
     return udid;
 }
 

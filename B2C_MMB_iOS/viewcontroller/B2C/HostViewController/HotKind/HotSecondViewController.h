@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 
-@interface HotSecondViewController : UIViewController<UIActionSheetDelegate,ConnectionDelegate>
+@interface HotSecondViewController : UIViewController<UIActionSheetDelegate,ConnectionDelegate,UITextFieldDelegate>
 {
     DCFConnectionUtil *conn;
 }

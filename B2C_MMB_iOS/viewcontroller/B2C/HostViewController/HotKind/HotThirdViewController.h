@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HotThirdViewController : UIViewController
+@interface HotThirdViewController : UIViewController<UIAlertViewDelegate>
+
+//返回首页属性
 - (IBAction)backHome:(id)sender;
+//返回第二页
 - (IBAction)backSecond:(id)sender;
+//咨询电话
+- (IBAction)taPhone:(id)sender;
+
 
 @end

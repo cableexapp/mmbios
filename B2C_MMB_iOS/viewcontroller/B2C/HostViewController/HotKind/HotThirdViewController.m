@@ -58,8 +58,7 @@
  //  跳转到首页
     [self.navigationController popToRootViewControllerAnimated:YES];
     
-//   隐藏底部
-    [self setHidesBottomBarWhenPushed:YES];
+
     
 }
 
@@ -69,4 +68,27 @@
      //  倒退到页面2
     [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
 }
+
+- (IBAction)taPhone:(id)sender
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    [av show];
+
+    
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex)
+    {
+        case 0:
+            break;
+        case 1:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            break;
+        default:
+            break;
+    }
+}
+
 @end

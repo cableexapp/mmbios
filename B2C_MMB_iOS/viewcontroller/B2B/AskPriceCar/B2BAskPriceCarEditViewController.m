@@ -53,6 +53,20 @@
     self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
     self.sureBtn.layer.cornerRadius = 5.0f;
     
+    self.unitBtn.layer.borderColor = [UIColor blackColor].CGColor;
+    self.unitBtn.layer.borderWidth = 1.0f;
+    
+    self.specBtn.layer.borderColor = [UIColor blackColor].CGColor;
+    self.specBtn.layer.borderWidth = 1.0f;
+    
+    self.featherBtn.layer.borderColor = [UIColor blackColor].CGColor;
+    self.featherBtn.layer.borderWidth = 1.0f;
+    
+    self.volBtn.layer.borderColor = [UIColor blackColor].CGColor;
+    self.volBtn.layer.borderWidth = 1.0f;
+    
+    self.colorBtn.layer.borderColor = [UIColor blackColor].CGColor;
+    self.colorBtn.layer.borderWidth = 1.0f;
     
     [self.modelLabel setText:self.myModel];
     
@@ -182,7 +196,11 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    [self.delegate removeSubView];
+//    [self.delegate removeSubView];
+//    if(pickerView)
+//    {
+//        [pickerView inAndOut];
+//    }
 }
 
 - (void) textViewDidChange:(UITextView *)textView

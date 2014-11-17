@@ -29,5 +29,6 @@
 //- (id) initWithFrame:(CGRect)frame WithArray:(NSMutableArray *) array;
 
 - (id) initWithFrame:(CGRect)frame WithArray:(NSMutableArray *) array WithTag:(int) tag;
+- (void) inAndOut;
 
 @end

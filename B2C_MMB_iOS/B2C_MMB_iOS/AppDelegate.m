@@ -19,6 +19,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "WelComeViewController.h"
 #import "UIImage (fixOrientation).h"
+#import "BPush.h"
 
 //XMPP
 #import <AudioToolbox/AudioToolbox.h>
@@ -124,9 +125,89 @@ NSString *strUserId = @"";
     }
 }
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSLog(@"test:%@",deviceToken);
+    [BPush registerDeviceToken: deviceToken];
+}
+
+
+- (void) onMethod:(NSString*)method response:(NSDictionary*)data {
+    NSLog(@"On method:%@", method);
+    NSLog(@"data:%@", [data description]);
+    NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
+    if ([BPushRequestMethod_Bind isEqualToString:method]) {
+        NSString *appid = [res valueForKey:BPushRequestAppIdKey];
+        NSString *userid = [res valueForKey:BPushRequestUserIdKey];
+        NSString *channelid = [res valueForKey:BPushRequestChannelIdKey];
+        //NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        
+        if (returnCode == BPushErrorCode_Success) {
+            
+            // 在内存中备份，以便短时间内进入可以看到这些值，而不需要重新bind
+            self.appId = appid;
+            self.channelId = channelid;
+            self.userId = userid;
+        }
+    } else if ([BPushRequestMethod_Unbind isEqualToString:method]) {
+        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
+        if (returnCode == BPushErrorCode_Success)
+        {
+
+        }
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    if (application.applicationState == UIApplicationStateActive) {
+        // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Did receive a Remote Notification"
+                                                            message:[NSString stringWithFormat:@"The application received this remote notification while it was running:\n%@", alert]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+    [application setApplicationIconBadgeNumber:0];
+    
+    [BPush handleNotification:userInfo];
+    
+}
+
+
+#if SUPPORT_IOS8
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    [application registerForRemoteNotifications];
+}
+#endif
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
+    //百度云推送
+    [BPush setupChannel:launchOptions];
+    [BPush setDelegate:self];
+    
+    [application setApplicationIconBadgeNumber:0];
+#if SUPPORT_IOS8
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }else
+#endif
+    {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+    
     
     //XMPP
     if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID])
@@ -274,6 +355,9 @@ NSString *strUserId = @"";
 {
     [self reConnect];
     [self queryRoster];
+    
+    NSLog(@"%@  %@  %@",[BPush getAppId],[BPush getUserId],[BPush getChannelId]);
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -281,6 +365,9 @@ NSString *strUserId = @"";
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
     [self reConnect];
     [self queryRoster];
+    
+    NSLog(@"%@  %@  %@",[BPush getAppId],[BPush getUserId],[BPush getChannelId]);
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

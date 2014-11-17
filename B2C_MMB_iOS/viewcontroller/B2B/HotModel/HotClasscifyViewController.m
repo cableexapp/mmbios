@@ -467,7 +467,7 @@
 - (IBAction)hotLineBtnClick:(id)sender
 {
     NSLog(@"热线");
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热点电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
     [av show];
 }
 

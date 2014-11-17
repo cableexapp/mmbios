@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.m
 //  Far_East_MMB_iOS
@@ -114,7 +115,7 @@ NSString *strUserId = @"";
 -(NSString*) getUdid
 {
     NSString *udid = [PhoneHelper getDeviceId];
-    
+    NSLog(@"%@",udid);
     return udid;
 }
 
@@ -165,12 +166,13 @@ NSString *strUserId = @"";
    
     NSLog(@"%@",userInfo);
 
+    NSString *pushTitle = [userInfo objectForKey:@"title"];
+    NSString *description = [userInfo objectForKey:@"description"];
     
-    NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     if (application.applicationState == UIApplicationStateActive) {
         // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Did receive a Remote Notification"
-                                                            message:[NSString stringWithFormat:@"The application received this remote notification while it was running:\n%@", alert]
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:pushTitle
+                                                            message:description
                                                            delegate:self
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];

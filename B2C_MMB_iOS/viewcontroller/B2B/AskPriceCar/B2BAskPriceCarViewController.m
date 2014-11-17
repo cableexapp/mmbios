@@ -42,7 +42,6 @@
     
     UIButton *subViewBtn;   //加载编辑界面的按钮
     B2BAskPriceCarEditViewController *b2bAskPriceCarEditViewController;
-    
     int deleteBtnTag;
 }
 @end

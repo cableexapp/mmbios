@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface AccountManagerTableViewController : UITableViewController
+@property (weak, nonatomic) IBOutlet UITableViewCell *cell_1;
+@property (weak, nonatomic) IBOutlet UITableViewCell *cell_2;
+@property (weak, nonatomic) IBOutlet UITableViewCell *cell_3;
 
 @end

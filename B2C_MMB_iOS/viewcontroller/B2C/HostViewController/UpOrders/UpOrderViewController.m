@@ -54,6 +54,18 @@
     NSString *orderNum;
     
     NSString *totalPrice;
+    
+    UILabel *billReceiveAddressLabel_1;
+    UILabel *billReceiveAddressLabel_2;
+    
+    NSString *receiveprovince;
+    NSString *receivecity;
+    NSString *receivedistrict;
+    NSString *receiveaddress;
+    NSString *receiver;
+    NSString *receiveTel;
+    NSString *invoiceId;
+    NSString *usefp;
 }
 @end
 
@@ -196,7 +208,6 @@
                 [cellTextFieldArray addObject:tf];
             }
         }
-        NSLog(@"goodsListArray = %@",goodsListArray);
         
 
 
@@ -362,6 +373,57 @@
 
     }
     
+    
+    if(!billReceiveAddressLabel_1)
+    {
+        billReceiveAddressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
+        [billReceiveAddressLabel_1 setFont:[UIFont systemFontOfSize:13]];
+    }
+    if(!billReceiveAddressLabel_2)
+    {
+        billReceiveAddressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 30)];
+        [billReceiveAddressLabel_2 setFont:[UIFont systemFontOfSize:13]];
+        [billReceiveAddressLabel_2 setNumberOfLines:0];
+    }
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
+    {
+        [billReceiveAddressLabel_1 setText:@"暂无收货地址"];
+        [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
+        
+        receiveaddress = @"";
+        receivecity = @"";
+        receivedistrict = @"";
+        receiveprovince = @"";
+        receiver = @"";
+        receiveTel = @"";
+    }
+    else
+    {
+        NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+        
+        receiver = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiver"]];
+        receiveTel = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveTel"]];
+        receiveprovince = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveprovince"]];
+        receivecity = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivecity"]];
+        receivedistrict = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivedistrict"]];
+        receiveaddress = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveaddress"]];
+        
+        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"%@    %@",receiver,receiveTel]];
+        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        if(fullAddress.length == 0 || [fullAddress isKindOfClass:[NSNull class]])
+        {
+            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
+        }
+        else
+        {
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, size.height)];
+        }
+        [billReceiveAddressLabel_2 setText:fullAddress];
+        
+    }
+
+    
     if(tv)
     {
         [tv reloadData];
@@ -519,23 +581,25 @@
     if(indexPath.section == 0)
     {
 
-        if(!addressDic || [addressDic allKeys].count == 0)
+        NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+        
+        
+        receiver = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiver"]];
+        receiveTel = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveTel"]];
+        receiveprovince = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveprovince"]];
+        receivecity = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivecity"]];
+        receivedistrict = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivedistrict"]];
+        receiveaddress = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveaddress"]];
+        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        if(fullAddress.length == 0 || [fullAddress isKindOfClass:[NSNull class]])
         {
-            return 44;
+            return 40;
         }
         else
         {
-            NSString *s1 = [addressDic objectForKey:@"province"];
-            NSString *s2 = [addressDic objectForKey:@"city"];
-            NSString *s3 = [addressDic objectForKey:@"area"];
-            NSString *s4 = [addressDic objectForKey:@"addressName"];
-            NSString *str = [NSString stringWithFormat:@"%@%@%@\n%@",s1,s2,s3,s4];
-            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
-   
-            return 30+size.height + 10;
-            
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            return size.height+40;
         }
-        //        }
     }
     if(indexPath.section == 2)
     {
@@ -650,56 +714,9 @@
         
         if(indexPath.section == 0)
         {
-            
-            if(!b2cOrderData || [b2cOrderData.addressArray count] == 0)
-            {
-                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-                [cell.contentView addSubview:view];
-                
-                [cell.textLabel setText:@"暂无收货人信息"];
-            }
-            else
-            {
-                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 20, 30)];
-                [iv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
-                
-                
-                
-                NSString *name = [addressDic objectForKey:@"receiver"];
-                CGSize size_name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
-                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, size_name.width, 30)];
-                [nameLabel setText:name];
-                [nameLabel setTextAlignment:NSTextAlignmentLeft];
-                [nameLabel setFont:[UIFont systemFontOfSize:13]];
-                
-                NSString *tel = [addressDic objectForKey:@"mobile"];
-                CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
-                UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-20-size_tel.width, 5, size_tel.width, 30)];
-                [telLabel setText:tel];
-                [telLabel setFont:[UIFont systemFontOfSize:13]];
-                [telLabel setTextAlignment:NSTextAlignmentRight];
-                [cell.contentView addSubview:telLabel];
-                
-                NSString *s1 = [addressDic objectForKey:@"province"];
-                NSString *s2 = [addressDic objectForKey:@"city"];
-                NSString *s3 = [addressDic objectForKey:@"area"];
-                NSString *s4 = [addressDic objectForKey:@"addressName"];
 
-                NSString *str = [NSString stringWithFormat:@"%@%@%@\n%@",s1,s2,s3,s4];
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
-                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, nameLabel.frame.origin.y + nameLabel.frame.size.height, 260, size.height)];
-                [addressLabel setText:str];
-                [addressLabel setFont:[UIFont systemFontOfSize:12]];
-                [addressLabel setNumberOfLines:0];
-                
-                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 35+size.height+5)];
-                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-                [cell.contentView addSubview:view];
-                [cell.contentView addSubview:iv];
-                [cell.contentView addSubview:nameLabel];
-                [cell.contentView addSubview:addressLabel];
-            }
+            [cell.contentView addSubview:billReceiveAddressLabel_1];
+            [cell.contentView addSubview:billReceiveAddressLabel_2];
             
         }
         if(indexPath.section == 1)

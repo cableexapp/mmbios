@@ -94,6 +94,22 @@ NSString *strUserId = @"";
     
 }
 
+#pragma mark - 屏幕旋转
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;//只支持这一个方向(正常的方向)
+}
+
 -(NSString*) getUdid
 {
     NSString *udid = [PhoneHelper getDeviceId];
@@ -221,10 +237,10 @@ NSString *strUserId = @"";
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-    DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
-    self.window.rootViewController = tabbar;
-//    [tabbar.view.window setBackgroundColor:[UIColor blackColor]];
-//    [tabbar.view.window setOpaque:NO];
+//    DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
+//    self.window.rootViewController = tabbar;
+    WelComeViewController *welcome = [sb instantiateViewControllerWithIdentifier:@"welComeViewController"];
+    self.window.rootViewController = welcome;
     
     [PhoneHelper sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
@@ -454,7 +470,6 @@ NSString *strUserId = @"";
 	NSError *error = nil;
 	if (![[self xmppStream] authenticateWithPassword:@"123456" error:&error])
 	{
-//        NSLog(@"Error authenticating: %@", error);
         if (error != nil)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"errorMessage" object:nil];
@@ -465,14 +480,11 @@ NSString *strUserId = @"";
 //验证通过 上线、
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
-    //    NSLog(@"验证通过 上线");
     [self goonline];
 }
 
 -(void)goonline
 {
-//    //    NSLog(@"goonline");
-
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
     [xmppStream sendElement:presence];
     if (self.roster.count == 0)
@@ -483,7 +495,6 @@ NSString *strUserId = @"";
 
 - (BOOL)connect
 {
-    //    NSLog(@"connect");
 	NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
 	NSString *myPassword = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
     

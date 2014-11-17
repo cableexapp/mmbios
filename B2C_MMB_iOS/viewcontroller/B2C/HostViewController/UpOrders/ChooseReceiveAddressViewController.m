@@ -176,6 +176,24 @@
                 [btn setTag:i];
                 [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 [cellBtnArray addObject:btn];
+                
+                B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:i];
+
+                if([[data isDefault] isEqualToString:@"1"])
+                {
+                    [btn setSelected:YES];
+                    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
+                    {
+                        
+                    }
+                    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel", nil];
+                    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+                    
+                }
+                else
+                {
+                    [btn setSelected:NO];
+                }
             }
             
         }
@@ -331,6 +349,24 @@
 {
     UIButton *btn = (UIButton *)sender;
     btn.selected = !btn.selected;
+    int tag = btn.tag;
+    
+    
+    for(UIButton *btn in cellBtnArray)
+    {
+        if(btn.tag == tag)
+        {
+            
+        }
+        else
+        {
+            [btn setSelected:NO];
+        }
+    }
+    B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:tag];
+    
+    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel", nil];
+    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -346,6 +382,11 @@
     {
         
     }
+    B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
+
+    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel", nil];
+    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+    
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

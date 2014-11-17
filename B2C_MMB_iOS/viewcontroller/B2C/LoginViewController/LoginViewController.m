@@ -191,8 +191,8 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
     NSString *des = [MCdes encryptUseDES:self.tf_Secrect.text key:@"cableex_app*#!Key"];
     
-    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@",self.tf_Account.text,des,token,[app getUdid]];
-    
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",self.tf_Account.text,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
+    NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -204,7 +204,6 @@
     if(URLTag == URLLoginTag)
     {
         [HUD hide:YES];
-        
         int reslut = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(reslut == 0)
@@ -220,12 +219,20 @@
         }
         else
         {
-            NSString *memberId = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
+            NSDictionary *iems = [NSDictionary dictionaryWithDictionary:[dicRespon objectForKey:@"items"]];
+            
+            NSString *memberId = [NSString stringWithFormat:@"%@",[iems objectForKey:@"memberId"]];
             
             [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"memberId"];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            NSString *phone = [NSString stringWithFormat:@"%@",[iems objectForKey:@"phone"]];
+            [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"UserPhone"];
+            
+            NSString *email = [NSString stringWithFormat:@"%@",[iems objectForKey:@"email"]];
+            [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"UserEmail"];
 
             [self dismissViewControllerAnimated:YES completion:nil];
         }

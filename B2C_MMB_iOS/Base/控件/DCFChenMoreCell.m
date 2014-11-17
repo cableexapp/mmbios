@@ -68,4 +68,10 @@
     self.avState.hidden = YES;
 }
 
+- (void) noB2BInvoice
+{
+    self.lblContent.text = @"暂无发票信息";
+    [self.avState stopAnimating];
+    self.avState.hidden = YES;
+}
 @end

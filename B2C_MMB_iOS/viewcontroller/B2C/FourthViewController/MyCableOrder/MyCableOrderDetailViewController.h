@@ -26,6 +26,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
 
+@property (weak, nonatomic) IBOutlet UILabel *buttomLabel;
+
+
 @property (weak, nonatomic) IBOutlet UIView *tableSubView;
 
 @property (weak, nonatomic) IBOutlet UIView *topView;

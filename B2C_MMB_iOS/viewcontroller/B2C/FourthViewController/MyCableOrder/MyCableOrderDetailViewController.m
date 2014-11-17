@@ -12,6 +12,7 @@
 #import "DCFCustomExtra.h"
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "MyCableSureOrderViewController.h"
 
 @interface MyCableOrderDetailViewController ()
 {
@@ -32,6 +33,10 @@
 - (void) sureBtnClick:(UIButton *) sender
 {
     NSLog(@"sure");
+    
+    MyCableSureOrderViewController *myCableSureOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderViewController"];
+    myCableSureOrderViewController.b2bMyCableOrderListData = _b2bMyCableOrderListData;
+    [self.navigationController pushViewController:myCableSureOrderViewController animated:YES];
 }
 
 - (void)viewDidLoad
@@ -50,19 +55,23 @@
     [self.sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     NSString *status = [[NSString alloc] initWithFormat:@"%@",_b2bMyCableOrderListData.status];
-    if([status intValue] == 0 || [status intValue] == 5)
+    if([status intValue] == 0 )
     {
-//        [self.buttomView setHidden:YES];
-//        [self.sureBtn setHidden:YES];
-        [self.buttomView setFrame:CGRectZero];
-        [self.sureBtn setFrame:CGRectZero];
-        [self.tableSubView setFrame:CGRectMake(0, self.topView.frame.origin.y+self.topView.frame.size.height, ScreenWidth, ScreenHeight-self.topView.frame.size.height)];
-        
-        NSLog(@"%f  %f  %f",self.topView.frame.size.height, self.tableSubView.frame.origin.y,self.tableSubView.frame.size.height);
+        [self.sureBtn setHidden:NO];
+        [self.buttomLabel setHidden:YES];
+    }
+    //待付款
+    else if([status intValue] == 2)
+    {
+        [self.sureBtn setHidden:YES];
+        [self.buttomLabel setHidden:NO];
     }
     else
     {
-        
+        [self.buttomView setFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 0)];
+        [self.buttomLabel setFrame:CGRectMake(self.buttomLabel.frame.origin.x, self.buttomLabel.frame.origin.y, self.buttomLabel.frame.size.width, 0)];
+        [self.sureBtn setFrame:CGRectMake(self.sureBtn.frame.origin.x, self.sureBtn.frame.origin.y, self.sureBtn.frame.size.width, 0)];
+        [self.tableSubView setFrame:CGRectMake(self.tableSubView.frame.origin.x, self.tableSubView.frame.origin.y, self.tableSubView.frame.size.width, ScreenHeight-self.topView.frame.size.height)];
     }
     
     NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",_b2bMyCableOrderListData.receiveprovince,_b2bMyCableOrderListData.receivecity,_b2bMyCableOrderListData.receivedistrict,_b2bMyCableOrderListData.receiveaddress];

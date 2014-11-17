@@ -128,7 +128,20 @@ enum {
     URLOrderListTag,  //我的电缆订单列表
     URLOrderDetailTag, //我的电缆订单详情查看
     
-    URLUpImagePicTag
+    URLConfirmOrderTag, //确认订单
+    URLConfirmReceiveTag, //确认收货
+    
+    URLB2BAddInvoiceAddTag,  //新增发票(增值税)
+    URLB2BAddInvoiceNormalTag, //新增发票(普通)
+    
+    URLUpImagePicTag,
+    
+    URLInvoiceListTag,  //B2B发票列表
+    
+    URLChangePasswordTag,  //修改密码（未绑定手机或者邮箱）
+    URLSendEmailTag,  //发送验证码
+    URLSendMsgTag,   //发送验证码
+    URLChangeBindPhoneTag  //修改绑定手机
 };
 typedef NSUInteger URLTag;
 

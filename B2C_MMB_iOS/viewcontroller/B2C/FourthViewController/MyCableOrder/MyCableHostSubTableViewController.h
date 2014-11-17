@@ -18,7 +18,7 @@
 
 @end
 
-@interface MyCableHostSubTableViewController : UITableViewController<ConnectionDelegate,EGORefreshTableHeaderDelegate>
+@interface MyCableHostSubTableViewController : UITableViewController<ConnectionDelegate,EGORefreshTableHeaderDelegate,UIAlertViewDelegate>
 {
     DCFConnectionUtil *conn;
 }
@@ -27,6 +27,7 @@
 @property (assign,nonatomic) int tag;
 @property (strong,nonatomic) NSString *statusIndex;
 @property (assign,nonatomic) id<PushToDetailVC> delegate;
+@property (assign,nonatomic) int intPage;
 
 - (void) loadRequestWithStatus:(NSString *) sender;
 @end

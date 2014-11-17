@@ -60,7 +60,6 @@
     
     if(URLTag == URLOrderDetailTag)
     {
-        NSLog(@"%@",dicRespon);
         if([[dicRespon allKeys] count] == 0)
         {
             [moreCell noDataAnimation];

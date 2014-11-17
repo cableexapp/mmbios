@@ -1,24 +1,43 @@
 //
-//  MyCableDetailTableViewController.m
+//  MyCableSureOrderTableViewController.m
 //  B2C_MMB_iOS
 //
-//  Created by App01 on 14-11-13.
+//  Created by xiaochen on 14-11-13.
 //  Copyright (c) 2014年 YUANDONG. All rights reserved.
 //
 
-#import "MyCableDetailTableViewController.h"
+#import "MyCableSureOrderTableViewController.h"
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
 #import "DCFChenMoreCell.h"
+#import "ChooseReceiveAddressViewController.h"
+#import "B2CAddressData.h"
+#import "DCFStringUtil.h"
 
-@interface MyCableDetailTableViewController ()
+@interface MyCableSureOrderTableViewController ()
 {
     DCFChenMoreCell *moreCell;
     NSMutableArray *dataArray;
+    
+    UILabel *billMsgTypeLabel;
+    UILabel *billMsgNameLabel;
+    
+    UILabel *billReceiveAddressLabel_1;
+    UILabel *billReceiveAddressLabel_2;
+    
+    NSString *receiveprovince;
+    NSString *receivecity;
+    NSString *receivedistrict;
+    NSString *receiveaddress;
+    NSString *receiver;
+    NSString *receiveTel;
+    NSString *invoiceId;
+    NSString *usefp;
 }
+
 @end
 
-@implementation MyCableDetailTableViewController
+@implementation MyCableSureOrderTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -29,9 +48,196 @@
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    if(!billMsgTypeLabel)
+    {
+        billMsgTypeLabel = [[UILabel alloc] init];
+        [billMsgTypeLabel setFont:[UIFont systemFontOfSize:13]];
+    }
+    if(!billMsgNameLabel)
+    {
+        billMsgNameLabel = [[UILabel alloc] init];
+        [billMsgNameLabel setFont:[UIFont systemFontOfSize:13]];
+        [billMsgNameLabel setTextAlignment:NSTextAlignmentRight];
+        [billMsgNameLabel setNumberOfLines:0];
+    }
+    
+    //确认订单b2b发票信息
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+    {
+        [billMsgTypeLabel setFrame:CGRectMake(10, 5, ScreenWidth-20, 40)];
+        [billMsgTypeLabel setText:@"暂无发票信息"];
+        
+        [billMsgNameLabel setFrame:CGRectZero];
+        
+        invoiceId = @"";
+    }
+    else
+    {
+        NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"]];
+        invoiceId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"invoiceId"]];
+        
+        NSString *headType = [dic objectForKey:@"type"];
+        if(headType.length == 0 || [headType isKindOfClass:[NSNull class]])
+        {
+            [billMsgTypeLabel setFrame:CGRectMake(10,5, 0, 30)];
+        }
+        else
+        {
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:headType WithSize:CGSizeMake(MAXFLOAT, 30)];
+            [billMsgTypeLabel setFrame:CGRectMake(10, 5, size.width, 30)];
+        }
+        [billMsgTypeLabel setText:headType];
+        
+        NSString *headName = [dic objectForKey:@"name"];
+        if(headName.length == 0 || [headName isKindOfClass:[NSNull class]])
+        {
+            [billMsgNameLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x + billMsgTypeLabel.frame.size.width + 5, 5, 0, 30)];
+        }
+        else
+        {
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:headName WithSize:CGSizeMake(ScreenWidth-25-billMsgTypeLabel.frame.size.width, MAXFLOAT)];
+            if(size.height <= 30)
+            {
+                [billMsgNameLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x + billMsgTypeLabel.frame.size.width + 5, 5,ScreenWidth-25-billMsgTypeLabel.frame.size.width, 30)];
+            }
+            else
+            {
+                [billMsgNameLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x + billMsgTypeLabel.frame.size.width + 5, 5, ScreenWidth-25-billMsgTypeLabel.frame.size.width, MAXFLOAT)];
+            }
+        }
+        [billMsgNameLabel setText:headName];
+        
+        //重设frame
+        [billMsgTypeLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x, (billMsgNameLabel.frame.size.height+10-30)/2, billMsgTypeLabel.frame.size.width, 30)];
+        
+    }
+    
+    
+    if(!billReceiveAddressLabel_1)
+    {
+        billReceiveAddressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
+        [billReceiveAddressLabel_1 setFont:[UIFont systemFontOfSize:13]];
+    }
+    if(!billReceiveAddressLabel_2)
+    {
+        billReceiveAddressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 30)];
+        [billReceiveAddressLabel_2 setFont:[UIFont systemFontOfSize:13]];
+        [billReceiveAddressLabel_2 setNumberOfLines:0];
+    }
+    //确认发票收货地址
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
+    {
+        [billReceiveAddressLabel_1 setText:@"暂无发票邮寄地址"];
+        [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
+        
+        receiveaddress = @"";
+        receivecity = @"";
+        receivedistrict = @"";
+        receiveprovince = @"";
+        receiver = @"";
+        receiveTel = @"";
+    }
+    else
+    {
+        NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+        
+        
+        receiver = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiver"]];
+        receiveTel = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveTel"]];
+        receiveprovince = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveprovince"]];
+        receivecity = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivecity"]];
+        receivedistrict = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivedistrict"]];
+        receiveaddress = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveaddress"]];
+        
+        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"%@    %@",receiver,receiveTel]];
+        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        if(fullAddress.length == 0 || [fullAddress isKindOfClass:[NSNull class]])
+        {
+            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
+        }
+        else
+        {
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, size.height)];
+        }
+        [billReceiveAddressLabel_2 setText:fullAddress];
+    
+    }
+    
+    
+    
+    //确认是否使用发票
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"])
+    {
+        usefp = @"2";
+    }
+    else
+    {
+        BOOL B2BManageBillSwitchStatus = [[[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"] boolValue];
+        if(B2BManageBillSwitchStatus == YES)
+        {
+            usefp = @"1";
+        }
+        else
+        {
+            usefp = @"2";
+            [billMsgTypeLabel setText:@"不需要发票"];
+            [billMsgNameLabel setText:@""];
+        }
+    }
+    [self.tableView reloadData];
+
+    
+}
+
+- (void) loadRequest
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"ConfirmOrder",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@receiver=%@&tel=%@&invoiceid=%@",token,self.myOrderid,usefp,receiveprovince,receivecity,receivedistrict,receiveaddress,receiver,receiveTel,invoiceId];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmOrderTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ConfirmOrder.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    if(URLTag == URLConfirmOrderTag)
+    {
+        if(result == 1)
+        {
+            [DCFStringUtil showNotice:msg];
+        }
+        else
+        {
+            if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
+            {
+                [DCFStringUtil showNotice:@"确定失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     
     
     [self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:229.0/255.0 blue:240.0/255.0 alpha:1.0]];
@@ -51,39 +257,13 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     [moreCell startAnimation];
-}
-
-
-- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
-{
-    int result = [[dicRespon objectForKey:@"result"] intValue];
     
-    if(URLTag == URLOrderDetailTag)
-    {
-        if([[dicRespon allKeys] count] == 0)
-        {
-            [moreCell noDataAnimation];
-        }
-        else
-        {
-            if(result == 1)
-            {
-                dataArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
-                if(dataArray.count == 0)
-                {
-                    [moreCell noClasses];
-                }
-            }
-            else
-            {
-                dataArray = [[NSMutableArray alloc] init];
-                [moreCell failAcimation];
-            }
-        }
-        
-    }
-    [self.tableView reloadData];
+    
 }
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -95,39 +275,39 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(!dataArray || dataArray.count == 0)
-    {
-        return 1;
-    }
-    return 2;
+    return 4;
 }
 
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(!dataArray || dataArray.count == 0)
-    {
-        return 0;
-    }
     return 40;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if(!dataArray || dataArray.count == 0)
-    {
-        return nil;
-    }
+
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
     //    [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, ScreenWidth-20, 30)];
+    //    [label setTextColor:MYCOLOR];
+    //    label.layer.borderColor = MYCOLOR.CGColor;
+    //    label.layer.borderWidth = 1.0f;
     [label setFont:[UIFont boldSystemFontOfSize:13]];
     if(section == 0)
     {
-        [label setText:@"收货地址"];
+        [label setText:@"发票信息"];
     }
     if(section == 1)
+    {
+        [label setText:@"发票邮寄地址"];
+    }
+    if(section == 2)
+    {
+        [label setText:@"收货地址"];
+    }
+    if(section == 3)
     {
         [label setText:@"型号信息"];
     }
@@ -138,7 +318,7 @@
     for(int i=0;i<2;i++)
     {
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5*i, ScreenWidth, 0.5)];
-        [lineView setBackgroundColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
+        [lineView setBackgroundColor:MYCOLOR];
         [view addSubview:lineView];
     }
     return view;
@@ -146,24 +326,42 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(!dataArray || dataArray.count == 0)
+    if(section == 0 || section == 1 || section == 2)
     {
         return 1;
     }
-    if(section == 0)
-    {
-        return 1;
-    }
-    return dataArray.count;
+    return [_b2bMyCableOrderListData myItems].count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!dataArray || dataArray.count == 0)
+    if(indexPath.section == 0)
     {
         return 44;
     }
-    if(indexPath.section == 0)
+    if(indexPath.section == 1)
+    {
+        NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+        
+        
+        receiver = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiver"]];
+        receiveTel = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveTel"]];
+        receiveprovince = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveprovince"]];
+        receivecity = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivecity"]];
+        receivedistrict = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivedistrict"]];
+        receiveaddress = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveaddress"]];
+        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        if(fullAddress.length == 0 || [fullAddress isKindOfClass:[NSNull class]])
+        {
+            return 40;
+        }
+        else
+        {
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            return size.height+40;
+        }
+    }
+    if(indexPath.section == 2)
     {
         NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
         CGSize size;
@@ -178,7 +376,7 @@
         return size.height+40;
     }
     
-    NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[dataArray objectAtIndex:indexPath.row]];
+    NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[_b2bMyCableOrderListData.myItems objectAtIndex:indexPath.row]];
     
     NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
     CGSize requestSize;
@@ -195,28 +393,29 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!dataArray || dataArray.count == 0)
-    {
-        static NSString *moreCellId = @"moreCell";
-        moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
-        
-        if(moreCell == nil)
-        {
-            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-        }
-        return moreCell;
-    }
     
-    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    //    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
+    static NSString *cellId = @"cellId";
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
         
+        
         if(indexPath.section == 0)
+        {
+            [cell.contentView addSubview:billMsgTypeLabel];
+            [cell.contentView addSubview:billMsgNameLabel];
+        }
+        if(indexPath.section == 1)
+        {
+            [cell.contentView addSubview:billReceiveAddressLabel_1];
+            [cell.contentView addSubview:billReceiveAddressLabel_2];
+        }
+        
+        if(indexPath.section == 2)
         {
             if(indexPath.row == 0)
             {
@@ -245,7 +444,7 @@
                 [cell.contentView addSubview:addressLabel];
             }
         }
-        else
+        if(indexPath.section == 3)
         {
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 65)];
             [view setBackgroundColor:[UIColor whiteColor]];
@@ -253,7 +452,7 @@
             
             CGFloat width = cell.contentView.frame.size.width/2;
             
-            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[dataArray objectAtIndex:indexPath.row]];
+            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[[_b2bMyCableOrderListData myItems] objectAtIndex:indexPath.row]];
             
             CGSize size_model = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"型号:" WithSize:CGSizeMake(MAXFLOAT, 30)];
             UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_model.width, 30)];
@@ -292,7 +491,7 @@
             NSString *theInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]]; //规格
             NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
             NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
-//            NSString *thecolor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]]; //颜色
+            //            NSString *thecolor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]]; //颜色
             
             NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]]; //价格
             NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
@@ -343,7 +542,7 @@
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+60, width*2, 30)];
                         break;
                     }
-
+                        
                         
                     default:
                         break;
@@ -393,6 +592,29 @@
     }
     
     return cell;
+}
+
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+    {
+        manageInvoiceViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"manageInvoiceViewController"];
+        [self.navigationController pushViewController:manageInvoiceViewController animated:YES];
+    }
+    if(indexPath.section == 1)
+    {
+        ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
+        [self.navigationController pushViewController:chooseAddress animated:YES];
+    }
+    if(indexPath.section == 2)
+    {
+        
+    }
+    if(indexPath.section == 3)
+    {
+        
+    }
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

@@ -11,9 +11,14 @@
 #import "DCFTopLabel.h"
 #import "ModifyLoginSecViewController.h"
 #import "ModifyTelViewController.h"
+#import "BangDingWithOutMobileOrEmailViewController.h"
+#import "BangDingWithMobileOrEmailViewController.h"
 
 @interface AccountManagerTableViewController ()
-
+{
+    NSString *phone;
+    NSString *email;
+}
 @end
 
 @implementation AccountManagerTableViewController
@@ -35,15 +40,27 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"账户管理"];
     self.navigationItem.titleView = top;
+    
+    phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
+    email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self setHidesBottomBarWhenPushed:YES];
+
     if(indexPath.row == 0)
     {
-        [self setHidesBottomBarWhenPushed:YES];
-        ModifyLoginSecViewController *modifyLoginSecViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"modifyLoginSecViewController"];
-        [self.navigationController pushViewController:modifyLoginSecViewController animated:YES];
+        if(phone.length == 0 && email.length == 0)
+        {
+            BangDingWithOutMobileOrEmailViewController *bangDingWithOutMobileOrEmailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"bangDingWithOutMobileOrEmailViewController"];
+            [self.navigationController pushViewController:bangDingWithOutMobileOrEmailViewController animated:YES];
+        }
+        else
+        {
+            BangDingWithMobileOrEmailViewController *bangDingWithMobileOrEmailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"bangDingWithMobileOrEmailViewController"];
+            [self.navigationController pushViewController:bangDingWithMobileOrEmailViewController animated:YES];
+        }
     }
     if(indexPath.row == 1)
     {

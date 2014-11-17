@@ -67,6 +67,11 @@
 		616BE0C21A14A4020061C956 /* MyCableOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616BE0C11A14A4020061C956 /* MyCableOrderDetailViewController.m */; };
 		616BE0C51A14ABC60061C956 /* MyCableDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616BE0C41A14ABC60061C956 /* MyCableDetailTableViewController.m */; };
 		616D7A0019E62DFC00D7A357 /* B2CUpOrderData.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D79FF19E62DFC00D7A357 /* B2CUpOrderData.m */; };
+		61760A711A15981500F3BA0B /* MyCableSureOrderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A6D1A15981500F3BA0B /* MyCableSureOrderTableViewController.m */; };
+		61760A721A15981500F3BA0B /* MyCableSureOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A6F1A15981500F3BA0B /* MyCableSureOrderViewController.m */; };
+		61760A7B1A15D71200F3BA0B /* ManageInvoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A781A15D71200F3BA0B /* ManageInvoiceViewController.m */; };
+		61760A7C1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A7A1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m */; };
+		61760A801A15F22300F3BA0B /* B2BManagBillData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
 		6181A34E19CFC3F8000E2D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34D19CFC3F8000E2D14 /* UIKit.framework */; };
@@ -319,6 +324,12 @@
 		61DF89F419FB9CD700D47430 /* moreUnSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61DF89F019FB9CD700D47430 /* moreUnSelect.png */; };
 		61DF89F619FB9D4900D47430 /* HomeSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61DF89F519FB9D4900D47430 /* HomeSelect.png */; };
 		61DF89F819FB9EB500D47430 /* p_centerUnSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61DF89F719FB9EB500D47430 /* p_centerUnSelect.png */; };
+		61E65DD61A16F96300E22E2E /* AddInvoiceAddedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DD11A16F96300E22E2E /* AddInvoiceAddedTableViewController.m */; };
+		61E65DD71A16F96300E22E2E /* AddInvoiceNormalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DD31A16F96300E22E2E /* AddInvoiceNormalTableViewController.m */; };
+		61E65DD81A16F96300E22E2E /* AddInvoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DD51A16F96300E22E2E /* AddInvoiceViewController.m */; };
+		61E65DDC1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DDB1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m */; };
+		61E65DDF1A17815800E22E2E /* ModifyLogSecSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DDE1A17815800E22E2E /* ModifyLogSecSuccessViewController.m */; };
+		61E65DE21A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */; };
 		61FFC5A319F6405E00F16E64 /* B2CGetOrderDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */; };
 		8BA7C05C1A10A85500758B0F /* chat_timeline_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA7BF631A10A85500758B0F /* chat_timeline_bg.png */; };
 		8BA7C0611A10A85500758B0F /* active_page_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA7BF691A10A85500758B0F /* active_page_image.png */; };
@@ -810,6 +821,16 @@
 		616BE0C41A14ABC60061C956 /* MyCableDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableDetailTableViewController.m; sourceTree = "<group>"; };
 		616D79FE19E62DFC00D7A357 /* B2CUpOrderData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CUpOrderData.h; sourceTree = "<group>"; };
 		616D79FF19E62DFC00D7A357 /* B2CUpOrderData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CUpOrderData.m; sourceTree = "<group>"; };
+		61760A6C1A15981500F3BA0B /* MyCableSureOrderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableSureOrderTableViewController.h; sourceTree = "<group>"; };
+		61760A6D1A15981500F3BA0B /* MyCableSureOrderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableSureOrderTableViewController.m; sourceTree = "<group>"; };
+		61760A6E1A15981500F3BA0B /* MyCableSureOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableSureOrderViewController.h; sourceTree = "<group>"; };
+		61760A6F1A15981500F3BA0B /* MyCableSureOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableSureOrderViewController.m; sourceTree = "<group>"; };
+		61760A771A15D71200F3BA0B /* ManageInvoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageInvoiceViewController.h; sourceTree = "<group>"; };
+		61760A781A15D71200F3BA0B /* ManageInvoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageInvoiceViewController.m; sourceTree = "<group>"; };
+		61760A791A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagerInvoiceSubTableViewController.h; sourceTree = "<group>"; };
+		61760A7A1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagerInvoiceSubTableViewController.m; sourceTree = "<group>"; };
+		61760A7E1A15F22300F3BA0B /* B2BManagBillData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BManagBillData.h; sourceTree = "<group>"; };
+		61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BManagBillData.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6181A34919CFC3F8000E2D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1219,6 +1240,18 @@
 		61DF89F019FB9CD700D47430 /* moreUnSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moreUnSelect.png; sourceTree = "<group>"; };
 		61DF89F519FB9D4900D47430 /* HomeSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HomeSelect.png; sourceTree = "<group>"; };
 		61DF89F719FB9EB500D47430 /* p_centerUnSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p_centerUnSelect.png; sourceTree = "<group>"; };
+		61E65DD01A16F96300E22E2E /* AddInvoiceAddedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInvoiceAddedTableViewController.h; sourceTree = "<group>"; };
+		61E65DD11A16F96300E22E2E /* AddInvoiceAddedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddInvoiceAddedTableViewController.m; sourceTree = "<group>"; };
+		61E65DD21A16F96300E22E2E /* AddInvoiceNormalTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInvoiceNormalTableViewController.h; sourceTree = "<group>"; };
+		61E65DD31A16F96300E22E2E /* AddInvoiceNormalTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddInvoiceNormalTableViewController.m; sourceTree = "<group>"; };
+		61E65DD41A16F96300E22E2E /* AddInvoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInvoiceViewController.h; sourceTree = "<group>"; };
+		61E65DD51A16F96300E22E2E /* AddInvoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddInvoiceViewController.m; sourceTree = "<group>"; };
+		61E65DDA1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BangDingWithOutMobileOrEmailViewController.h; sourceTree = "<group>"; };
+		61E65DDB1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BangDingWithOutMobileOrEmailViewController.m; sourceTree = "<group>"; };
+		61E65DDD1A17815800E22E2E /* ModifyLogSecSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyLogSecSuccessViewController.h; sourceTree = "<group>"; };
+		61E65DDE1A17815800E22E2E /* ModifyLogSecSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyLogSecSuccessViewController.m; sourceTree = "<group>"; };
+		61E65DE01A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BangDingWithMobileOrEmailViewController.h; sourceTree = "<group>"; };
+		61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BangDingWithMobileOrEmailViewController.m; sourceTree = "<group>"; };
 		61FFC5A119F6405E00F16E64 /* B2CGetOrderDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGetOrderDetailData.h; sourceTree = "<group>"; };
 		61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGetOrderDetailData.m; sourceTree = "<group>"; };
 		8BA7BF631A10A85500758B0F /* chat_timeline_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_timeline_bg.png; sourceTree = "<group>"; };
@@ -1994,6 +2027,11 @@
 		616BE0B51A1447C60061C956 /* MyCableOrder */ = {
 			isa = PBXGroup;
 			children = (
+				61760A761A15D71200F3BA0B /* ManageInvoice */,
+				61760A6C1A15981500F3BA0B /* MyCableSureOrderTableViewController.h */,
+				61760A6D1A15981500F3BA0B /* MyCableSureOrderTableViewController.m */,
+				61760A6E1A15981500F3BA0B /* MyCableSureOrderViewController.h */,
+				61760A6F1A15981500F3BA0B /* MyCableSureOrderViewController.m */,
 				616BE0B61A1447C60061C956 /* MyCableHostSubTableViewController.h */,
 				616BE0B71A1447C60061C956 /* MyCableHostSubTableViewController.m */,
 				616BE0B81A1447C60061C956 /* MyCableOrderHostViewController.h */,
@@ -2022,6 +2060,32 @@
 				616D79FF19E62DFC00D7A357 /* B2CUpOrderData.m */,
 			);
 			path = B2CUpOrderData;
+			sourceTree = "<group>";
+		};
+		61760A761A15D71200F3BA0B /* ManageInvoice */ = {
+			isa = PBXGroup;
+			children = (
+				61E65DD01A16F96300E22E2E /* AddInvoiceAddedTableViewController.h */,
+				61E65DD11A16F96300E22E2E /* AddInvoiceAddedTableViewController.m */,
+				61E65DD21A16F96300E22E2E /* AddInvoiceNormalTableViewController.h */,
+				61E65DD31A16F96300E22E2E /* AddInvoiceNormalTableViewController.m */,
+				61E65DD41A16F96300E22E2E /* AddInvoiceViewController.h */,
+				61E65DD51A16F96300E22E2E /* AddInvoiceViewController.m */,
+				61760A771A15D71200F3BA0B /* ManageInvoiceViewController.h */,
+				61760A781A15D71200F3BA0B /* ManageInvoiceViewController.m */,
+				61760A791A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.h */,
+				61760A7A1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m */,
+			);
+			path = ManageInvoice;
+			sourceTree = "<group>";
+		};
+		61760A7D1A15F21700F3BA0B /* B2BManagBillData */ = {
+			isa = PBXGroup;
+			children = (
+				61760A7E1A15F22300F3BA0B /* B2BManagBillData.h */,
+				61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */,
+			);
+			path = B2BManagBillData;
 			sourceTree = "<group>";
 		};
 		6181A33D19CFC3F8000E2D14 = {
@@ -2227,6 +2291,7 @@
 		6181A3DF19CFC4C2000E2D14 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				61760A7D1A15F21700F3BA0B /* B2BManagBillData */,
 				616BE0BC1A1448600061C956 /* B2BMyCableOrderListData */,
 				614A84001A11AC5600D4FE1F /* B2BMyInquiryListFastData */,
 				61383AA21A0F53F700AD3446 /* B2BGetModelByIdData */,
@@ -2746,6 +2811,7 @@
 		61B7104919FF3B53001CC3BD /* FourthViewController */ = {
 			isa = PBXGroup;
 			children = (
+				61E65DD91A177F2B00E22E2E /* ManageAccount */,
 				616BE0B51A1447C60061C956 /* MyCableOrder */,
 				61B7104A19FF3B53001CC3BD /* AccountManagerTableViewController.h */,
 				61B7104B19FF3B53001CC3BD /* AccountManagerTableViewController.m */,
@@ -2967,6 +3033,19 @@
 				61DF89D219FB83E400D47430 /* B2CGoodsFastPicData.m */,
 			);
 			path = B2CGoodsFastPicData;
+			sourceTree = "<group>";
+		};
+		61E65DD91A177F2B00E22E2E /* ManageAccount */ = {
+			isa = PBXGroup;
+			children = (
+				61E65DDA1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.h */,
+				61E65DDB1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m */,
+				61E65DE01A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.h */,
+				61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */,
+				61E65DDD1A17815800E22E2E /* ModifyLogSecSuccessViewController.h */,
+				61E65DDE1A17815800E22E2E /* ModifyLogSecSuccessViewController.m */,
+			);
+			path = ManageAccount;
 			sourceTree = "<group>";
 		};
 		61FFC5A019F6404A00F16E64 /* B2CGetOrderDetailData */ = {
@@ -4388,6 +4467,7 @@
 				8BA7C2C61A10A8DD00758B0F /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
 				8BA7C2D51A10A8DD00758B0F /* DDFileLogger.m in Sources */,
 				616D7A0019E62DFC00D7A357 /* B2CUpOrderData.m in Sources */,
+				61E65DD81A16F96300E22E2E /* AddInvoiceViewController.m in Sources */,
 				6195F5F61A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m in Sources */,
 				8BBB28C81A11FB41009AAEE8 /* SearchViewController.m in Sources */,
 				8BA7C2B71A10A8DD00758B0F /* XMPPvCardTempModule.m in Sources */,
@@ -4433,6 +4513,7 @@
 				619C10071A0772EA002E9DF8 /* HotClasscifyViewController.m in Sources */,
 				61B710EF19FF3B53001CC3BD /* LoginViewController.m in Sources */,
 				6181A51D19CFC4C2000E2D14 /* UIViewController+exp.m in Sources */,
+				61760A7C1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m in Sources */,
 				61B710CD19FF3B53001CC3BD /* ModifyLoginSecViewController.m in Sources */,
 				61B710DD19FF3B53001CC3BD /* ShopHostPreTableViewController.m in Sources */,
 				6181A4C819CFC4C2000E2D14 /* DCFNavigationBar.m in Sources */,
@@ -4447,6 +4528,7 @@
 				6181A4FB19CFC4C2000E2D14 /* OpenUDID.m in Sources */,
 				0DABE3291A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m in Sources */,
 				61551E981A0B8CAC004F50FF /* B2BAskPriceUpSuccessViewController.m in Sources */,
+				61760A711A15981500F3BA0B /* MyCableSureOrderTableViewController.m in Sources */,
 				6181A4CD19CFC4C2000E2D14 /* EScrollerView.m in Sources */,
 				6122714119CFC81500FE4DFF /* SBJsonWriter.m in Sources */,
 				6181A4D419CFC4C2000E2D14 /* TestTask.m in Sources */,
@@ -4477,6 +4559,7 @@
 				8BA7C2B11A10A8DD00758B0F /* XMPPvCardTemp.m in Sources */,
 				8BA7C2B91A10A8DD00758B0F /* XMPPPubSub.m in Sources */,
 				61B710E019FF3B53001CC3BD /* ShoppingHostViewController.m in Sources */,
+				61E65DDC1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m in Sources */,
 				8BA7C2C41A10A8DD00758B0F /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				6181A50619CFC4C2000E2D14 /* FMDatabase.m in Sources */,
 				61A197C919F7509400909C6F /* QBImagePickerVideoInfoView.m in Sources */,
@@ -4490,6 +4573,7 @@
 				8BA7C2D01A10A8DD00758B0F /* XMPPAttentionModule.m in Sources */,
 				8BA7C3191A10A93B00758B0F /* FaceBoard.m in Sources */,
 				8BA7C2BA1A10A8DD00758B0F /* TURNSocket.m in Sources */,
+				61E65DDF1A17815800E22E2E /* ModifyLogSecSuccessViewController.m in Sources */,
 				8BA7C2E21A10A8DD00758B0F /* GCDMulticastDelegate.m in Sources */,
 				8BA7C29D1A10A8DD00758B0F /* XMPPPrivacy.m in Sources */,
 				616BE0BF1A1448600061C956 /* B2BMyCableOrderListData.m in Sources */,
@@ -4530,6 +4614,7 @@
 				8BA7C28D1A10A8DD00758B0F /* XMPPBandwidthMonitor.m in Sources */,
 				61B710DA19FF3B53001CC3BD /* B2CShoppingSearchViewController.m in Sources */,
 				61A197C219F7509400909C6F /* QBAssetCollectionViewController.m in Sources */,
+				61760A721A15981500F3BA0B /* MyCableSureOrderViewController.m in Sources */,
 				61B710B719FF3B53001CC3BD /* AboutViewController.m in Sources */,
 				61B710E519FF3B53001CC3BD /* AddReceiveAddressViewController.m in Sources */,
 				61B710C319FF3B53001CC3BD /* CancelOrderViewController.m in Sources */,
@@ -4592,6 +4677,7 @@
 				8BA7C31D1A10A93B00758B0F /* WaitViewController.m in Sources */,
 				6181A4FD19CFC4C2000E2D14 /* CKRefreshArrowView.m in Sources */,
 				8BA7C2CD1A10A8DD00758B0F /* XMPPAutoTime.m in Sources */,
+				61760A801A15F22300F3BA0B /* B2BManagBillData.m in Sources */,
 				6181A4CA19CFC4C2000E2D14 /* DCFRootNaviController.m in Sources */,
 				6181A4CB19CFC4C2000E2D14 /* DCFTabBarCtrl.m in Sources */,
 				8BA7C2CA1A10A8DD00758B0F /* XMPPMessage+XEP_0184.m in Sources */,
@@ -4605,11 +4691,13 @@
 				0DEC450C1A18D83F004CCCA0 /* MJTitleButton.m in Sources */,
 				8BA7C28E1A10A8DD00758B0F /* XMPPCoreDataStorage.m in Sources */,
 				611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */,
+				61E65DE21A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m in Sources */,
 				6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */,
 				8BA7C3011A10A90800758B0F /* XMPPPresence.m in Sources */,
 				8BA7C2D21A10A8DD00758B0F /* GCDAsyncSocket.m in Sources */,
 				6181A50119CFC4C2000E2D14 /* ELCAsset.m in Sources */,
 				6181A4D119CFC4C2000E2D14 /* BaseExecutor.m in Sources */,
+				61E65DD71A16F96300E22E2E /* AddInvoiceNormalTableViewController.m in Sources */,
 				6181A4C219CFC4C2000E2D14 /* SetNavigationBar.m in Sources */,
 				8BA7C2A01A10A8DD00758B0F /* XMPPRoomMessageCoreDataStorageObject.m in Sources */,
 				8BA7C2901A10A8DD00758B0F /* XMPPReconnect.m in Sources */,
@@ -4661,6 +4749,8 @@
 				8BA7C2DD1A10A8DD00758B0F /* DDXMLElement.m in Sources */,
 				8BA7C2B31A10A8DD00758B0F /* XMPPvCardTempAdrTypes.m in Sources */,
 				61B710D419FF3B53001CC3BD /* ThirdStepViewController.m in Sources */,
+				61E65DD61A16F96300E22E2E /* AddInvoiceAddedTableViewController.m in Sources */,
+				61760A7B1A15D71200F3BA0B /* ManageInvoiceViewController.m in Sources */,
 				61222AD31A087DBB00B8A686 /* B2BAskPriceDetailData.m in Sources */,
 				8BA7C2891A10A8DD00758B0F /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				6122713F19CFC81500FE4DFF /* SBJsonBase.m in Sources */,

@@ -16,5 +16,6 @@
 - (void)stopAnimation;
 - (void)noDataAnimation;
 - (void) noClasses;
+- (void) noB2BInvoice;
 
 @end

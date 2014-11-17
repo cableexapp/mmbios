@@ -110,7 +110,6 @@
     //    NSString *msg = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"msg"]];
     if(URLTag == URLGetProductTypeTag)
     {
-
         if(result == 1)
         {
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
@@ -122,13 +121,9 @@
                 NSDictionary *dic = [[dicRespon objectForKey:@"items"] objectAtIndex:i];
                 NSString  *typeName = [dic objectForKey:@"typeName"];
                 [dataArray addObject:typeName];
-                
                 NSString *typeId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"typeId"]];
-                NSLog(@"typeId = %@",typeId);
                 [typeIdArray addObject:typeId];
             }
-            
-            
 #pragma mark - 数组里的字符串按长度重新排序
             typeArray = [dataArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                 NSUInteger len0 = [(NSString *)obj1 length];
@@ -168,7 +163,6 @@
         }
     }
 }
-
 
 - (void) typeBtnClick:(UIButton *) sender
 {

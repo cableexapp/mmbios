@@ -25,9 +25,16 @@
 
 //提交信息
 - (IBAction)submitNews:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *labelText;
+
+@property (weak, nonatomic) IBOutlet UITextView *secondTextView;
+
 
 //手机号码文本框
 - (IBAction)phoneText:(id)sender;
+
+
+
 
 
 @end

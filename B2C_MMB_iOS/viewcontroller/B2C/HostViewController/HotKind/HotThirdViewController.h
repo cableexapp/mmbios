@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HotThirdViewController : UIViewController<UIActionSheetDelegate>
+@interface HotThirdViewController : UIViewController<UIAlertViewDelegate>
 
 //返回首页属性
 - (IBAction)backHome:(id)sender;

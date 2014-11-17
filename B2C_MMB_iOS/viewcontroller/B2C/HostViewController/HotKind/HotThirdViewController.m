@@ -71,9 +71,24 @@
 
 - (IBAction)taPhone:(id)sender
 {
-           UIAlertView *alter = [[UIAlertView alloc] initWithTitle:nil message:@"您确定要拨打电话吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拨号", nil];
-            [alter show];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    [av show];
 
     
 }
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex)
+    {
+        case 0:
+            break;
+        case 1:
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            break;
+        default:
+            break;
+    }
+}
+
 @end

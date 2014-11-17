@@ -52,6 +52,8 @@
     
      //每个界面都要加这句话‘返回’
     [self pushAndPopStyle];
+    
+    self.markView.editable = NO;
 
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交所选分类"];
     self.navigationItem.titleView = top;
@@ -83,9 +85,7 @@
 
 - (IBAction)phoneText:(id)sender
 {
- 
-
-}
+ }
 
 - (NSString *) getMemberId
 {
@@ -182,19 +182,52 @@
     }
     
     NSString *memberid = [self getMemberId];
-    
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@",memberid,token,[self getUserName],self.PhoneNumber.text,[self getUserName],self.markView.text];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]] || memberid == NULL)
+    {
+        
+    }
+    else
+    {
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@",memberid,token,[self getUserName],self.PhoneNumber.text,[self getUserName],self.markView.text];
+        
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
+
 //    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请登陆后再提交" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
 //    [sheet showInView:self.view];
     
-    
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSLog(@"111111");
+    if ([text isEqualToString:@"\n"]) {//检测到“完成”
+        [textView resignFirstResponder];//释放键盘
+        return NO;
+    }
+    if (_secondTextView.text.length==0){//textview长度为0
+        if ([text isEqualToString:@""]) {//判断是否为删除键
+            _labelText.hidden=NO;//隐藏文字
+        }else{
+            _labelText.hidden=YES;
+        }
+    }else{//textview长度不为0
+        if (_secondTextView.text.length==1){//textview长度为1时候
+            if ([text isEqualToString:@""]) {//判断是否为删除键
+                _labelText.hidden=NO;
+            }else{//不是删除
+                _labelText.hidden=YES;
+            }
+        }else{//长度不为1时候
+            _labelText.hidden=YES;
+        }
+    }
+    return YES;
 }
 @end

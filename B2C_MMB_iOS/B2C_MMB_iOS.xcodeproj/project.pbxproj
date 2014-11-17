@@ -1815,7 +1815,6 @@
 		0D8491B01A0A3BBE00E9C81B /* HotKind */ = {
 			isa = PBXGroup;
 			children = (
-				0D4354BD1A199AF400C0AF0A /* Hotpst.plist */,
 				0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */,
 				0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */,
 				0DABE32A1A1306FB00C64FB7 /* HotSecondViewController.h */,
@@ -1824,6 +1823,7 @@
 				0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */,
 				0DEC450A1A18D83F004CCCA0 /* MJTitleButton.h */,
 				0DEC450B1A18D83F004CCCA0 /* MJTitleButton.m */,
+				0D4354BD1A199AF400C0AF0A /* Hotpst.plist */,
 			);
 			path = HotKind;
 			sourceTree = "<group>";

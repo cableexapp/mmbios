@@ -32,7 +32,9 @@
 //展开选中
 @property (nonatomic, assign,getter = isOpened) BOOL opend;
 
+@property (weak, nonatomic) IBOutlet UIView *selectView;
 
+- (IBAction)deleteTab:(UIButton *)sender;
 
 
 

@@ -62,7 +62,7 @@
 //    [self.PhoneNumber resignFirstResponder];
    [self.view endEditing:YES];
     
-//    [field setDelegate:self];
+//    [_labelText setDelegate:self];
     
 //    数据加载到文本框
     NSString *str = @"";

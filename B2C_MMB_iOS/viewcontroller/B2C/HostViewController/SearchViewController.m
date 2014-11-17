@@ -267,34 +267,18 @@
     {
         if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"types"] count] != 0)
         {
-//            if (B2BhistoryArray.count > 0)
-//            {
-//                for (int i = 0; i < B2BhistoryArray.count; i++)
-//                {
-//                    [dataArray insertObject:[B2BhistoryArray objectAtIndex:i] atIndex:0];
-//                }
-//                
-//            }
-
             dataArray = [dicRespon objectForKey:@"types"];
-//            [self refreshTableView];
+            [self refreshTableView];
             [self.serchResultView reloadData];
-      
             coverView.hidden = YES;
             [mySearchBar resignFirstResponder];
         }
         else if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"] && [[dicRespon objectForKey:@"products"] count] != 0)
         {
-
-            
             dataArray = [dicRespon objectForKey:@"products"];
-            
-//             [self refreshTableView];
+            [self refreshTableView];
             coverView.hidden = YES;
-            
             [self.serchResultView reloadData];
-           
-            
             [mySearchBar resignFirstResponder];
         }
         else if ([[dicRespon objectForKey:@"types"] count] == 0 || [[dicRespon objectForKey:@"products"] count] == 0)

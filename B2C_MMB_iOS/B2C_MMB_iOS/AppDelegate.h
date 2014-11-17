@@ -61,7 +61,7 @@
 
 @property (strong, nonatomic) NSString *appId;
 @property (strong, nonatomic) NSString *channelId;
-@property (strong, nonatomic) NSString *userId;
+@property (strong, nonatomic) NSString *baiduPushUserId;
 
 
 //@property (strong,nonatomic) NSString *udid;

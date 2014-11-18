@@ -59,11 +59,9 @@
     self.navigationItem.titleView = top;
     [super viewDidLoad];
     
-//    [self.PhoneNumber resignFirstResponder];
    [self.view endEditing:YES];
     
-//    [field setDelegate:self];
-    
+    self.secondTextView.delegate = self;
 //    数据加载到文本框
     NSString *str = @"";
     for (NSDictionary *aDic in upArray) {
@@ -98,7 +96,6 @@
     {
         LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
         [self presentViewController:loginNavi animated:YES completion:nil];
-        
     }
     return memberid;
 }
@@ -197,36 +194,20 @@
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
-
-//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请登陆后再提交" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//    [sheet showInView:self.view];
-    
 }
 
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+//textview文本框里的备注
+- (void) textViewDidChange:(UITextView *)textView
 {
-    NSLog(@"111111");
-    if ([text isEqualToString:@"\n"]) {//检测到“完成”
-        [textView resignFirstResponder];//释放键盘
-        return NO;
+ 
+    if(self.secondTextView.text.length == 0)
+    {
+        [self.labelText setHidden:NO];
     }
-    if (_secondTextView.text.length==0){//textview长度为0
-        if ([text isEqualToString:@""]) {//判断是否为删除键
-            _labelText.hidden=NO;//隐藏文字
-        }else{
-            _labelText.hidden=YES;
-        }
-    }else{//textview长度不为0
-        if (_secondTextView.text.length==1){//textview长度为1时候
-            if ([text isEqualToString:@""]) {//判断是否为删除键
-                _labelText.hidden=NO;
-            }else{//不是删除
-                _labelText.hidden=YES;
-            }
-        }else{//长度不为1时候
-            _labelText.hidden=YES;
-        }
+    else
+    {
+        [self.labelText setHidden:YES];
     }
-    return YES;
+    
 }
 @end

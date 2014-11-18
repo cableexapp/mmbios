@@ -34,8 +34,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 
-- (IBAction)deleteTab:(UIButton *)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *triangleBtn;
 
 
 

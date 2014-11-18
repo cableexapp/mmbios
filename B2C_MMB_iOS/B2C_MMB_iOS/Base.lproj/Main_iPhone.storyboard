@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="H55-N4-BNn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="H55-N4-BNn">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -4053,7 +4053,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" tag="33" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="9eX-A2-Wln">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="461"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -4128,16 +4128,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BIi-ks-dyo" id="Vzj-38-7Bg">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="FKX-d5-hNq">
-                                                    <rect key="frame" x="276" y="8" width="30" height="27"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" image="delete_1.png"/>
-                                                    <connections>
-                                                        <action selector="deleteTab:" destination="KNf-K8-Afe" eventType="touchUpInside" id="76d-nW-Men"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -4158,6 +4148,7 @@
                         <outlet property="selectView" destination="q5X-xZ-ynU" id="EgB-yD-N86"/>
                         <outlet property="testSubTableView" destination="4cg-FX-u8O" id="VSu-Vt-JDa"/>
                         <outlet property="testTableView" destination="9eX-A2-Wln" id="dbc-O4-ZB3"/>
+                        <outlet property="triangleBtn" destination="zhB-O3-Xiy" id="4Rr-4E-xZx"/>
                         <outlet property="typeBtn" destination="2FD-L9-ANb" id="vvF-4H-cnl"/>
                         <outlet property="upBtn" destination="ibT-dS-ie4" id="lbv-eL-KTf"/>
                     </connections>
@@ -4175,11 +4166,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="vbJ-r2-hDe">
-                                <rect key="frame" x="13" y="42" width="295" height="280"/>
+                                <rect key="frame" x="13" y="38" width="295" height="381"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8NC-pv-2Xp">
-                                        <rect key="frame" x="79" y="235" width="137" height="36"/>
+                                        <rect key="frame" x="79" y="328" width="137" height="36"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="提交">
                                             <color key="titleColor" red="0.082352941176470587" green="0.39215686274509803" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
@@ -4190,15 +4181,16 @@
                                         </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="FrA-vZ-eTd">
-                                        <rect key="frame" x="35" y="0.0" width="240" height="89"/>
+                                        <rect key="frame" x="7" y="41" width="281" height="112"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="light"/>
                                     </textView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder=" 请输入手机号码" minimumFontSize="17" clearButtonMode="unlessEditing" id="cVQ-m1-odF">
-                                        <rect key="frame" x="35" y="190" width="240" height="37"/>
+                                        <rect key="frame" x="7" y="265" width="281" height="38"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" keyboardAppearance="light"/>
                                         <connections>
@@ -4206,18 +4198,25 @@
                                         </connections>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BC8-nI-1NS">
-                                        <rect key="frame" x="35" y="102" width="240" height="76"/>
+                                        <rect key="frame" x="7" y="169" width="281" height="76"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="textColor" red="0.73830117984693877" green="0.73830117984693877" blue="0.73830117984693877" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请填写备注，如无则不填写" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ymt-UK-2Pp">
-                                        <rect key="frame" x="62" y="118" width="205" height="23"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请填写备注，如无则不填写，最多不超过1000字" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ymt-UK-2Pp">
+                                        <rect key="frame" x="20" y="178" width="245" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" red="0.37254901959999998" green="0.37254901959999998" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已选的内容：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0pp-Fi-fr3">
+                                        <rect key="frame" x="20" y="12" width="120" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -4678,7 +4677,6 @@
         <image name="Set.png" width="22" height="22"/>
         <image name="YellowDownArrow.png" width="16" height="16"/>
         <image name="choose.png" width="26" height="29"/>
-        <image name="delete_1.png" width="30" height="27"/>
         <image name="icon_addpic_unfocused.png" width="230" height="230"/>
     </resources>
     <color key="tintColor" red="1" green="0.14356049670000001" blue="0.02994241207" alpha="1" colorSpace="calibratedRGB"/>

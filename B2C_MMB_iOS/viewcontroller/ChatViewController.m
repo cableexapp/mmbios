@@ -13,7 +13,7 @@
 #import "AppDelegate.h"
 #import "Reachability.h"
 #import "DDLog.h"
-
+#define SUPPORT_IOS8 0
 @interface ChatViewController ()
 {
     UITextView *messageField;
@@ -38,6 +38,7 @@
     NSString *stringLabel;
     NSString *roomMessage;
     int messagePush;
+    NSString *isOn;
 }
 
 @end
@@ -207,8 +208,27 @@
 
     [self firstPageMessageData];
     
-    naviTitle.text = @"正在咨询";
-    imageView.image = image;
+    NSLog(@"viewDidLoad_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
+    
+    if ([self.appDelegate.isOnLine isEqualToString:@"unavailable"])
+    {
+        NSLog(@"客服已经离开!");
+        naviTitle.text = @"客服已经离开";
+        noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
+        noNet.hidden = NO;
+        noNetView.hidden = NO;
+        noNetMessage.hidden = NO;
+        [messageField resignFirstResponder];
+        self.tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+        toolBar.hidden = YES;
+    }
+    else
+    {
+         NSLog(@"客服在线!");
+        naviTitle.text = @"正在咨询";
+        imageView.image = image;
+    }
+    
 }
 
 //检查网络是否连接
@@ -278,6 +298,18 @@
 
 -(void)chatRoomMessage:(NSNotification *)chatRoomMessage
 {
+    #if SUPPORT_IOS8
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }else
+  #endif
+    {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
     UILocalNotification *_localNotification=[[UILocalNotification alloc] init];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
@@ -302,13 +334,15 @@
 
 -(void)noFriendOnLineMessage:(NSNotification *)busyMessage
 {
+    isOn = @"unavailable";
+    
+    [messageField resignFirstResponder];
+    self.tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+    toolBar.hidden = YES;
     noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
     noNet.hidden = NO;
     noNetView.hidden = NO;
     noNetMessage.hidden = NO;
-    [messageField resignFirstResponder];
-    self.tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
-    toolBar.hidden = YES;
 }
 
 //服务器繁忙提示
@@ -335,6 +369,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+     NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
+    
     [self checkNet];
     NSLog(@"self.fromStringFlag = %@",self.fromStringFlag);
     if ([[self appDelegate].xmppStream isDisconnected])

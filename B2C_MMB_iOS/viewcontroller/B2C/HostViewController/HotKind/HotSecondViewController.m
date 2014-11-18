@@ -70,7 +70,7 @@
         str = [str stringByAppendingString:[NSString stringWithFormat:@"%@\n",[aDic objectForKey:@"typePls"]]];
     }
     [self.markView setText:str];
-    
+    self.secondTextView.delegate = self;
 }
 
 
@@ -163,15 +163,12 @@
 }
 
 
-
 - (IBAction)submitNews:(UIButton *)sender {
     
     if(sender == self.submit)
     {
         [self.PhoneNumber resignFirstResponder];
     }
-    
-    
     if(self.PhoneNumber.text.length == 0)
     {
         [DCFStringUtil showNotice:@"手机号码不能为空"];

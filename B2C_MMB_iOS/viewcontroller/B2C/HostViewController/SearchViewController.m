@@ -133,7 +133,7 @@
     tempFlag = @"4";
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [mySearchBar resignFirstResponder];
-//    [self readHistoryData];
+    [self readHistoryData];
     
     NSLog(@"viewDidDisappear");
 }
@@ -247,7 +247,7 @@
     
     [self createDataBase_B2B];
     [self createDataBase_B2C];
-    
+
     NSLog(@"viewDidLoad");
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopCarArray:) name:@"shopCar" object:nil];
 }
@@ -342,13 +342,14 @@
 //语音搜索
 -(void)soundSrarchTap:(UITapGestureRecognizer *) sender
 {
-    [self messageMusic];
+    
     clearBtn.hidden = YES;
     tempFlag = @"4";
     imageFlag = @"0";
     [mySearchBar resignFirstResponder];
     //启动识别服务
     [_iflyRecognizerView start];
+    [self messageMusic];
 }
 
 -(void)messageMusic
@@ -356,7 +357,7 @@
     //消息音提示
     NSString *strPath = [[NSBundle mainBundle]pathForResource:@"searchSound" ofType:@"wav"];
     NSData * voiceData = [[NSData alloc]initWithContentsOfFile:strPath];
-    AVAudioPlayer *messageSound = [[AVAudioPlayer alloc]initWithData:voiceData error:nil];
+    messageSound = [[AVAudioPlayer alloc]initWithData:voiceData error:nil];
     if ([messageSound isPlaying])
     {
         [messageSound stop];
@@ -434,7 +435,7 @@
         [self SearchB2CDataFromDataBase];
         dataArray = B2ChistoryArray;
     }
-    //    [self refreshTableView];
+       [self refreshTableView];
 //
     [self.serchResultView reloadData];
     [self refreshClearButton];
@@ -632,6 +633,10 @@
     }
     [self coverClearButton];
     [self deleteData];
+    
+    [self createDataBase_B2B];
+    [self createDataBase_B2C];
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -659,8 +664,6 @@
         [cell addSubview:searchResultLabel];
     }
     
-    
-   
     if ([imageFlag isEqualToString:@"1"])
     {
         searchImageView.image = [UIImage imageNamed:@"clock"];
@@ -669,8 +672,6 @@
     {
         searchImageView.image = [UIImage imageNamed:@"search"];
     }
-    
-    
     
     if ([tempFlag isEqualToString:@"3"])
     {
@@ -786,7 +787,7 @@
     NSString *docsDir = [dirPaths objectAtIndex:0];
     if ([tempType isEqualToString:@"1"])
     {
-        databasePathB2B = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"contact_B2B.db"]];
+        databasePathB2B = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"contact_B2B.sqlite"]];
         if ([[NSFileManager defaultManager] fileExistsAtPath:databasePathB2B] == YES)
         {
             [[NSFileManager defaultManager] removeItemAtPath:databasePathB2B error:nil];
@@ -794,14 +795,14 @@
     }
     else if ([tempType isEqualToString:@"2"])
     {
-        databasePathB2C = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"contact_B2C.db"]];
+        databasePathB2C = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"contact_B2C.sqlite"]];
         if ([[NSFileManager defaultManager] fileExistsAtPath:databasePathB2C] == YES)
         {
             [[NSFileManager defaultManager] removeItemAtPath:databasePathB2C error:nil];
         }
     }
-    [B2BhistoryArray removeAllObjects];
-    [B2ChistoryArray removeAllObjects];
+//    [B2BhistoryArray removeAllObjects];
+//    [B2ChistoryArray removeAllObjects];
 }
 
 - (AppDelegate *)appDelegate
@@ -818,13 +819,14 @@
     
     NSString *docsDir = [dirPaths objectAtIndex:0];
     
-    databasePathB2B = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"contact_B2B.db"]];
+    databasePathB2B = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"contact_B2B.sqlite"]];
  
     if ([[NSFileManager defaultManager] fileExistsAtPath:databasePathB2B] == NO)
     {
         const char *dbpath = [databasePathB2B UTF8String];
         if (sqlite3_open(dbpath, &contactDBB2B)==SQLITE_OK)
         {
+            NSLog(@"创建B2B表成功\n");
             char *errMsg;
             const char *sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS(ID INTEGER PRIMARY KEY AUTOINCREMENT,TYPE TEXT ,FID TEXT, FIRSTTYPE TEXT,SECONDTYPE TEXT,SEQ TEXT,SID TEXT,THIRDTYPE TEXT,TID TEXT)";
             if (sqlite3_exec(contactDBB2B, sql_stmt, NULL, NULL, &errMsg)!=SQLITE_OK)
@@ -913,10 +915,10 @@
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2BhistoryArray addObject:dic];
-                        
+                      
+                        [self.serchResultView reloadData];
                         NSLog(@"B2Bhistory = %@",B2BhistoryArray);
                     }
-
                 }
             }
             else
@@ -939,13 +941,14 @@
     
     NSString *docsDir = [dirPaths objectAtIndex:0];
     
-    databasePathB2C = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"contact_B2C.db"]];
+    databasePathB2C = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent: @"contact_B2C.sqlite"]];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:databasePathB2C] == NO)
     {
         const char *dbpath = [databasePathB2C UTF8String];
         if (sqlite3_open(dbpath, &contactDBB2C)==SQLITE_OK)
         {
+             NSLog(@"创建B2C表成功\n");
             char *errMsg;
             const char *sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS(ID INTEGER PRIMARY KEY AUTOINCREMENT,TYPE TEXT ,PRODUCTID TEXT, PRODUCTNAME TEXT)";
             if (sqlite3_exec(contactDBB2C, sql_stmt, NULL, NULL, &errMsg)!=SQLITE_OK)
@@ -1022,7 +1025,7 @@
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2ChistoryArray addObject:dic];
-                        
+                        [self.serchResultView reloadData];
                         NSLog(@"self.history = %@",B2ChistoryArray);
                     }
                     

@@ -35,6 +35,8 @@
     UIStoryboard *sb;
     
     NSMutableArray *typeIdArray;
+    
+    ZSYPopoverListView *listView;
 }
 @end
 
@@ -259,7 +261,6 @@
 
 -(void)goToChatView:(NSNotification *)goToChat
 {
-    NSLog(@"11111");
     ChatViewController *chatVC = [[ChatViewController alloc] init];
     [self presentViewController:chatVC animated:YES completion:nil];
 }
@@ -397,6 +398,14 @@
         SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
         [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
     }
+    if(btn.tag == 1)
+    {
+        listView = [[ZSYPopoverListView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-50,250)];
+        listView.titleName.text = @"选择一级分类";
+        listView.datasource = self;
+        listView.delegate = self;
+        [listView show];
+    }
     if(btn.tag == 2)
     {
        [self setHidesBottomBarWhenPushed:YES];
@@ -438,10 +447,57 @@
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:chatVC animated:NO];
     }
+    if (btn.tag == 7)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"友情提示"
+                                                            message:@"系统将拨打400客服电话，是否确认？"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"拨打", nil];
+        [alertView show];
+    }
     [self setHidesBottomBarWhenPushed:NO];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        NSString *tel = [NSString stringWithFormat:@"tel://%@",@"4008280188"];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tel]];
+    }
+}
 
+- (NSInteger)popoverListView:(ZSYPopoverListView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+
+    return typeArray.count;
+}
+
+- (UITableViewCell *)popoverListView:(ZSYPopoverListView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        static NSString *identifier = @"identifier";
+        UITableViewCell *cell = [tableView dequeueReusablePopoverCellWithIdentifier:identifier];
+        if (nil == cell)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+    
+        cell.textLabel.text = typeArray[indexPath.row];
+        return cell;
+}
+
+- (void)popoverListView:(ZSYPopoverListView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [listView dismiss];
+    [self setHidesBottomBarWhenPushed:YES];
+    CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
+    cableSecondAndThirdStepViewController.myTitle = typeArray[indexPath.row];
+    cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:cableSecondAndThirdStepViewController animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
+}
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

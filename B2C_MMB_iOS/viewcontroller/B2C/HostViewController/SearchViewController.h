@@ -21,6 +21,7 @@
     sqlite3 *contactDBB2C;
     NSString *databasePathB2B;
     NSString *databasePathB2C;
+    AVAudioPlayer * messageSound;
 }
 
 @property (nonatomic,strong) UITableView *serchResultView;

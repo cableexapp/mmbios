@@ -48,6 +48,7 @@ NSString *strUserId = @"";
 }
 @synthesize mainQueue;
 @synthesize db;
+@synthesize isOnLine;
 
 //XMPP
 @synthesize personName;
@@ -132,6 +133,13 @@ NSString *strUserId = @"";
     }
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    UIApplicationState state = application.applicationState;
+    NSLog(@"sate = %zi",state);
+    NSLog(@"notification = %@",notification);
+}
+
 
 #if SUPPORT_IOS8
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
@@ -152,7 +160,8 @@ NSString *strUserId = @"";
     
     [application setApplicationIconBadgeNumber:0];
 #if SUPPORT_IOS8
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
         UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
@@ -362,7 +371,7 @@ NSString *strUserId = @"";
     {
         [self.db close];
     }
-    [self saveContext];
+    
 }
 
 
@@ -664,7 +673,14 @@ NSString *strUserId = @"";
    //在线状态
     if ([presenceType isEqualToString:@"unavailable"])
     {
+        self.isOnLine = @"unavailable";
+        NSLog(@"self.isOnLine = %@...........",self.isOnLine);
        [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
+    }
+    else if ([presenceType isEqualToString:@"available"])
+    {
+        NSLog(@"self.isOnLine = %@...........",self.isOnLine);
+//        self.isOnLine = @"available";
     }
 }
 

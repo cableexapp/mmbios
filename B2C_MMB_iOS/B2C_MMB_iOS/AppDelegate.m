@@ -362,7 +362,7 @@ NSString *strUserId = @"";
     {
         [self.db close];
     }
-    [self saveContext];
+//    [self saveContext];
 }
 
 

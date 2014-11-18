@@ -69,47 +69,88 @@
     }
     [self.markView setText:str];
     
-    // 2.监听键盘的通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [self.PhoneNumber addTarget:self action:@selector(textViewDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.PhoneNumber addTarget:self action:@selector(textViewDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
+    
+  
+//    // 2.监听键盘的通知
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
 }
 
 
+//- (void)textViewDidBeginEditing:(UITextView *)textView
+//{
+//    CGRect frame = textView.frame;
+//    int offset = frame.origin.y + 60 - (self.view.frame.size.height-330.0);
+//    NSTimeInterval animationDuration=0.30f;
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//    if (offset > 0)
+//    {
+//        self.view.frame=CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+//        [UIView commitAnimations];
+//    }
+//}
 
-
-
-/**
- *  当键盘改变了frame(位置和尺寸)的时候调用
- */
-- (void)keyboardWillChangeFrame:(NSNotification *)note
+- (void)textViewDidEndEditing:(UITextView *)textView
 {
-    // 设置窗口的颜色
-    self.view.window.backgroundColor = self.markView.backgroundColor;
-    
-    // 0.取出键盘动画的时间
-    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    
-    // 1.取得键盘最后的frame
-    CGRect keyboardFrame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    // 2.计算控制器的view需要平移的距离
-    CGFloat transformY = keyboardFrame.origin.y - self.view.frame.size.height - 62;
-    
-    // 3.执行动画
-    [UIView animateWithDuration:duration animations:^{
-        self.view.transform = CGAffineTransformMakeTranslation(0, transformY);
-//        CGAffineTransform pTransform = CGAffineTransformMakeTranslation(0, -100);
-//        self.view.transform = pTransform;
-     }];
+    self.view.frame =CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
+}
 
-}
-/**
- *  当开始拖拽表格的时候就会调用
- */
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+
+- (void)textViewDidBeginEditing:(UITextField *)textView
 {
-    // 退出键盘
-    [self.view endEditing:YES];
+    CGRect frame = textView.frame;
+    int offset = frame.origin.y + 60 - (self.view.frame.size.height-236.0);
+    NSTimeInterval animationDuration=0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    if (offset > 0)
+    {
+        self.view.frame=CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+        [UIView commitAnimations];
+    }
 }
+
+
+
+
+
+//
+///**
+// *  当键盘改变了frame(位置和尺寸)的时候调用
+// */
+//- (void)keyboardWillChangeFrame:(NSNotification *)note
+//{
+//    // 设置窗口的颜色
+//    self.view.window.backgroundColor = self.markView.backgroundColor;
+//    
+//    // 0.取出键盘动画的时间
+//    CGFloat duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+//    
+//    // 1.取得键盘最后的frame
+//    CGRect keyboardFrame = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    
+//    // 2.计算控制器的view需要平移的距离
+//    CGFloat transformY = keyboardFrame.origin.y - self.view.frame.size.height ;
+//    
+//    // 3.执行动画
+//    [UIView animateWithDuration:duration animations:^{
+//        self.view.transform = CGAffineTransformMakeTranslation(0, transformY);
+////        CGAffineTransform pTransform = CGAffineTransformMakeTranslation(0, -100);
+////        self.view.transform = pTransform;
+//     }];
+//
+//}
+///**
+// *  当开始拖拽表格的时候就会调用
+// */
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+//{
+//    // 退出键盘
+//    [self.view endEditing:YES];
+//
+//}
 
 
 
@@ -162,7 +203,7 @@
     
 
     
-//    [self.navigationController popToRootViewControllerAnimated:YES];
+
 
 }
 

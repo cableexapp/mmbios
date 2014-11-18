@@ -24,6 +24,7 @@
 {
     NSMutableArray *dataArray;
     NSMutableArray *selectArray;
+    UIView *backView;
 }
 
 
@@ -98,6 +99,14 @@
     self.triangleBtn.imageView.clipsToBounds = NO;
     
    
+    self.testTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    
+    backView = [[UIView alloc] init];
+    backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
+    backView.hidden = YES;
+    backView.backgroundColor = [UIColor lightGrayColor];
+    [self.view insertSubview:backView aboveSubview:self.testTableView];
     
     
 }
@@ -194,7 +203,7 @@
         NSString *str = [NSString stringWithFormat:@"%@",[[selectArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
         [cell.textLabel setText:str];
         [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
-//        cell.textAlignment = UITextAlignmentCenter;
+        cell.textLabel.textAlignment = 1;
         return cell;
     }
     
@@ -209,11 +218,10 @@
     NSLog(@"indexPath = %zi",indexPath.row);
     if (tableView.tag == 33)
     {
+        self.testTableView.frame = CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-88);
 //        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
 //        [self.testTableView setFrame:CGRectMake(0, self.testTableView.frame.origin.y - height, self.testTableView.frame.size.width - height, self.testTableView.frame.origin.x + height)];
-        
-        
-        self.selectView.hidden = NO;
+               self.selectView.hidden = NO;
         self.clearBtn.hidden = NO;
         [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
         [dataArray removeObjectAtIndex:indexPath.row];
@@ -240,7 +248,7 @@
 
  if ( _opend )
     {
-        
+        backView.hidden = YES;
         self.opend = NO;
         self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);
         _testTableView.userInteractionEnabled = YES;
@@ -249,6 +257,10 @@
 }else
     
     {
+        backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
+        backView.alpha = 0.7;
+        backView.hidden = NO;
+        
         self.opend = YES;
         self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);
 
@@ -298,7 +310,7 @@
     self.opend = NO;
 //    CGRect newframe = CGRectMake(0, 原来的 － 加上黄色试图的高度, 原来的 , 原来的 ＋ 加上黄色试图的高度);
     
-
+    self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
     self.selectView.hidden = YES;
 
     _testSubTableView.hidden = YES;
@@ -345,6 +357,7 @@
     [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
         if (selectArray.count == 0)
        {
+           self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
            _testSubTableView.hidden = YES;
            _testTableView.userInteractionEnabled = YES;
            self.selectView.hidden = YES;

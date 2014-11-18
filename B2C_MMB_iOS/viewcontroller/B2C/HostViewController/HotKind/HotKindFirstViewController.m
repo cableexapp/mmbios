@@ -182,7 +182,10 @@
         [label setNumberOfLines:0];
         [cell.contentView addSubview:label];
         label.textAlignment = NSTextAlignmentCenter;
-
+//        
+//        cell.textLabel.text = str;
+//        cell.textLabel.font = [UIFont systemFontOfSize:13];
+//        cell.textLabel.textAlignment = 1;
 
         return cell;
         
@@ -219,9 +222,7 @@
     if (tableView.tag == 33)
     {
         self.testTableView.frame = CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-88);
-//        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
-//        [self.testTableView setFrame:CGRectMake(0, self.testTableView.frame.origin.y - height, self.testTableView.frame.size.width - height, self.testTableView.frame.origin.x + height)];
-               self.selectView.hidden = NO;
+        self.selectView.hidden = NO;
         self.clearBtn.hidden = NO;
         [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
         [dataArray removeObjectAtIndex:indexPath.row];
@@ -308,8 +309,7 @@
 {
     if (buttonIndex != 0) return;
     self.opend = NO;
-//    CGRect newframe = CGRectMake(0, 原来的 － 加上黄色试图的高度, 原来的 , 原来的 ＋ 加上黄色试图的高度);
-    
+    backView.hidden = YES;
     self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
     self.selectView.hidden = YES;
 

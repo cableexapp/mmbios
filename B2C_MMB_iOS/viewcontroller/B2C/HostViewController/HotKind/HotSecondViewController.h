@@ -31,8 +31,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *secondTextView;
 
 
-//手机号码文本框
-- (IBAction)phoneText:(id)sender;
+
 
 
 

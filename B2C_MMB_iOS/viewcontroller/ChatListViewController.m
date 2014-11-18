@@ -291,7 +291,11 @@ int flagPage = 0;
     }
     else if([self.fromString isEqualToString:@"热门型号在线咨询"])
     {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if([self.fromString isEqualToString:@"热门分类在线客服"])
+    {
+         [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {

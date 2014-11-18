@@ -285,8 +285,13 @@
     }
     else if ([self.fromStringFlag isEqualToString:@"热门型号在线咨询"])
     {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+         [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+    }
+    else if ([self.fromStringFlag isEqualToString:@"热门分类在线客服"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -1)] animated:YES];
     }
     else
     {
@@ -610,6 +615,10 @@
             else if ([self.fromStringFlag isEqualToString:@"热门型号在线咨询"])
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 热门型号]：%@",message];
+            }
+            else if ([self.fromStringFlag isEqualToString:@"热门分类在线客服"])
+            {
+                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 热门分类]：%@",message];
             }
 //            NSString *stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：%@",message];
             [body setStringValue:stringLabel];

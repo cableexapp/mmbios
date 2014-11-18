@@ -338,6 +338,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"++++++++dataArray+++++++++ = %@",[dicRespon objectForKey:@"items"]);
     if(URLTag == URLB2CGoodsListTag)
     {
         if(_reloading == YES)
@@ -363,6 +364,8 @@
                     [dataArray removeAllObjects];
                 }
                 [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
+                
+                
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 

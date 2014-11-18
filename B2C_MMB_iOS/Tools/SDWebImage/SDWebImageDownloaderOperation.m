@@ -30,6 +30,7 @@
     size_t width, height;
     BOOL responseFromCached;
 }
+@synthesize executing,finished;
 
 - (id)initWithRequest:(NSURLRequest *)request options:(SDWebImageDownloaderOptions)options progress:(void (^)(NSUInteger, long long))progressBlock completed:(void (^)(UIImage *, NSData *, NSError *, BOOL))completedBlock cancelled:(void (^)())cancelBlock
 {
@@ -118,19 +119,26 @@
     self.imageData = nil;
 }
 
-- (void)setFinished:(BOOL)finished
+- (void)setFinished:(BOOL)finishedUse
 {
+    
     [self willChangeValueForKey:@"isFinished"];
-    _finished = finished;
-//    self.finished = finished;
+
+
+        finished = finishedUse;
+    
+
+    
+//
     [self didChangeValueForKey:@"isFinished"];
 }
 
-- (void)setExecuting:(BOOL)executing
+- (void)setExecuting:(BOOL)executingUse
 {
     [self willChangeValueForKey:@"isExecuting"];
-    _executing = executing;
-//    self.executing = executing;
+
+    executing = executingUse;
+
     [self didChangeValueForKey:@"isExecuting"];
 }
 

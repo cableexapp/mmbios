@@ -174,6 +174,8 @@ double secondsCountDown =0;
     [self sendJoinRequest];
 }
 
+
+
 -(void)goBack
 {
     [timeCountTimer invalidate];

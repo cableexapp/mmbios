@@ -20,6 +20,7 @@
 #import "HotScreenFirstViewController.h"
 #import "SearchViewController.h"
 #import "MCDefine.h"
+#import "ChatViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -52,16 +53,13 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    //    if(searchBar)
-    //    {
-    //        [searchBar resignFirstResponder];
-    //    }
-    
+    [self setHidesBottomBarWhenPushed:NO];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101)
         {
             [view setHidden:NO];
+            
         }
         if([view isKindOfClass:[UISearchBar class]])
         {
@@ -85,6 +83,7 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+//    [self.navigationController.tabBarController.tabBar setHidden:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
 }
 
@@ -112,7 +111,6 @@
     //    NSString *msg = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"msg"]];
     if(URLTag == URLGetProductTypeTag)
     {
-
         if(result == 1)
         {
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
@@ -124,12 +122,9 @@
                 NSDictionary *dic = [[dicRespon objectForKey:@"items"] objectAtIndex:i];
                 NSString  *typeName = [dic objectForKey:@"typeName"];
                 [dataArray addObject:typeName];
-                
                 NSString *typeId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"typeId"]];
                 [typeIdArray addObject:typeId];
             }
-            
-            
 #pragma mark - 数组里的字符串按长度重新排序
             typeArray = [dataArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                 NSUInteger len0 = [(NSString *)obj1 length];
@@ -170,12 +165,11 @@
     }
 }
 
-
 - (void) typeBtnClick:(UIButton *) sender
 {
     UIButton *btn = (UIButton *) sender;
     int tag = [btn tag];
-    
+    NSLog(@"tag = %d",tag);
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = btn.titleLabel.text;
@@ -260,7 +254,14 @@
                      @"装潢明线",
                      @"电源连接线",
                      @"",nil];
-    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
+}
+
+-(void)goToChatView:(NSNotification *)goToChat
+{
+    NSLog(@"11111");
+    ChatViewController *chatVC = [[ChatViewController alloc] init];
+    [self presentViewController:chatVC animated:YES completion:nil];
 }
 
 - (void) section1BtnClick:(UIButton *) sender

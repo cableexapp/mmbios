@@ -62,7 +62,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     flag = NO;
     if(addToCarArray)
     {
@@ -126,8 +126,7 @@
     askPriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
-    [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [askPriceBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
     [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
     [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -387,6 +386,7 @@
 - (void) askPriceBtnClick:(UIButton *) sender
 {
     [self setHidesBottomBarWhenPushed:YES];
+    
     B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
     [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
 }

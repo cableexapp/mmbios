@@ -9,7 +9,6 @@
 #import "LoginViewController.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFTopLabel.h"
-#import "RegisterViewController.h"
 #import "MCdes.h"
 #import "DCFCustomExtra.h"
 #import "MCDefine.h"
@@ -20,6 +19,8 @@
 {
     DCFTopLabel *top;
     AppDelegate *app;
+    
+    NSDictionary *regiserDic;
 }
 @end
 
@@ -45,6 +46,28 @@
     {
         [conn stopConnection];
         conn = nil;
+    }
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    
+    regiserDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"]];
+    NSLog(@"regiserDic = %@",regiserDic);
+    if([[regiserDic allKeys] count] == 0 || [regiserDic isKindOfClass:[NSNull class]])
+    {
+        
+    }
+    else
+    {
+        NSString *account = [regiserDic objectForKey:@"registerAccount"];
+        NSString *secrect = [regiserDic objectForKey:@"registerSecrect"];
+        [self.tf_Account setText:account];
+        [self.tf_Secrect setText:secrect];
+        
+        [self logWithAccount:account WithSec:secrect];
     }
 }
 
@@ -159,20 +182,26 @@
     
 //    cableex
 
-    [self log];
+    [self logWithAccount:self.tf_Account.text WithSec:self.tf_Secrect.text];
 }
 
-- (void) log
+- (void) logWithAccount:(NSString *) acc WithSec:(NSString *) sec
 {
-    [self.tf_Account resignFirstResponder];
-    [self.tf_Secrect resignFirstResponder];
+    if([self.tf_Account isFirstResponder])
+    {
+        [self.tf_Account resignFirstResponder];
+    }
+    if([self.tf_Secrect isFirstResponder])
+    {
+        [self.tf_Secrect resignFirstResponder];
+    }
     
-    if(self.tf_Account.text.length == 0)
+    if(acc.length == 0)
     {
         [DCFStringUtil showNotice:@"请输入账号"];
         return;
     }
-    if(self.tf_Secrect.text.length == 0)
+    if(sec.length == 0)
     {
         [DCFStringUtil showNotice:@"请输入密码"];
         return;
@@ -189,9 +218,9 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
-    NSString *des = [MCdes encryptUseDES:self.tf_Secrect.text key:@"cableex_app*#!Key"];
+    NSString *des = [MCdes encryptUseDES:sec key:@"cableex_app*#!Key"];
     
-    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",self.tf_Account.text,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",acc,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
     NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     
@@ -269,7 +298,7 @@
 
     if(textField == _tf_Secrect)
     {
-        [self log];
+        [self logWithAccount:self.tf_Account.text WithSec:self.tf_Secrect.text];
     }
     return YES;
 }

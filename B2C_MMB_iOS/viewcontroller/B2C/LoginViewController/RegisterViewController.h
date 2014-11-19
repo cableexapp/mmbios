@@ -10,10 +10,15 @@
 #import "MBProgressHUD.h"
 #import "DCFConnectionUtil.h"
 
+
 @interface RegisterViewController : UIViewController<UITextFieldDelegate,MBProgressHUDDelegate,ConnectionDelegate,UIScrollViewDelegate>
 {
     MBProgressHUD *HUD;
 }
+
+
+@property (weak, nonatomic) IBOutlet UIView *segmentView;
+
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *mySegment;
 
@@ -32,3 +37,5 @@
 
 
 @end
+
+

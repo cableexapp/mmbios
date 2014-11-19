@@ -10,7 +10,7 @@
 #import "DCFTopLabel.h"
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
-
+#import "B2BMyInquiryListFastData.h"
 
 @interface MyInquiryListFirstViewController ()
 {
@@ -56,6 +56,7 @@
     
     speed = [self.storyboard instantiateViewControllerWithIdentifier:@"speedInquiryListTableViewController"];
     speed.view.frame = self.secondView.bounds;
+    speed.delegate = self;
     [self addChildViewController:speed];
     [self.secondView addSubview:speed.view];
 }
@@ -87,7 +88,14 @@
 }
 
 
-
+- (void) pushViewController:(B2BMyInquiryListFastData *)data
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    [self setHidesBottomBarWhenPushed:YES];
+    MyFastInquiryOrder *myFastInquiryOrder = [sb instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
+    myFastInquiryOrder.fastData = data;
+    [self.navigationController pushViewController:myFastInquiryOrder animated:YES];
+}
 
 - (void) segmentChange:(UISegmentedControl *) sender
 {

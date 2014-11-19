@@ -54,11 +54,14 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的快速询价单"];
     self.navigationItem.titleView = top;
     
-    [self.statusLabel setText:[NSString stringWithFormat:@"状态:%@",self.fastData.status]];
+    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",self.fastData.oemId]];
     
-    [self.upTimeLabel setText:[NSString stringWithFormat:@"提交时间:%@",self.fastData.myTime]];
-    [self.telLabel setText:[NSString stringWithFormat:@"联系电话:%@",self.fastData.phone]];
-    [self.linkManLabel setText:[NSString stringWithFormat:@"联系人:%@",self.fastData.linkman]];
+    [self.statusLabel setText:[NSString stringWithFormat:@"状态:%@",self.fastData.status]];
+    [self.statusLabel setTextAlignment:NSTextAlignmentRight];
+    
+    [self.upTimeLabel setText:[NSString stringWithFormat:@"%@",self.fastData.myTime]];
+    [self.telLabel setText:[NSString stringWithFormat:@"%@",self.fastData.phone]];
+    [self.linkManLabel setText:[NSString stringWithFormat:@"%@",self.fastData.linkman]];
     
     
     UILabel *requestLabel = [[UILabel alloc] init];

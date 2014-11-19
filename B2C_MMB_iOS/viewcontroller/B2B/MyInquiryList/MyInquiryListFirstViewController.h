@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NormalInquiryListTableViewController.h"
+#import "SpeedInquiryListTableViewController.h"
+#import "MyNormalInquiryDetailController.h"
 
-@interface MyInquiryListFirstViewController : UIViewController
+@interface MyInquiryListFirstViewController : UIViewController<PushToNextVC,PushViewController>
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segment;
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;

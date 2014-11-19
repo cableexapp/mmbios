@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 #import "MBProgressHUD.h"
+#import "RegisterViewController.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate,MBProgressHUDDelegate>
 {

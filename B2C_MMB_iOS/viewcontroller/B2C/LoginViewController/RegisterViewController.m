@@ -60,6 +60,8 @@
 {
     [super viewWillAppear:YES];
     timeCount_tel = 60;
+    
+//    NSLog(@"%@",self.navigationController)
 }
 
 - (void)viewDidLoad
@@ -70,6 +72,9 @@
     
     DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"电缆买卖宝注册"];
     self.navigationItem.titleView = TOP;
+    
+    
+    [self.mySegment setFrame:CGRectMake((ScreenWidth-self.mySegment.frame.size.width)/2, (self.segmentView.frame.size.height-self.mySegment.frame.size.height)/2, self.mySegment.frame.size.width, self.mySegment.frame.size.height)];
     
     [self.sv setContentSize:CGSizeMake(ScreenWidth*2, self.sv.frame.size.height)];
     [self.sv setDelegate:self];
@@ -212,6 +217,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
     [_speedGetSecBtn setUserInteractionEnabled:YES];
     [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     if(timer)
@@ -223,25 +229,43 @@
     
     if(URLTag == URLRegesterTag)
     {
-
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
+        }
+        NSDictionary *dic = nil;
+        
         [HUD hide:YES];
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
-        if(result == 0)
+        
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
         {
-            if(msg.length == 0)
+            dic = [[NSDictionary alloc] init];
+        }
+        else
+        {
+            if(result == 0)
             {
-                [DCFStringUtil showNotice:@"注册失败"];
+                dic = [[NSDictionary alloc] init];
+                if(msg.length == 0)
+                {
+                    [DCFStringUtil showNotice:@"注册失败"];
+                }
+                else
+                {
+                    [DCFStringUtil showNotice:msg];
+                }
             }
-            else
+            else if (result == 1)
             {
-                [DCFStringUtil showNotice:msg];
+                dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.normalAccountTf.text,@"registerAccount",self.normalSecTf.text,@"registerSecrect", nil];
+                [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
+
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }
-        else if (result == 1)
-        {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
+
     }
 }
 

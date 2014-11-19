@@ -17,8 +17,11 @@
     MBProgressHUD *HUD;
     UITableView *tv;
     EScrollerView *es;
+    NSString *GoodsDetailUrl;
 }
 @property (strong,nonatomic) NSString *productid;
+
+@property (nonatomic,strong) NSString *GoodsDetailUrl;
 
 - (id) initWithProductId:(NSString *) productid;
 @end

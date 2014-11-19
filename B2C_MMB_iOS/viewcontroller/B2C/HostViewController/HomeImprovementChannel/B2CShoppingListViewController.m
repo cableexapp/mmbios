@@ -23,6 +23,8 @@
 {
     NSMutableArray *dataArray;
     
+    NSMutableArray *phoneDescribeArray; //商品网址链接
+    
     DCFChenMoreCell *moreCell;
     int intPage; //页数
     int intTotal; //总数
@@ -314,10 +316,7 @@
 
 - (void) loadRequest:(NSString *) seq WithUse:(NSString *) use
 {
-    
-    
     pageSize = 10;
-    
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     
@@ -338,7 +337,8 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"++++++++dataArray+++++++++ = %@",[dicRespon objectForKey:@"items"]);
+    phoneDescribeArray = [dicRespon objectForKey:@"items"];
+    
     if(URLTag == URLB2CGoodsListTag)
     {
         if(_reloading == YES)
@@ -564,8 +564,8 @@
 {
     NSString *productId = [[dataArray objectAtIndex:indexPath.row] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
+    detail.GoodsDetailUrl = [[phoneDescribeArray objectAtIndex:indexPath.row] objectForKey:@"phoneDescribe"];
     [self.navigationController pushViewController:detail animated:YES];
-
 }
 //
 //

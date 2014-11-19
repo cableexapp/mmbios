@@ -52,8 +52,6 @@
     }
 }
 
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -66,7 +64,8 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
-    [top setTextColor:[UIColor colorWithRed:18.0/255.0 green:104.0/255.0 blue:253.0/255.0 alpha:1.0]];
+//    [top setTextColor:[UIColor colorWithRed:18.0/255.0 green:104.0/255.0 blue:253.0/255.0 alpha:1.0]];
+    [top setTextColor:[UIColor whiteColor]];
     self.navigationItem.titleView = top;
     
     topTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 320, 34)];

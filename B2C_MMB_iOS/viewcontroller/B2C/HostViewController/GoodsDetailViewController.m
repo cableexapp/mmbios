@@ -68,6 +68,8 @@
 
 @implementation GoodsDetailViewController
 
+@synthesize GoodsDetailUrl;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -284,7 +286,7 @@
     cellBtnArray = [[NSMutableArray alloc] init];
     
     
-    
+    NSLog(@"GoodsDetailUrl = %@",self.GoodsDetailUrl);
     
 }
 

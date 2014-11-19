@@ -111,13 +111,13 @@
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 if(s.intValue < 99 && s.intValue > 0)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 0, 20, 20)];
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 0, 18, 18)];
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
                     [btn setTitle:s forState:UIControlStateNormal];
                 }
                 else if (s.intValue >= 99)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 0, 40, 20)];
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 0, 24, 18)];
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
                     [btn setTitle:@"99+" forState:UIControlStateNormal];
                 }

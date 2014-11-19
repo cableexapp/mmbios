@@ -112,7 +112,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-
+    [self readHistoryData];
     NSLog(@"viewDidAppear");
 }
 
@@ -252,7 +252,6 @@
 
     [dataArray removeAllObjects];
     NSLog(@"viewDidLoad");
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopCarArray:) name:@"shopCar" object:nil];
 }
 
 -(void)coverClearButton
@@ -271,7 +270,7 @@
         if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"types"] count] != 0)
         {
             dataArray = [dicRespon objectForKey:@"types"];
-            [self refreshTableView];
+//            [self refreshTableView];
             [self.serchResultView reloadData];
             coverView.hidden = YES;
             [mySearchBar resignFirstResponder];
@@ -279,7 +278,7 @@
         else if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"] && [[dicRespon objectForKey:@"products"] count] != 0)
         {
             dataArray = [dicRespon objectForKey:@"products"];
-            [self refreshTableView];
+//            [self refreshTableView];
             coverView.hidden = YES;
             [self.serchResultView reloadData];
             [mySearchBar resignFirstResponder];
@@ -291,7 +290,6 @@
         }
     }
 }
-
 
 //提示没有符合查询条件的数据
 -(void)remindNoSearchResult
@@ -334,7 +332,6 @@
 //键盘手动搜索
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-
     clearBtn.hidden = YES;
     tempFlag = @"4";
     imageFlag = @"0";
@@ -344,7 +341,6 @@
 //语音搜索
 -(void)soundSrarchTap:(UITapGestureRecognizer *) sender
 {
-    
     clearBtn.hidden = YES;
     tempFlag = @"4";
     imageFlag = @"0";
@@ -370,7 +366,6 @@
     }
 }
 
-
 /*识别结果返回代理
  @param resultArray 识别结果
  @ param isLast 表示是否最后一次结果
@@ -391,6 +386,7 @@
     if (soundInput != nil)
     {
         [self cancelIFlyRecognizer];
+        speakButtonView.hidden = YES;
         speakButton.hidden = YES;
         [self sendRquest];
     }
@@ -401,7 +397,6 @@
 - (void)onError: (IFlySpeechError *) error
 {
     [self.view addSubview:_popView];
-    
     [_popView setText:@"识别结束!"];
 }
 
@@ -429,22 +424,20 @@
     if ([tempType isEqualToString:@"1"])
     {
         [self SearchB2BDataFromDataBase];
-        if (B2BhistoryArray.count == 0)
-        {
-            [self SearchB2BDataFromDataBase];
-        }
+   
+//            [self SearchB2BDataFromDataBase];
+        
         dataArray = B2BhistoryArray;
     }
     else if ([tempType isEqualToString:@"2"])
     {
         [self SearchB2CDataFromDataBase];
-        if (B2ChistoryArray.count == 0)
-        {
-            [self SearchB2CDataFromDataBase];
-        }
+       
+//            [self SearchB2CDataFromDataBase];
+        
         dataArray = B2ChistoryArray;
     }
-    [self refreshTableView];
+//    [self refreshTableView];
     [self.serchResultView reloadData];
     [self refreshClearButton];
 }
@@ -515,10 +508,13 @@
     if ([searchBar.text isEqualToString:@""])
     {
         speakButton.hidden = NO;
+        speakButtonView.hidden = NO;
     }
     else
     {
         speakButton.hidden = YES;
+        speakButtonView.hidden = YES;
+        
     }
 }
 
@@ -558,7 +554,7 @@
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
         tempType = @"2";
-        [self SearchB2BDataFromDataBase];
+//        [self SearchB2BDataFromDataBase];
     }
     else
     {

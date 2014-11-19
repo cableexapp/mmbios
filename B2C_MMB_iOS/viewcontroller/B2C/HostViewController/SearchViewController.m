@@ -514,7 +514,6 @@
     {
         speakButton.hidden = YES;
         speakButtonView.hidden = YES;
-        
     }
 }
 

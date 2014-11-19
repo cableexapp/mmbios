@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyCableOrderSearchViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface MyCableOrderSearchViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate>
 
 @property (nonatomic,strong) UITableView *tableView;
 

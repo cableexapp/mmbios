@@ -103,8 +103,10 @@
             [view setHidden:YES];
         }
     }
+    
     [self readHistoryData];
     NSLog(@"viewWillAppear");
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -133,7 +135,7 @@
     tempFlag = @"4";
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [mySearchBar resignFirstResponder];
-    [self readHistoryData];
+//    [self readHistoryData];
     
     NSLog(@"viewDidDisappear");
 }
@@ -194,7 +196,7 @@
     [speakButton setBackgroundImage:[UIImage imageNamed:@"speak"] forState:UIControlStateNormal];
     [self.view insertSubview:speakButton atIndex:1];
     
-    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-109) style:UITableViewStylePlain];
+    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-45) style:UITableViewStylePlain];
     self.serchResultView.dataSource = self;
     self.serchResultView.delegate = self;
     self.serchResultView.scrollEnabled = YES;
@@ -248,6 +250,7 @@
     [self createDataBase_B2B];
     [self createDataBase_B2C];
 
+    [dataArray removeAllObjects];
     NSLog(@"viewDidLoad");
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shopCarArray:) name:@"shopCar" object:nil];
 }
@@ -288,7 +291,6 @@
         }
     }
 }
-
 
 
 //提示没有符合查询条件的数据
@@ -406,7 +408,7 @@
 -(void)refreshTableView
 {
     [self.serchResultView removeFromSuperview];
-    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-109) style:UITableViewStylePlain];
+    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-45) style:UITableViewStylePlain];
     self.serchResultView.dataSource = self;
     self.serchResultView.delegate = self;
     self.serchResultView.scrollEnabled = YES;
@@ -427,12 +429,19 @@
     if ([tempType isEqualToString:@"1"])
     {
         [self SearchB2BDataFromDataBase];
+        if (B2BhistoryArray.count == 0)
+        {
+            [self SearchB2BDataFromDataBase];
+        }
         dataArray = B2BhistoryArray;
     }
     else if ([tempType isEqualToString:@"2"])
     {
-      
         [self SearchB2CDataFromDataBase];
+        if (B2ChistoryArray.count == 0)
+        {
+            [self SearchB2CDataFromDataBase];
+        }
         dataArray = B2ChistoryArray;
     }
     [self refreshTableView];
@@ -698,7 +707,6 @@
             searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"productName"];
         }
     }
-
     return cell;
 }
 
@@ -723,7 +731,7 @@
                 NSString *ThridType = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
                 NSString *Tid = [dataArray[indexPath.row] objectForKey:@"tid"];
                 //数据存入数据库
-                [self saveType:tempType Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
                 
                 [self.navigationController pushViewController:cstVC animated:YES];
             }
@@ -740,7 +748,7 @@
                 NSString *ThridType = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
                 NSString *Tid = [dataArray[indexPath.row] objectForKey:@"tid"];
                 //数据存入数据库
-                [self saveType:tempType Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
                                  
                 [self.navigationController pushViewController:cstVC animated:YES];
             }
@@ -757,8 +765,7 @@
                 NSString *ThridType = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
                 NSString *Tid = [dataArray[indexPath.row] objectForKey:@"tid"];
                 //数据存入数据库
-                [self saveType:tempType Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
-                
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
                 [self.navigationController pushViewController:ccmVC animated:YES];
             }
         }
@@ -768,11 +775,9 @@
             NSString *productName = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"productName"];
             GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
             
-            [self saveType:tempType ProductId:productId ProductName:productName];
-            
+            [self saveType:@"2" ProductId:productId ProductName:productName];
             [self.navigationController pushViewController:detail animated:YES];
         }
-//    [self.serchResultView reloadData];
     NSLog(@"cstVC.myTitle = %@",cstVC.myTitle);
     NSLog(@"cstVC.typeId = %@",cstVC.typeId);
 }

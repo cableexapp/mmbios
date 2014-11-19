@@ -16,6 +16,7 @@
     UISearchDisplayController *searchDisplayController;
     NSMutableArray *searchResults;
     NSMutableArray *dataArray;
+    int isSearch;
 }
 
 @end
@@ -45,15 +46,7 @@
     naviTitle.text = @"订单搜索";
     self.navigationItem.titleView = naviTitle;
     
-//    search = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0,self.view.frame.size.width, 45)];
-//    [search setDelegate:self];
-////    [search setBarStyle:0];
-//    search.autocorrectionType = UITextAutocorrectionTypeNo;
-//    search.autocapitalizationType = UITextAutocapitalizationTypeNone;
-//    search.placeholder = @"输入搜索内容";
-//    [self.view addSubview:search];
-    
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-109) style:UITableViewStylePlain];
     self.tableView.separatorColor = [UIColor colorWithRed:153.0/255.0 green:206.0/255.0 blue:250.0/255.0 alpha:1];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -68,19 +61,17 @@
     search.backgroundColor = [UIColor clearColor];
     search.autocorrectionType = UITextAutocorrectionTypeNo;
     search.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    search.placeholder = @"搜索";
-    
-    //    search.backgroundImage = [UIImage imageNamed:@"搜索.png"];
+    search.placeholder = @"输入搜索内容";
     [self.view addSubview:search];
     
     searchDisplayController = [[UISearchDisplayController alloc]initWithSearchBar:search contentsController:self];
     searchDisplayController.active = NO;
     searchDisplayController.searchResultsDataSource = self;
     searchDisplayController.searchResultsDelegate = self;
+    searchDisplayController.delegate = self;
     
-    dataArray = [[NSMutableArray alloc] initWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10", nil];
+    dataArray = [[NSMutableArray alloc] initWithObjects:@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"10", nil];
 }
-
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -96,7 +87,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return 50;
+	return 100;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -111,27 +102,15 @@
     }
 }
 
--(void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
-{
-    [self.tableView setContentInset:UIEdgeInsetsZero];
-    [self.tableView setScrollIndicatorInsets:UIEdgeInsetsZero];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];//以indexPath来唯一确定cell
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.textLabel.textColor = [UIColor blackColor];
-//        UIImage *cellImage = [UIImage imageNamed:@"列表箭头.png"];
-//        UIImageView *cellImageView = [[UIImageView alloc] initWithImage:cellImage];
-//        cellImageView.frame = CGRectMake(290, 10, 15, 25);
-//        [cell addSubview:cellImageView];
     }
-//    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"列表背景.png"]];
-//    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"列表背景-高亮.png"]];
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
         cell.textLabel.text = searchResults[indexPath.row];
@@ -143,7 +122,6 @@
     return cell;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -152,19 +130,49 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     NSLog(@"键盘搜索.....");
+    [search resignFirstResponder];
+    search.frame = CGRectMake(0, 20,self.view.frame.size.width, 45);
 }
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    NSLog(@"searchBarTextDidBeginEditing");
     search.frame = CGRectMake(0, 20,self.view.frame.size.width, 45);
-     self.searchDisplayController.searchResultsTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    self.searchDisplayController.searchResultsTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
+    if (search.text.length > 0)
+    {
+        search.frame = CGRectMake(0, 20,self.view.frame.size.width, 45);
+    }
+}
+
+- (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
+{
+    NSLog(@"searchDisplayControllerWillBeginSearch");
+}
+- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+{
+     NSLog(@"searchDisplayControllerDidBeginSearch");
+}
+- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+{
+    NSLog(@"searchDisplayControllerWillEndSearch");
     search.frame = CGRectMake(0, 0,self.view.frame.size.width, 45);
-    NSLog(@"searchBarTextDidEndEditing");
+}
+- (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
+{
+    NSLog(@"searchDisplayControllerDidEndSearch");
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView
+{
+    NSLog(@"willHideSearchResultsTableView");
+}
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
+{
+    NSLog(@"didHideSearchResultsTableView");
 }
 
 - (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar
@@ -182,8 +190,6 @@
 {
     [self.view endEditing:YES];
 }
-
-
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {

@@ -113,7 +113,7 @@
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-    NSString *s = [NSString stringWithFormat:@"%@   %@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"],[[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"]];
+    NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
     [cell.textLabel setText:s];
     return cell;
 }

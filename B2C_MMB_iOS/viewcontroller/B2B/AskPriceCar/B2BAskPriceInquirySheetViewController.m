@@ -176,10 +176,15 @@
         [DCFStringUtil showNotice:@"暂无商品信息"];
         return;
     }
+    if(addressData.addressId.length == 0 || [addressData.addressId isKindOfClass:[NSNull class]])
+    {
+        [DCFStringUtil showNotice:@"收货地址不能为空"];
+        return;
+    }
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"SubInquiry",time];
     NSString *token = [DCFCustomExtra md5:string];
-    
+
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&addressid=%@&type=%@",token,[self getMemberId],addressData.addressId,@"7"];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubInquiryTag delegate:self];

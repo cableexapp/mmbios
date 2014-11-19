@@ -210,7 +210,6 @@
 		6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6195F5F81A0CCE6B0036D168 /* MyNormalInquiryDetailController.m */; };
 		619A62511A00C09900556B90 /* FifthSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624D1A00C09900556B90 /* FifthSB.storyboard */; };
 		619A62521A00C09900556B90 /* FourthSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624E1A00C09900556B90 /* FourthSB.storyboard */; };
-		619A62531A00C09900556B90 /* SecondSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A624F1A00C09900556B90 /* SecondSB.storyboard */; };
 		619A62541A00C09900556B90 /* ThirdSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619A62501A00C09900556B90 /* ThirdSB.storyboard */; };
 		619C10071A0772EA002E9DF8 /* HotClasscifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 619C10051A0772EA002E9DF8 /* HotClasscifyViewController.m */; };
 		619C10081A0772EA002E9DF8 /* KindsPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 619C10061A0772EA002E9DF8 /* KindsPlist.plist */; };
@@ -1070,7 +1069,6 @@
 		6195F5F81A0CCE6B0036D168 /* MyNormalInquiryDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNormalInquiryDetailController.m; sourceTree = "<group>"; };
 		619A624D1A00C09900556B90 /* FifthSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FifthSB.storyboard; sourceTree = "<group>"; };
 		619A624E1A00C09900556B90 /* FourthSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FourthSB.storyboard; sourceTree = "<group>"; };
-		619A624F1A00C09900556B90 /* SecondSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SecondSB.storyboard; sourceTree = "<group>"; };
 		619A62501A00C09900556B90 /* ThirdSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ThirdSB.storyboard; sourceTree = "<group>"; };
 		619C10041A0772EA002E9DF8 /* HotClasscifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotClasscifyViewController.h; sourceTree = "<group>"; };
 		619C10051A0772EA002E9DF8 /* HotClasscifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotClasscifyViewController.m; sourceTree = "<group>"; };
@@ -2752,7 +2750,6 @@
 			children = (
 				619A624D1A00C09900556B90 /* FifthSB.storyboard */,
 				619A624E1A00C09900556B90 /* FourthSB.storyboard */,
-				619A624F1A00C09900556B90 /* SecondSB.storyboard */,
 				619A62501A00C09900556B90 /* ThirdSB.storyboard */,
 			);
 			path = storyBoard;
@@ -4361,7 +4358,6 @@
 				8BBB28C51A11F3AB009AAEE8 /* speak@2x.png in Resources */,
 				8BA7C0FB1A10A85500758B0F /* 爱心.png in Resources */,
 				8BA7C0A01A10A85500758B0F /* 呲牙@2x.png in Resources */,
-				619A62531A00C09900556B90 /* SecondSB.storyboard in Resources */,
 				8BA7C0A61A10A85500758B0F /* 哈欠.png in Resources */,
 				8BA7C0EB1A10A85500758B0F /* 敲打.png in Resources */,
 				8BA7C0DB1A10A85500758B0F /* 抠鼻.png in Resources */,

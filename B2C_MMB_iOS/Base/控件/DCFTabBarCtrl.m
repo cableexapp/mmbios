@@ -49,15 +49,14 @@
     [hostNavi.tabBarItem setTag:1];
     //    [hostNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
-    UIStoryboard *secondSB = [UIStoryboard storyboardWithName:@"SecondSB" bundle:nil];
-    SecondNaviViewController *secondNavi = [secondSB instantiateViewControllerWithIdentifier:@"secondNaviViewController"];
-    UIImage *selectClassifySelectImg = [UIImage imageNamed:@"classifySelect.png"];
-    UIImage *unClassifyUnSelectImImg = [UIImage imageNamed:@"classifyUnSelect.png"];
-    selectClassifySelectImg = [UIImage imageWithCGImage:selectClassifySelectImg.CGImage scale:1.5 orientation:selectClassifySelectImg.imageOrientation];
-    unClassifyUnSelectImImg = [UIImage imageWithCGImage:unClassifyUnSelectImImg.CGImage scale:1.5 orientation:unClassifyUnSelectImImg.imageOrientation];
-    secondNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"分类" image:unClassifyUnSelectImImg selectedImage:selectClassifySelectImg];
-    [secondNavi.tabBarItem setTag:2];
-    //    [secondNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
+    //UIStoryboard *secondSB = [UIStoryboard storyboardWithName:@"SecondSB" bundle:nil];
+    //SecondNaviViewController *secondNavi = [secondSB instantiateViewControllerWithIdentifier:@"secondNaviViewController"];
+    //UIImage *selectClassifySelectImg = [UIImage imageNamed:@"classifySelect.png"];
+    //UIImage *unClassifyUnSelectImImg = [UIImage imageNamed:@"classifyUnSelect.png"];
+    //selectClassifySelectImg = [UIImage imageWithCGImage:selectClassifySelectImg.CGImage scale:1.5 orientation:selectClassifySelectImg.imageOrientation];
+    //unClassifyUnSelectImImg = [UIImage imageWithCGImage:unClassifyUnSelectImImg.CGImage scale:1.5 orientation:unClassifyUnSelectImImg.imageOrientation];
+    //secondNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"分类" image:unClassifyUnSelectImImg selectedImage:selectClassifySelectImg];
+    //[secondNavi.tabBarItem setTag:2];
     
     UIStoryboard *thirdSB = [UIStoryboard storyboardWithName:@"ThirdSB" bundle:nil];
     ThirdNaviViewController *thirdNavi = [thirdSB instantiateViewControllerWithIdentifier:@"thirdNaviViewController"];
@@ -66,7 +65,7 @@
     selectImImg = [UIImage imageWithCGImage:selectImImg.CGImage scale:1.5 orientation:selectImImg.imageOrientation];
     unSelectImImg = [UIImage imageWithCGImage:unSelectImImg.CGImage scale:1.5 orientation:unSelectImImg.imageOrientation];
     thirdNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"在线咨询" image:unSelectImImg selectedImage:selectImImg];
-    [thirdNavi.tabBarItem setTag:3];
+    [thirdNavi.tabBarItem setTag:2];
     //    [thirdNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     UIStoryboard *fourthSB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
@@ -76,7 +75,7 @@
     selectp_centerSelectImg = [UIImage imageWithCGImage:selectp_centerSelectImg.CGImage scale:1.5 orientation:selectp_centerSelectImg.imageOrientation];
     unSelectp_centerUnSelectImg = [UIImage imageWithCGImage:unSelectp_centerUnSelectImg.CGImage scale:1.5 orientation:unSelectp_centerUnSelectImg.imageOrientation];
     fourthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"个人中心" image:unSelectp_centerUnSelectImg selectedImage:selectp_centerSelectImg];
-    [fourthNavi.tabBarItem setTag:4];
+    [fourthNavi.tabBarItem setTag:3];
     //    [fourthNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     UIStoryboard *fifthSB = [UIStoryboard storyboardWithName:@"FifthSB" bundle:nil];
@@ -86,11 +85,11 @@
     selectmoreSelectImg = [UIImage imageWithCGImage:selectmoreSelectImg.CGImage scale:1.5 orientation:selectmoreSelectImg.imageOrientation];
     unSelectmoreUnSelectImg = [UIImage imageWithCGImage:unSelectmoreUnSelectImg.CGImage scale:1.5 orientation:unSelectmoreUnSelectImg.imageOrientation];
     fifthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"更多" image:unSelectmoreUnSelectImg selectedImage:selectmoreSelectImg];
-    [fifthNavi.tabBarItem setTag:5];
+    [fifthNavi.tabBarItem setTag:4];
 //    [fifthNavi.tabBarItem setTitle:@"分类"];
     
     //set the tab bar items
-    NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi,fifthNavi, nil];
+    NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,thirdNavi,fourthNavi,fifthNavi, nil];
     self.viewControllers = tabbarItems;
     
 }

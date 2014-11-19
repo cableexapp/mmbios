@@ -44,7 +44,6 @@
 }
 
 
-
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -145,12 +144,9 @@
         size = CGSizeMake(ScreenWidth-20, 30);
     }
     return size.height+10;
-    
 }
 
-
-
-
+#pragma mark - Tableview填充数据
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 33) {
@@ -169,9 +165,7 @@
         
         NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
         UILabel *label = [[UILabel alloc] init];
-        
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
-        
         if(size.height <= 30)
         {
             size = CGSizeMake(cell.contentView.frame.size.width-20, 30);
@@ -182,24 +176,21 @@
         [label setNumberOfLines:0];
         [cell.contentView addSubview:label];
         label.textAlignment = NSTextAlignmentCenter;
-//        
+       
 //        cell.textLabel.text = str;
 //        cell.textLabel.font = [UIFont systemFontOfSize:13];
 //        cell.textLabel.textAlignment = 1;
 
         return cell;
         
-        
-    }else
+}else
     {
         static NSString *cellId = @"twohotKindFirstViewTableViewCell";
         HotKindFirstViewTableViewCell *cell = (HotKindFirstViewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
         if(!cell)
         {
             cell = [[HotKindFirstViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
-
         }
-       
         cell.contentView.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:228.0/255.0 blue:191.0/255.0 alpha:255.0/255.0];
         tableView.separatorColor = [ UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:255.0/255.0];
         //显示数据
@@ -213,17 +204,17 @@
 }
 
 
+#pragma  mark - 选中后传递给testSubTableView
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
-    
-    NSLog(@"indexPath = %zi",indexPath.row);
+//    NSLog(@"indexPath = %zi",indexPath.row);
     if (tableView.tag == 33)
     {
         self.testTableView.frame = CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-88);
         self.selectView.hidden = NO;
         self.clearBtn.hidden = NO;
+        self.testSubTableView.hidden = YES;
         [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
         [dataArray removeObjectAtIndex:indexPath.row];
     }
@@ -236,8 +227,56 @@
         //设置是控制tableview的最大高度
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
-
     }
+}
+
+#pragma mark - 删除testSubTableView里的数据
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView.tag == 33)
+    {
+        self.selectView.hidden = NO;
+        self.clearBtn.hidden = NO;
+        [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
+        [dataArray removeObjectAtIndex:indexPath.row];
+    }
+    else
+    {
+        [dataArray addObject:[selectArray objectAtIndex:indexPath.row]];
+        [selectArray removeObjectAtIndex:indexPath.row];
+    }
+    [_testTableView reloadData];
+    
+    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
+    if (selectArray.count == 0)
+    {
+        self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+        backView.hidden = YES;
+        _testSubTableView.hidden = YES;
+        _testTableView.userInteractionEnabled = YES;
+        self.selectView.hidden = YES;
+        self.opend = NO;
+    }
+    if (self.isOpened)
+    {
+        [_testSubTableView reloadData];
+        _testSubTableView.hidden = NO;
+        //设置是控制tableview的最大高度
+        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
+        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
+        
+    }
+}
+
+#pragma mark - 删除风格
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;//默认没有编辑风格
+    if ([tableView isEqual:self.testSubTableView])
+    {
+        result = UITableViewCellEditingStyleDelete;      //设置编辑风格为删除风格
+    }
+    return result;
 }
 
 
@@ -246,38 +285,31 @@
 {
 //类型转换
 //UIButton *button = (UIButton * ) sender;
-
- if ( _opend )
+if ( _opend )
     {
-        backView.hidden = YES;
         self.opend = NO;
-        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);
+        backView.hidden = YES;
+        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);  //三角按钮旋转
         _testTableView.userInteractionEnabled = YES;
         _testSubTableView.hidden = YES;
-
-}else
-    
+    }
+   else
     {
-        backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
-        backView.alpha = 0.7;
-        backView.hidden = NO;
-        
         self.opend = YES;
+        backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
+        backView.alpha = 0.6;
+        backView.hidden = NO;
+        if (selectArray.count != 0)
+        {
+         _testSubTableView.hidden = YES;
+        }
         self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);
-
         _testSubTableView.hidden = NO;
-//      未选列表不能选中
-        _testTableView.userInteractionEnabled = NO;
-        
+        _testTableView.userInteractionEnabled = NO;   // 未选列表不能选中
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
-        
-       
-        
-        [_testSubTableView reloadData];
-
+            [_testSubTableView reloadData];
     }
-    
 }
 
 
@@ -296,11 +328,13 @@
     [self setHidesBottomBarWhenPushed:YES];
     if (selectArray.count == 0) {
         [DCFStringUtil showNotice:@"请选择分类"];
-    }else{
+    }
+    else
+    {
             HotSecondViewController *secCtr = [self.storyboard instantiateViewControllerWithIdentifier:@"hotSecondViewController"];
             secCtr.upArray = selectArray;
             [self.navigationController pushViewController:secCtr animated:YES];
-}
+    }
 }
 
 
@@ -312,7 +346,6 @@
     backView.hidden = YES;
     self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
     self.selectView.hidden = YES;
-
     _testSubTableView.hidden = YES;
     _testTableView.userInteractionEnabled = YES;
     [_testSubTableView setFrame:CGRectMake(_testSubTableView.frame.origin.x, _testSubTableView.frame.origin.y, _testSubTableView.frame.size.width, 0)];
@@ -326,57 +359,6 @@
 {
     return YES;
 }
-
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;//默认没有编辑风格
-    if ([tableView isEqual:self.testSubTableView])
-    {
-        result = UITableViewCellEditingStyleDelete;      //设置编辑风格为删除风格
-    }
-    return result;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView.tag == 33)
-    {
-        self.selectView.hidden = NO;
-        self.clearBtn.hidden = NO;
-        [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
-        [dataArray removeObjectAtIndex:indexPath.row];
-        
-    }
-    else
-    {
-        [dataArray addObject:[selectArray objectAtIndex:indexPath.row]];
-        [selectArray removeObjectAtIndex:indexPath.row];
-    }
-    [_testTableView reloadData];
-    
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
-        if (selectArray.count == 0)
-       {
-           self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
-           backView.hidden = YES;
-           _testSubTableView.hidden = YES;
-           _testTableView.userInteractionEnabled = YES;
-           self.selectView.hidden = YES;
-        }
-    
-    if (self.isOpened)
-    {
-        [_testSubTableView reloadData];
-        _testSubTableView.hidden = NO;
-        
-        //设置是控制tableview的最大高度
-        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
-        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
-    }
-}
-
-
-
 
 - (void)didReceiveMemoryWarning
 {

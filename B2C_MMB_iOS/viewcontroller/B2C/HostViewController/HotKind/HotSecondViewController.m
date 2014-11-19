@@ -43,8 +43,6 @@
         conn = nil;
     }
 }
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -77,7 +75,6 @@
 {
     self.view.frame =CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
 }
-
 
 - (void)textViewDidBeginEditing:(UITextField *)textView
 {

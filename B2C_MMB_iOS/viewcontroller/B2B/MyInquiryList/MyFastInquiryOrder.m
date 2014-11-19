@@ -47,6 +47,8 @@
 {
     [super viewDidLoad];
     
+//    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    
     [self pushAndPopStyle];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的快速询价单"];
@@ -63,6 +65,7 @@
     NSString *request = [NSString stringWithFormat:@"%@",self.fastData.remark];
     if(request.length == 0 || [request isKindOfClass:[NSNull class]])
     {
+        [self.requestFirstLabel setFrame:CGRectMake(self.requestFirstLabel.frame.origin.x, self.requestFirstLabel.frame.origin.y, self.requestFirstLabel.frame.size.width, 0)];
         [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height-20, ScreenWidth-20, 0)];
     }
     else
@@ -82,7 +85,7 @@
     [requestLabel setNumberOfLines:0];
     [self.sv addSubview:requestLabel];
     
-    UILabel *picTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height, ScreenWidth-20, 30)];
+    UILabel *picTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height+5, ScreenWidth-20, 30)];
     [picTitleLabel setText:@"已传照片:"];
     [self.sv addSubview:picTitleLabel];
     
@@ -90,6 +93,7 @@
     NSString *filePath = [NSString stringWithFormat:@"%@",[self.fastData filePath]];
     if(filePath.length == 0 || [filePath isKindOfClass:[NSNull class]])
     {
+        [picTitleLabel setFrame:CGRectMake(picTitleLabel.frame.origin.x, picTitleLabel.frame.origin.y, picTitleLabel.frame.size.width, 0)];
         [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 0)];
     }
     else
@@ -109,6 +113,7 @@
     if(string.length == 0 || [string isKindOfClass:[NSNull class]])
     {
         [situationLabel setFrame:CGRectMake(10, iv.frame.origin.y+iv.frame.size.height+10, ScreenWidth-20, 30)];
+        [situationLabel setText:@"处理情况: 暂无处理情况哦~"];
     }
     else
     {
@@ -196,12 +201,14 @@
 
 - (IBAction)againAskBtnClick:(id)sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
     SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
     [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
 }
 
 - (IBAction)lookBtnClick:(id)sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
     MyNormalInquiryDetailController *myNormalInquiryDetailController = [self.storyboard instantiateViewControllerWithIdentifier:@"myNormalInquiryDetailController"];
     
 #pragma mark - 这里暂时用oemid替换inquirId

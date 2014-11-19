@@ -10,8 +10,7 @@
 #import "DCFTopLabel.h"
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
-#import "NormalInquiryListTableViewController.h"
-#import "SpeedInquiryListTableViewController.h"
+
 
 @interface MyInquiryListFirstViewController ()
 {
@@ -51,6 +50,7 @@
     
     normal = [self.storyboard instantiateViewControllerWithIdentifier:@"normalInquiryListTableViewController"];
     normal.view.frame = self.firstView.bounds;
+    normal.delegate = self;
     [self addChildViewController:normal];
     [self.firstView addSubview:normal.view];
     
@@ -59,6 +59,35 @@
     [self addChildViewController:speed];
     [self.secondView addSubview:speed.view];
 }
+
+- (void)pushToNextVC:(MyNormalInquiryDetailController *) sender WithData:(B2BMyInquiryListNormalData *)data
+{
+    MyNormalInquiryDetailController *myNormalInquiryDetailController = sender;
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    
+    NSString *orderNum = [NSString stringWithFormat:@"%@",[data inquiryserial]];
+    myNormalInquiryDetailController.myOrderNum = orderNum;
+    
+    
+    NSString *status = [NSString stringWithFormat:@"%@",[data status]];
+    myNormalInquiryDetailController.myStatus = status;
+    
+    
+    NSString *upTime = [data time];
+    myNormalInquiryDetailController.myTime = upTime;
+    
+    NSString *Inquiryid = [data inquiryid];
+    myNormalInquiryDetailController.myInquiryid = Inquiryid;
+    
+    NSDictionary *dic = [data pushDic];
+    myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:dic];
+    
+    [self.navigationController pushViewController:myNormalInquiryDetailController animated:YES];
+}
+
+
+
 
 - (void) segmentChange:(UISegmentedControl *) sender
 {

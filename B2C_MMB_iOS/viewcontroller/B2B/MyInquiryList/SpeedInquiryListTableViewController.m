@@ -189,7 +189,7 @@
 
 - (void) lookBtnClick:(UIButton *) sender
 {
-    NSLog(@"tag = %d",sender.tag);
+    [self setHidesBottomBarWhenPushed:YES];
     MyFastInquiryOrder *myFastInquiryOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
     myFastInquiryOrder.fastData = [dataArray objectAtIndex:sender.tag];
     [self.navigationController pushViewController:myFastInquiryOrder animated:YES];
@@ -411,6 +411,7 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    [self setHidesBottomBarWhenPushed:YES];
     MyFastInquiryOrder *myFastInquiryOrder = [sb instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
     myFastInquiryOrder.fastData = [dataArray objectAtIndex:indexPath.section];
     [self.navigationController pushViewController:myFastInquiryOrder animated:YES];

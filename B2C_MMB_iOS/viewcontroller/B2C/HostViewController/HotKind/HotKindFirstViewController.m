@@ -147,6 +147,7 @@
     
 }
 
+#pragma mark - Tableview
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 33) {
@@ -185,8 +186,7 @@
 
         return cell;
         
-        
-    }else
+}else
     {
         static NSString *cellId = @"twohotKindFirstViewTableViewCell";
         HotKindFirstViewTableViewCell *cell = (HotKindFirstViewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
@@ -207,11 +207,10 @@
 }
 
 
+#pragma  mark - 选中后传递给testSubTableView
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
-    
 //    NSLog(@"indexPath = %zi",indexPath.row);
     if (tableView.tag == 33)
     {
@@ -231,9 +230,59 @@
         //设置是控制tableview的最大高度
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
-
     }
 }
+
+#pragma mark - 删除testSubTableView里的数据
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView.tag == 33)
+    {
+        self.selectView.hidden = NO;
+        self.clearBtn.hidden = NO;
+        [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
+        [dataArray removeObjectAtIndex:indexPath.row];
+    }
+    else
+    {
+        [dataArray addObject:[selectArray objectAtIndex:indexPath.row]];
+        [selectArray removeObjectAtIndex:indexPath.row];
+    }
+    [_testTableView reloadData];
+    
+    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
+    if (selectArray.count == 0)
+    {
+        self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+        backView.hidden = YES;
+        _testSubTableView.hidden = YES;
+        _testTableView.userInteractionEnabled = YES;
+        self.selectView.hidden = YES;
+    }
+    
+    if (self.isOpened)
+    {
+        [_testSubTableView reloadData];
+        _testSubTableView.hidden = NO;
+        
+        //设置是控制tableview的最大高度
+        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
+        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
+    }
+}
+
+#pragma mark - 删除风格
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;//默认没有编辑风格
+    if ([tableView isEqual:self.testSubTableView])
+    {
+        result = UITableViewCellEditingStyleDelete;      //设置编辑风格为删除风格
+    }
+    return result;
+}
+
+
 
 
 #pragma mark - 展开已选按钮
@@ -311,57 +360,19 @@ if ( _opend )
     [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
 }
 
+
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
 
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;//默认没有编辑风格
-    if ([tableView isEqual:self.testSubTableView])
-    {
-        result = UITableViewCellEditingStyleDelete;      //设置编辑风格为删除风格
-    }
-    return result;
-}
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView.tag == 33)
-    {
-        self.selectView.hidden = NO;
-        self.clearBtn.hidden = NO;
-        [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
-        [dataArray removeObjectAtIndex:indexPath.row];
-    }
-    else
-    {
-        [dataArray addObject:[selectArray objectAtIndex:indexPath.row]];
-        [selectArray removeObjectAtIndex:indexPath.row];
-    }
-    [_testTableView reloadData];
-    
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
-        if (selectArray.count == 0)
-       {
-           self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
-           backView.hidden = YES;
-           _testSubTableView.hidden = YES;
-           _testTableView.userInteractionEnabled = YES;
-           self.selectView.hidden = YES;
-       }
-    
-    if (self.isOpened)
-    {
-        [_testSubTableView reloadData];
-        _testSubTableView.hidden = NO;
-        
-        //设置是控制tableview的最大高度
-        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
-        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
-    }
-}
+
+
+
+
+
 
 
 - (void)didReceiveMemoryWarning

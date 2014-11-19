@@ -60,7 +60,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PhoneHelper);
         default:
             break;
     }
-
 }
 
 -(BOOL)isNetValiad

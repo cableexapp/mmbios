@@ -435,12 +435,9 @@
         [self SearchB2CDataFromDataBase];
         dataArray = B2ChistoryArray;
     }
-       [self refreshTableView];
-//
+    [self refreshTableView];
     [self.serchResultView reloadData];
     [self refreshClearButton];
-
-   
 }
 
 //-(void)shopCarArray:(NSNotification*)array
@@ -480,7 +477,7 @@
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    
+    NSLog(@"searchBarTextDidBeginEditing");
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -552,6 +549,7 @@
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
         tempType = @"2";
+        [self SearchB2BDataFromDataBase];
     }
     else
     {
@@ -562,7 +560,7 @@
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     [self readHistoryData];
-    [self refreshTableView];
+//    [self refreshTableView];
     [self refreshClearButton];
     [self.serchResultView reloadData];
    
@@ -801,8 +799,8 @@
             [[NSFileManager defaultManager] removeItemAtPath:databasePathB2C error:nil];
         }
     }
-//    [B2BhistoryArray removeAllObjects];
-//    [B2ChistoryArray removeAllObjects];
+    [B2BhistoryArray removeAllObjects];
+    [B2ChistoryArray removeAllObjects];
 }
 
 - (AppDelegate *)appDelegate
@@ -915,7 +913,8 @@
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2BhistoryArray addObject:dic];
-                      
+                       
+//                        [dataArray addObject:dic];
                         [self.serchResultView reloadData];
                         NSLog(@"B2Bhistory = %@",B2BhistoryArray);
                     }
@@ -1025,6 +1024,8 @@
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2ChistoryArray addObject:dic];
+                        
+//                        [dataArray addObject:dic];
                         [self.serchResultView reloadData];
                         NSLog(@"self.history = %@",B2ChistoryArray);
                     }

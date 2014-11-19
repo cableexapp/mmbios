@@ -329,7 +329,6 @@
     });
     self.appDelegate.pushChatView = @"push";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
-    
 }
 
 - (AppDelegate *)appDelegate

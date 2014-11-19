@@ -92,9 +92,9 @@
 
 -(void)disconnect;
 
--(void)stetupStrem;
+-(void)setupStream;
 
--(void)goOnline;
+-(void)goonline;
 
 -(void)goOffline;
 

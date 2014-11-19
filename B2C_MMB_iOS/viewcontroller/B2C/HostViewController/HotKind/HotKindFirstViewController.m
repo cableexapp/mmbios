@@ -358,6 +358,7 @@
         if (selectArray.count == 0)
        {
            self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+           backView.hidden = YES;
            _testSubTableView.hidden = YES;
            _testTableView.userInteractionEnabled = YES;
            self.selectView.hidden = YES;

@@ -10,8 +10,7 @@
 #import "DCFTopLabel.h"
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
-#import "NormalInquiryListTableViewController.h"
-#import "SpeedInquiryListTableViewController.h"
+#import "B2BMyInquiryListFastData.h"
 
 @interface MyInquiryListFirstViewController ()
 {
@@ -51,13 +50,51 @@
     
     normal = [self.storyboard instantiateViewControllerWithIdentifier:@"normalInquiryListTableViewController"];
     normal.view.frame = self.firstView.bounds;
+    normal.delegate = self;
     [self addChildViewController:normal];
     [self.firstView addSubview:normal.view];
     
     speed = [self.storyboard instantiateViewControllerWithIdentifier:@"speedInquiryListTableViewController"];
     speed.view.frame = self.secondView.bounds;
+    speed.delegate = self;
     [self addChildViewController:speed];
     [self.secondView addSubview:speed.view];
+}
+
+- (void)pushToNextVC:(MyNormalInquiryDetailController *) sender WithData:(B2BMyInquiryListNormalData *)data
+{
+    MyNormalInquiryDetailController *myNormalInquiryDetailController = sender;
+    
+    [self setHidesBottomBarWhenPushed:YES];
+    
+    NSString *orderNum = [NSString stringWithFormat:@"%@",[data inquiryserial]];
+    myNormalInquiryDetailController.myOrderNum = orderNum;
+    
+    
+    NSString *status = [NSString stringWithFormat:@"%@",[data status]];
+    myNormalInquiryDetailController.myStatus = status;
+    
+    
+    NSString *upTime = [data time];
+    myNormalInquiryDetailController.myTime = upTime;
+    
+    NSString *Inquiryid = [data inquiryid];
+    myNormalInquiryDetailController.myInquiryid = Inquiryid;
+    
+    NSDictionary *dic = [data pushDic];
+    myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:dic];
+    
+    [self.navigationController pushViewController:myNormalInquiryDetailController animated:YES];
+}
+
+
+- (void) pushViewController:(B2BMyInquiryListFastData *)data
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    [self setHidesBottomBarWhenPushed:YES];
+    MyFastInquiryOrder *myFastInquiryOrder = [sb instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
+    myFastInquiryOrder.fastData = data;
+    [self.navigationController pushViewController:myFastInquiryOrder animated:YES];
 }
 
 - (void) segmentChange:(UISegmentedControl *) sender

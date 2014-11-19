@@ -10,11 +10,20 @@
 #import "DCFConnectionUtil.h"
 #import "CKRefreshControl.h"
 #import "EGORefreshTableHeaderView.h"
+#import "B2BMyInquiryListFastData.h"
+#import "MyFastInquiryOrder.h"
+
+@protocol PushViewController <NSObject>
+
+- (void) pushViewController:(B2BMyInquiryListFastData *) data;
+
+@end
 
 @interface SpeedInquiryListTableViewController : UITableViewController<ConnectionDelegate,EGORefreshTableHeaderDelegate>
 {
     DCFConnectionUtil *conn;
 }
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
-
+@property (assign,nonatomic) id<PushViewController> delegate;
 @end
+

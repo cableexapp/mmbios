@@ -10,11 +10,21 @@
 #import "DCFConnectionUtil.h"
 #import "CKRefreshControl.h"
 #import "EGORefreshTableHeaderView.h"
+#import "MyNormalInquiryDetailController.h"
+#import "B2BMyInquiryListNormalData.h"
+
+@protocol PushToNextVC <NSObject>
+
+- (void) pushToNextVC:(MyNormalInquiryDetailController *) myNormalInquiryDetailController WithData:(B2BMyInquiryListNormalData *) data;
+
+@end
 
 @interface NormalInquiryListTableViewController : UITableViewController<ConnectionDelegate,EGORefreshTableHeaderDelegate>
 {
     DCFConnectionUtil *conn;
 }
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
+@property (assign,nonatomic) id<PushToNextVC> delegate;
 
 @end
+

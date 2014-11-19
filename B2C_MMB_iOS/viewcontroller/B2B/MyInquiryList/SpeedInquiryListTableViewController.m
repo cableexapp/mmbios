@@ -12,8 +12,7 @@
 #import "DCFCustomExtra.h"
 #import "LoginNaviViewController.h"
 #import "DCFChenMoreCell.h"
-#import "B2BMyInquiryListFastData.h"
-#import "MyFastInquiryOrder.h"
+
 
 @interface SpeedInquiryListTableViewController ()
 {
@@ -189,7 +188,7 @@
 
 - (void) lookBtnClick:(UIButton *) sender
 {
-    NSLog(@"tag = %d",sender.tag);
+    [self setHidesBottomBarWhenPushed:YES];
     MyFastInquiryOrder *myFastInquiryOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
     myFastInquiryOrder.fastData = [dataArray objectAtIndex:sender.tag];
     [self.navigationController pushViewController:myFastInquiryOrder animated:YES];
@@ -298,6 +297,7 @@
     [firstLabel setTextAlignment:NSTextAlignmentRight];
     [view addSubview:firstLabel];
     
+#pragma mark - 这里的单号暂时用oemId代替
     NSString *orderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:section] oemId]];
     UILabel *orderNumLabel = [[UILabel alloc] init];
     if(orderNum.length == 0 || [orderNum isKindOfClass:[NSNull class]])
@@ -410,10 +410,20 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    MyFastInquiryOrder *myFastInquiryOrder = [sb instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
-    myFastInquiryOrder.fastData = [dataArray objectAtIndex:indexPath.section];
-    [self.navigationController pushViewController:myFastInquiryOrder animated:YES];
+    if(!dataArray || dataArray.count == 0)
+    {
+        
+    }
+    else
+    {
+        B2BMyInquiryListFastData *data = (B2BMyInquiryListFastData *)[dataArray objectAtIndex:indexPath.section];
+
+        if([self.delegate respondsToSelector:@selector(pushViewController:)])
+        {
+            [self.delegate pushViewController:data];
+        }
+    }
+
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

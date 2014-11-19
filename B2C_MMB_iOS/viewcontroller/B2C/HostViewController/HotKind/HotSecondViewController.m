@@ -68,7 +68,8 @@
         str = [str stringByAppendingString:[NSString stringWithFormat:@"%@\n",[aDic objectForKey:@"typePls"]]];
     }
     [self.markView setText:str];
-    
+    self.secondTextView.delegate = self;
+    self.PhoneNumber.delegate = self;
     [self.PhoneNumber addTarget:self action:@selector(textViewDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
     [self.PhoneNumber addTarget:self action:@selector(textViewDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
     
@@ -93,6 +94,9 @@
         [UIView commitAnimations];
     }
 }
+
+
+
 
 // 隐藏键盘
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -206,10 +210,30 @@
     }
 }
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSLog(@"shouldChangeTextInRange");
+    if ([text isEqualToString:@"\n"])
+    {
+        [self.secondTextView resignFirstResponder];
+        return NO;
+    }
+    if(self.secondTextView.text.length == 0)
+    {
+        [self.labelText setHidden:NO];
+    }
+    else
+    {
+        [self.labelText setHidden:YES];
+    }
+    return YES;
+}
+
+
+
 //textview文本框里的备注
 - (void) textViewDidChange:(UITextView *)textView
 {
- 
     if(self.secondTextView.text.length == 0)
     {
         [self.labelText setHidden:NO];

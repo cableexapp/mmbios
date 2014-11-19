@@ -255,6 +255,7 @@
         _testSubTableView.hidden = YES;
         _testTableView.userInteractionEnabled = YES;
         self.selectView.hidden = YES;
+        self.opend = NO;
     }
     if (self.isOpened)
     {
@@ -263,6 +264,7 @@
         //设置是控制tableview的最大高度
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
+        
     }
 }
 
@@ -292,7 +294,7 @@ if ( _opend )
         _testSubTableView.hidden = YES;
     }
    else
-       {
+    {
         self.opend = YES;
         backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
         backView.alpha = 0.6;
@@ -307,7 +309,7 @@ if ( _opend )
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
             [_testSubTableView reloadData];
-       }
+    }
 }
 
 
@@ -353,20 +355,10 @@ if ( _opend )
     [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
 }
 
-
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
-
-
-
-
-
-
-
-
 
 - (void)didReceiveMemoryWarning
 {

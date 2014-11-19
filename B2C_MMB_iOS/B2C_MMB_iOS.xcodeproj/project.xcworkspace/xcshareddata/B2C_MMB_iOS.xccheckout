@@ -18,13 +18,13 @@
 		<string>ssh://github.com/cableexapp/mmbios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>B2C_MMB_iOS/B2C_MMB_iOS.xcodeproj/project.xcworkspace</string>
+	<string>B2C_MMB_iOS/B2C_MMB_iOS.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>55cf90a1-0c96-468b-aa50-050415425df3++4954</key>
-		<string>../../../B2C_MMB_iOS/Tools/SDWebImage</string>
+		<string>../../..B2C_MMB_iOS/Tools/SDWebImage</string>
 		<key>55cf90a1-0c96-468b-aa50-050415425df3++5127</key>
-		<string>../../../B2C_MMB_iOS/Tools/phone</string>
+		<string>../../..B2C_MMB_iOS/Tools/phone</string>
 		<key>F60F4B91C26728757CB15F60425EE88018D8FA71</key>
 		<string>../../..</string>
 	</dict>

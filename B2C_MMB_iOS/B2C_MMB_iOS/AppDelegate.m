@@ -21,7 +21,7 @@
 #import "WelComeViewController.h"
 #import "UIImage (fixOrientation).h"
 #import "BPush.h"
-
+#import "ChatViewController.h"
 #define SUPPORT_IOS8 0
 
 //XMPP
@@ -31,13 +31,16 @@
 #import "DDTTYLogger.h"
 #import "NSXMLElement+XMPP.h"
 
+//讯飞
+#import "iflyMSC/IFlySpeechUtility.h"
+
 #if DEBUG
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #else
 static const int ddLogLevel = LOG_LEVEL_INFO;
 #endif
-
 NSString *strUserId = @"";
+
 @implementation AppDelegate
 {
     //李深望修改
@@ -45,6 +48,7 @@ NSString *strUserId = @"";
 }
 @synthesize mainQueue;
 @synthesize db;
+@synthesize isOnLine;
 
 //XMPP
 @synthesize personName;
@@ -56,6 +60,7 @@ NSString *strUserId = @"";
 @synthesize uesrID;
 @synthesize chatRequestJID;
 @synthesize roomJID;
+@synthesize pushChatView;
 
 - (void) reachabilityChanged: (NSNotification* )note
 {
@@ -128,60 +133,11 @@ NSString *strUserId = @"";
     }
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    NSLog(@"token = %@",deviceToken);
-    NSString *token = [[deviceToken description]stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"%@",token);
-    [BPush registerDeviceToken:deviceToken]; // 必须
-    [BPush bindChannel]; // 必须。可以在其它时机调用，只有在该方法返回（通过onMethod:response:回调）绑定成功时，app才能接收到Push消息。一个app绑定成功至少一次即可（如果access token变更请重新绑定）。
-}
-
-
-- (void) onMethod:(NSString*)method response:(NSDictionary*)data
-{
-    if ([BPushRequestMethod_Bind isEqualToString:method])
-    {
-        NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
-        
-        self.appId = [res valueForKey:BPushRequestAppIdKey];
-        self.baiduPushUserId = [res valueForKey:BPushRequestUserIdKey];
-        self.channelId = [res valueForKey:BPushRequestChannelIdKey];
-        NSLog(@"%@  %@   %@",self.appId,self.baiduPushUserId,self.channelId);
-        
-        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
-        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
-        
-        //        BPushRequestResponseParamsKey
-    }
-    else if ([BPushRequestMethod_Unbind isEqualToString:method])
-    {
-        
-    }
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
-   
-    NSLog(@"%@",userInfo);
-
-    NSString *pushTitle = [userInfo objectForKey:@"title"];
-    NSString *description = [userInfo objectForKey:@"description"];
-    
-    if (application.applicationState == UIApplicationStateActive) {
-        // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:pushTitle
-                                                            message:description
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-    [application setApplicationIconBadgeNumber:0];
-    
-    [BPush handleNotification:userInfo];
-    
+    UIApplicationState state = application.applicationState;
+    NSLog(@"sate = %zi",state);
+    NSLog(@"notification = %@",notification);
 }
 
 
@@ -196,15 +152,16 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
-    //百度云推送
-    [BPush setupChannel:launchOptions];
-    [BPush setDelegate:self];
+    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@",@"546454f4"];
+    [IFlySpeechUtility createUtility:initString];
     
     [application setApplicationIconBadgeNumber:0];
 #if SUPPORT_IOS8
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
         UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
@@ -286,6 +243,7 @@ NSString *strUserId = @"";
     [PhoneHelper sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushChatViewController:) name:@"pushChatView" object:nil];
     
     mainQueue = [[NSOperationQueue alloc] init] ;
     [self.mainQueue setMaxConcurrentOperationCount:30];
@@ -355,15 +313,40 @@ NSString *strUserId = @"";
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     //程序进入后台时将xmpp下线
-    [self goOffline];
+//    [self goOffline];
+    //程序进入后台保持连接
+    UIApplication*   app = [UIApplication sharedApplication];
+    __block    UIBackgroundTaskIdentifier bgTask;
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (bgTask != UIBackgroundTaskInvalid)
+            {
+                bgTask = UIBackgroundTaskInvalid;
+            }
+        });
+    });
+    NSLog(@"applicationDidEnterBackground");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self reConnect];
-    [self queryRoster];
+   [self reConnect];
+   [self queryRoster];
     
+    NSLog(@"applicationWillEnterForeground");
+}
 
+-(void)pushChatViewController:(NSNotification *)chatView
+{
+    self.pushChatView = chatView.object;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -371,8 +354,15 @@ NSString *strUserId = @"";
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
     [self reConnect];
     [self queryRoster];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
+    NSLog(@"self.pushChatView = %@",self.pushChatView);
+    if ([self.pushChatView isEqualToString:@"push"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
 
+    }
+    NSLog(@"applicationDidBecomeActive");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -382,8 +372,8 @@ NSString *strUserId = @"";
         [self.db close];
     }
     
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 #pragma mark - Xmpp初始化
 - (void)setupStream
@@ -678,20 +668,20 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
-//    NSLog(@"presence = %@",presence);
-    //    //取得好友状态
-        NSString *presenceType = [presence type]; //online/offline
-//        //当前用户
-//        NSString *userId = [[sender myJID] user];
-//        NSLog(@"请求的用户userId = %@",userId);
-//        //在线用户
-//        NSString *presenceFromUser = [[presence from] user];
-//        NSLog(@"presenceFromUser = %@",presenceFromUser);
-       //在线状态
-        if ([presenceType isEqualToString:@"unavailable"])
-        {
-           [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
-        }
+   //取得好友状态
+    NSString *presenceType = [presence type];
+   //在线状态
+    if ([presenceType isEqualToString:@"unavailable"])
+    {
+        self.isOnLine = @"unavailable";
+        NSLog(@"self.isOnLine = %@...........",self.isOnLine);
+       [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
+    }
+    else if ([presenceType isEqualToString:@"available"])
+    {
+        NSLog(@"self.isOnLine = %@...........",self.isOnLine);
+//        self.isOnLine = @"available";
+    }
 }
 
 - (void)disconnect

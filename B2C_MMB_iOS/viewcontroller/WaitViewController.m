@@ -174,6 +174,8 @@ double secondsCountDown =0;
     [self sendJoinRequest];
 }
 
+
+
 -(void)goBack
 {
     [timeCountTimer invalidate];
@@ -191,6 +193,10 @@ double secondsCountDown =0;
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
     }
     else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
+    {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+    }
+    else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
     {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
     }
@@ -456,6 +462,11 @@ double secondsCountDown =0;
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
            
         }
+        else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
+        {
+            [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+            
+        }
         else
         {
             [self.tabBarController setSelectedIndex:0];
@@ -474,6 +485,11 @@ double secondsCountDown =0;
     else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
     {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+    }
+    else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
+    {
+        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+        
     }
 }
 - (AppDelegate *)appDelegate

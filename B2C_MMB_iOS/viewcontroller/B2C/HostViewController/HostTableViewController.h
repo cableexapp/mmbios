@@ -11,8 +11,9 @@
 #import "HostSection1TableViewCell.h"
 #import "DCFConnectionUtil.h"
 #import "DCFColorUtil.h"
+#import "ZSYPopoverListView.h"
 
-@interface HostTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,EScrollerViewDelegate,HostSection1BtnClick,ConnectionDelegate>
+@interface HostTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,EScrollerViewDelegate,HostSection1BtnClick,ConnectionDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate,UIAlertViewDelegate>
 {
     DCFConnectionUtil *conn;
     EScrollerView *es;

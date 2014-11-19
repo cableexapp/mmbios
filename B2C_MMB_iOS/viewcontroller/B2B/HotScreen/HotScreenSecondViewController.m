@@ -180,6 +180,8 @@
 
 - (void) textViewDidChange:(UITextView *)textView
 {
+    
+    NSLog(@"2222");
     if(self.myTextView.text.length == 0)
     {
         [self.textViewLabel setHidden:NO];

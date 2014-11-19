@@ -20,6 +20,7 @@
 #import "HotScreenFirstViewController.h"
 #import "SearchViewController.h"
 #import "MCDefine.h"
+#import "ChatViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -34,6 +35,8 @@
     UIStoryboard *sb;
     
     NSMutableArray *typeIdArray;
+    
+    ZSYPopoverListView *listView;
 }
 @end
 
@@ -52,16 +55,13 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    //    if(searchBar)
-    //    {
-    //        [searchBar resignFirstResponder];
-    //    }
-    
+    [self setHidesBottomBarWhenPushed:NO];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101)
         {
             [view setHidden:NO];
+            
         }
         if([view isKindOfClass:[UISearchBar class]])
         {
@@ -85,6 +85,7 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+//    [self.navigationController.tabBarController.tabBar setHidden:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
 }
 
@@ -112,7 +113,6 @@
     //    NSString *msg = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"msg"]];
     if(URLTag == URLGetProductTypeTag)
     {
-
         if(result == 1)
         {
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
@@ -124,12 +124,9 @@
                 NSDictionary *dic = [[dicRespon objectForKey:@"items"] objectAtIndex:i];
                 NSString  *typeName = [dic objectForKey:@"typeName"];
                 [dataArray addObject:typeName];
-                
                 NSString *typeId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"typeId"]];
                 [typeIdArray addObject:typeId];
             }
-            
-            
 #pragma mark - 数组里的字符串按长度重新排序
             typeArray = [dataArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                 NSUInteger len0 = [(NSString *)obj1 length];
@@ -170,12 +167,11 @@
     }
 }
 
-
 - (void) typeBtnClick:(UIButton *) sender
 {
     UIButton *btn = (UIButton *) sender;
     int tag = [btn tag];
-    
+    NSLog(@"tag = %d",tag);
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = btn.titleLabel.text;
@@ -260,7 +256,13 @@
                      @"装潢明线",
                      @"电源连接线",
                      @"",nil];
-    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
+}
+
+-(void)goToChatView:(NSNotification *)goToChat
+{
+    ChatViewController *chatVC = [[ChatViewController alloc] init];
+    [self presentViewController:chatVC animated:YES completion:nil];
 }
 
 - (void) section1BtnClick:(UIButton *) sender
@@ -396,6 +398,14 @@
         SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
         [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
     }
+    if(btn.tag == 1)
+    {
+        listView = [[ZSYPopoverListView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-50,250)];
+        listView.titleName.text = @"选择一级分类";
+        listView.datasource = self;
+        listView.delegate = self;
+        [listView show];
+    }
     if(btn.tag == 2)
     {
        [self setHidesBottomBarWhenPushed:YES];
@@ -437,10 +447,57 @@
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:chatVC animated:NO];
     }
+    if (btn.tag == 7)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"友情提示"
+                                                            message:@"系统将拨打400客服电话，是否确认？"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"拨打", nil];
+        [alertView show];
+    }
     [self setHidesBottomBarWhenPushed:NO];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        NSString *tel = [NSString stringWithFormat:@"tel://%@",@"4008280188"];
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tel]];
+    }
+}
 
+- (NSInteger)popoverListView:(ZSYPopoverListView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+
+    return typeArray.count;
+}
+
+- (UITableViewCell *)popoverListView:(ZSYPopoverListView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        static NSString *identifier = @"identifier";
+        UITableViewCell *cell = [tableView dequeueReusablePopoverCellWithIdentifier:identifier];
+        if (nil == cell)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        }
+    
+        cell.textLabel.text = typeArray[indexPath.row];
+        return cell;
+}
+
+- (void)popoverListView:(ZSYPopoverListView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [listView dismiss];
+    [self setHidesBottomBarWhenPushed:YES];
+    CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
+    cableSecondAndThirdStepViewController.myTitle = typeArray[indexPath.row];
+    cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:cableSecondAndThirdStepViewController animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
+}
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

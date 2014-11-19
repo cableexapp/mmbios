@@ -35,7 +35,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101)
@@ -75,15 +75,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"开始询价"];
+    top.font = [UIFont systemFontOfSize:19];
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
     
+    NSLog(@"self.myTitle+++++++++ = %@",self.myTitle);
+     NSLog(@"self.typeId+++++++++ = %@",self.typeId);
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"搜索" forState:UIControlStateNormal];
-    [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn setFrame:CGRectMake(0, 0, 50, 40)];
     [btn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];

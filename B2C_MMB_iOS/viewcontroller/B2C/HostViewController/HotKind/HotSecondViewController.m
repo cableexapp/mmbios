@@ -59,11 +59,9 @@
     self.navigationItem.titleView = top;
     [super viewDidLoad];
     
-//    [self.PhoneNumber resignFirstResponder];
    [self.view endEditing:YES];
     
-//    [field setDelegate:self];
-    
+    self.secondTextView.delegate = self;
 //    数据加载到文本框
     NSString *str = @"";
     for (NSDictionary *aDic in upArray) {
@@ -71,23 +69,37 @@
     }
     [self.markView setText:str];
     
+    [self.PhoneNumber addTarget:self action:@selector(textViewDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
+    [self.PhoneNumber addTarget:self action:@selector(textViewDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    self.view.frame =CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
 }
 
 
+- (void)textViewDidBeginEditing:(UITextField *)textView
+{
+    CGRect frame = textView.frame;
+    int offset = frame.origin.y + 60 - (self.view.frame.size.height-236.0);
+    NSTimeInterval animationDuration=0.30f;
+    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+    [UIView setAnimationDuration:animationDuration];
+    if (offset > 0)
+    {
+        self.view.frame=CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+        [UIView commitAnimations];
+    }
+}
 
 // 隐藏键盘
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-//    [self.PhoneNumber resignFirstResponder];
-//    [self.markView resignFirstResponder];
+
     [self.view endEditing:YES];
- [self.PhoneNumber resignFirstResponder];
-
+    [self.PhoneNumber resignFirstResponder];
 }
-
-- (IBAction)phoneText:(id)sender
-{
- }
 
 - (NSString *) getMemberId
 {
@@ -98,11 +110,9 @@
     {
         LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
         [self presentViewController:loginNavi animated:YES completion:nil];
-        
     }
     return memberid;
 }
-
 
 - (NSString *) getUserName
 {
@@ -122,11 +132,6 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != 0) return;
-    
-
-    
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -163,20 +168,18 @@
 }
 
 
-
 - (IBAction)submitNews:(UIButton *)sender {
     
     if(sender == self.submit)
     {
         [self.PhoneNumber resignFirstResponder];
     }
-    
-    
     if(self.PhoneNumber.text.length == 0)
     {
         [DCFStringUtil showNotice:@"手机号码不能为空"];
         return;
     }
+    
     if([DCFCustomExtra validateMobile:self.PhoneNumber.text] == NO)
     {
         [DCFStringUtil showNotice:@"请输入正确的手机号码"];
@@ -200,36 +203,20 @@
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
-
-//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"请登陆后再提交" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//    [sheet showInView:self.view];
-    
 }
 
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+//textview文本框里的备注
+- (void) textViewDidChange:(UITextView *)textView
 {
-    NSLog(@"111111");
-    if ([text isEqualToString:@"\n"]) {//检测到“完成”
-        [textView resignFirstResponder];//释放键盘
-        return NO;
+ 
+    if(self.secondTextView.text.length == 0)
+    {
+        [self.labelText setHidden:NO];
     }
-    if (_secondTextView.text.length==0){//textview长度为0
-        if ([text isEqualToString:@""]) {//判断是否为删除键
-            _labelText.hidden=NO;//隐藏文字
-        }else{
-            _labelText.hidden=YES;
-        }
-    }else{//textview长度不为0
-        if (_secondTextView.text.length==1){//textview长度为1时候
-            if ([text isEqualToString:@""]) {//判断是否为删除键
-                _labelText.hidden=NO;
-            }else{//不是删除
-                _labelText.hidden=YES;
-            }
-        }else{//长度不为1时候
-            _labelText.hidden=YES;
-        }
+    else
+    {
+        [self.labelText setHidden:YES];
     }
-    return YES;
+    
 }
 @end

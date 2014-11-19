@@ -10,7 +10,7 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "HotKindFirstViewController.h"
-
+#import "ChatListViewController.h"
 
 
 @interface HotThirdViewController ()
@@ -75,6 +75,22 @@
     [av show];
 
     
+}
+
+- (IBAction)clickAsk:(id)sender
+{
+    NSLog(@"热门分类");
+#pragma mark - 在线客服
+    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+    chatVC.fromString = @"热门分类在线客服";
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type =  kCATransitionMoveIn;
+    transition.subtype =  kCATransitionFromTop;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:chatVC animated:NO];
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

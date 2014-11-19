@@ -129,8 +129,6 @@ int flagPage = 0;
     
     //接收分组列表
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (memberGroupList:) name:@"memberGroupName" object:nil];
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -293,14 +291,15 @@ int flagPage = 0;
     }
     else if([self.fromString isEqualToString:@"热门型号在线咨询"])
     {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if([self.fromString isEqualToString:@"热门分类在线客服"])
+    {
+         [self.navigationController popViewControllerAnimated:YES];
     }
     else
     {
         [self.tabBarController setSelectedIndex:0];
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-//        [self.navigationController popViewControllerAnimated:YES];
-//        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -340,10 +339,17 @@ int flagPage = 0;
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
         view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
         [cell.contentView addSubview:view];
-        cell.textLabel.textColor = [UIColor blackColor];
-        cell.backgroundColor = [UIColor colorWithRed:250.0/255 green:250.0/255 blue:250.0/255 alpha:1.0];
-        cell.textLabel.font = [UIFont systemFontOfSize:16];
-        cell.textLabel.text = [NSString stringWithFormat:@"%@",self.tempArray[indexPath.row]];
+        
+        UIImageView *groupView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 14.5, 36, 36)];
+        groupView.image = [UIImage imageNamed:@"icon02"];
+        groupView.backgroundColor = [UIColor clearColor];
+        [cell addSubview:groupView];
+        
+        UILabel *cellText = [[UILabel alloc] initWithFrame:CGRectMake(55, 5, self.view.frame.size.width-55, 50)];
+        cellText.text = [[[NSString stringWithFormat:@"%@",self.tempArray[indexPath.row]] componentsSeparatedByString:@"@"] objectAtIndex:0];
+        cellText.font = [UIFont systemFontOfSize:16];
+        cellText.backgroundColor = [UIColor clearColor];
+        [cell addSubview:cellText];
     }
     return cell;
 }

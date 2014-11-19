@@ -17,5 +17,7 @@
 //咨询电话
 - (IBAction)taPhone:(id)sender;
 
+- (IBAction)clickAsk:(id)sender;
+
 
 @end

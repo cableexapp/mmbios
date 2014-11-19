@@ -13,6 +13,8 @@
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
 #import "UIViewController+AddPushAndPopStyle.h"
+#import "DCFStringUtil.h"
+
 
 
 
@@ -22,6 +24,7 @@
 {
     NSMutableArray *dataArray;
     NSMutableArray *selectArray;
+    UIView *backView;
 }
 
 
@@ -68,7 +71,7 @@
     self.opend = NO;
     self.testSubTableView.hidden = YES;
     self.selectView.hidden = YES;
-     self.clearBtn.hidden = YES;
+    self.clearBtn.hidden = YES;
     
     //每个界面都要加这句话
     [self pushAndPopStyle];
@@ -79,13 +82,8 @@
     self.navigationItem.titleView = top;
     [super viewDidLoad];
 
-    
-    
-    
     //读取plist文件
     NSString *filePath = [[NSString alloc] initWithFormat:@"%@",[[NSBundle mainBundle] pathForResource:@"Hotpst" ofType:@"plist"]];
-
-    
     dataArray = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
     if(_testTableView)
     {
@@ -94,6 +92,22 @@
       selectArray = [NSMutableArray arrayWithCapacity:dataArray.count];
      [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, 0)];
     self.testSubTableView.hidden = YES;
+    
+    // 设置按钮内部的imageView的内容模式为居中
+    self.triangleBtn.imageView.contentMode = UIViewContentModeCenter;
+    // 超出边框的内容不需要裁剪
+    self.triangleBtn.imageView.clipsToBounds = NO;
+    
+   
+    self.testTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    
+    backView = [[UIView alloc] init];
+    backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
+    backView.hidden = YES;
+    backView.backgroundColor = [UIColor lightGrayColor];
+    [self.view insertSubview:backView aboveSubview:self.testTableView];
+    
     
 }
 
@@ -117,7 +131,6 @@
 {
     
     NSString *str;
-    
     if (tableView.tag == 33) {
         str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typePls"]];
     }
@@ -127,13 +140,10 @@
     }
     
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-    
-    
     if(size.height <= 30)
     {
         size = CGSizeMake(ScreenWidth-20, 30);
     }
-    
     return size.height+10;
     
 }
@@ -172,6 +182,10 @@
         [label setNumberOfLines:0];
         [cell.contentView addSubview:label];
         label.textAlignment = NSTextAlignmentCenter;
+//        
+//        cell.textLabel.text = str;
+//        cell.textLabel.font = [UIFont systemFontOfSize:13];
+//        cell.textLabel.textAlignment = 1;
 
         return cell;
         
@@ -192,54 +206,175 @@
         NSString *str = [NSString stringWithFormat:@"%@",[[selectArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
         [cell.textLabel setText:str];
         [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
-//        cell.textAlignment = UITextAlignmentCenter;
-
-
-        
-
+        cell.textLabel.textAlignment = 1;
         return cell;
     }
     
 }
 
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+
     
-    if (tableView.tag == 33) {
+    NSLog(@"indexPath = %zi",indexPath.row);
+    if (tableView.tag == 33)
+    {
+        self.testTableView.frame = CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-88);
         self.selectView.hidden = NO;
         self.clearBtn.hidden = NO;
         [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
         [dataArray removeObjectAtIndex:indexPath.row];
-    }else{
-    
-        [dataArray addObject:[selectArray objectAtIndex:indexPath.row]];
-        [selectArray removeObjectAtIndex:indexPath.row];
     }
-    
-    
-    
     [_testTableView reloadData];
     [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
-    if (selectArray.count == 0) {
-        _testSubTableView.hidden = YES;
-        _testTableView.userInteractionEnabled = YES;
-        self.selectView.hidden = YES;
-     }
-  
-    
-    if (self.isOpened) {
+
+    if (self.isOpened)
+    {
         [_testSubTableView reloadData];
-
-
         //设置是控制tableview的最大高度
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
 
     }
 }
+
+
+#pragma mark - 展开已选按钮
+- (IBAction)typeBtn:(id)sender
+{
+//类型转换
+//UIButton *button = (UIButton * ) sender;
+
+ if ( _opend )
+    {
+        backView.hidden = YES;
+        self.opend = NO;
+        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);
+        _testTableView.userInteractionEnabled = YES;
+        _testSubTableView.hidden = YES;
+
+}else
+    
+    {
+        backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
+        backView.alpha = 0.7;
+        backView.hidden = NO;
+        
+        self.opend = YES;
+        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);
+
+        _testSubTableView.hidden = NO;
+//      未选列表不能选中
+        _testTableView.userInteractionEnabled = NO;
+        
+        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
+        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
+        
+       
+        
+        [_testSubTableView reloadData];
+
+    }
+    
+}
+
+
+#pragma mark - 清空按钮
+- (IBAction)clearBtn:(id)sender
+{
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"您确定要清空吗？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+      [sheet showInView:self.view];
+    
+}
+
+#pragma mark - 提交
+- (IBAction)clickSubmit:(id)sender
+{
+    //   隐藏底部
+    [self setHidesBottomBarWhenPushed:YES];
+    if (selectArray.count == 0) {
+        [DCFStringUtil showNotice:@"请选择分类"];
+    }else{
+            HotSecondViewController *secCtr = [self.storyboard instantiateViewControllerWithIdentifier:@"hotSecondViewController"];
+            secCtr.upArray = selectArray;
+            [self.navigationController pushViewController:secCtr animated:YES];
+}
+}
+
+
+#pragma mark - actionsheet的代理方法
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != 0) return;
+    self.opend = NO;
+    backView.hidden = YES;
+    self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+    self.selectView.hidden = YES;
+
+    _testSubTableView.hidden = YES;
+    _testTableView.userInteractionEnabled = YES;
+    [_testSubTableView setFrame:CGRectMake(_testSubTableView.frame.origin.x, _testSubTableView.frame.origin.y, _testSubTableView.frame.size.width, 0)];
+    [dataArray addObjectsFromArray:selectArray];
+    [selectArray removeAllObjects];
+    [_testTableView reloadData];
+    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCellEditingStyle result = UITableViewCellEditingStyleNone;//默认没有编辑风格
+    if ([tableView isEqual:self.testSubTableView])
+    {
+        result = UITableViewCellEditingStyleDelete;      //设置编辑风格为删除风格
+    }
+    return result;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView.tag == 33)
+    {
+        self.selectView.hidden = NO;
+        self.clearBtn.hidden = NO;
+        [selectArray addObject:[dataArray objectAtIndex:indexPath.row]];
+        [dataArray removeObjectAtIndex:indexPath.row];
+        
+    }
+    else
+    {
+        [dataArray addObject:[selectArray objectAtIndex:indexPath.row]];
+        [selectArray removeObjectAtIndex:indexPath.row];
+    }
+    [_testTableView reloadData];
+    
+    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
+        if (selectArray.count == 0)
+       {
+           self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+           backView.hidden = YES;
+           _testSubTableView.hidden = YES;
+           _testTableView.userInteractionEnabled = YES;
+           self.selectView.hidden = YES;
+        }
+    
+    if (self.isOpened)
+    {
+        [_testSubTableView reloadData];
+        _testSubTableView.hidden = NO;
+        
+        //设置是控制tableview的最大高度
+        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
+        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
+    }
+}
+
 
 
 
@@ -259,81 +394,4 @@
 }
 
 
-
-
-#pragma mark - 展开已选按钮
-- (IBAction)typeBtn:(id)sender
-{
-//类型转换
-//UIButton *button = (UIButton * ) sender;
- 
-if ( _opend )
-    {
-        
-        self.opend = NO;
-    
-      _testTableView.userInteractionEnabled = YES;
-        _testSubTableView.hidden = YES;
-
-}else
-    
-    {
-        self.opend = YES;
-     
-        _testSubTableView.hidden = NO;
-//      未选列表不能选中
-        _testTableView.userInteractionEnabled = NO;
-        float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
-        [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
-        [_testSubTableView reloadData];
-
-    }
-    
-}
-
-
-#pragma mark - 清空按钮
-- (IBAction)clearBtn:(id)sender
-{
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"您确定要清空吗？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [sheet showInView:self.view];
-    
-}
-
-#pragma mark - 提交
-- (IBAction)clickSubmit:(id)sender
-{
-    //   隐藏底部
-    [self setHidesBottomBarWhenPushed:YES];
-    HotSecondViewController *secCtr = [self.storyboard instantiateViewControllerWithIdentifier:@"hotSecondViewController"];
-    secCtr.upArray = selectArray;
-    [self.navigationController pushViewController:secCtr animated:YES];
-    
-}
-
-
-#pragma mark - actionsheet的代理方法
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != 0) return;
-    self.opend = NO;
-    self.selectView.hidden = YES;
-
-    _testSubTableView.hidden = YES;
-    _testTableView.userInteractionEnabled = YES;
-    [_testSubTableView setFrame:CGRectMake(_testSubTableView.frame.origin.x, _testSubTableView.frame.origin.y, _testSubTableView.frame.size.width, 0)];
-    
-    [dataArray addObjectsFromArray:selectArray];
-    [selectArray removeAllObjects];
-    [_testTableView reloadData];
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
-}
-
-- (IBAction)deleteTab:(UIButton *)sender
-{
-    
-    
-    
-
-}
 @end

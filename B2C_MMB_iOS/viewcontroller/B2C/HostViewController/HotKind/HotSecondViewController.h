@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 
-@interface HotSecondViewController : UIViewController<UIActionSheetDelegate,ConnectionDelegate,UITextFieldDelegate>
+@interface HotSecondViewController : UIViewController<UIActionSheetDelegate,ConnectionDelegate,UITextFieldDelegate,UITextViewDelegate>
 {
     DCFConnectionUtil *conn;
 }
@@ -25,13 +25,13 @@
 
 //提交信息
 - (IBAction)submitNews:(UIButton *)sender;
+
 @property (weak, nonatomic) IBOutlet UILabel *labelText;
 
 @property (weak, nonatomic) IBOutlet UITextView *secondTextView;
 
 
-//手机号码文本框
-- (IBAction)phoneText:(id)sender;
+
 
 
 

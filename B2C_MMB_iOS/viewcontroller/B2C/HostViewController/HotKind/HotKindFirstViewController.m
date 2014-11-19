@@ -144,10 +144,9 @@
         size = CGSizeMake(ScreenWidth-20, 30);
     }
     return size.height+10;
-    
 }
 
-#pragma mark - Tableview
+#pragma mark - Tableview填充数据
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == 33) {
@@ -166,9 +165,7 @@
         
         NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
         UILabel *label = [[UILabel alloc] init];
-        
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
-        
         if(size.height <= 30)
         {
             size = CGSizeMake(cell.contentView.frame.size.width-20, 30);
@@ -176,7 +173,7 @@
         [label setFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-20, size.height)];
         [label setText:str];
         [label setFont:[UIFont systemFontOfSize:13]];
-//        [label setNumberOfLines:0];
+        [label setNumberOfLines:0];
         [cell.contentView addSubview:label];
         label.textAlignment = NSTextAlignmentCenter;
        
@@ -259,12 +256,10 @@
         _testTableView.userInteractionEnabled = YES;
         self.selectView.hidden = YES;
     }
-    
     if (self.isOpened)
     {
         [_testSubTableView reloadData];
         _testSubTableView.hidden = NO;
-        
         //设置是控制tableview的最大高度
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
@@ -283,8 +278,6 @@
 }
 
 
-
-
 #pragma mark - 展开已选按钮
 - (IBAction)typeBtn:(id)sender
 {
@@ -297,7 +290,7 @@ if ( _opend )
         self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);  //三角按钮旋转
         _testTableView.userInteractionEnabled = YES;
         _testSubTableView.hidden = YES;
-      }
+    }
    else
        {
         self.opend = YES;

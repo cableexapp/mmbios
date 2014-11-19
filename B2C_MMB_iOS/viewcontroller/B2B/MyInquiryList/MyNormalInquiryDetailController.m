@@ -35,16 +35,13 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"询价单详情"];
     self.navigationItem.titleView = top;
-    
     [self pushAndPopStyle];
-    
     MyInquiryDetailTableViewController *tv = [self.storyboard instantiateViewControllerWithIdentifier:@"myInquiryDetailTableViewController"];
     tv.myInquiryid = self.myInquiryid;
     tv.addressDic = [[NSDictionary alloc] initWithDictionary:self.myDic];
     tv.view.frame = self.tableBackView.bounds;
     [self addChildViewController:tv];
     [self.tableBackView addSubview:tv.view];
-    
     CGSize size_order;
     if(self.myOrderNum.length == 0 || [self.myOrderNum isKindOfClass:[NSNull class]])
     {

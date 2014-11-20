@@ -312,6 +312,7 @@
 		61CCBCE519CFFF150008A46B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDF19CFFF150008A46B /* Icon.png */; };
 		61CCBCE619CFFF150008A46B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE019CFFF150008A46B /* Icon@2x.png */; };
 		61CCBCE819D00C880008A46B /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE719D00C880008A46B /* star.png */; };
+		61CD8CFB1A1D959F003C75F8 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CD8CF81A1D959F003C75F8 /* libMobClickLibrary.a */; };
 		61D6698119FE1D5300908016 /* LogisticsTrackingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6698019FE1D5300908016 /* LogisticsTrackingTableViewCell.m */; };
 		61DF89D319FB83E400D47430 /* B2CGoodsFastPicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF89D219FB83E400D47430 /* B2CGoodsFastPicData.m */; };
 		61DF89DF19FB8FCD00D47430 /* GoodsFastPicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF89DD19FB8FCD00D47430 /* GoodsFastPicTableViewCell.m */; };
@@ -1247,6 +1248,9 @@
 		61CCBCDF19CFFF150008A46B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		61CCBCE019CFFF150008A46B /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		61CCBCE719D00C880008A46B /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		61CD8CF81A1D959F003C75F8 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		61CD8CF91A1D959F003C75F8 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		61CD8CFA1A1D959F003C75F8 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		61D6697F19FE1D5300908016 /* LogisticsTrackingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsTrackingTableViewCell.h; sourceTree = "<group>"; };
 		61D6698019FE1D5300908016 /* LogisticsTrackingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsTrackingTableViewCell.m; sourceTree = "<group>"; };
 		61DF89D119FB83E400D47430 /* B2CGoodsFastPicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGoodsFastPicData.h; sourceTree = "<group>"; };
@@ -1841,6 +1845,7 @@
 				6181A55F19CFC6EF000E2D14 /* libstdc++.dylib in Frameworks */,
 				8B2821501A1492D700060534 /* iflyMSC.framework in Frameworks */,
 				6181A55D19CFC6E6000E2D14 /* libresolv.dylib in Frameworks */,
+				61CD8CFB1A1D959F003C75F8 /* libMobClickLibrary.a in Frameworks */,
 				6181A55B19CFC6DB000E2D14 /* MobileCoreServices.framework in Frameworks */,
 				6181A55919CFC6C7000E2D14 /* CoreLocation.framework in Frameworks */,
 				6181A55719CFC6BD000E2D14 /* Social.framework in Frameworks */,
@@ -2544,6 +2549,7 @@
 		6181A41819CFC4C2000E2D14 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				61CD8CF71A1D9574003C75F8 /* UMeng */,
 				8B89E1DD1A1B202E00AA33C2 /* PopListView */,
 				8B89E1C71A1B079000AA33C2 /* Search */,
 				8BC2AD8E1A19F0E100E44BC2 /* LibBPush */,
@@ -3098,6 +3104,16 @@
 				61CCBCE019CFFF150008A46B /* Icon@2x.png */,
 			);
 			path = icon;
+			sourceTree = "<group>";
+		};
+		61CD8CF71A1D9574003C75F8 /* UMeng */ = {
+			isa = PBXGroup;
+			children = (
+				61CD8CF81A1D959F003C75F8 /* libMobClickLibrary.a */,
+				61CD8CF91A1D959F003C75F8 /* MobClick.h */,
+				61CD8CFA1A1D959F003C75F8 /* MobClickSocialAnalytics.h */,
+			);
+			path = UMeng;
 			sourceTree = "<group>";
 		};
 		61DF89D019FB83E400D47430 /* B2CGoodsFastPicData */ = {
@@ -5122,6 +5138,7 @@
 					"$(PROJECT_DIR)/Tools/Vendor/libidn",
 					"$(PROJECT_DIR)/Tools/lib/sunflower",
 					"$(PROJECT_DIR)/Tools/LibBPush",
+					"$(PROJECT_DIR)/Tools/UMeng",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
@@ -5160,6 +5177,7 @@
 					"$(PROJECT_DIR)/Tools/Vendor/libidn",
 					"$(PROJECT_DIR)/Tools/lib/sunflower",
 					"$(PROJECT_DIR)/Tools/LibBPush",
+					"$(PROJECT_DIR)/Tools/UMeng",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

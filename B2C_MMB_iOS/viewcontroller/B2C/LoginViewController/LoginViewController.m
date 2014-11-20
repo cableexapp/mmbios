@@ -14,6 +14,7 @@
 #import "MCDefine.h"
 #import "DCFStringUtil.h"
 #import "AppDelegate.h"
+#import "FindBackSec_FirstViewController.h"
 
 @interface LoginViewController ()
 {
@@ -257,12 +258,21 @@
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
+            
+#pragma mark - 这里暂时写死数据
             NSString *phone = [NSString stringWithFormat:@"%@",[iems objectForKey:@"phone"]];
+//            NSString *phone = @"13921307054";
             [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"UserPhone"];
             
-            NSString *email = [NSString stringWithFormat:@"%@",[iems objectForKey:@"email"]];
+//            NSString *email = [NSString stringWithFormat:@"%@",[iems objectForKey:@"email"]];
+            NSString *email = @"cxboss405@163.com";
             [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"UserEmail"];
 
+            
+            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.tf_Account.text,@"registerAccount",self.tf_Secrect.text,@"registerSecrect", nil];
+            [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
+            
+            
             [self dismissViewControllerAnimated:YES completion:nil];
         }
     }
@@ -270,6 +280,21 @@
 
 - (IBAction)forgetBtnClick:(id)sender
 {
+    NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
+    NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
+    
+    
+    if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email == NULL || email == nil))
+    {
+        [DCFStringUtil showNotice:@"您尚未绑定任何设备,请联系客服"];
+        return;
+    }
+    else
+    {
+        FindBackSec_FirstViewController *findBackSec_FirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_FirstViewController"];
+        [self.navigationController pushViewController:findBackSec_FirstViewController animated:YES];
+    }
+
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField

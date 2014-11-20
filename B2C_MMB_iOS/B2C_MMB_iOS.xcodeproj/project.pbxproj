@@ -313,6 +313,8 @@
 		61CCBCE619CFFF150008A46B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE019CFFF150008A46B /* Icon@2x.png */; };
 		61CCBCE819D00C880008A46B /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCE719D00C880008A46B /* star.png */; };
 		61CD8CFB1A1D959F003C75F8 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CD8CF81A1D959F003C75F8 /* libMobClickLibrary.a */; };
+		61CD8D011A1DDA70003C75F8 /* ValidateForPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CD8D001A1DDA70003C75F8 /* ValidateForPhoneViewController.m */; };
+		61CD8D041A1DF279003C75F8 /* ValidateForEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CD8D031A1DF279003C75F8 /* ValidateForEmailViewController.m */; };
 		61D6698119FE1D5300908016 /* LogisticsTrackingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6698019FE1D5300908016 /* LogisticsTrackingTableViewCell.m */; };
 		61DF89D319FB83E400D47430 /* B2CGoodsFastPicData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF89D219FB83E400D47430 /* B2CGoodsFastPicData.m */; };
 		61DF89DF19FB8FCD00D47430 /* GoodsFastPicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DF89DD19FB8FCD00D47430 /* GoodsFastPicTableViewCell.m */; };
@@ -1251,6 +1253,10 @@
 		61CD8CF81A1D959F003C75F8 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		61CD8CF91A1D959F003C75F8 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		61CD8CFA1A1D959F003C75F8 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		61CD8CFF1A1DDA70003C75F8 /* ValidateForPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidateForPhoneViewController.h; sourceTree = "<group>"; };
+		61CD8D001A1DDA70003C75F8 /* ValidateForPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidateForPhoneViewController.m; sourceTree = "<group>"; };
+		61CD8D021A1DF279003C75F8 /* ValidateForEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidateForEmailViewController.h; sourceTree = "<group>"; };
+		61CD8D031A1DF279003C75F8 /* ValidateForEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidateForEmailViewController.m; sourceTree = "<group>"; };
 		61D6697F19FE1D5300908016 /* LogisticsTrackingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsTrackingTableViewCell.h; sourceTree = "<group>"; };
 		61D6698019FE1D5300908016 /* LogisticsTrackingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsTrackingTableViewCell.m; sourceTree = "<group>"; };
 		61DF89D119FB83E400D47430 /* B2CGoodsFastPicData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGoodsFastPicData.h; sourceTree = "<group>"; };
@@ -2878,6 +2884,10 @@
 		61B7104019FF3B53001CC3BD /* FindBackSecrect */ = {
 			isa = PBXGroup;
 			children = (
+				61CD8CFF1A1DDA70003C75F8 /* ValidateForPhoneViewController.h */,
+				61CD8D001A1DDA70003C75F8 /* ValidateForPhoneViewController.m */,
+				61CD8D021A1DF279003C75F8 /* ValidateForEmailViewController.h */,
+				61CD8D031A1DF279003C75F8 /* ValidateForEmailViewController.m */,
 				61B7104119FF3B53001CC3BD /* FindBack_ThirdViewController.h */,
 				61B7104219FF3B53001CC3BD /* FindBack_ThirdViewController.m */,
 				61B7104319FF3B53001CC3BD /* FindBackSec_FirstViewController.h */,
@@ -4662,6 +4672,7 @@
 				8BC2ADA31A19F0E100E44BC2 /* JSONKit.m in Sources */,
 				616D7A0019E62DFC00D7A357 /* B2CUpOrderData.m in Sources */,
 				61E65DD81A16F96300E22E2E /* AddInvoiceViewController.m in Sources */,
+				61CD8D011A1DDA70003C75F8 /* ValidateForPhoneViewController.m in Sources */,
 				6195F5F61A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m in Sources */,
 				8BA7C2B71A10A8DD00758B0F /* XMPPvCardTempModule.m in Sources */,
 				8BA7C2D11A10A8DD00758B0F /* XMPPMessage+XEP_0224.m in Sources */,
@@ -4885,6 +4896,7 @@
 				8BA7C2CA1A10A8DD00758B0F /* XMPPMessage+XEP_0184.m in Sources */,
 				61B710D319FF3B53001CC3BD /* SecondStepViewController.m in Sources */,
 				61551E8D1A0B4D21004F50FF /* B2BAskPriceCarEditViewController.m in Sources */,
+				61CD8D041A1DF279003C75F8 /* ValidateForEmailViewController.m in Sources */,
 				6181A51019CFC4C2000E2D14 /* SDWebImageCompat.m in Sources */,
 				8BA7C2AE1A10A8DD00758B0F /* XMPPvCardCoreDataStorage.m in Sources */,
 				8BA7C28B1A10A8DD00758B0F /* NSNumber+XMPP.m in Sources */,

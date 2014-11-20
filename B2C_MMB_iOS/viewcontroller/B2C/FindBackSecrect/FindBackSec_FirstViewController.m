@@ -12,6 +12,9 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "FindBackSec_SecondViewController.h"
 #import "DCFCustomExtra.h"
+#import "ValidateForPhoneViewController.h"
+#import "ValidateForEmailViewController.h"
+#import "MCDefine.h"
 
 @interface FindBackSec_FirstViewController ()
 
@@ -37,15 +40,9 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"找回密码"];
     self.navigationItem.titleView = top;
     
-    UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
-    [nextBtn setTitleColor:[UIColor colorWithRed:21.0/255.0 green:100.0/255.0 blue:249.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [nextBtn setFrame:CGRectMake(100, 0, 50, 30)];
-    [nextBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    [nextBtn addTarget:self action:@selector(next:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:nextBtn];
-    self.navigationItem.rightBarButtonItem = right;
+    self.nextBtn.layer.borderColor = MYCOLOR.CGColor;
+    self.nextBtn.layer.borderWidth = 1.0f;
+    self.nextBtn.layer.cornerRadius = 5.0f;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
@@ -66,7 +63,7 @@
     return YES;
 }
 
-- (void) next:(UIButton *) sender
+- (IBAction)nextBtnClick:(id)sender
 {
     if([_tf_confirm isFirstResponder])
     {
@@ -83,58 +80,39 @@
     }
     
     [self push];
-//    for(int i = 0;i < string.length; i++)
-//    {
-//        char c = [string characterAtIndex:i];
-//        if(c == '@')
-//        {
-//            NSLog(@"是邮箱");
-//            
-//            if([DCFCustomExtra isValidateEmail:string] == 0)
-//            {
-//                [DCFStringUtil showNotice:@"请输入正确的邮箱"];
-//                return;
-//            }
-//            else
-//            {
-//                [self push];
-//            }
-//        }
-//   
-//    }
-//    
-//    if(string.length <= 10 || string.length >= 12)
-//    {
-//        if([self isAllNum:string] == 1)
-//        {
-//            [DCFStringUtil showNotice:@"用户名不能为纯数字"];
-//            return;
-//        }
-//        else
-//        {
-//            [self push];
-//        }
-//   
-//    }
-//    else if (string.length == 11)
-//    {
-//        if([DCFCustomExtra validateMobile:string] == 0)
-//        {
-//            [DCFStringUtil showNotice:@"请输入正确的手机号码"];
-//            return;
-//        }
-//        else
-//        {
-//            [self push];
-//        }
-//    }
+}
+
+- (void) next:(UIButton *) sender
+{
+
 }
 
 
 - (void) push
 {
-    FindBackSec_SecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_SecondViewController"];
-    [self.navigationController pushViewController:second animated:YES];
+    NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
+    NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
+    phone = @"";
+    email = @"cxboss405@163.com";
+    //只绑定邮箱没有绑定手机进入邮箱验证界面
+     if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length != 0 || ![email isKindOfClass:[NSNull class]] || email != NULL || email != nil))
+    {
+        ValidateForEmailViewController *validateForEmailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"validateForEmailViewController"];
+        [self.navigationController pushViewController:validateForEmailViewController animated:YES];
+    }
+    //只绑定手机没绑定邮箱,进入手机安全验证界面
+    else if((phone.length != 0 || ![phone isKindOfClass:[NSNull class]] || phone != NULL || phone != nil) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email == NULL || email == nil))
+    {
+        ValidateForPhoneViewController *validateForPhoneViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"validateForPhoneViewController"];
+        [self.navigationController pushViewController:validateForPhoneViewController animated:YES];
+    }
+    //同时绑定了手机和邮箱进入找回密码界面
+    else
+    {
+        FindBackSec_SecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_SecondViewController"];
+        [self.navigationController pushViewController:second animated:YES];
+    }
+
 }
 
 - (void) tap:(UITapGestureRecognizer *) sender

@@ -46,7 +46,7 @@
     email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
    
 //    phone = @"13921307065";
-    email = @"306233304@qq.com";
+//    email = @"306233304@qq.com";
     
     [self.tableView reloadData];
 }

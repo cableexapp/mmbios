@@ -92,9 +92,6 @@
 
 - (void) searchTap:(UITapGestureRecognizer *) sender
 {
-//    ChooseListTableViewController *choose = [[ChooseListTableViewController alloc] init];
-//    [self setHidesBottomBarWhenPushed:YES];
-//    [self.navigationController pushViewController:choose animated:YES];
     SearchViewController *searchVC = [[SearchViewController alloc] init];
     [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:searchVC animated:YES];
@@ -110,7 +107,7 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
-    //    NSString *msg = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"msg"]];
+  
     if(URLTag == URLGetProductTypeTag)
     {
         if(result == 1)
@@ -142,10 +139,9 @@
                 UIButton *typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                 [typeBtn setFrame:CGRectZero];
                 [typeBtn setTitle:str forState:UIControlStateNormal];
-                [typeBtn setTitleColor:[UIColor colorWithRed:28.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-                typeBtn.layer.borderColor = [UIColor colorWithRed:28.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-                typeBtn.layer.borderWidth = 0.5f;
+                [typeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [typeBtn setTag:i];
+                typeBtn.titleLabel.font = [UIFont systemFontOfSize:16];
                 [typeBtn addTarget:self action:@selector(typeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 
                 //                UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:typeBtn.bounds byRoundingCorners:(UIRectCornerTopRight | UIRectCornerBottomRight) cornerRadii:CGSizeMake(5, 5)];
@@ -175,7 +171,35 @@
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = btn.titleLabel.text;
-    cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:tag];
+    if (typeArray.count == 5)
+    {
+        if (tag == 3)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:1];
+        }
+        else if (tag == 4)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:3];
+        }
+        else if (tag == 1)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:2];
+        }
+        else if (tag == 0)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:0];
+        }
+        else if (tag == 2)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:4];
+        }
+
+    }
+    else
+    {
+         cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:tag];
+    }
+   
     [self.navigationController pushViewController:cableSecondAndThirdStepViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -203,12 +227,12 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mmb" ofType:@"png"]];
-    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(4, 7, 100, 30)];
+    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-8, 0, 120,44)];
     [naviImageView setImage:naviimage];
     [naviImageView setTag:100];
     [self.navigationController.navigationBar addSubview:naviImageView];
     
-    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width + 10, naviImageView.frame.origin.y-2, 200, 30)];
+    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width-8 , naviImageView.frame.origin.y+7, self.view.frame.size.width-(naviImageView.frame.origin.x + naviImageView.frame.size.width+2), 30)];
     [searchImageView setUserInteractionEnabled:YES];
     [searchImageView setTag:101];
     searchImageView.backgroundColor = [UIColor whiteColor];
@@ -306,12 +330,20 @@
                     {
                         return 3;
                     }
+                    if (typeBtnArray.count == 5)
+                    {
+                        return 1;
+                    }
                 }
                 else  //3个按钮
                 {
-                    if(typeBtnArray.count <= 5)
+                    if(typeBtnArray.count < 5)
                     {
                         return 2;
+                    }
+                    if (typeBtnArray.count == 5)
+                    {
+                        return 1;
                     }
                     else
                     {
@@ -330,7 +362,7 @@
 {
     if(indexPath.section == 2)
     {
-        return 50;
+        return 103;
     }
     else if (indexPath.section == 0)
     {
@@ -356,21 +388,18 @@
         {
             return 0;
         }
-        return 30;
+        return 35;
     }
-    return 30;
+    return 35;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *headBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UIView *headBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 35)];
     [headBackView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-    
-    UIImageView *headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 20, 20)];
-    [headImageView setImage:[UIImage imageNamed:@"caLogo.png"]];
-    [headBackView addSubview:headImageView];
-    
-    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(headImageView.frame.origin.x + headImageView.frame.size.width + 10, headImageView.frame.origin.y, 200, 20)];
+
+    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake( 10, 0, 200, 35)];
+    headLabel.font = [UIFont systemFontOfSize:18];
     if(section == 3)
     {
         [headLabel setText:@"热门电缆"];
@@ -483,7 +512,7 @@
         {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         }
-    
+        cell.backgroundColor = [UIColor whiteColor];
         cell.textLabel.text = typeArray[indexPath.row];
         return cell;
 }
@@ -494,7 +523,34 @@
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = typeArray[indexPath.row];
-    cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:indexPath.row];
+    if (typeArray.count == 5)
+    {
+        if (indexPath.row == 3)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:1];
+        }
+        else if (indexPath.row == 4)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:3];
+        }
+        else if (indexPath.row == 1)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:2];
+        }
+        else if (indexPath.row == 0)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:0];
+        }
+        else if (indexPath.row == 2)
+        {
+            cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:4];
+        }
+        
+    }
+    else
+    {
+        cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:indexPath.row];
+    }
     [self.navigationController pushViewController:cableSecondAndThirdStepViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -569,9 +625,44 @@
             {
                 for(int i=0;i<2;i++)
                 {
-                    UIButton *btn = [typeBtnArray objectAtIndex:i];
-                    [btn setFrame:CGRectMake(ScreenWidth/2*i, 0, ScreenWidth/2, 50)];
+                    UIButton *btn;
+                    if (i == 0)
+                    {
+                        btn = [typeBtnArray objectAtIndex:3];
+                       [btn setFrame:CGRectMake(ScreenWidth/3*i+4, 4, ScreenWidth/3-3, 45.5)];
+                        btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:237.0/255.0 blue:232.0/255.0 alpha:1.0];
+                    }
+                    else
+                    {
+                         btn = [typeBtnArray objectAtIndex:4];
+                        [btn setFrame:CGRectMake( ScreenWidth/3*2+4, 4, ScreenWidth/3-6, 45.5)];
+                        btn.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:250.0/255.0 alpha:1.0];
+                    }
                     [cell.contentView addSubview:btn];
+                    
+                    for(int i=2;i<5;i++)
+                    {
+                        UIButton *btn;
+                        if (i == 3)
+                        {
+                             btn = [typeBtnArray objectAtIndex:0];
+                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 4, ScreenWidth/3-5, 95)];
+                            btn.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:245.0/255.0 blue:237.0/255.0 alpha:1.0];
+                        }
+                        else if(i == 2)
+                        {
+                            btn = [typeBtnArray objectAtIndex:1];
+                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 53, ScreenWidth/3-5, 45.5)];
+                            btn.backgroundColor = [UIColor colorWithRed:231.0/255.0 green:240.0/255.0 blue:255.0/255.0 alpha:1.0];
+                        }
+                        else if(i == 4)
+                        {
+                            btn = [typeBtnArray objectAtIndex:2];
+                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 53, ScreenWidth/3-5, 45.5)];
+                            btn.backgroundColor = [UIColor colorWithRed:254.0/255.0 green:246.0/255.0 blue:223.0/255.0 alpha:1.0];
+                        }
+                        [cell.contentView addSubview:btn];
+                    }
                 }
             }
             if(indexPath.row == 1)
@@ -584,6 +675,7 @@
                     
                     UIButton *b = [typeBtnArray objectAtIndex:3];
                     [b  setFrame:CGRectMake(btn.frame.origin.x + btn.frame.size.width, 0, ScreenWidth/2, 50)];
+                    [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                     [cell.contentView addSubview:b];
                     [cell.contentView addSubview:btn];
                 }
@@ -592,8 +684,18 @@
                     for(int i=2;i<5;i++)
                     {
                         UIButton *btn = [typeBtnArray objectAtIndex:i];
-                        [btn setFrame:CGRectMake(ScreenWidth/3*(i-2), 0, ScreenWidth/3, 49)];
+                        if (i == 3)
+                        {
+                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+3, 3, ScreenWidth/3-5, 49)];
+                        }
+                        else
+                        {
+                           [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+3, 3, ScreenWidth/3-5, 49)];
+                            [cell.contentView addSubview:btn];
+                        }
                         [cell.contentView addSubview:btn];
+                        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                        
                     }
                 }
             }
@@ -607,6 +709,7 @@
                     {
                         UIButton *b = [typeBtnArray objectAtIndex:i];
                         [b setFrame:CGRectMake(ScreenWidth/3*(i-4), 0, ScreenWidth/3, 49)];
+                        [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                         [cell.contentView addSubview:b];
                     }
                 }
@@ -616,6 +719,7 @@
                     {
                         UIButton *b = [typeBtnArray objectAtIndex:i];
                         [b setFrame:CGRectMake(ScreenWidth/2*(i-5), 0, ScreenWidth/2, 49)];
+                        [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                         [cell.contentView addSubview:b];
                     }
                 }
@@ -629,11 +733,7 @@
         [firstLabel setText:[listDataArray objectAtIndex:indexPath.row]];
         [firstLabel setFont:[UIFont systemFontOfSize:15]];
         [cell.contentView addSubview:firstLabel];
-        
-        
-        UIImageView *arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(290, 5, 20, 20)];
-        [arrowImageView setImage:[UIImage imageNamed:@"caLogo.png"]];
-        [cell.contentView addSubview:arrowImageView];
+
         
         for(int i = 0;i < 2; i++)
         {

@@ -37,6 +37,8 @@
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
+    
+    self.logOutBtn.backgroundColor = [UIColor blueColor];
 }
 
 - (void)didReceiveMemoryWarning

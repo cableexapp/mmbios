@@ -37,6 +37,7 @@
     NSMutableArray *typeIdArray;
     
     ZSYPopoverListView *listView;
+    NSArray *useArray;
 }
 @end
 
@@ -273,6 +274,8 @@
     
     moneyDataArray = [[NSArray alloc] initWithObjects:@"98",@"99",@"100",@"101",@"102",@"103",@"104",@"105",@"106",@"107", nil];
     
+    useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
+    
     listDataArray = [[NSArray alloc] initWithObjects:
                      @"照明/插座用线",
                      @"空调/热水器用线",
@@ -296,12 +299,16 @@
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 5;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section == 3)
+    {
+       
+    }
+    if(section == 4)
     {
         return textViewDataArray.count/2;
     }
@@ -373,6 +380,11 @@
         return 185;
         //        return 200;
     }
+    else if (indexPath.section == 3)
+    {
+        return 155;
+        
+    }
     return 260;
 }
 
@@ -402,7 +414,11 @@
     headLabel.font = [UIFont systemFontOfSize:18];
     if(section == 3)
     {
-        [headLabel setText:@"热门电缆"];
+        [headLabel setText:@"电线用途"];
+    }
+    else if(section == 4)
+    {
+        [headLabel setText:@"热门商品"];
     }
     else if (section == 2)
     {
@@ -563,7 +579,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:0];
-    }
+//    }
     if(indexPath.section == 0)
     {
         if(!es)
@@ -584,34 +600,6 @@
         }
         section1.delegate = self;
         return section1;
-        //        UIView *section_two = [[UIView alloc] initWithFrame:CGRectMake(5, 0, 310, 200)];
-        //        [section_two setBackgroundColor:[UIColor lightGrayColor]];
-        //        [cell.contentView addSubview:section_two];
-        //
-        //        for(int i=0;i<3;i++)
-        //        {
-        //            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        //            [btn setShowsTouchWhenHighlighted:NO];
-        //            switch (i) {
-        //                case 0:
-        //                    [btn setFrame:CGRectMake(10, 10, 145, 180)];
-        //                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_1.png"] forState:UIControlStateNormal];
-        //                    break;
-        //                case 1:
-        //                    [btn setFrame:CGRectMake(165, 10, 135, 60)];
-        //                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_2.png"] forState:UIControlStateNormal];
-        //                    break;
-        //                case 2:
-        //                    [btn setFrame:CGRectMake(165, 80, 135, 110)];
-        //                    [btn setBackgroundImage:[UIImage imageNamed:@"cell_3.png"] forState:UIControlStateNormal];
-        //                    break;
-        //                default:
-        //                    break;
-        //            }
-        //            [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        //            [btn setTag:i+10];
-        //            [section_two addSubview:btn];
-        //        }
     }
     if(indexPath.section == 2)
     {
@@ -635,7 +623,7 @@
                     else
                     {
                          btn = [typeBtnArray objectAtIndex:4];
-                        [btn setFrame:CGRectMake( ScreenWidth/3*2+4, 4, ScreenWidth/3-6, 45.5)];
+                        [btn setFrame:CGRectMake( ScreenWidth/3*2+4, 4, ScreenWidth/3-8, 45.5)];
                         btn.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:250.0/255.0 alpha:1.0];
                     }
                     [cell.contentView addSubview:btn];
@@ -658,7 +646,7 @@
                         else if(i == 4)
                         {
                             btn = [typeBtnArray objectAtIndex:2];
-                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 53, ScreenWidth/3-5, 45.5)];
+                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 53, ScreenWidth/3-8, 45.5)];
                             btn.backgroundColor = [UIColor colorWithRed:254.0/255.0 green:246.0/255.0 blue:223.0/255.0 alpha:1.0];
                         }
                         [cell.contentView addSubview:btn];
@@ -728,6 +716,111 @@
     }
     if(indexPath.section == 3)
     {
+        for (int i = 0; i < 3; i++)
+        {
+            UILabel *label = [[UILabel alloc] init];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            if (i == 0)
+            {
+                button.frame = CGRectMake(ScreenWidth/3*i+6, 5, ScreenWidth/3-6, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+            }
+            else if (i == 1)
+            {
+                button.frame = CGRectMake(ScreenWidth/3*i+6, 5, ScreenWidth/3-6, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+            }
+            else if (i == 2)
+            {
+                button.frame = CGRectMake(ScreenWidth/3*i+6, 5, ScreenWidth/3-12, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+            }
+            button.layer.borderWidth = 0.5;
+            button.titleLabel.textAlignment = NSTextAlignmentRight;
+            button.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            button.backgroundColor = [UIColor whiteColor];
+            [cell addSubview:button];
+            label.text = [useArray objectAtIndex:i];
+            label.backgroundColor = [UIColor clearColor];
+            label.font = [UIFont systemFontOfSize:13];
+            [button addSubview:label];
+            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
+            [button addSubview:imageView];
+        }
+        for (int i = 3; i < 6; i++)
+        {
+             UILabel *label = [[UILabel alloc] init];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            if (i == 3)
+            {
+                button.frame = CGRectMake(6, 55, ScreenWidth/3-6, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+            }
+            else if (i == 4)
+            {
+                button.frame = CGRectMake(ScreenWidth/3+6, 55, ScreenWidth/3-6, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+            }
+            else if (i == 5)
+            {
+                button.frame = CGRectMake(ScreenWidth/3*2+6, 55, ScreenWidth/3-12, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+            }
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            [cell addSubview:button];
+            label.text = [useArray objectAtIndex:i];
+            label.backgroundColor = [UIColor clearColor];
+            label.font = [UIFont systemFontOfSize:13];
+            [button addSubview:label];
+            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
+            [button addSubview:imageView];
+        }
+        for (int i = 6; i < 9; i++)
+        {
+            UILabel *label = [[UILabel alloc] init];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            if (i == 6)
+            {
+                button.frame = CGRectMake(6, 105, ScreenWidth/3-6, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+            }
+            else if (i == 7)
+            {
+                button.frame = CGRectMake(ScreenWidth/3+6, 105, ScreenWidth/3-6, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+            }
+            else
+            {
+                button.frame = CGRectMake(ScreenWidth/3*2+6, 105, ScreenWidth/3-12, 45);
+                label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
+                imageView.frame = CGRectMake(0, 2.5, 40, 40);
+                label.numberOfLines = 2;
+            }
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            [cell addSubview:button];
+            label.text = [useArray objectAtIndex:i];
+            label.backgroundColor = [UIColor clearColor];
+            label.font = [UIFont systemFontOfSize:13];
+            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
+            [button addSubview:imageView];
+            [button addSubview:label];
+        }
+    }
+    if(indexPath.section == 4)
+    {
         UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
         [firstLabel setTextAlignment:NSTextAlignmentLeft];
         [firstLabel setText:[listDataArray objectAtIndex:indexPath.row]];
@@ -737,7 +830,6 @@
         
         for(int i = 0;i < 2; i++)
         {
-            
             UIView *cabelShowView = [[UIView alloc] initWithFrame:CGRectMake(10 + 155*i,firstLabel.frame.origin.y + firstLabel.frame.size.height + 10, 145, 220)];
             [cabelShowView setBackgroundColor:[UIColor grayColor]];
             [cabelShowView setTag:2*indexPath.row + i ];
@@ -765,8 +857,8 @@
             [cabelShowView addSubview:moneyLabel];
         }
     }
-    
-    [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+     }
+//    [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
     return cell;
 }
 

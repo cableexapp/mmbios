@@ -362,8 +362,6 @@ NSString *strUserId = @"";
 {
     [self reConnect];
     [self queryRoster];
-    
-    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -371,8 +369,6 @@ NSString *strUserId = @"";
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
     [self reConnect];
     [self queryRoster];
-    
-    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

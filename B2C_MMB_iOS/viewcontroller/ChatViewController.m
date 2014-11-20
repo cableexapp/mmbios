@@ -251,8 +251,6 @@
 
 -(void)endChatConfrence
 {
-    NSLog(@"endChatConfrence");
-   
     [xmppRoom leaveRoom];
     [self.appDelegate goOffline];
     [self.appDelegate disconnect];
@@ -264,7 +262,6 @@
 -(void)goBackActionToHome
 {
     [self dismissViewControllerAnimated:NO completion:nil];
-    
     [self pageFromWhere];
     messagePush = 1;
 }
@@ -373,8 +370,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-     NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
-    
     [self checkNet];
     NSLog(@"self.fromStringFlag = %@",self.fromStringFlag);
     if ([[self appDelegate].xmppStream isDisconnected])
@@ -605,7 +600,7 @@
             NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
             if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
             {
-                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 在线客服]：%@",message];
+                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 首页客服]：%@",message];
             }
             else if ([self.fromStringFlag isEqualToString:@"来自快速询价客服"])
             {
@@ -619,7 +614,10 @@
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 热门分类]：%@",message];
             }
-//            NSString *stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：%@",message];
+            else
+            {
+                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 首页客服]：%@",message];
+            }
             [body setStringValue:stringLabel];
             NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
             [mes addAttributeWithName:@"type" stringValue:@"groupchat"];

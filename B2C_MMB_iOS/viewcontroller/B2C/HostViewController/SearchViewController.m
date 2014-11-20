@@ -103,7 +103,6 @@
             [view setHidden:YES];
         }
     }
-    
     [self readHistoryData];
     NSLog(@"viewWillAppear");
     
@@ -112,7 +111,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    [self readHistoryData];
+//    [self readHistoryData];
     NSLog(@"viewDidAppear");
 }
 
@@ -267,10 +266,10 @@
 {
     if (URLTag == URLSearchProductTypeTag)
     {
+         [self refreshTableView];
         if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"types"] count] != 0)
         {
             dataArray = [dicRespon objectForKey:@"types"];
-//            [self refreshTableView];
             [self.serchResultView reloadData];
             coverView.hidden = YES;
             [mySearchBar resignFirstResponder];
@@ -278,7 +277,6 @@
         else if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"] && [[dicRespon objectForKey:@"products"] count] != 0)
         {
             dataArray = [dicRespon objectForKey:@"products"];
-//            [self refreshTableView];
             coverView.hidden = YES;
             [self.serchResultView reloadData];
             [mySearchBar resignFirstResponder];
@@ -347,7 +345,7 @@
     [mySearchBar resignFirstResponder];
     //启动识别服务
     [_iflyRecognizerView start];
-    [self messageMusic];
+
 }
 
 -(void)messageMusic
@@ -424,20 +422,13 @@
     if ([tempType isEqualToString:@"1"])
     {
         [self SearchB2BDataFromDataBase];
-   
-//            [self SearchB2BDataFromDataBase];
-        
         dataArray = B2BhistoryArray;
     }
     else if ([tempType isEqualToString:@"2"])
     {
         [self SearchB2CDataFromDataBase];
-       
-//            [self SearchB2CDataFromDataBase];
-        
         dataArray = B2ChistoryArray;
     }
-//    [self refreshTableView];
     [self.serchResultView reloadData];
     [self refreshClearButton];
 }
@@ -549,25 +540,29 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dissMiss" object:nil];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0] isEqualToString:@"家装线专卖"])
     {
+        NSLog(@"家装线专卖");
         sectionBtnIv.frame = CGRectMake(72,17.5,10,10);
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
         tempType = @"2";
-//        [self SearchB2BDataFromDataBase];
+        [self refreshTableView];
+        [self readHistoryData];
+        [self refreshClearButton];
+        [self.serchResultView reloadData];
     }
     else
     {
+        NSLog(@"询价车");
         sectionBtnIv.frame = CGRectMake(68,17.5,10,10);
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"询价车" forState:UIControlStateNormal];
         tempType = @"1";
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
+    [self refreshTableView];
     [self readHistoryData];
-//    [self refreshTableView];
     [self refreshClearButton];
     [self.serchResultView reloadData];
-   
 }
 
 -(void)changeClick:(NSNotification *)viewChanged
@@ -603,7 +598,6 @@
         [clearBtn setFrame:CGRectMake((self.view.frame.size.width-230)/2,self.view.frame.size.height-42, 230, 35)];
         clearBtn.hidden = NO;
     }
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -638,7 +632,6 @@
     
     [self createDataBase_B2B];
     [self createDataBase_B2C];
-
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -664,45 +657,45 @@
         searchResultLabel.frame = CGRectMake(38, 5, cell.frame.size.width-38, 34);
         searchResultLabel.font = [UIFont systemFontOfSize:16];
         [cell addSubview:searchResultLabel];
-    }
-    
-    if ([imageFlag isEqualToString:@"1"])
-    {
-        searchImageView.image = [UIImage imageNamed:@"clock"];
-    }
-    else if ([imageFlag isEqualToString:@"0"])
-    {
-        searchImageView.image = [UIImage imageNamed:@"search"];
-    }
-    
-    if ([tempFlag isEqualToString:@"3"])
-    {
-        searchResultLabel.text = dataArray[indexPath.row];
-    }
-    else if ([tempFlag isEqualToString:@"4"])
-    {
-        coverView.hidden = YES;
-        if ([tempType isEqualToString:@"1"])
+        
+        if ([imageFlag isEqualToString:@"1"])
         {
-            if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"1"])
+            searchImageView.image = [UIImage imageNamed:@"clock"];
+        }
+        else if ([imageFlag isEqualToString:@"0"])
+        {
+            searchImageView.image = [UIImage imageNamed:@"search"];
+        }
+        
+        if ([tempFlag isEqualToString:@"3"])
+        {
+            searchResultLabel.text = dataArray[indexPath.row];
+        }
+        else if ([tempFlag isEqualToString:@"4"])
+        {
+            coverView.hidden = YES;
+            if ([tempType isEqualToString:@"1"])
             {
-                searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"1"])
+                {
+                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                }
+                else if([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"2"])
+                {
+                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"secondtype"];
+                }
+                else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
+                {
+                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
+                }
             }
-            else if([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"2"])
+            else if ([tempType isEqualToString:@"2"])
             {
-                searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"secondtype"];
-            }
-            else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
-            {
-                searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
+                searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"productName"];
             }
         }
-        else if ([tempType isEqualToString:@"2"])
-        {
-            searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"productName"];
-        }
     }
-    return cell;
+        return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

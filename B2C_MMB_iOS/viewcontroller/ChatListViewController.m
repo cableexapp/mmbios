@@ -55,7 +55,7 @@ int flagPage = 0;
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-    self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-147) style:UITableViewStylePlain];
+    self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
     self.memberTableView.dataSource = self;
     self.memberTableView.delegate = self;
     if (self.appDelegate.roster.count >= 7)
@@ -71,28 +71,28 @@ int flagPage = 0;
     self.memberTableView.separatorColor = [UIColor clearColor];
     [self.view addSubview:self.memberTableView];
     
-    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-140, self.view.frame.size.width, 2)];
+    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-150, self.view.frame.size.width, 2)];
     separatorView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
     [self.view insertSubview:separatorView atIndex:1];
     
-    UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-138, self.view.frame.size.width, 80)];
+    UIView *timeView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-148, self.view.frame.size.width, 90)];
     timeView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     [self.view insertSubview:timeView atIndex:1];
     
     UILabel *label1 = [[UILabel alloc] init];
-    label1.frame = CGRectMake(0,3, self.view.frame.size.width, 30);
+    label1.frame = CGRectMake(0,8, self.view.frame.size.width, 30);
     label1.text = @"人工客服时间";
     label1.textColor = [DCFColorUtil colorFromHexRGB:@"#666666"];
     label1.textAlignment = NSTextAlignmentCenter;
-    label1.font = [UIFont systemFontOfSize:16];
+    label1.font = [UIFont systemFontOfSize:18];
     [timeView addSubview:label1];
     
     UILabel *label2 = [[UILabel alloc] init];
-    label2.frame = CGRectMake(0, 35, self.view.frame.size.width, 30);
+    label2.frame = CGRectMake(0, 38, self.view.frame.size.width, 30);
     label2.text = @"09:00 - 21:00";
     label2.textColor = [DCFColorUtil colorFromHexRGB:@"#666666"];
     label2.textAlignment = NSTextAlignmentCenter;
-    label2.font = [UIFont systemFontOfSize:22];
+    label2.font = [UIFont systemFontOfSize:24];
     [timeView addSubview:label2];
     
     //自定义网络状态提示视图
@@ -164,7 +164,7 @@ int flagPage = 0;
         [self.appDelegate reConnect];
         [self.memberTableView removeFromSuperview];
         self.tempArray = self.appDelegate.roster;
-        self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-147) style:UITableViewStylePlain];
+        self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
         self.memberTableView.dataSource = self;
         self.memberTableView.delegate = self;
         if (self.appDelegate.roster.count >= 7)
@@ -232,7 +232,7 @@ int flagPage = 0;
 {
     [self.memberTableView removeFromSuperview];
     self.tempArray = memberList.object;
-    self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-147) style:UITableViewStylePlain];
+    self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
     self.memberTableView.dataSource = self;
     self.memberTableView.delegate = self;
     if (self.appDelegate.roster.count >= 7)

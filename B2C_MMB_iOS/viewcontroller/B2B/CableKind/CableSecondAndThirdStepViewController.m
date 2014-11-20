@@ -70,6 +70,7 @@
 - (void) searchBtnClick:(UIButton *) sender
 {
     NSLog(@"searchBtnClick");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad
@@ -82,9 +83,6 @@
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
-    
-    NSLog(@"self.myTitle+++++++++ = %@",self.myTitle);
-     NSLog(@"self.typeId+++++++++ = %@",self.typeId);
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:@"搜索" forState:UIControlStateNormal];

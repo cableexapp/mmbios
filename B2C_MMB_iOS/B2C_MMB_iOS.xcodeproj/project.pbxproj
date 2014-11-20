@@ -342,6 +342,10 @@
 		8B2821501A1492D700060534 /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B28214C1A1492D700060534 /* iflyMSC.framework */; };
 		8B2821511A1492D700060534 /* libSunFlower.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B28214F1A1492D700060534 /* libSunFlower.a */; };
 		8B2821551A14BA9200060534 /* PopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2821541A14BA9200060534 /* PopupView.m */; };
+		8B49698D1A1DB05E008C75DF /* board_system@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4969891A1DB05E008C75DF /* board_system@2x.png */; };
+		8B49698E1A1DB05E008C75DF /* board_emoji@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B49698A1A1DB05E008C75DF /* board_emoji@2x.png */; };
+		8B49698F1A1DB05E008C75DF /* board_emoji.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B49698B1A1DB05E008C75DF /* board_emoji.png */; };
+		8B4969901A1DB05E008C75DF /* board_system.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B49698C1A1DB05E008C75DF /* board_system.png */; };
 		8B89E1D61A1B07B500AA33C2 /* ChineseInclude.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1C91A1B07B500AA33C2 /* ChineseInclude.m */; };
 		8B89E1D71A1B07B500AA33C2 /* ChineseToPinyinResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1CB1A1B07B500AA33C2 /* ChineseToPinyinResource.m */; };
 		8B89E1D81A1B07B500AA33C2 /* HanyuPinyinOutputFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1CD1A1B07B500AA33C2 /* HanyuPinyinOutputFormat.m */; };
@@ -721,13 +725,9 @@
 		8BD9B8B21A13562F0037FB65 /* chatto_bg_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8B01A13562F0037FB65 /* chatto_bg_normal.png */; };
 		8BD9B8B31A13562F0037FB65 /* chatto_bg_focused.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8B11A13562F0037FB65 /* chatto_bg_focused.png */; };
 		8BD9B8B51A13573B0037FB65 /* icon02.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8B41A13573B0037FB65 /* icon02.png */; };
-		8BD9B8B81A135AC30037FB65 /* board_system.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8B61A135AC30037FB65 /* board_system.png */; };
-		8BD9B8B91A135AC30037FB65 /* board_system@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8B71A135AC30037FB65 /* board_system@2x.png */; };
 		8BD9B8BB1A13804E0037FB65 /* _expression_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8BA1A13804E0037FB65 /* _expression_en.plist */; };
 		8BEBDDB61A132B65007D0B48 /* ico_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BEBDDB41A132B65007D0B48 /* ico_error.png */; };
 		8BEBDDB71A132B65007D0B48 /* ico_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BEBDDB51A132B65007D0B48 /* ico_error@2x.png */; };
-		8BF1CFBC1A132D9A00E0EEC8 /* board_emoji.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF1CFBA1A132D9A00E0EEC8 /* board_emoji.png */; };
-		8BF1CFBD1A132D9A00E0EEC8 /* board_emoji@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF1CFBB1A132D9A00E0EEC8 /* board_emoji@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1293,6 +1293,10 @@
 		8B28214F1A1492D700060534 /* libSunFlower.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSunFlower.a; sourceTree = "<group>"; };
 		8B2821531A14BA9200060534 /* PopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupView.h; sourceTree = "<group>"; };
 		8B2821541A14BA9200060534 /* PopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupView.m; sourceTree = "<group>"; };
+		8B4969891A1DB05E008C75DF /* board_system@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "board_system@2x.png"; sourceTree = "<group>"; };
+		8B49698A1A1DB05E008C75DF /* board_emoji@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "board_emoji@2x.png"; sourceTree = "<group>"; };
+		8B49698B1A1DB05E008C75DF /* board_emoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board_emoji.png; sourceTree = "<group>"; };
+		8B49698C1A1DB05E008C75DF /* board_system.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board_system.png; sourceTree = "<group>"; };
 		8B89E1C81A1B07B500AA33C2 /* ChineseInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseInclude.h; sourceTree = "<group>"; };
 		8B89E1C91A1B07B500AA33C2 /* ChineseInclude.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseInclude.m; sourceTree = "<group>"; };
 		8B89E1CA1A1B07B500AA33C2 /* ChineseToPinyinResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseToPinyinResource.h; sourceTree = "<group>"; };
@@ -1824,13 +1828,9 @@
 		8BD9B8B01A13562F0037FB65 /* chatto_bg_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatto_bg_normal.png; sourceTree = "<group>"; };
 		8BD9B8B11A13562F0037FB65 /* chatto_bg_focused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatto_bg_focused.png; sourceTree = "<group>"; };
 		8BD9B8B41A13573B0037FB65 /* icon02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon02.png; sourceTree = "<group>"; };
-		8BD9B8B61A135AC30037FB65 /* board_system.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board_system.png; sourceTree = "<group>"; };
-		8BD9B8B71A135AC30037FB65 /* board_system@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "board_system@2x.png"; sourceTree = "<group>"; };
 		8BD9B8BA1A13804E0037FB65 /* _expression_en.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = _expression_en.plist; sourceTree = "<group>"; };
 		8BEBDDB41A132B65007D0B48 /* ico_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_error.png; sourceTree = "<group>"; };
 		8BEBDDB51A132B65007D0B48 /* ico_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_error@2x.png"; sourceTree = "<group>"; };
-		8BF1CFBA1A132D9A00E0EEC8 /* board_emoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board_emoji.png; sourceTree = "<group>"; };
-		8BF1CFBB1A132D9A00E0EEC8 /* board_emoji@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "board_emoji@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3213,6 +3213,10 @@
 		8BA7BF581A10A85500758B0F /* chatImage */ = {
 			isa = PBXGroup;
 			children = (
+				8B4969891A1DB05E008C75DF /* board_system@2x.png */,
+				8B49698A1A1DB05E008C75DF /* board_emoji@2x.png */,
+				8B49698B1A1DB05E008C75DF /* board_emoji.png */,
+				8B49698C1A1DB05E008C75DF /* board_system.png */,
 				8BEBDDB41A132B65007D0B48 /* ico_error.png */,
 				8BEBDDB51A132B65007D0B48 /* ico_error@2x.png */,
 				8BD9B8AC1A1355FA0037FB65 /* chatfrom_bg_normal.png */,
@@ -3234,10 +3238,6 @@
 		8BA7BF681A10A85500758B0F /* faceBoard */ = {
 			isa = PBXGroup;
 			children = (
-				8BF1CFBA1A132D9A00E0EEC8 /* board_emoji.png */,
-				8BF1CFBB1A132D9A00E0EEC8 /* board_emoji@2x.png */,
-				8BD9B8B61A135AC30037FB65 /* board_system.png */,
-				8BD9B8B71A135AC30037FB65 /* board_system@2x.png */,
 				8BA7BF691A10A85500758B0F /* active_page_image.png */,
 				8BA7BF6A1A10A85500758B0F /* active_page_image@2x.png */,
 				8BA7BF6F1A10A85500758B0F /* del_emoji_normal.png */,
@@ -4350,9 +4350,9 @@
 				8BA7C0D51A10A85500758B0F /* 惊讶.png in Resources */,
 				8BA7C0A21A10A85500758B0F /* 咒骂.png in Resources */,
 				8BA7C0B31A10A85500758B0F /* 大哭.png in Resources */,
-				8BF1CFBC1A132D9A00E0EEC8 /* board_emoji.png in Resources */,
 				8BBB28C41A11F3AB009AAEE8 /* speak.png in Resources */,
 				8BA7C0F01A10A85500758B0F /* 月亮@2x.png in Resources */,
+				8B49698F1A1DB05E008C75DF /* board_emoji.png in Resources */,
 				6181A4F219CFC4C2000E2D14 /* sun.png in Resources */,
 				8BA7C0E21A10A85500758B0F /* 拳头@2x.png in Resources */,
 				61DF89F419FB9CD700D47430 /* moreUnSelect.png in Resources */,
@@ -4391,7 +4391,6 @@
 				8BA7C0CE1A10A85500758B0F /* 心碎@2x.png in Resources */,
 				8BA7C0C01A10A85500758B0F /* 左哼@2x.png in Resources */,
 				6181A36519CFC3F9000E2D14 /* Images.xcassets in Resources */,
-				8BD9B8B91A135AC30037FB65 /* board_system@2x.png in Resources */,
 				6166ED5A19D2B86400D9A219 /* area.plist in Resources */,
 				8BA7C0761A10A85500758B0F /* 好的@2x.png in Resources */,
 				8BA7C0851A10A85500758B0F /* 凋谢.png in Resources */,
@@ -4453,7 +4452,6 @@
 				8BA7C0A51A10A85500758B0F /* 咖啡@2x.png in Resources */,
 				8BA7C0E41A10A85500758B0F /* 挥手@2x.png in Resources */,
 				8BA7C11D1A10A85500758B0F /* 蛋糕.png in Resources */,
-				8BD9B8B81A135AC30037FB65 /* board_system.png in Resources */,
 				0D4354BE1A199AF400C0AF0A /* Hotpst.plist in Resources */,
 				61B7110319FF67A2001CC3BD /* 电缆选购.png in Resources */,
 				8BA7C13F1A10A85500758B0F /* 米饭.png in Resources */,
@@ -4545,7 +4543,6 @@
 				6140E7C91A01DE4C00E349E3 /* hotModelSelected.png in Resources */,
 				6181A4E119CFC4C2000E2D14 /* cell_1.png in Resources */,
 				61C8DBB219F260F400E2A17D /* msg_bqy@2x.png in Resources */,
-				8BF1CFBD1A132D9A00E0EEC8 /* board_emoji@2x.png in Resources */,
 				619A62521A00C09900556B90 /* FourthSB.storyboard in Resources */,
 				8BA7C1291A10A85500758B0F /* 跳绳.png in Resources */,
 				6181A4EF19CFC4C2000E2D14 /* Set@2x 11-27-55-562.png in Resources */,
@@ -4565,8 +4562,10 @@
 				61DF89F619FB9D4900D47430 /* HomeSelect.png in Resources */,
 				8BA7C0DA1A10A85500758B0F /* 折磨@2x.png in Resources */,
 				8BA7C07A1A10A85500758B0F /* 亲亲@2x.png in Resources */,
+				8B4969901A1DB05E008C75DF /* board_system.png in Resources */,
 				8BA7C0B01A10A85500758B0F /* 坏笑@2x.png in Resources */,
 				8BA7C11C1A10A85500758B0F /* 菜刀@2x.png in Resources */,
+				8B49698D1A1DB05E008C75DF /* board_system@2x.png in Resources */,
 				61DF89F119FB9CD700D47430 /* classifyUnSelect.png in Resources */,
 				8BA7C0801A10A85500758B0F /* 傲慢@2x.png in Resources */,
 				8BA7C0841A10A85500758B0F /* 冷汗@2x.png in Resources */,
@@ -4586,6 +4585,7 @@
 				6166ED5519D2B06800D9A219 /* addAddress.png in Resources */,
 				8BA7C1471A10A85500758B0F /* 返回.png in Resources */,
 				61CCBCE119CFFF150008A46B /* Icon-40@2x.png in Resources */,
+				8B49698E1A1DB05E008C75DF /* board_emoji@2x.png in Resources */,
 				8BA7C1381A10A85500758B0F /* 阴险@2x.png in Resources */,
 				8BA7C2DA1A10A8DD00758B0F /* README.txt in Resources */,
 				8BA7C0BE1A10A85500758B0F /* 尴尬@2x.png in Resources */,

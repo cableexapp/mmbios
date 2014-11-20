@@ -1,30 +1,30 @@
 //
-//  ModifyBangDingMobileViewController.m
+//  ValidateForPhoneViewController.m
 //  B2C_MMB_iOS
 //
-//  Created by App01 on 14-11-16.
+//  Created by App01 on 14-11-20.
 //  Copyright (c) 2014年 YUANDONG. All rights reserved.
 //
 
-#import "ModifyBangDingMobileViewController.h"
+#import "ValidateForPhoneViewController.h"
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFTopLabel.h"
 #import "LoginNaviViewController.h"
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
-#import "AddBangDingMobileViewController.h"
+#import "FindBack_ThirdViewController.h"
 
-@interface ModifyBangDingMobileViewController ()
+@interface ValidateForPhoneViewController ()
 {
-    NSString *phone;
-    NSString *code;
     NSTimer *timer_tel;
     int timeCount_tel;
+    NSString *code;
+    NSString *phone;
 }
 @end
 
-@implementation ModifyBangDingMobileViewController
+@implementation ValidateForPhoneViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,15 +62,6 @@
     
 }
 
-- (BOOL) textFieldShouldReturn:(UITextField *)textField
-{
-    if([self.validateTf isFirstResponder])
-    {
-        [self.validateTf resignFirstResponder];
-    }
-    return YES;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -78,28 +69,59 @@
     
     [self pushAndPopStyle];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"新增绑定手机"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"安全验证"];
     self.navigationItem.titleView = top;
     
-    
-    self.validateBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.validateBtn.layer.borderWidth = 1.0f;
-    self.validateBtn.layer.cornerRadius = 5.0f;
-    
-    
-    self.upBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.upBtn.layer.borderWidth = 1.0f;
-    self.upBtn.layer.cornerRadius = 5.0f;
-    
     phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
-    
     NSString *s1 = [phone substringToIndex:3];
     
     NSString *s2 = [phone substringFromIndex:7];
     
     NSString *s3 = @"****";
     NSString *tel = [NSString stringWithFormat:@"%@%@%@",s1,s3,s2];
-    [self.telLabel setText:[NSString stringWithFormat:@"已绑定手机:%@",tel]];
+    [self.numberLabel setText:[NSString stringWithFormat:@"%@",tel]];
+    
+    self.telTf.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.telTf.layer.borderWidth = 1.0f;
+    
+    self.validateBtn.layer.borderColor = MYCOLOR.CGColor;
+    self.validateBtn.layer.borderWidth = 1.0f;
+    self.validateBtn.layer.cornerRadius = 5.0f;
+    
+    
+    self.buttomBtn.layer.borderColor = MYCOLOR.CGColor;
+    self.buttomBtn.layer.borderWidth = 1.0f;
+    self.buttomBtn.layer.cornerRadius = 5.0f;
+    
+    [self.telTf setDelegate:self];
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    [self.telTf resignFirstResponder];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+    [UIView commitAnimations];
+    
+    return YES;
+}
+
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    if(ScreenHeight < 500)
+    {
+
+        [self.view setFrame:CGRectMake(0, -100, ScreenWidth, ScreenHeight)];
+    }
+    else
+    {
+        [self.view setFrame:CGRectMake(0, -64, ScreenWidth, ScreenHeight)];
+    }
+    [UIView commitAnimations];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -145,8 +167,6 @@
 
 - (IBAction)validateBtnClick:(id)sender
 {
-    [self.validateTf resignFirstResponder];
-    
     timer_tel = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
     [timer_tel fire];
     
@@ -159,6 +179,36 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendMessage.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
+
+- (IBAction)buttomBtnClick:(id)sender
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+    [UIView commitAnimations];
+    
+    [self.telTf resignFirstResponder];
+    
+    if(self.telTf.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入验证码"];
+        return;
+    }
+#pragma mark - 验证码暂时写死
+//    if(![self.telTf.text isEqualToString:code])
+//    {
+//        [DCFStringUtil showNotice:@"请输入正确的验证码"];
+//        return;
+//    }
+    
+    [self.telTf resignFirstResponder];
+    
+    
+    FindBack_ThirdViewController *findBack_ThirdViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"findBack_ThirdViewController"];
+    [self.navigationController pushViewController:findBack_ThirdViewController animated:YES];
+
+}
+
 
 - (void) timer:(NSTimer *) sender
 {
@@ -213,25 +263,6 @@
         
     }
     return memberid;
-}
-
-- (IBAction)upbtnClick:(id)sender
-{
-    [self.validateTf resignFirstResponder];
-    
-    if(self.validateTf.text.length == 0)
-    {
-        [DCFStringUtil showNotice:@"请输入验证码"];
-        return;
-    }
-    //    if(![self.validateTf.text isEqualToString:code])
-    //    {
-    //        [DCFStringUtil showNotice:@"请输入正确的验证码"];
-    //        return;
-    //    }
-    
-    AddBangDingMobileViewController *addBangDingMobileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"addBangDingMobileViewController"];
-    [self.navigationController pushViewController:addBangDingMobileViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

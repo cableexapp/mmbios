@@ -10,5 +10,6 @@
 
 @interface FindBackSec_FirstViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *tf_confirm;
+@property (weak, nonatomic) IBOutlet UIButton *nextBtn;
 
 @end

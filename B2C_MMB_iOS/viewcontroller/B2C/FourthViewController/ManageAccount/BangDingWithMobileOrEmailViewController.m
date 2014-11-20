@@ -272,16 +272,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改登录密码"];
-    self.navigationItem.titleView = top;
-    
-    [self pushAndPopStyle];
-    
-    self.validateBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.validateBtn.layer.borderWidth = 1.0f;
-    self.validateBtn.layer.cornerRadius = 5.0f;
-    
-    [self.validateTf setDelegate:self];
+
     
 }
 

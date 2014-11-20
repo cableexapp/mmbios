@@ -273,11 +273,11 @@
             return;
         }
 
-//    if(![self.validateTf.text isEqualToString:code])
-//    {
-//        [DCFStringUtil showNotice:@"请输入正确的验证码"];
-//        return;
-//    }
+    if(![self.validateTf.text isEqualToString:code])
+    {
+        [DCFStringUtil showNotice:@"请输入正确的验证码"];
+        return;
+    }
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"ChangeBindPhone",time];

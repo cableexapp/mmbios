@@ -65,7 +65,7 @@
     //自定义导航条
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     nameLabel.textColor = [UIColor whiteColor];
-    nameLabel.backgroundColor = [UIColor colorWithRed:17.0/255.0 green:66.0/255.0 blue:146.0/255.0 alpha:1.0];
+    nameLabel.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:88.0/255.0 blue:173.0/255.0 alpha:1.0];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view insertSubview:nameLabel atIndex:1];
     
@@ -105,28 +105,26 @@
     toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
     [self.view addSubview:toolBar];
     
-     [messageField becomeFirstResponder];
-    
     //键盘按钮
     keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    keyboardButton.frame = CGRectMake(6, 6, 32, 32);
+    keyboardButton.frame = CGRectMake(6, 4.5, 35, 35);
     [keyboardButton addTarget:self action:@selector(faceBoardClick) forControlEvents:UIControlEventTouchUpInside];
     [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
     [toolBar addSubview:keyboardButton];
     
     //发送按钮
     sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    sendButton.frame = CGRectMake(250, 6, 64, 32);
+    sendButton.frame = CGRectMake(260, 6, 54, 32);
     [sendButton addTarget:self action:@selector(sendNewChatMessage) forControlEvents:UIControlEventTouchUpInside];
     sendButton.layer.cornerRadius = 3;
-    sendButton.layer.backgroundColor = [[UIColor colorWithRed:18.0/255.0 green:90.0/255.0 blue:169.0/255.0 alpha:1] CGColor];
+    sendButton.layer.backgroundColor = [[UIColor colorWithRed:10.0/255.0 green:88.0/255.0 blue:173.0/255.0 alpha:1] CGColor];
     [sendButton setTitle:@"发送" forState:UIControlStateNormal];
     [sendButton setTintColor:[UIColor whiteColor]];
     [toolBar addSubview:sendButton];
     
     //消息输入框
     messageField = [[UITextView alloc] init];
-    messageField.frame = CGRectMake(46, 6, 196, 32);
+    messageField.frame = CGRectMake(46, 6, 206, 32);
     messageField.delegate = self;
     messageField.layer.backgroundColor = [[DCFColorUtil colorFromHexRGB:@"#ffffff"] CGColor];
     messageField.layer.borderWidth = 1;
@@ -228,7 +226,7 @@
         naviTitle.text = @"正在咨询";
         imageView.image = image;
     }
-    
+    [messageField becomeFirstResponder];
 }
 
 //检查网络是否连接

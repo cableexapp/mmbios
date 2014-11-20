@@ -14,21 +14,15 @@
 #import "DCFCustomExtra.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFStringUtil.h"
-
-
-
-
-
+#import "SearchViewController.h"
 
 @interface HotKindFirstViewController ()
 {
     NSMutableArray *dataArray;
     NSMutableArray *selectArray;
     UIView *backView;
+    UIView *rightButtonView;
 }
-
-
-
 
 @end
 
@@ -47,7 +41,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101)
@@ -59,6 +53,13 @@
             [view setHidden:YES];
         }
     }
+    rightButtonView.hidden = NO;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    rightButtonView.hidden = YES;
 }
 
 - (void)viewDidLoad
@@ -75,6 +76,17 @@
     //每个界面都要加这句话
     [self pushAndPopStyle];
     
+    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
+    [self.navigationController.navigationBar addSubview:rightButtonView];
+    
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundColor:[UIColor clearColor]];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
+    [rightBtn addTarget:self action:@selector(searchRightBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightButtonView addSubview:rightBtn];
     
     [super viewDidLoad];
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"热门分类"];
@@ -106,8 +118,6 @@
     backView.hidden = YES;
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:self.testTableView];
-    
-    
 }
 
 
@@ -256,6 +266,7 @@
         _testTableView.userInteractionEnabled = YES;
         self.selectView.hidden = YES;
         self.opend = NO;
+        [_testSubTableView reloadData];
     }
     if (self.isOpened)
     {
@@ -376,4 +387,10 @@ if ( _opend )
 }
 
 
+- (void)searchRightBtnClick
+{
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    [self setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:searchVC animated:YES];
+}
 @end

@@ -217,7 +217,7 @@
     self.navigationItem.titleView = top;
     
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 321, 40)];
-    [topView setBackgroundColor:[UIColor whiteColor]];
+    [topView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [self.view addSubview:topView];
     
     for(int i=0;i<2;i++)
@@ -227,18 +227,22 @@
         [topView addSubview:lineView];
     }
     
-    searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 1, 270, 38)];
+    searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(5, 10, 265, 34)];
     [searchTextField setDelegate:self];
-    [searchTextField setPlaceholder:@"搜索家装馆内电线型号,电线品牌等"];
+    [searchTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等"];
     [searchTextField setBackgroundColor:[UIColor whiteColor]];
     UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 40, 38)];
     [leftView setImage:[UIImage imageNamed:@"magnifying glass.png"]];
     [searchTextField setLeftView:leftView];
+    [searchTextField setFont:[UIFont systemFontOfSize:12]];
+    searchTextField.layer.borderWidth = 0.3;
+    searchTextField.layer.cornerRadius = 5;
     [searchTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [self.view addSubview:searchTextField];
     
     searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchBtn setFrame:CGRectMake(searchTextField.frame.origin.x + searchTextField.frame.size.width, 5, 40, 30)];
+    [searchBtn setFrame:CGRectMake(searchTextField.frame.origin.x + searchTextField.frame.size.width+5, 12, 35, 30)];
     [searchBtn setTitle:@"筛选" forState:UIControlStateNormal];
     [searchBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     searchBtn.layer.borderWidth = 1.0f;
@@ -248,15 +252,15 @@
     [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:searchBtn];
     
-    selectBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, 320, 40)];
-    [selectBtnView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+    selectBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height+13, 320, 60)];
+    [selectBtnView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:selectBtnView];
     
     btnArray = [[NSMutableArray alloc] init];
     for(int i=0;i<3;i++)
     {
         UIButton *selctBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [selctBtn setFrame:CGRectMake(10 + 100*i, 5, 100, 30)];
+        [selctBtn setFrame:CGRectMake(10 + 100*i, 13, 100, 30)];
         switch (i)
         {
             case 0:
@@ -272,18 +276,18 @@
             default:
                 break;
         }
-        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
         
-        [selctBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+        [selctBtn setTitleColor:[UIColor colorWithRed:133.0/255.0 green:133.0/255.0 blue:133.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         [selctBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         
         [selctBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [selctBtn setTag:i];
         
-        selctBtn.layer.borderColor = MYCOLOR.CGColor;
-        selctBtn.layer.borderWidth = 1.0f;
-        selctBtn.layer.masksToBounds = YES;
+//        selctBtn.layer.borderColor = MYCOLOR.CGColor;
+//        selctBtn.layer.borderWidth = 1.0f;
+//        selctBtn.layer.masksToBounds = YES;
         
         [selectBtnView addSubview:selctBtn];
         [btnArray addObject:selctBtn];
@@ -294,6 +298,7 @@
     [tv setDataSource:self];
     [tv setShowsVerticalScrollIndicator:NO];
     [tv setShowsHorizontalScrollIndicator:NO];
+
     [self.view addSubview:tv];
     
     
@@ -471,7 +476,7 @@
         if(cell == nil)
         {
             cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-            [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+            [cell.contentView setBackgroundColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0]];
             [cell setSelectionStyle:0];
         }
         while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -481,8 +486,8 @@
         
         if(indexPath.row == 0)
         {
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
-            [view setBackgroundColor:[UIColor whiteColor]];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 3)];
+            [view setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
             [cell.contentView addSubview:view];
         }
         

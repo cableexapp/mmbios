@@ -232,7 +232,7 @@
     }
     UILabel *cellLabel = [[UILabel alloc] init];
     
-    NSString *str = [NSString stringWithFormat:@"  %@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typeName"]];
+    NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typeName"]];
     CGSize size;
     if(str.length == 0)
     {
@@ -244,11 +244,11 @@
     }
     if(size.height <= 30)
     {
-        [cellLabel setFrame:CGRectMake(0, 5, self.width-20, 30)];
+        [cellLabel setFrame:CGRectMake(6, 5, self.width-6, 30)];
     }
     else
     {
-        [cellLabel setFrame:CGRectMake(0, 5, self.width-20, size.height)];
+        [cellLabel setFrame:CGRectMake(6, 5, self.width-6, size.height)];
     }
     [cellLabel setText:str];
     [cellLabel setTag:10];

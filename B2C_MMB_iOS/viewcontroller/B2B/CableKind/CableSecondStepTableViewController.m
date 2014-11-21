@@ -201,13 +201,13 @@
         
         [cell.contentView setFrame:CGRectMake(0, 0, self.width, self.height)];
         
-        UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(3,0.5, self.width-3, 43)];
+        UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(4,0, self.width-4, 44)];
         [cellLabel setTag:10];
         [cellLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:cellLabel];
 
         
-        UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(0,0.5, 3,43)];
+        UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(0,-0.5, 4,44.5)];
         cellIv.backgroundColor = [UIColor colorWithRed:8.0/255.0 green:88.0/255.0 blue:172.0/255.0 alpha:1.0];
 
         [cellIv setTag:11];

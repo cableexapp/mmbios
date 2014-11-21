@@ -369,7 +369,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self checkNet];
-    NSLog(@"self.fromStringFlag = %@",self.fromStringFlag);
     if ([[self appDelegate].xmppStream isDisconnected])
     {
 //        noNetMessage.text = @"服务器未连接，请退出重新登录!";

@@ -112,6 +112,7 @@
 {
     [super viewDidAppear:YES];
 //    [self readHistoryData];
+    
     NSLog(@"viewDidAppear");
 }
 
@@ -120,7 +121,6 @@
     [super viewDidDisappear:YES];
     [_iflyRecognizerView cancel];
     _iflyRecognizerView.delegate = nil;
-    
     NSLog(@"viewDidDisappear");
 }
 
@@ -132,10 +132,10 @@
     clearBtn.hidden = NO;
     imageFlag = @"1";
     tempFlag = @"4";
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
+    
     [mySearchBar resignFirstResponder];
 //    [self readHistoryData];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
     NSLog(@"viewDidDisappear");
 }
 
@@ -153,6 +153,10 @@
     naviTitle.textAlignment = NSTextAlignmentCenter;
     naviTitle.text = @"搜索";
     self.navigationItem.titleView = naviTitle;
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+    backButton.title = @"返回";
+    self.navigationItem.backBarButtonItem = backButton;
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     

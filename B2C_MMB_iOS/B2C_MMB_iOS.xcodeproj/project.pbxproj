@@ -348,7 +348,7 @@
 		8B49698E1A1DB05E008C75DF /* board_emoji@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B49698A1A1DB05E008C75DF /* board_emoji@2x.png */; };
 		8B49698F1A1DB05E008C75DF /* board_emoji.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B49698B1A1DB05E008C75DF /* board_emoji.png */; };
 		8B4969901A1DB05E008C75DF /* board_system.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B49698C1A1DB05E008C75DF /* board_system.png */; };
-		8B4969961A1DD577008C75DF /* mmb.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4969951A1DD577008C75DF /* mmb.png */; };
+		8B4969961A1DD577008C75DF /* maimaibao.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B4969951A1DD577008C75DF /* maimaibao.png */; };
 		8B89E1D61A1B07B500AA33C2 /* ChineseInclude.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1C91A1B07B500AA33C2 /* ChineseInclude.m */; };
 		8B89E1D71A1B07B500AA33C2 /* ChineseToPinyinResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1CB1A1B07B500AA33C2 /* ChineseToPinyinResource.m */; };
 		8B89E1D81A1B07B500AA33C2 /* HanyuPinyinOutputFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1CD1A1B07B500AA33C2 /* HanyuPinyinOutputFormat.m */; };
@@ -737,6 +737,10 @@
 		8BD9B8B31A13562F0037FB65 /* chatto_bg_focused.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8B11A13562F0037FB65 /* chatto_bg_focused.png */; };
 		8BD9B8B51A13573B0037FB65 /* icon02.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8B41A13573B0037FB65 /* icon02.png */; };
 		8BD9B8BB1A13804E0037FB65 /* _expression_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8BA1A13804E0037FB65 /* _expression_en.plist */; };
+		8BE6CA6F1A1F48310015277A /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BE6CA6C1A1F48310015277A /* setting.png */; };
+		8BE6CA701A1F48310015277A /* mob.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BE6CA6D1A1F48310015277A /* mob.png */; };
+		8BE6CA711A1F48310015277A /* about.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BE6CA6E1A1F48310015277A /* about.png */; };
+		8BE6CA731A1F49840015277A /* mmb.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BE6CA721A1F49840015277A /* mmb.png */; };
 		8BEBDDB61A132B65007D0B48 /* ico_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BEBDDB41A132B65007D0B48 /* ico_error.png */; };
 		8BEBDDB71A132B65007D0B48 /* ico_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BEBDDB51A132B65007D0B48 /* ico_error@2x.png */; };
 /* End PBXBuildFile section */
@@ -1312,7 +1316,7 @@
 		8B49698A1A1DB05E008C75DF /* board_emoji@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "board_emoji@2x.png"; sourceTree = "<group>"; };
 		8B49698B1A1DB05E008C75DF /* board_emoji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board_emoji.png; sourceTree = "<group>"; };
 		8B49698C1A1DB05E008C75DF /* board_system.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = board_system.png; sourceTree = "<group>"; };
-		8B4969951A1DD577008C75DF /* mmb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mmb.png; sourceTree = "<group>"; };
+		8B4969951A1DD577008C75DF /* maimaibao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maimaibao.png; sourceTree = "<group>"; };
 		8B89E1C81A1B07B500AA33C2 /* ChineseInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseInclude.h; sourceTree = "<group>"; };
 		8B89E1C91A1B07B500AA33C2 /* ChineseInclude.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChineseInclude.m; sourceTree = "<group>"; };
 		8B89E1CA1A1B07B500AA33C2 /* ChineseToPinyinResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseToPinyinResource.h; sourceTree = "<group>"; };
@@ -1853,6 +1857,10 @@
 		8BD9B8B11A13562F0037FB65 /* chatto_bg_focused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatto_bg_focused.png; sourceTree = "<group>"; };
 		8BD9B8B41A13573B0037FB65 /* icon02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon02.png; sourceTree = "<group>"; };
 		8BD9B8BA1A13804E0037FB65 /* _expression_en.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = _expression_en.plist; sourceTree = "<group>"; };
+		8BE6CA6C1A1F48310015277A /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
+		8BE6CA6D1A1F48310015277A /* mob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mob.png; sourceTree = "<group>"; };
+		8BE6CA6E1A1F48310015277A /* about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about.png; sourceTree = "<group>"; };
+		8BE6CA721A1F49840015277A /* mmb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mmb.png; sourceTree = "<group>"; };
 		8BEBDDB41A132B65007D0B48 /* ico_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_error.png; sourceTree = "<group>"; };
 		8BEBDDB51A132B65007D0B48 /* ico_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_error@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2500,6 +2508,9 @@
 				61DF89ED19FB9CD700D47430 /* classifyUnSelect.png */,
 				61DF89E519FB9AD000D47430 /* classifySelect.png */,
 				61DF89EF19FB9CD700D47430 /* imUnSelect.png */,
+				8BE6CA6C1A1F48310015277A /* setting.png */,
+				8BE6CA6D1A1F48310015277A /* mob.png */,
+				8BE6CA6E1A1F48310015277A /* about.png */,
 				61DF89E619FB9AD000D47430 /* imSelect.png */,
 				61DF89F019FB9CD700D47430 /* moreUnSelect.png */,
 				61DF89E719FB9AD000D47430 /* moreSelect.png */,
@@ -2526,7 +2537,8 @@
 				6181A3F819CFC4C2000E2D14 /* click1.png */,
 				6181A3F919CFC4C2000E2D14 /* click2.png */,
 				6181A3FA19CFC4C2000E2D14 /* magnifying glass.png */,
-				8B4969951A1DD577008C75DF /* mmb.png */,
+				8B4969951A1DD577008C75DF /* maimaibao.png */,
+				8BE6CA721A1F49840015277A /* mmb.png */,
 				8B1F0FC61A16FCEA00F819D1 /* clock.png */,
 				8B1F0FC71A16FCEA00F819D1 /* clock@2x.png */,
 				8BBB28B81A11AD23009AAEE8 /* search.png */,
@@ -4385,6 +4397,7 @@
 				8BA7C0C81A10A85500758B0F /* 很强@2x.png in Resources */,
 				8BA7C1361A10A85500758B0F /* 闭嘴@2x.png in Resources */,
 				8BA7C08A1A10A85500758B0F /* 勾引@2x.png in Resources */,
+				8BE6CA6F1A1F48310015277A /* setting.png in Resources */,
 				61C8DBB119F260F400E2A17D /* msg_bqy.png in Resources */,
 				61CCBCE419CFFF150008A46B /* Icon-Small@2x.png in Resources */,
 				8BA7C0D51A10A85500758B0F /* 惊讶.png in Resources */,
@@ -4472,7 +4485,7 @@
 				8BA7C1031A10A85500758B0F /* 玫瑰.png in Resources */,
 				8BA7C0611A10A85500758B0F /* active_page_image.png in Resources */,
 				6181A4DF19CFC4C2000E2D14 /* cabel.png in Resources */,
-				8B4969961A1DD577008C75DF /* mmb.png in Resources */,
+				8B4969961A1DD577008C75DF /* maimaibao.png in Resources */,
 				8BA7C0E91A10A85500758B0F /* 擦汗.png in Resources */,
 				61B7110019FF67A2001CC3BD /* 快速查询.png in Resources */,
 				6181A35D19CFC3F9000E2D14 /* Main_iPhone.storyboard in Resources */,
@@ -4485,6 +4498,7 @@
 				8BA7C0FE1A10A85500758B0F /* 爱情@2x.png in Resources */,
 				8BA7C1421A10A85500758B0F /* 骷髅@2x.png in Resources */,
 				8BA7C0991A10A85500758B0F /* 太极.png in Resources */,
+				8BE6CA731A1F49840015277A /* mmb.png in Resources */,
 				8BA7C0C51A10A85500758B0F /* 很弱.png in Resources */,
 				6181A4F419CFC4C2000E2D14 /* sv_2.png in Resources */,
 				8BA7C0B81A10A85500758B0F /* 奋斗@2x.png in Resources */,
@@ -4519,6 +4533,7 @@
 				8BA7C13C1A10A85500758B0F /* 飞吻@2x.png in Resources */,
 				8BA7C0C41A10A85500758B0F /* 差劲@2x.png in Resources */,
 				8BA7C0B91A10A85500758B0F /* 委屈.png in Resources */,
+				8BE6CA711A1F48310015277A /* about.png in Resources */,
 				8BBB2CA61A1E162800895B4C /* 5.png in Resources */,
 				8BA7C10D1A10A85500758B0F /* 磕头.png in Resources */,
 				8BA7C0E71A10A85500758B0F /* 撇嘴.png in Resources */,
@@ -4555,6 +4570,7 @@
 				8BA7C1261A10A85500758B0F /* 调皮@2x.png in Resources */,
 				8BA7C0D61A10A85500758B0F /* 惊讶@2x.png in Resources */,
 				8BD9B8B21A13562F0037FB65 /* chatto_bg_normal.png in Resources */,
+				8BE6CA701A1F48310015277A /* mob.png in Resources */,
 				8BA7C0D31A10A85500758B0F /* 惊恐.png in Resources */,
 				615C8F9019F8EFDF00A2B8CD /* ratingbar_unselect.png in Resources */,
 				8BA7C0AD1A10A85500758B0F /* 困了.png in Resources */,

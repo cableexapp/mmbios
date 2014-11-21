@@ -15,6 +15,7 @@
 #import "DCFStringUtil.h"
 #import "B2BAskPriceCarViewController.h"
 #import "ChatListViewController.h"
+#import "SpeedAskPriceFirstViewController.h"
 
 #define pi 3.14159265359
 #define   DEGREES_TO_RADIANS(degrees)  ((pi * degrees)/ 180)
@@ -113,7 +114,6 @@
             [self setHidesBottomBarWhenPushed:YES];
             B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
             [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
-
         }
         else
         {
@@ -141,18 +141,17 @@
     askPriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
-    [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:17]];
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
     [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:askPriceBtn];
     self.navigationItem.rightBarButtonItem = item;
-    
-    self.addToAskPriceBtn.layer.borderColor = [UIColor redColor].CGColor;
-    self.addToAskPriceBtn.layer.borderWidth = 1.0f;
-    self.addToAskPriceBtn.layer.cornerRadius = 2.0f;
-    
+ 
+    self.addToAskPriceBtn.layer.cornerRadius = 5.0f;
+    [self.addToAskPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.addToAskPriceBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
     [_sv setContentSize:CGSizeMake(ScreenWidth*7, self.sv.frame.size.height-200)];
     [_sv setBounces:NO];
     
@@ -280,8 +279,6 @@
     else
     {
         [addToCarArray removeObject:btn];
-        
-   
     }
     
     
@@ -489,7 +486,6 @@
 
 - (IBAction)imbtnClick:(id)sender
 {
-    NSLog(@"热门型号在线咨询");
     [self setHidesBottomBarWhenPushed:YES];
     ChatListViewController *chatVC = [[ChatListViewController alloc] init];
     chatVC.fromString = @"热门型号在线咨询";
@@ -506,28 +502,20 @@
 - (IBAction)moreModelBtnClick:(id)sender
 {
     NSLog(@"更多");
+   [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 - (IBAction)directBtnClick:(id)sender
 {
     NSLog(@"直接");
+    SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
+    [self setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

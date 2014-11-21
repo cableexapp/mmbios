@@ -53,7 +53,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
+//    [self.navigationController.tabBarController.tabBar setHidden:NO];
     [self setHidesBottomBarWhenPushed:NO];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
@@ -170,6 +170,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = btn.titleLabel.text;
+    cableSecondAndThirdStepViewController.fromPage = @"电缆分类";
     if (typeArray.count == 5)
     {
         if (tag == 3)
@@ -225,7 +226,7 @@
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-    UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mmb" ofType:@"png"]];
+    UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"maimaibao" ofType:@"png"]];
     UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-8, 0, 120,44)];
     [naviImageView setImage:naviimage];
     [naviImageView setTag:100];
@@ -368,19 +369,7 @@
         return 175;
         
     }
-//    else if (indexPath.section == 4)
-//    {
-//        if (indexPath.row == 0)
-//        {
-//            return 225;
-//        }
-//        else
-//        {
-//            return 235;
-//        }
-//        
-//    }
-    return 225;
+        return 225;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -534,6 +523,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = typeArray[indexPath.row];
+    cableSecondAndThirdStepViewController.fromPage = @"电缆选购";
     if (typeArray.count == 5)
     {
         if (indexPath.row == 3)

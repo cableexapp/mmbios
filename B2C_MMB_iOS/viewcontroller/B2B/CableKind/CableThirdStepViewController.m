@@ -162,25 +162,25 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typeName"]];
-    CGSize size;
-    if(str.length == 0)
-    {
-        size = CGSizeMake(self.width-20, 30);
-    }
-    else
-    {
-        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(self.width-20, MAXFLOAT)];
-    }
-    if(size.height <= 30)
-    {
-        return 40;
-    }
-    else
-    {
-        return size.height+10;
-    }
-//    return 44;
+//    NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typeName"]];
+//    CGSize size;
+//    if(str.length == 0)
+//    {
+//        size = CGSizeMake(self.width-20, 30);
+//    }
+//    else
+//    {
+//        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(self.width-20, MAXFLOAT)];
+//    }
+//    if(size.height <= 30)
+//    {
+//        return 40;
+//    }
+//    else
+//    {
+//        return size.height+10;
+//    }
+   return 44;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

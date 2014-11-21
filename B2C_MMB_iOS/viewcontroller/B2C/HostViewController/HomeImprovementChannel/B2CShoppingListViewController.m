@@ -63,6 +63,12 @@
     return self;
 }
 
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
+}
+
 #pragma mark - delegate
 - (void) requestStringWithUse:(NSString *)myUse WithBrand:(NSString *)myBrand WithSpec:(NSString *)mySpec WithModel:(NSString *)myModel WithSeq:(NSString *)mySeq
 {

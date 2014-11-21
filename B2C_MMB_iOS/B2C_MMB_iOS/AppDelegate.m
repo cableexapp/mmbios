@@ -41,6 +41,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 NSString *strUserId = @"";
 @implementation AppDelegate
 {
+    //李深望修改
     UIStoryboard *sb;
 }
 @synthesize mainQueue;

@@ -243,6 +243,7 @@
     {
         [DCFStringUtil showNotice:msg];
 
+        code = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"code"]];
     }
     else
     {

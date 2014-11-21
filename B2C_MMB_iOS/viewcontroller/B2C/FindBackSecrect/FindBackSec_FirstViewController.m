@@ -79,6 +79,11 @@
         return;
     }
     
+    if([DCFCustomExtra validateMobile:self.tf_confirm.text] == NO)
+    {
+        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+        return;
+    }
     [self push];
 }
 
@@ -111,6 +116,7 @@
     else
     {
         FindBackSec_SecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_SecondViewController"];
+        second.isMobileOrEmail = YES;
         [self.navigationController pushViewController:second animated:YES];
     }
 

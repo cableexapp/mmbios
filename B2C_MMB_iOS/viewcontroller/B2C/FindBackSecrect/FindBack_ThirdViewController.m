@@ -181,7 +181,7 @@
             NSDictionary *newDic = [[NSDictionary alloc] initWithObjectsAndKeys:userName,@"registerAccount",password,@"registerSecrect", nil];
             
             [[NSUserDefaults standardUserDefaults] setObject:newDic forKey:@"regiserDic"];
-            [self.navigationController popViewControllerAnimated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
         else
         {

@@ -285,6 +285,14 @@
         [selctBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [selctBtn setTag:i];
         
+         _lineView = [[UIView alloc] initWithFrame:CGRectMake(110, selctBtn.frame.origin.y+5, 1, 20)];
+        [_lineView setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0]];
+        [selectBtnView addSubview:_lineView];
+        
+        _lineView_1 = [[UIView alloc] initWithFrame:CGRectMake(207, selctBtn.frame.origin.y+5, 1, 20)];
+        [_lineView_1 setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0]];
+        [selectBtnView addSubview:_lineView_1];
+        
 //        selctBtn.layer.borderColor = MYCOLOR.CGColor;
 //        selctBtn.layer.borderWidth = 1.0f;
 //        selctBtn.layer.masksToBounds = YES;
@@ -517,7 +525,7 @@
         [saleOutLabel setText:saleOut];
         [saleOutLabel setFont:[UIFont systemFontOfSize:12]];
         [saleOutLabel setTextAlignment:NSTextAlignmentLeft];
-        [saleOutLabel setTextColor:[UIColor blackColor]];
+        [saleOutLabel setTextColor:[UIColor colorWithRed:118.0/255.0 green:118.0/255.0 blue:118.0/255.0 alpha:1.0]];
         [cell.contentView addSubview:saleOutLabel];
         
         
@@ -532,7 +540,7 @@
         }
         NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
         NSLog(@"picUrl = %@",picUrl);
-        [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
+        [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
         [cell.contentView addSubview:cellIv];
         
         return cell;
@@ -540,6 +548,8 @@
     return nil;
 }
 
+
+#pragma  mark  -  滚动加载
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.refreshView egoRefreshScrollViewDidEndDragging:scrollView];
@@ -572,11 +582,11 @@
     detail.GoodsDetailUrl = [[phoneDescribeArray objectAtIndex:indexPath.row] objectForKey:@"phoneDescribe"];
     [self.navigationController pushViewController:detail animated:YES];
 }
-//
-//
-//
+
+
+
 //#pragma mark -
-//#pragma mark SCROLLVIEW DELEGATE METHODS
+#pragma mark SCROLLVIEW DELEGATE METHODS
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     

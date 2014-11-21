@@ -8,12 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFPickerView.h"
-
-@interface FindBackSec_SecondViewController : UIViewController<PickerView,UITextFieldDelegate>
+#import "DCFConnectionUtil.h"
+@interface FindBackSec_SecondViewController : UIViewController<PickerView,UITextFieldDelegate,ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
 
 @property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
 @property (weak, nonatomic) IBOutlet UILabel *showLabel;
 @property (weak, nonatomic) IBOutlet UIButton *getValidateBtn;
 @property (weak, nonatomic) IBOutlet UITextField *tf_getValidate;
+
+@property (weak, nonatomic) IBOutlet UIView *backView;
+@property (weak, nonatomic) IBOutlet UIView *secondLine;
+@property (weak, nonatomic) IBOutlet UIView *firstView;
+
+@property (weak, nonatomic) IBOutlet UIButton *nextBtn;
+
+@property (assign,nonatomic) BOOL isMobileOrEmail;
 
 @end

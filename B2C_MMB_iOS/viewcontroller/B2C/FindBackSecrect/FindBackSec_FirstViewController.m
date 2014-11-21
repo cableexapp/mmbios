@@ -79,6 +79,11 @@
         return;
     }
     
+    if([DCFCustomExtra validateMobile:self.tf_confirm.text] == NO)
+    {
+        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+        return;
+    }
     [self push];
 }
 
@@ -92,8 +97,9 @@
 {
     NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
     NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
-    phone = @"";
+    phone = @"13921307054";
     email = @"cxboss405@163.com";
+//    email = @"";
     //只绑定邮箱没有绑定手机进入邮箱验证界面
      if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length != 0 || ![email isKindOfClass:[NSNull class]] || email != NULL || email != nil))
     {
@@ -110,6 +116,7 @@
     else
     {
         FindBackSec_SecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_SecondViewController"];
+        second.isMobileOrEmail = YES;
         [self.navigationController pushViewController:second animated:YES];
     }
 

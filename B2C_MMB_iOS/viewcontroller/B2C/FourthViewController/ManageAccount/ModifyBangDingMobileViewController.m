@@ -127,6 +127,7 @@
         {
             [DCFStringUtil showNotice:msg];
             
+            code = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"code"]];
         }
         else
         {
@@ -224,11 +225,11 @@
         [DCFStringUtil showNotice:@"请输入验证码"];
         return;
     }
-    //    if(![self.validateTf.text isEqualToString:code])
-    //    {
-    //        [DCFStringUtil showNotice:@"请输入正确的验证码"];
-    //        return;
-    //    }
+    if(![self.validateTf.text isEqualToString:code])
+    {
+        [DCFStringUtil showNotice:@"请输入正确的验证码"];
+         return;
+    }
     
     AddBangDingMobileViewController *addBangDingMobileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"addBangDingMobileViewController"];
     [self.navigationController pushViewController:addBangDingMobileViewController animated:YES];

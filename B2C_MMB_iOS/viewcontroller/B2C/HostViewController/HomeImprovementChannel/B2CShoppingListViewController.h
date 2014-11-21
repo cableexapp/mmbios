@@ -32,6 +32,8 @@
     BOOL flag;
 }
 
+@property (strong,nonatomic) UIView *lineView;
+@property (strong,nonatomic) UIView *lineView_1;
 
 @property (strong,nonatomic) NSString *use;
 @property (strong,nonatomic) NSString *seq;

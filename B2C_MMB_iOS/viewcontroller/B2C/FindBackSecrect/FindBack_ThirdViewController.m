@@ -7,7 +7,11 @@
 //
 
 #import "FindBack_ThirdViewController.h"
+#import "MCDefine.h"
+#import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFTopLabel.h"
+#import "LoginNaviViewController.h"
+#import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
 #import "LoginNaviViewController.h"
 
@@ -30,35 +34,7 @@
 
 - (void) sure:(UIButton *) sender
 {
-    [_tf_newSec resignFirstResponder];
-    
-    NSString *string = [_tf_newSec.text stringByReplacingOccurrencesOfString:@" " withString:@""];
 
-    if(string.length == 0)
-    {
-        [DCFStringUtil showNotice:@"请输入密码"];
-        return;
-    }
-    if(string.length < 6)
-    {
-        [DCFStringUtil showNotice:@"密码长度不能小于6位"];
-        return;
-    }
-    if(string.length > 18)
-    {
-        [DCFStringUtil showNotice:@"密码长度不能大于18位"];
-        return;
-    }
-    BOOL isAllNum = [self isAllNum:string];
-    if(isAllNum == 1)
-    {
-        [DCFStringUtil showNotice:@"密码不能为纯数字"];
-        return;
-    }
-    else
-    {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
 }
 
 #pragma mark - 判断是不是纯数字
@@ -75,22 +51,27 @@
     }
     return YES;
 }
-    
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    
-    UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [nextBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [nextBtn setTitleColor:[UIColor colorWithRed:21.0/255.0 green:100.0/255.0 blue:249.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [nextBtn setFrame:CGRectMake(100, 0, 50, 30)];
-    [nextBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    [nextBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:nextBtn];
-    self.navigationItem.rightBarButtonItem = right;
+
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
@@ -100,9 +81,152 @@
     
 }
 
+
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
+
+
+- (IBAction)sureBtnClick:(id)sender
+{
+    if([_tf_newSec isFirstResponder])
+    {
+        [_tf_newSec resignFirstResponder];
+    }
+    if([_tf_sureSec isFirstResponder])
+    {
+        [_tf_sureSec resignFirstResponder];
+    }
+    
+    
+    if(_tf_newSec.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"请输入密码"];
+        return;
+    }
+    if(_tf_newSec.text.length < 6)
+    {
+        [DCFStringUtil showNotice:@"密码长度不能小于6位"];
+        return;
+    }
+    if(_tf_newSec.text.length > 18)
+    {
+        [DCFStringUtil showNotice:@"密码长度不能大于18位"];
+        return;
+    }
+    BOOL isAllNum = [self isAllNum:_tf_newSec.text];
+    if(isAllNum == 1)
+    {
+        [DCFStringUtil showNotice:@"密码不能为纯数字"];
+        return;
+    }
+    
+    if(![_tf_newSec.text isEqualToString:_tf_sureSec.text])
+    {
+        [DCFStringUtil showNotice:@"两次输入密码不一致"];
+        return;
+    }
+    
+    if(!HUD)
+    {
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [HUD setLabelText:@"正在修改..."];
+        [HUD setDelegate:self];
+    }
+    
+    NSString *memberid = [self getMemberId];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"ChangePassword",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&oldpassword=%@&newpassword=%@",memberid,token,@"",self.tf_newSec.text];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLChangePasswordTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ChangePassword.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
+    
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    
+    if(URLTag == URLChangePasswordTag)
+    {
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            [DCFStringUtil showNotice:@"修改绑定手机失败"];
+        }
+        if(result == 1)
+        {
+            [DCFStringUtil showNotice:msg];
+            NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"]];
+            NSString *userName = [dic objectForKey:@"registerAccount"];
+            NSString *password = [self.tf_newSec text];
+            
+            NSDictionary *newDic = [[NSDictionary alloc] initWithObjectsAndKeys:userName,@"registerAccount",password,@"registerSecrect", nil];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:newDic forKey:@"regiserDic"];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        else
+        {
+            if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
+            {
+                [DCFStringUtil showNotice:@"修改绑定手机失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
+    NSLog(@"%@",dicRespon);
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    if([_tf_newSec isFirstResponder])
+    {
+        [_tf_newSec resignFirstResponder];
+    }
+    if([_tf_sureSec isFirstResponder])
+    {
+        [_tf_sureSec resignFirstResponder];
+    }
+    return YES;
+}
+
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    [_tf_newSec resignFirstResponder];
+    if([_tf_newSec isFirstResponder])
+    {
+        [_tf_newSec resignFirstResponder];
+    }
+    if([_tf_sureSec isFirstResponder])
+    {
+        [_tf_sureSec resignFirstResponder];
+    }
+}
+
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
 }
 
 - (void)didReceiveMemoryWarning

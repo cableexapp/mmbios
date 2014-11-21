@@ -220,6 +220,12 @@
     }
 }
 
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -31,7 +31,7 @@
         [btn setTag:i];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake((btn.frame.size.width-50)/2, 5, 50, 50)];
-        NSLog(@"%f %f %f",btn.frame.origin.y,btn.frame.size.height,btn.frame.size.width);
+//        NSLog(@"%f %f %f",btn.frame.origin.y,btn.frame.size.height,btn.frame.size.width);
         switch (i) {
             case 0:
                 [iv setImage:[UIImage imageNamed:@"快速查询.png"]];

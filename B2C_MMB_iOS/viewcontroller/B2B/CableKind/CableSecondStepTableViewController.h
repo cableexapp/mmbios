@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
+#import "DCFColorUtil.h"
 
 @protocol Change <NSObject>
 

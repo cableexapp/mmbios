@@ -32,6 +32,9 @@
     
     BOOL _reloading;
     
+    UIView *backView;
+
+    
     NSMutableArray *btnArray;
     
     UIButton *searchBtn;
@@ -120,9 +123,9 @@
         }
     }
     
-    UIButton *btn = (UIButton *) sender;
-    btn.selected = !btn.selected;
-    [btn setUserInteractionEnabled:YES];
+//    UIButton *btn = (UIButton *) sender;
+//    btn.selected = !btn.selected;
+//    [btn setUserInteractionEnabled:YES];
     
     _seq = @"";
     intPage = 1;
@@ -130,10 +133,21 @@
     
     //    if(!searchView)
     //    {
+    
+    backView = [[UIView alloc] init];
+    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    backView.alpha = 0.6;
+    backView.hidden = NO;
+    backView.backgroundColor = [UIColor lightGrayColor];
+    [self.view insertSubview:backView aboveSubview:tv];
+
     searchView = [[UIView alloc] init];
-    [searchView setFrame:CGRectMake(100, 0, ScreenWidth-100, ScreenHeight)];
+    [searchView setFrame:CGRectMake(70, 50, ScreenWidth-40, ScreenHeight)];
     [searchView setBackgroundColor:[UIColor redColor]];
     [self.view addSubview:searchView];
+    
+    
+    
     //    }
     //    if(!search)
     //    {
@@ -146,6 +160,7 @@
     search.delegate = self;
     [self addChildViewController:search];
     [searchView addSubview:search.view];
+   
     
     
     [UIView commitAnimations];

@@ -7,6 +7,8 @@
 //
 
 #import "B2CShoppingSearchViewController.h"
+#import "B2CShoppingListViewController.h"
+
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
@@ -23,6 +25,7 @@
     
     
     UIImageView *useCloseIV;  //用途右上角关闭
+    UIView *lineView_1;
     
     NSString *useString;  //用途
     NSString *brandString; //品牌
@@ -218,6 +221,7 @@
     useBtn.layer.borderWidth = 1.0f;
     [useBtn setTag:1];
     [headBtnArray addObject:useBtn];
+    lineView_1.hidden = YES;
     
     showUseCell = NO;
     
@@ -479,75 +483,83 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i == 0)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"照明" forState:UIControlStateNormal];
         }
         if(i == 1)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"插座" forState:UIControlStateNormal];
         }
         if(i == 2)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"热水器" forState:UIControlStateNormal];
         }
         if(i == 3)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"立式空调" forState:UIControlStateNormal];
         }
         if(i == 4)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"挂壁空调" forState:UIControlStateNormal];
         }
         if(i == 5)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"中央空调" forState:UIControlStateNormal];
         }
         if(i == 6)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"装潢明线" forState:UIControlStateNormal];
         }
         if(i == 7)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"进户总线" forState:UIControlStateNormal];
         }
         if(i == 8)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"网络" forState:UIControlStateNormal];
         }
         if(i == 9)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*4 + 30*3, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*4 + 30*3, btnWidth-20, 30)];
             [btn setTitle:@"电话" forState:UIControlStateNormal];
         }
         if(i == 10)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*4 + 30*3, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*4 + 30*3, btnWidth-20, 30)];
             [btn setTitle:@"电源连接线" forState:UIControlStateNormal];
         }
         if(i == 11)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*4 + 30*3, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*4 + 30*3, btnWidth-20, 30)];
             [btn setTitle:@"视频" forState:UIControlStateNormal];
         }
         if(i == 12)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*5 + 30*4, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*5 + 30*4, btnWidth-20, 30)];
             [btn setTitle:@"音频" forState:UIControlStateNormal];
+            
+            lineView_1 = [[UIView alloc]init];
+            lineView_1.frame = CGRectMake(0, 210, myRect.size.width, 7);
+            lineView_1.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
+            [tv addSubview:lineView_1];
         }
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(useBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+        [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
+        btn.layer.borderWidth = 0.3;
         [btn setEnabled:YES];
         [array1 addObject:btn];
     }
@@ -559,58 +571,61 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i == 0)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"远东" forState:UIControlStateNormal];
         }
         if(i == 1)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"华东电缆" forState:UIControlStateNormal];
         }
         if(i == 2)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"鑫园电缆" forState:UIControlStateNormal];
         }
         if(i == 3)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"玖开电缆" forState:UIControlStateNormal];
         }
         if(i == 4)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"澳航" forState:UIControlStateNormal];
         }
         if(i == 5)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"陆通舜山" forState:UIControlStateNormal];
         }
         if(i == 6)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"上进" forState:UIControlStateNormal];
         }
         if(i == 7)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"安徽电缆" forState:UIControlStateNormal];
         }
         if(i == 8)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"荣宜天康" forState:UIControlStateNormal];
+            
         }
         
         
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn setEnabled:YES];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(brandBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
+        btn.layer.borderWidth = 0.3;
         [array2 addObject:btn];
     }
     
@@ -621,76 +636,78 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i == 0)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"BV" forState:UIControlStateNormal];
         }
         if(i == 1)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"BVR" forState:UIControlStateNormal];
         }
         if(i == 2)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"BVV" forState:UIControlStateNormal];
         }
         if(i == 3)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"BRVV" forState:UIControlStateNormal];
         }
         if(i == 4)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"ZR-BV" forState:UIControlStateNormal];
         }
         if(i == 5)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"NH-BV" forState:UIControlStateNormal];
         }
         if(i == 6)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"ZR-RVS" forState:UIControlStateNormal];
         }
         if(i == 7)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"NH-RVS" forState:UIControlStateNormal];
         }
         if(i == 8)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"ZR-BVR" forState:UIControlStateNormal];
         }
         if(i == 9)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*4 + 30*3, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*4 + 30*3, btnWidth-20, 30)];
             [btn setTitle:@"NH-BVR" forState:UIControlStateNormal];
         }
         if(i == 10)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*4 + 30*3, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*4 + 30*3, btnWidth-20, 30)];
             [btn setTitle:@"ZR-RVV" forState:UIControlStateNormal];
         }
         if(i == 11)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*4 + 30*3, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*4 + 30*3, btnWidth-20, 30)];
             [btn setTitle:@"NH-RVV" forState:UIControlStateNormal];
         }
         if(i == 12)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*5 + 30*4, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*5 + 30*4, btnWidth-20, 30)];
             [btn setTitle:@"HSYV-5" forState:UIControlStateNormal];
         }
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn setEnabled:YES];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
+        btn.layer.borderWidth = 0.3;
         [array3 addObject:btn];
     }
     
@@ -701,68 +718,69 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         if(i == 0)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"0.5平方" forState:UIControlStateNormal];
         }
         if(i == 1)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"0.75平方" forState:UIControlStateNormal];
         }
         if(i == 2)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*1 + 30*0, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*1 + 30*0, btnWidth-20, 30)];
             [btn setTitle:@"1平方" forState:UIControlStateNormal];
         }
         if(i == 3)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"1.5平方" forState:UIControlStateNormal];
         }
         if(i == 4)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"2.5平方" forState:UIControlStateNormal];
         }
         if(i == 5)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*2 + 30*1, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*2 + 30*1, btnWidth-20, 30)];
             [btn setTitle:@"4平方" forState:UIControlStateNormal];
         }
         if(i == 6)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"6平方" forState:UIControlStateNormal];
         }
         if(i == 7)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"10平方" forState:UIControlStateNormal];
         }
         if(i == 8)
         {
-            [btn setFrame:CGRectMake(5*3 + btnWidth*2, 5*3 + 30*2, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"16平方" forState:UIControlStateNormal];
         }
         if(i == 9)
         {
-            [btn setFrame:CGRectMake(5*1 + btnWidth*0, 5*4 + 30*3, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*4 + 30*3, btnWidth-20, 30)];
             [btn setTitle:@"25平方" forState:UIControlStateNormal];
         }
         if(i == 10)
         {
-            [btn setFrame:CGRectMake(5*2 + btnWidth*1, 5*4 + 30*3, btnWidth, 30)];
+            [btn setFrame:CGRectMake(5*2 + btnWidth*1-5, 5*4 + 30*3, btnWidth-20, 30)];
             [btn setTitle:@"35平方" forState:UIControlStateNormal];
         }
         
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0]forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn setEnabled:YES];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(specBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
+        [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
+        btn.layer.borderWidth = 0.3;
         [array4 addObject:btn];
     }
     _myDic = [[NSDictionary alloc] initWithObjectsAndKeys:array1,@"按用途筛选",
@@ -776,7 +794,6 @@
     {
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 1, 23, 27)];
         [iv setImage:[UIImage imageNamed:@"next.png"]];
-        
         [ivArray addObject:iv];
     }
     
@@ -820,12 +837,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
+
 }
 
 - (void) clear:(UIButton *) sender
 {
+
+    
     if(headBtnArray && headBtnArray.count != 0)
     {
         [headBtnArray removeAllObjects];
@@ -1059,26 +1077,31 @@
     view1 = nil;
 	view2 = nil;
 	view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
-	view1.backgroundColor = [UIColor colorWithRed:0.9 green:0.95 blue:0.9 alpha:1.0];
+	view1.backgroundColor = [UIColor clearColor];
 	
-	view2 = [[UIView alloc] initWithFrame:CGRectMake(2, 1, myRect.size.width, 30)];
-	view2.backgroundColor = [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1.0];
+	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
+	view2.backgroundColor = [UIColor clearColor];
+    
+    UIView *lineView = [[UIView alloc]init];
+    lineView.frame = CGRectMake(0, 31, myRect.size.width, 0.7);
+    lineView.backgroundColor = [UIColor blackColor];
+//    [view2 addSubview:lineView];
 	[view1 addSubview:view2];
 	
-    
+   
     UIButton *abtn = [UIButton buttonWithType:UIButtonTypeCustom];
-	abtn.backgroundColor = [UIColor clearColor];
+    abtn.backgroundColor = [UIColor clearColor];
     abtn.frame = CGRectMake(0, 0,myRect.size.width, 32);
     
-    UIImageView *iv =[ivArray objectAtIndex:section-1];
-    [abtn addSubview:iv];
+//    UIImageView *iv =[ivArray objectAtIndex:section-1];
+//    [abtn addSubview:iv];
     
 	abtn.tag = section-1;
 	[abtn addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
 	[view2 addSubview:abtn];
     
     
-	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, myRect.size.width, 30)];
+	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, myRect.size.width, 30)];
 	label1.backgroundColor = [UIColor clearColor];
     [label1 setFont:[UIFont systemFontOfSize:13]];
 	label1.text = [[_myDic allKeys] objectAtIndex:section-1];
@@ -1098,13 +1121,15 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:0];
-        //        [cell.contentView setBackgroundColor:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0]];
+//        [cell.contentView setBackgroundColor:[UIColor redColor]];
         [cell.contentView setBackgroundColor:[UIColor whiteColor]];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
     {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+        
     }
+    
     //	NSString *str = [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:[indexPath section]]] objectAtIndex:indexPath.row];
     //	cell.imageView.image = [UIImage imageNamed:@"102.png"];
     //	cell.textLabel.text = str;
@@ -1118,6 +1143,7 @@
         }
         else
         {
+//            选中的btn
             for(UIButton *btn in headBtnArray)
             {
                 [cell.contentView addSubview:btn];
@@ -1126,6 +1152,7 @@
     }
     else
     {
+//        列表的所有Btn
         NSMutableArray *array = [_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section-1]];
         for(UIButton *btn in array)
         {
@@ -1144,18 +1171,25 @@
 	UIButton *btn = (UIButton *)sender;
 	flag[sectionIndex] = !flag[sectionIndex];
     
-    UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
+//    UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
     
 	if(flag[sectionIndex])
 	{
+        
+        
 		btn.selected = YES;
-        [iv setImage:[UIImage imageNamed:@"click1.png"]
-         ];
+//       [iv setImage:[UIImage imageNamed:@"click1.png"]];
+        lineView_1.hidden = NO;
+        
+        
 	}
 	else
     {
 		btn.selected = NO;
-        [iv setImage:[UIImage imageNamed:@"next.png"]];
+//        [iv setImage:[UIImage imageNamed:@"next.png"]];
+        lineView_1.hidden = YES;
+//        self.lineView.hidden = NO;
+
 	}
     
 	[tv reloadData];

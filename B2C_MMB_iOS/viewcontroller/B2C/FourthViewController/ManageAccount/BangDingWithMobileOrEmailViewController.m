@@ -91,17 +91,14 @@
     [self.tf_getValidate setDelegate:self];
     
     [_chooseBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _chooseBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    _chooseBtn.layer.borderWidth = 1.5f;
     _chooseBtn.layer.cornerRadius = 5.0f;
-    _chooseBtn.layer.masksToBounds = YES;
-    [_chooseBtn setBackgroundColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0]];
     
     
     _getValidateBtn.layer.borderColor = MYCOLOR.CGColor;
     _getValidateBtn.layer.borderWidth = 1.0f;
     _getValidateBtn.layer.cornerRadius = 5;
     _getValidateBtn.layer.masksToBounds = YES;
+    [_getValidateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     UITapGestureRecognizer *TAP = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:TAP];

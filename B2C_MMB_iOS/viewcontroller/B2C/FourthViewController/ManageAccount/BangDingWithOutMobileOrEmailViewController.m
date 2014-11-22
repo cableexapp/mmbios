@@ -89,11 +89,51 @@
     NSLog(@"%@",dicRespon);
 }
 
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == self.sureSecTf)
+    {
+        if(ScreenHeight <= 500)
+        {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDelegate:self];
+            [UIView setAnimationDuration:0.3f];
+            [self.view setFrame:CGRectMake(0, -20, ScreenWidth, ScreenHeight)];
+            [UIView commitAnimations];
+        }
+        else
+        {
+            
+        }
+    }
+}
+
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    [self.oldSecTf resignFirstResponder];
-    [self.setNewSecTf resignFirstResponder];
-    [self.sureSecTf resignFirstResponder];
+    if(textField == self.oldSecTf)
+    {
+        [self.oldSecTf resignFirstResponder];
+    }
+    if(textField == self.setNewSecTf)
+    {
+        [self.setNewSecTf resignFirstResponder];
+    }
+    if(textField == self.sureSecTf)
+    {
+        [self.sureSecTf resignFirstResponder];
+        if(ScreenHeight <= 500)
+        {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDelegate:self];
+            [UIView setAnimationDuration:0.3f];
+            [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+            [UIView commitAnimations];
+        }
+        else
+        {
+            
+        }
+    }
     return YES;
 }
 
@@ -111,6 +151,19 @@
     [self.oldSecTf resignFirstResponder];
     [self.setNewSecTf resignFirstResponder];
     [self.sureSecTf resignFirstResponder];
+    
+    if(ScreenHeight <= 500)
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDuration:0.3f];
+        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+        [UIView commitAnimations];
+    }
+    else
+    {
+        
+    }
     
     if(self.oldSecTf.text.length == 0)
     {

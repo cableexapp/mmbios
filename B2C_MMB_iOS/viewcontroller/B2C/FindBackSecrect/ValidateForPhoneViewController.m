@@ -115,11 +115,11 @@
     if(ScreenHeight < 500)
     {
 
-        [self.view setFrame:CGRectMake(0, -100, ScreenWidth, ScreenHeight)];
+        [self.view setFrame:CGRectMake(0, -20, ScreenWidth, ScreenHeight)];
     }
     else
     {
-        [self.view setFrame:CGRectMake(0, -64, ScreenWidth, ScreenHeight)];
+//        [self.view setFrame:CGRectMake(0, -64, ScreenWidth, ScreenHeight)];
     }
     [UIView commitAnimations];
 }

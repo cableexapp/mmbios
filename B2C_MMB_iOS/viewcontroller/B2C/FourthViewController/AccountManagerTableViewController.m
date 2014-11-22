@@ -95,7 +95,6 @@
     [self setHidesBottomBarWhenPushed:YES];
 
     
-    
     if(indexPath.row == 0)
     {
         if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email ==NULL || email == nil))

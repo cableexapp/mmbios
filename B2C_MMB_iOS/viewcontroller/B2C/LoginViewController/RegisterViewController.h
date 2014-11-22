@@ -17,17 +17,13 @@
 }
 
 
-@property (weak, nonatomic) IBOutlet UIView *segmentView;
 
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *mySegment;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 
+@property (weak, nonatomic) IBOutlet UIButton *regesterBtn;
 
-@property (weak, nonatomic) IBOutlet UITextField *speedRegisterTf;
-@property (weak, nonatomic) IBOutlet UIButton *speedAgreeBtn;
-@property (weak, nonatomic) IBOutlet UIButton *speedGetSecBtn;
 
 @property (weak, nonatomic) IBOutlet UITextField *normalAccountTf;
 

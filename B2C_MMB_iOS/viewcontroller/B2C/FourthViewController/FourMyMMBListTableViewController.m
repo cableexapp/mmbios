@@ -111,21 +111,18 @@
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 if(s.intValue < 99 && s.intValue > 0)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 0, 18, 18)];
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 10, 18, 18)];
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
                     [btn setTitle:s forState:UIControlStateNormal];
                 }
                 else if (s.intValue >= 99)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 0, 24, 18)];
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 10, 24, 18)];
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
                     [btn setTitle:@"99+" forState:UIControlStateNormal];
                 }
                 
                 [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-                
-                
-                
                 
                 if(s.intValue == 0)
                 {
@@ -231,7 +228,7 @@
     for(int i=0;i<5;i++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:CGRectMake(-1, 0, ScreenWidth+1, 40)];
+        [btn setFrame:CGRectMake(-1, 0, ScreenWidth+1, 45)];
         //        btn.layer.borderColor = [UIColor colorWithRed:216.0/255.0 green:232.0/255.0 blue:249.0/255.0 alpha:1.0].CGColor;
         //        btn.layer.borderColor = [UIColor redColor].CGColor;
         //        btn.layer.borderWidth = 1.0f;
@@ -239,60 +236,74 @@
         [btn setTag:i];
         [btn setTitle:@"" forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [btn setBackgroundColor:[UIColor colorWithRed:200.0/255.0 green:237.0/255.0 blue:253.0/255.0 alpha:1.0]];
+        [btn setBackgroundColor:[UIColor whiteColor]];
         
         UILabel *label_1 = [[UILabel alloc] init];
-        [label_1 setTextColor:[UIColor colorWithRed:44.0/255.0 green:122.0/255.0 blue:250.0/255.0 alpha:1.0]];
+        [label_1 setTextColor:[UIColor blackColor]];
+        [label_1 setFont:[UIFont systemFontOfSize:15]];
         if(i <= 2)
         {
-            [label_1 setFrame:CGRectMake(10, 5, 200, 30)];
+            [label_1 setFrame:CGRectMake(45, 5, 200, 35)];
         }
         else
         {
-            [label_1 setFrame:CGRectMake(50, 5, 150, 30)];
+            [label_1 setFrame:CGRectMake(45, 5, 150, 35)];
         }
         [label_1 setTextAlignment:NSTextAlignmentLeft];
         
-        UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width-140, 5, 100, 30)];
-        [label_2 setTextColor:[UIColor colorWithRed:44.0/255.0 green:122.0/255.0 blue:250.0/255.0 alpha:1.0]];
+        UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width-140, 5, 100, 35)];
+        [label_2 setTextColor:[UIColor lightGrayColor]];
+        [label_2 setFont:[UIFont systemFontOfSize:14]];
         [label_2 setTextAlignment:NSTextAlignmentRight];
-        [label_2 setText:@"查看全部"];
+        [label_2 setText:@"查看全部订单"];
         
         if(i == 0)
         {
             [label_1 setText:@"我的买卖宝询价单"];
             [btn addSubview:label_2];
+            
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            [iv setImage:[UIImage imageNamed:@"mmbOrder.png"]];
+            [btn addSubview:iv];
         }
         if(i == 1)
         {
             [label_1 setText:@"我的电缆采购订单"];
             [btn addSubview:label_2];
+            
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            [iv setImage:[UIImage imageNamed:@"dlOrder.png"]];
+            [btn addSubview:iv];
         }
         if(i == 2)
         {
             [label_1 setText:@"我的家装馆订单"];
             [btn addSubview:label_2];
+            
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            [iv setImage:[UIImage imageNamed:@"homeOrder.png"]];
+            [btn addSubview:iv];
         }
         if(i == 3)
         {
             [label_1 setText:@"账户信息"];
             
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
-            [iv setImage:[UIImage imageNamed:@"Set.png"]];
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            [iv setImage:[UIImage imageNamed:@"count.png"]];
             [btn addSubview:iv];
         }
         if(i == 4)
         {
             [label_1 setText:@"收货地址"];
             
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
-            [iv setImage:[UIImage imageNamed:@"Set.png"]];
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            [iv setImage:[UIImage imageNamed:@"getAddress.png"]];
             [btn addSubview:iv];
         }
         [btn addSubview:label_1];
         
-        UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 30, 30)];
-        [arrowIv setImage:[UIImage imageNamed:@"Set.png"]];
+        UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 35, 35)];
+        [arrowIv setImage:[UIImage imageNamed:@"set_clear.png"]];
         [btn addSubview:arrowIv];
         
         [headBtnArray addObject:btn];
@@ -304,43 +315,40 @@
     {
         UIButton *btn = (UIButton *)[cellBtnArray objectAtIndex:i];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
-        
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((btn.frame.size.width-30)/2, 5, 30, 20)];
-        [imageView setImage:[UIImage imageNamed:@"Set.png"]];
-        [btn addSubview:imageView];
-        
     }
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if(section == 0)
     {
-        return 50;
+        return 70;
     }
-    return 40;
+    return 45;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if(section == 0)
     {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 50)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 70)];
         
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 30, 30)];
-        [iv setImage:[UIImage imageNamed:@"Set.png"]];
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 50, 50)];
+        [iv setImage:[UIImage imageNamed:@"headPic.png"]];
         [view addSubview:iv];
         
+        UIImageView *backView = [[UIImageView alloc] init];
+        backView.frame = CGRectMake(0, 0, ScreenWidth, 70);
+        backView.image = [UIImage imageNamed:@"headView.png"];
+        [view insertSubview:backView belowSubview:iv];
+        
         NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((ScreenWidth-200)/2, 10, 200, 30)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(85, 10, 200, 50)];
         if(userName.length == 0 || [userName isKindOfClass:[NSNull class]] || userName == NULL || userName == nil)
         {
             [label setText:@""];
@@ -350,8 +358,8 @@
             [label setText:userName];
         }
         [label setFont:[UIFont boldSystemFontOfSize:20]];
-        [label setTextAlignment:NSTextAlignmentCenter];
-        [label setTextColor:[UIColor colorWithRed:44.0/255.0 green:122.0/255.0 blue:250.0/255.0 alpha:1.0]];
+        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setTextColor:[UIColor blackColor]];
         [view addSubview:label];
         
         return view;
@@ -359,11 +367,11 @@
     UIButton *btn = [headBtnArray objectAtIndex:section-1];
     
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, btn.frame.size.width, 1)];
-    [topView setBackgroundColor:[UIColor colorWithRed:65.0/255.0 green:98.0/255.0 blue:127.0/255.0 alpha:1.0]];
+    [topView setBackgroundColor:[UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0]];
     [btn addSubview:topView];
     
     UIView *buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height, btn.frame.size.width, 1)];
-    [buttomView setBackgroundColor:[UIColor colorWithRed:65.0/255.0 green:98.0/255.0 blue:127.0/255.0 alpha:1.0]];
+    [buttomView setBackgroundColor:[UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0]];
     if(section != 4)
     {
         [btn addSubview:buttomView];

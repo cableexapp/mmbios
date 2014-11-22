@@ -50,7 +50,9 @@
     [self.view addGestureRecognizer:tap];
     
     self.numTF.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.numTF.layer.borderWidth = 0.5f;
     self.timeTF.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.timeTF.layer.borderWidth = 0.5f;
     
     self.sureBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
     self.sureBtn.layer.cornerRadius = 5.0f;

@@ -88,20 +88,17 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改登陆密码"];
     self.navigationItem.titleView = top;
     
-
+    [self.tf_getValidate setDelegate:self];
     
     [_chooseBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _chooseBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    _chooseBtn.layer.borderWidth = 1.5f;
     _chooseBtn.layer.cornerRadius = 5.0f;
-    _chooseBtn.layer.masksToBounds = YES;
-    [_chooseBtn setBackgroundColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0]];
     
     
     _getValidateBtn.layer.borderColor = MYCOLOR.CGColor;
     _getValidateBtn.layer.borderWidth = 1.0f;
     _getValidateBtn.layer.cornerRadius = 5;
     _getValidateBtn.layer.masksToBounds = YES;
+    [_getValidateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     UITapGestureRecognizer *TAP = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:TAP];
@@ -307,35 +304,26 @@
 
 - (void) adjustTheScreen
 {
-    //    if(ScreenHeight >= 500)
-    //    {
-    //
-    //    }
-    //    else
-    //    {
-    //        [UIView beginAnimations:nil context:nil];
-    //        [UIView setAnimationDuration:0.3];
-    //        [UIView setAnimationDelegate:self];
-    //        [self.view setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-    //        [UIView commitAnimations];
-    //    }
-    //
-    //    if([_chooseBtn.titleLabel.text isEqualToString:@"已验证手机"])
-    //    {
-    //
-    //    }
-    //    else
-    //    {
-    //
-    //
-    //
-    //    }
+    if(ScreenHeight >= 500)
+    {
+        
+    }
+    else
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDuration:0.3];
+        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+        [UIView commitAnimations];
+    }
     
 }
 
 
 - (IBAction)nextBtnClick:(id)sender
 {
+    [self.nextBtn resignFirstResponder];
+    
     [self adjustTheScreen];
     
     _tf_getValidate.text = [_tf_getValidate.text stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -557,7 +545,7 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDuration:0.3];
-        [self.view setFrame:CGRectMake(0, -44, 320, ScreenHeight)];
+        [self.view setFrame:CGRectMake(0, -20, ScreenWidth, ScreenHeight)];
         [UIView commitAnimations];
     }
 }
@@ -568,6 +556,7 @@
     {
         [_tf_getValidate resignFirstResponder];
     }
+    [self adjustTheScreen];
     return YES;
 }
 

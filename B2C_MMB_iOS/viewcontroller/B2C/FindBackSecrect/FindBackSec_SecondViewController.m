@@ -89,12 +89,8 @@
     self.navigationItem.titleView = top;
 
     
-    [_chooseBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    _chooseBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    _chooseBtn.layer.borderWidth = 1.5f;
+    [_chooseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _chooseBtn.layer.cornerRadius = 5.0f;
-    _chooseBtn.layer.masksToBounds = YES;
-    [_chooseBtn setBackgroundColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0]];
     
     
     _getValidateBtn.layer.borderColor = MYCOLOR.CGColor;
@@ -298,35 +294,25 @@
         [self whenShowEmail:theEmail];
     }
     
+    [self adjustTheScreen];
+    
     //    [_nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height+20, self.nextBtn.frame.size.width, self.nextBtn.frame.size.height)];
-    //    [self adjustTheScreen];
 }
 
 - (void) adjustTheScreen
 {
-//    if(ScreenHeight >= 500)
-//    {
-//        
-//    }
-//    else
-//    {
-//        [UIView beginAnimations:nil context:nil];
-//        [UIView setAnimationDuration:0.3];
-//        [UIView setAnimationDelegate:self];
-//        [self.view setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-//        [UIView commitAnimations];
-//    }
-//    
-//    if([_chooseBtn.titleLabel.text isEqualToString:@"已验证手机"])
-//    {
-//
-//    }
-//    else
-//    {
-//
-//       
-//
-//    }
+    if(ScreenHeight >= 500)
+    {
+        
+    }
+    else
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDuration:0.3];
+        [self.view setFrame:CGRectMake(0, 64, 320, ScreenHeight)];
+        [UIView commitAnimations];
+    }
 
 }
 
@@ -554,7 +540,7 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDuration:0.3];
-        [self.view setFrame:CGRectMake(0, -44, 320, ScreenHeight)];
+        [self.view setFrame:CGRectMake(0, -20, 320, ScreenHeight)];
         [UIView commitAnimations];
     }
 }
@@ -565,6 +551,7 @@
     {
         [_tf_getValidate resignFirstResponder];
     }
+    [self adjustTheScreen];
     return YES;
 }
 

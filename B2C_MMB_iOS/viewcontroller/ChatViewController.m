@@ -73,6 +73,7 @@
     naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(130,20, 120, 44)];
     naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
+    naviTitle.font = [UIFont systemFontOfSize:20];
     naviTitle.textAlignment = NSTextAlignmentLeft;
     [self.view insertSubview:naviTitle atIndex:2];
     

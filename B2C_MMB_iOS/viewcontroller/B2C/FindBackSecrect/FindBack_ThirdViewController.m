@@ -79,6 +79,8 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"找回密码"];
     self.navigationItem.titleView = top;
     
+    
+    self.sureBtn.layer.cornerRadius = 5.0f;
 }
 
 

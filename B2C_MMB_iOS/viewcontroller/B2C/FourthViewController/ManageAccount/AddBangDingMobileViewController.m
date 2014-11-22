@@ -61,6 +61,26 @@
     
 }
 
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == self.validateTf)
+    {
+        if(ScreenHeight <= 500)
+        {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.3f];
+            [UIView setAnimationDelegate:self];
+            [self.view setFrame:CGRectMake(0, -20, ScreenWidth, ScreenHeight)];
+            [UIView commitAnimations];
+        }
+        else
+        {
+            
+        }
+
+    }
+}
+
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
     if([self.teltf isFirstResponder])
@@ -69,6 +89,18 @@
     }
     if([self.validateTf isFirstResponder])
     {
+        if(ScreenHeight <= 500)
+        {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.3f];
+            [UIView setAnimationDelegate:self];
+            [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+            [UIView commitAnimations];
+        }
+        else
+        {
+            
+        }
         [self.validateTf resignFirstResponder];
     }
     
@@ -257,6 +289,19 @@
 {
     [self.teltf resignFirstResponder];
     [self.validateTf resignFirstResponder];
+    
+    if(ScreenHeight <= 500)
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3f];
+        [UIView setAnimationDelegate:self];
+        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+        [UIView commitAnimations];
+    }
+    else
+    {
+        
+    }
     
     if(self.validateTf.text.length == 0)
     {

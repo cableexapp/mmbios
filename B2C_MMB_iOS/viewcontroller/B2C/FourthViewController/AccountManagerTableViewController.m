@@ -51,6 +51,28 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"账户管理"];
     self.navigationItem.titleView = top;
     
+    phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
+    email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
+    UIView *lineView1 = [[UIView alloc] init];
+    lineView1.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
+    lineView1.backgroundColor = [UIColor lightGrayColor];
+    
+    UIView *lineView2 = [[UIView alloc] init];
+    lineView2.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
+    lineView2.backgroundColor = [UIColor lightGrayColor];
+    
+    UIView *lineView3 = [[UIView alloc] init];
+    lineView3.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
+    lineView3.backgroundColor = [UIColor lightGrayColor];
+    [self.cell_1 addSubview:lineView1];
+    [self.cell_2 addSubview:lineView2];
+    [self.cell_3 addSubview:lineView3];
+    self.cell_1.contentView.backgroundColor = [UIColor whiteColor];
+    self.cell_1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.cell_2.backgroundColor = [UIColor whiteColor];
+    self.cell_2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.cell_3.backgroundColor = [UIColor whiteColor];
+    self.cell_3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     [self.tableView reloadData];
 }
@@ -59,7 +81,8 @@
 {
     if(indexPath.row == 0)
     {
-        return 44;
+        return 50;
+        self.cell_1.contentView.backgroundColor = [UIColor whiteColor];
     }
     if(indexPath.row == 1)
     {
@@ -71,7 +94,8 @@
         else
         {
             [self.cell_2 setHidden:NO];
-            return 44;
+            self.cell_2.backgroundColor = [UIColor whiteColor];
+            return 50;
         }
     }
     if(indexPath.row == 2)
@@ -79,7 +103,7 @@
         if(phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil)
         {
             [self.cell_3 setHidden:NO];
-            return 44;
+            return 50;
         }
         else
         {
@@ -87,16 +111,34 @@
             return 0;
         }
     }
-    return 44;
+    return 50;
 }
+
+
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil)
+//    {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//        //         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
+//        //         view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+//        //         [cell.contentView addSubview:view];
+//        
+//        
+//        //         cell.font = [UIFont systemFontOfSize:16];
+//        cell.backgroundColor = [UIColor clearColor];
+//        
+//    }
+//    return cell;
+//}
+
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self setHidesBottomBarWhenPushed:YES];
-    
-    
-    
-    
+
     
     if(indexPath.row == 0)
     {
@@ -127,7 +169,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

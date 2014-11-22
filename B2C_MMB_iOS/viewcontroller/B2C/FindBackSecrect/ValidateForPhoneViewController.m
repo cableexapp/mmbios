@@ -115,11 +115,11 @@
     if(ScreenHeight < 500)
     {
 
-        [self.view setFrame:CGRectMake(0, -100, ScreenWidth, ScreenHeight)];
+        [self.view setFrame:CGRectMake(0, -20, ScreenWidth, ScreenHeight)];
     }
     else
     {
-        [self.view setFrame:CGRectMake(0, -64, ScreenWidth, ScreenHeight)];
+//        [self.view setFrame:CGRectMake(0, -64, ScreenWidth, ScreenHeight)];
     }
     [UIView commitAnimations];
 }
@@ -197,11 +197,11 @@
         return;
     }
 #pragma mark - 验证码暂时写死
-//    if(![self.telTf.text isEqualToString:code])
-//    {
-//        [DCFStringUtil showNotice:@"请输入正确的验证码"];
-//        return;
-//    }
+    if(![self.telTf.text isEqualToString:code])
+    {
+        [DCFStringUtil showNotice:@"请输入正确的验证码"];
+        return;
+    }
     
     [self.telTf resignFirstResponder];
     

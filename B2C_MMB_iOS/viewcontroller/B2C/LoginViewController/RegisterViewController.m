@@ -51,7 +51,6 @@
         [timer invalidate];
         timer = nil;
     }
-    [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     timeCount_tel = 60;
 }
 
@@ -72,16 +71,14 @@
     
     DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"电缆买卖宝注册"];
     self.navigationItem.titleView = TOP;
+
+    self.regesterBtn.layer.cornerRadius = 5.0f;
     
-    
-    [self.mySegment setFrame:CGRectMake((ScreenWidth-self.mySegment.frame.size.width)/2, (self.segmentView.frame.size.height-self.mySegment.frame.size.height)/2, self.mySegment.frame.size.width, self.mySegment.frame.size.height)];
-    
-    [self.sv setContentSize:CGSizeMake(ScreenWidth*2, self.sv.frame.size.height-200)];
+    [self.sv setContentSize:CGSizeMake(ScreenWidth-50, self.sv.frame.size.height-200)];
     [self.sv setDelegate:self];
     [self.sv setPagingEnabled:YES];
     [self.sv setBounces:NO];
     
-    [self.mySegment addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     
     [self.normalAccountTf setReturnKeyType:UIReturnKeyNext];
     [self.normalSecTf setReturnKeyType:UIReturnKeyNext];
@@ -91,72 +88,16 @@
     [self.view addGestureRecognizer:tap];
 }
 
-- (IBAction)speedAgreeBtnClick:(id)sender
-{
-    NSLog(@"1111");
-}
-
-- (IBAction)speedGetSecBtnClick:(id)sender
-{
-    [self.speedRegisterTf resignFirstResponder];
-    
-    if(self.speedRegisterTf.text.length == 0)
-    {
-        [DCFStringUtil showNotice:@"请输入手机号码"];
-        return;
-    }
-    if([DCFCustomExtra validateMobile:self.speedRegisterTf.text] == NO)
-    {
-        [DCFStringUtil showNotice:@"手机号码不正确"];
-        return;
-    }
-    if(!timer)
-    {
-        timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
-        [timer fire];
-    }
-}
 
 
-- (void) timer:(NSTimer *) sender
-{
-    if(timeCount_tel == 0)
-    {
-        [self.speedGetSecBtn setUserInteractionEnabled:YES];
-        [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        [timer invalidate];
-        timer = nil;
-        timeCount_tel = 60;
-    }
-    else
-    {
-        timeCount_tel = timeCount_tel - 1;
-        if(timeCount_tel == 0)
-        {
-            [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        }
-        else
-        {
-            NSString *timeString = [NSString stringWithFormat:@"剩余%d秒",timeCount_tel];
-            [self.speedGetSecBtn setTitle:timeString forState:UIControlStateNormal];
-        }
-        [self.speedGetSecBtn setUserInteractionEnabled:NO];
-        
-    }
-}
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    if(currentPageIndex == 0)
-    {
-        [self.speedRegisterTf resignFirstResponder];
-    }
-    else
-    {
-        [_normalAccountTf resignFirstResponder];
-        [_normalSecTf resignFirstResponder];
-        [_normalSureSecTf resignFirstResponder];
-    }
+
+    [_normalAccountTf resignFirstResponder];
+    [_normalSecTf resignFirstResponder];
+    [_normalSureSecTf resignFirstResponder];
+    
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
@@ -218,14 +159,7 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     NSLog(@"%@",dicRespon);
-    [_speedGetSecBtn setUserInteractionEnabled:YES];
-    [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-    if(timer)
-    {
-        [timer invalidate];
-        timer = nil;
-        timeCount_tel = 60;
-    }
+
     
     if(URLTag == URLRegesterTag)
     {
@@ -274,41 +208,6 @@
     [self regester];
 }
 
-- (void) segmentChange:(UISegmentedControl *) sender
-{
-    int index = self.mySegment.selectedSegmentIndex;
-    if(index == 0)
-    {
-        if(currentPageIndex == 0)
-        {
-            [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
-        }
-        else if (currentPageIndex == 1)
-        {
-            [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
-        }
-    }
-    if(index == 1)
-    {
-        [_speedGetSecBtn setUserInteractionEnabled:YES];
-        [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        if(timer)
-        {
-            [timer invalidate];
-            timer = nil;
-            timeCount_tel = 60;
-        }
-        
-        if(currentPageIndex == 0)
-        {
-            [self.sv setContentOffset:CGPointMake(ScreenWidth, 0) animated:YES];
-        }
-        else if (currentPageIndex == 1)
-        {
-            [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
-        }
-    }
-}
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -318,17 +217,9 @@
     
     if(currentPageIndex == 1)
     {
-        [_speedGetSecBtn setUserInteractionEnabled:YES];
-        [self.speedGetSecBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        if(timer)
-        {
-            [timer invalidate];
-            timer = nil;
-            timeCount_tel = 60;
-        }
+
     }
     
-    [self.mySegment setSelectedSegmentIndex:currentPageIndex];
 }
 
 - (void) hudWasHidden:(MBProgressHUD *)hud

@@ -54,9 +54,10 @@
     
     [self pushAndPopStyle];
     
-    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.sureBtn.layer.borderWidth = 1.0f;
+    self.sureBtn.backgroundColor = [UIColor colorWithRed:0/255.0 green:99/255.0 blue:206/255.0 alpha:1.0];
     self.sureBtn.layer.cornerRadius = 5.0f;
+    [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.sureBtn.frame = CGRectMake(15, self.view.frame.size.height-205, self.view.frame.size.width-30, 40);
     
     [self.oldSecTf setDelegate:self];
     [self.setNewSecTf setDelegate:self];
@@ -89,11 +90,51 @@
     NSLog(@"%@",dicRespon);
 }
 
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == self.sureSecTf)
+    {
+        if(ScreenHeight <= 500)
+        {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDelegate:self];
+            [UIView setAnimationDuration:0.3f];
+            [self.view setFrame:CGRectMake(0, -20, ScreenWidth, ScreenHeight)];
+            [UIView commitAnimations];
+        }
+        else
+        {
+            
+        }
+    }
+}
+
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    [self.oldSecTf resignFirstResponder];
-    [self.setNewSecTf resignFirstResponder];
-    [self.sureSecTf resignFirstResponder];
+    if(textField == self.oldSecTf)
+    {
+        [self.oldSecTf resignFirstResponder];
+    }
+    if(textField == self.setNewSecTf)
+    {
+        [self.setNewSecTf resignFirstResponder];
+    }
+    if(textField == self.sureSecTf)
+    {
+        [self.sureSecTf resignFirstResponder];
+        if(ScreenHeight <= 500)
+        {
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDelegate:self];
+            [UIView setAnimationDuration:0.3f];
+            [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+            [UIView commitAnimations];
+        }
+        else
+        {
+            
+        }
+    }
     return YES;
 }
 
@@ -111,6 +152,19 @@
     [self.oldSecTf resignFirstResponder];
     [self.setNewSecTf resignFirstResponder];
     [self.sureSecTf resignFirstResponder];
+    
+    if(ScreenHeight <= 500)
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDuration:0.3f];
+        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+        [UIView commitAnimations];
+    }
+    else
+    {
+        
+    }
     
     if(self.oldSecTf.text.length == 0)
     {

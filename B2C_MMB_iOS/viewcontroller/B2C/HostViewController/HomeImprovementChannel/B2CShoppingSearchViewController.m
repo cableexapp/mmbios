@@ -7,6 +7,8 @@
 //
 
 #import "B2CShoppingSearchViewController.h"
+#import "B2CShoppingListViewController.h"
+
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
@@ -544,10 +546,11 @@
         }
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(useBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+        btn.layer.borderWidth = 0.2;
         [btn setEnabled:YES];
         [array1 addObject:btn];
     }
@@ -608,9 +611,10 @@
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn setEnabled:YES];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(brandBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        btn.layer.borderWidth = 0.2;
         [array2 addObject:btn];
     }
     
@@ -688,9 +692,10 @@
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn setEnabled:YES];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        btn.layer.borderWidth = 0.2;
         [array3 addObject:btn];
     }
     
@@ -759,10 +764,10 @@
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn setEnabled:YES];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
+//        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(specBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
+        btn.layer.borderWidth = 0.2;
         [array4 addObject:btn];
     }
     _myDic = [[NSDictionary alloc] initWithObjectsAndKeys:array1,@"按用途筛选",
@@ -820,12 +825,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
+
 }
 
 - (void) clear:(UIButton *) sender
 {
+
+    
     if(headBtnArray && headBtnArray.count != 0)
     {
         [headBtnArray removeAllObjects];
@@ -842,6 +848,7 @@
         
         [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
     }
+    
     
     [self.view.superview removeFromSuperview];
     [self.view removeFromSuperview];
@@ -1059,26 +1066,31 @@
     view1 = nil;
 	view2 = nil;
 	view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
-	view1.backgroundColor = [UIColor colorWithRed:0.9 green:0.95 blue:0.9 alpha:1.0];
+    
+	view1.backgroundColor = [UIColor clearColor];
 	
-	view2 = [[UIView alloc] initWithFrame:CGRectMake(2, 1, myRect.size.width, 30)];
-	view2.backgroundColor = [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1.0];
+	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
+	view2.backgroundColor = [UIColor clearColor];
+    UIView *lineView = [[UIView alloc]init];
+    lineView.frame = CGRectMake(0, 31, myRect.size.width, 0.7);
+    lineView.backgroundColor = [UIColor blackColor];
+    [view2 addSubview:lineView];
 	[view1 addSubview:view2];
 	
     
     UIButton *abtn = [UIButton buttonWithType:UIButtonTypeCustom];
-	abtn.backgroundColor = [UIColor clearColor];
+    abtn.backgroundColor = [UIColor clearColor];
     abtn.frame = CGRectMake(0, 0,myRect.size.width, 32);
     
-    UIImageView *iv =[ivArray objectAtIndex:section-1];
-    [abtn addSubview:iv];
+//    UIImageView *iv =[ivArray objectAtIndex:section-1];
+//    [abtn addSubview:iv];
     
 	abtn.tag = section-1;
 	[abtn addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
 	[view2 addSubview:abtn];
     
     
-	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, myRect.size.width, 30)];
+	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, myRect.size.width, 30)];
 	label1.backgroundColor = [UIColor clearColor];
     [label1 setFont:[UIFont systemFontOfSize:13]];
 	label1.text = [[_myDic allKeys] objectAtIndex:section-1];
@@ -1098,7 +1110,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:0];
-        //        [cell.contentView setBackgroundColor:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0]];
+//        [cell.contentView setBackgroundColor:[UIColor redColor]];
         [cell.contentView setBackgroundColor:[UIColor whiteColor]];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -1118,6 +1130,7 @@
         }
         else
         {
+//            选中的btn
             for(UIButton *btn in headBtnArray)
             {
                 [cell.contentView addSubview:btn];
@@ -1126,6 +1139,7 @@
     }
     else
     {
+//        列表的所有Btn
         NSMutableArray *array = [_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section-1]];
         for(UIButton *btn in array)
         {
@@ -1149,7 +1163,7 @@
 	if(flag[sectionIndex])
 	{
 		btn.selected = YES;
-        [iv setImage:[UIImage imageNamed:@"click1.png"]
+       [iv setImage:[UIImage imageNamed:@"click1.png"]
          ];
 	}
 	else

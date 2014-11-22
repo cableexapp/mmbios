@@ -302,8 +302,8 @@
                 
                 UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 35, 30)];
                 [iv setImage:[UIImage imageNamed:@"sun.png"]];
-                //                [iv.layer setCornerRadius:8.0]; //设置矩圆角半径
-                //                [iv.layer setBorderWidth:0.5];   //边框宽度
+                //   [iv.layer setCornerRadius:8.0]; //设置矩圆角半径
+                //   [iv.layer setBorderWidth:0.5];   //边框宽度
                 [view addSubview:iv];
                 CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
                 CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 0, 0, 1 });

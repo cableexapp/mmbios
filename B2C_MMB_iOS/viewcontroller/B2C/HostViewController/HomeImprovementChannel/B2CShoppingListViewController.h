@@ -21,7 +21,8 @@
     UITableView *tv;
     
     UIView *selectBtnView;
-    
+   
+
     MBProgressHUD *HUD;
     
     NSString *delegateMyUse;
@@ -34,7 +35,7 @@
 
 @property (strong,nonatomic) UIView *lineView;
 @property (strong,nonatomic) UIView *lineView_1;
-
+@property (strong,nonatomic) UIView *backView;
 @property (strong,nonatomic) NSString *use;
 @property (strong,nonatomic) NSString *seq;
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;

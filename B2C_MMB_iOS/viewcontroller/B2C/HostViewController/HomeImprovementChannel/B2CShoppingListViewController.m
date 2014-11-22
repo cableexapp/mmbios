@@ -137,6 +137,7 @@
     backView = [[UIView alloc] init];
     backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     backView.alpha = 0.6;
+    backView.hidden = NO;
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:tv];
 

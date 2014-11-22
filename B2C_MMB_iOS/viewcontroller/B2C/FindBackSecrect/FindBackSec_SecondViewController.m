@@ -13,6 +13,8 @@
 #import "DCFStringUtil.h"
 #import "MCDefine.h"
 #import "SendEmailViewController.h"
+#import "DCFCustomExtra.h"
+#import "LoginNaviViewController.h"
 
 @interface FindBackSec_SecondViewController ()
 {
@@ -23,9 +25,12 @@
     NSTimer *timer_tel;
     int timeCount_tel;     //倒计时
     
-    UIButton *nextBtn;
     
-    BOOL isMobileOrEmail;
+    
+    UILabel *buttomLabel;
+    
+    NSString *code;
+
 }
 @end
 
@@ -46,10 +51,10 @@
     
     timeCount_tel = 60;
     
-    [_getValidateBtn setUserInteractionEnabled:NO];
+    [_getValidateBtn setUserInteractionEnabled:YES];
     
-    isMobileOrEmail = YES;
-    
+//    isMobileOrEmail = YES;
+    NSLog(@"_isMobileOrEmail = %d",_isMobileOrEmail);
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -61,7 +66,15 @@
         [timer_tel invalidate];
         timer_tel = nil;
     }
-    [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    
+    if(_isMobileOrEmail == YES)
+    {
+        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.getValidateBtn setTitle:@"获取验证短信" forState:UIControlStateNormal];
+    }
     timeCount_tel = 60;
 }
 
@@ -73,18 +86,9 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"找回密码"];
     self.navigationItem.titleView = top;
-    
-    nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
-    [nextBtn setTitleColor:[UIColor colorWithRed:21.0/255.0 green:100.0/255.0 blue:249.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    [nextBtn setFrame:CGRectMake(100, 0, 50, 30)];
-    [nextBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    [nextBtn addTarget:self action:@selector(next:) forControlEvents:UIControlEventTouchUpInside];
-    [nextBtn setHidden:YES];
-    
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:nextBtn];
-    self.navigationItem.rightBarButtonItem = right;
-    
+
+    _nextBtn.layer.cornerRadius = 5.0f;
+    [_nextBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
     
     [_chooseBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     _chooseBtn.layer.borderColor = [UIColor blackColor].CGColor;
@@ -92,7 +96,7 @@
     _chooseBtn.layer.cornerRadius = 5.0f;
     _chooseBtn.layer.masksToBounds = YES;
     [_chooseBtn setBackgroundColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0]];
-    [_chooseBtn setTitle:@"请选择已验证方式" forState:UIControlStateNormal];
+    [_chooseBtn setTitle:@"已验证手机" forState:UIControlStateNormal];
     
     
     _getValidateBtn.layer.borderColor = MYCOLOR.CGColor;
@@ -102,6 +106,23 @@
     
     UITapGestureRecognizer *TAP = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:TAP];
+    
+    buttomLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.nextBtn.frame.origin.x, self.nextBtn.frame.origin.y + self.nextBtn.frame.size.height, self.nextBtn.frame.size.width, 80)];
+    [buttomLabel setNumberOfLines:0];
+    [buttomLabel setText:@"如果您没有收到验证码,可以直接联系买卖宝在线客服,或者拨打客服服务热线4008280188"];
+    [buttomLabel setFont:[UIFont systemFontOfSize:14]];
+    [buttomLabel setTextColor:[UIColor colorWithRed:166.0/255.0 green:166.0/255.0 blue:166.0/255.0 alpha:1.0]];
+    [self.view addSubview:buttomLabel];
+    
+    showString = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
+    NSString *s1 = [showString substringToIndex:3];
+    
+    NSString *s2 = [showString substringFromIndex:7];
+    
+    NSString *s3 = @"****";
+    NSString *tel = [NSString stringWithFormat:@"%@%@%@",s1,s3,s2];
+    
+    [_showLabel setText:tel];
 }
 
 - (void) tap:(UITapGestureRecognizer *) sender
@@ -112,7 +133,8 @@
 
 - (void) pickerView:(NSString *)title WithTag:(int)tag
 {
-    [_getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+    [_getValidateBtn setTitle:title forState:UIControlStateNormal];
+
     [_getValidateBtn setUserInteractionEnabled:YES];
     
     if(timer_tel)
@@ -123,16 +145,27 @@
     timeCount_tel = 60;
     
     [_chooseBtn setTitle:title forState:UIControlStateNormal];
+
+    
+    
     if([title isEqualToString:@"已验证手机"])
     {
+
+        _isMobileOrEmail = YES;
         
-        isMobileOrEmail = YES;
+        [self.nextBtn setHidden:NO];
+//
+//        [_firstView setHidden:NO];
+//        [_getValidateBtn setHidden:NO];
+//        [_showLabel setHidden:NO];
+//        [_secondLine setHidden:NO];
+//        [_tf_getValidate setHidden:NO];
+//        
+//        [_nextBtn setHidden:NO];
         
-        [nextBtn setHidden:NO];
+        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         
-        [_tf_getValidate setHidden:NO];
-        
-        showString = @"13921307054";
+        showString = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
         
         NSString *s1 = [showString substringToIndex:3];
         
@@ -143,15 +176,42 @@
         
         [_showLabel setText:tel];
         
+        [buttomLabel setText:@"如果您没有收到验证码,可以直接联系买卖宝在线客服,或者拨打客服服务热线4008280188"];
+        
+        [buttomLabel setTextColor:[UIColor colorWithRed:166.0/255.0 green:166.0/255.0 blue:166.0/255.0 alpha:1.0]];
+        
+        [self.backView setFrame:CGRectMake(self.backView.frame.origin.x, self.backView.frame.origin.y, self.backView.frame.size.width, 171)];
+        [self.nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height + 10, self.nextBtn.frame.size.width, 43)];
+
+        [self.firstView setFrame:CGRectMake(self.firstView.frame.origin.x, 58, self.firstView.frame.size.width, 1)];
+        
+        [self.showLabel setFrame:CGRectMake(self.showLabel.frame.origin.x, 67, self.showLabel.frame.size.width, 40)];
+        
+        [self.getValidateBtn setFrame:CGRectMake(self.getValidateBtn.frame.origin.x, 67, self.getValidateBtn.frame.size.width, 40)];
+        
+        [self.secondLine setFrame:CGRectMake(self.secondLine.frame.origin.x, 113, self.secondLine.frame.size.width, 1)];
+        
+        [self.tf_getValidate setFrame:CGRectMake(self.tf_getValidate.frame.origin.x, 122, self.tf_getValidate.frame.size.width, 38)];
+       
+        self.nextBtn.layer.cornerRadius = 5.0f;
+        [self.nextBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
     }
     else if ([title isEqualToString:@"已验证邮箱"])
     {
+//        [_firstView setHidden:NO];
+//        [_getValidateBtn setHidden:NO];
+//        [_showLabel setHidden:NO];
+//        [_secondLine setHidden:YES];
+//        [_tf_getValidate setHidden:YES];
+//        
+        [self.nextBtn setHidden:YES];
         
-        isMobileOrEmail = NO;
+        _isMobileOrEmail = NO;
         
-        [nextBtn setHidden:YES];
+        [self.getValidateBtn setTitle:@"获取验证邮件" forState:UIControlStateNormal];
         
-        showString = @"306233304@qq.com";
+        showString = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
+        NSString *string = nil;
         
         for(int i=0;i<showString.length;i++)
         {
@@ -173,7 +233,7 @@
                 NSRange range_2 = NSMakeRange(i-1, showString.length-i+1);
                 NSString *s3 = [showString substringWithRange:range_2];
                 
-                NSString *string = [NSString stringWithFormat:@"%@%@%@",s1,starString,s3];
+                string = [NSString stringWithFormat:@"%@%@%@",s1,starString,s3];
                 [_showLabel setText:string];
                 break;
             }
@@ -182,29 +242,62 @@
                 
             }
         }
-        [_tf_getValidate setHidden:YES];
+
+        [self.backView setFrame:CGRectMake(self.backView.frame.origin.x, self.backView.frame.origin.y, self.backView.frame.size.width, 113)];
+        [self.nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height + 10, self.nextBtn.frame.size.width,0)];
+
+        
+        [buttomLabel setText:[NSString stringWithFormat:@"您的邮箱%@已经收到一份账号绑定确认邮件,请在24小时内去你的邮箱查收并按照邮件提示进行操作,完成绑定",string]];
+        [buttomLabel setTextColor:[UIColor orangeColor]];
+        
+        [self.firstView setFrame:CGRectMake(self.firstView.frame.origin.x, 58, self.firstView.frame.size.width, 1)];
+        
+        [self.showLabel setFrame:CGRectMake(self.showLabel.frame.origin.x, 67, self.showLabel.frame.size.width, 40)];
+        
+        [self.getValidateBtn setFrame:CGRectMake(self.getValidateBtn.frame.origin.x, 67, self.getValidateBtn.frame.size.width, 40)];
+        
+        [self.secondLine setFrame:CGRectMake(self.secondLine.frame.origin.x, 113, self.secondLine.frame.size.width, 0)];
+        
+        [self.tf_getValidate setFrame:CGRectMake(self.tf_getValidate.frame.origin.x, 122, self.tf_getValidate.frame.size.width, 0)];
+      
+
     }
+    
+    [buttomLabel setFrame:CGRectMake(buttomLabel.frame.origin.x, self.nextBtn.frame.origin.y + self.nextBtn.frame.size.height, buttomLabel.frame.size.width, buttomLabel.frame.size.height)];
+//    [self adjustTheScreen];
 }
 
 - (void) adjustTheScreen
 {
-    if(ScreenHeight >= 500)
-    {
-        
-    }
-    else
-    {
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-        [UIView setAnimationDelegate:self];
-        [self.view setFrame:CGRectMake(0, 0, 320, ScreenHeight)];
-        [UIView commitAnimations];
-    }
+//    if(ScreenHeight >= 500)
+//    {
+//        
+//    }
+//    else
+//    {
+//        [UIView beginAnimations:nil context:nil];
+//        [UIView setAnimationDuration:0.3];
+//        [UIView setAnimationDelegate:self];
+//        [self.view setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+//        [UIView commitAnimations];
+//    }
+//    
+//    if([_chooseBtn.titleLabel.text isEqualToString:@"已验证手机"])
+//    {
+//
+//    }
+//    else
+//    {
+//
+//       
+//
+//    }
+
 }
 
-- (void) next:(UIButton *) sender
+
+- (IBAction)nextBtnClick:(id)sender
 {
-    
     [self adjustTheScreen];
     
     _tf_getValidate.text = [_tf_getValidate.text stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -214,9 +307,20 @@
         return;
     }
     
-    FindBack_ThirdViewController *third = [self.storyboard instantiateViewControllerWithIdentifier:@"findBack_ThirdViewController"];
-    [self.navigationController pushViewController:third animated:YES];
+    if([self.tf_getValidate.text isEqualToString:code])
+    {
+        FindBack_ThirdViewController *third = [self.storyboard instantiateViewControllerWithIdentifier:@"findBack_ThirdViewController"];
+        _isMobileOrEmail = YES;
+        [self.navigationController pushViewController:third animated:YES];
+    }
+    else
+    {
+        [DCFStringUtil showNotice:@"输入的验证码不正确"];
+    }
+    
+
 }
+
 
 - (IBAction)chooseBtnClick:(id)sender
 {
@@ -231,15 +335,148 @@
 {
     timer_tel = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
     [timer_tel fire];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+
+    if(_isMobileOrEmail == YES)
+    {
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"sendMessage",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@&username=%@",showString,token,[self getUserName]];
+        NSLog(@"push = %@",pushString);
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendMsgTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendMessage.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
+    else
+    {
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"sendEmail",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&username=%@&email=%@",[self getMemberId],token,[self getUserName],showString];
+        NSLog(@"push = %@",pushString);
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendEmailTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendEmail.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
+    
 }
 
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    
+    [self.getValidateBtn setUserInteractionEnabled:YES];
+
+    if(timer_tel)
+    {
+        [timer_tel invalidate];
+        timer_tel = nil;
+        timeCount_tel = 60;
+    }
+    
+    
+    if(URLTag == URLSendMsgTag)
+    {
+        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+
+        
+        
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            [DCFStringUtil showNotice:@"获取验证码失败"];
+        }
+        if(result == 1)
+        {
+            [DCFStringUtil showNotice:msg];
+            
+            code = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"code"]];
+        }
+        else
+        {
+            if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
+            {
+                [DCFStringUtil showNotice:@"获取验证码失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
+    
+    
+    if(URLTag == URLSendEmailTag)
+    {
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            [DCFStringUtil showNotice:@"获取验证短信失败"];
+        }
+        if(result == 1)
+        {
+            [DCFStringUtil showNotice:msg];
+            _isMobileOrEmail = NO;
+            SendEmailViewController *sendEmail = [self.storyboard instantiateViewControllerWithIdentifier:@"sendEmailViewController"];
+            [self.navigationController pushViewController:sendEmail animated:YES];
+        }
+        else
+        {
+            if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
+            {
+                [DCFStringUtil showNotice:@"获取验证短信失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
+    NSLog(@"%@",dicRespon);
+}
+
+- (NSString *) getUserName
+{
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+    
+    if(userName.length == 0)
+    {
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+    }
+    return userName;
+    
+}
+
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
 
 - (void) timer:(NSTimer *) sender
 {
     if(timeCount_tel == 0)
     {
         [_getValidateBtn setUserInteractionEnabled:YES];
-        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        if(_isMobileOrEmail == YES)
+        {
+            [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        }
+        else
+        {
+            [self.getValidateBtn setTitle:@"获取验证短信" forState:UIControlStateNormal];
+        }
         [timer_tel invalidate];
         timer_tel = nil;
         timeCount_tel = 60;
@@ -249,7 +486,14 @@
         timeCount_tel = timeCount_tel - 1;
         if(timeCount_tel == 0)
         {
-            [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+            if(_isMobileOrEmail == YES)
+            {
+                [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+            }
+            else
+            {
+                [self.getValidateBtn setTitle:@"获取验证短信" forState:UIControlStateNormal];
+            }
         }
         else
         {
@@ -259,16 +503,7 @@
         [_getValidateBtn setUserInteractionEnabled:NO];
         
     }
-    
-    if(isMobileOrEmail == YES)
-    {
-        
-    }
-    else
-    {
-        SendEmailViewController *sendEmail = [self.storyboard instantiateViewControllerWithIdentifier:@"sendEmailViewController"];
-        [self.navigationController pushViewController:sendEmail animated:YES];
-    }
+
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField

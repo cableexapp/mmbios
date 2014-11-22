@@ -118,8 +118,10 @@
     backView.hidden = YES;
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:self.testTableView];
+    
+    self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:137/255.0 blue:0/255.0 alpha:1.0];
+    self.upBtn.layer.cornerRadius = 5;
 }
-
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -128,10 +130,12 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ( tableView.tag == 33) {
+    if ( tableView.tag == 33)
+    {
         return dataArray.count;
     }
-    else{
+    else
+    {
         return selectArray.count;
     }
 }

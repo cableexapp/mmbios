@@ -34,16 +34,18 @@
 {
     [super viewDidLoad];
     
-    self.upBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.upBtn.layer.borderWidth = 1.0f;
-    self.upBtn.layer.cornerRadius = 5.0f;
+    [self.upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.upBtn.layer.cornerRadius = 5;
+    self.upBtn.layer.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0].CGColor;
     
-    [self.topLabel setText:self.screen];
+    [self.topLabel setText:[NSString stringWithFormat:@"已选场合: %@",self.screen]];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交所选场合"];
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
+    
+    self.myTextField.backgroundColor = [UIColor whiteColor];
 }
 
 - (NSString *) getMemberId
@@ -194,18 +196,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

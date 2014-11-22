@@ -21,14 +21,12 @@
 #import "SearchViewController.h"
 #import "MCDefine.h"
 #import "ChatViewController.h"
+#import "B2CShoppingListViewController.h";
 
 @interface HostTableViewController ()
 {
     NSArray *textViewDataArray;
     NSArray *moneyDataArray;
-    
-    NSArray *listDataArray;
-    
     NSArray *typeArray;  //一级分类数组
     NSMutableArray *typeBtnArray;  //一级分类按钮
     
@@ -172,6 +170,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = btn.titleLabel.text;
+    cableSecondAndThirdStepViewController.fromPage = @"电缆分类";
     if (typeArray.count == 5)
     {
         if (tag == 3)
@@ -227,7 +226,7 @@
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-    UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mmb" ofType:@"png"]];
+    UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"maimaibao" ofType:@"png"]];
     UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-8, 0, 120,44)];
     [naviImageView setImage:naviimage];
     [naviImageView setTag:100];
@@ -258,31 +257,16 @@
     [self.tableView setShowsVerticalScrollIndicator:NO];
     
     textViewDataArray = [[NSArray alloc] initWithObjects:
-                         @"查看",
                          @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在 ",
                          @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
                          @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
                          @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         
                          nil];
     
-    moneyDataArray = [[NSArray alloc] initWithObjects:@"98",@"99",@"100",@"101",@"102",@"103",@"104",@"105",@"106",@"107", nil];
+    moneyDataArray = [[NSArray alloc] initWithObjects:@"98",@"99",@"100",@"101", nil];
     
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
-    
-    listDataArray = [[NSArray alloc] initWithObjects:
-                     @"照明/插座用线",
-                     @"空调/热水器用线",
-                     @"进户总线",
-                     @"装潢明线",
-                     @"电源连接线",
-                     @"",nil];
+
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
 }
 
@@ -306,7 +290,7 @@
 {
     if(section == 3)
     {
-       
+       return 1;
     }
     if(section == 4)
     {
@@ -382,10 +366,10 @@
     }
     else if (indexPath.section == 3)
     {
-        return 155;
+        return 175;
         
     }
-    return 260;
+        return 225;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -539,6 +523,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = typeArray[indexPath.row];
+    cableSecondAndThirdStepViewController.fromPage = @"电缆选购";
     if (typeArray.count == 5)
     {
         if (indexPath.row == 3)
@@ -634,13 +619,13 @@
                         if (i == 3)
                         {
                              btn = [typeBtnArray objectAtIndex:0];
-                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 4, ScreenWidth/3-5, 95)];
+                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 4, ScreenWidth/3-3, 95)];
                             btn.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:245.0/255.0 blue:237.0/255.0 alpha:1.0];
                         }
                         else if(i == 2)
                         {
                             btn = [typeBtnArray objectAtIndex:1];
-                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 53, ScreenWidth/3-5, 45.5)];
+                            [btn setFrame:CGRectMake(ScreenWidth/3*(i-2)+4, 53, ScreenWidth/3-3, 45.5)];
                             btn.backgroundColor = [UIColor colorWithRed:231.0/255.0 green:240.0/255.0 blue:255.0/255.0 alpha:1.0];
                         }
                         else if(i == 4)
@@ -723,19 +708,19 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             if (i == 0)
             {
-                button.frame = CGRectMake(ScreenWidth/3*i+6, 5, ScreenWidth/3-6, 45);
+                button.frame = CGRectMake(ScreenWidth/3*i+6, 15, ScreenWidth/3-6, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 1)
             {
-                button.frame = CGRectMake(ScreenWidth/3*i+6, 5, ScreenWidth/3-6, 45);
+                button.frame = CGRectMake(ScreenWidth/3*i+6, 15, ScreenWidth/3-6, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 2)
             {
-                button.frame = CGRectMake(ScreenWidth/3*i+6, 5, ScreenWidth/3-12, 45);
+                button.frame = CGRectMake(ScreenWidth/3*i+6, 15, ScreenWidth/3-12, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
@@ -748,6 +733,8 @@
             label.backgroundColor = [UIColor clearColor];
             label.font = [UIFont systemFontOfSize:13];
             [button addSubview:label];
+            button.tag = i;
+            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
             [button addSubview:imageView];
         }
@@ -758,19 +745,19 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             if (i == 3)
             {
-                button.frame = CGRectMake(6, 55, ScreenWidth/3-6, 45);
+                button.frame = CGRectMake(6, 65, ScreenWidth/3-6, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 4)
             {
-                button.frame = CGRectMake(ScreenWidth/3+6, 55, ScreenWidth/3-6, 45);
+                button.frame = CGRectMake(ScreenWidth/3+6, 65, ScreenWidth/3-6, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 5)
             {
-                button.frame = CGRectMake(ScreenWidth/3*2+6, 55, ScreenWidth/3-12, 45);
+                button.frame = CGRectMake(ScreenWidth/3*2+6,65, ScreenWidth/3-12, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
@@ -781,6 +768,8 @@
             label.backgroundColor = [UIColor clearColor];
             label.font = [UIFont systemFontOfSize:13];
             [button addSubview:label];
+            button.tag = i;
+            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
             [button addSubview:imageView];
         }
@@ -791,19 +780,19 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             if (i == 6)
             {
-                button.frame = CGRectMake(6, 105, ScreenWidth/3-6, 45);
+                button.frame = CGRectMake(6, 115, ScreenWidth/3-6, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 7)
             {
-                button.frame = CGRectMake(ScreenWidth/3+6, 105, ScreenWidth/3-6, 45);
+                button.frame = CGRectMake(ScreenWidth/3+6, 115, ScreenWidth/3-6, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else
             {
-                button.frame = CGRectMake(ScreenWidth/3*2+6, 105, ScreenWidth/3-12, 45);
+                button.frame = CGRectMake(ScreenWidth/3*2+6, 115, ScreenWidth/3-12, 45);
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
                 label.numberOfLines = 2;
@@ -814,6 +803,8 @@
             label.text = [useArray objectAtIndex:i];
             label.backgroundColor = [UIColor clearColor];
             label.font = [UIFont systemFontOfSize:13];
+            button.tag = i;
+            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
             [button addSubview:imageView];
             [button addSubview:label];
@@ -821,17 +812,12 @@
     }
     if(indexPath.section == 4)
     {
-        UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
-        [firstLabel setTextAlignment:NSTextAlignmentLeft];
-        [firstLabel setText:[listDataArray objectAtIndex:indexPath.row]];
-        [firstLabel setFont:[UIFont systemFontOfSize:15]];
-        [cell.contentView addSubview:firstLabel];
-
-        
         for(int i = 0;i < 2; i++)
         {
-            UIView *cabelShowView = [[UIView alloc] initWithFrame:CGRectMake(10 + 155*i,firstLabel.frame.origin.y + firstLabel.frame.size.height + 10, 145, 220)];
-            [cabelShowView setBackgroundColor:[UIColor grayColor]];
+            UIView *cabelShowView = [[UIView alloc] initWithFrame:CGRectMake(10 + 155*i,0, 145, 210)];
+            [cabelShowView setBackgroundColor:[UIColor whiteColor]];
+            cabelShowView.layer.borderWidth = 0.5;
+            cabelShowView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
             [cabelShowView setTag:2*indexPath.row + i ];
             
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
@@ -841,9 +827,11 @@
             
             UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 145, 145)];
             [pic setImage:[UIImage imageNamed:@"cabel.png"]];
+            pic.layer.borderWidth = 0.5;
+            pic.layer.borderColor = [[UIColor lightGrayColor] CGColor];
             [cabelShowView addSubview:pic];
             
-            UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(pic.frame.origin.x, pic.frame.origin.y + pic.frame.size.height + 10, pic.frame.size.width, 30)];
+            UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(pic.frame.origin.x, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width, 30)];
             [tv setBackgroundColor:[UIColor clearColor]];
             [tv setDelegate:self];
             [tv setText:[textViewDataArray objectAtIndex:2*indexPath.row + i]];
@@ -851,15 +839,46 @@
             [cabelShowView addSubview:tv];
             
             UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, tv.frame.origin.y + tv.frame.size.height + 5, pic.frame.size.width, 20)];
-            NSString *money = [NSString stringWithFormat:@"  %@  %@",@"¥",[moneyDataArray objectAtIndex:2*indexPath.row + i]];
+            NSString *money = [NSString stringWithFormat:@"  %@ %@",@"¥",[moneyDataArray objectAtIndex:2*indexPath.row + i]];
             [moneyLabel setText:money];
             [moneyLabel setTextColor:[UIColor redColor]];
             [cabelShowView addSubview:moneyLabel];
+            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            cell.backgroundColor = [UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0];
         }
     }
-     }
+}
+    
 //    [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
     return cell;
+}
+
+-(void)buttonClick:(UIButton *)sender
+{
+    NSString *str = nil;
+    if(sender.tag == 0)
+    {
+        str = @"照明";
+    }
+    else if(sender.tag == 3)
+    {
+        str = @"插座";
+    }
+    else if (sender.tag == 4)
+    {
+        str = @"立式空调";
+    }
+    else if (sender.tag == 5)
+    {
+        str = @"进户主线";
+    }
+    else if(sender.tag != 0 && sender.tag != 3 && sender.tag != 4 && sender.tag != 5)
+    {
+        str = [useArray objectAtIndex:sender.tag];
+    }
+    B2CShoppingListViewController *shoppingList = [[B2CShoppingListViewController alloc] initWithUse:str];
+    [self setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:shoppingList animated:YES];
 }
 
 -(void)EScrollerViewDidClicked:(NSUInteger)index
@@ -901,7 +920,7 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    
+    NSLog(@"热门商品");
 }
 
 - (void)didReceiveMemoryWarning

@@ -20,4 +20,6 @@
 
 @property (strong,nonatomic) NSString *myTitle;
 
+@property (nonatomic,strong) NSString *fromPage;
+
 @end

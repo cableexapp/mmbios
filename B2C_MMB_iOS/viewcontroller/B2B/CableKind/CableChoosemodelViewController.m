@@ -123,6 +123,7 @@
     
     addToCarArray = [[NSMutableArray alloc] init];
     
+    
     askPriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
@@ -164,8 +165,7 @@
     {
         mySearch = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topLabel.frame.origin.y+topLabel.frame.size.height, ScreenWidth, 44)];
         [mySearch setDelegate:self];
-        
-        //        [mySearch setBarStyle:UIBarStyleBlackOpaque];
+        [[mySearch.subviews objectAtIndex:0] setBackgroundColor:[UIColor clearColor]];
         [mySearch setPlaceholder:@"搜索该分类下的型号"];
         [self.view addSubview:mySearch];
     }
@@ -175,6 +175,7 @@
         myTv = [[UITableView alloc] initWithFrame:CGRectMake(0, mySearch.frame.origin.y + mySearch.frame.size.height , ScreenWidth, ScreenHeight-mySearch.frame.size.height-topLabel.frame.size.height-64) style:0];
         [myTv setDataSource:self];
         [myTv setDelegate:self];
+        myTv.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
         [myTv setShowsHorizontalScrollIndicator:NO];
         [myTv setShowsVerticalScrollIndicator:NO];
         [self.view addSubview:myTv];
@@ -267,12 +268,10 @@
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
             [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
-            [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-            [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+            [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [btn setTag:i];
-            [btn setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-            btn.layer.borderColor = MYCOLOR.CGColor;
-            btn.layer.borderWidth = 0.5f;
+            [btn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
             btn.layer.cornerRadius = 5.0f;
             [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -648,6 +647,7 @@
                 moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
                 [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
             }
+            moreCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return moreCell;
         }
         
@@ -663,9 +663,8 @@
         
         [cell.contentView addSubview:(UILabel *)[labelArray objectAtIndex:indexPath.row]];
         [cell.contentView addSubview:(UIButton *)[btnArray objectAtIndex:indexPath.row]];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-        
     }
     if(flag == YES)
     {
@@ -678,9 +677,9 @@
                 [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
             }
             [moreCell noDataAnimation];
+            moreCell.selectionStyle = UITableViewCellSelectionStyleNone;
             return moreCell;
         }
-        
         static NSString *cellId = @"cellId";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
         if(!cell)
@@ -693,7 +692,7 @@
         
         [cell.contentView addSubview:(UILabel *)[searchLabelArray objectAtIndex:indexPath.row]];
         [cell.contentView addSubview:(UIButton *)[searchBtnArray objectAtIndex:indexPath.row]];
-        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
     }

@@ -87,7 +87,7 @@
         [tv setDelegate:self];
         [tv setShowsHorizontalScrollIndicator:NO];
         [tv setShowsVerticalScrollIndicator:NO];
-        [tv setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+        [tv setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:226.0/255.0 blue:226.0/255.0 alpha:1.0]];
         [self.view addSubview:tv];
     }
 
@@ -162,25 +162,25 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typeName"]];
-    CGSize size;
-    if(str.length == 0)
-    {
-        size = CGSizeMake(self.width-20, 30);
-    }
-    else
-    {
-        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(self.width-20, MAXFLOAT)];
-    }
-    if(size.height <= 30)
-    {
-        return 40;
-    }
-    else
-    {
-        return size.height+10;
-    }
-    return 40;
+//    NSString *str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typeName"]];
+//    CGSize size;
+//    if(str.length == 0)
+//    {
+//        size = CGSizeMake(self.width-20, 30);
+//    }
+//    else
+//    {
+//        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(self.width-20, MAXFLOAT)];
+//    }
+//    if(size.height <= 30)
+//    {
+//        return 40;
+//    }
+//    else
+//    {
+//        return size.height+10;
+//    }
+   return 44;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -222,7 +222,7 @@
         [tableView setSeparatorStyle:0];
 
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+        [cell.contentView setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:226.0/255.0 blue:226.0/255.0 alpha:1.0]];
         
         
     }
@@ -244,11 +244,11 @@
     }
     if(size.height <= 30)
     {
-        [cellLabel setFrame:CGRectMake(0, 5, self.width-20, 30)];
+        [cellLabel setFrame:CGRectMake(6, 5, self.width-6, 30)];
     }
     else
     {
-        [cellLabel setFrame:CGRectMake(0, 5, self.width-20, size.height)];
+        [cellLabel setFrame:CGRectMake(6, 5, self.width-6, size.height)];
     }
     [cellLabel setText:str];
     [cellLabel setTag:10];
@@ -258,7 +258,7 @@
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, cell.contentView.frame.size.height-1, self.width, 1)];
     [lineView setTag:11];
-    [lineView setBackgroundColor:MYCOLOR];
+    [lineView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [cell.contentView addSubview:lineView];
 
     return cell;
@@ -287,15 +287,5 @@
         [self.delegate pushString:self.myTitle WithTypeId:myId];
     }
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

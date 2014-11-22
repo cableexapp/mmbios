@@ -66,6 +66,19 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    for(UIView *view in self.navigationController.navigationBar.subviews)
+    {
+        if([view tag] == 100 || [view tag] == 101 )
+        {
+            [view setHidden:YES];
+        }
+    }
+}
+
 #pragma mark - delegate
 - (void) requestStringWithUse:(NSString *)myUse WithBrand:(NSString *)myBrand WithSpec:(NSString *)mySpec WithModel:(NSString *)myModel WithSeq:(NSString *)mySeq
 {
@@ -219,6 +232,12 @@
             [b setSelected:NO];
         }
     }
+}
+
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
 }
 
 - (void)viewDidLoad

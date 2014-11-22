@@ -134,15 +134,13 @@
         
         upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [upBtn setTitle:@"提交" forState:UIControlStateNormal];
+        upBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [upBtn setBackgroundColor:[UIColor colorWithRed:224.0/225.0 green:99.0/255.0 blue:0 alpha:1.0]];
-        upBtn.layer.borderColor = [UIColor colorWithRed:224.0/225.0 green:99.0/255.0 blue:0 alpha:1.0].CGColor;
-        upBtn.layer.borderWidth = 1.0f;
+        upBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
         upBtn.layer.cornerRadius = 5.0f;
         [upBtn setFrame:CGRectMake(ScreenWidth-120, 15, 100, 30)];
         [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [buttomView addSubview:upBtn];
-        
     }
     
     if(!tv)
@@ -208,7 +206,7 @@
     [subViewBtn setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     
 #pragma mark - 防止父视图的透明度影响子视图
-    [subViewBtn setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]];
+    [subViewBtn setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.6]];
     [subViewBtn addTarget:self action:@selector(subViewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:subViewBtn];
     
@@ -216,7 +214,12 @@
     b2bAskPriceCarEditViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarEditViewController"];
     b2bAskPriceCarEditViewController.myModel = data.cartModel;
     b2bAskPriceCarEditViewController.myCartId = data.cartId;
+    b2bAskPriceCarEditViewController.view.layer.cornerRadius = 6;
     b2bAskPriceCarEditViewController.view.frame = CGRectMake(20, 20, subViewBtn.frame.size.width-40, subViewBtn.frame.size.height-70);
+    UILabel *tempLabel = [[UILabel alloc] init];
+    tempLabel.frame = CGRectMake(0, 25, b2bAskPriceCarEditViewController.view.frame.size.width, 8);
+    tempLabel.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
+    [b2bAskPriceCarEditViewController.view addSubview:tempLabel];
     b2bAskPriceCarEditViewController.delegate = self;
     [self addChildViewController:b2bAskPriceCarEditViewController];
     [subViewBtn addSubview:b2bAskPriceCarEditViewController.view];
@@ -231,8 +234,6 @@
             break;
         case 1:
         {
-            
-            
             NSString *time = [DCFCustomExtra getFirstRunTime];
             NSString *string = [NSString stringWithFormat:@"%@%@",@"DeleteInquiryCartItem",time];
             NSString *token = [DCFCustomExtra md5:string];
@@ -255,15 +256,11 @@
 #pragma mark - 删除
 - (void) del:(UIButton *) sender
 {
-    
-    
     if(chooseArray.count == 0)
     {
         //        [DCFStringUtil showNotice:@"您尚未选择商品"];
         return;
     }
-    
-    
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您确定要删除嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [av show];
     
@@ -289,11 +286,7 @@
         editAndDelBtnArray = [[NSMutableArray alloc] init];
         
         chooseArray = [[NSMutableArray alloc] init];
-        
-        
-        
-        
-        
+    
         if(result == 1)
         {
             [dataArray addObjectsFromArray:[B2BAskPriceDetailData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -316,18 +309,19 @@
                     
                     [sectionHeadBtn setTag:i];
                     [sectionHeadBtn addTarget:self action:@selector(sectionHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                    [sectionHeadBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+                    [sectionHeadBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
                     [sectionHeadBtnArray addObject:sectionHeadBtn];
                     
                     //编辑删除按钮
                     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                     [editBtn setFrame:CGRectMake(ScreenWidth-120, 7, 50, 30)];
                     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+                    [editBtn setTitleColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] forState:UIControlStateNormal];
                     [editBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-                    [editBtn setBackgroundColor:[UIColor colorWithRed:230.0/255.0 green:120.0/255.0 blue:13.0/255.0 alpha:1.0]];
+                    [editBtn setBackgroundColor:[UIColor whiteColor]];
                     editBtn.layer.borderWidth = 1.0f;
                     [editBtn setTag:i];
-                    editBtn.layer.borderColor = [UIColor colorWithRed:230.0/255.0 green:120.0/255.0 blue:13.0/255.0 alpha:1.0].CGColor;
+                    editBtn.layer.borderColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
                     editBtn.layer.cornerRadius = 5.0f;
                     [editBtn addTarget:self action:@selector(edit:) forControlEvents:UIControlEventTouchUpInside];
                     
@@ -335,10 +329,11 @@
                     [delBtn setFrame:CGRectMake(ScreenWidth-60, 7, 50, 30)];
                     [delBtn setTitle:@"删除" forState:UIControlStateNormal];
                     [delBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-                    [delBtn setBackgroundColor:[UIColor colorWithRed:230.0/255.0 green:120.0/255.0 blue:13.0/255.0 alpha:1.0]];
+                    [delBtn setBackgroundColor:[UIColor whiteColor]];
                     delBtn.layer.borderWidth = 1.0f;
+                    [delBtn setTitleColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] forState:UIControlStateNormal];
                     [delBtn setTag:i];
-                    delBtn.layer.borderColor = [UIColor colorWithRed:230.0/255.0 green:120.0/255.0 blue:13.0/255.0 alpha:1.0].CGColor;
+                    delBtn.layer.borderColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
                     delBtn.layer.cornerRadius = 5.0f;
                     [delBtn addTarget:self action:@selector(del:) forControlEvents:UIControlEventTouchUpInside];
                     
@@ -512,12 +507,13 @@
     }
     else
     {
-        UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20,20)];
-        [modelLabel setText:[NSString stringWithFormat:@"型号:%@",[[dataArray objectAtIndex:section] cartModel]]];
+        sectionHeadBtn.backgroundColor = [UIColor redColor];
+        UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, ScreenWidth-20,20)];
+        [modelLabel setText:[NSString stringWithFormat:@"型号:  %@",[[dataArray objectAtIndex:section] cartModel]]];
         [modelLabel setFont:[UIFont systemFontOfSize:12]];
         [sectionHeadBtn addSubview:modelLabel];
         
-        NSString *kindString = [NSString stringWithFormat:@"分类:%@ %@ %@",[[dataArray objectAtIndex:section] firstType],[[dataArray objectAtIndex:section] secondType],[[dataArray objectAtIndex:section] thridType]];
+        NSString *kindString = [NSString stringWithFormat:@"分类:  %@ %@ %@",[[dataArray objectAtIndex:section] firstType],[[dataArray objectAtIndex:section] secondType],[[dataArray objectAtIndex:section] thridType]];
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:kindString WithSize:CGSizeMake(modelLabel.frame.size.width, MAXFLOAT)];
         UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(modelLabel.frame.origin.x,modelLabel.frame.origin.y+modelLabel.frame.size.height, modelLabel.frame.size.width, size.height)];
         [kindLabel setText:kindString];
@@ -530,12 +526,12 @@
         
         
         UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];
-        [firstLine setBackgroundColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
+        [firstLine setBackgroundColor:[UIColor lightGrayColor]];
         [sectionHeadBtn addSubview:firstLine];
         
         
         UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(0, height-1, ScreenWidth, 1)];
-        [secondLine setBackgroundColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
+        [secondLine setBackgroundColor:[UIColor lightGrayColor]];
         [sectionHeadBtn addSubview:secondLine];
     }
     
@@ -628,7 +624,8 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
     {
@@ -845,18 +842,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

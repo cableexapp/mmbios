@@ -12,6 +12,7 @@
 #import "DCFCustomExtra.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "CableChoosemodelViewController.h"
+#import "SearchViewController.h"
 
 @interface CableSecondAndThirdStepViewController ()
 {
@@ -69,8 +70,15 @@
 
 - (void) searchBtnClick:(UIButton *) sender
 {
-    NSLog(@"searchBtnClick");
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([self.fromPage isEqualToString:@"电缆选购"] || [self.fromPage isEqualToString:@"电缆分类"])
+    {
+        SearchViewController *searchVC = [[SearchViewController alloc] init];
+        [self.navigationController pushViewController:searchVC animated:YES];
+    }
+    else
+    {
+         [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)viewDidLoad
@@ -111,23 +119,10 @@
     [self.thirdTypeView addSubview:third.view];
 }
 
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

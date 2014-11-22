@@ -7,8 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
-@interface FindBack_ThirdViewController : UIViewController<UITextFieldDelegate>
+@interface FindBack_ThirdViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate,MBProgressHUDDelegate>
+{
+    DCFConnectionUtil *conn;
+    MBProgressHUD *HUD;
+}
+
 @property (weak, nonatomic) IBOutlet UITextField *tf_newSec;
+@property (weak, nonatomic) IBOutlet UITextField *tf_sureSec;
+@property (weak, nonatomic) IBOutlet UIButton *sureBtn;
 
 @end

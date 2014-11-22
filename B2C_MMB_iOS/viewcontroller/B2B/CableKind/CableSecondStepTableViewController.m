@@ -67,8 +67,9 @@
     [self.view setFrame:CGRectMake(0, 0, self.width, self.height)];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-    [self.tableView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-    
+    [self.tableView setBackgroundColor:[UIColor whiteColor]];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.tableView.separatorColor = [UIColor colorWithRed:226.0/255.0 green:226.0/255.0 blue:226.0/255.0 alpha:1.0];
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductTypeByid",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -200,43 +201,45 @@
         
         [cell.contentView setFrame:CGRectMake(0, 0, self.width, self.height)];
         
-        UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, self.width-40, 30)];
+        UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(4,0, self.width-4, 44)];
         [cellLabel setTag:10];
         [cellLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:cellLabel];
 
         
-        UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake( self.width-31, 5, 20, 30)];
+        UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(0,-0.5, 4,44.5)];
+        cellIv.backgroundColor = [UIColor colorWithRed:8.0/255.0 green:88.0/255.0 blue:172.0/255.0 alpha:1.0];
+
         [cellIv setTag:11];
         if(indexPath.row == 0)
         {
-            [cellLabel setBackgroundColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
-            [cellLabel setTextColor:[UIColor whiteColor]];
+            [cellLabel setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:226.0/255.0 blue:226.0/255.0 alpha:1.0]];
+            cell.backgroundColor = [UIColor whiteColor];
+            [cellLabel setTextColor:[UIColor colorWithRed:8.0/255.0 green:88.0/255.0 blue:172.0/255.0 alpha:1.0]];
             [cellIv setHidden:NO];
         }
         else
         {
-            [cellLabel setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+            [cellLabel setBackgroundColor:[UIColor whiteColor]];
             [cellLabel setTextColor:[UIColor blackColor]];
             [cellIv setHidden:YES];
         }
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+        [cell.contentView setBackgroundColor:[UIColor clearColor]];
         [cell.contentView addSubview:cellIv];
 
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-0.5, 0, 0.5, cell.contentView.frame.size.height)];
-        [lineView setBackgroundColor:MYCOLOR];
+        [lineView setBackgroundColor:[UIColor lightGrayColor]];
         [cell.contentView addSubview:lineView];
         
         [cellIvArray addObject:cellIv];
         [cellLabelArray addObject:cellLabel];
     }
     
-    
     UILabel *label = (UILabel *)[cell.contentView viewWithTag:10];
-    [label setText:[NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typeName"]]];
-    
-    UIImageView *iv = (UIImageView *)[cell.contentView viewWithTag:11];
-    [iv setImage:[UIImage imageNamed:@"Set.png"]];
+    [label setText:[NSString stringWithFormat:@"  %@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typeName"]]];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, cell.frame.size.height-0.5, self.width, 0.5)];
+    [lineView setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:226.0/255.0 blue:226.0/255.0 alpha:1.0]];
+    [cell addSubview:lineView];
     
     return cell;
 }
@@ -250,13 +253,13 @@
         UILabel *label = (UILabel *)[cellLabelArray objectAtIndex:i];
         if(i == indexPath.row)
         {
-            [label setBackgroundColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
-            [label setTextColor:[UIColor whiteColor]];
+            [label setBackgroundColor:[UIColor colorWithRed:226.0/255.0 green:226.0/255.0 blue:226.0/255.0 alpha:1.0]];
+            [label setTextColor:[UIColor colorWithRed:8.0/255.0 green:88.0/255.0 blue:172.0/255.0 alpha:1.0]];
             [iv setHidden:NO];
         }
         else
         {
-            [label setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+            [label setBackgroundColor:[UIColor whiteColor]];
             [label setTextColor:[UIColor blackColor]];
             [iv setHidden:YES];
         }

@@ -49,29 +49,40 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
     
-    self.sureBtn.layer.borderWidth = 1.0f;
-    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
+    self.numTF.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.numTF.layer.borderWidth = 0.5f;
+    self.timeTF.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.timeTF.layer.borderWidth = 0.5f;
+    
+    self.sureBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
     self.sureBtn.layer.cornerRadius = 5.0f;
+    self.sureBtn.frame = CGRectMake(15,self.view.frame.size.height - 60,self.view.frame.size.width-30,40);
+    [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    self.unitBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    self.unitBtn.layer.borderWidth = 1.0f;
+    self.unitBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.unitBtn.layer.borderWidth = 0.5f;
     
-    self.specBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    self.specBtn.layer.borderWidth = 1.0f;
+    self.specBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.specBtn.layer.borderWidth = 0.5f;
     
-    self.featherBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    self.featherBtn.layer.borderWidth = 1.0f;
+    self.featherBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.featherBtn.layer.borderWidth = 0.5f;
     
-    self.volBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    self.volBtn.layer.borderWidth = 1.0f;
+    self.volBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.volBtn.layer.borderWidth = 0.5f;
     
-    self.colorBtn.layer.borderColor = [UIColor blackColor].CGColor;
-    self.colorBtn.layer.borderWidth = 1.0f;
+    self.colorBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.colorBtn.layer.borderWidth = 0.5f;
     
     [self.modelLabel setText:self.myModel];
+    self.modelLabel.textAlignment = 1;
+    self.modelLabel.frame = CGRectMake(0, 0, self.view.frame.size.width, 40);
+    self.modelLabel.layer.cornerRadius = 6;
+    self.modelLabel.textColor = [UIColor whiteColor];
+    self.modelLabel.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
-    self.requestTF.layer.borderColor = [UIColor blackColor].CGColor;
-    self.requestTF.layer.borderWidth = 1.0f;
+    self.requestTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.requestTF.layer.borderWidth = 0.5f;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getSpecVoltageByModel",time];
@@ -426,18 +437,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

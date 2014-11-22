@@ -68,9 +68,15 @@
     
     [self pushAndPopStyle];
     
-    self.upBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.upBtn.layer.borderWidth = 1.0f;
+    self.tel_Tf.placeholder = @"手机号码/固定号码";
+    self.tel_Tf.layer.borderWidth = 0.5; 
+    self.tel_Tf.layer.borderColor = [[UIColor clearColor] CGColor];
+
+    self.upBtn.layer.cornerRadius = 6;
+    self.upBtn.layer.backgroundColor = [[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] CGColor];
     [self.upBtn setTitle:@"提交" forState:UIControlStateNormal];
+    self.upBtn.frame = CGRectMake(8, self.view.frame.size.height-55, self.view.frame.size.width-16, 40);
+    [self.upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [self.lastUpPicBtn setTag:100];
     

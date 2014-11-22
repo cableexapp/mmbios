@@ -43,6 +43,8 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101 )
@@ -329,7 +331,6 @@
        
         }
     }
-    
     return cell;
 }
 
@@ -356,15 +357,5 @@
     [self.navigationController pushViewController:shoppingList animated:YES];
 //    [self setHidesBottomBarWhenPushed:NO];
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

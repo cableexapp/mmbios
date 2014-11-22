@@ -200,7 +200,6 @@
 {
     [super viewWillAppear:YES];
     
-    
     NSString *memberid = [self getMemberId];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];

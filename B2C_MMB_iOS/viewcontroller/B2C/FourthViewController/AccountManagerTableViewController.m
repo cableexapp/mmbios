@@ -53,12 +53,26 @@
     
     phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
     email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
+    UIView *lineView1 = [[UIView alloc] init];
+    lineView1.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
+    lineView1.backgroundColor = [UIColor lightGrayColor];
+    
+    UIView *lineView2 = [[UIView alloc] init];
+    lineView2.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
+    lineView2.backgroundColor = [UIColor lightGrayColor];
+    
+    UIView *lineView3 = [[UIView alloc] init];
+    lineView3.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
+    lineView3.backgroundColor = [UIColor lightGrayColor];
+    [self.cell_1 addSubview:lineView1];
+    [self.cell_2 addSubview:lineView2];
+    [self.cell_3 addSubview:lineView3];
     self.cell_1.contentView.backgroundColor = [UIColor whiteColor];
-//    self.cell_1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.cell_1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.cell_2.backgroundColor = [UIColor whiteColor];
-//    self.cell_2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.cell_2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.cell_3.backgroundColor = [UIColor whiteColor];
-//    self.cell_3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.cell_3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //    phone = @"13921307065";
 //    email = @"306233304@qq.com";
     
@@ -69,7 +83,7 @@
 {
     if(indexPath.row == 0)
     {
-        return 44;
+        return 50;
         self.cell_1.contentView.backgroundColor = [UIColor whiteColor];
     }
     if(indexPath.row == 1)
@@ -83,7 +97,7 @@
         {
             [self.cell_2 setHidden:NO];
             self.cell_2.backgroundColor = [UIColor whiteColor];
-            return 44;
+            return 50;
         }
     }
     if(indexPath.row == 2)
@@ -91,7 +105,7 @@
         if(phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil)
         {
             [self.cell_3 setHidden:NO];
-            return 44;
+            return 50;
         }
         else
         {
@@ -99,7 +113,7 @@
             return 0;
         }
     }
-    return 44;
+    return 50;
 }
 
 

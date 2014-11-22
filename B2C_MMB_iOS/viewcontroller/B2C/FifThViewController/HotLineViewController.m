@@ -34,14 +34,33 @@
     
     [self pushAndPopStyle];
     
-    [self.hotBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 30)];
+    UIButton *hotLineButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    hotLineButton.frame = CGRectMake(30, 65, 50, 50);
+    [hotLineButton setBackgroundImage:[UIImage imageNamed:@"电话服务"] forState:UIControlStateNormal];
+    [hotLineButton addTarget:self action:@selector(callHotLine) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:hotLineButton];
     
-    // Do any additional setup after loading the view.
+    [self.hotBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 30)];
+    self.view.backgroundColor = [UIColor whiteColor];
+}
+
+-(void)callHotLine
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么"
+                                                 message:nil
+                                                delegate:self
+                                       cancelButtonTitle:@"取消"
+                                       otherButtonTitles:@"呼叫", nil];
+    [av show];
 }
 
 - (IBAction)hotBtnClick:(id)sender
 {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么"
+                                                 message:nil
+                                                delegate:self
+                                       cancelButtonTitle:@"取消"
+                                       otherButtonTitles:@"呼叫", nil];
     [av show];
 }
 
@@ -58,21 +77,10 @@
             break;
     }
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

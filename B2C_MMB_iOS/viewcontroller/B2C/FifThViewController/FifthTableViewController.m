@@ -37,19 +37,18 @@
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.logOutBtn.backgroundColor = [UIColor colorWithRed:0/255.0 green:99/255.0 blue:206/255.0 alpha:1.0];
     [self.logOutBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.logOutBtn.layer.cornerRadius = 5;
-    self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 50);
+    self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 60);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)logOutBtnClick:(id)sender

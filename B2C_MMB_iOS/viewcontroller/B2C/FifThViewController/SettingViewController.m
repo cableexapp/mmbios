@@ -36,6 +36,19 @@
     
     [self.view setUserInteractionEnabled:YES];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.cleanBackView.backgroundColor = [UIColor whiteColor];
+    
+    UIView *firstLine = [[UIView alloc] init];
+    firstLine.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
+    firstLine.backgroundColor = [UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0];
+    [self.cleanBackView addSubview:firstLine];
+    
+    UIView *secondLine = [[UIView alloc] init];
+    secondLine.frame = CGRectMake(0, 49, self.view.frame.size.width, 1);
+    secondLine.backgroundColor = [UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0];
+    [self.cleanBackView addSubview:secondLine];
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.cleanBackView addGestureRecognizer:tap];
     [self.cleanBackView setUserInteractionEnabled:YES];
@@ -45,9 +58,7 @@
 }
 
 - (void) tap:(UITapGestureRecognizer *) sender
-{
-    NSLog(@"tap");
-    
+{    
     as = [[UIActionSheet alloc] initWithTitle:@"您确定要清除缓存图片吗" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [as showInView:self.view];
 }
@@ -85,18 +96,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

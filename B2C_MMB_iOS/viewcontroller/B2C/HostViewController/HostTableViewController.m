@@ -53,7 +53,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-//    [self.navigationController.tabBarController.tabBar setHidden:NO];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
     [self setHidesBottomBarWhenPushed:NO];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {

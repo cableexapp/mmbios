@@ -14,6 +14,11 @@
     DCFConnectionUtil *conn;
 }
 
+@property (strong,nonatomic) NSString *myPhone;
+@property (strong,nonatomic) NSString *myEmail;
+
+@property (weak, nonatomic) IBOutlet UILabel *buttomLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
 @property (weak, nonatomic) IBOutlet UILabel *showLabel;
 @property (weak, nonatomic) IBOutlet UIButton *getValidateBtn;

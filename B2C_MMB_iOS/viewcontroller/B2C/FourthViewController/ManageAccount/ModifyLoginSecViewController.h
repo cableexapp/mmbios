@@ -15,5 +15,6 @@
 }
 @property (weak, nonatomic) IBOutlet UITextField *tf_first;
 @property (weak, nonatomic) IBOutlet UITextField *tf_second;
+@property (weak, nonatomic) IBOutlet UIButton *buttomBtn;
 
 @end

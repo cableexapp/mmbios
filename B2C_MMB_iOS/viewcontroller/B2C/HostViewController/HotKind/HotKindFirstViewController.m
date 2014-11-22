@@ -323,7 +323,7 @@ if ( _opend )
         _testTableView.userInteractionEnabled = NO;   // 未选列表不能选中
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
-            [_testSubTableView reloadData];
+        [_testSubTableView reloadData];
     }
 }
 

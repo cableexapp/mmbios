@@ -613,6 +613,7 @@
         {
             [btn setFrame:CGRectMake(5*3 + btnWidth*2-15, 5*3 + 30*2, btnWidth-20, 30)];
             [btn setTitle:@"荣宜天康" forState:UIControlStateNormal];
+            
         }
         
         
@@ -771,7 +772,7 @@
             [btn setTitle:@"35平方" forState:UIControlStateNormal];
         }
         
-        [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0]forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn setEnabled:YES];
@@ -1080,13 +1081,14 @@
 	
 	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
 	view2.backgroundColor = [UIColor clearColor];
+    
     UIView *lineView = [[UIView alloc]init];
     lineView.frame = CGRectMake(0, 31, myRect.size.width, 0.7);
     lineView.backgroundColor = [UIColor blackColor];
 //    [view2 addSubview:lineView];
 	[view1 addSubview:view2];
 	
-    
+   
     UIButton *abtn = [UIButton buttonWithType:UIButtonTypeCustom];
     abtn.backgroundColor = [UIColor clearColor];
     abtn.frame = CGRectMake(0, 0,myRect.size.width, 32);
@@ -1126,9 +1128,6 @@
     {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
         
-        lineView_1.hidden = YES;
-       
-        NSLog(@"aaaaa");
     }
     
     //	NSString *str = [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:[indexPath section]]] objectAtIndex:indexPath.row];
@@ -1172,18 +1171,25 @@
 	UIButton *btn = (UIButton *)sender;
 	flag[sectionIndex] = !flag[sectionIndex];
     
-    UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
+//    UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
     
 	if(flag[sectionIndex])
 	{
+        
+        
 		btn.selected = YES;
-       [iv setImage:[UIImage imageNamed:@"click1.png"]
-         ];
+//       [iv setImage:[UIImage imageNamed:@"click1.png"]];
+        lineView_1.hidden = NO;
+        
+        
 	}
 	else
     {
 		btn.selected = NO;
-        [iv setImage:[UIImage imageNamed:@"next.png"]];
+//        [iv setImage:[UIImage imageNamed:@"next.png"]];
+        lineView_1.hidden = YES;
+//        self.lineView.hidden = NO;
+
 	}
     
 	[tv reloadData];

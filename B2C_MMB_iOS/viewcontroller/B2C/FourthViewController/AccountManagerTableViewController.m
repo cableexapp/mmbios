@@ -73,8 +73,6 @@
     self.cell_2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.cell_3.backgroundColor = [UIColor whiteColor];
     self.cell_3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    phone = @"13921307065";
-//    email = @"306233304@qq.com";
     
     [self.tableView reloadData];
 }

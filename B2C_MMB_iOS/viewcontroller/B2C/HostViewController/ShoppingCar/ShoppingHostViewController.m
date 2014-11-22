@@ -86,7 +86,7 @@
     [topTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等信息"];
     [self.view addSubview:topTextField];
     
-    useArray = [[NSArray alloc] initWithObjects:@"照明",@"插座",@"热水器",@"挂壁空调",@"立式空调",@"中央空调",@"网络",@"电话",@"电源连接线", nil];
+    useArray = [[NSArray alloc] initWithObjects:@"照明",@"插座",@"热水器",@"挂壁空调",@"立式空调",@"中央空调",@"网络",@"电话",@"音/视频", @"电源连接线",@"进户主线",@"装潢明线",nil];
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height-44-20)];
     [tv setDataSource:self];
@@ -122,31 +122,47 @@
 {
     NSArray *moneyArray = [[NSArray alloc] initWithObjects:@" ¥ 449.00",@" ¥ 325.00",@" ¥ 500.00",@" ¥ 500.00", nil];
     
-    contentArray = [[NSArray alloc] initWithObjects:@"安缆 BV2.5平方 国标铜芯电线 单芯铜线 100米",@"远东电线电缆 BV4平方 国标铜芯电线 单芯铜线 100",@"远东电缆zc-bv4平方国际铜芯阻燃电线100米",@"远东电缆zc-bv4平方国际铜芯阻燃电线100米远东电缆zc-bv4平方国际铜芯阻燃电", nil];
+    contentArray = [[NSArray alloc] initWithObjects:@"安缆 BV2.5平方 国标铜芯电线 单芯铜线 100米",@"远东电线电缆 BV4平方 国标铜芯电线 单芯铜线 100",@"远东电缆zc-bv4平方国际铜芯阻燃电线100米",@"远东电缆zc-bv4平方国际铜芯阻燃电线100米", nil];
     
     NSArray *arr = [[NSArray alloc] initWithObjects:@"cabel.png",@"cabel.png",@"cabel.png",@"cabel.png", nil];
-    sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 230)];
-    sv.backgroundColor = [UIColor whiteColor];
+    sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 260)];
+    sv.backgroundColor = [UIColor clearColor];
     [sv setDelegate:self];
     for(int i = 0; i < arr.count; i++)
     {
-        UIImageView *svImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i, 10, 145, 145)];
+        
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-5, 10, 150, 220)];
+        [view.layer setCornerRadius:3]; //设置矩圆角半径
+        view.layer.borderWidth = 1.0f;
+        view.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
+        [view setBackgroundColor:[UIColor clearColor]];
+        [sv addSubview:view];
+        
+        
+        UIImageView *svImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-2, 12, 145, 145)];
         [svImageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",[arr objectAtIndex:i]]]];
         [svImageView setTag:10+i];
+//       svImageView.layer.borderWidth = 1.0f;
         [svImageView setUserInteractionEnabled:YES];
         svImageView.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
-        svImageView.layer.borderWidth = 1.0f;
         svImageView.layer.masksToBounds = YES;
         [sv addSubview:svImageView];
         
+        
+        UIView *lineView = [[UIView alloc]init];
+        lineView.frame = CGRectMake(10*(i+1) + 145*i+5, 200, 120, 0.7);
+        lineView.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0];
+        [sv addSubview:lineView];
+    
+     
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
         [svImageView addGestureRecognizer:tap];
-        
+       
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[contentArray objectAtIndex:i] WithSize:CGSizeMake(svImageView.frame.size.width, MAXFLOAT)];//获取视图大小
         
         UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [contentLabel setBackgroundColor:[UIColor purpleColor]];
-        [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height, svImageView.frame.size.width, size.height)];  //设置该cell的高度
+        [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height-8, svImageView.frame.size.width, size.height)];  //设置该cell的高度
         [contentLabel setFont:[UIFont systemFontOfSize:12]];
         [contentLabel setText:[contentArray objectAtIndex:i]];
         [contentLabel setBackgroundColor:[UIColor clearColor]];
@@ -154,11 +170,11 @@
         [contentLabel setNumberOfLines:0]; //文本换行
         [sv addSubview:contentLabel];
         
-        UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height, contentLabel.frame.size.width, 20)];
+        UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height+28, contentLabel.frame.size.width, 20)];
         [moneyLabel setTextAlignment:NSTextAlignmentLeft];
         [moneyLabel setBackgroundColor:[UIColor clearColor]];
         [moneyLabel setTextColor:[UIColor redColor]];
-        [moneyLabel setFont:[UIFont boldSystemFontOfSize:12]];
+        [moneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [moneyLabel setText:[moneyArray objectAtIndex:i]];
         [sv addSubview:moneyLabel];
         
@@ -293,37 +309,33 @@
     else
     {
         [tableView setSeparatorStyle:0];
-        for(int i = 0;i < 2;i++)
+        for(int i = 0;i < 3;i++)
         {
-            if(indexPath.row*2 + i < useArray.count)
+            if(indexPath.row*3 + i < useArray.count)
             {
-                UIView * view = [[UIView alloc] initWithFrame:CGRectMake(2+160*i, 0, 100, 50)];
-                [view setBackgroundColor:[UIColor whiteColor]];
+                UIView * view = [[UIView alloc] initWithFrame:CGRectMake(2+103*i+5, 10, 100, 40)];
+                [view setBackgroundColor:[UIColor clearColor]];
                 [cell.contentView addSubview:view];
-                
-                
-                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 35, 30)];
+
+                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(2, 7, 35, 30)];
                 [iv setImage:[UIImage imageNamed:@"sun.png"]];
                 //   [iv.layer setCornerRadius:8.0]; //设置矩圆角半径
                 //   [iv.layer setBorderWidth:0.5];   //边框宽度
                 [view addSubview:iv];
-                CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-                CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 0, 0, 1 });
-                [iv.layer setBorderColor:colorref];//边框颜色
-                
-                
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x-10 + iv.frame.size.width + 10, iv.frame.origin.y,80, 30)];
-                [label setText:[useArray objectAtIndex:indexPath.row*2 + i]];
-                [label setTextColor:MYCOLOR];
+          
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x-20 + iv.frame.size.width + 10, iv.frame.origin.y,80, 30)];
+                [label setText:[useArray objectAtIndex:indexPath.row*3 + i]];
                 [label setBackgroundColor:[UIColor clearColor]];
-                [label.layer setBorderWidth:0.5];   //边框宽度
-                [label setTextColor:[UIColor blackColor]];
-                [label setFont:[UIFont boldSystemFontOfSize:15]];
-                
+                [label setTextColor:[UIColor colorWithRed:52.0/255.0 green:52.0/255.0 blue:52.0/255.0 alpha:1.0]];
+                [label setFont:[UIFont boldSystemFontOfSize:14]];
+                [view addSubview:label];
+                [view.layer setCornerRadius:3]; //设置矩圆角半径
+                [view.layer setBorderWidth:1.0];   //边框宽度
+                 view.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
+
                 
                 
                 [view addSubview:label];
-                
                 [view setTag:indexPath.row*2 + i];
                 UITapGestureRecognizer *viewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap:)];
                 [view addGestureRecognizer:viewTap];

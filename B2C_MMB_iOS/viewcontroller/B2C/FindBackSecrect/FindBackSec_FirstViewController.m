@@ -97,8 +97,7 @@
 {
     NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
     NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
-    phone = @"13921307054";
-    email = @"cxboss405@163.com";
+    NSLog(@"%@  %@",phone,email);
 //    email = @"";
     //只绑定邮箱没有绑定手机进入邮箱验证界面
      if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length != 0 || ![email isKindOfClass:[NSNull class]] || email != NULL || email != nil))
@@ -116,6 +115,8 @@
     else
     {
         FindBackSec_SecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_SecondViewController"];
+        second.myPhone = phone;
+        second.myEmail = email;
         second.isMobileOrEmail = YES;
         [self.navigationController pushViewController:second animated:YES];
     }

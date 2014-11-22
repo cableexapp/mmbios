@@ -76,7 +76,7 @@
     
     [self.mySegment setFrame:CGRectMake((ScreenWidth-self.mySegment.frame.size.width)/2, (self.segmentView.frame.size.height-self.mySegment.frame.size.height)/2, self.mySegment.frame.size.width, self.mySegment.frame.size.height)];
     
-    [self.sv setContentSize:CGSizeMake(ScreenWidth*2, self.sv.frame.size.height)];
+    [self.sv setContentSize:CGSizeMake(ScreenWidth*2, self.sv.frame.size.height-200)];
     [self.sv setDelegate:self];
     [self.sv setPagingEnabled:YES];
     [self.sv setBounces:NO];

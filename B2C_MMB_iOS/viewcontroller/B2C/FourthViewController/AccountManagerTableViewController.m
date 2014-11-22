@@ -33,6 +33,15 @@
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
+    email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
+    NSLog(@"phone = %@   email = %@",phone,email);
+    
+    [self.tableView reloadData];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,11 +51,6 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"账户管理"];
     self.navigationItem.titleView = top;
     
-    phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
-    email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
-   
-//    phone = @"13921307065";
-//    email = @"306233304@qq.com";
     
     [self.tableView reloadData];
 }
@@ -89,11 +93,11 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self setHidesBottomBarWhenPushed:YES];
-
     
-
     
-
+    
+    
+    
     if(indexPath.row == 0)
     {
         if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email ==NULL || email == nil))

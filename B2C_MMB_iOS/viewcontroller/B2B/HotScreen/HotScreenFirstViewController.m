@@ -79,7 +79,6 @@
     }
 }
 
-
 - (void) screenBtnClick:(UIButton *) sender
 {
     [self setHidesBottomBarWhenPushed:YES];
@@ -87,7 +86,6 @@
     hotScreenSecondViewController.screen = sender.titleLabel.text;
     [self.navigationController pushViewController:hotScreenSecondViewController animated:YES];
 }
-
 
 - (IBAction)upBtnClick:(id)sender
 {
@@ -127,7 +125,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 

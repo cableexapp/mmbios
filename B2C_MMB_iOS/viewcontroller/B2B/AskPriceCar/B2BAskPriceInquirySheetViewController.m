@@ -135,11 +135,9 @@
         upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [upBtn setTitle:@"提交" forState:UIControlStateNormal];
         [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [upBtn setBackgroundColor:[UIColor colorWithRed:224.0/225.0 green:99.0/255.0 blue:0 alpha:1.0]];
-        upBtn.layer.borderColor = [UIColor colorWithRed:224.0/225.0 green:99.0/255.0 blue:0 alpha:1.0].CGColor;
-        upBtn.layer.borderWidth = 1.0f;
+        [upBtn setBackgroundColor:[UIColor colorWithRed:237.0/225.0 green:142.0/255.0 blue:0 alpha:1.0]];
         upBtn.layer.cornerRadius = 5.0f;
-        [upBtn setFrame:CGRectMake(ScreenWidth-120, 15, 100, 30)];
+        [upBtn setFrame:CGRectMake(15, 7.5, ScreenWidth-30, 35)];
         [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [buttomView addSubview:upBtn];
     }
@@ -224,10 +222,10 @@
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
-    [headLabel setTextColor:MYCOLOR];
+    [headLabel setTextColor:[UIColor blackColor]];
     [headLabel setBackgroundColor:[UIColor whiteColor]];
     headLabel.layer.borderWidth = 1.0f;
-    headLabel.layer.borderColor = MYCOLOR.CGColor;
+    headLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     if(section == 0)
     {
         [headLabel setText:@" 收货地址"];

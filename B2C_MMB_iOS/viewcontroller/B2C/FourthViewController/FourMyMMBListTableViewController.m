@@ -326,7 +326,7 @@
 {
     if(section == 0)
     {
-        return 70;
+        return 95;
     }
     return 45;
 }
@@ -335,19 +335,19 @@
 {
     if(section == 0)
     {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 70)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 95)];
         
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 50, 50)];
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-50)/2, 10, 50, 50)];
         [iv setImage:[UIImage imageNamed:@"headPic.png"]];
         [view addSubview:iv];
         
         UIImageView *backView = [[UIImageView alloc] init];
-        backView.frame = CGRectMake(0, 0, ScreenWidth, 70);
+        backView.frame = CGRectMake(0, 0, ScreenWidth, 95);
         backView.image = [UIImage imageNamed:@"headView.png"];
         [view insertSubview:backView belowSubview:iv];
         
         NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(85, 10, 200, 50)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width-200)/2, 70, 200, 20)];
         if(userName.length == 0 || [userName isKindOfClass:[NSNull class]] || userName == NULL || userName == nil)
         {
             [label setText:@""];
@@ -357,7 +357,7 @@
             [label setText:userName];
         }
         [label setFont:[UIFont boldSystemFontOfSize:20]];
-        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setTextAlignment:NSTextAlignmentCenter];
         [label setTextColor:[UIColor blackColor]];
         [view addSubview:label];
         

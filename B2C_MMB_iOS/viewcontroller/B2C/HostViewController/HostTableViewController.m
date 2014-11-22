@@ -67,6 +67,8 @@
             [view setHidden:YES];
         }
     }
+    
+    NSLog(@"host-----viewWillAppear");
 }
 - (void) viewWillDisappear:(BOOL)animated
 {
@@ -268,6 +270,8 @@
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
+    
+    NSLog(@"host-----viewDidLoad");
 }
 
 -(void)goToChatView:(NSNotification *)goToChat

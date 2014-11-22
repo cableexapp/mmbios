@@ -44,7 +44,12 @@
     
     phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
     email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
-   
+    self.cell_1.contentView.backgroundColor = [UIColor whiteColor];
+//    self.cell_1.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.cell_2.backgroundColor = [UIColor whiteColor];
+//    self.cell_2.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    self.cell_3.backgroundColor = [UIColor whiteColor];
+//    self.cell_3.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //    phone = @"13921307065";
 //    email = @"306233304@qq.com";
     
@@ -56,6 +61,7 @@
     if(indexPath.row == 0)
     {
         return 44;
+        self.cell_1.contentView.backgroundColor = [UIColor whiteColor];
     }
     if(indexPath.row == 1)
     {
@@ -67,6 +73,7 @@
         else
         {
             [self.cell_2 setHidden:NO];
+            self.cell_2.backgroundColor = [UIColor whiteColor];
             return 44;
         }
     }
@@ -86,13 +93,30 @@
     return 44;
 }
 
+
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil)
+//    {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//        //         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 5)];
+//        //         view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+//        //         [cell.contentView addSubview:view];
+//        
+//        
+//        //         cell.font = [UIFont systemFontOfSize:16];
+//        cell.backgroundColor = [UIColor clearColor];
+//        
+//    }
+//    return cell;
+//}
+
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self setHidesBottomBarWhenPushed:YES];
-
-    
-
-    
 
     if(indexPath.row == 0)
     {
@@ -123,7 +147,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

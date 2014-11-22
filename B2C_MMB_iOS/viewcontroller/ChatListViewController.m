@@ -45,6 +45,7 @@ int flagPage = 0;
     naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.textAlignment = NSTextAlignmentCenter;
+    naviTitle.font = [UIFont systemFontOfSize:20];
     naviTitle.text = @"客服分组";
     self.navigationItem.titleView = naviTitle;
    

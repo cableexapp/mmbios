@@ -59,6 +59,7 @@ double secondsCountDown =0;
     naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.textAlignment = NSTextAlignmentCenter;
+    naviTitle.font = [UIFont systemFontOfSize:20];
     naviTitle.text = @"等候咨询";
     self.navigationItem.titleView = naviTitle;
     

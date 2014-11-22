@@ -111,13 +111,13 @@
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 if(s.intValue < 99 && s.intValue > 0)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 10, 18, 18)];
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 15, 18, 18)];
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
                     [btn setTitle:s forState:UIControlStateNormal];
                 }
                 else if (s.intValue >= 99)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-10, 10, 24, 18)];
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 15, 24, 18)];
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
                     [btn setTitle:@"99+" forState:UIControlStateNormal];
                 }
@@ -199,7 +199,6 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
     
     NSString *memberid = [self getMemberId];
     
@@ -327,7 +326,7 @@
 {
     if(section == 0)
     {
-        return 70;
+        return 95;
     }
     return 45;
 }
@@ -336,19 +335,19 @@
 {
     if(section == 0)
     {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 70)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 95)];
         
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 50, 50)];
+        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-50)/2, 10, 50, 50)];
         [iv setImage:[UIImage imageNamed:@"headPic.png"]];
         [view addSubview:iv];
         
         UIImageView *backView = [[UIImageView alloc] init];
-        backView.frame = CGRectMake(0, 0, ScreenWidth, 70);
+        backView.frame = CGRectMake(0, 0, ScreenWidth, 95);
         backView.image = [UIImage imageNamed:@"headView.png"];
         [view insertSubview:backView belowSubview:iv];
         
         NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(85, 10, 200, 50)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width-200)/2, 70, 200, 20)];
         if(userName.length == 0 || [userName isKindOfClass:[NSNull class]] || userName == NULL || userName == nil)
         {
             [label setText:@""];
@@ -358,7 +357,7 @@
             [label setText:userName];
         }
         [label setFont:[UIFont boldSystemFontOfSize:20]];
-        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setTextAlignment:NSTextAlignmentCenter];
         [label setTextColor:[UIColor blackColor]];
         [view addSubview:label];
         
@@ -496,64 +495,6 @@
 {
     return 0.1;
 }
-/*
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
- {
- UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
- 
- // Configure the cell...
- 
- return cell;
- }
- */
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

@@ -261,11 +261,9 @@
             
 #pragma mark - 这里暂时写死数据
             NSString *phone = [NSString stringWithFormat:@"%@",[iems objectForKey:@"phone"]];
-//            NSString *phone = @"13921307054";
             [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"UserPhone"];
             
-//            NSString *email = [NSString stringWithFormat:@"%@",[iems objectForKey:@"email"]];
-            NSString *email = @"cxboss405@163.com";
+            NSString *email = [NSString stringWithFormat:@"%@",[iems objectForKey:@"email"]];
             [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"UserEmail"];
 
             
@@ -284,7 +282,7 @@
     NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
     
     
-    if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email == NULL || email == nil))
+    if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil || [phone isEqualToString:@"(null)"]) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email == NULL || email == nil || [email isEqualToString:@"(null)"]))
     {
         [DCFStringUtil showNotice:@"您尚未绑定任何设备,请联系客服"];
         return;

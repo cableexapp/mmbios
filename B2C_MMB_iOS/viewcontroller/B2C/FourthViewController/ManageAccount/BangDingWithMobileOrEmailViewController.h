@@ -10,18 +10,27 @@
 #import "DCFConnectionUtil.h"
 #import "DCFPickerView.h"
 
-@interface BangDingWithMobileOrEmailViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate,PickerView>
+@interface BangDingWithMobileOrEmailViewController : UIViewController<PickerView,UITextFieldDelegate,ConnectionDelegate>
 {
     DCFConnectionUtil *conn;
-    DCFPickerView *pickerView;
 }
 
 @property (strong,nonatomic) NSString *myPhone;
 @property (strong,nonatomic) NSString *myEmail;
 
 @property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
-@property (weak, nonatomic) IBOutlet UILabel *chooseLabel;
-@property (weak, nonatomic) IBOutlet UIButton *validateBtn;
-@property (weak, nonatomic) IBOutlet UITextField *validateTf;
+@property (weak, nonatomic) IBOutlet UILabel *showLabel;
+@property (weak, nonatomic) IBOutlet UIButton *getValidateBtn;
+@property (weak, nonatomic) IBOutlet UITextField *tf_getValidate;
 
+@property (weak, nonatomic) IBOutlet UIView *backView;
+@property (weak, nonatomic) IBOutlet UIView *secondLine;
+@property (weak, nonatomic) IBOutlet UIView *firstView;
+
+@property (weak, nonatomic) IBOutlet UIButton *nextBtn;
+
+@property (weak, nonatomic) IBOutlet UILabel *buttomLabel;
+
+
+@property (assign,nonatomic) BOOL isMobileOrEmail;
 @end

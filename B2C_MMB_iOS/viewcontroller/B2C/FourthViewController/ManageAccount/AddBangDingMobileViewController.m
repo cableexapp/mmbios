@@ -154,6 +154,8 @@
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
+            [[NSUserDefaults standardUserDefaults] setObject:self.teltf.text forKey:@"UserPhone"];
+            
             ModifyBangDingMobileSuccessViewController *modifyBangDingMobileSuccessViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"modifyBangDingMobileSuccessViewController"];
             [self.navigationController pushViewController:modifyBangDingMobileSuccessViewController animated:YES];
         }

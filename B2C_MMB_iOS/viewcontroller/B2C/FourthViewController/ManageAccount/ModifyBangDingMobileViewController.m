@@ -39,6 +39,16 @@
 {
     [super viewWillAppear:YES];
     timeCount_tel = 60;
+    
+    phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
+    NSString *s1 = [phone substringToIndex:3];
+    
+    NSString *s2 = [phone substringFromIndex:7];
+    
+    NSString *s3 = @"****";
+    NSString *tel = [NSString stringWithFormat:@"%@%@%@",s1,s3,s2];
+    [self.telLabel setText:[NSString stringWithFormat:@"已绑定手机:%@",tel]];
+
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -78,7 +88,7 @@
     
     [self pushAndPopStyle];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"新增绑定手机"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改绑定手机"];
     self.navigationItem.titleView = top;
     
     
@@ -91,15 +101,6 @@
     self.upBtn.layer.borderWidth = 1.0f;
     self.upBtn.layer.cornerRadius = 5.0f;
     
-    phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
-    
-    NSString *s1 = [phone substringToIndex:3];
-    
-    NSString *s2 = [phone substringFromIndex:7];
-    
-    NSString *s3 = @"****";
-    NSString *tel = [NSString stringWithFormat:@"%@%@%@",s1,s3,s2];
-    [self.telLabel setText:[NSString stringWithFormat:@"已绑定手机:%@",tel]];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode

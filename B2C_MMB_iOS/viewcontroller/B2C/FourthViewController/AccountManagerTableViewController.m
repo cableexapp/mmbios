@@ -93,9 +93,7 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self setHidesBottomBarWhenPushed:YES];
-    
-    
-    
+
     
     
     if(indexPath.row == 0)

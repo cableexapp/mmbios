@@ -197,11 +197,11 @@
         return;
     }
 #pragma mark - 验证码暂时写死
-//    if(![self.telTf.text isEqualToString:code])
-//    {
-//        [DCFStringUtil showNotice:@"请输入正确的验证码"];
-//        return;
-//    }
+    if(![self.telTf.text isEqualToString:code])
+    {
+        [DCFStringUtil showNotice:@"请输入正确的验证码"];
+        return;
+    }
     
     [self.telTf resignFirstResponder];
     

@@ -177,6 +177,8 @@
     return YES;
 }
 
+- (IBAction)buttomBtnClick:(id)sender {
+}
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {

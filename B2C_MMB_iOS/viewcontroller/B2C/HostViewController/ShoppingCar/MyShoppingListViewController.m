@@ -94,6 +94,9 @@
             [view setHidden:YES];
         }
     }
+    
+    [self loadRequest];
+
 }
 
 - (void) buttomBtnClick:(UIButton *) sender
@@ -148,41 +151,45 @@
     [self payBtnChange];
 }
 
+- (void) loadRequest
+{
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartList",time];
+    
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartList.html?"];
+    NSString *pushString = nil;
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarGoodsMsgTag delegate:self];
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
 - (id) initWithDataArray:(NSArray *)arr
 {
     if(self = [super init])
     {
-     
-        app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartList",time];
-        
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartList.html?"];
-        NSString *pushString = nil;
-        
-        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-        
-        NSString *visitorid = [app getUdid];
-        
-        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-   
-        if(hasLogin == YES)
-        {
-            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
-        }
-        else
-        {
-            pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
-        }
-        
-        
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarGoodsMsgTag delegate:self];
-        
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//        [self loadRequest];
     }
     return self;
 }
@@ -687,7 +694,7 @@
     moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(countLabel.frame.origin.x + countLabel.frame.size.width+5, 13, 100, 30)];
     [moneyLabel setTextColor:[UIColor redColor]];
     totalMoney = 0.00;
-    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
+    [moneyLabel setText:[DCFCustomExtra decimalwithFormat:@"0.00" floatV:totalMoney]];
     [moneyLabel setTextAlignment:NSTextAlignmentLeft];
     [buttomView addSubview:moneyLabel];
     
@@ -1330,9 +1337,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
         totalMoney = [price floatValue]*[carlist.num intValue] + totalMoney;
     }
     
-    
-    [moneyLabel setText:[NSString stringWithFormat:@"%.2f",totalMoney]];
-    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
+    [moneyLabel setText:[DCFCustomExtra decimalwithFormat:@"0.00" floatV:totalMoney]];
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

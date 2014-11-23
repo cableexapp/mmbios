@@ -31,6 +31,10 @@
     DCFMyTextField *mobileTf;
     
     DCFMyTextField *fixedLineTelephone;   //固定电话
+    
+    UIView *backView;
+    
+    UIButton *backBtn;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -101,6 +105,12 @@
     return self;
 }
 
+- (void) backBtnClick:(UIButton *) sender
+{
+    [self dismissKeyBoard];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -109,6 +119,22 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     
     [self pushAndPopStyle];
+    
+    
+    backView = [[UIView alloc] initWithFrame:CGRectMake(10, 20, ScreenWidth-20, 250)];
+    [backView setBackgroundColor:[UIColor whiteColor]];
+    backView.layer.borderColor = [UIColor colorWithRed:188.0/255.0 green:188.0/255.0 blue:188.0/255.0 alpha:1.0].CGColor;
+    backView.layer.borderWidth = 1.0f;
+    [self.view addSubview:backView];
+    
+    backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(20, backView.frame.origin.y + backView.frame.size.height + 10, ScreenWidth-40, 35)];
+    [backBtn setTitle:@"返回首页" forState:UIControlStateNormal];
+    [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [backBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
+    backBtn.layer.cornerRadius = 5.0f;
+    [backBtn addTarget:self action:@selector(backBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backBtn];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
@@ -288,13 +314,17 @@
 - (void) loadSubViews
 {
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"所在地区" WithSize:CGSizeMake(MAXFLOAT, 30)];
-    UILabel *addressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, size.width,30)];
+    UILabel *addressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, size.width,30)];
     [addressLabel_1 setTextAlignment:NSTextAlignmentLeft];
     [addressLabel_1 setFont:[UIFont systemFontOfSize:13]];
     [addressLabel_1 setText:@"所在地区"];
-    [self.view addSubview:addressLabel_1];
+    [backView addSubview:addressLabel_1];
     
-    UILabel *addressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(addressLabel_1.frame.origin.x + addressLabel_1.frame.size.width + 10, 20, 320-30-addressLabel_1.frame.size.width, 30)];
+    UIView *line_1 = [[UIView alloc] initWithFrame:CGRectMake(10, addressLabel_1.frame.origin.y + addressLabel_1.frame.size.height + 5, backView.frame.size.width-20, 1)];
+    [line_1 setBackgroundColor:[UIColor lightGrayColor]];
+    [backView addSubview:line_1];
+    
+    UILabel *addressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(addressLabel_1.frame.origin.x + addressLabel_1.frame.size.width + 10, addressLabel_1.frame.origin.y, backView.frame.size.width-30-addressLabel_1.frame.size.width, 30)];
     
     if(!b2cAddressData)
     {
@@ -310,13 +340,13 @@
     addressLabel_2.layer.borderColor = MYCOLOR.CGColor;
     addressLabel_2.layer.borderWidth = 1.0f;
     [addressLabel_2 setTextColor:MYCOLOR];
-    [self.view addSubview:addressLabel_2];
+    [backView addSubview:addressLabel_2];
     
     CGSize s1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"手机号码" WithSize:CGSizeMake(MAXFLOAT, 30)];
     
     for(int i=0;i<5;i++)
     {
-        UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 70+50*i, s1.width, 30)];
+        UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 50+40*i, s1.width, 30)];
         [firstLabel setFont:[UIFont systemFontOfSize:13]];
         [firstLabel setTextAlignment:NSTextAlignmentLeft];
         switch (i) {
@@ -337,10 +367,17 @@
             default:
                 break;
         }
-        [self.view addSubview:firstLabel];
+        if(i < 4)
+        {
+            UIView *line_2 = [[UIView alloc] initWithFrame:CGRectMake(10, firstLabel.frame.origin.y + firstLabel.frame.size.height + 5, backView.frame.size.width-20, 1)];
+            [line_2 setBackgroundColor:[UIColor lightGrayColor]];
+            [backView addSubview:line_2];
+        }
+        [backView addSubview:firstLabel];
         
-        DCFMyTextField *tf = [[DCFMyTextField alloc] initWithFrame:CGRectMake(s1.width+20, firstLabel.frame.origin.y, 320-30-s1.width, 30)];
+        DCFMyTextField *tf = [[DCFMyTextField alloc] initWithFrame:CGRectMake(s1.width+20, firstLabel.frame.origin.y, backView.frame.size.width-30-s1.width, 30)];
         [tf setDelegate:self];
+        [tf setFont:[UIFont systemFontOfSize:13]];
         [tf setTag:i];
         if(i < 3)
         {
@@ -358,7 +395,7 @@
             }
             [tf setReturnKeyType:UIReturnKeyDone];
         }
-        [self.view addSubview:tf];
+        [backView addSubview:tf];
         [textFieldArray addObject:tf];
         
         if(i == 0)
@@ -419,22 +456,7 @@
 //                [tf setText:[_msgDic objectForKey:@"tel"]];
 //            }
         }
-        
-        
-//        if(i == 3)
-//        {
-//            UILabel *pretermissionLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, tf.frame.origin.y + tf.frame.size.height + 20, 100, 30)];
-//            [pretermissionLabel setText:@"是否为默认"];
-//            [pretermissionLabel setTextAlignment:NSTextAlignmentLeft];
-//            [pretermissionLabel setFont:[UIFont systemFontOfSize:13]];
-//            [self.view addSubview:pretermissionLabel];
-//            
-//            swith = [[UISwitch alloc] initWithFrame:CGRectMake(pretermissionLabel.frame.origin.x + pretermissionLabel.frame.size.width + 20, pretermissionLabel.frame.origin.y, 40, 30)];
-//            [swith setUserInteractionEnabled:YES];
-//            [swith setOn:YES];
-//            [swith addTarget:self action:@selector(swithChange:) forControlEvents:UIControlEventValueChanged];
-//            [self.view addSubview:swith];
-//        }
+
     }
 }
 
@@ -443,7 +465,14 @@
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3f];
     [UIView setAnimationDelegate:self];
-    [self.view setFrame:CGRectMake(0, 64, 320, ScreenHeight)];
+    if(ScreenHeight <= 500)
+    {
+        [self.view setFrame:CGRectMake(0, 64, 320, ScreenHeight)];
+    }
+    else
+    {
+        
+    }
     
     [UIView commitAnimations];
     
@@ -492,7 +521,7 @@
         }
         else
         {
-            [self.view setFrame:CGRectMake(0, 0, 320, ScreenHeight)];
+//            [self.view setFrame:CGRectMake(0, 0, 320, ScreenHeight)];
         }
         [UIView commitAnimations];
     }

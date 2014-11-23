@@ -8,7 +8,6 @@
 
 #import "B2CShoppingSearchViewController.h"
 #import "B2CShoppingListViewController.h"
-
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
@@ -215,13 +214,13 @@
     
     UIButton *useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [useBtn setTitle:useString forState:UIControlStateNormal];
+//    [useBtn setFrame:CGRectMake(useBtn.frame.size.width+20, 5, 50, 30)];
     [useBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [useBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    useBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [useBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    useBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
     useBtn.layer.borderWidth = 1.0f;
     [useBtn setTag:1];
     [headBtnArray addObject:useBtn];
-    lineView_1.hidden = YES;
     
     showUseCell = NO;
     
@@ -243,8 +242,8 @@
     UIButton *brandBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [brandBtn setTitle:brandString forState:UIControlStateNormal];
     [brandBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [brandBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    brandBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [brandBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    brandBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
     brandBtn.layer.borderWidth = 1.0f;
     [brandBtn setTag:4];
     [headBtnArray addObject:brandBtn];
@@ -266,8 +265,8 @@
     UIButton *modelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [modelBtn setTitle:modelString forState:UIControlStateNormal];
     [modelBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [modelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    modelBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [modelBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    modelBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
     modelBtn.layer.borderWidth = 1.0f;
     [modelBtn setTag:2];
     [headBtnArray addObject:modelBtn];
@@ -291,8 +290,8 @@
     UIButton *specBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [specBtn setTitle:specString forState:UIControlStateNormal];
     [specBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [specBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    specBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    [specBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    specBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
     specBtn.layer.borderWidth = 1.0f;
     [specBtn setTag:3];
     [headBtnArray addObject:specBtn];
@@ -401,23 +400,25 @@
             switch (i)
             {
                 case 0:
-                    [B setFrame:CGRectMake(5, 5, width, 30)];
+                    [B setFrame:CGRectMake(15, 5, width-60, 30)];
                     break;
                 case 1:
-                    [B setFrame:CGRectMake(15+width, 5, width, 30)];
+                    [B setFrame:CGRectMake(15+width-10, 5, width-60, 30)];
                     break;
                 case 2:
-                    [B setFrame:CGRectMake(5, 40, width, 30)];
+                    [B setFrame:CGRectMake(15, 40, width-60, 30)];
                     break;
                 case 3:
-                    [B setFrame:CGRectMake(15+width, 40, width, 30)];
+                    [B setFrame:CGRectMake(15+width-10, 40, width-60, 30)];
                     break;
                 default:
                     break;
             }
             
             useCloseIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
-            [useCloseIV setFrame:CGRectMake(B.frame.size.width-10, 5, 20, 20)];
+            [useCloseIV setFrame:CGRectMake(B.frame.size.width, 0, 30, 30)];
+            useCloseIV.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+            useCloseIV.layer.borderWidth = 1.0f;
             [B addSubview:useCloseIV];
      
         }
@@ -436,7 +437,7 @@
 - (void) addHeadView
 {
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 40)];
-    [topView setBackgroundColor:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0]];
+    [topView setBackgroundColor:[UIColor colorWithRed:212.0/255.0 green:212.0/255.0 blue:212.0/255.0 alpha:1.0]];
     [self.view addSubview:topView];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 40)];
@@ -468,7 +469,7 @@
     //    sectionArray = [[NSArray alloc] initWithObjects:@"品牌",@"用途",@"型号",@"横截面",@"颜色",@"芯数",@"单位", nil];
     
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, myRect.size.width, myRect.size.height-40) style:0];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, myRect.size.width, myRect.size.height-90) style:0];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
@@ -546,11 +547,7 @@
             [btn setFrame:CGRectMake(5*1 + btnWidth*0+5, 5*5 + 30*4, btnWidth-20, 30)];
             [btn setTitle:@"音频" forState:UIControlStateNormal];
             
-            lineView_1 = [[UIView alloc]init];
-            lineView_1.frame = CGRectMake(0, 210, myRect.size.width, 7);
-            lineView_1.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
-            [tv addSubview:lineView_1];
-        }
+                    }
         
         [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
@@ -841,13 +838,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+   
+
 
 }
 
 - (void) clear:(UIButton *) sender
 {
 
-    
+//     backView.hidden = YES;
     if(headBtnArray && headBtnArray.count != 0)
     {
         [headBtnArray removeAllObjects];
@@ -1082,15 +1082,16 @@
     view1 = nil;
 	view2 = nil;
 	view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
-	view1.backgroundColor = [UIColor clearColor];
+	view1.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
+//       view1.backgroundColor = [UIColor redColor];
 	
 	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
 	view2.backgroundColor = [UIColor clearColor];
     
     UIView *lineView = [[UIView alloc]init];
-    lineView.frame = CGRectMake(0, 31, myRect.size.width, 0.7);
-    lineView.backgroundColor = [UIColor blackColor];
-//    [view2 addSubview:lineView];
+    lineView.frame = CGRectMake(0, 31, myRect.size.width, 3.0);
+    lineView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
+    [view2 addSubview:lineView];
 	[view1 addSubview:view2];
 	
    
@@ -1134,6 +1135,7 @@
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
         
     }
+
     
     //	NSString *str = [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:[indexPath section]]] objectAtIndex:indexPath.row];
     //	cell.imageView.image = [UIImage imageNamed:@"102.png"];
@@ -1184,7 +1186,6 @@
         
 		btn.selected = YES;
 //       [iv setImage:[UIImage imageNamed:@"click1.png"]];
-        lineView_1.hidden = NO;
         
         
 	}
@@ -1192,8 +1193,6 @@
     {
 		btn.selected = NO;
 //        [iv setImage:[UIImage imageNamed:@"next.png"]];
-        lineView_1.hidden = YES;
-//        self.lineView.hidden = NO;
 
 	}
     

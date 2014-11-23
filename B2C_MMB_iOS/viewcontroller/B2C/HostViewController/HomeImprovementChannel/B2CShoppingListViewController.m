@@ -33,7 +33,11 @@
     BOOL _reloading;
     
     UIView *backView;
+    UIView * lineView_2;
+    UIView * lineView_3;
+    UIView * lineView_4;
 
+    NSMutableArray *buttonLineViewArray;  //底部3条下滑线数组
     
     NSMutableArray *btnArray;
     
@@ -134,12 +138,12 @@
     //    if(!searchView)
     //    {
     
-    backView = [[UIView alloc] init];
-    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    backView.alpha = 0.6;
-    backView.hidden = NO;
-    backView.backgroundColor = [UIColor lightGrayColor];
-    [self.view insertSubview:backView aboveSubview:tv];
+//    backView = [[UIView alloc] init];
+//    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+//    backView.alpha = 0.6;
+//    backView.hidden = NO;
+//    backView.backgroundColor = [UIColor lightGrayColor];
+//    [self.view insertSubview:backView aboveSubview:tv];
 
     searchView = [[UIView alloc] init];
     [searchView setFrame:CGRectMake(70, 50, ScreenWidth-40, ScreenHeight)];
@@ -193,11 +197,29 @@
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     int tag = btn.tag;
+    
+    NSLog(@"tag = %d",tag);
+    
+    for(UIView *view in buttonLineViewArray)
+    {
+        if(view.tag == tag)
+        {
+            [view setHidden:NO];
+        }
+        else
+        {
+            [view setHidden:YES];
+        }
+    }
+    
+    
     for(int i = 0;i < btnArray.count; i++)
     {
+
         UIButton *b = (UIButton *)[btnArray objectAtIndex:i];
         if(i == tag)
         {
+
             _seq = b.titleLabel.text;
             if(dataArray.count != 0)
             {
@@ -206,18 +228,26 @@
             intPage = 1;
             
             //价格product_price  销量:sale_num
-            
+        
             if(i == 0)
             {
-                _seq = @"";
+             _seq = @"";
+
+                
             }
             if(i == 1)
             {
                 _seq = @"product_price";
+
+                
+
+              
             }
             if(i == 2)
             {
                 _seq = @"sale_num";
+
+              
             }
             if(flag == YES)
             {
@@ -291,6 +321,7 @@
     [self.view addSubview:selectBtnView];
     
     btnArray = [[NSMutableArray alloc] init];
+    buttonLineViewArray = [[NSMutableArray alloc] init];
     for(int i=0;i<3;i++)
     {
         UIButton *selctBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -300,6 +331,7 @@
             case 0:
                 [selctBtn setTitle:@"相关度" forState:UIControlStateNormal];
                 [selctBtn setSelected:YES];
+        
                 break;
             case 1:
                 [selctBtn setTitle:@"价格" forState:UIControlStateNormal];
@@ -310,11 +342,40 @@
             default:
                 break;
         }
-        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+//        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+//        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
         
         [selctBtn setTitleColor:[UIColor colorWithRed:133.0/255.0 green:133.0/255.0 blue:133.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-        [selctBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+//        [selctBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+        
+        if(i == 0)
+        {
+            //蓝色下划线
+            lineView_2 = [[UIView alloc] initWithFrame:CGRectMake(8, selctBtn.frame.origin.y+40, 100, 3)];
+            [lineView_2 setBackgroundColor:[UIColor colorWithRed:30.0/255.0 green:91.0/255.0 blue:253.0/255.0 alpha:1.0]];
+            [selectBtnView addSubview:lineView_2];
+            [lineView_2 setTag:0];
+            lineView_2.hidden = NO;
+            [buttonLineViewArray addObject:lineView_2];
+
+            lineView_3 = [[UIView alloc] initWithFrame:CGRectMake(110, selctBtn.frame.origin.y+40, 100, 3)];
+            [lineView_3 setBackgroundColor:[UIColor colorWithRed:30.0/255.0 green:91.0/255.0 blue:253.0/255.0 alpha:1.0]];
+            [selectBtnView addSubview:lineView_3];
+            [lineView_3 setTag:1];
+            lineView_3.hidden = YES;
+            [buttonLineViewArray addObject:lineView_3];
+
+            lineView_4 = [[UIView alloc] initWithFrame:CGRectMake(215, selctBtn.frame.origin.y+40, 100, 3)];
+            [lineView_4 setBackgroundColor:[UIColor colorWithRed:30.0/255.0 green:91.0/255.0 blue:253.0/255.0 alpha:1.0]];
+            [selectBtnView addSubview:lineView_4];
+            [lineView_4 setTag:2];
+            lineView_4.hidden = YES;
+            [buttonLineViewArray addObject:lineView_4];
+        }
+
+
+       
+ 
         
         [selctBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [selctBtn setTag:i];

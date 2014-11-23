@@ -559,7 +559,8 @@
         [btn addTarget:self action:@selector(useBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
-        btn.layer.borderWidth = 0.3;
+        [btn.layer setBorderWidth:1.0];   //边框宽度
+        btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [btn setEnabled:YES];
         [array1 addObject:btn];
     }
@@ -625,7 +626,8 @@
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(brandBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
-        btn.layer.borderWidth = 0.3;
+        [btn.layer setBorderWidth:1.0];   //边框宽度
+        btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [array2 addObject:btn];
     }
     
@@ -707,7 +709,8 @@
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
-        btn.layer.borderWidth = 0.3;
+        [btn.layer setBorderWidth:1.0];   //边框宽度
+        btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [array3 addObject:btn];
     }
     
@@ -780,7 +783,8 @@
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(specBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
-        btn.layer.borderWidth = 0.3;
+        [btn.layer setBorderWidth:1.0];   //边框宽度
+        btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [array4 addObject:btn];
     }
     _myDic = [[NSDictionary alloc] initWithObjectsAndKeys:array1,@"按用途筛选",
@@ -860,6 +864,7 @@
         
         [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
     }
+    
     
     [self.view.superview removeFromSuperview];
     [self.view removeFromSuperview];

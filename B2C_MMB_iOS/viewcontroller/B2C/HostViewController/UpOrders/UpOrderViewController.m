@@ -47,7 +47,7 @@
     NSMutableArray *chooseSendTitleArray;
     //    NSMutableArray *totalMoneyArray;
     
-    int totalMoney;
+//    int totalMoney;
     
     int myTag;
     
@@ -63,9 +63,12 @@
     NSString *receivedistrict;
     NSString *receiveaddress;
     NSString *receiver;
+    NSString *receiveAddressId;
     NSString *receiveTel;
     NSString *invoiceId;
     NSString *usefp;
+    
+    UILabel *sendMoneyLabel;
 }
 @end
 
@@ -99,20 +102,20 @@
         }
         else
         {
-            for(NSDictionary *dic in b2cOrderData.addressArray)
-            {
-                if([dic.allKeys count] == 0)
-                {
-                    
-                }
-                else
-                {
-                    if([[dic objectForKey:@"isDefault"] isEqualToString:@"1"])
-                    {
-                        addressDic = [[NSDictionary alloc] initWithDictionary:dic];
-                    }
-                }
-            }
+//            for(NSDictionary *dic in b2cOrderData.addressArray)
+//            {
+//                if([dic.allKeys count] == 0)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    if([[dic objectForKey:@"isDefault"] isEqualToString:@"1"])
+//                    {
+//                        addressDic = [[NSDictionary alloc] initWithDictionary:dic];
+//                    }
+//                }
+//            }
         }
         
 
@@ -321,9 +324,23 @@
     {
         
     }
+    
+    NSString *s1 = billReceiveAddressLabel_1.text;
+    NSString *s2 = billReceiveAddressLabel_2.text;
+    if([DCFCustomExtra validateString:s1] == NO || [DCFCustomExtra validateString:s2] == NO)
+    {
+        [DCFStringUtil showNotice:@"收货地址不能为空"];
+        return;
+    }
+
+    if([sendMoneyLabel.text isEqualToString:@"配送费:"])
+    {
+        [DCFStringUtil showNotice:@"请选择配送方式"];
+        return;
+    }
     NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
                              shopArray,@"shopList",
-                             [addressDic objectForKey:@"addressId"],@"address",
+                             [addressDic objectForKey:@"receiveAddressId"],@"address",
                              billId,@"invonice",
                              [self getMemberId],@"memberid",
                              nil];
@@ -396,6 +413,8 @@
         receiveprovince = @"";
         receiver = @"";
         receiveTel = @"";
+        receiveAddressId = @"";
+        addressDic = [[NSDictionary alloc] init];
     }
     else
     {
@@ -407,6 +426,9 @@
         receivecity = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivecity"]];
         receivedistrict = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivedistrict"]];
         receiveaddress = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveaddress"]];
+        receiveAddressId = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveAddressId"]];
+        
+        addressDic = [[NSDictionary alloc] initWithDictionary:receiveDic];
         
         [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"%@    %@",receiver,receiveTel]];
         NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
@@ -490,6 +512,11 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单提交"];
     self.navigationItem.titleView = top;
     
+    
+    sendMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 7,ScreenWidth-30, 0)];
+    [sendMoneyLabel setTextAlignment:NSTextAlignmentRight];
+    [sendMoneyLabel setFont:[UIFont systemFontOfSize:12]];
+    
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight - 64 - 50)];
     [tv setDataSource:self];
     [tv setDelegate:self];
@@ -502,7 +529,8 @@
     [self.view addSubview:buttomView];
     
     totalMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 50)];
-    [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra notRounding:goodsMoney afterPoint:2]]];
+    
+    [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra decimalwithFormat:@"0.00" floatV:goodsMoney]]];
     [totalMoneyLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [totalMoneyLabel setTextColor:[UIColor blackColor]];
     [totalMoneyLabel setBackgroundColor:[UIColor clearColor]];
@@ -765,7 +793,8 @@
                     [countlabel setFont:[UIFont systemFontOfSize:12]];
                     
                     float money = [number intValue] * [data.price floatValue];
-                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
+
+                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra decimalwithFormat:@"0.00" floatV:money]];
                     CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
                     UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
                     [totalLabel setText:smallCal];
@@ -839,11 +868,9 @@
                                 }
                             }
                             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(MAXFLOAT,20)];
-                            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size.width, 7, size.width, 30)];
-                            [label setText:str];
-                            [label setTextAlignment:NSTextAlignmentRight];
-                            [label setFont:[UIFont systemFontOfSize:12]];
-                            [cell.contentView addSubview:label];
+                            [sendMoneyLabel setFrame:CGRectMake(320-30-size.width, 7, size.width, 30)];
+                            [sendMoneyLabel setText:str];
+                            [cell.contentView addSubview:sendMoneyLabel];
                         }
                         
                         
@@ -1003,11 +1030,9 @@
                                 }
                             }
                             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(MAXFLOAT,20)];
-                            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size.width, 7, size.width, 30)];
-                            [label setText:str];
-                            [label setTextAlignment:NSTextAlignmentRight];
-                            [label setFont:[UIFont systemFontOfSize:12]];
-                            [cell.contentView addSubview:label];
+                            [sendMoneyLabel setFrame:CGRectMake(320-30-size.width, 7, size.width, 30)];
+                            [sendMoneyLabel setText:str];
+                            [cell.contentView addSubview:sendMoneyLabel];
                         }
                         
                         
@@ -1173,13 +1198,13 @@
 
 - (void) pickerView:(NSString *)title WithTag:(int)tag
 {
-
     [chooseSendTitleArray replaceObjectAtIndex:tag withObject:title];
     [tv reloadData];
     
 
-    goodsMoney = goodsMoney + [[self getNumFromString:title] floatValue];
-    [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra notRounding:goodsMoney afterPoint:2]]];
+    float myTotalMoney = goodsMoney + [[self getNumFromString:title] floatValue];
+
+    [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra decimalwithFormat:@"0.00" floatV:myTotalMoney]]];
 }
 
 #pragma mark - 从字符串中取出数字

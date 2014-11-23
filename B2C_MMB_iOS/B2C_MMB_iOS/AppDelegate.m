@@ -221,9 +221,12 @@ NSString *strUserId = @"";
     
 }
 
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+
     
     //友盟
     //  友盟的方法本身是异步执行，所以不需要再异步调用

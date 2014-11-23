@@ -224,7 +224,7 @@
     self.navigationItem.titleView = top;
     
     headBtnArray = [[NSMutableArray alloc] init];
-    for(int i=0;i<5;i++)
+    for(int i=0;i<4;i++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(-1, 0, ScreenWidth+1, 45)];
@@ -291,14 +291,14 @@
             [iv setImage:[UIImage imageNamed:@"count.png"]];
             [btn addSubview:iv];
         }
-        if(i == 4)
-        {
-            [label_1 setText:@"收货地址"];
-            
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
-            [iv setImage:[UIImage imageNamed:@"getAddress.png"]];
-            [btn addSubview:iv];
-        }
+//        if(i == 4)
+//        {
+//            [label_1 setText:@"收货地址"];
+//            
+//            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+//            [iv setImage:[UIImage imageNamed:@"getAddress.png"]];
+//            [btn addSubview:iv];
+//        }
         [btn addSubview:label_1];
         
         UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 35, 35)];

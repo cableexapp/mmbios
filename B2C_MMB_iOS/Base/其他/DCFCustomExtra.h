@@ -44,4 +44,8 @@
 
 + (UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize;
 
++ (NSString *) decimalwithFormat:(NSString *)format  floatV:(float)floatV;
+
++ (BOOL) validateString:(NSString *) str;
+
 @end

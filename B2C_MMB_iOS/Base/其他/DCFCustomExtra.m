@@ -48,11 +48,31 @@
     return CGSizeZero;
 }
 
+#pragma mark - 判断字符串是否为空
++ (BOOL) validateString:(NSString *) str
+{
+    if(str.length ==  0 || [str isKindOfClass:[NSNull class]] || str == nil || str == NULL || [str isEqualToString:@"(null)"] || [[str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
+    {
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark - 四舍五入
++ (NSString *) decimalwithFormat:(NSString *)format  floatV:(float)floatV
+{
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    
+    [numberFormatter setPositiveFormat:format];
+    
+    return  [numberFormatter stringFromNumber:[NSNumber numberWithFloat:floatV]];
+}
+
 #pragma mark - 截取小数点后2位，四舍五入，如果不要，修改NSRoundUp
 + (NSString *)notRounding:(float)price afterPoint:(int)position
 {
     
-    NSDecimalNumberHandler* roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:position raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    NSDecimalNumberHandler* roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown scale:position raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     
     NSDecimalNumber *ouncesDecimal;
     

@@ -81,7 +81,7 @@
     UIImage *image_2 = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"welcome_2" ofType:@"png"]];
     [self.iv_Sec setImage:image_2];
     
-    UIImage *image_3 = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"welcome_1" ofType:@"png"]];
+    UIImage *image_3 = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"welcome_3" ofType:@"png"]];
     [self.iv_Third setImage:image_3];
     
     [self.startBtn setBackgroundImage:[UIImage imageNamed:@"ty.png"] forState:UIControlStateNormal];

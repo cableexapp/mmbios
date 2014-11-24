@@ -108,7 +108,7 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *status = [NSString stringWithFormat:@"%@",sender];
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,@"668",pageSize,_intPage,status];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,[self getMemberId],pageSize,_intPage,status];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLOrderListTag delegate:self];
     

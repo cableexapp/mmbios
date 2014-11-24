@@ -154,7 +154,7 @@
 
 - (void) loadRequest:(NSString *) sender
 {
-    pageSize = 40;
+    pageSize = 1000000;
     //    intPage = 1;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -174,6 +174,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     

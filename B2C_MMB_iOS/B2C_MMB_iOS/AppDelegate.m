@@ -32,6 +32,11 @@
 #import "DDTTYLogger.h"
 #import "NSXMLElement+XMPP.h"
 
+//讯飞
+#import "iflyMSC/IFlySpeechUtility.h"
+#define APPID_VALUE   @"546454f4"
+#define TIMEOUT_VALUE @"20000"
+
 #if DEBUG
 static const int ddLogLevel = LOG_LEVEL_VERBOSE;
 #else
@@ -227,6 +232,11 @@ NSString *strUserId = @"";
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 
+    //创建讯飞语音配置,appid必须要传入，仅执行一次则可
+    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@,timeout=%@",APPID_VALUE,TIMEOUT_VALUE];
+    
+    //所有服务启动前，需要确保执行createUtility
+    [IFlySpeechUtility createUtility:initString];
     
     //友盟
     //  友盟的方法本身是异步执行，所以不需要再异步调用

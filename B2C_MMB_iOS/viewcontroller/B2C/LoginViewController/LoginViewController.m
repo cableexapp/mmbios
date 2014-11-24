@@ -123,7 +123,7 @@
     
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [registerBtn setFrame:CGRectMake(0, 5, 40, 30)];
-    [registerBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [registerBtn setTitle:@"注册" forState:UIControlStateNormal];
     registerBtn.layer.borderColor = MYCOLOR.CGColor;
     registerBtn.layer.borderWidth = 1.0f;
@@ -136,7 +136,7 @@
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [cancelBtn setFrame:CGRectMake(0, 5, 40, 30)];
-    [cancelBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     cancelBtn.layer.borderColor = MYCOLOR.CGColor;
     cancelBtn.layer.borderWidth = 1.0f;

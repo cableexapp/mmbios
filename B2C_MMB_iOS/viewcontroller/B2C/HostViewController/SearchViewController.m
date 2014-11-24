@@ -928,9 +928,8 @@
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2BhistoryArray addObject:dic];
-                       
-//                        [dataArray addObject:dic];
-                        [self.serchResultView reloadData];
+
+//                        [self.serchResultView reloadData];
                         NSLog(@"B2Bhistory = %@",B2BhistoryArray);
                     }
                 }
@@ -1039,9 +1038,7 @@
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2ChistoryArray addObject:dic];
-                        
-//                        [dataArray addObject:dic];
-                        [self.serchResultView reloadData];
+//                        [self.serchResultView reloadData];
                         NSLog(@"self.history = %@",B2ChistoryArray);
                     }
                     
@@ -1066,7 +1063,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 1;
+    return 0.1;
 }
 
 @end

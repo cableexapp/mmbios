@@ -120,7 +120,7 @@
         [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
         btn.layer.borderColor = MYCOLOR.CGColor;
         btn.layer.borderWidth = 0.5f;
-        btn.layer.cornerRadius = 5.0f;
+//        btn.layer.cornerRadius = 5.0f;
         [btn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         if(btn.tag == self.btnIndex)
         {

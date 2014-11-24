@@ -16,7 +16,6 @@
 @interface MyInquiryListFirstViewController ()
 {
     int currentPageIndex;
-
     NormalInquiryListTableViewController *normal;
     SpeedInquiryListTableViewController *speed;
     UIView *rightButtonView;
@@ -54,6 +53,9 @@
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
+    self.segment.segmentedControlStyle = UISegmentedControlStylePlain;
+     self.segment.frame = CGRectMake(-3, 0, self.view.frame.size.width+6, 30);
+    self.segment.tintColor = [UIColor colorWithRed:37/255.0 green:118/255.0 blue:254/255.0 alpha:1.0];
     
     [self.segment addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     
@@ -85,7 +87,6 @@
     [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
     [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:rightBtn];
-
 }
 
 -(void)searchOrderBtnClick

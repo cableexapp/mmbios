@@ -93,7 +93,8 @@
         [btn setTitleColor:[UIColor colorWithRed:240.0/255.0 green:241.0/255.0 blue:223.0/255.0 alpha:1.0] forState:UIControlStateSelected];
         
         [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:83.0/255.0 green:83.0/255.0 blue:83.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+        
+        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:37.0/255.0 green:118.0/255.0 blue:254.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
         
         [btn setTag:i];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -950,18 +951,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

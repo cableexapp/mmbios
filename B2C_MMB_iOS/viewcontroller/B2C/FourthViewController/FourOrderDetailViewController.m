@@ -15,6 +15,8 @@
 #import "B2CGetOrderDetailData.h"
 #import "UIImageView+WebCache.h"
 #import "GoodsPicFastViewController.h"
+#import "logisticsTrackingViewController.h"
+#import "DiscussViewController.h"
 
 @interface FourOrderDetailViewController ()
 {
@@ -87,7 +89,34 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getOrderDetail.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height-53) style:0];
+    tv = [[UITableView alloc] init];
+    if(self.showOrHideDisCussBtn == YES || self.showOrHideTradeBtn == YES)
+    {
+        [self.buttomView setHidden:NO];
+
+        [self.discussBtn setHidden:!self.showOrHideDisCussBtn];
+        
+        [self.tradeBtn setHidden:!self.showOrHideTradeBtn];
+        
+//        for(UIButton *btn in self.buttomView.subviews)
+//        {
+//            [btn setHidden: NO];
+//        }
+        [self.tableBackView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-self.buttomView.frame.size.height-64)];
+        [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
+    }
+    else
+    {
+        [self.buttomView setHidden:YES];
+        [self.buttomView setFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 0)];
+        for(UIButton *btn in self.buttomView.subviews)
+        {
+            [btn setHidden:YES];
+            [btn setFrame:CGRectMake(btn.frame.origin.x, ScreenHeight, btn.frame.size.width, 0)];
+        }
+        [self.tableBackView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+        [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
+    }
     [tv setDataSource:self];
     [tv setDelegate:self];
     [self.tableBackView addSubview:tv];
@@ -109,12 +138,23 @@
 
 - (IBAction)discussBtnClick:(id)sender
 {
+    DiscussViewController *disCuss = [self.storyboard instantiateViewControllerWithIdentifier:@"discussViewController"];
+
+    disCuss.itemArray = [[NSMutableArray alloc] initWithArray:self.theLogiArray];
+    disCuss.shopId = [NSString stringWithFormat:@"%@",self.theShopId];
+    disCuss.orderNum = [NSString stringWithFormat:@"%@",self.theOrderNum];
+    disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:self.theDic];
     
+    [self.navigationController pushViewController:disCuss animated:YES];
 }
 
 - (IBAction)tradeBtnClick:(id)sender
 {
-    
+    logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
+    logisticsTrackingView.mylogisticsId = self.theLogiId;
+    logisticsTrackingView.mylogisticsNum = self.theLogiNum;
+    NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
+    [self.navigationController pushViewController:logisticsTrackingView animated:YES];
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView

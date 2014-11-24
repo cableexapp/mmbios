@@ -28,7 +28,7 @@ typedef NSUInteger URLMethod;
 
 enum {
     URLLoginTag = 1, //登录
-    URLLogoutTag,  //退出
+    URLDeleteAppCartItemsTag,  //退出
     URLRegesterTag,  //注册
     
     URLShopListTag,  //购物车列表

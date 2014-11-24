@@ -151,7 +151,7 @@
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDuration:0.3];
-    [self.view setFrame:CGRectMake(0, -150, 320, self.view.frame.size.height)];
+    [self.view setFrame:CGRectMake(0, -40, ScreenWidth, ScreenHeight)];
     [UIView commitAnimations];
 }
 
@@ -173,7 +173,7 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDuration:0.3];
-        [self.view setFrame:CGRectMake(0, 64, 320, ScreenHeight)];
+        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
         [UIView commitAnimations];
         
 
@@ -187,14 +187,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    
-    NSLog(@"%@",self.itemArray);
-    NSLog(@"%@",self.shopId);
-    
-    
-    NSLog(@"%@",self.orderNum);
-    NSLog(@"%@",self.subDateDic);
+
     
     [self.numberLabel setText:self.orderNum];
     
@@ -226,7 +219,7 @@
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setFrame:CGRectMake(0, 0, 40, 40)];
     [rightBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor colorWithRed:11.0/255.0 green:99.0/255.0 blue:254.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = right;
@@ -299,6 +292,8 @@
         [btn addSubview:[btnPicUnSelectArray objectAtIndex:i+15]];
     }
     
+    [self.showOrHideBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+    [self.showOrHideBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
     self.showOrHideBtn.selected = YES;
     isAnonymousFlag = YES;
 }

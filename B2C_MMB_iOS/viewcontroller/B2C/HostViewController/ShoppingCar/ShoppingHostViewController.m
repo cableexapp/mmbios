@@ -14,8 +14,7 @@
 #import "DCFCustomExtra.h"
 #import "GoodsDetailViewController.h"
 #import "B2CShoppingListViewController.h"
-
-
+#import "SearchViewController.h"
 #import "OneStepViewController.h"
 
 @interface ShoppingHostViewController ()
@@ -94,16 +93,12 @@
     [tv setShowsVerticalScrollIndicator:NO];
     [self.view addSubview:tv];
 
-    
-    
-    
     [self loadScrollview];
-    
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
-    [rightBtn setFrame:CGRectMake(0, 5, 34, 34)];
+    [rightBtn setFrame:CGRectMake(0, 5, 37, 34)];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
@@ -130,7 +125,6 @@
     [sv setDelegate:self];
     for(int i = 0; i < arr.count; i++)
     {
-        
         UIView * view = [[UIView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-5, 10, 150, 220)];
         [view.layer setCornerRadius:3]; //设置矩圆角半径
         view.layer.borderWidth = 1.0f;
@@ -203,8 +197,11 @@
         [topTextField resignFirstResponder];
     }
     
-    OneStepViewController *one = [[OneStepViewController alloc] init];
-    [self.navigationController pushViewController:one animated:YES];
+//    OneStepViewController *one = [[OneStepViewController alloc] init];
+//    [self.navigationController pushViewController:one animated:YES];
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    searchVC.searchFlag = [NSString stringWithFormat:@"B2C+%@",topTextField.text];
+    [self.navigationController pushViewController:searchVC animated:YES];
     return YES;
 }
 

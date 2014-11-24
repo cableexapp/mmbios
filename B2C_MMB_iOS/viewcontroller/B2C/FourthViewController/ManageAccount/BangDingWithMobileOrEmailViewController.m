@@ -85,20 +85,23 @@
     
     [self pushAndPopStyle];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改登陆密码"];
     self.navigationItem.titleView = top;
     
     [self.tf_getValidate setDelegate:self];
     
-    [_chooseBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_chooseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _chooseBtn.frame = CGRectMake(166, 15, 105,68);
+    [_chooseBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    _chooseBtn.backgroundColor = [UIColor colorWithRed:4.0/255.0 green:94.0/255.0 blue:253.0/255.0 alpha:1.0];
     _chooseBtn.layer.cornerRadius = 5.0f;
     
-    
-    _getValidateBtn.layer.borderColor = MYCOLOR.CGColor;
-    _getValidateBtn.layer.borderWidth = 1.0f;
     _getValidateBtn.layer.cornerRadius = 5;
     _getValidateBtn.layer.masksToBounds = YES;
     [_getValidateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+   
     
     UITapGestureRecognizer *TAP = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:TAP];

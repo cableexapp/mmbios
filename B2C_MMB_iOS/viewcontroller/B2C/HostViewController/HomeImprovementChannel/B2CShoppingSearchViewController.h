@@ -16,7 +16,6 @@
 
 @end
 
-
 @interface B2CShoppingSearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,MBProgressHUDDelegate>
 {
 //    NSDictionary *myDic;
@@ -43,6 +42,8 @@
 @property (strong,nonatomic) UIButton *clearBtn;
 @property (strong,nonatomic) UIView *lineView;
 @property (strong,nonatomic) UIButton *sureBtn;
+
+
 
 @property (strong,nonatomic) id<RequestString> delegate;
 @end

@@ -16,6 +16,7 @@
 #import "DCFCustomExtra.h"
 #import "MyInquiryListFirstViewController.h"
 #import "MyCableOrderHostViewController.h"
+#import "LoginViewController.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -93,6 +94,8 @@
     if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
     {
         LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        LoginViewController *loginViewController = [loginNavi.viewControllers objectAtIndex:0];
+        loginViewController.myLoginStatus = 10;
         [self presentViewController:loginNavi animated:YES completion:nil];
         
     }
@@ -214,6 +217,7 @@
 {
     [super viewWillAppear:YES];
     
+    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [self getMemberId];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -230,9 +234,9 @@
 {
     [super viewDidLoad];
     
+    
     [self pushAndPopStyle];
     
-    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;

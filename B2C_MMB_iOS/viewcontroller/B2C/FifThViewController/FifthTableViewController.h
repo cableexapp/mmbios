@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
-@interface FifthTableViewController : UITableViewController
+@interface FifthTableViewController : UITableViewController<ConnectionDelegate,MBProgressHUDDelegate>
+{
+    MBProgressHUD *HUD;
+    DCFConnectionUtil *conn;
+}
 @property (weak, nonatomic) IBOutlet UIButton *logOutBtn;
 
 @end

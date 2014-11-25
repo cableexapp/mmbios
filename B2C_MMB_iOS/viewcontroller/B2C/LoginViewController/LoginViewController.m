@@ -22,6 +22,8 @@
     AppDelegate *app;
     
     NSDictionary *regiserDic;
+    
+    BOOL logInSuccess;
 }
 @end
 
@@ -76,6 +78,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    logInSuccess = NO;
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
@@ -153,7 +157,18 @@
 
 - (void) cancelBtnClick:(UIButton *) sender
 {
-
+    if(self.myLoginStatus == 10)
+    {
+        if(logInSuccess == YES)
+        {
+            
+        }
+        else
+        {
+            [DCFStringUtil showNotice:@"您尚未登录"];
+            return;
+        }
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -233,7 +248,10 @@
 
     if(URLTag == URLLoginTag)
     {
-        [HUD hide:YES];
+        if(HUD)
+        {
+            [HUD hide:YES];
+        }
         int reslut = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(reslut == 0)
@@ -246,9 +264,12 @@
             {
                 [DCFStringUtil showNotice:msg];
             }
+            logInSuccess = NO;
         }
         else
         {
+            logInSuccess = YES;
+            
             NSDictionary *iems = [NSDictionary dictionaryWithDictionary:[dicRespon objectForKey:@"items"]];
             
             NSString *memberId = [NSString stringWithFormat:@"%@",[iems objectForKey:@"memberId"]];

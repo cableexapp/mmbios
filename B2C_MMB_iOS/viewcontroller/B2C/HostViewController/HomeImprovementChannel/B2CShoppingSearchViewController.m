@@ -24,7 +24,12 @@
     
     
     UIImageView *useCloseIV;  //用途右上角关闭
+    UIImageView *useCloseIV_1;  //展开的小三角
+    UIView *backView;
+    UIWindow *window;
+
     UIView *lineView_1;
+    UIButton *specBtn;
     
     NSString *useString;  //用途
     NSString *brandString; //品牌
@@ -222,7 +227,7 @@
     [useBtn setTag:1];
     [headBtnArray addObject:useBtn];
     
-    showUseCell = NO;
+//    showUseCell = NO;
     
 
     [self setHeadBtnFrame];
@@ -287,7 +292,9 @@
     
     [self upDateHeadBtnArray:3];
     
-    UIButton *specBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    useCloseIV_1.transform = CGAffineTransformMakeRotation(M_2_PI);
+    
+    specBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [specBtn setTitle:specString forState:UIControlStateNormal];
     [specBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [specBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
@@ -297,6 +304,7 @@
     [headBtnArray addObject:specBtn];
     
     showSpecCell = NO;
+
     
     [self setHeadBtnFrame];
     
@@ -394,9 +402,10 @@
         {
             float width = (myRect.size.width-20)/2;
             UIButton *B  = [headBtnArray objectAtIndex:i];
-            [B setTitle:B.titleLabel.text forState:UIControlStateNormal];
+
+           [B setTitle:B.titleLabel.text forState:UIControlStateNormal];
             [B addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            
+
             switch (i)
             {
                 case 0:
@@ -404,6 +413,7 @@
                     break;
                 case 1:
                     [B setFrame:CGRectMake(15+width-10, 5, width-60, 30)];
+
                     break;
                 case 2:
                     [B setFrame:CGRectMake(15, 40, width-60, 30)];
@@ -838,8 +848,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-   
+
 
 
 }
@@ -868,7 +877,7 @@
     
     [self.view.superview removeFromSuperview];
     [self.view removeFromSuperview];
-    self.view = nil;
+     self.view = nil;
     [self removeFromParentViewController];
 }
 
@@ -1084,6 +1093,13 @@
 	view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
 	view1.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
 //       view1.backgroundColor = [UIColor redColor];
+//    [specBtn setFrame:CGRectMake(100, 0, 60, 30)];
+//    [view1 addSubview:specBtn];
+    
+    
+
+
+
 	
 	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
 	view2.backgroundColor = [UIColor clearColor];
@@ -1093,18 +1109,23 @@
     lineView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
     [view2 addSubview:lineView];
 	[view1 addSubview:view2];
+
 	
+    //    UIImageView *iv =[ivArray objectAtIndex:section-1];
+    //    [abtn addSubview:iv];
    
     UIButton *abtn = [UIButton buttonWithType:UIButtonTypeCustom];
     abtn.backgroundColor = [UIColor clearColor];
     abtn.frame = CGRectMake(0, 0,myRect.size.width, 32);
-    
-//    UIImageView *iv =[ivArray objectAtIndex:section-1];
-//    [abtn addSubview:iv];
-    
-	abtn.tag = section-1;
+    abtn.tag = section-1;
 	[abtn addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
+    abtn.backgroundColor = [UIColor clearColor];
 	[view2 addSubview:abtn];
+    
+    //  展开的小三角
+    useCloseIV_1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow@2x.png"]];
+    [useCloseIV_1 setFrame:CGRectMake(200, 5, 20, 20)];
+    [abtn addSubview:useCloseIV_1];
     
     
 	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, myRect.size.width, 30)];
@@ -1186,18 +1207,21 @@
         
 		btn.selected = YES;
 //       [iv setImage:[UIImage imageNamed:@"click1.png"]];
-        
-        
+       useCloseIV_1.transform = CGAffineTransformMakeRotation(M_2_PI);
 	}
 	else
     {
 		btn.selected = NO;
 //        [iv setImage:[UIImage imageNamed:@"next.png"]];
+        useCloseIV_1.transform = CGAffineTransformMakeRotation(0);
+
 
 	}
     
 	[tv reloadData];
 }
+
+
 
 - (int)numberOfRowsInSection:(NSInteger)section
 {

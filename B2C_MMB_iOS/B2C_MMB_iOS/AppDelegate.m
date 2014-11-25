@@ -63,6 +63,9 @@ NSString *strUserId = @"";
 @synthesize chatRequestJID;
 @synthesize roomJID;
 
+@synthesize pushChatView;
+@synthesize isOnLine;
+
 - (void) reachabilityChanged: (NSNotification* )note
 {
     Reachability *curReach = [note object];
@@ -187,7 +190,6 @@ NSString *strUserId = @"";
     [application setApplicationIconBadgeNumber:0];
     
     [BPush handleNotification:userInfo];
-    
 }
 
 
@@ -413,6 +415,10 @@ NSString *strUserId = @"";
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
     [self reConnect];
     [self queryRoster];
+    if ([pushChatView isEqualToString:@"push"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -731,6 +737,11 @@ NSString *strUserId = @"";
     if ([presenceType isEqualToString:@"unavailable"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
+        isOnLine = @"unavailable";
+    }
+    else
+    {
+        isOnLine = @"available";
     }
 }
 

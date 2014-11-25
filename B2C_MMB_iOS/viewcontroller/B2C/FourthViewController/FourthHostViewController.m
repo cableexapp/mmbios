@@ -108,7 +108,7 @@
 //        }
     }
 //    [self loadRequest:_myStatus];
-    [self loadRequest:@"全部订单"];
+    [self loadRequest:@""];
 }
 
 - (void)viewDidLoad
@@ -137,7 +137,6 @@
     
     [self.tv setDataSource:self];
     [self.tv setDelegate:self];
-    
 }
 
 - (NSString *) getMemberId
@@ -154,7 +153,7 @@
 
 - (void) loadRequest:(NSString *) sender
 {
-    pageSize = 40;
+    pageSize = 1000000;
     //    intPage = 1;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -238,6 +237,31 @@
     }
 }
 
+- (NSString *) validateStatus:(NSString *) str
+{
+    if([str isEqualToString:@"全部订单"])
+    {
+        _myStatus = @"";
+    }
+    if([str isEqualToString:@"待付款"])
+    {
+        _myStatus = @"1";
+    }
+    if([str isEqualToString:@"待发货"])
+    {
+        _myStatus = @"2";
+    }
+    if([str isEqualToString:@"待确认收货"])
+    {
+        _myStatus = @"3";
+    }
+    if([str isEqualToString:@"待评价"])
+    {
+        _myStatus = @"4";
+    }
+    return _myStatus;
+}
+
 - (void) btnClick:(UIButton *) sender
 {
     UIButton *btn = (UIButton *) sender;
@@ -258,7 +282,8 @@
     }
     
     NSString *title = [btn.titleLabel text];
-    _myStatus = title;
+    _myStatus = [self validateStatus:title];
+    
     
     
     
@@ -616,6 +641,7 @@
     [cell.receiveBtn setTag:path.section*10+5];
     [cell.receiveBtn addTarget:self action:@selector(receiveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
+    
     return cell;
     
 }
@@ -665,7 +691,12 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if(!dataArray || dataArray.count == 0)
+    {
+        return;
+    }
+
+
     
     NSString *s1 = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"month"];
     NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
@@ -680,6 +711,66 @@
     
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
+
+    fourOrderDetailViewController.theLogiId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] logisticsId]];
+    fourOrderDetailViewController.theLogiNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] logisticsNum]];
+
+    
+    fourOrderDetailViewController.theLogiArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
+    fourOrderDetailViewController.theShopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] shopId]];
+    fourOrderDetailViewController.theOrderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] orderNum]];
+    fourOrderDetailViewController.theDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:indexPath.section] subDate]];
+
+    int status = [[[dataArray objectAtIndex:indexPath.section] status] intValue];
+    if(status == 1)
+    {
+        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+        fourOrderDetailViewController.showOrHideTradeBtn = NO;
+    }
+    
+    if(status == 2)
+    {
+        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+        fourOrderDetailViewController.showOrHideTradeBtn = NO;
+    }
+    
+    if(status == 3)
+    {
+        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+        fourOrderDetailViewController.showOrHideTradeBtn = YES;
+    }
+    
+    if(status == 6)
+    {
+        int judgeStatus = [[[dataArray objectAtIndex:indexPath.section] juderstatus] intValue];
+        int afterStatus = [[[dataArray objectAtIndex:indexPath.section] afterStatus] intValue];
+        if(judgeStatus == 1)
+        {
+            if(afterStatus == 2 || afterStatus == 3)
+            {
+                fourOrderDetailViewController.showOrHideDisCussBtn = YES;
+                fourOrderDetailViewController.showOrHideTradeBtn = YES;
+            }
+            else
+            {
+                fourOrderDetailViewController.showOrHideDisCussBtn = YES;
+                fourOrderDetailViewController.showOrHideTradeBtn = YES;
+            }
+        }
+        else if (judgeStatus == 2)
+        {
+            if(afterStatus == 2 || afterStatus == 3)
+            {
+                fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+                fourOrderDetailViewController.showOrHideTradeBtn = YES;
+            }
+            else
+            {
+                fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+                fourOrderDetailViewController.showOrHideTradeBtn = YES;
+            }
+        }
+    }
     fourOrderDetailViewController.myOrderNum = [[dataArray objectAtIndex:indexPath.section] orderNum];
     fourOrderDetailViewController.myTime = time;
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
@@ -760,7 +851,6 @@
     logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
     logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsId]];
     logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsNum]];
-    NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

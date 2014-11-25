@@ -370,22 +370,6 @@
 
 }
 
--(void)messageMusic
-{
-    //消息音提示
-    NSString *strPath = [[NSBundle mainBundle]pathForResource:@"searchSound" ofType:@"wav"];
-    NSData * voiceData = [[NSData alloc]initWithContentsOfFile:strPath];
-    messageSound = [[AVAudioPlayer alloc]initWithData:voiceData error:nil];
-    if ([messageSound isPlaying])
-    {
-        [messageSound stop];
-    }
-    else
-    {
-        [messageSound play];
-    }
-}
-
 /*识别结果返回代理
  @param resultArray 识别结果
  @ param isLast 表示是否最后一次结果
@@ -581,6 +565,8 @@
         tempType = @"1";
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
+    speakButton.hidden = NO;
+    speakButtonView.hidden = NO;
     [self refreshTableView];
     [self readHistoryData];
     [self refreshClearButton];

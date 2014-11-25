@@ -2364,6 +2364,46 @@
             </objects>
             <point key="canvasLocation" x="93" y="1349"/>
         </scene>
+        <!--Has Not Login View Controller-->
+        <scene sceneID="rGW-u6-j2j">
+            <objects>
+                <viewController storyboardIdentifier="hasNotLoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0Go-E6-7v4" customClass="HasNotLoginViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xWt-vK-crg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="您尚未登陆,是否现在去登陆" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nn8-3G-JYr">
+                                <rect key="frame" x="20" y="20" width="280" height="183"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="qgv-0p-Fmt">
+                                <rect key="frame" x="20" y="269" width="280" height="62"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.43921568630000002" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="登陆">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginBtnClick:" destination="0Go-E6-7v4" eventType="touchUpInside" id="XhT-TW-uDg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6bw-9e-9lT"/>
+                    <connections>
+                        <outlet property="loginBtn" destination="qgv-0p-Fmt" id="q23-dB-blO"/>
+                        <outlet property="showLabel" destination="nn8-3G-JYr" id="fbD-iK-QrV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KwX-KK-XMg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-464" y="-150"/>
+        </scene>
     </scenes>
     <resources>
         <image name="548AC6E6-A8FD-4E2C-A0E3-7078993AC6D2" width="45" height="45">

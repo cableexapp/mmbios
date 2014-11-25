@@ -22,6 +22,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UIButton *forgetBtn;
 
-@property (assign,nonatomic) int myLoginStatus;
 
 @end

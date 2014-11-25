@@ -7,9 +7,16 @@
 //
 
 #import "FourthNaviViewController.h"
+#import "HasNotLoginViewController.h"
+#import "FourMyMMBListTableViewController.h"
 
 @interface FourthNaviViewController ()
-
+{
+    BOOL flag;
+    UIStoryboard *sb;
+    FourMyMMBListTableViewController *fourMyMMBListTableViewController;
+    HasNotLoginViewController *hasNotLoginViewController;
+}
 @end
 
 @implementation FourthNaviViewController
@@ -29,6 +36,59 @@
     // Do any additional setup after loading the view.
 }
 
+- (void) dealChangeFourthNaviRootViewController:(NSNotification *) noti
+{
+    NSLog(@"flag=%d",[[noti object] boolValue]);
+    flag = [[noti object] boolValue];
+    if(flag == 1)
+    {
+        fourMyMMBListTableViewController = [sb instantiateViewControllerWithIdentifier:@"fourMyMMBListTableViewController"];
+        [self setViewControllers:[NSArray arrayWithObject:fourMyMMBListTableViewController]];
+    }
+    else
+    {
+        hasNotLoginViewController = [sb instantiateViewControllerWithIdentifier:@"hasNotLoginViewController"];
+        [self setViewControllers:[NSArray arrayWithObject:hasNotLoginViewController]];
+    }
+}
+
+- (void) dealhasLogOut:(NSNotification *) noti
+{
+    if([[noti object] boolValue] == 0)
+    {
+        fourMyMMBListTableViewController = [sb instantiateViewControllerWithIdentifier:@"fourMyMMBListTableViewController"];
+        [self setViewControllers:[NSArray arrayWithObject:fourMyMMBListTableViewController]];
+        
+    }
+    else
+    {
+        hasNotLoginViewController = [sb instantiateViewControllerWithIdentifier:@"hasNotLoginViewController"];
+        [self setViewControllers:[NSArray arrayWithObject:hasNotLoginViewController]];
+        
+    }
+}
+
+- (void) awakeFromNib
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealChangeFourthNaviRootViewController:) name:@"ChangeFourthNaviRootViewController" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealhasLogOut:) name:@"hasLogOut" object:nil];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    sb = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
+    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    {
+        hasNotLoginViewController = [sb instantiateViewControllerWithIdentifier:@"hasNotLoginViewController"];
+        [self setViewControllers:[NSArray arrayWithObject:hasNotLoginViewController]];
+    }
+    else
+    {
+        fourMyMMBListTableViewController = [sb instantiateViewControllerWithIdentifier:@"fourMyMMBListTableViewController"];
+        [self setViewControllers:[NSArray arrayWithObject:fourMyMMBListTableViewController]];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -36,14 +96,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

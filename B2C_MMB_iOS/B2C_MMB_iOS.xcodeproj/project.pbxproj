@@ -201,6 +201,7 @@
 		6181A55D19CFC6E6000E2D14 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A55C19CFC6E6000E2D14 /* libresolv.dylib */; };
 		6181A55F19CFC6EF000E2D14 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A55E19CFC6EF000E2D14 /* libstdc++.dylib */; };
 		6181A56119CFC6F5000E2D14 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A56019CFC6F5000E2D14 /* libiconv.dylib */; };
+		61828B5E1A241B200028AB4C /* HasNotLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61828B5D1A241B200028AB4C /* HasNotLoginViewController.m */; };
 		618459DA19D414A8000A3F4E /* delete_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 618459D919D414A8000A3F4E /* delete_1.png */; };
 		6195F5F31A0C58B00036D168 /* B2BMyInquiryListNormalData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6195F5F21A0C58B00036D168 /* B2BMyInquiryListNormalData.m */; };
 		6195F5F61A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6195F5F51A0CC5AA0036D168 /* MyInquiryDetailTableViewController.m */; };
@@ -1084,6 +1085,8 @@
 		6181A55C19CFC6E6000E2D14 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		6181A55E19CFC6EF000E2D14 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		6181A56019CFC6F5000E2D14 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		61828B5C1A241B200028AB4C /* HasNotLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HasNotLoginViewController.h; sourceTree = "<group>"; };
+		61828B5D1A241B200028AB4C /* HasNotLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HasNotLoginViewController.m; sourceTree = "<group>"; };
 		618459D919D414A8000A3F4E /* delete_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_1.png; sourceTree = "<group>"; };
 		6195F5F11A0C58B00036D168 /* B2BMyInquiryListNormalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BMyInquiryListNormalData.h; sourceTree = "<group>"; };
 		6195F5F21A0C58B00036D168 /* B2BMyInquiryListNormalData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BMyInquiryListNormalData.m; sourceTree = "<group>"; };
@@ -2807,6 +2810,8 @@
 				61B710B319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m */,
 				6114F7AB1A189A25007DAC39 /* WelComeViewController.h */,
 				6114F7AC1A189A25007DAC39 /* WelComeViewController.m */,
+				61828B5C1A241B200028AB4C /* HasNotLoginViewController.h */,
+				61828B5D1A241B200028AB4C /* HasNotLoginViewController.m */,
 			);
 			path = viewcontroller;
 			sourceTree = "<group>";
@@ -4923,6 +4928,7 @@
 				61B710DA19FF3B53001CC3BD /* B2CShoppingSearchViewController.m in Sources */,
 				61A197C219F7509400909C6F /* QBAssetCollectionViewController.m in Sources */,
 				61760A721A15981500F3BA0B /* MyCableSureOrderViewController.m in Sources */,
+				61828B5E1A241B200028AB4C /* HasNotLoginViewController.m in Sources */,
 				61B710B719FF3B53001CC3BD /* AboutViewController.m in Sources */,
 				61B710E519FF3B53001CC3BD /* AddReceiveAddressViewController.m in Sources */,
 				61B710C319FF3B53001CC3BD /* CancelOrderViewController.m in Sources */,

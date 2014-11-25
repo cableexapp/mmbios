@@ -36,6 +36,8 @@
     
     ZSYPopoverListView *listView;
     NSArray *useArray;
+    UIActivityIndicatorView *activityIndicator;
+    UILabel *label;
 }
 @end
 
@@ -67,8 +69,6 @@
             [view setHidden:YES];
         }
     }
-    
-    NSLog(@"host-----viewWillAppear");
 }
 - (void) viewWillDisappear:(BOOL)animated
 {
@@ -435,6 +435,14 @@
         listView.titleName.text = @"选择一级分类";
         listView.datasource = self;
         listView.delegate = self;
+        activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activityIndicator.frame = CGRectMake(10, 38, 30, 30);
+        [listView addSubview:activityIndicator];
+        label = [[UILabel alloc] init];
+        label.frame = CGRectMake(40, 38, self.view.frame.size.width-50, 30);
+        label.text = @"数据加载中";
+        label.hidden = YES;
+        [listView addSubview:label];
         [listView show];
     }
     if(btn.tag == 2)
@@ -508,14 +516,24 @@
 
 - (UITableViewCell *)popoverListView:(ZSYPopoverListView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        static NSString *identifier = @"identifier";
-        UITableViewCell *cell = [tableView dequeueReusablePopoverCellWithIdentifier:identifier];
-        if (nil == cell)
-        {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        }
-        cell.backgroundColor = [UIColor whiteColor];
+    static NSString *identifier = @"identifier";
+    UITableViewCell *cell = [tableView dequeueReusablePopoverCellWithIdentifier:identifier];
+    if (nil == cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    cell.backgroundColor = [UIColor whiteColor];
+    if (typeArray.count == 0)
+    {
+        [activityIndicator startAnimating];
+        label.hidden = NO;
+    }
+    else if (typeArray.count > 0)
+    {
+        [activityIndicator stopAnimating];
+        label.hidden = YES;
         cell.textLabel.text = typeArray[indexPath.row];
+    }
         return cell;
 }
 
@@ -850,8 +868,6 @@
         }
     }
 }
-    
-//    [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
     return cell;
 }
 
@@ -899,7 +915,6 @@
   
 }
 
-
 - (void) btnClick:(UIButton *) sender
 {
     int tag = [sender tag];
@@ -928,7 +943,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

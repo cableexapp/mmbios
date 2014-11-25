@@ -26,6 +26,8 @@
     UIStoryboard *sb;
     
     NSArray *useArray;
+    
+    NSArray *picArray;
 }
 @end
 
@@ -57,7 +59,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self pushAndPopStyle];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -84,10 +86,10 @@
     [topTextField setLeftViewMode:UITextFieldViewModeAlways];
     [topTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等信息"];
     [self.view addSubview:topTextField];
-    
-    useArray = [[NSArray alloc] initWithObjects:@"照明",@"插座",@"热水器",@"挂壁空调",@"立式空调",@"中央空调",@"网络",@"电话",@"音/视频", @"电源连接线",@"进户主线",@"装潢明线",nil];
-    
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height-44-20)];
+
+    useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
+    picArray = [[NSArray alloc] initWithObjects:@"0.png",@"1.png",@"2.png",@"3.png",@"4.png",@"5.png",@"6.png",@"7.png",@"8.png", nil];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height-64)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
@@ -177,7 +179,6 @@
     [sv setContentSize:CGSizeMake(145*arr.count + 10*(arr.count+1), 180)];
     [sv setBounces:NO];
     [sv setShowsHorizontalScrollIndicator:NO];
-    
     [tv reloadData];
 }
 
@@ -234,12 +235,12 @@
 
     if(section == 0)
     {
-        [hotLabel setText:@"  热销商品"];
+        [hotLabel setText:@"  热卖商品"];
  
     }
     else if (section == 1)
     {
-        [hotLabel setText:@"  电线用途"];
+        [hotLabel setText:@"  家装线主题馆"];
     }
     [hotLabel setTextAlignment:NSTextAlignmentLeft];
     [hotLabel setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
@@ -310,34 +311,30 @@
         {
             if(indexPath.row*3 + i < useArray.count)
             {
-                UIView * view = [[UIView alloc] initWithFrame:CGRectMake(2+103*i+5, 10, 100, 40)];
+                UIView * view = [[UIView alloc] initWithFrame:CGRectMake(2+103*i+5, 10, 100, 45)];
                 [view setBackgroundColor:[UIColor clearColor]];
                 [cell.contentView addSubview:view];
 
-                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(2, 7, 35, 30)];
-                [iv setImage:[UIImage imageNamed:@"sun.png"]];
-                //   [iv.layer setCornerRadius:8.0]; //设置矩圆角半径
-                //   [iv.layer setBorderWidth:0.5];   //边框宽度
+                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 40, 40)];
+                [iv setImage:[UIImage imageNamed:[picArray objectAtIndex:indexPath.row*3 + i]]];
                 [view addSubview:iv];
           
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x-20 + iv.frame.size.width + 10, iv.frame.origin.y,80, 30)];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + 44, iv.frame.origin.y-2.5,60, 45)];
                 [label setText:[useArray objectAtIndex:indexPath.row*3 + i]];
                 [label setBackgroundColor:[UIColor clearColor]];
                 [label setTextColor:[UIColor colorWithRed:52.0/255.0 green:52.0/255.0 blue:52.0/255.0 alpha:1.0]];
-                [label setFont:[UIFont boldSystemFontOfSize:14]];
+                [label setFont:[UIFont systemFontOfSize:13]];
+                label.numberOfLines = 2;
+//                label.textAlignment = 1; 
                 [view addSubview:label];
-                [view.layer setCornerRadius:3]; //设置矩圆角半径
                 [view.layer setBorderWidth:1.0];   //边框宽度
                  view.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
 
-                
-                
                 [view addSubview:label];
                 [view setTag:indexPath.row*2 + i];
                 UITapGestureRecognizer *viewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap:)];
                 [view addGestureRecognizer:viewTap];
             }
-       
         }
     }
     return cell;

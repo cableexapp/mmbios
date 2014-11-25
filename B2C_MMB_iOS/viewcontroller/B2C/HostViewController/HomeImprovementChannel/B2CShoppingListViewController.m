@@ -498,12 +498,9 @@
                 [moreCell failAcimation];
             }
         }
-        
         [tv reloadData];
-        
     }
 }
-
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {

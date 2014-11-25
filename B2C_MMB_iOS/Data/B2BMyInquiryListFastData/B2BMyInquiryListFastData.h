@@ -41,7 +41,6 @@
 @property (strong,nonatomic) NSString *treatment;
 
 @property (strong,nonatomic) NSString *myTime;
-
 - (id) initWithDic:(NSDictionary *) dic;
 
 + (NSMutableArray *) getListArray:(NSMutableArray *) array;

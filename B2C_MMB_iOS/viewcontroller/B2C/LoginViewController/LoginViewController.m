@@ -58,7 +58,6 @@
     
     
     regiserDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"]];
-    NSLog(@"regiserDic = %@",regiserDic);
     if([[regiserDic allKeys] count] == 0 || [regiserDic isKindOfClass:[NSNull class]])
     {
         
@@ -157,19 +156,7 @@
 
 - (void) cancelBtnClick:(UIButton *) sender
 {
-    if(self.myLoginStatus == 10)
-    {
-        if(logInSuccess == YES)
-        {
-            
-        }
-        else
-        {
-            [DCFStringUtil showNotice:@"您尚未登录"];
-            return;
-        }
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissCurrentView];
 }
 
 - (void) registerBtnClick:(UIButton *) sender
@@ -183,21 +170,21 @@
     if([_tf_Secrect isFirstResponder])
     {
         [_tf_Secrect resignFirstResponder];
-//        [_tf_Account becomeFirstResponder];
+        //        [_tf_Account becomeFirstResponder];
     }
     if([_tf_Account isFirstResponder])
     {
         [_tf_Account resignFirstResponder];
-//        [_tf_Secrect becomeFirstResponder];
+        //        [_tf_Secrect becomeFirstResponder];
     }
-
+    
 }
 
 - (IBAction)loginBtnClick:(id)sender
 {
     
-//    cableex
-
+    //    cableex
+    
     [self logWithAccount:self.tf_Account.text WithSec:self.tf_Secrect.text];
 }
 
@@ -245,12 +232,18 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-
+    
     if(URLTag == URLLoginTag)
     {
         if(HUD)
         {
             [HUD hide:YES];
+        }
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            [DCFStringUtil showNotice:@"登录失败"];
+            logInSuccess = NO;
+            return;
         }
         int reslut = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
@@ -280,21 +273,26 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             
-#pragma mark - 这里暂时写死数据
             NSString *phone = [NSString stringWithFormat:@"%@",[iems objectForKey:@"phone"]];
             [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"UserPhone"];
             
             NSString *email = [NSString stringWithFormat:@"%@",[iems objectForKey:@"email"]];
             [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"UserEmail"];
-
+            
             
             NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.tf_Account.text,@"registerAccount",self.tf_Secrect.text,@"registerSecrect", nil];
             [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
             
-            
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissCurrentView];
         }
     }
+}
+
+- (void) dismissCurrentView
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ChangeFourthNaviRootViewController" object:[NSNumber numberWithBool:logInSuccess]];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)forgetBtnClick:(id)sender
@@ -313,7 +311,7 @@
         FindBackSec_FirstViewController *findBackSec_FirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_FirstViewController"];
         [self.navigationController pushViewController:findBackSec_FirstViewController animated:YES];
     }
-
+    
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
@@ -338,8 +336,8 @@
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-//    [textField resignFirstResponder];
-
+    //    [textField resignFirstResponder];
+    
     if(textField == _tf_Secrect)
     {
         [self logWithAccount:self.tf_Account.text WithSec:self.tf_Secrect.text];
@@ -360,14 +358,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

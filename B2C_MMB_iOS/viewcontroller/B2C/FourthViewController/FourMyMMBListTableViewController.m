@@ -76,14 +76,8 @@
 - (NSString *) getMemberId
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
     {
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        LoginViewController *loginViewController = [loginNavi.viewControllers objectAtIndex:0];
-        loginViewController.myLoginStatus = 10;
-        [self presentViewController:loginNavi animated:YES completion:nil];
-        
     }
     return memberid;
 }
@@ -295,14 +289,14 @@
             [iv setImage:[UIImage imageNamed:@"count.png"]];
             [btn addSubview:iv];
         }
-//        if(i == 4)
-//        {
-//            [label_1 setText:@"收货地址"];
-//            
-//            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
-//            [iv setImage:[UIImage imageNamed:@"getAddress.png"]];
-//            [btn addSubview:iv];
-//        }
+        //        if(i == 4)
+        //        {
+        //            [label_1 setText:@"收货地址"];
+        //
+        //            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+        //            [iv setImage:[UIImage imageNamed:@"getAddress.png"]];
+        //            [btn addSubview:iv];
+        //        }
         [btn addSubview:label_1];
         
         UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 35, 35)];
@@ -325,6 +319,9 @@
 {
     [super didReceiveMemoryWarning];
 }
+
+
+
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -381,7 +378,6 @@
     }
     return btn;
 }
-
 
 
 - (IBAction)btn2Click:(id)sender

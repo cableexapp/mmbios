@@ -35,6 +35,20 @@
     return self;
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -67,7 +81,7 @@
         [HUD setLabelText:@"正在退出"];
         [HUD setDelegate:self];
     }
- 
+    
     
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -98,7 +112,7 @@
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-  
+    
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -111,7 +125,7 @@
     if(URLTag == URLDeleteAppCartItemsTag)
     {
         int result = [[dicRespon objectForKey:@"result"] intValue];
-        NSString *msg = [dicRespon objectForKey:@"msg"];
+        //        NSString *msg = [dicRespon objectForKey:@"msg"];
         if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
         {
             [DCFStringUtil showNotice:@"退出失败"];
@@ -119,25 +133,47 @@
         }
         if(result == 0)
         {
-            if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
-            {
-                [DCFStringUtil showNotice:@"退出失败"];
-                return;
-            }
-            else
-            {
-                [DCFStringUtil showNotice:msg];
-                return;
-            }
+            [DCFStringUtil showNotice:@"退出失败"];
+            return;
         }
-        else
+        else if(result == 1)
         {
-            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-            LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-            [self presentViewController:loginNavi animated:YES completion:nil];
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberId"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"hasLogin"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"userName"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userName"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserPhone"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserEmail"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
+            }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
+            
+            [DCFStringUtil showNotice:@"退出成功"];
         }
     }
-
+    
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -74,12 +74,9 @@
     self.colorBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.colorBtn.layer.borderWidth = 0.5f;
     
+#pragma mark - v1.1.2 陈晓修改询价车编辑界面BUG
     [self.modelLabel setText:self.myModel];
-    self.modelLabel.textAlignment = 1;
-    self.modelLabel.frame = CGRectMake(0, 0, self.view.frame.size.width, 40);
-    self.modelLabel.layer.cornerRadius = 6;
-    self.modelLabel.textColor = [UIColor whiteColor];
-    self.modelLabel.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
+    self.modelLabel.layer.cornerRadius = 5;
     
     self.requestTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.requestTF.layer.borderWidth = 0.5f;
@@ -369,6 +366,9 @@
 
 - (void) loadPickerViewWithArray:(NSMutableArray *) array WithTag:(int) tag
 {
+    [self.numTF resignFirstResponder];
+    [self.timeTF resignFirstResponder];
+    
     pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.window.frame.size.height) WithArray:array WithTag:tag];
     pickerView.delegate = self;
     [self.view.window setBackgroundColor:[UIColor blackColor]];

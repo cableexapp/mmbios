@@ -216,10 +216,10 @@
     b2bAskPriceCarEditViewController.myCartId = data.cartId;
     b2bAskPriceCarEditViewController.view.layer.cornerRadius = 6;
     b2bAskPriceCarEditViewController.view.frame = CGRectMake(20, 20, subViewBtn.frame.size.width-40, subViewBtn.frame.size.height-70);
-    UILabel *tempLabel = [[UILabel alloc] init];
-    tempLabel.frame = CGRectMake(0, 25, b2bAskPriceCarEditViewController.view.frame.size.width, 8);
-    tempLabel.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
-    [b2bAskPriceCarEditViewController.view addSubview:tempLabel];
+//    UILabel *tempLabel = [[UILabel alloc] init];
+//    tempLabel.frame = CGRectMake(0, 25, b2bAskPriceCarEditViewController.view.frame.size.width, 8);
+//    tempLabel.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
+//    [b2bAskPriceCarEditViewController.view addSubview:tempLabel];
     b2bAskPriceCarEditViewController.delegate = self;
     [self addChildViewController:b2bAskPriceCarEditViewController];
     [subViewBtn addSubview:b2bAskPriceCarEditViewController.view];
@@ -305,12 +305,11 @@
                     [headBtnIv setImage:[UIImage imageNamed:@"unchoose.png"]];
                     
                     UIButton *sectionHeadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [sectionHeadBtn setFrame:CGRectMake(0, 0, ScreenWidth, 60)];
                     
                     [sectionHeadBtn setTag:i];
                     [sectionHeadBtn addTarget:self action:@selector(sectionHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                    [sectionHeadBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-                    [sectionHeadBtnArray addObject:sectionHeadBtn];
+//                    [sectionHeadBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+                    [sectionHeadBtn setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
                     
                     //编辑删除按钮
                     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -364,6 +363,36 @@
                         height = size.height+70;
                     }
                     [cellHeightArray addObject:[NSNumber numberWithFloat:height]];
+                    
+          
+                    
+                    //计算head高度
+                    UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, ScreenWidth-20,20)];
+                    [modelLabel setText:[NSString stringWithFormat:@"型号:  %@",[[dataArray objectAtIndex:i] cartModel]]];
+                    [modelLabel setFont:[UIFont systemFontOfSize:12]];
+                    [sectionHeadBtn addSubview:modelLabel];
+                    
+                    NSString *kindString = [NSString stringWithFormat:@"分类:  %@ %@ %@",[[dataArray objectAtIndex:i] firstType],[[dataArray objectAtIndex:i] secondType],[[dataArray objectAtIndex:i] thridType]];
+                    CGSize size_head = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:kindString WithSize:CGSizeMake(modelLabel.frame.size.width, MAXFLOAT)];
+                    UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(modelLabel.frame.origin.x,modelLabel.frame.origin.y+modelLabel.frame.size.height, modelLabel.frame.size.width, size_head.height)];
+                    [kindLabel setText:kindString];
+                    [kindLabel setFont:[UIFont systemFontOfSize:11]];
+                    [kindLabel setNumberOfLines:0];
+                    [sectionHeadBtn addSubview:kindLabel];
+
+                    
+                    
+                    UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];
+                    [firstLine setBackgroundColor:[UIColor lightGrayColor]];
+                    [sectionHeadBtn addSubview:firstLine];
+                    
+                    
+                    UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(0, height-1, ScreenWidth, 1)];
+                    [secondLine setBackgroundColor:[UIColor lightGrayColor]];
+//                    [sectionHeadBtn addSubview:secondLine];
+                    
+                    [sectionHeadBtn setFrame:CGRectMake(0, 0, ScreenWidth, size_head.height+30)];
+                    [sectionHeadBtnArray addObject:sectionHeadBtn];
                 }
                 [moreCell stopAnimation];
             }
@@ -488,55 +517,8 @@
         return nil;
     }
     
-    UIButton *sectionHeadBtn = (UIButton *)[sectionHeadBtnArray objectAtIndex:section];
-    if([sectionHeadBtn.subviews count] != 0)
-    {
-        //        NSLog(@"已经有了");
-        //        UIImageView *headIv = [headImageArray objectAtIndex:section];
-        
-        //        UIButton *b = [sectionHeadBtnArray objectAtIndex:section];
-        //        if(b.selected == YES)
-        //        {
-        //            [headIv setImage:[UIImage imageNamed:@"choose.png"]];
-        //        }
-        //        else
-        //        {
-        //            [headIv setImage:[UIImage imageNamed:@"unchoose.png"]];
-        //        }
-        
-    }
-    else
-    {
-        sectionHeadBtn.backgroundColor = [UIColor redColor];
-        UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, ScreenWidth-20,20)];
-        [modelLabel setText:[NSString stringWithFormat:@"型号:  %@",[[dataArray objectAtIndex:section] cartModel]]];
-        [modelLabel setFont:[UIFont systemFontOfSize:12]];
-        [sectionHeadBtn addSubview:modelLabel];
-        
-        NSString *kindString = [NSString stringWithFormat:@"分类:  %@ %@ %@",[[dataArray objectAtIndex:section] firstType],[[dataArray objectAtIndex:section] secondType],[[dataArray objectAtIndex:section] thridType]];
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:kindString WithSize:CGSizeMake(modelLabel.frame.size.width, MAXFLOAT)];
-        UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(modelLabel.frame.origin.x,modelLabel.frame.origin.y+modelLabel.frame.size.height, modelLabel.frame.size.width, size.height)];
-        [kindLabel setText:kindString];
-        [kindLabel setFont:[UIFont systemFontOfSize:11]];
-        [kindLabel setNumberOfLines:0];
-        [sectionHeadBtn addSubview:kindLabel];
-        
-        CGFloat height = modelLabel.frame.size.height + size.height+10;
-        [sectionHeadBtn setFrame:CGRectMake(0, 0,ScreenWidth, height)];
-        
-        
-        UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];
-        [firstLine setBackgroundColor:[UIColor lightGrayColor]];
-        [sectionHeadBtn addSubview:firstLine];
-        
-        
-        UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(0, height-1, ScreenWidth, 1)];
-        [secondLine setBackgroundColor:[UIColor lightGrayColor]];
-        [sectionHeadBtn addSubview:secondLine];
-    }
-    
-    
-    return sectionHeadBtn;
+    UIButton *btn = (UIButton *)[sectionHeadBtnArray objectAtIndex:section];
+    return btn;
 }
 
 
@@ -564,9 +546,9 @@
     {
         return 0;
     }
-    NSString *kindString = [NSString stringWithFormat:@"分类:%@ %@ %@",[[dataArray objectAtIndex:section] firstType],[[dataArray objectAtIndex:section] secondType],[[dataArray objectAtIndex:section] thridType]];
-    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:kindString WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-    return size.height+30;
+    
+    UIButton *btn = (UIButton *)[sectionHeadBtnArray objectAtIndex:section];
+    return btn.frame.size.height;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -753,38 +735,87 @@
             if(i == 0)
             {
                 [cellLabel setFrame:CGRectMake(10, 5, size_1.width, 20)];
-                [cellLabel setAttributedText:myNum];
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] num]] == NO)
+                {
+                    [cellLabel setText:@"数量"];
+                }
+                else
+                {
+                    [cellLabel setAttributedText:myNum];
+                }
             }
             if(i == 1)
             {
                 [cellLabel setFrame:CGRectMake(halfWidth, 5, size_2.width, 20)];
-                [cellLabel setAttributedText:myDeliver];
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] deliver]] == NO)
+                {
+                    [cellLabel setText:@"交货期"];
+                }
+                else
+                {
+                    [cellLabel setAttributedText:myDeliver];
+                }
             }
             if(i == 2)
             {
                 [cellLabel setFrame:CGRectMake(10, 25, size_3.width, 20)];
-                [cellLabel setAttributedText:myCartSpec];
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] cartSpec]] == NO)
+                {
+                    [cellLabel setText:@"规格"];
+                }
+                else
+                {
+                    [cellLabel setAttributedText:myCartSpec];
+                }
                 
             }
             if(i == 3)
             {
                 [cellLabel setFrame:CGRectMake(halfWidth, 25, size_4.width, 20)];
-                [cellLabel setAttributedText:myCartVoltage];
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] cartVoltage]] == NO)
+                {
+                    [cellLabel setText:@"电压"];
+                }
+                else
+                {
+                    [cellLabel setAttributedText:myCartVoltage];
+                }
             }
             if(i == 4)
             {
                 [cellLabel setFrame:CGRectMake(10, 45, size_5.width, 20)];
-                [cellLabel setAttributedText:myColor];
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] cartColor]] == NO)
+                {
+                    [cellLabel setText:@"颜色"];
+                }
+                else
+                {
+                    [cellLabel setAttributedText:myColor];
+                }
             }
             if(i == 5)
             {
                 [cellLabel setFrame:CGRectMake(halfWidth, 45, size_6.width, 20)];
-                [cellLabel setAttributedText:myFeatureone];
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] featureone]] == NO)
+                {
+                    [cellLabel setText:@"阻燃特性"];
+                }
+                else
+                {
+                    [cellLabel setAttributedText:myFeatureone];
+                }
             }
             if(i == 6)
             {
                 [cellLabel setFrame:CGRectMake(10, 65, cell.contentView.frame.size.width-20, size_7.height)];
-                [cellLabel setAttributedText:myRequire];
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] require]] == NO)
+                {
+                    [cellLabel setText:@"特殊需求"];
+                }
+                else
+                {
+                    [cellLabel setAttributedText:myRequire];
+                }
             }
             
             [cellLabel setFont:[UIFont systemFontOfSize:12]];
@@ -812,7 +843,6 @@
         }
         else
         {
-            NSLog(@"test");
         }
         
     }

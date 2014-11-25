@@ -44,7 +44,21 @@
 - (void) headBtnClick:(UIButton *) sender
 {
     int tag = sender.tag;
-    
+    if (tag == 0)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
+        [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+    if(tag == 1)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
+        myCableOrder.btnIndex = tag;
+        [self.navigationController pushViewController:myCableOrder animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
     if(tag == 2)
     {
         [self pushToOrderListViewControllerWithBtn:sender];
@@ -288,6 +302,9 @@
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"count.png"]];
             [btn addSubview:iv];
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height-0.5, self.view.frame.size.width, 0.5)];
+            lineView.backgroundColor = [UIColor lightGrayColor];
+            [btn addSubview:lineView];
         }
         //        if(i == 4)
         //        {

@@ -146,7 +146,6 @@
 		6181A4EE19CFC4C2000E2D14 /* Set.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A40F19CFC4C2000E2D14 /* Set.png */; };
 		6181A4EF19CFC4C2000E2D14 /* Set@2x 11-27-55-562.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A41019CFC4C2000E2D14 /* Set@2x 11-27-55-562.png */; };
 		6181A4F019CFC4C2000E2D14 /* Set@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A41119CFC4C2000E2D14 /* Set@2x.png */; };
-		6181A4F119CFC4C2000E2D14 /* shoppingCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A41219CFC4C2000E2D14 /* shoppingCar.png */; };
 		6181A4F219CFC4C2000E2D14 /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A41319CFC4C2000E2D14 /* sun.png */; };
 		6181A4F319CFC4C2000E2D14 /* sv_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A41419CFC4C2000E2D14 /* sv_1.png */; };
 		6181A4F419CFC4C2000E2D14 /* sv_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6181A41519CFC4C2000E2D14 /* sv_2.png */; };
@@ -337,6 +336,7 @@
 		61E65DE21A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */; };
 		61EF03801A2071520048FBBB /* ModifyLoginSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EF037F1A2071520048FBBB /* ModifyLoginSecViewController.m */; };
 		61FFC5A319F6405E00F16E64 /* B2CGetOrderDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */; };
+		8B1721481A2301AB003A143A /* shoppingCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1721471A2301AB003A143A /* shoppingCar.png */; };
 		8B1F0FC81A16FCEA00F819D1 /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1F0FC61A16FCEA00F819D1 /* clock.png */; };
 		8B1F0FC91A16FCEA00F819D1 /* clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1F0FC71A16FCEA00F819D1 /* clock@2x.png */; };
 		8B1F0FCC1A174E6000F819D1 /* MyCableOrderSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */; };
@@ -993,7 +993,6 @@
 		6181A40F19CFC4C2000E2D14 /* Set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Set.png; sourceTree = "<group>"; };
 		6181A41019CFC4C2000E2D14 /* Set@2x 11-27-55-562.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Set@2x 11-27-55-562.png"; sourceTree = "<group>"; };
 		6181A41119CFC4C2000E2D14 /* Set@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Set@2x.png"; sourceTree = "<group>"; };
-		6181A41219CFC4C2000E2D14 /* shoppingCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoppingCar.png; sourceTree = "<group>"; };
 		6181A41319CFC4C2000E2D14 /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
 		6181A41419CFC4C2000E2D14 /* sv_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sv_1.png; sourceTree = "<group>"; };
 		6181A41519CFC4C2000E2D14 /* sv_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sv_2.png; sourceTree = "<group>"; };
@@ -1314,6 +1313,7 @@
 		61EF037F1A2071520048FBBB /* ModifyLoginSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyLoginSecViewController.m; sourceTree = "<group>"; };
 		61FFC5A119F6405E00F16E64 /* B2CGetOrderDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGetOrderDetailData.h; sourceTree = "<group>"; };
 		61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGetOrderDetailData.m; sourceTree = "<group>"; };
+		8B1721471A2301AB003A143A /* shoppingCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoppingCar.png; sourceTree = "<group>"; };
 		8B1F0FC61A16FCEA00F819D1 /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		8B1F0FC71A16FCEA00F819D1 /* clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@2x.png"; sourceTree = "<group>"; };
 		8B1F0FCA1A174E6000F819D1 /* MyCableOrderSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderSearchViewController.h; sourceTree = "<group>"; };
@@ -2534,6 +2534,7 @@
 				8B3149DC1A20280200B7DAFC /* headView.png */,
 				61DF89E519FB9AD000D47430 /* classifySelect.png */,
 				61DF89EF19FB9CD700D47430 /* imUnSelect.png */,
+				8B1721471A2301AB003A143A /* shoppingCar.png */,
 				8BE6CA6C1A1F48310015277A /* setting.png */,
 				8BE6CA6D1A1F48310015277A /* mob.png */,
 				8BE6CA6E1A1F48310015277A /* about.png */,
@@ -2605,7 +2606,6 @@
 				6181A40F19CFC4C2000E2D14 /* Set.png */,
 				6181A41019CFC4C2000E2D14 /* Set@2x 11-27-55-562.png */,
 				6181A41119CFC4C2000E2D14 /* Set@2x.png */,
-				6181A41219CFC4C2000E2D14 /* shoppingCar.png */,
 				6181A41319CFC4C2000E2D14 /* sun.png */,
 				6181A41419CFC4C2000E2D14 /* sv_1.png */,
 				6181A41519CFC4C2000E2D14 /* sv_2.png */,
@@ -4499,6 +4499,7 @@
 				8BA7C1201A10A85500758B0F /* 街舞@2x.png in Resources */,
 				8BA7C06D1A10A85500758B0F /* sms01.mp3 in Resources */,
 				8BA7C1021A10A85500758B0F /* 献吻@2x.png in Resources */,
+				8B1721481A2301AB003A143A /* shoppingCar.png in Resources */,
 				8BA7C07F1A10A85500758B0F /* 傲慢.png in Resources */,
 				8BA7C0B41A10A85500758B0F /* 大哭@x.png in Resources */,
 				6181A4D919CFC4C2000E2D14 /* click2.png in Resources */,
@@ -4542,7 +4543,6 @@
 				6181A4F419CFC4C2000E2D14 /* sv_2.png in Resources */,
 				8BA7C0B81A10A85500758B0F /* 奋斗@2x.png in Resources */,
 				8BA7C0E01A10A85500758B0F /* 拥抱@2x.png in Resources */,
-				6181A4F119CFC4C2000E2D14 /* shoppingCar.png in Resources */,
 				8BA7C11B1A10A85500758B0F /* 菜刀.png in Resources */,
 				8BA7C0A51A10A85500758B0F /* 咖啡@2x.png in Resources */,
 				8BA7C0E41A10A85500758B0F /* 挥手@2x.png in Resources */,

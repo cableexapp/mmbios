@@ -80,6 +80,8 @@
 @end
 
 @implementation SearchViewController
+@synthesize searchFlag;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -254,6 +256,22 @@
     [self createDataBase_B2C];
 
     [dataArray removeAllObjects];
+    
+    if ([[[self.searchFlag componentsSeparatedByString:@"+"] objectAtIndex:0] isEqualToString:@"B2C"])
+    {
+        clearBtn.hidden = YES;
+        tempFlag = @"4";
+        imageFlag = @"0";
+        leftBtn.text = @"家装线专卖";
+        tempType = @"2";
+        sectionBtnIv.frame = CGRectMake(72,17.5,10,10);
+         [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
+        mySearchBar.text = [[self.searchFlag componentsSeparatedByString:@"+"] objectAtIndex:1];
+        searchBarText = [[self.searchFlag componentsSeparatedByString:@"+"] objectAtIndex:1];
+        speakButton.hidden = YES;
+        speakButtonView.hidden = YES;
+        [self sendRquest];
+    }
     NSLog(@"viewDidLoad");
 }
 
@@ -910,9 +928,8 @@
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2BhistoryArray addObject:dic];
-                       
-//                        [dataArray addObject:dic];
-                        [self.serchResultView reloadData];
+
+//                        [self.serchResultView reloadData];
                         NSLog(@"B2Bhistory = %@",B2BhistoryArray);
                     }
                 }
@@ -1021,9 +1038,7 @@
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2ChistoryArray addObject:dic];
-                        
-//                        [dataArray addObject:dic];
-                        [self.serchResultView reloadData];
+//                        [self.serchResultView reloadData];
                         NSLog(@"self.history = %@",B2ChistoryArray);
                     }
                     
@@ -1048,7 +1063,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 1;
+    return 0.1;
 }
 
 @end

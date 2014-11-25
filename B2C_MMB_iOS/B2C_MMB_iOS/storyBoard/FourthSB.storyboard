@@ -1673,7 +1673,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4vi-Q6-pmJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="80" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="82" height="40"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="全部">
@@ -1682,7 +1682,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="m8m-z7-Bql">
-                                        <rect key="frame" x="81" y="0.0" width="80" height="40"/>
+                                        <rect key="frame" x="81" y="0.0" width="82" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="待确认">
@@ -1691,7 +1691,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0EJ-ZP-u6w">
-                                        <rect key="frame" x="161" y="0.0" width="80" height="40"/>
+                                        <rect key="frame" x="161" y="0.0" width="82" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="待付款">
@@ -2611,6 +2611,7 @@ LY4tly2qLa4twS3MLdUt2i3iLeUt6i35Lf0uBC4MLhkuHi4gLiIuJy4vLjIuNy4/LkIuVC5XLlwAAAAA
 AAACAQAAAAAAAAA/AAAAAAAAAAAAAAAAAAAuXg
 </mutableData>
         </image>
+        <image name="90ACEE45-32E0-4BA5-9D9A-223D834A5143" width="148" height="148"/>
         <image name="cabel.png" width="148" height="148"/>
         <image name="mmb.png" width="388" height="147"/>
         <image name="sendOK.png" width="89" height="86"/>

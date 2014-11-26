@@ -17,6 +17,7 @@
 #import "B2CGoodsListData.h"
 #import "DCFCustomExtra.h"
 #import "GoodsDetailViewController.h"
+#import "SearchViewController.h"
 
 #pragma mark - 少一个total字段,筛选部分
 @interface B2CShoppingListViewController ()
@@ -300,6 +301,7 @@
     [searchTextField setFont:[UIFont systemFontOfSize:12]];
     searchTextField.layer.borderWidth = 0.3;
     searchTextField.layer.cornerRadius = 5;
+    [searchTextField setReturnKeyType:UIReturnKeyDone];
     [searchTextField setLeftViewMode:UITextFieldViewModeAlways];
     [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [self.view addSubview:searchTextField];
@@ -412,9 +414,18 @@
     
     _seq = @"";
     [self loadRequest:_seq WithUse:_use];
-    
-    
-    
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    if(textField == searchTextField)
+    {
+        [textField resignFirstResponder];
+    }
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    searchVC.searchFlag = [NSString stringWithFormat:@"B2C+%@",searchTextField.text];
+    [self.navigationController pushViewController:searchVC animated:YES];
+    return YES;
 }
 
 - (void) loadRequest:(NSString *) seq WithUse:(NSString *) use
@@ -487,20 +498,8 @@
                 [moreCell failAcimation];
             }
         }
-        
         [tv reloadData];
-        
     }
-}
-
-
-- (BOOL) textFieldShouldReturn:(UITextField *)textField
-{
-    if(textField == searchTextField)
-    {
-        [textField resignFirstResponder];
-    }
-    return YES;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView

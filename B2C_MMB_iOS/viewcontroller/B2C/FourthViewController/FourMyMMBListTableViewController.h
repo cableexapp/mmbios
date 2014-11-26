@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
+#import "HasNotLoginViewController.h"
 
 @interface FourMyMMBListTableViewController : UITableViewController<ConnectionDelegate>
 {
+    HasNotLoginViewController *hasNotLoginViewController;
     DCFConnectionUtil *conn;
 }
 

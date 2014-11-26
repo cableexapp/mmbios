@@ -507,6 +507,8 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self pushAndPopStyle];
 
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单提交"];
@@ -521,7 +523,7 @@
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
-    [tv setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+    [tv setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:tv];
     
     buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-50-64, 320, 50)];
@@ -538,11 +540,10 @@
     
     UIButton *upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [upBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [upBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [upBtn setFrame:CGRectMake(320-100, 5, 80, 40)];
     [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    upBtn.layer.borderColor = MYCOLOR.CGColor;
-    upBtn.layer.borderWidth = 1.0f;
+    upBtn.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0];
     upBtn.layer.cornerRadius = 5.0f;
     [buttomView addSubview:upBtn];
 }

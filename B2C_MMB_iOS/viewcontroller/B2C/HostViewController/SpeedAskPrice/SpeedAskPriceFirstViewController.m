@@ -123,6 +123,68 @@
     
 }
 
+- (void) textViewDidBeginEditing:(UITextView *)textView
+{
+    if(ScreenHeight <= 500)
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDuration:0.3];
+        [self.view setFrame:CGRectMake(0, 20, ScreenWidth, ScreenHeight)];
+        [UIView commitAnimations];
+    }
+    else
+    {
+        
+    }
+}
+
+- (void) textViewDidEndEditing:(UITextView *)textView
+{
+    if(ScreenHeight <= 500)
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDuration:0.3];
+        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+        [UIView commitAnimations];
+    }
+    else
+    {
+        
+    }
+}
+
+- (void) textViewDidChange:(UITextView *)textView
+{
+    if(self.content_Tv.text.length > 1000)
+    {
+        [DCFStringUtil showNotice:@"您输入的字数超过了1000字"];
+    }
+    if(self.content_Tv.text.length == 0)
+    {
+        [self.showlabel setHidden:NO];
+    }
+    else
+    {
+        [self.showlabel setHidden:YES];
+    }
+}
+
+- (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if([text isEqualToString:@"\n"])
+    {
+        [self.content_Tv resignFirstResponder];
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDuration:0.3f];
+        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+        [UIView commitAnimations];
+    }
+    return YES;
+}
+
 - (void) deleteWithPicBtn:(NSMutableArray *)btnArray WithImageArray:(NSMutableArray *)imageArray
 {
     deleteOrNot = YES;

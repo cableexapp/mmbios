@@ -11,13 +11,14 @@
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "B2BMyInquiryListFastData.h"
+#import "MyCableOrderSearchViewController.h"
 
 @interface MyInquiryListFirstViewController ()
 {
     int currentPageIndex;
-
     NormalInquiryListTableViewController *normal;
     SpeedInquiryListTableViewController *speed;
+    UIView *rightButtonView;
 }
 @end
 
@@ -32,6 +33,18 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    rightButtonView.hidden = NO;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    rightButtonView.hidden = YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -40,6 +53,9 @@
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
+    self.segment.segmentedControlStyle = UISegmentedControlStylePlain;
+     self.segment.frame = CGRectMake(-3, 0, self.view.frame.size.width+6, 30);
+    self.segment.tintColor = [UIColor colorWithRed:37/255.0 green:118/255.0 blue:254/255.0 alpha:1.0];
     
     [self.segment addTarget:self action:@selector(segmentChange:) forControlEvents:UIControlEventValueChanged];
     
@@ -59,6 +75,25 @@
     speed.delegate = self;
     [self addChildViewController:speed];
     [self.secondView addSubview:speed.view];
+    
+    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
+    [self.navigationController.navigationBar addSubview:rightButtonView];
+    
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundColor:[UIColor clearColor]];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
+    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightButtonView addSubview:rightBtn];
+}
+
+-(void)searchOrderBtnClick
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    MyCableOrderSearchViewController *searchVC = [[MyCableOrderSearchViewController alloc] init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 - (void)pushToNextVC:(MyNormalInquiryDetailController *) sender WithData:(B2BMyInquiryListNormalData *)data
@@ -83,6 +118,7 @@
     
     NSDictionary *dic = [data pushDic];
     myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:dic];
+    NSLog(@"dic = %@",dic);
     
     [self.navigationController pushViewController:myNormalInquiryDetailController animated:YES];
 }
@@ -94,6 +130,9 @@
     [self setHidesBottomBarWhenPushed:YES];
     MyFastInquiryOrder *myFastInquiryOrder = [sb instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
     myFastInquiryOrder.fastData = data;
+    NSLog(@"createDate = %@",data.createDate);
+    NSLog(@"myTime = %@",data.myTime);
+    NSLog(@"status = %@",data.inquiryId);
     [self.navigationController pushViewController:myFastInquiryOrder animated:YES];
 }
 
@@ -131,18 +170,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

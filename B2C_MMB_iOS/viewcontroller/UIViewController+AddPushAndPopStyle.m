@@ -12,8 +12,8 @@
 
 - (void) pushAndPopStyle
 {
-    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:0 target:self action:@selector(back:)];
-    [back setTitle:@"返回"];
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithTitle:@"" style:0 target:self action:@selector(back:)];
+    [back setTitle:@""];
     
     CGFloat systemVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
 

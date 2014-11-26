@@ -44,7 +44,21 @@
 - (void) headBtnClick:(UIButton *) sender
 {
     int tag = sender.tag;
-    
+    if (tag == 0)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
+        [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+    if(tag == 1)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
+        myCableOrder.btnIndex = tag;
+        [self.navigationController pushViewController:myCableOrder animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
     if(tag == 2)
     {
         [self pushToOrderListViewControllerWithBtn:sender];
@@ -76,14 +90,8 @@
 - (NSString *) getMemberId
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
     {
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        LoginViewController *loginViewController = [loginNavi.viewControllers objectAtIndex:0];
-        loginViewController.myLoginStatus = 10;
-        [self presentViewController:loginNavi animated:YES completion:nil];
-        
     }
     return memberid;
 }
@@ -294,15 +302,18 @@
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"count.png"]];
             [btn addSubview:iv];
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height-0.5, self.view.frame.size.width, 0.5)];
+            lineView.backgroundColor = [UIColor lightGrayColor];
+            [btn addSubview:lineView];
         }
-//        if(i == 4)
-//        {
-//            [label_1 setText:@"收货地址"];
-//            
-//            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
-//            [iv setImage:[UIImage imageNamed:@"getAddress.png"]];
-//            [btn addSubview:iv];
-//        }
+        //        if(i == 4)
+        //        {
+        //            [label_1 setText:@"收货地址"];
+        //
+        //            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+        //            [iv setImage:[UIImage imageNamed:@"getAddress.png"]];
+        //            [btn addSubview:iv];
+        //        }
         [btn addSubview:label_1];
         
         UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 35, 35)];
@@ -325,6 +336,9 @@
 {
     [super didReceiveMemoryWarning];
 }
+
+
+
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -381,7 +395,6 @@
     }
     return btn;
 }
-
 
 
 - (IBAction)btn2Click:(id)sender

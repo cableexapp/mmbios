@@ -63,6 +63,8 @@
     
     
     NSString *productNum;  //库存数量
+    
+    UIView *backView;
 }
 @end
 
@@ -221,11 +223,11 @@
     
     [self pushAndPopStyle];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     showCell = YES;
-    
-    [self.view setBackgroundColor:[UIColor colorWithRed:229.0/255.0 green:227.0/255.0 blue:235.0/255.0 alpha:1.0]];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线商品详情"];
     self.navigationItem.titleView = top;
@@ -241,17 +243,17 @@
         if(i == 0)
         {
             [btn setTitle:@"立即购买" forState:UIControlStateNormal];
-            [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-            btn.layer.borderColor = MYCOLOR.CGColor;
-            btn.layer.borderWidth = 1.0f;
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:80.0/255.0 blue:4/255.0 alpha:1.0];
             btn.layer.cornerRadius = 5;
         }
         if(i == 1)
         {
             [btn setTitle:@"加入购物车" forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-            btn.layer.borderColor = [UIColor redColor].CGColor;
-            btn.layer.borderWidth = 1.0f;
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            btn.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0];
+            [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
             btn.layer.cornerRadius = 5;
         }
         [btn setTag:i+100];
@@ -265,12 +267,19 @@
     //    [tableView setBackgroundColor:[UIColor redColor]];
     //    [self.view addSubview:tableView];
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320,  ScreenHeight-50-64) style:0];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,  ScreenHeight-50-64) style:0];
     [tv setDataSource:self];
     [tv setDelegate:self];
-    [tv setBackgroundColor:[UIColor colorWithRed:229.0/255.0 green:227.0/255.0 blue:235.0/255.0 alpha:1.0]];
+    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [tv setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:tv];
     
+    backView = [[UIView alloc] init];
+    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    backView.backgroundColor = [UIColor lightGrayColor];
+    backView.hidden = YES;
+    backView.alpha = 0.8;
+    [self.view insertSubview:backView aboveSubview:tv];
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
@@ -281,15 +290,10 @@
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = right;
     
-    
-    
     cellBtnArray = [[NSMutableArray alloc] init];
     
-    
     NSLog(@"GoodsDetailUrl = %@",self.GoodsDetailUrl);
-    
 }
-
 
 - (void) loadRequest
 {
@@ -492,22 +496,18 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //    [tableView setSeparatorStyle:0];
-    
-    
-    
+ 
     NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:231.0/255.0 green:229.0/255.0 blue:240.0/255.0 alpha:1.0]];
+        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
         [cell setSelectionStyle:0];
         
         if(indexPath.row == 0)
         {
             NSArray *imageArray = nil;
-            
-            
             
             if(detailData.picArray.count != 0)
             {
@@ -534,54 +534,66 @@
                 [label setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:label];
                 [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+                UIView *lineView = [[UIView alloc] init];
+                lineView.frame = CGRectMake(0, size.height+7.0, cell.frame.size.width, 0.5);
+                lineView.backgroundColor = [UIColor lightGrayColor];
+                [cell addSubview:lineView];
             }
             else
             {
                 
             }
-            
-            
         }
         if(indexPath.row == 2)
         {
             if(detailData.productPrice.length != 0)
             {
-                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"价格" WithSize:CGSizeMake(MAXFLOAT, 30)];
+                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"价格" WithSize:CGSizeMake(MAXFLOAT, 30)];
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
                 [label setText:@"价格"];
-                [label setFont:[UIFont systemFontOfSize:12]];
+                [label setFont:[UIFont systemFontOfSize:13]];
                 [label setTextAlignment:NSTextAlignmentLeft];
                 [cell.contentView addSubview:label];
                 
-                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:detailData.productPrice WithSize:CGSizeMake(MAXFLOAT, 30)];
+                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:detailData.productPrice WithSize:CGSizeMake(MAXFLOAT, 30)];
                 
                 UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 20, 5, size_2.width, 30)];
                 [priceLabel setTextAlignment:NSTextAlignmentLeft];
                 [priceLabel setText:detailData.productPrice];
-                [priceLabel setFont:[UIFont systemFontOfSize:12]];
+                [priceLabel setFont:[UIFont systemFontOfSize:13]];
                 [cell.contentView addSubview:priceLabel];
                 
-                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"运费5元" WithSize:CGSizeMake(MAXFLOAT, 30)];
+                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"运费5元" WithSize:CGSizeMake(MAXFLOAT, 30)];
                 UILabel *tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-size_3.width-10, 5, size_3.width, 30)];
                 [tradeLabel setText:@"运费5元"];
                 [tradeLabel setTextAlignment:NSTextAlignmentRight];
                 [tradeLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
-                [tradeLabel setFont:[UIFont systemFontOfSize:12]];
+                [tradeLabel setFont:[UIFont systemFontOfSize:13]];
                 //            [cell.contentView addSubview:tradeLabel];
+                UIView *lineView = [[UIView alloc] init];
+                lineView.frame = CGRectMake(0, cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
+                lineView.backgroundColor = [UIColor lightGrayColor];
+                [cell addSubview:lineView];
             }
             else
             {
                 
             }
-            
-            
         }
         if(indexPath.row == 3)
         {
-            [cell.textLabel setText:@"颜色分类"];
-            [cell.textLabel setFont:[UIFont systemFontOfSize:12]];
+            CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"颜色分类" WithSize:CGSizeMake(MAXFLOAT, 30)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
+            [label setText:@"颜色分类"];
+            [label setFont:[UIFont systemFontOfSize:13]];
+            [label setTextAlignment:NSTextAlignmentLeft];
+            [cell.contentView addSubview:label];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            UIView *lineView = [[UIView alloc] init];
+            lineView.frame = CGRectMake(0, cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
+            lineView.backgroundColor = [UIColor lightGrayColor];
+            [cell addSubview:lineView];
             
         }
         if(indexPath.row == 4)
@@ -592,9 +604,9 @@
                 UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
                 [firstIv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
                 
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,30)];
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,30)];
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, size.width, 30)];
-                [label setFont:[UIFont systemFontOfSize:12]];
+                [label setFont:[UIFont systemFontOfSize:13]];
                 [label setText:[detailData shopName]];
                 [label setTextAlignment:NSTextAlignmentLeft];
                 [label setTextColor:MYCOLOR];
@@ -615,21 +627,23 @@
                 UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatTap:)];
                 [chatIv addGestureRecognizer:chatTap];
                 [cell.contentView addSubview:chatIv];
+                UIView *lineView = [[UIView alloc] init];
+                lineView.frame = CGRectMake(0, cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
+                lineView.backgroundColor = [UIColor lightGrayColor];
+                [cell addSubview:lineView];
             }
             else
             {
                 
             }
-            
-            
-            
         }
         if(indexPath.row == 5)
         {
             for(int i = 0;i < 2;i++)
             {
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                [btn setFrame:CGRectMake(10+100*i, 5, 100, 34)];
+//                [btn setFrame:CGRectMake(10+100*i, 5, 100, 34)];
+                [btn setFrame:CGRectMake(10+(self.view.frame.size.width-20)/2*i, 5, (self.view.frame.size.width-20)/2, 34)];
                 if(i == 0)
                 {
                     if(showCell == YES)
@@ -664,12 +678,9 @@
                 
                 [btn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 
-                
-                
                 [cellBtnArray addObject:btn];
                 
                 [cell.contentView addSubview:btn];
-                
             }
         }
         if(indexPath.row == 6)
@@ -691,16 +702,13 @@
                 [customCell.lengthLabel setText:detailData.avgLength];
                 [customCell.topLabel setText:detailData.avgDiameter];
                 [customCell.weightLabel setText:detailData.weight];
-                
+                [cell setBackgroundColor:[UIColor whiteColor]];
                 return customCell;
-                
             }
             else
             {
                 
             }
-            
-            
         }
         if(indexPath.row > 6)
         {
@@ -766,6 +774,10 @@
                     [contentLabel setNumberOfLines:0];
                     [contentLabel setBackgroundColor:[UIColor whiteColor]];
                     [cell.contentView addSubview:contentLabel];
+                    UIView *lineView = [[UIView alloc] init];
+                    lineView.frame = CGRectMake(0, cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
+                    lineView.backgroundColor = [UIColor lightGrayColor];
+                    [cell addSubview:lineView];
                 }
                 
                 else
@@ -797,12 +809,13 @@
 
 - (void) starViewTap:(UITapGestureRecognizer *) sender
 {
+    
 }
 
 - (void) chatTap:(UITapGestureRecognizer *) sender
 {
+    
 }
-
 
 - (void) cellBtnClick:(UIButton *) sender
 {
@@ -857,7 +870,9 @@
     {
         //        [self.view.window setBackgroundColor:[UIColor blackColor]];
         //        [self.view.window setAlpha:0.4];
+        
         [self.view.window addSubview:[self loadChooseColorAndCount]];
+        backView.hidden = NO;
         //        [self loadChooseColorAndCount];
     }
 }
@@ -895,19 +910,17 @@
         //        [iv setImage:cabelImage];
         [chooseColorAndCountView addSubview:iv];
         
-        
-        
         UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [closeBtn setFrame:CGRectMake(320-10-50, 30, 50, 50)];
+        [closeBtn setFrame:CGRectMake(self.view.frame.size.width-10-35, 15, 35, 30)];
         [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [closeBtn setTitle:@"关闭x" forState:UIControlStateNormal];
+        [closeBtn setBackgroundImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
         [closeBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
         [closeBtn addTarget:self action:@selector(closeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [chooseColorAndCountView addSubview:closeBtn];
         
         UILabel *colorKindLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, iv.frame.origin.y+iv.frame.size.height+20, 200, 20)];
         [colorKindLabel setText:@"颜色分类"];
-        [colorKindLabel setFont:[UIFont systemFontOfSize:12]];
+        [colorKindLabel setFont:[UIFont systemFontOfSize:13]];
         [colorKindLabel setBackgroundColor:[UIColor clearColor]];
         [colorKindLabel setTextAlignment:NSTextAlignmentLeft];
         [chooseColorAndCountView addSubview:colorKindLabel];
@@ -953,7 +966,7 @@
         for(int i=0;i<3;i++)
         {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x +iv.frame.size.width + 10, 5 + 25*i, 160, 20)];
-            [label setFont:[UIFont systemFontOfSize:12]];
+            [label setFont:[UIFont systemFontOfSize:13]];
             switch (i) {
                 case 0:
                 {
@@ -993,7 +1006,7 @@
         [chooseCountLabel setText:@"购买数量"];
         [chooseCountLabel setTextAlignment:NSTextAlignmentLeft];
         [chooseCountLabel setBackgroundColor:[UIColor clearColor]];
-        [chooseCountLabel setFont:[UIFont systemFontOfSize:12]];
+        [chooseCountLabel setFont:[UIFont systemFontOfSize:13]];
         [chooseColorAndCountView addSubview:chooseCountLabel];
         
         for(int i=0;i<3;i++)
@@ -1001,24 +1014,24 @@
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             if(i == 0)
             {
-                [btn setFrame:CGRectMake(150, chooseCountLabel.frame.origin.y, 20, 20)];
-                [btn setTitle:@"-" forState:UIControlStateNormal];
+                [btn setFrame:CGRectMake((self.view.frame.size.width-140)/2, chooseCountLabel.frame.origin.y, 30, 30)];
+                [btn setTitle:@"➖" forState:UIControlStateNormal];
             }
             if(i == 1)
             {
-                [btn setFrame:CGRectMake(180, chooseCountLabel.frame.origin.y, 60, 20)];
+                [btn setFrame:CGRectMake((self.view.frame.size.width-140)/2+40, chooseCountLabel.frame.origin.y, 60, 30)];
                 [btn setTitle:@"0" forState:UIControlStateNormal];
-                [btn.titleLabel setFont:[UIFont systemFontOfSize:10]];
+                [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
                 [btn setUserInteractionEnabled:NO];
             }
             if(i == 2)
             {
-                [btn setFrame:CGRectMake(250, chooseCountLabel.frame.origin.y, 20, 20)];
-                [btn setTitle:@"+" forState:UIControlStateNormal];
+                [btn setFrame:CGRectMake((self.view.frame.size.width-140)/2+110, chooseCountLabel.frame.origin.y, 30, 30)];
+                [btn setTitle:@"➕" forState:UIControlStateNormal];
             }
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             btn.layer.borderWidth = 0.5f;
-            btn.layer.borderColor = [UIColor blackColor].CGColor;
+            btn.layer.borderColor = [UIColor lightGrayColor].CGColor;
             [btn setTag:10+i];
             [btn addTarget:self action:@selector(chooseCountClick:) forControlEvents:UIControlEventTouchUpInside];
             [chooseColorAndCountView addSubview:btn];
@@ -1027,13 +1040,12 @@
         
         
         UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [sureBtn setFrame:CGRectMake((320-120)/2, 240, 120, 40)];
+        [sureBtn setFrame:CGRectMake((self.view.frame.size.width-140)/2, 240, 140, 40)];
         [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
-        [sureBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+        [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [sureBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        sureBtn.layer.borderColor = MYCOLOR.CGColor;
-        sureBtn.layer.borderWidth = 1.0f;
+        sureBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1];
         sureBtn.layer.cornerRadius = 5;
         [chooseColorAndCountView addSubview:sureBtn];
         
@@ -1049,6 +1061,7 @@
 {
     if(chooseColorAndCountView)
     {
+        backView.hidden = YES;
         [chooseColorAndCountView removeFromSuperview];
         chooseColorAndCountView = nil;
     }
@@ -1147,6 +1160,7 @@
 {
     if(chooseColorAndCountView)
     {
+        backView.hidden = YES;
         [chooseColorAndCountView removeFromSuperview];
         chooseColorAndCountView = nil;
     }

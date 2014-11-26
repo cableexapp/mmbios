@@ -34,6 +34,12 @@
     AppDelegate *app;
     
     NSDictionary *dic;  //plist文件字典
+    
+    int carCount;  //询价车数量
+    
+    UIButton *badgeBtn;
+    
+    BOOL flag;//判断取消是在返回还是点击加入询价车情况下点击
 }
 @end
 
@@ -66,6 +72,14 @@
     {
         [HUD hide:YES];
     }
+
+}
+
+- (void) loadAlertView
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚有商品未加入询价车,是否加入" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [av setTag:10];
+    [av show];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -93,9 +107,18 @@
 
 - (void) askPriceBtnClick:(UIButton *) sender
 {
-    [self setHidesBottomBarWhenPushed:YES];
-    B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
-    [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
+    flag = NO;
+    if(addToCarArray && addToCarArray.count != 0)
+    {
+        [self loadAlertView];
+    }
+    else
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+        [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
+    }
+
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -112,6 +135,16 @@
         if(result == 1)
         {
             [self setHidesBottomBarWhenPushed:YES];
+            
+            if(badgeBtn)
+            {
+                carCount = carCount + addToCarArray.count;
+                [badgeBtn setTitle:[NSString stringWithFormat:@"%d",carCount] forState:UIControlStateNormal];
+            }
+//            if(addToCarArray)
+//            {
+//                [addToCarArray removeAllObjects];
+//            }
             B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
             [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
         }
@@ -121,7 +154,59 @@
         }
         
     }
+    if(URLTag == URLInquiryCartCountTag)
+    {
+        if(result == 1)
+        {
+            carCount = [[dicRespon objectForKey:@"value"] intValue];
+        }
+        else
+        {
+            carCount = 0;
+        }
+        
+
+        if(carCount < 99 && carCount > 0)
+        {
+            [badgeBtn setFrame:CGRectMake(askPriceBtn.frame.size.width-15, 10, 18, 18)];
+            [badgeBtn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
+            [badgeBtn setTitle:[NSString stringWithFormat:@"%d",carCount] forState:UIControlStateNormal];
+        }
+        else if (carCount >= 99)
+        {
+            [badgeBtn setFrame:CGRectMake(askPriceBtn.frame.size.width-15, 10, 24, 18)];
+            [badgeBtn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
+            [badgeBtn setTitle:@"99+" forState:UIControlStateNormal];
+        }
+   
+        if(carCount == 0)
+        {
+            [badgeBtn setHidden:YES];
+        }
+        else
+        {
+            [badgeBtn setHidden:NO];
+        }
+
+        
+        
+
+    }
 }
+
+- (void) back:(id) sender
+{
+    flag = YES;
+    if(addToCarArray && addToCarArray.count != 0)
+    {
+        [self loadAlertView];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -131,6 +216,14 @@
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     [self pushAndPopStyle];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
     
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"热门型号"];
@@ -145,6 +238,12 @@
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
     [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    badgeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [badgeBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+    [askPriceBtn addSubview:badgeBtn];
+    
+
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:askPriceBtn];
     self.navigationItem.rightBarButtonItem = item;
@@ -204,6 +303,36 @@
         
     }
     [self allKinds:btnArray];
+    
+    
+    //请求询价车商品数量
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 
@@ -231,50 +360,7 @@
     if(btn.selected == YES)
     {
         [addToCarArray addObject:btn];
-        
-//        //加入购物车动画效果
-//        CALayer *transitionLayer = [[CALayer alloc] init];
-//        [CATransaction begin];
-//        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-//        transitionLayer.opacity = 1.0;
-//        transitionLayer.contents = b.layer.contents;
-//        
-//        //修改动画路线宽度
-//        transitionLayer.frame = [[UIApplication sharedApplication].keyWindow convertRect:CGRectMake(0, 0, 20, 20) fromView:btn.titleLabel];
-//        [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer];
-//        [CATransaction commit];
-//        
-//        //路径曲线
-//        UIBezierPath *movePath = [UIBezierPath bezierPath];
-//        [movePath moveToPoint:transitionLayer.position];
-//        
-//        CGPoint toPoint = CGPointMake(askPriceBtn.center.x, askPriceBtn.center.y);
-//        [movePath addQuadCurveToPoint:toPoint
-//                         controlPoint:CGPointMake(askPriceBtn.center.x,transitionLayer.position.y)];
-//        
-//        UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-//        UIGraphicsEndImageContext();
-//        
-//        UIImageView *imgView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-//        imgView.image = img;
-//        [self.view addSubview:imgView];
-//        //关键帧
-//        CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-//        positionAnimation.path = movePath.CGPath;
-//        positionAnimation.removedOnCompletion = YES;
-//        
-//        CAAnimationGroup *group = [CAAnimationGroup animation];
-//        group.beginTime = CACurrentMediaTime();
-//        group.duration = 0.7;
-//        group.animations = [NSArray arrayWithObjects:positionAnimation,nil];
-//        group.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-//        group.delegate = self;
-//        group.fillMode = kCAFillModeForwards;
-//        group.removedOnCompletion = NO;
-//        group.autoreverses= NO;
-//        
-//        [transitionLayer addAnimation:group forKey:@"opacity"];
-//        [self performSelector:@selector(addShopFinished:) withObject:transitionLayer afterDelay:0.5f];
+
     }
     else
     {
@@ -282,68 +368,20 @@
     }
     
     
-//    allPrice = allPrice -1;
     
-    int badge = addToCarArray.count;
-    NSString *str = nil;
-    if(badge <= 0)
-    {
-        str = [NSString stringWithFormat:@"%@",@"询价车"];
-    }
-    else
-    {
-        str = [NSString stringWithFormat:@"询价车 +%i",badge];
-    }
-    [askPriceBtn setTitle:str forState:UIControlStateNormal];
+//    int badge = addToCarArray.count;
+//    NSString *str = nil;
+//    if(badge <= 0)
+//    {
+//        str = [NSString stringWithFormat:@"%@",@"询价车"];
+//    }
+//    else
+//    {
+//        str = [NSString stringWithFormat:@"询价车 +%i",badge];
+//    }
+//    [askPriceBtn setTitle:str forState:UIControlStateNormal];
 }
 
-
-//加入购物车 步骤2
-//- (void)addShopFinished:(CALayer*)transitionLayer{
-//    
-//    transitionLayer.opacity = 0;
-//
-//        allPrice = allPrice + addPrice;
-//        NSString *str = [NSString stringWithFormat:@"询价车 +%i",allPrice];
-//        [askPriceBtn setTitle:str forState:UIControlStateNormal];
-//        
-//        //加入购物车动画效果
-////        UILabel *addLabel = (UILabel*)[self.view viewWithTag:66];
-////        [addLabel setText:[NSString stringWithFormat:@"询价车 +%i",addPrice]];
-////        [addLabel  setTextColor:[UIColor redColor]];
-//    
-//        CALayer *transitionLayer1 = [[CALayer alloc] init];
-//        [CATransaction begin];
-//        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
-//        transitionLayer1.opacity = 1.0;
-//        transitionLayer1.contents = (id)askPriceBtn.layer.contents;
-//        transitionLayer1.frame = [[UIApplication sharedApplication].keyWindow convertRect:askPriceBtn.bounds fromView:askPriceBtn];
-//        [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer1];
-//        [CATransaction commit];
-//        
-//        CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-//        positionAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(askPriceBtn.frame.origin.x+30, askPriceBtn.frame.origin.y+20)];
-//        positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(askPriceBtn.frame.origin.x+30, askPriceBtn.frame.origin.y)];
-//        
-//        CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-//        opacityAnimation.fromValue = [NSNumber numberWithFloat:1.0];
-//        opacityAnimation.toValue = [NSNumber numberWithFloat:0];
-//        
-//        CABasicAnimation *rotateAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
-//        rotateAnimation.fromValue = [NSNumber numberWithFloat:0 * M_PI];
-//        rotateAnimation.toValue = [NSNumber numberWithFloat:2 * M_PI];
-//        
-//        CAAnimationGroup *group = [CAAnimationGroup animation];
-//        group.beginTime = CACurrentMediaTime();
-//        group.duration = 1.5;
-//        group.animations = [NSArray arrayWithObjects:positionAnimation,opacityAnimation,nil];
-//        group.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//        group.delegate = self;
-//        group.fillMode = kCAFillModeForwards;
-//        group.removedOnCompletion = NO;
-//        group.autoreverses= NO;
-//        [transitionLayer1 addAnimation:group forKey:@"opacity"];
-//}
 
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
@@ -362,13 +400,8 @@
     return strP;
 }
 
-- (IBAction)addToAskPriceCarBtnClick:(id)sender
+- (void) addToCar
 {
-    
-    NSLog(@"%@",addToCarArray);
-    
-    
-    
     if(!addToCarArray || addToCarArray.count == 0)
     {
         [DCFStringUtil showNotice:@"您尚未选择型号"];
@@ -390,7 +423,7 @@
         
         [modelListArray addObject:senderDic];
     }
-
+    
     NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:modelListArray,@"modellist", nil];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -423,8 +456,14 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
+}
 
+- (IBAction)addToAskPriceCarBtnClick:(id)sender
+{
+    
+    NSLog(@"%@",addToCarArray);
+    
+    [self addToCar];
 }
 
 - (IBAction)searchBtnClick:(id)sender
@@ -465,8 +504,8 @@
 
 - (IBAction)hotLineBtnClick:(id)sender
 {
-    NSLog(@"热线");
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    [av setTag:20];
     [av show];
 }
 
@@ -476,10 +515,29 @@
     switch (buttonIndex)
     {
         case 0:
-            
+            if(alertView.tag == 10)
+            {
+                if(flag == YES)
+                {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+                else
+                {
+                    [self setHidesBottomBarWhenPushed:YES];
+                    B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+                    [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
+                }
+            }
             break;
         case 1:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            if(alertView.tag == 10)
+            {
+                [self addToCar];
+            }
+            else
+            {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            }
             break;
         default:
             break;
@@ -503,13 +561,11 @@
 
 - (IBAction)moreModelBtnClick:(id)sender
 {
-    NSLog(@"更多");
    [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 - (IBAction)directBtnClick:(id)sender
 {
-    NSLog(@"直接");
     SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
     [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];

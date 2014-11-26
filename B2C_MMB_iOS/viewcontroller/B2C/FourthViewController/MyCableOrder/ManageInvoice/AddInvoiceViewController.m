@@ -104,7 +104,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self pushAndPopStyle];
     
@@ -137,10 +137,9 @@
     
     [self.sv setContentSize:CGSizeMake(ScreenWidth*2, ScreenHeight-200)];
     
-    self.sureBtn.layer.borderColor = [UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0].CGColor;
-    self.sureBtn.layer.borderWidth = 1.0f;
     self.sureBtn.layer.cornerRadius =5.0f;
-    [self.sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+    self.sureBtn.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0];
+    [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
 }
 
@@ -176,18 +175,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

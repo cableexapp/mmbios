@@ -22,10 +22,14 @@
     NSString *databasePathB2B;
     NSString *databasePathB2C;
     AVAudioPlayer * messageSound;
+    NSString *searchFlag;
 }
 
 @property (nonatomic,strong) UITableView *serchResultView;
 
 @property (nonatomic,strong) PopupView *popView;
+
+@property (nonatomic,strong) NSString *searchFlag;
+
 
 @end

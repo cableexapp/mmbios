@@ -194,6 +194,8 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF CONTAINS %@",searchText];
+    NSLog(@"searchArray = %@",[NSArray arrayWithArray:[dataArray filteredArrayUsingPredicate:pred]]);
     searchResults = [[NSMutableArray alloc]init];
     if (search.text.length>0&&![ChineseInclude isIncludeChineseInString:search.text])
     {

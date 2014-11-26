@@ -24,8 +24,6 @@
 {
     NSMutableArray *dataArray;
     
-    NSMutableArray *phoneDescribeArray; //商品网址链接
-    
     DCFChenMoreCell *moreCell;
     int intPage; //页数
     int intTotal; //总数
@@ -166,12 +164,8 @@
     [self addChildViewController:search];
     [searchView addSubview:search.view];
    
-    
-    
     [UIView commitAnimations];
     [search addHeadView];
-    
-    
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -281,7 +275,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
     self.navigationItem.titleView = top;
     
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 321, 40)];
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
     [topView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [self.view addSubview:topView];
     
@@ -393,7 +387,7 @@
         [btnArray addObject:selctBtn];
     }
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, 320, ScreenHeight - 80 - 64) style:0];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 175) style:0];
     [tv setDelegate:self];
     [tv setDataSource:self];
     [tv setShowsVerticalScrollIndicator:NO];
@@ -422,9 +416,12 @@
     {
         [textField resignFirstResponder];
     }
-    SearchViewController *searchVC = [[SearchViewController alloc] init];
-    searchVC.searchFlag = [NSString stringWithFormat:@"B2C+%@",searchTextField.text];
-    [self.navigationController pushViewController:searchVC animated:YES];
+    if (searchTextField.text.length > 0)
+    {
+        SearchViewController *searchVC = [[SearchViewController alloc] init];
+        searchVC.searchFlag = [NSString stringWithFormat:@"B2C+%@",searchTextField.text];
+        [self.navigationController pushViewController:searchVC animated:YES];
+    }
     return YES;
 }
 
@@ -451,8 +448,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    phoneDescribeArray = [dicRespon objectForKey:@"items"];
-    
     if(URLTag == URLB2CGoodsListTag)
     {
         if(_reloading == YES)
@@ -668,7 +663,6 @@
 {
     NSString *productId = [[dataArray objectAtIndex:indexPath.row] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
-    detail.GoodsDetailUrl = [[phoneDescribeArray objectAtIndex:indexPath.row] objectForKey:@"phoneDescribe"];
     [self.navigationController pushViewController:detail animated:YES];
 }
 

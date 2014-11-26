@@ -523,18 +523,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.backgroundColor = [UIColor whiteColor];
-    if (typeArray.count == 0)
-    {
-        [activityIndicator startAnimating];
-        label.hidden = NO;
-    }
-    else if (typeArray.count > 0)
-    {
-        [activityIndicator stopAnimating];
-        label.hidden = YES;
-        cell.textLabel.text = typeArray[indexPath.row];
-    }
-        return cell;
+    cell.textLabel.text = typeArray[indexPath.row];
+    return cell;
 }
 
 - (void)popoverListView:(ZSYPopoverListView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

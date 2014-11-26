@@ -39,6 +39,7 @@
     NSString *roomMessage;
     int messagePush;
     NSString *isOn;
+    NSString *MessageFlag;
 }
 
 @end
@@ -275,6 +276,11 @@
         [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
     else if([self.fromStringFlag isEqualToString:@"来自快速询价客服"])
+    {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+    }
+    else if ([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
     {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
@@ -611,6 +617,18 @@
             else if ([self.fromStringFlag isEqualToString:@"热门分类在线客服"])
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 热门分类]：%@",message];
+            }
+            else if ([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+            {
+                if (MessageFlag.length == 0)
+                {
+                    stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：\n%@\n%@",[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:0],message];
+                   MessageFlag = stringLabel;
+                }
+                else
+                {
+                    stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：%@",message];
+                }
             }
             else
             {

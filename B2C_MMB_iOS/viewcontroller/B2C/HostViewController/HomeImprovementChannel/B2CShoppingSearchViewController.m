@@ -227,7 +227,7 @@
     [useBtn setTag:1];
     [headBtnArray addObject:useBtn];
     
-//    showUseCell = NO;
+    showUseCell = NO;
     
 
     [self setHeadBtnFrame];
@@ -442,6 +442,7 @@
     NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
     NSArray *arr = [NSArray arrayWithObjects:path, nil];
     [tv reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];
+    
 }
 
 - (void) addHeadView
@@ -1217,8 +1218,6 @@
 		btn.selected = NO;
 //        [iv setImage:[UIImage imageNamed:@"next.png"]];
         useCloseIV_1.transform = CGAffineTransformMakeRotation(0);
-
-
 	}
     
 	[tv reloadData];

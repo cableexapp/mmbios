@@ -32,7 +32,7 @@
     
     self.loginBtn.layer.cornerRadius = 5.0f;
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"测试"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@""];
     self.navigationItem.titleView = top;
 }
 

@@ -393,12 +393,11 @@
         [btnArray addObject:selctBtn];
     }
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, 320, ScreenHeight - 80 - 64) style:0];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, 320, ScreenHeight - 144) style:0];
     [tv setDelegate:self];
     [tv setDataSource:self];
     [tv setShowsVerticalScrollIndicator:NO];
     [tv setShowsHorizontalScrollIndicator:NO];
-
     [self.view addSubview:tv];
     
     

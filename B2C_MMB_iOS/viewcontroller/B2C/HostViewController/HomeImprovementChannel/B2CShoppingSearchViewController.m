@@ -219,7 +219,7 @@
     
     UIButton *useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [useBtn setTitle:useString forState:UIControlStateNormal];
-//    [useBtn setFrame:CGRectMake(useBtn.frame.size.width+20, 5, 50, 30)];
+//  [useBtn setFrame:CGRectMake(useBtn.frame.size.width+20, 5, 50, 30)];
     [useBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [useBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     useBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
@@ -479,12 +479,15 @@
     
     //    sectionArray = [[NSArray alloc] initWithObjects:@"品牌",@"用途",@"型号",@"横截面",@"颜色",@"芯数",@"单位", nil];
     
+
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, myRect.size.width, myRect.size.height-90) style:0];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
     [self.view addSubview:tv];
+    
+    
     
     
     float btnWidth = (myRect.size.width-20)/3;
@@ -805,7 +808,7 @@
     for(int i=0;i<[[_myDic allKeys] count];i++)
     {
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 1, 23, 27)];
-        [iv setImage:[UIImage imageNamed:@"next.png"]];
+        [iv setImage:[UIImage imageNamed:@"YellowDownArrow@2x.png"]];
         [ivArray addObject:iv];
     }
     
@@ -828,7 +831,7 @@
         brandString = @"";
         specString = @"";
         modelString = @"";
-        
+
         showUseCell = YES;
         showModelCell = YES;
         showSpecCell = YES;
@@ -852,8 +855,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-
+    backView = [[UIView alloc] init];
+    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    backView.alpha = 0.6;
+    backView.hidden = NO;
+    backView.backgroundColor = [UIColor lightGrayColor];
+    [self.view insertSubview:backView aboveSubview:tv];
 
 }
 
@@ -1096,15 +1103,10 @@
 	view2 = nil;
 	view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
 	view1.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
-//       view1.backgroundColor = [UIColor redColor];
+//     view1.backgroundColor = [UIColor redColor];
 //    [specBtn setFrame:CGRectMake(100, 0, 60, 30)];
 //    [view1 addSubview:specBtn];
     
-    
-
-
-
-	
 	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 32)];
 	view2.backgroundColor = [UIColor clearColor];
     
@@ -1203,7 +1205,7 @@
 	UIButton *btn = (UIButton *)sender;
 	flag[sectionIndex] = !flag[sectionIndex];
     
-//    UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
+    UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
     
 	if(flag[sectionIndex])
 	{
@@ -1211,13 +1213,13 @@
         
 		btn.selected = YES;
 //       [iv setImage:[UIImage imageNamed:@"click1.png"]];
-       useCloseIV_1.transform = CGAffineTransformMakeRotation(M_2_PI);
+       iv.transform = CGAffineTransformMakeRotation(M_2_PI);
 	}
 	else
     {
 		btn.selected = NO;
 //        [iv setImage:[UIImage imageNamed:@"next.png"]];
-        useCloseIV_1.transform = CGAffineTransformMakeRotation(0);
+        iv.transform = CGAffineTransformMakeRotation(0);
 	}
     
 	[tv reloadData];

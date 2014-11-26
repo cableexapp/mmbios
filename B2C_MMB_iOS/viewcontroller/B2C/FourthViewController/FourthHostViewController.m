@@ -421,7 +421,7 @@
                 [label setFrame:CGRectMake(0, 5, 65, 21)];
                 [label setFont:[UIFont systemFontOfSize:13]];
                 [label setTextAlignment:NSTextAlignmentRight];
-                [label setText:@"订单编号:"];
+                [label setText:@"订单编号:  "];
             }
             if(i == 1)
             {
@@ -517,7 +517,12 @@
     {
         [cell.onLinePayBtn setHidden:NO];
         [cell.cancelOrderBtn setHidden:NO];
-        
+        cell.onLinePayBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+        [cell.onLinePayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cell.onLinePayBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        cell.cancelOrderBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+        [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         [cell.onLinePayBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
         [cell.cancelOrderBtn setFrame:CGRectMake(cell.onLinePayBtn.frame.origin.x + cell.onLinePayBtn.frame.size.width + 5, 5, cell.onLinePayBtn.frame.size.width, 30)];
         

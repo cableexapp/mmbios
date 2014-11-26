@@ -22,6 +22,9 @@
 #import "LoginNaviViewController.h"
 #import "UpOrderViewController.h"
 #import "B2CUpOrderData.h"
+#import "ChatListViewController.h"
+
+#define GoodsDetail_URL @"http://mmb.fgame.com:8083/"
 
 @interface GoodsDetailViewController ()
 {
@@ -65,6 +68,8 @@
     NSString *productNum;  //库存数量
     
     UIView *backView;
+    
+    NSString *producturl;//商品链接地址
 }
 @end
 
@@ -318,6 +323,8 @@
     {
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
+        producturl = [dicRespon objectForKey:@"producturl"];
+        NSLog(@"producturl = %@",producturl);
         if(result == 1)
         {
             detailData = [[B2CGoodsDetailData alloc] init];
@@ -620,9 +627,9 @@
                 [firstView addGestureRecognizer:tap_1];
                 
                 
-                UIImageView *chatIv = [[UIImageView alloc] initWithFrame:CGRectMake(320-40, 7, 30, 30)];
+                UIImageView *chatIv = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-40, 7, 30, 30)];
                 [chatIv setUserInteractionEnabled:YES];
-                [chatIv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
+                [chatIv setImage:[UIImage imageNamed:@"在线客服.png"]];
                 
                 UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatTap:)];
                 [chatIv addGestureRecognizer:chatTap];
@@ -814,6 +821,12 @@
 
 - (void) chatTap:(UITapGestureRecognizer *) sender
 {
+    NSLog(@"家装线商品详情");
+    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@@%@",GoodsDetail_URL,producturl,@"家装线商品详情"];
+    chatVC.fromString = urlString;
+    NSLog(@"chatVC.fromString = %@",chatVC.fromString);
+    [self.navigationController pushViewController:chatVC animated:YES];
     
 }
 

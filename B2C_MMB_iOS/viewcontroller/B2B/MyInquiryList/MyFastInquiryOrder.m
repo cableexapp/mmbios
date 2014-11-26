@@ -57,6 +57,11 @@
     
     [self pushAndPopStyle];
     
+    self.againAskBtn.layer.cornerRadius = 5;
+    self.againAskBtn.frame = CGRectMake(15, self.view.frame.size.height-50, self.view.frame.size.width-30, 40);
+    self.againAskBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    [self.view addSubview:self.againAskBtn];
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的快速询价单"];
     self.navigationItem.titleView = top;
     

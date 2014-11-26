@@ -30,14 +30,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self pushAndPopStyle];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交成功"];
     self.navigationItem.titleView = top;
     
-    self.lookForMyOrderBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.lookForMyOrderBtn.layer.borderWidth = 1.0f;
+    [self.lookForMyOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.lookForMyOrderBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     self.lookForMyOrderBtn.layer.cornerRadius = 5.0f;
 }
 

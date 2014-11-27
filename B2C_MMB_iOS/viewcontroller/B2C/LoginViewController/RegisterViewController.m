@@ -18,8 +18,12 @@
     DCFConnectionUtil *conn;
     int currentPageIndex;
     
-    NSTimer *timer;
     int timeCount_tel;     //倒计时
+    
+    BOOL phoneOrUserName;  //判断用户用手机注册还是用户名注册
+    
+    NSString *code;
+    NSTimer *timer_tel;
 }
 @end
 
@@ -42,15 +46,13 @@
         [conn stopConnection];
         conn = nil;
     }
-    if(HUD)
+    
+    if(timer_tel)
     {
-        [HUD hide:YES];
+        [timer_tel invalidate];
+        timer_tel = nil;
     }
-    if(timer)
-    {
-        [timer invalidate];
-        timer = nil;
-    }
+    [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     timeCount_tel = 60;
 }
 
@@ -60,7 +62,88 @@
     [super viewWillAppear:YES];
     timeCount_tel = 60;
     
-//    NSLog(@"%@",self.navigationController)
+    phoneOrUserName = NO;
+    [self checkStatus];
+}
+
+#pragma mark - 监测注册状态(手机还是用户名)
+- (void) checkStatus
+{
+    if(phoneOrUserName == YES)
+    {
+        [self.sureSecLabel setText:@"验证码"];
+        [self.getValidateBtn setHidden:NO];
+        [self.sureSecTf setFrame:CGRectMake(self.sureSecTf.frame.origin.x, self.sureSecTf.frame.origin.y, self.subView.frame.size.width-20-self.sureSecLabel.frame.size.width, self.sureSecTf.frame.size.height)];
+    }
+    else
+    {
+        [self.sureSecLabel setText:@"确认密码"];
+        [self.getValidateBtn setHidden:YES];
+        [self.sureSecTf setFrame:CGRectMake(self.sureSecTf.frame.origin.x, self.sureSecTf.frame.origin.y, self.subView.frame.size.width-20, self.sureSecTf.frame.size.height)];
+    }
+}
+
+- (IBAction)getValidateBtnClick:(id)sender
+{
+    if([self.userTf isFirstResponder])
+    {
+        [self.userTf resignFirstResponder];
+    }
+    if([self.sureSecTf isFirstResponder])
+    {
+        [self.sureSecTf resignFirstResponder];
+    }
+    if([self.secTf isFirstResponder])
+    {
+        [self.secTf resignFirstResponder];
+    }
+    
+    
+    timer_tel = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
+    [timer_tel fire];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"sendMessage",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@&username=%@",self.userTf.text,token,self.userTf.text];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendMsgTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendMessage.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) timer:(NSTimer *) sender
+{
+    if(timeCount_tel == 0)
+    {
+        [self.getValidateBtn setUserInteractionEnabled:YES];
+        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [timer_tel invalidate];
+        timer_tel = nil;
+        timeCount_tel = 60;
+    }
+    else
+    {
+        timeCount_tel = timeCount_tel - 1;
+        if(timeCount_tel == 0)
+        {
+            [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        }
+        else
+        {
+            NSString *timeString = [NSString stringWithFormat:@"剩余%d秒",timeCount_tel];
+            [self.getValidateBtn setTitle:timeString forState:UIControlStateNormal];
+        }
+        [self.getValidateBtn setUserInteractionEnabled:NO];
+        
+    }
+}
+
+
+- (IBAction)agreeBtnClick:(id)sender
+{
+    UIButton *btn = (UIButton *) sender;
+    btn.selected = !btn.selected;
 }
 
 - (void)viewDidLoad
@@ -71,7 +154,7 @@
     
     DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"电缆买卖宝注册"];
     self.navigationItem.titleView = TOP;
-
+    
     self.regesterBtn.layer.cornerRadius = 5.0f;
     
     [self.sv setContentSize:CGSizeMake(ScreenWidth-50, self.sv.frame.size.height-200)];
@@ -79,13 +162,12 @@
     [self.sv setPagingEnabled:YES];
     [self.sv setBounces:NO];
     
-    
-    [self.normalAccountTf setReturnKeyType:UIReturnKeyNext];
-    [self.normalSecTf setReturnKeyType:UIReturnKeyNext];
-    [self.normalSureSecTf setReturnKeyType:UIReturnKeyDone];
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
+    
+    [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+    [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
+    
 }
 
 
@@ -93,73 +175,209 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
+    if([self.userTf isFirstResponder])
+    {
+        [self.userTf resignFirstResponder];
+    }
+    if([self.sureSecTf isFirstResponder])
+    {
+        [self.sureSecTf resignFirstResponder];
+    }
+    if([self.secTf isFirstResponder])
+    {
+        [self.secTf resignFirstResponder];
+    }
+}
 
-    [_normalAccountTf resignFirstResponder];
-    [_normalSecTf resignFirstResponder];
-    [_normalSureSecTf resignFirstResponder];
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == self.secTf || textField == self.sureSecTf)
+    {
+        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
+        {
+            phoneOrUserName = YES;
+        }
+        else
+        {
+            phoneOrUserName = NO;
+        }
+        [self checkStatus];
+    }
+}
+
+- (void) textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField == self.userTf)
+    {
+        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
+        {
+            phoneOrUserName = YES;
+        }
+        else
+        {
+            phoneOrUserName = NO;
+        }
+        [self checkStatus];
+    }
     
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    [self.normalAccountTf resignFirstResponder];
-    [self.normalSecTf resignFirstResponder];
-    [self.normalSureSecTf resignFirstResponder];
-    
-    
-    if(textField == self.normalSureSecTf)
+    if(textField == self.userTf)
     {
-        [self regester];
+        [self.userTf resignFirstResponder];
+        
+        //校验是否是手机注册
+        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
+        {
+            phoneOrUserName = YES;
+        }
+        else
+        {
+            phoneOrUserName = NO;
+        }
+        [self checkStatus];
+    }
+    if(textField == self.secTf)
+    {
+        [self.secTf resignFirstResponder];
+    }
+    
+    if(textField == self.sureSecTf)
+    {
+        [self.sureSecTf resignFirstResponder];
     }
     return YES;
 }
 
 - (void) regester
 {
-    [_normalAccountTf resignFirstResponder];
-    [_normalSecTf resignFirstResponder];
-    [_normalSureSecTf resignFirstResponder];
-
+    if([self.userTf isFirstResponder])
+    {
+        [self.userTf resignFirstResponder];
+    }
+    if([self.sureSecTf isFirstResponder])
+    {
+        [self.sureSecTf resignFirstResponder];
+    }
+    if([self.secTf isFirstResponder])
+    {
+        [self.secTf resignFirstResponder];
+    }
     
-    if(_normalAccountTf.text.length == 0)
+    if(self.agreeBtn.selected == NO)
+    {
+        [DCFStringUtil showNotice:@"您确定不同意电缆买卖宝用户注册协议吗"];
+        return;
+    }
+    if(self.userTf.text.length == 0)
     {
         [DCFStringUtil showNotice:@"请输入账号"];
         return;
     }
-    if(_normalSecTf.text.length == 0 || _normalSureSecTf.text.length == 0)
+    if(self.secTf.text.length == 0)
     {
         [DCFStringUtil showNotice:@"请输入密码"];
         return;
     }
-    if(![_normalSecTf.text isEqualToString:_normalSureSecTf.text])
+    
+    if(self.sureSecTf.text.length == 0 && phoneOrUserName == YES)
     {
-        [DCFStringUtil showNotice:@"输入密码不一致,请检查"];
+        [DCFStringUtil showNotice:@"请输入验证码"];
+        return;
+    }
+    if(self.sureSecTf.text.length == 0 && phoneOrUserName == NO)
+    {
+        [DCFStringUtil showNotice:@"请确认密码"];
+        return;
+    }
+    if(![self.secTf.text isEqualToString:self.sureSecTf.text] && phoneOrUserName == NO)
+    {
+        [DCFStringUtil showNotice:@"两次输入的密码不一致,请核对"];
         return;
     }
     
+#pragma mark - 写死
+    code = @"111111";
+    if(![code isEqualToString:self.sureSecTf.text] && phoneOrUserName == YES)
+    {
+        [DCFStringUtil showNotice:@"验证码输入不正确,请核对"];
+        return;
+    }
     HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [HUD setDelegate:self];
     [HUD setLabelText:@"正在注册....."];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
+    NSString *string = nil;
+    NSString *urlString = nil;
+    if(phoneOrUserName == YES)
+    {
+        string = [NSString stringWithFormat:@"%@%@",@"PhoneUserRegister",time];
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/PhoneUserRegister.html?"];
+    }
+    else
+    {
+        string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
+    }
     
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
-    NSString *des = [MCdes encryptUseDES:self.normalSecTf.text key:@"cableex_app*#!Key"];
+    NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
     
-    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.normalAccountTf.text,des,token];
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
+
+
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     NSLog(@"%@",dicRespon);
-
+    
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    
+    if(URLTag == URLSendMsgTag)
+    {
+        [self.getValidateBtn setUserInteractionEnabled:YES];
+        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        if(timer_tel)
+        {
+            [timer_tel invalidate];
+            timer_tel = nil;
+            timeCount_tel = 60;
+        }
+        
+        
+        
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            [DCFStringUtil showNotice:@"获取失败"];
+            return;
+        }
+        if(result == 1)
+        {
+            [DCFStringUtil showNotice:msg];
+            code = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"code"]];
+        }
+        else
+        {
+            if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
+            {
+                [DCFStringUtil showNotice:@"获取失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
     
     if(URLTag == URLRegesterTag)
     {
@@ -193,13 +411,13 @@
             }
             else if (result == 1)
             {
-                dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.normalAccountTf.text,@"registerAccount",self.normalSecTf.text,@"registerSecrect", nil];
+                dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.userTf.text,@"registerAccount",self.secTf.text,@"registerSecrect", nil];
                 [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
-
+                
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }
-
+        
     }
 }
 
@@ -217,7 +435,7 @@
     
     if(currentPageIndex == 1)
     {
-
+        
     }
     
 }

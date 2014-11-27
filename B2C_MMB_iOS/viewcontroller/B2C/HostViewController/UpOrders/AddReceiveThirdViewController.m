@@ -130,6 +130,10 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return;
+    }
     NSMutableArray *arr = [[NSMutableArray alloc] init];
     
     NSString *code = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"];

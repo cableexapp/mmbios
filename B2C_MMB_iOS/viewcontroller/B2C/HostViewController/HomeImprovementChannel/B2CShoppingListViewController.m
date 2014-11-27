@@ -669,6 +669,10 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return;
+    }
     NSString *productId = [[dataArray objectAtIndex:indexPath.row] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     detail.GoodsDetailUrl = [[phoneDescribeArray objectAtIndex:indexPath.row] objectForKey:@"phoneDescribe"];

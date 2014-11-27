@@ -19,17 +19,19 @@
 
 
 
+@property (weak, nonatomic) IBOutlet UIView *subView;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
 
 @property (weak, nonatomic) IBOutlet UIButton *regesterBtn;
 
+@property (weak, nonatomic) IBOutlet UITextField *userTf;
+@property (weak, nonatomic) IBOutlet UITextField *secTf;
+@property (weak, nonatomic) IBOutlet UILabel *sureSecLabel;
+@property (weak, nonatomic) IBOutlet UITextField *sureSecTf;
+@property (weak, nonatomic) IBOutlet UIButton *getValidateBtn;
+@property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
 
-@property (weak, nonatomic) IBOutlet UITextField *normalAccountTf;
-
-@property (weak, nonatomic) IBOutlet UITextField *normalSecTf;
-
-@property (weak, nonatomic) IBOutlet UITextField *normalSureSecTf;
 
 
 @end

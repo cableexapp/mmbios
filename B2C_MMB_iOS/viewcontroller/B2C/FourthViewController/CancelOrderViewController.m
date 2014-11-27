@@ -250,6 +250,10 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return;
+    }
     if(indexPath.row < 9)
     {
         str = [dataArray objectAtIndex:indexPath.row];

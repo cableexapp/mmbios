@@ -101,6 +101,10 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return;
+    }
     NSString *str = [NSString stringWithFormat:@"%@%@",_town,[[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
     
     NSString *code = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"]];

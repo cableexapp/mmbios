@@ -267,6 +267,10 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return;
+    }
     NSIndexPath *path = [tableView indexPathForSelectedRow];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:path];
     

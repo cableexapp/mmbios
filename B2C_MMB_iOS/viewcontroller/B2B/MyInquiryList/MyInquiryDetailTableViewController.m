@@ -37,14 +37,14 @@
     [self.tableView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:229.0/255.0 blue:240.0/255.0 alpha:1.0]];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryDetail",time];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getInquiryInfo",time];
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&inquiryid=%@",token,self.myInquiryid];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryDetailTag delegate:self];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryDetail.html?"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getInquiryInfo.html?"];
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -59,7 +59,7 @@
     if(URLTag == URLInquiryDetailTag)
     {
   
-        if([[dicRespon allKeys] count] == 0)
+        if([[dicRespon allKeys] count] == 0 || [[dicRespon objectForKey:@"ctems"] count] == 0 || [[dicRespon objectForKey:@"ctems"] isKindOfClass:[NSNull class]])
         {
             [moreCell noDataAnimation];
         }
@@ -67,7 +67,15 @@
         {
             if(result == 1)
             {
-                dataArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
+                int status = [[[[dicRespon objectForKey:@"ctems"] lastObject] objectForKey:@"status"] intValue];
+                if(status == 1)
+                {
+                    dataArray = [[NSMutableArray alloc] initWithArray:[[[dicRespon objectForKey:@"ctems"] lastObject] objectForKey:@"items"]];
+                }
+                else
+                {
+                    dataArray = [[NSMutableArray alloc] initWithArray:[[[dicRespon objectForKey:@"ctems"] lastObject] objectForKey:@"ctems"]];
+                }
                 if(dataArray.count == 0)
                 {
                     [moreCell noClasses];

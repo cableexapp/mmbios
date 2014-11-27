@@ -126,6 +126,10 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return;
+    }
     NSString *title = [NSString stringWithFormat:@"%@>%@",_headTitle,[dataArray objectAtIndex:indexPath.row]];
     ThirdStepViewController *third = [[ThirdStepViewController alloc] initWithHeadTitle:title];
     [self.navigationController pushViewController:third animated:YES];

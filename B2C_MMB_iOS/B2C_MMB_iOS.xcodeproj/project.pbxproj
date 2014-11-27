@@ -11,7 +11,7 @@
 		0D73C0C21A133F4C004A9B95 /* HotThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */; };
 		0DABE3291A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE3271A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m */; };
 		0DABE32C1A1306FB00C64FB7 /* HotSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */; };
-		0DEC45091A184E70004CCCA0 /* YellowDownArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DEC45081A184E70004CCCA0 /* YellowDownArrow@2x.png */; };
+		0DAF5BF81A26C04B00E6D98B /* YellowDownArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAF5BF71A26C04B00E6D98B /* YellowDownArrow.png */; };
 		0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */; };
 		0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */; };
 		6114F7A41A187DFE007DAC39 /* AddBangDingMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6114F7A31A187DFE007DAC39 /* AddBangDingMobileViewController.m */; };
@@ -777,7 +777,7 @@
 		0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotSecondViewController.m; sourceTree = "<group>"; };
 		0DACD7D91A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewTableViewCell.h; sourceTree = "<group>"; };
 		0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewTableViewCell.m; sourceTree = "<group>"; };
-		0DEC45081A184E70004CCCA0 /* YellowDownArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowDownArrow@2x.png"; sourceTree = "<group>"; };
+		0DAF5BF71A26C04B00E6D98B /* YellowDownArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YellowDownArrow.png; sourceTree = "<group>"; };
 		0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
 		0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
 		6114F7A21A187DFE007DAC39 /* AddBangDingMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBangDingMobileViewController.h; sourceTree = "<group>"; };
@@ -2522,6 +2522,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				0DAF5BF71A26C04B00E6D98B /* YellowDownArrow.png */,
 				61828B5F1A247A790028AB4C /* back.png */,
 				6114F7AE1A189E25007DAC39 /* WelCome */,
 				6140E7C51A01DE4C00E349E3 /* hotModelSelected */,
@@ -2583,7 +2584,6 @@
 				6181A3FB19CFC4C2000E2D14 /* next.png */,
 				6181A3FC19CFC4C2000E2D14 /* tel.png */,
 				6181A3FD19CFC4C2000E2D14 /* up.png */,
-				0DEC45081A184E70004CCCA0 /* YellowDownArrow@2x.png */,
 				6181A3FE19CFC4C2000E2D14 /* 临时图片夹 */,
 			);
 			path = image;
@@ -4494,7 +4494,6 @@
 				61222ADE1A089DFB00B8A686 /* Alixpay.bundle in Resources */,
 				8BA7C0C61A10A85500758B0F /* 很弱@2x.png in Resources */,
 				8BA7C0621A10A85500758B0F /* active_page_image@2x.png in Resources */,
-				0DEC45091A184E70004CCCA0 /* YellowDownArrow@2x.png in Resources */,
 				8BA7C2DF1A10A8DD00758B0F /* build-libidn.sh in Resources */,
 				8BF5D5441A1F565300A3287C /* set_clear.png in Resources */,
 				8BA7C1311A10A85500758B0F /* 装酷.png in Resources */,
@@ -4662,6 +4661,7 @@
 				8BD9B8AB1A1355330037FB65 /* icon01.png in Resources */,
 				6181A35419CFC3F9000E2D14 /* InfoPlist.strings in Resources */,
 				8BEBDDB61A132B65007D0B48 /* ico_error.png in Resources */,
+				0DAF5BF81A26C04B00E6D98B /* YellowDownArrow.png in Resources */,
 				61DF89F619FB9D4900D47430 /* HomeSelect.png in Resources */,
 				8BA7C0DA1A10A85500758B0F /* 折磨@2x.png in Resources */,
 				8BA7C07A1A10A85500758B0F /* 亲亲@2x.png in Resources */,

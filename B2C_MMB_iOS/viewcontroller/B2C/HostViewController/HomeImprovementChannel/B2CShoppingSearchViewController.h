@@ -34,6 +34,8 @@
 }
 
 - (id) initWithFrame:(CGRect) rect;
+- (void)brandBtnClick:(UIButton *)button;
+
 
 - (void) addHeadView;
 

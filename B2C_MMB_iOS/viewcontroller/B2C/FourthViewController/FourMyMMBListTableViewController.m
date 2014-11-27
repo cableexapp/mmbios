@@ -44,13 +44,13 @@
 - (void) headBtnClick:(UIButton *) sender
 {
     int tag = sender.tag;
-    if (tag == 0)
-    {
-        [self setHidesBottomBarWhenPushed:YES];
-        MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
-        [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
-    }
+//    if (tag == 0)
+//    {
+//        [self setHidesBottomBarWhenPushed:YES];
+//        MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
+//        [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
+//        [self setHidesBottomBarWhenPushed:NO];
+//    }
     if(tag == 1)
     {
         [self setHidesBottomBarWhenPushed:YES];
@@ -99,7 +99,7 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
-    //    NSString *msg = [dicRespon objectForKey:@"msg"];
+//    NSLog(@"dicRespon = %@",dicRespon);
     if(URLTag == URLGetCountNumTag)
     {
         
@@ -111,7 +111,7 @@
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
-                
+              
                 NSString *s = [NSString stringWithFormat:@"%@",[badgeArray objectAtIndex:i]];
                 //                if(s.intValue == 0)
                 //                {
@@ -120,15 +120,30 @@
                 //                else
                 //                {
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                
                 if(s.intValue < 99 && s.intValue > 0)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 15, 18, 18)];
+                    if (cellBtn.frame.size.width >= 153)
+                    {
+                        NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-62, 13, 18, 18)];
+                    }
+                    else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
+                    {
+                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-47, 13, 18, 18)];
+                    }
+                    else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
+                    {
+                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 13, 18, 18)];
+                    }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
                     [btn setTitle:s forState:UIControlStateNormal];
                 }
                 else if (s.intValue >= 99)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 15, 24, 18)];
+                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 13, 24, 18)];
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
                     [btn setTitle:@"99+" forState:UIControlStateNormal];
                 }
@@ -206,7 +221,6 @@
     }
 }
 
-
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -224,6 +238,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -240,10 +255,6 @@
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(-1, 0, ScreenWidth+1, 45)];
-        //        btn.layer.borderColor = [UIColor colorWithRed:216.0/255.0 green:232.0/255.0 blue:249.0/255.0 alpha:1.0].CGColor;
-        //        btn.layer.borderColor = [UIColor redColor].CGColor;
-        //        btn.layer.borderWidth = 1.0f;
-        //        btn.layer.masksToBounds = YES;
         [btn setTag:i];
         [btn setTitle:@"" forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -271,9 +282,9 @@
         if(i == 0)
         {
             [label_1 setText:@"我的买卖宝询价单"];
-            [btn addSubview:label_2];
+//            [btn addSubview:label_2];
             
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"mmbOrder.png"]];
             [btn addSubview:iv];
         }
@@ -282,7 +293,7 @@
             [label_1 setText:@"我的电缆采购订单"];
             [btn addSubview:label_2];
             
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"dlOrder.png"]];
             [btn addSubview:iv];
         }
@@ -291,7 +302,7 @@
             [label_1 setText:@"我的家装馆订单"];
             [btn addSubview:label_2];
             
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"homeOrder.png"]];
             [btn addSubview:iv];
         }
@@ -299,7 +310,7 @@
         {
             [label_1 setText:@"账户信息"];
             
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"count.png"]];
             [btn addSubview:iv];
             UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height-0.5, self.view.frame.size.width, 0.5)];
@@ -315,11 +326,12 @@
         //            [btn addSubview:iv];
         //        }
         [btn addSubview:label_1];
-        
-        UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 35, 35)];
-        [arrowIv setImage:[UIImage imageNamed:@"set_clear.png"]];
-        [btn addSubview:arrowIv];
-        
+        if (i != 0)
+        {
+            UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 35, 35)];
+            [arrowIv setImage:[UIImage imageNamed:@"set_clear.png"]];
+            [btn addSubview:arrowIv];
+        }
         [headBtnArray addObject:btn];
     }
     
@@ -336,9 +348,6 @@
 {
     [super didReceiveMemoryWarning];
 }
-
-
-
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

@@ -159,7 +159,7 @@
 {
     if(self.content_Tv.text.length > 1000)
     {
-        [DCFStringUtil showNotice:@"您输入的字数超过了1000字"];
+        [self.countLabel setTextColor:[UIColor redColor]];
     }
     if(self.content_Tv.text.length == 0)
     {
@@ -656,6 +656,11 @@
     if(validateTel == NO)
     {
         [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+        return;
+    }
+    if(self.content_Tv.text.length > 1000)
+    {
+        [DCFStringUtil showNotice:@"您输入的文字超过了1000字"];
         return;
     }
     if(!HUD)

@@ -220,6 +220,73 @@
         [self checkStatus];
     }
     
+    if(self.secTf.text.length == 0)
+    {
+        [DCFStringUtil showNotice:@"密码长度不能为空"];
+        return;
+    }
+    if(self.secTf.text.length < 6)
+    {
+        [DCFStringUtil showNotice:@"密码长度不能小于6位"];
+        return;
+    }
+    if(self.secTf.text.length > 20)
+    {
+        [DCFStringUtil showNotice:@"密码长度不能大于20位"];
+        return;
+    }
+    
+    NSString * regex = @"^[A-Za-z0-9_]{6,20}$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch = [pred evaluateWithObject:self.secTf.text];
+    if(isMatch == NO)
+    {
+        [DCFStringUtil showNotice:@"密码只能是数字字母下划线"];
+        return;
+    }
+    if([self isAllNum:self.secTf.text] == YES)
+    {
+        [DCFStringUtil showNotice:@"密码不能是纯数字"];
+        return;
+    }
+    
+    if([self PureLetters:self.secTf.text] == YES)
+    {
+        [DCFStringUtil showNotice:@"密码不能是纯字母"];
+        return;
+    }
+}
+
+#pragma mark - 纯字母
+-(BOOL)PureLetters:(NSString*)str
+{
+    
+    for(int i=0;i<str.length;i++){
+        
+        unichar c=[str characterAtIndex:i];
+        
+        if((c<'A'||c>'Z')&&(c<'a'||c>'z'))
+            
+            return NO;
+        
+    }
+    
+    return YES;
+    
+}
+
+- (BOOL)isAllNum:(NSString *)string
+{
+    unichar c;
+    for (int i=0; i<string.length; i++)
+    {
+        c=[string characterAtIndex:i];
+        if (!isdigit(c))
+        {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
@@ -298,8 +365,6 @@
         return;
     }
     
-#pragma mark - 写死
-    code = @"111111";
     if(![code isEqualToString:self.sureSecTf.text] && phoneOrUserName == YES)
     {
         [DCFStringUtil showNotice:@"验证码输入不正确,请核对"];

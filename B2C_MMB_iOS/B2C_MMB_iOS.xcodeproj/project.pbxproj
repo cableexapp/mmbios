@@ -11,7 +11,6 @@
 		0D73C0C21A133F4C004A9B95 /* HotThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */; };
 		0DABE3291A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE3271A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m */; };
 		0DABE32C1A1306FB00C64FB7 /* HotSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */; };
-		0DAF5BF81A26C04B00E6D98B /* YellowDownArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAF5BF71A26C04B00E6D98B /* YellowDownArrow.png */; };
 		0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */; };
 		0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */; };
 		6114F7A41A187DFE007DAC39 /* AddBangDingMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6114F7A31A187DFE007DAC39 /* AddBangDingMobileViewController.m */; };
@@ -739,6 +738,7 @@
 		8BC2ADA31A19F0E100E44BC2 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD9A1A19F0E100E44BC2 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8BC2ADA41A19F0E100E44BC2 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD9C1A19F0E100E44BC2 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8BC2ADA51A19F0E200E44BC2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD9E1A19F0E100E44BC2 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		8BCAFD3F1A281D6B005702FD /* YellowDownArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BCAFD3E1A281D6B005702FD /* YellowDownArrow.png */; };
 		8BCC0C841A1F6AE2004F0EF8 /* headPic.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC0C831A1F6AE2004F0EF8 /* headPic.png */; };
 		8BCC0C891A1F7074004F0EF8 /* count.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC0C871A1F7074004F0EF8 /* count.png */; };
 		8BCC0C8A1A1F7074004F0EF8 /* getAddress.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC0C881A1F7074004F0EF8 /* getAddress.png */; };
@@ -782,7 +782,6 @@
 		0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotSecondViewController.m; sourceTree = "<group>"; };
 		0DACD7D91A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewTableViewCell.h; sourceTree = "<group>"; };
 		0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewTableViewCell.m; sourceTree = "<group>"; };
-		0DAF5BF71A26C04B00E6D98B /* YellowDownArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YellowDownArrow.png; sourceTree = "<group>"; };
 		0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
 		0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
 		6114F7A21A187DFE007DAC39 /* AddBangDingMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBangDingMobileViewController.h; sourceTree = "<group>"; };
@@ -1876,6 +1875,7 @@
 		8BC2AD9C1A19F0E100E44BC2 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
 		8BC2AD9D1A19F0E100E44BC2 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		8BC2AD9E1A19F0E100E44BC2 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		8BCAFD3E1A281D6B005702FD /* YellowDownArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YellowDownArrow.png; sourceTree = "<group>"; };
 		8BCC0C831A1F6AE2004F0EF8 /* headPic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = headPic.png; sourceTree = "<group>"; };
 		8BCC0C871A1F7074004F0EF8 /* count.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = count.png; sourceTree = "<group>"; };
 		8BCC0C881A1F7074004F0EF8 /* getAddress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = getAddress.png; sourceTree = "<group>"; };
@@ -2539,6 +2539,7 @@
 				61DF89EE19FB9CD700D47430 /* HomeUnSelect.png */,
 				8B7549411A26FB2E00271985 /* close.png */,
 				61828B5F1A247A790028AB4C /* back.png */,
+				8BCAFD3E1A281D6B005702FD /* YellowDownArrow.png */,
 				8B7549431A27013600271985 /* chatBtn.png */,
 				8BB350981A2425AC00E76495 /* choose.png */,
 				8B7549451A270A4B00271985 /* shopPic.png */,
@@ -4679,7 +4680,6 @@
 				8BD9B8AB1A1355330037FB65 /* icon01.png in Resources */,
 				6181A35419CFC3F9000E2D14 /* InfoPlist.strings in Resources */,
 				8BEBDDB61A132B65007D0B48 /* ico_error.png in Resources */,
-				0DAF5BF81A26C04B00E6D98B /* YellowDownArrow.png in Resources */,
 				61DF89F619FB9D4900D47430 /* HomeSelect.png in Resources */,
 				8BA7C0DA1A10A85500758B0F /* 折磨@2x.png in Resources */,
 				8BA7C07A1A10A85500758B0F /* 亲亲@2x.png in Resources */,
@@ -4703,6 +4703,7 @@
 				6181A4F019CFC4C2000E2D14 /* Set@2x.png in Resources */,
 				6181A4E319CFC4C2000E2D14 /* cell_3.png in Resources */,
 				619C10081A0772EA002E9DF8 /* KindsPlist.plist in Resources */,
+				8BCAFD3F1A281D6B005702FD /* YellowDownArrow.png in Resources */,
 				8BA7C0E11A10A85500758B0F /* 拳头.png in Resources */,
 				8BA7C1351A10A85500758B0F /* 闭嘴.png in Resources */,
 				8BA7C0CB1A10A85500758B0F /* 微笑.png in Resources */,

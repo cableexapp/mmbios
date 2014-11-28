@@ -196,6 +196,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+//    NSLog(@"我的家装馆订单 = %@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
@@ -307,19 +308,13 @@
     NSString *title = [btn.titleLabel text];
     _myStatus = [self validateStatus:title];
     
-    
-    
-    
     if(dataArray && dataArray.count != 0)
     {
         [dataArray removeAllObjects];
     }
-    
     intPage = 1;
     [self.tv reloadData];
-    
     [self loadRequest:_myStatus];
-    
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -454,7 +449,7 @@
             }
             if(i == 2)
             {
-                [label setFrame:CGRectMake(201, 5, 119, 21)];
+                [label setFrame:CGRectMake(195, 5, 119, 21)];
                 [label setFont:[UIFont systemFontOfSize:11]];
                 [label setTextAlignment:NSTextAlignmentRight];
                 NSString *s1 = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"month"];
@@ -480,8 +475,6 @@
             [headView addSubview:label];
         }
     }
-    
-    
     return headView;
 }
 
@@ -505,22 +498,19 @@
     {
         cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
-    
     NSArray *itemsArray = [[dataArray objectAtIndex:path.section] myItems];
     NSDictionary *itemDic = [itemsArray objectAtIndex:path.row];
     
     NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
     NSURL *url = [NSURL URLWithString:picString];
     [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
-    
     [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
-    
+
     [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
     
     [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
     
     return cell;
-    
 }
 
 - (UITableViewCell *) returnBtnCell:(UITableView *) tv WithPath:(NSIndexPath *) path
@@ -531,9 +521,6 @@
     {
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
-    
-    
-    
     int status = [[[dataArray objectAtIndex:path.section] status] intValue];
     if(status == 1)
     {
@@ -545,15 +532,15 @@
         cell.cancelOrderBtn.layer.borderColor = [[UIColor clearColor] CGColor];
         [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
-        [cell.onLinePayBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
-        [cell.cancelOrderBtn setFrame:CGRectMake(cell.onLinePayBtn.frame.origin.x + cell.onLinePayBtn.frame.size.width + 5, 5, cell.onLinePayBtn.frame.size.width, 30)];
+        
+        [cell.onLinePayBtn setFrame:CGRectMake(30, 5, (cell.contentView.frame.size.width-100)/2, 30)];
+        [cell.cancelOrderBtn setFrame:CGRectMake(cell.onLinePayBtn.frame.origin.x + cell.onLinePayBtn.frame.size.width + 45, 5, cell.onLinePayBtn.frame.size.width, 30)];
         
         [cell.discussBtn setHidden:YES];
         [cell.lookForCustomBtn setHidden:YES];
         [cell.lookForTradeBtn setHidden:YES];
         [cell.receiveBtn setHidden:YES];
     }
-    
     if(status == 2)
     {
         [cell.cancelOrderBtn setHidden:NO];

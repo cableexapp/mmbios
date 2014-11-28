@@ -23,10 +23,10 @@
     NSMutableArray *array4;
     
     
-    UIImageView *useCloseIV;  //用途右上角关闭
-    UIImageView *useCloseIV_1;
-    UIImageView *useCloseIV_2;
-    UIImageView *useCloseIV_3;
+    UIImage *useCloseIV;  //用途右上角关闭
+    UIImage *useCloseIV_1;
+    UIImage *useCloseIV_2;
+    UIImage *useCloseIV_3;
     UIImageView *triangle;  //展开的小三角
     UIView *backView;
     UIWindow *window;
@@ -57,6 +57,13 @@
     UIButton *useBtn;
     UIButton *specBtn;
     UIButton *abtn;
+    
+    UIButton *useBtn_0;
+    UIButton *useBtn_1;
+    UIButton *useBtn_2;
+    UIButton *useBtn_3;
+
+    
 }
 @end
 
@@ -225,7 +232,7 @@
 {
     useString = sender.titleLabel.text;
     [useBtn setHidden:NO];
-    [useCloseIV setHidden:NO];
+    [useBtn setHidden:NO];
 
     [useBtn setTitle:useString forState:UIControlStateNormal];
 
@@ -239,7 +246,7 @@
 {
     brandString = sender.titleLabel.text;
     [brandBtn setHidden:NO];
-    [useCloseIV setHidden:NO];
+    [useBtn setHidden:NO];
     [brandBtn setTitle:brandString forState:UIControlStateNormal];
     
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
@@ -250,7 +257,7 @@
 {
     modelString = sender.titleLabel.text;
     [modelBtn setHidden:NO];
-    [useCloseIV setHidden:NO];
+    [useBtn setHidden:NO];
 
     [modelBtn setTitle:modelString forState:UIControlStateNormal];
     
@@ -262,7 +269,7 @@
 {
     specString = sender.titleLabel.text;
     [specBtn setHidden:NO];
-    [useCloseIV setHidden:NO];
+    [useBtn setHidden:NO];
 
     [specBtn setTitle:specString forState:UIControlStateNormal];
     
@@ -383,10 +390,7 @@
                     break;
             }
             
-            useCloseIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
-            [useCloseIV setFrame:CGRectMake(B.frame.size.width, 0, 30, 30)];
-            useCloseIV.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-            useCloseIV.layer.borderWidth = 1.0f;
+        
      
         }
     }
@@ -821,14 +825,6 @@
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:tv];
     
-    
-//    useCloseIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
-//    [useCloseIV setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
-//    useCloseIV.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-//    useCloseIV.layer.borderWidth = 1.0f;
-
-    
-    
     brandBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [brandBtn setTitle:brandString forState:UIControlStateNormal];
     [brandBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
@@ -842,15 +838,18 @@
     [brandBtn setTag:0];
     [brandBtn setHidden:YES];
     
-    useCloseIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
-    [useCloseIV setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
-    useCloseIV.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-    useCloseIV.layer.borderWidth = 1.0f;
-    [useCloseIV setTag:0];
-    [useCloseIV setHidden:YES];
+    
+    useBtn_0 = [[UIButton alloc] init];
+    useCloseIV = [UIImage imageNamed:@"Set.png"];
+    [useBtn_0 setBackgroundImage:useCloseIV forState:UIControlStateNormal];
+    [useBtn_0 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
+    useBtn_0.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+    useBtn_0.layer.borderWidth = 1.0f;
+    [useBtn_0 setTag:0];
+    [useBtn_0 setHidden:YES];
 
     modelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [modelBtn setFrame:CGRectMake(myRect.size.width-150, 5, 80, 30)];
+    [modelBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
 //    [modelBtn setTitle:modelString forState:UIControlStateNormal];
     [modelBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [modelBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
@@ -859,17 +858,20 @@
     modelBtn.layer.borderWidth = 1.0f;
     [modelBtn setTag:1];
     [modelBtn setHidden:YES];
-    [modelBtn addSubview:useCloseIV];
+//    [modelBtn addSubview:useCloseIV];
     
-    useCloseIV_1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
-    [useCloseIV_1 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
-    useCloseIV_1.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-    useCloseIV_1.layer.borderWidth = 1.0f;
-    [useCloseIV_1 setTag:1];
-    [useCloseIV_1 setHidden:YES];
+    
+    useBtn_1 = [[UIButton alloc] init];
+    useCloseIV_1 = [UIImage imageNamed:@"Set.png"];
+    [useBtn_1 setBackgroundImage:useCloseIV_1 forState:UIControlStateNormal];
+    [useBtn_1 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
+    useBtn_1.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+    useBtn_1.layer.borderWidth = 1.0f;
+    [useBtn_1 setTag:0];
+    [useBtn_1 setHidden:YES];
 
     useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [useBtn setFrame:CGRectMake(myRect.size.width-150, 5, 80, 30)];
+    [useBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
     [useBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [useBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     useBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
@@ -878,15 +880,18 @@
     [useBtn setTag:2];
     [useBtn setHidden:YES];
     
-    useCloseIV_2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
-    [useCloseIV_2 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
-    useCloseIV_2.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-    useCloseIV_2.layer.borderWidth = 1.0f;
-    [useCloseIV_2 setTag:2];
-    [useCloseIV_2 setHidden:YES];
+    
+    useBtn_2 = [[UIButton alloc] init];
+    useCloseIV_2 = [UIImage imageNamed:@"Set.png"];
+    [useBtn_2 setBackgroundImage:useCloseIV_2 forState:UIControlStateNormal];
+    [useBtn_2 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
+    useBtn_2.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+    useBtn_2.layer.borderWidth = 1.0f;
+    [useBtn_2 setTag:0];
+    [useBtn_2 setHidden:YES];
 
     specBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [specBtn setFrame:CGRectMake(myRect.size.width-150, 5, 80, 30)];
+    [specBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
     [specBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [specBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     specBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
@@ -895,12 +900,16 @@
     [specBtn setTag:3];
     [specBtn setHidden:YES];
     
-    useCloseIV_3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
-    [useCloseIV_3 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
-    useCloseIV_3.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-    useCloseIV_3.layer.borderWidth = 1.0f;
-    [useCloseIV_3 setTag:3];
-    [useCloseIV_3 setHidden:YES];
+   
+    
+    useBtn_3 = [[UIButton alloc] init];
+    useCloseIV_3 = [UIImage imageNamed:@"Set.png"];
+    [useBtn_3 setBackgroundImage:useCloseIV_3 forState:UIControlStateNormal];
+    [useBtn_3 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
+    useBtn_3.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+    useBtn_3.layer.borderWidth = 1.0f;
+    [useBtn_3 setTag:0];
+    [useBtn_3 setHidden:YES];
     
     
 
@@ -909,7 +918,6 @@
 - (void)brandbtnMet:(UIButton *)button
 {
     [brandBtn setHidden:YES];
-    [useCloseIV_1 setHidden:NO];
 
 }
 
@@ -1186,9 +1194,9 @@
 	[view2 addSubview:abtn];
     
     //  展开的小三角
-    useCloseIV_1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
-    [useCloseIV_1 setFrame:CGRectMake(200, 15, 20, 20)];
-    [abtn addSubview:useCloseIV_1];
+    triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    [triangle setFrame:CGRectMake(200, 15, 20, 20)];
+    [abtn addSubview:triangle];
 //    [triangleAaary addObject:useCloseIV_1];
     
     
@@ -1222,22 +1230,22 @@
             
         case 0:
             [abtn addSubview:brandBtn];
-            [abtn addSubview:useCloseIV];
+            [abtn addSubview:useBtn_0];
           
             break;
         case 1:
             [abtn addSubview:modelBtn];
-            [abtn addSubview:useCloseIV];
+            [abtn addSubview:useBtn_1];
 
             break;
         case 2:
             [abtn addSubview:useBtn];
-            [abtn addSubview:useCloseIV];
+            [abtn addSubview:useBtn_2];
 
             break;
         case 3:
             [abtn addSubview:specBtn];
-            [abtn addSubview:useCloseIV];
+            [abtn addSubview:useBtn_3];
 
             break;
      }

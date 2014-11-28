@@ -7,6 +7,7 @@
 //
 
 #import "DCFChenMoreCell.h"
+#import "MCDefine.h"
 
 @implementation DCFChenMoreCell
 
@@ -66,6 +67,15 @@
     self.lblContent.text = @"没有相关数据";
     [self.avState stopAnimating];
     self.avState.hidden = YES;
+}
+
+- (void) HomeImprovementGalleryOrders
+{
+    [self.avState stopAnimating];
+    self.avState.hidden = YES;
+    self.lblContent.text = @"您还没有家装馆订单哦~赶紧去选购一下吧~";
+    [self.lblContent setFont:[UIFont systemFontOfSize:12]];
+    [self.lblContent setFrame:CGRectMake(0, 5, self.frame.size.width, self.frame.size.height-10)];
 }
 
 - (void) noB2BInvoice

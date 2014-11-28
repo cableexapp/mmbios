@@ -48,4 +48,6 @@
 
 + (BOOL) validateString:(NSString *) str;
 
++ (BOOL) validateTel:(NSString *) tel;
+
 @end

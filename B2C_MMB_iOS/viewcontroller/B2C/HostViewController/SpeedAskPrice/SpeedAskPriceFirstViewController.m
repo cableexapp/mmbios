@@ -60,6 +60,7 @@
     
     
     deleteOrNot = NO;
+
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"快速询价"];
     self.navigationItem.titleView = top;
@@ -407,8 +408,9 @@
     
     if(memberid.length == 0)
     {
-        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+//        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+//        [self presentViewController:loginNavi animated:YES completion:nil];
+        memberid = @"";
         
     }
     return memberid;
@@ -420,8 +422,9 @@
     
     if(userName.length == 0)
     {
-        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+        userName = @"";
+//        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+//        [self presentViewController:loginNavi animated:YES completion:nil];
     }
     return userName;
     
@@ -474,10 +477,9 @@
     
     conn = [[DCFConnectionUtil alloc]initWithURLTag:URLUpImagePicTag delegate:self];
     
-    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@",[self getMemberId],token,[self getUserName],self.tel_Tf.text,[self getUserName],self.content_Tv.text];
+    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@",[self getMemberId],token,[self getUserName],self.tel_Tf.text,[self getUserName],self.content_Tv.text,@"3"];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?",strRequest];
-
     
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
     
@@ -652,17 +654,34 @@
         [DCFStringUtil showNotice:@"请输入手机号码"];
         return;
     }
-    BOOL validateTel = [DCFCustomExtra validateMobile:self.tel_Tf.text];
-    if(validateTel == NO)
+    
+    BOOL validatePhone = [DCFCustomExtra validateMobile:self.tel_Tf.text];
+    BOOL validateTel = [DCFCustomExtra validateTel:self.tel_Tf.text];
+    if(validateTel == YES || validatePhone == YES)
     {
-        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
-        return;
+
     }
+    
+    if(validatePhone == NO && validateTel == NO)
+    {
+        if(validateTel == NO)
+        {
+            [DCFStringUtil showNotice:@"请输入正确的电话号码"];
+            return;
+        }
+        if(validatePhone == NO)
+        {
+            [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+            return;
+        }
+    }
+    
     if(self.content_Tv.text.length > 1000)
     {
         [DCFStringUtil showNotice:@"您输入的文字超过了1000字"];
         return;
     }
+    
     if(!HUD)
     {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

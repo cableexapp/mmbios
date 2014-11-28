@@ -50,7 +50,6 @@
         scrollView.showsVerticalScrollIndicator = NO;
         scrollView.scrollsToTop = NO;
         scrollView.delegate = self;
-        NSLog(@"imag = %@",imgArr);
         for (int i=0; i<pageCount; i++)
         {
             NSString *imgURL=[imageArray objectAtIndex:i];

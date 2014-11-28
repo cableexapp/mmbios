@@ -577,7 +577,7 @@
                 [tradeLabel setTextAlignment:NSTextAlignmentRight];
                 [tradeLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
                 [tradeLabel setFont:[UIFont systemFontOfSize:13]];
-                //            [cell.contentView addSubview:tradeLabel];
+//             [cell.contentView addSubview:tradeLabel];
                 UIView *lineView = [[UIView alloc] init];
                 lineView.frame = CGRectMake(0, cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
                 lineView.backgroundColor = [UIColor lightGrayColor];

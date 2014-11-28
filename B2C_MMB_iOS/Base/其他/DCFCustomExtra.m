@@ -126,7 +126,7 @@
 + (void) alignLabelWithTop:(UILabel *)label
 {
     CGSize maxSize = CGSizeMake(label.frame.size.width, 999);
-//    label.adjustsFontSizeToFitWidth = NO;
+    //    label.adjustsFontSizeToFitWidth = NO;
     CGSize actualSize = [label.text sizeWithFont:label.font constrainedToSize:maxSize lineBreakMode:label.lineBreakMode];
     CGRect rect = label.frame;
     rect.size.height = actualSize.height;
@@ -205,7 +205,7 @@
     //            {
     //                return @"5";
     //            }
-    //            
+    //
     //        }
     //    }
 }
@@ -233,7 +233,7 @@
 + (NSString *) getFirstRunTime
 {
     NSDate *now = [NSDate date];
-
+    
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
     NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
@@ -287,9 +287,9 @@
     {
         S = [NSString stringWithFormat:@"%d",second];
     }
-
-//    NSString *time = [[NSString alloc] initWithFormat:@"%d-%d-%d %d:%@:%@",year,month,day,hour,M,S];
-//    NSLog(@"time = %@",time);
+    
+    //    NSString *time = [[NSString alloc] initWithFormat:@"%d-%d-%d %d:%@:%@",year,month,day,hour,M,S];
+    //    NSLog(@"time = %@",time);
     
     NSString *time = [NSString stringWithFormat:@"%d-%@-%@",year,monthString_2,day_2];
     return time;
@@ -305,12 +305,12 @@
     NSUInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
     NSDateComponents *dateComponent = [calendar components:unitFlags fromDate:now];
     
-//    int year = [dateComponent year];
-//    int month = [dateComponent month];
+    //    int year = [dateComponent year];
+    //    int month = [dateComponent month];
     int day = [dateComponent day];
     int hour = [dateComponent hour];
     int minute = [dateComponent minute];
-//    int second = [dateComponent second];
+    //    int second = [dateComponent second];
     
     NSString *HOUR = [[NSString alloc] initWithFormat:@"%d",hour];
     NSString *MIN = [[NSString alloc] initWithFormat:@"%d",minute];
@@ -323,7 +323,7 @@
 
 + (NSString *) getRandomNumber:(int) fromNum to:(int) toNum
 {
-//    return (int)(fromNum + (arc4random() % (toNum – fromNum + 1)));
+    //    return (int)(fromNum + (arc4random() % (toNum – fromNum + 1)));
     int n = (fromNum + (arc4random() % (toNum - fromNum +1)));
     NSString *s = [NSString stringWithFormat:@"%d",n];
     return s;
@@ -387,14 +387,14 @@
 #pragma mark 结束时间与当前时间差
 + (NSString *) timeIntervalFromStartToEnd:(NSString *) endTime
 {
-//    NSString *dateStr = [timeArray objectAtIndex:0];//传入开始时间
-//    //将传入时间转化成需要的格式
-//    NSDateFormatter *format=[[NSDateFormatter alloc] init];
-//    [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//    NSDate *fromdate=[format dateFromString:dateStr];
-//    NSTimeZone *fromzone = [NSTimeZone systemTimeZone];
-//    NSInteger frominterval = [fromzone secondsFromGMTForDate: fromdate];
-//    NSDate *fromDate = [fromdate  dateByAddingTimeInterval: frominterval];
+    //    NSString *dateStr = [timeArray objectAtIndex:0];//传入开始时间
+    //    //将传入时间转化成需要的格式
+    //    NSDateFormatter *format=[[NSDateFormatter alloc] init];
+    //    [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //    NSDate *fromdate=[format dateFromString:dateStr];
+    //    NSTimeZone *fromzone = [NSTimeZone systemTimeZone];
+    //    NSInteger frominterval = [fromzone secondsFromGMTForDate: fromdate];
+    //    NSDate *fromDate = [fromdate  dateByAddingTimeInterval: frominterval];
     
     NSString *dateStr1 = [NSString stringWithFormat:@"%@",endTime];//传入结束时间
     //将传入时间转化成需要的格式
@@ -415,14 +415,14 @@
     double intervalTime = [fromDate1 timeIntervalSinceReferenceDate] - [localeDate timeIntervalSinceReferenceDate];
     
     long lTime = (long)intervalTime;
-//    NSInteger iSeconds = lTime % 60;
+    //    NSInteger iSeconds = lTime % 60;
     NSInteger iMinutes = (lTime / 60) % 60;
     NSInteger iHours = (lTime / 3600);
-//    NSInteger iDays = lTime/60/60/24;
-//    NSInteger iMonth = lTime/60/60/24/12;
-//    NSInteger iYears = lTime/60/60/24/384;
+    //    NSInteger iDays = lTime/60/60/24;
+    //    NSInteger iMonth = lTime/60/60/24/12;
+    //    NSInteger iYears = lTime/60/60/24/384;
     
-//    NSLog(@"相差%d年%d月%d日%d时%d分%d秒", iYears,iMonth,iDays,iHours,iMinutes,iSeconds);
+    //    NSLog(@"相差%d年%d月%d日%d时%d分%d秒", iYears,iMonth,iDays,iHours,iMinutes,iSeconds);
     
     NSString *timeInterval;
     
@@ -470,28 +470,49 @@
 //    {
 //        NSString *s1 = [time substringToIndex:testRange.location];
 //        NSLog(@"s1 = %@",s1);
-//        
+//
 //        NSString *s2 = [s1 substringFromIndex:5];
 //        NSLog(@"s2 = %@",s2);
-//        
+//
 //        s2 = [s2 stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
 //        NSLog(@"s2   s2 = %@",s2);
-//        
+//
 //        NSString *s3 = [s2 stringByAppendingString:@"日"];
 //        NSLog(@"s3 = %@",s3);
-//        
+//
 //        NSString *s4 = [time substringFromIndex:testRange.location + 1];
 //        NSLog(@"s4 = %@",s4);
-//        
+//
 //        NSString *s5 = [s4 substringToIndex:5];
 //        NSLog(@"s5 = %@",s5);
-//        
+//
 //        finalTime = [NSString stringWithFormat:@"%@ %@",s3,s5];
 //        NSLog(@"finalTime = %@",finalTime);
 //    }
 //    return finalTime;
 //}
 
+#pragma mark - 验证固化小灵通
++ (BOOL) validateTel:(NSString *) tel
+{
+    //     25         * 大陆地区固话及小灵通
+    //     26         * 区号：010,020,021,022,023,024,025,027,028,029
+    //     27         * 号码：七位或八位
+    //     28         */
+    NSString *PHS = @"^([\\+][0-9]{1,3}[ \\.\\-])?([\\(]{1}[0-9]{2,6}[\\)])?([0-9 \\.\\-\\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$";
+//    ^([\\+][0-9]{1,3}[ \\.\\-])?([\\(]{1}[0-9]{2,6}[\\)])?([0-9 \\.\\-\\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$
+    NSPredicate *regextestTel = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", PHS];
+    BOOL isMatch = [regextestTel evaluateWithObject:tel];
+    if (isMatch == YES)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+    
+}
 
 #pragma mark - 验证手机号码
 + (BOOL)validateMobile:(NSString *)mobileNum
@@ -504,7 +525,7 @@
     
     if (!isMatch)
     {
-
+        
         
         return NO;
         
@@ -520,47 +541,47 @@
      * 联通：130,131,132,152,155,156,185,186
      * 电信：133,1349,153,180,189
      */
-//    NSString * MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-//    /**
-//     10         * 中国移动：China Mobile
-//     11         * 134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
-//     12         */
-//    NSString * CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-//    /**
-//     15         * 中国联通：China Unicom
-//     16         * 130,131,132,152,155,156,185,186
-//     17         */
-//    NSString * CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-//    /**
-//     20         * 中国电信：China Telecom
-//     21         * 133,1349,153,180,189
-//     22         */
-//    NSString * CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-//    /**
-//     25         * 大陆地区固话及小灵通
-//     26         * 区号：010,020,021,022,023,024,025,027,028,029
-//     27         * 号码：七位或八位
-//     28         */
-//    // NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
-//    
-//    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
-//    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
-//    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
-//    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
-//    
-//    if (([regextestmobile evaluateWithObject:mobileNum] == YES)
-//        || ([regextestcm evaluateWithObject:mobileNum] == YES)
-//        || ([regextestct evaluateWithObject:mobileNum] == YES)
-//        || ([regextestcu evaluateWithObject:mobileNum] == YES))
-//    {
-//        NSLog(@"正确");
-//        return YES;
-//    }
-//    else
-//    {
-//        NSLog(@"错误");
-//        return NO;
-//    }
+    //    NSString * MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+    //    /**
+    //     10         * 中国移动：China Mobile
+    //     11         * 134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
+    //     12         */
+    //    NSString * CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    //    /**
+    //     15         * 中国联通：China Unicom
+    //     16         * 130,131,132,152,155,156,185,186
+    //     17         */
+    //    NSString * CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    //    /**
+    //     20         * 中国电信：China Telecom
+    //     21         * 133,1349,153,180,189
+    //     22         */
+    //    NSString * CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    //    /**
+    //     25         * 大陆地区固话及小灵通
+    //     26         * 区号：010,020,021,022,023,024,025,027,028,029
+    //     27         * 号码：七位或八位
+    //     28         */
+    //     NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
+    //
+    //    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
+    //    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
+    //    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
+    //    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
+    //
+    //    if (([regextestmobile evaluateWithObject:mobileNum] == YES)
+    //        || ([regextestcm evaluateWithObject:mobileNum] == YES)
+    //        || ([regextestct evaluateWithObject:mobileNum] == YES)
+    //        || ([regextestcu evaluateWithObject:mobileNum] == YES))
+    //    {
+    //        NSLog(@"正确");
+    //        return YES;
+    //    }
+    //    else
+    //    {
+    //        NSLog(@"错误");
+    //        return NO;
+    //    }
 }
 
 #pragma mark - 验证邮箱

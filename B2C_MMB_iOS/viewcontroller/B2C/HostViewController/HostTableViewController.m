@@ -21,7 +21,7 @@
 #import "SearchViewController.h"
 #import "MCDefine.h"
 #import "ChatViewController.h"
-#import "B2CShoppingListViewController.h";
+#import "B2CShoppingListViewController.h"
 
 @interface HostTableViewController ()
 {
@@ -37,7 +37,7 @@
     ZSYPopoverListView *listView;
     NSArray *useArray;
     UIActivityIndicatorView *activityIndicator;
-    UILabel *label;
+    UILabel *labell;
 }
 @end
 
@@ -438,11 +438,11 @@
         activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         activityIndicator.frame = CGRectMake(10, 38, 30, 30);
         [listView addSubview:activityIndicator];
-        label = [[UILabel alloc] init];
-        label.frame = CGRectMake(40, 38, self.view.frame.size.width-50, 30);
-        label.text = @"数据加载中";
-        label.hidden = YES;
-        [listView addSubview:label];
+        labell = [[UILabel alloc] init];
+        labell.frame = CGRectMake(40, 38, self.view.frame.size.width-50, 30);
+        labell.text = @"数据加载中";
+        labell.hidden = YES;
+        [listView addSubview:labell];
         [listView show];
     }
     if(btn.tag == 2)

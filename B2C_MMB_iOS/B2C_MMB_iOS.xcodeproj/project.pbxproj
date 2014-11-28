@@ -11,8 +11,7 @@
 		0D73C0C21A133F4C004A9B95 /* HotThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */; };
 		0DABE3291A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE3271A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m */; };
 		0DABE32C1A1306FB00C64FB7 /* HotSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */; };
-		0DEC45091A184E70004CCCA0 /* YellowDownArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DEC45081A184E70004CCCA0 /* YellowDownArrow@2x.png */; };
-		0DEC450C1A18D83F004CCCA0 /* MJTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DEC450B1A18D83F004CCCA0 /* MJTitleButton.m */; };
+		0DAF5BF81A26C04B00E6D98B /* YellowDownArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DAF5BF71A26C04B00E6D98B /* YellowDownArrow.png */; };
 		0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */; };
 		0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */; };
 		6114F7A41A187DFE007DAC39 /* AddBangDingMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6114F7A31A187DFE007DAC39 /* AddBangDingMobileViewController.m */; };
@@ -783,9 +782,7 @@
 		0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotSecondViewController.m; sourceTree = "<group>"; };
 		0DACD7D91A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewTableViewCell.h; sourceTree = "<group>"; };
 		0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewTableViewCell.m; sourceTree = "<group>"; };
-		0DEC45081A184E70004CCCA0 /* YellowDownArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowDownArrow@2x.png"; sourceTree = "<group>"; };
-		0DEC450A1A18D83F004CCCA0 /* MJTitleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJTitleButton.h; sourceTree = "<group>"; };
-		0DEC450B1A18D83F004CCCA0 /* MJTitleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJTitleButton.m; sourceTree = "<group>"; };
+		0DAF5BF71A26C04B00E6D98B /* YellowDownArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YellowDownArrow.png; sourceTree = "<group>"; };
 		0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
 		0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
 		6114F7A21A187DFE007DAC39 /* AddBangDingMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBangDingMobileViewController.h; sourceTree = "<group>"; };
@@ -1966,8 +1963,6 @@
 				0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */,
 				0D73C0C01A133F4C004A9B95 /* HotThirdViewController.h */,
 				0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */,
-				0DEC450A1A18D83F004CCCA0 /* MJTitleButton.h */,
-				0DEC450B1A18D83F004CCCA0 /* MJTitleButton.m */,
 				0D4354BD1A199AF400C0AF0A /* Hotpst.plist */,
 			);
 			path = HotKind;
@@ -2603,7 +2598,6 @@
 				6181A3FB19CFC4C2000E2D14 /* next.png */,
 				6181A3FC19CFC4C2000E2D14 /* tel.png */,
 				6181A3FD19CFC4C2000E2D14 /* up.png */,
-				0DEC45081A184E70004CCCA0 /* YellowDownArrow@2x.png */,
 				6181A3FE19CFC4C2000E2D14 /* 临时图片夹 */,
 			);
 			path = image;
@@ -4514,7 +4508,6 @@
 				61222ADE1A089DFB00B8A686 /* Alixpay.bundle in Resources */,
 				8BA7C0C61A10A85500758B0F /* 很弱@2x.png in Resources */,
 				8BA7C0621A10A85500758B0F /* active_page_image@2x.png in Resources */,
-				0DEC45091A184E70004CCCA0 /* YellowDownArrow@2x.png in Resources */,
 				8BA7C2DF1A10A8DD00758B0F /* build-libidn.sh in Resources */,
 				8BF5D5441A1F565300A3287C /* set_clear.png in Resources */,
 				8BA7C1311A10A85500758B0F /* 装酷.png in Resources */,
@@ -4686,6 +4679,7 @@
 				8BD9B8AB1A1355330037FB65 /* icon01.png in Resources */,
 				6181A35419CFC3F9000E2D14 /* InfoPlist.strings in Resources */,
 				8BEBDDB61A132B65007D0B48 /* ico_error.png in Resources */,
+				0DAF5BF81A26C04B00E6D98B /* YellowDownArrow.png in Resources */,
 				61DF89F619FB9D4900D47430 /* HomeSelect.png in Resources */,
 				8BA7C0DA1A10A85500758B0F /* 折磨@2x.png in Resources */,
 				8BA7C07A1A10A85500758B0F /* 亲亲@2x.png in Resources */,
@@ -5028,7 +5022,6 @@
 				8BA7C28B1A10A8DD00758B0F /* NSNumber+XMPP.m in Sources */,
 				8BA7C2E11A10A8DD00758B0F /* DDList.m in Sources */,
 				61B710C419FF3B53001CC3BD /* DiscussViewController.m in Sources */,
-				0DEC450C1A18D83F004CCCA0 /* MJTitleButton.m in Sources */,
 				8BA7C28E1A10A8DD00758B0F /* XMPPCoreDataStorage.m in Sources */,
 				611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */,
 				61E65DE21A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m in Sources */,

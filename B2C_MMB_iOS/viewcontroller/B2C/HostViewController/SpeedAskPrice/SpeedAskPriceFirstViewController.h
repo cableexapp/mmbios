@@ -25,5 +25,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *lastUpPicBtn;
 @property (weak, nonatomic) IBOutlet UILabel *upLabel;
 @property (weak, nonatomic) IBOutlet UILabel *showlabel;
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
 @end

@@ -164,13 +164,13 @@
         if(hasLogin == YES)
         {
             arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
             pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
         }
         else
         {
             arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
             pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
             
         }
@@ -239,7 +239,7 @@
     [buttomView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:buttomView];
     
-     UIButton *chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *chatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [chatBtn setFrame:CGRectMake(40, 5, 40, 40)];
     [chatBtn setBackgroundImage:[UIImage imageNamed:@"chatBtn"] forState:UIControlStateNormal];
     [chatBtn addTarget:self action:@selector(IMChatClick) forControlEvents:UIControlEventTouchUpInside];
@@ -326,10 +326,10 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
+        NSLog(@"%@",dicRespon);
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         producturl = [dicRespon objectForKey:@"producturl"];
-        NSLog(@"producturl = %@",producturl);
         if(result == 1)
         {
             detailData = [[B2CGoodsDetailData alloc] init];
@@ -350,7 +350,7 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
-
+        
         
         if(result == 1)
         {
@@ -436,7 +436,51 @@
     }
     if(indexPath.row == 2 || indexPath.row == 3)
     {
-        return 54;
+        if(indexPath.row == 2)
+        {
+            if(detailData)
+            {
+                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[NSString stringWithFormat:@"%@ %@",@"¥",detailData.productPrice] WithSize:CGSizeMake(MAXFLOAT, 30)];
+
+                
+                NSString *FreightType = detailData.freightType;
+                NSString *string = nil;
+                if([FreightType isEqualToString:@"0"])
+                {
+                    string = [NSString stringWithFormat:@"商品运费:物流%@元,快递%@元,EMS%@元",detailData.surfaceFreightPrice,detailData.expressFreightPrice,detailData.emsFreightPrice];
+                }
+                if([FreightType isEqualToString:@"1"])
+                {
+                    string = @"卖家承担运费";
+                }
+                if([FreightType isEqualToString:@"2"])
+                {
+                    if([detailData.minString isEqualToString:@"0"])
+                    {
+                        string = @"商品运:结算时根据配送地区具体计算";
+                    }
+                    else
+                    {
+                        string = [NSString stringWithFormat:@"商品运费:参考运费%@元,结算时根据配送地区具体计算",detailData.minString];
+                    }
+                }
+                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:string WithSize:CGSizeMake(ScreenWidth-20-size_1.width, MAXFLOAT)];
+                if(size_3.height < 30)
+                {
+                    return 50;
+                }
+                else
+                {
+                    return size_3.height + 20;
+                }
+            }
+            else
+            {
+                
+            }
+        }
+ 
+        return 50;
     }
     if (indexPath.row == 5)
     {
@@ -446,8 +490,8 @@
         }
         else
         {
-        return 54;
-       }
+            return 54;
+        }
     }
     if(indexPath.row == 4)
     {
@@ -463,7 +507,7 @@
     }
     if(indexPath.row == 6)
     {
-            return 54;
+        return 54;
     }
     if (indexPath.row > 5)
     {
@@ -511,7 +555,7 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //    [tableView setSeparatorStyle:0];
- 
+    
     NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(cell == nil)
@@ -567,24 +611,59 @@
         {
             if(detailData.productPrice.length != 0)
             {
-                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:18] WithText:[NSString stringWithFormat:@"%@ %@",@"¥",detailData.productPrice] WithSize:CGSizeMake(MAXFLOAT, 30)];
+                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[NSString stringWithFormat:@"%@ %@",@"¥",detailData.productPrice] WithSize:CGSizeMake(MAXFLOAT, 30)];
                 
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 5, size_1.width+40, 40)];
-                [label setText:[NSString stringWithFormat:@"%@  %@",@"¥",detailData.productPrice]];
-                [label setFont:[UIFont systemFontOfSize:18]];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+                [label setText:[NSString stringWithFormat:@"%@%@",@"¥",detailData.productPrice]];
                 [label setTextColor:[UIColor redColor]];
+                [label setFont:[UIFont systemFontOfSize:14]];
                 [label setTextAlignment:NSTextAlignmentLeft];
                 [cell.contentView addSubview:label];
                 
-                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"运费5元" WithSize:CGSizeMake(MAXFLOAT, 30)];
-                UILabel *tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-size_3.width-10, 5, size_3.width, 40)];
-                [tradeLabel setText:@"运费5元"];
+                NSString *FreightType = detailData.freightType;
+                NSString *string = nil;
+                if([FreightType isEqualToString:@"0"])
+                {
+                    string = [NSString stringWithFormat:@"商品运费:物流%@元,快递%@元,EMS%@元",detailData.surfaceFreightPrice,detailData.expressFreightPrice,detailData.emsFreightPrice];
+                }
+                if([FreightType isEqualToString:@"1"])
+                {
+                    string = @"卖家承担运费";
+                }
+                if([FreightType isEqualToString:@"2"])
+                {
+                    if([detailData.minString isEqualToString:@"0"])
+                    {
+                        string = @"商品运:结算时根据配送地区具体计算";
+                    }
+                    else
+                    {
+                        string = [NSString stringWithFormat:@"商品运费:参考运费%@元,结算时根据配送地区具体计算",detailData.minString];
+                    }
+                }
+                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:string WithSize:CGSizeMake(ScreenWidth-20-size_1.width, MAXFLOAT)];
+                UILabel *tradeLabel = nil;
+                if(size_3.height < 30)
+                {
+                    [label setFrame:CGRectMake(10, 10, size_1.width, 30)];
+
+                    tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width, 10, ScreenWidth-20-label.frame.size.width, 30)];
+                }
+                else
+                {
+                    [label setFrame:CGRectMake(10, (size_3.height-30)/2, size_1.width, 30)];
+
+                    tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width, 10, ScreenWidth-20-label.frame.size.width, size_3.height)];
+                }
+                [tradeLabel setText:string];
                 [tradeLabel setTextAlignment:NSTextAlignmentRight];
                 [tradeLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
                 [tradeLabel setFont:[UIFont systemFontOfSize:13]];
-//             [cell.contentView addSubview:tradeLabel];
+                [tradeLabel setNumberOfLines:0];
+                [cell.contentView addSubview:tradeLabel];
+                
                 UIView *lineView = [[UIView alloc] init];
-                lineView.frame = CGRectMake(0, cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
+                lineView.frame = CGRectMake(0, cell.contentView.frame.size.height-0.5, cell.contentView.frame.size.width, 0.5);
                 lineView.backgroundColor = [UIColor lightGrayColor];
                 [cell addSubview:lineView];
             }
@@ -633,7 +712,7 @@
                 
                 UITapGestureRecognizer *tap_1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstTap:)];
                 [firstView addGestureRecognizer:tap_1];
-             
+                
                 UIView *lineView = [[UIView alloc] init];
                 lineView.frame = CGRectMake(0, cell.frame.size.height-10, cell.frame.size.width, 10);
                 lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
@@ -650,13 +729,13 @@
             for(int i = 0;i < 2;i++)
             {
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//                [btn setFrame:CGRectMake(10+100*i, 5, 100, 34)];
+                //                [btn setFrame:CGRectMake(10+100*i, 5, 100, 34)];
                 UIView *selectView = [[UIView alloc] init];
                 [btn.titleLabel setFont:[UIFont systemFontOfSize:15]];
                 if(i == 0)
                 {
                     selectView.frame = CGRectMake(0, 38.5, self.view.frame.size.width/2, 1.5);
-                     [btn setFrame:CGRectMake((self.view.frame.size.width/2)*i, 0, self.view.frame.size.width/2-0.25, 40)];
+                    [btn setFrame:CGRectMake((self.view.frame.size.width/2)*i, 0, self.view.frame.size.width/2-0.25, 40)];
                     if(showCell == YES)
                     {
                         [btn setSelected:YES];
@@ -672,11 +751,11 @@
                 else if (i == 1)
                 {
                     selectView.frame = CGRectMake(self.view.frame.size.width/2, 38.5, self.view.frame.size.width/2, 1.5);
-                     [btn setFrame:CGRectMake((self.view.frame.size.width/2)*i+0.25, 0, self.view.frame.size.width/2-0.25, 40)];
+                    [btn setFrame:CGRectMake((self.view.frame.size.width/2)*i+0.25, 0, self.view.frame.size.width/2-0.25, 40)];
                     if(showCell == YES)
                     {
                         [btn setSelected:NO];
-                         selectView.backgroundColor = [UIColor clearColor];
+                        selectView.backgroundColor = [UIColor clearColor];
                     }
                     else
                     {
@@ -686,7 +765,7 @@
                     [btn setTitle:@"商品评价" forState:UIControlStateNormal];
                 }
                 [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-
+                
                 
                 [btn setTag:1000+i];
                 
@@ -733,7 +812,7 @@
                 
             }
         }
-//        if(indexPath.row > 5 && indexPath.row < 6)
+        //        if(indexPath.row > 5 && indexPath.row < 6)
         if(indexPath.row == 5 )
         {
             if(showCell == YES)
@@ -874,7 +953,7 @@
             [btn setSelected:NO];
         }
     }
-
+    
     [tv reloadData];
 }
 

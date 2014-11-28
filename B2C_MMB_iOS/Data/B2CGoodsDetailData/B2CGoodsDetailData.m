@@ -158,6 +158,31 @@
     }
     
     _productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
+    
+    _emsFreightPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"emsFreightPrice"]];
+    
+    _expressFreightPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"expressFreightPrice"]];
+    
+    _surfaceFreightPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"surfaceFreightPrice"]];
+    
+    _freightType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"freightType"]];
+    
+
+    NSArray *arr = [[NSArray alloc] initWithObjects:_emsFreightPrice,_surfaceFreightPrice,_expressFreightPrice, nil];
+    NSArray *testArr = [self getSortArrForMainApp:arr];
+    
+    _minString = [NSString stringWithFormat:@"%@",[testArr objectAtIndex:0]];
+}
+
+- (NSArray*)getSortArrForMainApp:(NSArray*)arrSrc {
+    NSArray* arrDes = [arrSrc sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        //change your code
+        NSString *value1 = obj1;
+        NSString *value2 = obj2;
+        return value1.intValue < value2.intValue ? NSOrderedAscending : NSOrderedDescending;
+    }];
+    
+    return arrDes;
 }
 
 @end

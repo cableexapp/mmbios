@@ -25,8 +25,7 @@
     {
         if(IS_IOS_7)
         {
-            //    获取当前文本的属性
-            
+            //    获取当前文本的属性            
             NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil];
             
             //ios7方法，获取文本需要的size，限制宽度

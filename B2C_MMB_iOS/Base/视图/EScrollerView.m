@@ -97,9 +97,19 @@
         
         float pageControlWidth=(pageCount-2)*10.0f+40.f;
         float pagecontrolHeight=20.0f;
-        pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake((self.frame.size.width-pageControlWidth),6, pageControlWidth, pagecontrolHeight)];
+        if(myTag == 0)
+        {
+            pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake((self.frame.size.width-pageControlWidth)/2,18, pageControlWidth, pagecontrolHeight)];
+        }
+        else
+        {
+            pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake((self.frame.size.width-pageControlWidth)/2,21, pageControlWidth, pagecontrolHeight)];
+        }
+        
         pageControl.currentPage=0;
         pageControl.numberOfPages=(pageCount-2);
+        pageControl.pageIndicatorTintColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1.0];
+        pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
         [noteView addSubview:pageControl];
         
         noteTitle=[[UILabel alloc] initWithFrame:CGRectMake(5, 6, self.frame.size.width-pageControlWidth-15, 20)];

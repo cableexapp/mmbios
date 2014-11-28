@@ -11,14 +11,14 @@
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "B2BMyInquiryListFastData.h"
-#import "MyCableOrderSearchViewController.h"
+//#import "MyCableOrderSearchViewController.h"
 
 @interface MyInquiryListFirstViewController ()
 {
     int currentPageIndex;
     NormalInquiryListTableViewController *normal;
     SpeedInquiryListTableViewController *speed;
-    UIView *rightButtonView;
+//    UIView *rightButtonView;
 }
 @end
 
@@ -36,13 +36,13 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    rightButtonView.hidden = NO;
+//    rightButtonView.hidden = NO;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-    rightButtonView.hidden = YES;
+//    rightButtonView.hidden = YES;
 }
 
 - (void)viewDidLoad
@@ -76,25 +76,25 @@
     [self addChildViewController:speed];
     [self.secondView addSubview:speed.view];
     
-    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
-    [self.navigationController.navigationBar addSubview:rightButtonView];
-    
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundColor:[UIColor clearColor]];
-    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
-    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
-    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [rightButtonView addSubview:rightBtn];
+//    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
+//    [self.navigationController.navigationBar addSubview:rightButtonView];
+//    
+//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [rightBtn setBackgroundColor:[UIColor clearColor]];
+//    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
+//    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+//    [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
+//    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [rightButtonView addSubview:rightBtn];
 }
 
--(void)searchOrderBtnClick
-{
-    [self setHidesBottomBarWhenPushed:YES];
-    MyCableOrderSearchViewController *searchVC = [[MyCableOrderSearchViewController alloc] init];
-    [self.navigationController pushViewController:searchVC animated:YES];
-}
+//-(void)searchOrderBtnClick
+//{
+//    [self setHidesBottomBarWhenPushed:YES];
+//    MyCableOrderSearchViewController *searchVC = [[MyCableOrderSearchViewController alloc] init];
+//    [self.navigationController pushViewController:searchVC animated:YES];
+//}
 
 - (void)pushToNextVC:(MyNormalInquiryDetailController *) sender WithData:(B2BMyInquiryListNormalData *)data
 {

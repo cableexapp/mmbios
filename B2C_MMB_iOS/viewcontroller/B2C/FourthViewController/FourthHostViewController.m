@@ -24,6 +24,7 @@
 #import "CancelOrderViewController.h"
 #import "logisticsTrackingViewController.h"
 #import "AliViewController.h"
+#import "MyCableOrderSearchViewController.h"
 
 @interface FourthHostViewController ()
 {
@@ -41,6 +42,7 @@
     
     BOOL _reloading;
     
+    UIView *rightButtonView;
     
     NSString *sureReceiveNumber; //确认收货
 }
@@ -60,7 +62,7 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-    
+    rightButtonView.hidden = YES;
     if(conn)
     {
         [conn stopConnection];
@@ -75,6 +77,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    rightButtonView.hidden = NO;
     if(!btnArray)
     {
         btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSend,self.waitForSureBtn,self.waitForDiscussBtn, nil];
@@ -116,6 +119,8 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self pushAndPopStyle];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -133,11 +138,28 @@
     [self.tv addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
     
-    
-    
-    
     [self.tv setDataSource:self];
     [self.tv setDelegate:self];
+    
+    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
+    [self.navigationController.navigationBar addSubview:rightButtonView];
+
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundColor:[UIColor clearColor]];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
+    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightButtonView addSubview:rightBtn];
+}
+
+-(void)searchOrderBtnClick
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    MyCableOrderSearchViewController *searchVC = [[MyCableOrderSearchViewController alloc] init];
+    searchVC.fromFlag = @"我的家装馆订单";
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 - (NSString *) getMemberId

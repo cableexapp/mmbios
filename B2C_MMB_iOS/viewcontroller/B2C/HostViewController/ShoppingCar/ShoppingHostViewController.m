@@ -89,7 +89,7 @@
 
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
     picArray = [[NSArray alloc] initWithObjects:@"0.png",@"1.png",@"2.png",@"3.png",@"4.png",@"5.png",@"6.png",@"7.png",@"8.png", nil];
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height-64)];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height+10)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];

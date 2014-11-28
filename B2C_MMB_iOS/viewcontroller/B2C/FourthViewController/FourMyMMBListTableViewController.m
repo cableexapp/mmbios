@@ -126,17 +126,17 @@
                     if (cellBtn.frame.size.width >= 153)
                     {
                         NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-62, 13, 18, 18)];
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-63, 13, 18, 18)];
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
                         NSLog(@"2= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-47, 13, 18, 18)];
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-48, 13, 18, 18)];
                     }
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
                         NSLog(@"3= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 13, 18, 18)];
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 13, 18, 18)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
                     [btn setTitle:s forState:UIControlStateNormal];

@@ -86,5 +86,45 @@
 		<key>typePls</key>
 		<string>超高压电力电缆—500kV交联聚乙烯绝缘</string>
 	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>高压电力电缆—220kV交联聚乙烯绝缘</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>高压电力电缆—110kV交联聚乙烯绝缘</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>高压电力电缆—66kV交联聚乙烯绝缘</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>漆包线—聚酯漆包线</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>同轴射频电缆—CATV电缆</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>布电线—B系列</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>光缆—中心管式室外</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>光缆—接入网用蝶形引入</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>架空绝缘电缆—铜芯</string>
+	</dict>
+	<dict>
+		<key>typePls</key>
+		<string>架空导线用裸绞线—钢芯铝绞线</string>
+	</dict>
 </array>
 </plist>

@@ -34,16 +34,15 @@
 }
 
 - (id) initWithFrame:(CGRect) rect;
+- (void)brandBtnClick:(UIButton *)button;
+
 
 - (void) addHeadView;
 
 @property (nonatomic,retain) NSDictionary *myDic;
-
 @property (strong,nonatomic) UIButton *clearBtn;
 @property (strong,nonatomic) UIView *lineView;
 @property (strong,nonatomic) UIButton *sureBtn;
-
-
-
 @property (strong,nonatomic) id<RequestString> delegate;
+
 @end

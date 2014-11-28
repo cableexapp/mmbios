@@ -122,7 +122,7 @@
         }
         else
         {
-            [selectBtn setSelected:NO];
+//            [selectBtn setSelected:NO];
         }
     }
     
@@ -193,8 +193,7 @@
     btn.selected = !btn.selected;
     int tag = btn.tag;
     
-    NSLog(@"tag = %d",tag);
-    
+//    遍历数组比较tag
     for(UIView *view in buttonLineViewArray)
     {
         if(view.tag == tag)
@@ -368,6 +367,7 @@
             lineView_4.hidden = YES;
             [buttonLineViewArray addObject:lineView_4];
         }
+        
         [selctBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [selctBtn setTag:i];
         
@@ -387,12 +387,11 @@
         [btnArray addObject:selctBtn];
     }
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 175) style:0];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, 320, ScreenHeight - 144) style:0];
     [tv setDelegate:self];
     [tv setDataSource:self];
     [tv setShowsVerticalScrollIndicator:NO];
     [tv setShowsHorizontalScrollIndicator:NO];
-
     [self.view addSubview:tv];
     
     
@@ -625,6 +624,9 @@
         NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
         NSLog(@"picUrl = %@",picUrl);
         [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
+        [cellIv.layer setCornerRadius:2.0]; //设置矩圆角半径
+        [cellIv.layer setBorderWidth:1.0];   //边框宽度
+        cellIv.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [cell.contentView addSubview:cellIv];
         
         return cell;

@@ -529,11 +529,12 @@
         cell.onLinePayBtn.layer.borderColor = [[UIColor clearColor] CGColor];
         [cell.onLinePayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.onLinePayBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        
         cell.cancelOrderBtn.layer.borderColor = [[UIColor clearColor] CGColor];
         [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
-        [cell.onLinePayBtn setFrame:CGRectMake(30, 5, (cell.contentView.frame.size.width-100)/2, 30)];
+        [cell.onLinePayBtn setFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-20, 30)];
         [cell.cancelOrderBtn setFrame:CGRectMake(cell.onLinePayBtn.frame.origin.x + cell.onLinePayBtn.frame.size.width + 45, 5, cell.onLinePayBtn.frame.size.width, 30)];
         
         [cell.discussBtn setHidden:YES];
@@ -544,6 +545,9 @@
     if(status == 2)
     {
         [cell.cancelOrderBtn setHidden:NO];
+        cell.cancelOrderBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+        [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
         [cell.cancelOrderBtn setFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-20, 30)];
         
@@ -557,7 +561,14 @@
     if(status == 3)
     {
         [cell.receiveBtn setHidden:NO];
+        cell.receiveBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+        [cell.receiveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cell.receiveBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        
         [cell.lookForTradeBtn setHidden:NO];
+        cell.lookForTradeBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+        [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
         [cell.receiveBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
         [cell.lookForTradeBtn setFrame:CGRectMake(cell.receiveBtn.frame.origin.x + cell.receiveBtn.frame.size.width + 5, 5, cell.receiveBtn.frame.size.width, 30)];
@@ -577,16 +588,27 @@
             if(afterStatus == 2 || afterStatus == 3)
             {
                 [cell.discussBtn setHidden:NO];
+                cell.discussBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+                [cell.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                cell.discussBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                
                 [cell.lookForCustomBtn setHidden:NO];
+                cell.lookForCustomBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+                [cell.lookForCustomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                cell.lookForCustomBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                
                 [cell.lookForTradeBtn setHidden:NO];
+                cell.lookForTradeBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+                [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                
                 
                 [cell.onLinePayBtn setHidden:YES];
                 [cell.cancelOrderBtn setHidden:YES];
                 [cell.receiveBtn setHidden:YES];
                 
                 [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/3, 30)];
-                
-                //                [cell.lookForCustomBtn setFrame:CGRectMake(200, 5, 100, 30)];
+        
                 [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
                 [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
                 
@@ -596,7 +618,14 @@
             else
             {
                 [cell.discussBtn setHidden:NO];
+                cell.discussBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+                [cell.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                cell.discussBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                
                 [cell.lookForTradeBtn setHidden:NO];
+                cell.lookForTradeBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+                [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
                 [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
                 [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
@@ -612,7 +641,14 @@
             if(afterStatus == 2 || afterStatus == 3)
             {
                 [cell.lookForCustomBtn setHidden:NO];
+                cell.lookForCustomBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+                [cell.lookForCustomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                cell.lookForCustomBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                
                 [cell.lookForTradeBtn setHidden:NO];
+                cell.lookForTradeBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+                [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
                 [cell.lookForCustomBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
                 [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
@@ -625,6 +661,9 @@
             else
             {
                 [cell.lookForTradeBtn setHidden:NO];
+                cell.lookForTradeBtn.layer.borderColor = [[UIColor clearColor] CGColor];
+                [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
                 [cell.lookForTradeBtn setFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-20, 30)];
                 

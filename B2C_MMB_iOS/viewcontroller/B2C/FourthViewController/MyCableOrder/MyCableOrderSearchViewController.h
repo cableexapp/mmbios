@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
-@interface MyCableOrderSearchViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,ConnectionDelegate>
+@interface MyCableOrderSearchViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,ConnectionDelegate,UIAlertViewDelegate>
 {
     NSString *fromFlag;
     DCFConnectionUtil *conn;

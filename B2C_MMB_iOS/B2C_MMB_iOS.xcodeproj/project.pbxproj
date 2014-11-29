@@ -714,6 +714,7 @@
 		8BA7C31E1A10A93B00758B0F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C3151A10A93B00758B0F /* ChatViewController.m */; };
 		8BB3509A1A2425AC00E76495 /* choose.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BB350981A2425AC00E76495 /* choose.png */; };
 		8BB3509B1A2425AC00E76495 /* unchoose.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BB350991A2425AC00E76495 /* unchoose.png */; };
+		8BB7D49D1A29A70F00C716E4 /* MyCableOrderB2BViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D49C1A29A70F00C716E4 /* MyCableOrderB2BViewController.m */; };
 		8BBB28BA1A11AD23009AAEE8 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28B81A11AD23009AAEE8 /* search.png */; };
 		8BBB28BB1A11AD23009AAEE8 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28B91A11AD23009AAEE8 /* search@2x.png */; };
 		8BBB28BF1A11E559009AAEE8 /* KxMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB28BE1A11E559009AAEE8 /* KxMenu.m */; };
@@ -1841,6 +1842,8 @@
 		8BA7C3151A10A93B00758B0F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		8BB350981A2425AC00E76495 /* choose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose.png; sourceTree = "<group>"; };
 		8BB350991A2425AC00E76495 /* unchoose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchoose.png; sourceTree = "<group>"; };
+		8BB7D49B1A29A70F00C716E4 /* MyCableOrderB2BViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderB2BViewController.h; sourceTree = "<group>"; };
+		8BB7D49C1A29A70F00C716E4 /* MyCableOrderB2BViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableOrderB2BViewController.m; sourceTree = "<group>"; };
 		8BBB28B81A11AD23009AAEE8 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		8BBB28B91A11AD23009AAEE8 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
 		8BBB28BD1A11E559009AAEE8 /* KxMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxMenu.h; sourceTree = "<group>"; };
@@ -2190,6 +2193,8 @@
 				616BE0B91A1447C60061C956 /* MyCableOrderHostViewController.m */,
 				8B1F0FCA1A174E6000F819D1 /* MyCableOrderSearchViewController.h */,
 				8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */,
+				8BB7D49B1A29A70F00C716E4 /* MyCableOrderB2BViewController.h */,
+				8BB7D49C1A29A70F00C716E4 /* MyCableOrderB2BViewController.m */,
 				616BE0C01A14A4020061C956 /* MyCableOrderDetailViewController.h */,
 				616BE0C11A14A4020061C956 /* MyCableOrderDetailViewController.m */,
 				616BE0C31A14ABC60061C956 /* MyCableDetailTableViewController.h */,
@@ -4784,6 +4789,7 @@
 				6181A36319CFC3F9000E2D14 /* ViewController.m in Sources */,
 				61B710D519FF3B53001CC3BD /* ChooseListTableViewController.m in Sources */,
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
+				8BB7D49D1A29A70F00C716E4 /* MyCableOrderB2BViewController.m in Sources */,
 				8BA7C17D1A10A8CC00758B0F /* FBShimmeringLayer.m in Sources */,
 				61551E911A0B4D6D004F50FF /* B2BAskPriceInquirySheetViewController.m in Sources */,
 				8BC2ADA11A19F0E100E44BC2 /* BPushClass.m in Sources */,

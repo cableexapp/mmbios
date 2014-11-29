@@ -383,7 +383,7 @@
         {
             [label setText:userName];
         }
-        [label setFont:[UIFont boldSystemFontOfSize:20]];
+        [label setFont:[UIFont boldSystemFontOfSize:16]];
         [label setTextAlignment:NSTextAlignmentCenter];
         [label setTextColor:[UIColor blackColor]];
         [view addSubview:label];

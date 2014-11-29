@@ -694,10 +694,10 @@
                 {
                     [statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
                 }
-                statusBtn.layer.borderColor = MYCOLOR.CGColor;
-                statusBtn.layer.borderWidth = 1.0f;
+                [statusBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                statusBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:144/255.0 blue:1/255.0 alpha:1.0];
                 statusBtn.layer.cornerRadius = 5.0f;
-                [statusBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+                [statusBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
                 [statusBtn addTarget:self action:@selector(statusBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 [statusBtn setTag:indexPath.section];
                 [cell.contentView addSubview:statusBtn];

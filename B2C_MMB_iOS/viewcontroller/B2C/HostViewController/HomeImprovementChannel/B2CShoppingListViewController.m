@@ -35,6 +35,8 @@
     UIView * lineView_2;
     UIView * lineView_3;
     UIView * lineView_4;
+    
+    UIWindow * window;
 
     NSMutableArray *buttonLineViewArray;  //底部3条下滑线数组
     
@@ -133,29 +135,25 @@
     _seq = @"";
     intPage = 1;
 //    [self loadRequest:_seq WithUse:_use];
+
     
-    //    if(!searchView)
-    //    {
-    
-//    backView = [[UIView alloc] init];
-//    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-//    backView.alpha = 0.6;
-//    backView.hidden = NO;
-//    backView.backgroundColor = [UIColor lightGrayColor];
-//    [self.view insertSubview:backView aboveSubview:tv];
+   
 
     searchView = [[UIView alloc] init];
     [searchView setFrame:CGRectMake(70, 50, ScreenWidth-40, ScreenHeight)];
     [searchView setBackgroundColor:[UIColor redColor]];
     [self.view addSubview:searchView];
     
+    backView = [[UIView alloc] init];
+    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    backView.alpha = 0.5;
+    backView.hidden = NO;
+    backView.backgroundColor = [UIColor lightGrayColor];
+    [self.view insertSubview:backView aboveSubview:tv];
     
     
-    //    }
-    //    if(!search)
-    //    {
     
-    //    }
+ 
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDuration:0.3];
@@ -407,6 +405,15 @@
     
     _seq = @"";
     [self loadRequest:_seq WithUse:_use];
+    
+//    设置隐藏背景VIEW的通知事件
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeBackView" object:nil];
+    
+}
+
+-(void)closeView:(NSNotification *)close
+{
+    backView.hidden = YES;
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField

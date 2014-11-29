@@ -113,13 +113,13 @@
 
 - (NSString *) getMemberId
 {
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+//    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    NSLog(@"%@",memberid);
-    if(memberid.length == 0)
+    if([DCFCustomExtra validateMobile:memberid] == NO)
     {
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+        memberid = @"";
+//        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+//        [self presentViewController:loginNavi animated:YES completion:nil];
     }
     return memberid;
 }
@@ -197,22 +197,22 @@
     }
     
     NSString *memberid = [self getMemberId];
-    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]] || memberid == NULL)
-    {
-        
-    }
-    else
-    {
+//    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]] || memberid == NULL)
+//    {
+//        
+//    }
+//    else
+//    {
         NSString *time = [DCFCustomExtra getFirstRunTime];
         NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@",memberid,token,[self getUserName],self.PhoneNumber.text,[self getUserName],self.markView.text];
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@",memberid,token,[self getUserName],self.PhoneNumber.text,[self getUserName],self.markView.text,@"4"];
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    }
+//    }
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

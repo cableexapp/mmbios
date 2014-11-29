@@ -158,11 +158,11 @@
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
-    if(memberid.length == 0)
+    if([DCFCustomExtra validateString:memberid] == NO)
     {
-        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
-        
+//        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+//        [self presentViewController:loginNavi animated:YES completion:nil];
+        memberid = @"";
     }
     return memberid;
 }

@@ -10,11 +10,11 @@
 #import "DCFConnectionUtil.h"
 @interface MyCableOrderSearchViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,ConnectionDelegate>
 {
-     NSString *fromFlag;
+    NSString *fromFlag;
     DCFConnectionUtil *conn;
 }
 
-@property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic,strong) UITableView *myTableView;
 
 @property (nonatomic,strong)  NSString *fromFlag;
 

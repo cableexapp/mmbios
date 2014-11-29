@@ -62,14 +62,15 @@
     naviTitle.text = @"订单搜索";
     self.navigationItem.titleView = naviTitle;
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-109) style:UITableViewStylePlain];
-    self.tableView.separatorColor = [UIColor colorWithRed:153.0/255.0 green:206.0/255.0 blue:250.0/255.0 alpha:1];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.scrollEnabled = YES;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-    [self.view addSubview:self.tableView];
+    dataArray = [[NSMutableArray alloc] init];
+    
+//    self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-109) style:UITableViewStylePlain];
+    self.myTableView.delegate = self;
+    self.myTableView.dataSource = self;
+    self.myTableView.scrollEnabled = YES;
+    self.myTableView.backgroundColor = [UIColor clearColor];
+    self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.view addSubview:self.myTableView];
     
     search = [[UISearchBar alloc] init];
     search.frame = CGRectMake(0, 0,self.view.frame.size.width, 45);
@@ -85,9 +86,7 @@
     searchDisplayController.searchResultsDataSource = self;
     searchDisplayController.searchResultsDelegate = self;
     searchDisplayController.delegate = self;
-    
-//    dataArray = [[NSMutableArray alloc] initWithObjects:@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"10", nil];
-    
+
     NSLog(@"fromFlag = %@",self.fromFlag);
 }
 
@@ -102,6 +101,21 @@
     else
     {
         [self loadRequestB2COrderListAllWithStatus:@"1"];
+    }
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+    if(moreCell)
+    {
+        [moreCell stopAnimation];
     }
 }
 
@@ -156,7 +170,7 @@
     {
         NSLog(@"B2C全部订单 = %@",dicRespon);
         [dataArray addObjectsFromArray:[B2CMyOrderData getListArray:[dicRespon objectForKey:@"items"]]];
-        [self.tableView reloadData];
+        [self.myTableView reloadData];
     }
 }
 
@@ -250,7 +264,6 @@
     return 42;
 }
 
-
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if(!dataArray || dataArray.count == 0)
@@ -290,7 +303,7 @@
             }
             if(i == 2)
             {
-                [label setFrame:CGRectMake(201, 5, 119, 21)];
+                [label setFrame:CGRectMake(195, 5, 119, 21)];
                 [label setFont:[UIFont systemFontOfSize:11]];
                 [label setTextAlignment:NSTextAlignmentRight];
                 NSString *s1 = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"month"];
@@ -316,37 +329,7 @@
             [headView addSubview:label];
         }
     }
-    
-    
     return headView;
-}
-
-
-
-- (UITableViewCell *) returnNormalCell:(UITableView *) tv WithPath:(NSIndexPath *) path
-{
-    static NSString *cellId = @"myOrderHostTableViewCell";
-    MyOrderHostTableViewCell *cell = (MyOrderHostTableViewCell *)[tv dequeueReusableCellWithIdentifier:cellId];
-    if(cell == nil)
-    {
-        cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-    }
-    
-    NSArray *itemsArray = [[dataArray objectAtIndex:path.section] myItems];
-    NSDictionary *itemDic = [itemsArray objectAtIndex:path.row];
-    
-    NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
-    NSURL *url = [NSURL URLWithString:picString];
-    [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
-    
-    [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
-    
-    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
-    
-    [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
-    
-    return cell;
-    
 }
 
 - (NSString *) dealPic:(NSString *) picString
@@ -462,8 +445,7 @@
         }
         total = [NSString stringWithFormat:@"%.2f",shopPrice];
     }
-    
-    //
+
     [self setHidesBottomBarWhenPushed:YES];
     
     AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
@@ -518,17 +500,58 @@
     [sureAlert show];
 }
 
-- (UITableViewCell *) returnBtnCell:(UITableView *) tv WithPath:(NSIndexPath *) path
+- (UITableViewCell *) returnMoreCell:(UITableView *)tableView
+{
+    static NSString *moreCellId = @"moreCell";
+    moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
+    if(moreCell == nil)
+    {
+        moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+        [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+    }
+    return moreCell;
+}
+
+- (UITableViewCell *) returnNormalCell:(UITableView *)tableView WithPath:(NSIndexPath *) path
+{
+    static NSString *cellId = @"myOrderHostTableViewCell";
+    MyOrderHostTableViewCell *cell = (MyOrderHostTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
+    if(cell == nil)
+    {
+        cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+    }
+//    NSLog(@"cell = %@",cell);
+    NSLog(@"%@",[[cell.subviews objectAtIndex:0] subviews]);
+//    NSLog(@"%@",cell.contentView.subviews);
+//    NSArray *itemsArray = [[dataArray objectAtIndex:path.section] myItems];
+//    NSDictionary *itemDic = [itemsArray objectAtIndex:path.row];
+//    
+//    NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
+//    NSURL *url = [NSURL URLWithString:picString];
+//    [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
+//    cell.cellIv.backgroundColor = [UIColor redColor];
+//    
+//    [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
+//    NSLog(@"contentLabel = %@",[itemDic objectForKey:@"productItmeTitle"]);
+//    
+//    cell.contentLabel.backgroundColor = [UIColor redColor];
+//    
+//    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
+//    NSLog(@"contentLabel = %@",[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]);
+//    
+//    [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
+//    NSLog(@"contentLabel = %@",[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]);
+    return cell;
+}
+
+- (UITableViewCell *) returnBtnCell:(UITableView *)tableView WithPath:(NSIndexPath *)path
 {
     static NSString *cellId = @"myOrderHostBtnTableViewCell";
-    MyOrderHostBtnTableViewCell *cell = (MyOrderHostBtnTableViewCell *)[tv dequeueReusableCellWithIdentifier:cellId];
+    MyOrderHostBtnTableViewCell *cell = (MyOrderHostBtnTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
     if(cell == nil)
     {
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
-    
-    
-    
     int status = [[[dataArray objectAtIndex:path.section] status] intValue];
     if(status == 1)
     {
@@ -548,7 +571,6 @@
         [cell.lookForTradeBtn setHidden:YES];
         [cell.receiveBtn setHidden:YES];
     }
-    
     if(status == 2)
     {
         [cell.cancelOrderBtn setHidden:NO];
@@ -561,7 +583,6 @@
         [cell.receiveBtn setHidden:YES];
         [cell.onLinePayBtn setHidden:YES];
     }
-    
     if(status == 3)
     {
         [cell.receiveBtn setHidden:NO];
@@ -575,7 +596,6 @@
         [cell.onLinePayBtn setHidden:YES];
         [cell.cancelOrderBtn setHidden:YES];
     }
-    
     if(status == 6)
     {
         int judgeStatus = [[[dataArray objectAtIndex:path.section] juderstatus] intValue];
@@ -597,9 +617,6 @@
                 //                [cell.lookForCustomBtn setFrame:CGRectMake(200, 5, 100, 30)];
                 [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
                 [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
-                
-                
-                
             }
             else
             {
@@ -644,8 +661,6 @@
             }
         }
     }
-    
-    
     [cell.lookForCustomBtn setTag:path.section*10];
     [cell.lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -664,28 +679,23 @@
     [cell.receiveBtn setTag:path.section*10+5];
     [cell.receiveBtn addTarget:self action:@selector(receiveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    
     return cell;
-    
 }
 
-- (UITableViewCell *) returnMoreCell:(UITableView *) tv
-{
-    static NSString *moreCellId = @"moreCell";
-    moreCell = (DCFChenMoreCell *)[tv dequeueReusableCellWithIdentifier:moreCellId];
-    if(moreCell == nil)
-    {
-        moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-        [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-    }
-    return moreCell;
-}
+
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(!dataArray || dataArray.count == 0)
     {
-        return [self returnMoreCell:tableView];
+//       return [self returnMoreCell:tableView];
+        NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        return cell;
     }
     
     if(indexPath.section < dataArray.count-1)
@@ -711,17 +721,17 @@
         }
         if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count]+1)
         {
-            return [self returnMoreCell:tableView];
+//            return [self returnMoreCell:tableView];
+            NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil)
+            {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            }
+            return cell;
         }
     }
-    
-    
     return nil;
-    //    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
-    //    {
-    //        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-    //    }
-    
 }
 
 

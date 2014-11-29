@@ -68,6 +68,17 @@
 
 @property (strong,nonatomic) NSString *productId;
 
+@property (strong,nonatomic) NSString *emsFreightPrice;  //ems
+
+@property (strong,nonatomic) NSString *expressFreightPrice;  //快递
+
+@property (strong,nonatomic) NSString *surfaceFreightPrice;  //物流
+
+@property (strong,nonatomic) NSString *freightType;     //配送类型
+
+@property (strong,nonatomic) NSString *minString;     //配送类型
+
+
 - (void) dealData:(NSDictionary *) dictionary;
 
 @end

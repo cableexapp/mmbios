@@ -77,7 +77,7 @@
             
             NSString *s1 = [pic substringToIndex:docIndex];
             
-            NSString *s2 = [s1 stringByAppendingString:@"_100"];
+            NSString *s2 = [s1 stringByAppendingString:@"_310"];
             
             NSString *pre = [pic substringFromIndex:docIndex];
             
@@ -94,7 +94,7 @@
             
             NSString *s3 = [pic substringToIndex:docIndex];
             
-            NSString *s4 = [s3 stringByAppendingString:@"_100"];
+            NSString *s4 = [s3 stringByAppendingString:@"_310"];
             
             NSString *pre = [pic substringFromIndex:docIndex];
             
@@ -158,6 +158,31 @@
     }
     
     _productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
+    
+    _emsFreightPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"emsFreightPrice"]];
+    
+    _expressFreightPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"expressFreightPrice"]];
+    
+    _surfaceFreightPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"surfaceFreightPrice"]];
+    
+    _freightType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"freightType"]];
+    
+
+    NSArray *arr = [[NSArray alloc] initWithObjects:_emsFreightPrice,_surfaceFreightPrice,_expressFreightPrice, nil];
+    NSArray *testArr = [self getSortArrForMainApp:arr];
+    
+    _minString = [NSString stringWithFormat:@"%@",[testArr objectAtIndex:0]];
+}
+
+- (NSArray*)getSortArrForMainApp:(NSArray*)arrSrc {
+    NSArray* arrDes = [arrSrc sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        //change your code
+        NSString *value1 = obj1;
+        NSString *value2 = obj2;
+        return value1.intValue < value2.intValue ? NSOrderedAscending : NSOrderedDescending;
+    }];
+    
+    return arrDes;
 }
 
 @end

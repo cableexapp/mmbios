@@ -66,6 +66,8 @@
     
     [self pushAndPopStyle];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆订单详情"];
     self.navigationItem.titleView= top;
     

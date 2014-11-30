@@ -13,7 +13,7 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MyCableOrderDetailViewController.h"
-#import "MyCableOrderSearchViewController.h"
+#import "MyCableOrderB2BViewController.h"
 
 @interface MyCableOrderHostViewController ()
 {
@@ -152,7 +152,7 @@
 {
     NSLog(@"搜索........");
     [self setHidesBottomBarWhenPushed:YES];
-    MyCableOrderSearchViewController *searchVC = [[MyCableOrderSearchViewController alloc] init];
+    MyCableOrderB2BViewController *searchVC = [[MyCableOrderB2BViewController alloc] init];
     searchVC.fromFlag = @"我的电缆订单";
     [self.navigationController pushViewController:searchVC animated:YES];
 }

@@ -55,7 +55,6 @@
         
         _myProductId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
         _productTitle = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productTitle"]];
-        
         _productPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productPrice"]];
     }
     return self;

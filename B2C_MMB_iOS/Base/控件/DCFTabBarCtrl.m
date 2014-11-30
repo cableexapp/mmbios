@@ -74,7 +74,7 @@
     UIImage *unSelectp_centerUnSelectImg = [UIImage imageNamed:@"p_centerUnSelect.png"];
     selectp_centerSelectImg = [UIImage imageWithCGImage:selectp_centerSelectImg.CGImage scale:1.5 orientation:selectp_centerSelectImg.imageOrientation];
     unSelectp_centerUnSelectImg = [UIImage imageWithCGImage:unSelectp_centerUnSelectImg.CGImage scale:1.5 orientation:unSelectp_centerUnSelectImg.imageOrientation];
-    fourthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"个人中心" image:unSelectp_centerUnSelectImg selectedImage:selectp_centerSelectImg];
+    fourthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我" image:unSelectp_centerUnSelectImg selectedImage:selectp_centerSelectImg];
     [fourthNavi.tabBarItem setTag:3];
     //    [fourthNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     

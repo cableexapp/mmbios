@@ -397,14 +397,14 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
-    [self.getValidateBtn setUserInteractionEnabled:YES];
-    
-    if(timer_tel)
-    {
-        [timer_tel invalidate];
-        timer_tel = nil;
-        timeCount_tel = 60;
-    }
+//    [self.getValidateBtn setUserInteractionEnabled:YES];
+//    
+//    if(timer_tel)
+//    {
+//        [timer_tel invalidate];
+//        timer_tel = nil;
+//        timeCount_tel = 60;
+//    }
     
     
     if(URLTag == URLSendMsgTag)

@@ -139,7 +139,7 @@
             
             UIImageView *svImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-2, 12, 145, 145)];
             NSURL *url = [NSURL URLWithString:[arr objectAtIndex:i]];
-            [svImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cable.png"]];
+            [svImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
             [svImageView setTag:10+i];
             [svImageView setUserInteractionEnabled:YES];
             svImageView.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
@@ -157,19 +157,19 @@
             [svImageView addGestureRecognizer:tap];
             
             UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-            CGSize size;
-            NSString *s = [contentArray objectAtIndex:i];
-            if([DCFCustomExtra validateString:s] == NO)
-            {
-                size = CGSizeMake(svImageView.frame.size.width, 0);
-            }
-            else
-            {
-                size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[contentArray objectAtIndex:i] WithSize:CGSizeMake(svImageView.frame.size.width, MAXFLOAT)];//获取视图大小
-            }
+//            CGSize size;
+//            NSString *s = [contentArray objectAtIndex:i];
+//            if([DCFCustomExtra validateString:s] == NO)
+//            {
+//                size = CGSizeMake(svImageView.frame.size.width, 0);
+//            }
+//            else
+//            {
+//                size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[contentArray objectAtIndex:i] WithSize:CGSizeMake(svImageView.frame.size.width, MAXFLOAT)];//获取视图大小
+//            }
             
-            [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height, svImageView.frame.size.width, size.height)];  //设置该cell的高度
-            [contentLabel setFont:[UIFont systemFontOfSize:12]];
+            [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height, svImageView.frame.size.width, 35)];  //设置该cell的高度
+            [contentLabel setFont:[UIFont systemFontOfSize:11]];
             [contentLabel setText:[contentArray objectAtIndex:i]];
             [contentLabel setBackgroundColor:[UIColor clearColor]];
             [contentLabel setTextAlignment:NSTextAlignmentLeft];  //文本对齐

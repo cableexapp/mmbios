@@ -22,11 +22,14 @@
 #import "MCDefine.h"
 #import "ChatViewController.h"
 #import "B2CShoppingListViewController.h"
+#import "UIImageView+WebCache.h"
+#import "B2CHotSaleData.h"
+#import "GoodsDetailViewController.h"
 
 @interface HostTableViewController ()
 {
-    NSArray *textViewDataArray;
-    NSArray *moneyDataArray;
+//    NSMutableArray *textViewDataArray;
+//    NSMutableArray *moneyDataArray;
     NSArray *typeArray;  //一级分类数组
     NSMutableArray *typeBtnArray;  //一级分类按钮
     
@@ -38,6 +41,9 @@
     NSArray *useArray;
     UIActivityIndicatorView *activityIndicator;
     UILabel *labell;
+    
+    NSMutableArray *dataArray;
+//    NSMutableArray *picArray;
 }
 @end
 
@@ -162,6 +168,43 @@
             
         }
     }
+    
+    if(URLTag == URLHotSaleProductTag)
+    {
+//        textViewDataArray = [[NSMutableArray alloc] initWithObjects:
+//                             @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在 ",
+//                             @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
+//                             @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
+//                             @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
+//                             nil];
+//        
+//        moneyDataArray = [[NSMutableArray alloc] initWithObjects:@"98",@"99",@"100",@"101", nil];
+        
+//        moneyDataArray = [[NSMutableArray alloc] init];
+//        textViewDataArray = [[NSMutableArray alloc] init];
+//        picArray = [[NSMutableArray alloc] init];
+
+        if([[dicRespon allKeys] copy] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            dataArray = [[NSMutableArray alloc] init];
+        }
+        if([[dicRespon objectForKey:@"items"] count] == 0 || [[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]])
+        {
+            dataArray = [[NSMutableArray alloc] init];
+        }
+        if([[dicRespon objectForKey:@"items"] count] != 0 || ![[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]])
+        {
+            dataArray = [[NSMutableArray alloc] initWithArray:[B2CHotSaleData getListArray:[dicRespon objectForKey:@"items"]]];
+//            for(int i=0;i<dataArray.count;i++)
+//            {
+//                B2CHotSaleData *data = (B2CHotSaleData *)[dataArray objectAtIndex:i];
+//                [moneyDataArray addObject:data.productPrice];
+//                [textViewDataArray addObject:data.productTitle];
+//                [picArray addObject:data.p1Path];
+//            }
+        }
+        [self.tableView reloadData];
+    }
 }
 
 - (void) typeBtnClick:(UIButton *) sender
@@ -206,12 +249,30 @@
     [self setHidesBottomBarWhenPushed:NO];
 }
 
+- (void) loadRequest
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"HotSaleProduct",time];
+    
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@",token];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/HotSaleProduct.html?"];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLHotSaleProductTag delegate:self];
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self pushAndPopStyle];
 
+    [self loadRequest];
+    
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -258,14 +319,7 @@
     
     [self.tableView setShowsVerticalScrollIndicator:NO];
     
-    textViewDataArray = [[NSArray alloc] initWithObjects:
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在 ",
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-                         nil];
-    
-    moneyDataArray = [[NSArray alloc] initWithObjects:@"98",@"99",@"100",@"101", nil];
+
     
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
 
@@ -296,7 +350,11 @@
     }
     if(section == 4)
     {
-        return textViewDataArray.count/2;
+        if(!dataArray || dataArray.count == 0)
+        {
+            return 0;
+        }
+        return dataArray.count/2 + dataArray.count%2;
     }
     if(section == 2)
     {
@@ -371,7 +429,15 @@
         return 175;
         
     }
-        return 225;
+    else if (indexPath.section == 4)
+    {
+        if(!dataArray || dataArray.count == 0)
+        {
+            return 0;
+        }
+        return 230;
+    }
+    return 0;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -383,6 +449,14 @@
     if(section == 2)
     {
         if(!typeArray || typeArray.count == 0)
+        {
+            return 0;
+        }
+        return 35;
+    }
+    if(section == 4)
+    {
+        if(!dataArray || dataArray.count == 0)
         {
             return 0;
         }
@@ -404,6 +478,10 @@
     }
     else if(section == 4)
     {
+        if(!dataArray || dataArray.count == 0)
+        {
+            return nil;
+        }
         [headLabel setText:@"热门商品"];
     }
     else if (section == 2)
@@ -822,40 +900,60 @@
     }
     if(indexPath.section == 4)
     {
-        for(int i = 0;i < 2; i++)
+        if(!dataArray || dataArray.count == 0)
         {
-            UIView *cabelShowView = [[UIView alloc] initWithFrame:CGRectMake(10 + 155*i,0, 145, 210)];
-            [cabelShowView setBackgroundColor:[UIColor whiteColor]];
-            cabelShowView.layer.borderWidth = 0.5;
-            cabelShowView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-            [cabelShowView setTag:2*indexPath.row + i ];
             
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-            [cabelShowView addGestureRecognizer:tap];
-            
-            [cell.contentView addSubview:cabelShowView];
-            
-            UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 145, 145)];
-            [pic setImage:[UIImage imageNamed:@"cabel.png"]];
-            pic.layer.borderWidth = 0.5;
-            pic.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-            [cabelShowView addSubview:pic];
-            
-            UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(pic.frame.origin.x, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width, 30)];
-            [tv setBackgroundColor:[UIColor clearColor]];
-            [tv setDelegate:self];
-            [tv setText:[textViewDataArray objectAtIndex:2*indexPath.row + i]];
-            [tv setFont:[UIFont systemFontOfSize:9]];
-            [cabelShowView addSubview:tv];
-            
-            UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, tv.frame.origin.y + tv.frame.size.height + 5, pic.frame.size.width, 20)];
-            NSString *money = [NSString stringWithFormat:@"  %@ %@",@"¥",[moneyDataArray objectAtIndex:2*indexPath.row + i]];
-            [moneyLabel setText:money];
-            [moneyLabel setTextColor:[UIColor redColor]];
-            [cabelShowView addSubview:moneyLabel];
-            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            cell.backgroundColor = [UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0];
         }
+        else
+        {
+            for(int i = 0;i < 2; i++)
+            {
+                if((indexPath.row*2 + i) >= dataArray.count)
+                {
+                    
+                }
+                else
+                {
+                    UIView *cabelShowView = [[UIView alloc] initWithFrame:CGRectMake(10 + 155*i,0, 145, 210)];
+                    [cabelShowView setBackgroundColor:[UIColor whiteColor]];
+                    cabelShowView.layer.borderWidth = 0.5;
+                    cabelShowView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                    [cabelShowView setTag:2*indexPath.row + i ];
+                    
+                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+                    [cabelShowView addGestureRecognizer:tap];
+                    
+                    [cell.contentView addSubview:cabelShowView];
+                    
+                    NSString *picUrl = [[dataArray objectAtIndex:indexPath.row*2 + i] p1Path];
+                    NSString *content = [[dataArray objectAtIndex:indexPath.row*2 + i] productTitle];
+                    NSString *price = [[dataArray objectAtIndex:indexPath.row*2 + i] productPrice];
+                    
+                    UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 145, 145)];
+                    [pic setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
+                    pic.layer.borderWidth = 0.5;
+                    pic.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                    [cabelShowView addSubview:pic];
+                    
+                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width, 35)];
+                    [contentLabel setBackgroundColor:[UIColor clearColor]];
+                    [contentLabel setNumberOfLines:0];
+                    [contentLabel setText:content];
+                    [contentLabel setFont:[UIFont systemFontOfSize:10]];
+                    [cabelShowView addSubview:contentLabel];
+                    
+                    UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height + 5, pic.frame.size.width, 20)];
+                    NSString *money = [NSString stringWithFormat:@" %@ %@",@"¥",price];
+                    [moneyLabel setText:money];
+                    [moneyLabel setTextColor:[UIColor redColor]];
+                    [cabelShowView addSubview:moneyLabel];
+                    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+                    cell.backgroundColor = [UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0];
+                }
+   
+            }
+        }
+ 
     }
 }
     return cell;
@@ -927,7 +1025,14 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-    NSLog(@"热门商品");
+    UITapGestureRecognizer *tap = (UITapGestureRecognizer *) sender;
+    int tag = [[tap view] tag];
+    NSLog(@"tag = %d",tag);
+    NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:tag] myProductId]];
+    [self setHidesBottomBarWhenPushed:YES];
+    GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];
+    [self.navigationController pushViewController:goodsDetail animated:YES];
+    //    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void)didReceiveMemoryWarning

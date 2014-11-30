@@ -49,9 +49,25 @@
         [HUD hide:YES];
     }
 }
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"])
+    {
+        [self.logOutBtn setHidden:YES];
+    }
+    else
+    {
+        [self.logOutBtn setHidden:NO];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"更多"];
     self.navigationItem.titleView = top;
@@ -125,19 +141,22 @@
     if(URLTag == URLDeleteAppCartItemsTag)
     {
         int result = [[dicRespon objectForKey:@"result"] intValue];
-        //        NSString *msg = [dicRespon objectForKey:@"msg"];
         if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
         {
+            [self.logOutBtn setHidden:NO];
             [DCFStringUtil showNotice:@"退出失败"];
             return;
         }
         if(result == 0)
         {
+            [self.logOutBtn setHidden:NO];
             [DCFStringUtil showNotice:@"退出失败"];
             return;
         }
         else if(result == 1)
         {
+            [self.logOutBtn setHidden:YES];
+
             if([[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"])
             {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberId"];

@@ -102,7 +102,6 @@
 //    NSLog(@"dicRespon = %@",dicRespon);
     if(URLTag == URLGetCountNumTag)
     {
-        
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
@@ -111,14 +110,9 @@
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
-              
+//                cellBtn.backgroundColor = [UIColor redColor];
                 NSString *s = [NSString stringWithFormat:@"%@",[badgeArray objectAtIndex:i]];
-                //                if(s.intValue == 0)
-                //                {
-                //
-                //                }
-                //                else
-                //                {
+   
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 
                 if(s.intValue < 99 && s.intValue > 0)
@@ -126,24 +120,57 @@
                     if (cellBtn.frame.size.width >= 153)
                     {
                         NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-63, 13, 18, 18)];
+                        if (cellBtn.titleLabel.text.length == 5)
+                        {
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-50, 15, 18, 18)];
+                        }
+                        else
+                        {
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-65, 15, 18, 18)];
+                        }
+                        
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
                         NSLog(@"2= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-48, 13, 18, 18)];
+
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 15, 18, 18)];
                     }
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
                         NSLog(@"3= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 13, 18, 18)];
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 15, 18, 18)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
                     [btn setTitle:s forState:UIControlStateNormal];
                 }
                 else if (s.intValue >= 99)
                 {
-                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 13, 24, 18)];
+//                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 13, 24, 18)];
+                    if (cellBtn.frame.size.width >= 153)
+                    {
+                        NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
+                        if (cellBtn.titleLabel.text.length == 5)
+                        {
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-50, 15, 18, 18)];
+                        }
+                        else
+                        {
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-65, 15, 18, 18)];
+                        }
+                        
+                    }
+                    else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
+                    {
+                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
+                        
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 15, 18, 18)];
+                    }
+                    else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
+                    {
+                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 15, 18, 18)];
+                    }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
                     [btn setTitle:@"99+" forState:UIControlStateNormal];
                 }
@@ -158,59 +185,6 @@
                 {
                     [cellBtn addSubview:btn];
                 }
-                //                    if(i == 0)
-                //                    {
-                //                        if(s.intValue < 99 && s.intValue > 0)
-                //                        {
-                //                            [btn setFrame:CGRectMake(self.btn_8.frame.size.width-5, self.btn_8.frame.origin.y-10, 20, 20)];
-                //                        }
-                //                        else
-                //                        {
-                //                            [btn setFrame:CGRectMake(self.btn_8.frame.size.width-5, self.btn_8.frame.origin.y-10, 40, 20)];
-                //                        }
-                //                        [self.btn_8 addSubview:btn];
-                //                    }
-                //                    if(i == 1)
-                //                    {
-                //                        if(s.intValue < 99 && s.intValue > 0)
-                //                        {
-                //                            [btn setFrame:CGRectMake(self.btn_11.frame.size.width-5, self.btn_11.frame.origin.y-10, 20, 20)];
-                //
-                //                        }
-                //                        else
-                //                        {
-                //                            [btn setFrame:CGRectMake(self.btn_11.frame.size.width-5, self.btn_11.frame.origin.y-10, 40, 20)];
-                //                        }
-                //                        [self.btn_11 addSubview:btn];
-                //                    }
-                //                    if(i == 2)
-                //                    {
-                //                        if(s.intValue < 99 && s.intValue > 0)
-                //                        {
-                //                            [btn setFrame:CGRectMake(self.btn_10.frame.size.width-5, self.btn_10.frame.origin.y-10, 20, 20)];
-                //
-                //                        }
-                //                        else
-                //                        {
-                //                            [btn setFrame:CGRectMake(self.btn_10.frame.size.width-5, self.btn_10.frame.origin.y-10, 40, 20)];
-                //                        }
-                //                        [self.btn_10 addSubview:btn];
-                //                    }
-                //                    if(i == 3)
-                //                    {
-                //                        if(s.intValue < 99 && s.intValue > 0)
-                //                        {
-                //                            [btn setFrame:CGRectMake(self.btn_9.frame.size.width-5, self.btn_9.frame.origin.y-10, 20, 20)];
-                //
-                //                        }
-                //                        else
-                //                        {
-                //                            [btn setFrame:CGRectMake(self.btn_9.frame.size.width-5, self.btn_9.frame.origin.y-10, 40, 20)];
-                //                        }
-                //                        [self.btn_9 addSubview:btn];
-                //                    }
-                //                }
-                
             }
         }
         else
@@ -249,6 +223,17 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;
+    
+    self.view1.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view2.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view3.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view4.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view5.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view6.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    
+    self.view11.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view22.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view33.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     
     headBtnArray = [[NSMutableArray alloc] init];
     for(int i=0;i<4;i++)
@@ -313,8 +298,8 @@
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"count.png"]];
             [btn addSubview:iv];
-            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height-0.5, self.view.frame.size.width, 0.5)];
-            lineView.backgroundColor = [UIColor lightGrayColor];
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height-1, self.view.frame.size.width, 1)];
+            lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
             [btn addSubview:lineView];
         }
         //        if(i == 4)
@@ -351,11 +336,16 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    CGFloat height;
     if(section == 0)
     {
-        return 95;
+        height = 95;
     }
-    return 45;
+    else
+    {
+        height = 45;
+    }
+    return height;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -383,7 +373,7 @@
         {
             [label setText:userName];
         }
-        [label setFont:[UIFont boldSystemFontOfSize:16]];
+        [label setFont:[UIFont systemFontOfSize:16]];
         [label setTextAlignment:NSTextAlignmentCenter];
         [label setTextColor:[UIColor blackColor]];
         [view addSubview:label];

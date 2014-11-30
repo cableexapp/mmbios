@@ -94,6 +94,7 @@
     _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, 320, 300)];
     [self.refreshView setDelegate:self];
     [self.tableView addSubview:self.refreshView];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.refreshView refreshLastUpdatedDate];
     
 //    [self loadRequestWithStatus:_tag];
@@ -435,13 +436,29 @@
         return moreCell;
     }
     
-    static NSString *cellId = @"cellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:CellIdentifier];
         [cell setSelectionStyle:0];
+        
+        UIView *lineView = [[UIView alloc] init];
+        lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        [cell addSubview:lineView];
+        if (indexPath.row == 0)
+        {
+            //        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+        }
+        else if (indexPath.row == 1)
+        {
+            lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+        }
+        else  if (indexPath.row == 2)
+        {
+            lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+        }
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
     {
@@ -644,9 +661,6 @@
 
                 }
             }
-            
-
-            
             [cell.contentView addSubview:orderNumLabel];
             [cell.contentView addSubview:numLabel];
             [cell.contentView addSubview:timeLabel];

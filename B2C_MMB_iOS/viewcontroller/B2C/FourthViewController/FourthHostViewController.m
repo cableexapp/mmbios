@@ -133,7 +133,7 @@
     dataArray = [[NSMutableArray alloc] init];
     
     //ADD REFRESH VIEW
-    _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, 320, 300)];
+    _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, ScreenWidth, 300)];
     [self.refreshView setDelegate:self];
     [self.tv addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];

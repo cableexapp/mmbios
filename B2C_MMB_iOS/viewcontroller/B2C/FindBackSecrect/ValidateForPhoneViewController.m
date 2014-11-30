@@ -130,14 +130,14 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLSendMsgTag)
     {
-        [self.validateBtn setUserInteractionEnabled:YES];
-        [self.validateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        if(timer_tel)
-        {
-            [timer_tel invalidate];
-            timer_tel = nil;
-            timeCount_tel = 60;
-        }
+//        [self.validateBtn setUserInteractionEnabled:YES];
+//        [self.validateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+//        if(timer_tel)
+//        {
+//            [timer_tel invalidate];
+//            timer_tel = nil;
+//            timeCount_tel = 60;
+//        }
         
         
         

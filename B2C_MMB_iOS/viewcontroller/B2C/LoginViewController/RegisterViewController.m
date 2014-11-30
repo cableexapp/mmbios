@@ -251,7 +251,7 @@
         }
         
         
-        if([self isAllNum:self.userTf.text] == YES)
+        if([self isAllNum:self.userTf.text] == YES && phoneOrUserName == NO)
         {
             [DCFStringUtil showNotice:@"用户名不能是纯数字"];
             return NO;
@@ -400,6 +400,15 @@
         if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
         {
             phoneOrUserName = YES;
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@",self.userTf.text,token];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCheckPhoneTag delegate:self];
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/CheckPhone.html?"];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         }
         else
         {
@@ -514,21 +523,20 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
     if(URLTag == URLSendMsgTag)
     {
-        [self.getValidateBtn setUserInteractionEnabled:YES];
-        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        if(timer_tel)
-        {
-            [timer_tel invalidate];
-            timer_tel = nil;
-            timeCount_tel = 60;
-        }
+//        [self.getValidateBtn setUserInteractionEnabled:YES];
+//        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+//        if(timer_tel)
+//        {
+//            [timer_tel invalidate];
+//            timer_tel = nil;
+//            timeCount_tel = 60;
+//        }
         
         
         
@@ -594,6 +602,25 @@
             }
         }
         
+    }
+    
+    if(URLTag == URLCheckPhoneTag)
+    {
+        if(result == 0)
+        {
+            if([DCFCustomExtra validateString:msg] == YES)
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:@"此用户已经存在"];
+            }
+        }
+        else
+        {
+            
+        }
     }
 }
 

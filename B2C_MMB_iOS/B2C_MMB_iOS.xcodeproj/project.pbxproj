@@ -80,6 +80,7 @@
 		61760A7B1A15D71200F3BA0B /* ManageInvoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A781A15D71200F3BA0B /* ManageInvoiceViewController.m */; };
 		61760A7C1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A7A1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m */; };
 		61760A801A15F22300F3BA0B /* B2BManagBillData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */; };
+		617E52CC1A2AC0F600121C49 /* B2CHotSaleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E52CB1A2AC0F600121C49 /* B2CHotSaleData.m */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
 		6181A34E19CFC3F8000E2D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34D19CFC3F8000E2D14 /* UIKit.framework */; };
@@ -714,6 +715,7 @@
 		8BA7C31E1A10A93B00758B0F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C3151A10A93B00758B0F /* ChatViewController.m */; };
 		8BB3509A1A2425AC00E76495 /* choose.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BB350981A2425AC00E76495 /* choose.png */; };
 		8BB3509B1A2425AC00E76495 /* unchoose.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BB350991A2425AC00E76495 /* unchoose.png */; };
+		8BB7D49D1A29A70F00C716E4 /* MyCableOrderB2BViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB7D49C1A29A70F00C716E4 /* MyCableOrderB2BViewController.m */; };
 		8BBB28BA1A11AD23009AAEE8 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28B81A11AD23009AAEE8 /* search.png */; };
 		8BBB28BB1A11AD23009AAEE8 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB28B91A11AD23009AAEE8 /* search@2x.png */; };
 		8BBB28BF1A11E559009AAEE8 /* KxMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBB28BE1A11E559009AAEE8 /* KxMenu.m */; };
@@ -901,6 +903,8 @@
 		61760A7A1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagerInvoiceSubTableViewController.m; sourceTree = "<group>"; };
 		61760A7E1A15F22300F3BA0B /* B2BManagBillData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BManagBillData.h; sourceTree = "<group>"; };
 		61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BManagBillData.m; sourceTree = "<group>"; };
+		617E52CA1A2AC0F600121C49 /* B2CHotSaleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CHotSaleData.h; sourceTree = "<group>"; };
+		617E52CB1A2AC0F600121C49 /* B2CHotSaleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CHotSaleData.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6181A34919CFC3F8000E2D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1841,6 +1845,8 @@
 		8BA7C3151A10A93B00758B0F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		8BB350981A2425AC00E76495 /* choose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose.png; sourceTree = "<group>"; };
 		8BB350991A2425AC00E76495 /* unchoose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchoose.png; sourceTree = "<group>"; };
+		8BB7D49B1A29A70F00C716E4 /* MyCableOrderB2BViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderB2BViewController.h; sourceTree = "<group>"; };
+		8BB7D49C1A29A70F00C716E4 /* MyCableOrderB2BViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableOrderB2BViewController.m; sourceTree = "<group>"; };
 		8BBB28B81A11AD23009AAEE8 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		8BBB28B91A11AD23009AAEE8 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
 		8BBB28BD1A11E559009AAEE8 /* KxMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxMenu.h; sourceTree = "<group>"; };
@@ -2190,6 +2196,8 @@
 				616BE0B91A1447C60061C956 /* MyCableOrderHostViewController.m */,
 				8B1F0FCA1A174E6000F819D1 /* MyCableOrderSearchViewController.h */,
 				8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */,
+				8BB7D49B1A29A70F00C716E4 /* MyCableOrderB2BViewController.h */,
+				8BB7D49C1A29A70F00C716E4 /* MyCableOrderB2BViewController.m */,
 				616BE0C01A14A4020061C956 /* MyCableOrderDetailViewController.h */,
 				616BE0C11A14A4020061C956 /* MyCableOrderDetailViewController.m */,
 				616BE0C31A14ABC60061C956 /* MyCableDetailTableViewController.h */,
@@ -2240,6 +2248,15 @@
 				61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */,
 			);
 			path = B2BManagBillData;
+			sourceTree = "<group>";
+		};
+		617E52C91A2AC0E400121C49 /* B2CHotSaleData */ = {
+			isa = PBXGroup;
+			children = (
+				617E52CA1A2AC0F600121C49 /* B2CHotSaleData.h */,
+				617E52CB1A2AC0F600121C49 /* B2CHotSaleData.m */,
+			);
+			path = B2CHotSaleData;
 			sourceTree = "<group>";
 		};
 		6181A33D19CFC3F8000E2D14 = {
@@ -2448,6 +2465,7 @@
 		6181A3DF19CFC4C2000E2D14 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				617E52C91A2AC0E400121C49 /* B2CHotSaleData */,
 				61760A7D1A15F21700F3BA0B /* B2BManagBillData */,
 				616BE0BC1A1448600061C956 /* B2BMyCableOrderListData */,
 				614A84001A11AC5600D4FE1F /* B2BMyInquiryListFastData */,
@@ -4784,6 +4802,7 @@
 				6181A36319CFC3F9000E2D14 /* ViewController.m in Sources */,
 				61B710D519FF3B53001CC3BD /* ChooseListTableViewController.m in Sources */,
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
+				8BB7D49D1A29A70F00C716E4 /* MyCableOrderB2BViewController.m in Sources */,
 				8BA7C17D1A10A8CC00758B0F /* FBShimmeringLayer.m in Sources */,
 				61551E911A0B4D6D004F50FF /* B2BAskPriceInquirySheetViewController.m in Sources */,
 				8BC2ADA11A19F0E100E44BC2 /* BPushClass.m in Sources */,
@@ -4906,6 +4925,7 @@
 				8BA7C2BA1A10A8DD00758B0F /* TURNSocket.m in Sources */,
 				61E65DDF1A17815800E22E2E /* ModifyLogSecSuccessViewController.m in Sources */,
 				8BA7C2E21A10A8DD00758B0F /* GCDMulticastDelegate.m in Sources */,
+				617E52CC1A2AC0F600121C49 /* B2CHotSaleData.m in Sources */,
 				8BA7C29D1A10A8DD00758B0F /* XMPPPrivacy.m in Sources */,
 				616BE0BF1A1448600061C956 /* B2BMyCableOrderListData.m in Sources */,
 				61551E9F1A0BA18A004F50FF /* NormalInquiryListTableViewController.m in Sources */,

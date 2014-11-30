@@ -158,6 +158,7 @@
 
 - (void) textViewDidChange:(UITextView *)textView
 {
+    [self.countLabel setText:[NSString stringWithFormat:@"%d",self.content_Tv.text.length]];
     if(self.content_Tv.text.length > 1000)
     {
         [self.countLabel setTextColor:[UIColor redColor]];
@@ -477,10 +478,8 @@
     
     conn = [[DCFConnectionUtil alloc]initWithURLTag:URLUpImagePicTag delegate:self];
     
-    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@",[self getMemberId],token,[self getUserName],self.tel_Tf.text,[self getUserName],self.content_Tv.text,@"3"];
-    
+    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@",[self getMemberId],token,[self getUserName],self.tel_Tf.text,[self getUserName],[self.content_Tv.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"3"];
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?",strRequest];
-    
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
     
     [conn getResultFromUrlString:urlString dicText:nil dicImage:imgDic imageFilename:strImageFileNameArray];
@@ -697,6 +696,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
     if(URLTag == URLUpImagePicTag)
     {
         if(HUD)

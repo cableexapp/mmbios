@@ -16,18 +16,22 @@
 #import "B2CShoppingListViewController.h"
 #import "SearchViewController.h"
 #import "OneStepViewController.h"
+#import "B2CHotSaleData.h"
+#import "UIImageView+WebCache.h"
 
 @interface ShoppingHostViewController ()
 {
     UITextField *topTextField;
     
-    NSArray *contentArray;
+    NSMutableArray *contentArray;
     
     UIStoryboard *sb;
     
     NSArray *useArray;
     
     NSArray *picArray;
+    
+    NSMutableArray *dataArray;
 }
 @end
 
@@ -40,6 +44,16 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -55,12 +69,139 @@
     }
 }
 
+#pragma mark - 查看热销商品
+- (void) loadHotSale
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"HotSaleProduct",time];
+    
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@",token];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/HotSaleProduct.html?"];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLHotSaleProductTag delegate:self];
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if(URLTag == URLHotSaleProductTag)
+    {
+        NSLog(@"%@",dicRespon);
+        NSMutableArray *moneyArray = nil;
+        NSMutableArray *arr = nil;
+        
+        if([[dicRespon allKeys] copy] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            moneyArray = [[NSMutableArray alloc] init];
+            contentArray = [[NSMutableArray alloc] init];
+            arr = [[NSMutableArray alloc] init];
+            
+            dataArray = [[NSMutableArray alloc] init];
+        }
+        if([[dicRespon objectForKey:@"items"] count] == 0 || [[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]])
+        {
+            moneyArray = [[NSMutableArray alloc] init];
+            contentArray = [[NSMutableArray alloc] init];
+            arr = [[NSMutableArray alloc] init];
+            dataArray = [[NSMutableArray alloc] init];
+        }
+        if([[dicRespon objectForKey:@"items"] count] != 0 || ![[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]])
+        {
+            moneyArray = [[NSMutableArray alloc] init];
+            contentArray = [[NSMutableArray alloc] init];
+            arr = [[NSMutableArray alloc] init];
+            
+            dataArray = [[NSMutableArray alloc] initWithArray:[B2CHotSaleData getListArray:[dicRespon objectForKey:@"items"]]];
+            for(int i=0;i<dataArray.count;i++)
+            {
+                B2CHotSaleData *data = (B2CHotSaleData *)[dataArray objectAtIndex:i];
+                [moneyArray addObject:data.productPrice];
+                [contentArray addObject:data.productTitle];
+                [arr addObject:data.p1Path];
+            }
+        }
+        sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 260)];
+        sv.backgroundColor = [UIColor clearColor];
+        [sv setDelegate:self];
+        for(int i = 0; i < arr.count; i++)
+        {
+            UIView * view = [[UIView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-5, 10, 150, 220)];
+            [view.layer setCornerRadius:3]; //设置矩圆角半径
+            view.layer.borderWidth = 1.0f;
+            view.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
+            [view setBackgroundColor:[UIColor clearColor]];
+            [sv addSubview:view];
+            
+            
+            UIImageView *svImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-2, 12, 145, 145)];
+            NSURL *url = [NSURL URLWithString:[arr objectAtIndex:i]];
+            [svImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cable.png"]];
+            [svImageView setTag:10+i];
+            [svImageView setUserInteractionEnabled:YES];
+            svImageView.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
+            svImageView.layer.masksToBounds = YES;
+            [sv addSubview:svImageView];
+            
+            
+            UIView *lineView = [[UIView alloc]init];
+            lineView.frame = CGRectMake(10*(i+1) + 145*i+5, 200, 120, 0.7);
+            lineView.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0];
+            [sv addSubview:lineView];
+            
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+            [svImageView addGestureRecognizer:tap];
+            
+            UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            CGSize size;
+            NSString *s = [contentArray objectAtIndex:i];
+            if([DCFCustomExtra validateString:s] == NO)
+            {
+                size = CGSizeMake(svImageView.frame.size.width, 0);
+            }
+            else
+            {
+                size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[contentArray objectAtIndex:i] WithSize:CGSizeMake(svImageView.frame.size.width, MAXFLOAT)];//获取视图大小
+            }
+            
+            [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height, svImageView.frame.size.width, size.height)];  //设置该cell的高度
+            [contentLabel setFont:[UIFont systemFontOfSize:12]];
+            [contentLabel setText:[contentArray objectAtIndex:i]];
+            [contentLabel setBackgroundColor:[UIColor clearColor]];
+            [contentLabel setTextAlignment:NSTextAlignmentLeft];  //文本对齐
+            [contentLabel setNumberOfLines:0]; //文本换行
+            [sv addSubview:contentLabel];
+            
+            UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height+5, contentLabel.frame.size.width, 20)];
+            [moneyLabel setTextAlignment:NSTextAlignmentLeft];
+            [moneyLabel setBackgroundColor:[UIColor clearColor]];
+            [moneyLabel setTextColor:[UIColor redColor]];
+            [moneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
+            [moneyLabel setText:[moneyArray objectAtIndex:i]];
+            [sv addSubview:moneyLabel];
+            
+            [sv setFrame:CGRectMake(0, 0, ScreenWidth, moneyLabel.frame.origin.y + moneyLabel.frame.size.height + 5)];
+        }
+        [sv setContentSize:CGSizeMake(145*arr.count + 10*(arr.count+1), 180)];
+        [sv setBounces:NO];
+        [sv setShowsHorizontalScrollIndicator:NO];
+        
+        [tv reloadData];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self pushAndPopStyle];
+    
+    [self loadHotSale];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
@@ -117,76 +258,17 @@
 
 - (void) loadScrollview
 {
-    NSArray *moneyArray = [[NSArray alloc] initWithObjects:@" ¥ 449.00",@" ¥ 325.00",@" ¥ 500.00",@" ¥ 500.00", nil];
-    
-    contentArray = [[NSArray alloc] initWithObjects:@"安缆 BV2.5平方 国标铜芯电线 单芯铜线 100米",@"远东电线电缆 BV4平方 国标铜芯电线 单芯铜线 100",@"远东电缆zc-bv4平方国际铜芯阻燃电线100米",@"远东电缆zc-bv4平方国际铜芯阻燃电线100米", nil];
-    
-    NSArray *arr = [[NSArray alloc] initWithObjects:@"cabel.png",@"cabel.png",@"cabel.png",@"cabel.png", nil];
-    sv = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 260)];
-    sv.backgroundColor = [UIColor clearColor];
-    [sv setDelegate:self];
-    for(int i = 0; i < arr.count; i++)
-    {
-        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-5, 10, 150, 220)];
-        [view.layer setCornerRadius:3]; //设置矩圆角半径
-        view.layer.borderWidth = 1.0f;
-        view.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
-        [view setBackgroundColor:[UIColor clearColor]];
-        [sv addSubview:view];
-        
-        
-        UIImageView *svImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-2, 12, 145, 145)];
-        [svImageView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",[arr objectAtIndex:i]]]];
-        [svImageView setTag:10+i];
-//       svImageView.layer.borderWidth = 1.0f;
-        [svImageView setUserInteractionEnabled:YES];
-        svImageView.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
-        svImageView.layer.masksToBounds = YES;
-        [sv addSubview:svImageView];
-        
-        
-        UIView *lineView = [[UIView alloc]init];
-        lineView.frame = CGRectMake(10*(i+1) + 145*i+5, 200, 120, 0.7);
-        lineView.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0];
-        [sv addSubview:lineView];
-    
-     
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-        [svImageView addGestureRecognizer:tap];
-       
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[contentArray objectAtIndex:i] WithSize:CGSizeMake(svImageView.frame.size.width, MAXFLOAT)];//获取视图大小
-        
-        UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        [contentLabel setBackgroundColor:[UIColor purpleColor]];
-        [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height-8, svImageView.frame.size.width, size.height)];  //设置该cell的高度
-        [contentLabel setFont:[UIFont systemFontOfSize:12]];
-        [contentLabel setText:[contentArray objectAtIndex:i]];
-        [contentLabel setBackgroundColor:[UIColor clearColor]];
-        [contentLabel setTextAlignment:NSTextAlignmentLeft];  //文本对齐
-        [contentLabel setNumberOfLines:0]; //文本换行
-        [sv addSubview:contentLabel];
-        
-        UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height+28, contentLabel.frame.size.width, 20)];
-        [moneyLabel setTextAlignment:NSTextAlignmentLeft];
-        [moneyLabel setBackgroundColor:[UIColor clearColor]];
-        [moneyLabel setTextColor:[UIColor redColor]];
-        [moneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
-        [moneyLabel setText:[moneyArray objectAtIndex:i]];
-        [sv addSubview:moneyLabel];
-        
-        [sv setFrame:CGRectMake(0, 0, 320, moneyLabel.frame.origin.y + moneyLabel.frame.size.height + 5)];
-    }
-    [sv setContentSize:CGSizeMake(145*arr.count + 10*(arr.count+1), 180)];
-    [sv setBounces:NO];
-    [sv setShowsHorizontalScrollIndicator:NO];
-    [tv reloadData];
+
 }
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
+    UITapGestureRecognizer *tap = (UITapGestureRecognizer *) sender;
+    int tag = [[tap view] tag]-10;
+    NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:tag] myProductId]];
     [self setHidesBottomBarWhenPushed:YES];
 //    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
-    GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:@""];
+    GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];
     [self.navigationController pushViewController:goodsDetail animated:YES];
 //    [self setHidesBottomBarWhenPushed:NO];
 }
@@ -239,6 +321,10 @@
 
     if(section == 0)
     {
+        if(!dataArray || dataArray.count == 0)
+        {
+            return nil;
+        }
         [hotLabel setText:@"  热卖商品"];
  
     }
@@ -263,6 +349,13 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if(section == 0)
+    {
+        if(!dataArray || dataArray.count == 0)
+        {
+            return 0;
+        }
+    }
     return 30;
 }
 
@@ -272,11 +365,17 @@
     {
         if(indexPath.row == 0)
         {
-            if(sv)
+            if(!dataArray || dataArray.count == 0)
             {
-                return sv.frame.size.height;
+                return 0;
             }
-            return 0;
+            else
+            {
+                if(sv)
+                {
+                    return sv.frame.size.height;
+                }
+            }
         }
     }
     return 50;

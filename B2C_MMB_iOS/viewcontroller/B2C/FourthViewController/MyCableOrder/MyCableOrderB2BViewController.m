@@ -11,10 +11,7 @@
 #import "PinYinForObjc.h"
 #import "DCFCustomExtra.h"
 #import "MCDefine.h"
-#import "B2CMyOrderData.h"
-//#import "MyOrderHostTableViewCell.h"
 #import "UIImageView+WebCache.h"
-//#import "MyOrderHostBtnTableViewCell.h"
 #import "LookForCustomViewController.h"
 #import "DiscussViewController.h"
 #import "CancelOrderViewController.h"
@@ -80,6 +77,7 @@
     self.myTableView.dataSource = self;
     self.myTableView.scrollEnabled = YES;
     self.myTableView.backgroundColor = [UIColor clearColor];
+    self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:self.myTableView];
     
@@ -376,6 +374,21 @@
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
     {
         [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    }
+    UIView *lineView = [[UIView alloc] init];
+    lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    [cell addSubview:lineView];
+    if (indexPath.row == 0)
+    {
+//        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+    }
+    else if (indexPath.row == 1)
+    {
+        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+    }
+    else
+    {
+        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
     }
     
     CGFloat cellWidth = cell.contentView.frame.size.width;

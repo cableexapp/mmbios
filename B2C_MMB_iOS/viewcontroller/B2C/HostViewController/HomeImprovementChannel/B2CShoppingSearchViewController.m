@@ -23,10 +23,17 @@
     NSMutableArray *array4;
     
     
-    UIImageView *useCloseIV;  //用途右上角关闭
-    UIImageView *useCloseIV_1;  //展开的小三角
-    UIView *backView;
-    UIWindow *window;
+    UIImage *useCloseIV;  //用途右上角关闭
+    UIImage *useCloseIV_1;
+    UIImage *useCloseIV_2;
+    UIImage *useCloseIV_3;
+    
+    UIImageView *triangle;  //展开的小三角
+    UIImageView *triangle_1;  //展开的小三角
+    UIImageView *triangle_2;  //展开的小三角
+    UIImageView *triangle_3;  //展开的小三角
+
+    
 
     UIView *lineView_1;
     
@@ -54,6 +61,13 @@
     UIButton *useBtn;
     UIButton *specBtn;
     UIButton *abtn;
+    
+    UIButton *brandBtn_0;
+    UIButton *modelBtn_1;
+    UIButton *useBtn_2;
+    UIButton *specBtn_3;
+
+    
 }
 @end
 
@@ -220,11 +234,12 @@
 #pragma mark - 用途按钮选中点击
 - (void) useBtnClick:(UIButton *) sender
 {
+    int sectionIndex = ((UIButton*)sender).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
     useString = sender.titleLabel.text;
     [useBtn setHidden:NO];
+    [useBtn_2 setHidden:NO];
     [useBtn setTitle:useString forState:UIControlStateNormal];
-    
-
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
  
 }
@@ -232,10 +247,19 @@
 #pragma mark - 品牌按钮点击
 - (void) brandBtnClick:(UIButton *) sender
 {
+
+    int sectionIndex = ((UIButton*)sender).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
+    [triangle setHidden:YES];
     brandString = sender.titleLabel.text;
     [brandBtn setHidden:NO];
-    [useCloseIV setHidden:NO];
+    [brandBtn_0 setHidden:NO];
     [brandBtn setTitle:brandString forState:UIControlStateNormal];
+    
+    
+    
+    
+    
     
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
@@ -243,18 +267,28 @@
 #pragma mark - 型号按钮点击
 - (void) modelBtnClick:(UIButton *) sender
 {
+
+    int sectionIndex = ((UIButton*)sender).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
     modelString = sender.titleLabel.text;
     [modelBtn setHidden:NO];
+    [modelBtn_1 setHidden:NO];
+    [triangle_1 setHidden:YES];
+
     [modelBtn setTitle:modelString forState:UIControlStateNormal];
-    
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
 
 #pragma mark - 横截面按钮点击
 - (void) specBtnClick:(UIButton *) sender
 {
+    int sectionIndex = ((UIButton*)sender).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
     specString = sender.titleLabel.text;
     [specBtn setHidden:NO];
+    [specBtn_3 setHidden:NO];
+    NSLog(@"tag = %d", sender.tag);
+
     [specBtn setTitle:specString forState:UIControlStateNormal];
     
     specString = [self getNumFromString:specString];
@@ -374,10 +408,7 @@
                     break;
             }
             
-            useCloseIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Set.png"]];
-            [useCloseIV setFrame:CGRectMake(B.frame.size.width, 0, 30, 30)];
-            useCloseIV.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-            useCloseIV.layer.borderWidth = 1.0f;
+        
      
         }
     }
@@ -520,6 +551,7 @@
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
         [btn.layer setBorderWidth:1.0];   //边框宽度
+        [btn setTag:2];
         btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [btn setEnabled:YES];
         [array1 addObject:btn];
@@ -587,8 +619,10 @@
         [btn addTarget:self action:@selector(brandBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
         [btn.layer setBorderWidth:1.0];   //边框宽度
+        [btn setTag:0];
         btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [array2 addObject:btn];
+        
     }
     
 #pragma mark - 型号数组
@@ -670,6 +704,7 @@
         [btn addTarget:self action:@selector(modelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
         [btn.layer setBorderWidth:1.0];   //边框宽度
+        [btn setTag:1];
         btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [array3 addObject:btn];
     }
@@ -744,6 +779,7 @@
         [btn addTarget:self action:@selector(specBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
         [btn.layer setBorderWidth:1.0];   //边框宽度
+        [btn setTag:3];
         btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [array4 addObject:btn];
     }
@@ -803,79 +839,182 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-    backView = [[UIView alloc] init];
-    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    backView.alpha = 0.6;
-    backView.hidden = NO;
-    backView.backgroundColor = [UIColor lightGrayColor];
-    [self.view insertSubview:backView aboveSubview:tv];
     
+    [super viewDidLoad];
+//    backView = [[UIView alloc] init];
+//    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+//    backView.alpha = 0.6;
+//    backView.hidden = NO;
+//    backView.backgroundColor = [UIColor lightGrayColor];
+//    [self.view insertSubview:backView aboveSubview:tv];
     
     brandBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [brandBtn setTitle:brandString forState:UIControlStateNormal];
+//   [brandBtn setTitle:brandString forState:UIControlStateNormal];
     [brandBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [brandBtn setFrame:CGRectMake(myRect.size.width-150, 5, 60, 30)];
+    [brandBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
     [brandBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     brandBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-    [brandBtn addTarget:self action:@selector(brandbtnMet:) forControlEvents:UIControlEventTouchUpInside];
     brandBtn.layer.borderWidth = 1.0f;
     [brandBtn setTag:0];
     [brandBtn setHidden:YES];
     
+    
+    brandBtn_0 = [[UIButton alloc] init];
+    useCloseIV = [UIImage imageNamed:@"Set.png"];
+    [brandBtn_0 setBackgroundImage:useCloseIV forState:UIControlStateNormal];
+    [brandBtn_0 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
+    brandBtn_0.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+    [brandBtn_0 addTarget:self action:@selector(branBtnMet_0:) forControlEvents:UIControlEventTouchUpInside];
+    brandBtn_0.layer.borderWidth = 1.0f;
+    [brandBtn_0 setTag:0];
+    [brandBtn_0 setHidden:YES];
+
     modelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [modelBtn setFrame:CGRectMake(myRect.size.width-150, 5, 60, 30)];
+    [modelBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
 //    [modelBtn setTitle:modelString forState:UIControlStateNormal];
     [modelBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [modelBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     modelBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-    [modelBtn addTarget:self action:@selector(modelbtnMet:)forControlEvents:UIControlEventTouchUpInside];
     modelBtn.layer.borderWidth = 1.0f;
-    [modelBtn setTag:1];
+   [modelBtn setTag:1];
     [modelBtn setHidden:YES];
+    
+    
+    modelBtn_1 = [[UIButton alloc] init];
+    useCloseIV_1 = [UIImage imageNamed:@"Set.png"];
+    [modelBtn_1 setBackgroundImage:useCloseIV_1 forState:UIControlStateNormal];
+    [modelBtn_1 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
+    modelBtn_1.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+    [modelBtn_1 addTarget:self action:@selector(modelBtnMet_1:) forControlEvents:UIControlEventTouchUpInside];
+    modelBtn_1.layer.borderWidth = 1.0f;
+    [modelBtn_1 setTag:1];
+    [modelBtn_1 setHidden:YES];
 
+    
     useBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [useBtn setFrame:CGRectMake(myRect.size.width-150, 5, 60, 30)];
+    [useBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
     [useBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [useBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     useBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-    [useBtn addTarget:self action:@selector(useBtnMet:) forControlEvents:UIControlEventTouchUpInside];
     useBtn.layer.borderWidth = 1.0f;
     [useBtn setTag:2];
     [useBtn setHidden:YES];
+    
+    
+    useBtn_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    useCloseIV_2 = [UIImage imageNamed:@"Set.png"];
+    [useBtn_2 setBackgroundImage:useCloseIV_2 forState:UIControlStateNormal];
+    [useBtn_2 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
+    useBtn_2.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+    [useBtn_2 addTarget:self action:@selector(useBtnMet_2:) forControlEvents:UIControlEventTouchUpInside];
+     useBtn_2.layer.borderWidth = 1.0f;
+    [useBtn_2 setTag:2];
+    [useBtn_2 setHidden:YES];
 
     specBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [specBtn setFrame:CGRectMake(myRect.size.width-150, 5, 60, 30)];
+    [specBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
     [specBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     [specBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     specBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
-    [specBtn addTarget:self action:@selector(specBtnMet:) forControlEvents:UIControlEventTouchUpInside];
      specBtn.layer.borderWidth = 1.0f;
     [specBtn setTag:3];
     [specBtn setHidden:YES];
+    
+   
+    specBtn_3 = [[UIButton alloc] init];
+    useCloseIV_3 = [UIImage imageNamed:@"Set.png"];
+    [specBtn_3 setBackgroundImage:useCloseIV_3 forState:UIControlStateNormal];
+    [specBtn_3 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
+    specBtn_3.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
+    [specBtn_3 addTarget:self action:@selector(specBtnMet_3:) forControlEvents:UIControlEventTouchUpInside];
+    specBtn_3.layer.borderWidth = 1.0f;
+    [specBtn_3 setTag:3];
+    [specBtn_3 setHidden:YES];
+   
+    triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    [triangle setTag:0];
+    [triangle setFrame:CGRectMake(200, 12, 20, 20)];
+    [triangle setHidden:YES];
+    
+    triangle_1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    [triangle_1 setTag:1];
+    [triangle_1 setFrame:CGRectMake(200, 12, 20, 20)];
+    [triangle_1 setHidden:YES];
+
+
+    
+    triangle_2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    [triangle_2 setTag:2];
+    [triangle_2 setFrame:CGRectMake(200, 12, 20, 20)];
+    [triangle_2 setHidden:YES];
+
+
+    
+    triangle_3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    [triangle_3 setTag:3];
+    [triangle_3 setFrame:CGRectMake(200, 15, 20, 20)];
+    [triangle_3 setHidden:YES];
+
+
+    
 
 }
 
-- (void)brandbtnMet:(UIButton *)button
+- (void)branBtnMet_0:(UIButton *)button
 {
+    int sectionIndex = ((UIButton*)button).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
     [brandBtn setHidden:YES];
-
+    [brandBtn_0 setHidden:YES];
+    brandString = @"";
+    showBrandCell = YES;
+    [triangle setHidden:NO];
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+    
 }
 
-- (void)modelbtnMet:(UIButton *)button
+- (void)modelBtnMet_1:(UIButton *)button
 {
+    int sectionIndex = ((UIButton*)button).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
     [modelBtn setHidden:YES];
+    [modelBtn_1 setHidden:YES];
+    modelString = @"";
+    showModelCell = YES;
+    [triangle_1 setHidden:NO];
+
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+//    [self reloadSection];
 
 }
-- (void)useBtnMet:(UIButton *)button
-{
-    [useBtn setHidden:YES];
 
-}
--(void)specBtnMet:(UIButton *)button
+- (void)useBtnMet_2:(UIButton *)button
 {
+    int sectionIndex = ((UIButton*)button).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
+  [useBtn setHidden:YES];
+  [useBtn_2 setHidden:YES];
+    showUseCell = YES;
+    useString = @"";
+    [triangle_2 setHidden:NO];
+
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+}
+
+- (void)specBtnMet_3:(UIButton *)button
+{
+    int sectionIndex = ((UIButton*)button).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
     [specBtn setHidden:YES];
+    [specBtn_3 setHidden:YES];
+    specString = @"";
+    showSpecCell = YES;
+    [triangle_3 setHidden:NO];
+
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+    
 }
+
 
 
 
@@ -883,7 +1022,6 @@
 - (void) clear:(UIButton *) sender
 {
 
-//    backView.hidden = YES;
     if(headBtnArray && headBtnArray.count != 0)
     {
         [headBtnArray removeAllObjects];
@@ -906,6 +1044,9 @@
     [self.view removeFromSuperview];
      self.view = nil;
     [self removeFromParentViewController];
+    
+    // 背影view的通知事件
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeBackView" object:nil];
 }
 
 - (void) sure:(UIButton *) sender
@@ -921,6 +1062,9 @@
     [self.view removeFromSuperview];
     self.view = nil;
     [self removeFromParentViewController];
+    
+    // 背影view的通知事件
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeBackView" object:nil];
     
 }
 
@@ -1128,17 +1272,17 @@
    
     abtn = [UIButton buttonWithType:UIButtonTypeCustom];
     abtn.backgroundColor = [UIColor clearColor];
-    abtn.frame = CGRectMake(0, 0,myRect.size.width, 30);
+    abtn.frame = CGRectMake(0, 0,myRect.size.width, 50);
     abtn.tag = section;
 	[abtn addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
     abtn.backgroundColor = [UIColor clearColor];
 	[view2 addSubview:abtn];
     
-    //  展开的小三角
-    useCloseIV_1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
-    [useCloseIV_1 setFrame:CGRectMake(200, 15, 20, 20)];
-    [abtn addSubview:useCloseIV_1];
-    [triangleAaary addObject:useCloseIV_1];
+//  展开的小三角
+//    triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+//    [triangle setFrame:CGRectMake(200, 15, 20, 20)];
+//    [abtn addSubview:triangle];
+//    [triangleAaary addObject:useCloseIV_1];
     
     
 	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, myRect.size.width, 30)];
@@ -1146,40 +1290,56 @@
     [label1 setFont:[UIFont systemFontOfSize:13]];
 	label1.text = [[_myDic allKeys] objectAtIndex:section];
     [abtn addSubview:label1];
-	
-//    if(section == 0)
-//    {
-//        [abtn addSubview:brandBtn];
-//    }
-//    if(section == 1)
-//    {
-//        [abtn addSubview:modelBtn];
-//    }
-//    if(section == 2)
-//    {
-//        [abtn addSubview:useBtn];
-//    }
-//    if(section == 3)
-//    {
-//        [abtn addSubview:specBtn];
-//    }
-   
+    
+
+//    triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+//    [triangle setTag:0];
+//    [triangle setFrame:CGRectMake(200, 12, 20, 20)];
+////    [triangle setHidden:NO];
+//    [view2 addSubview:triangle];
+//   
     switch (section)
     {
             
         case 0:
+            
             [abtn addSubview:brandBtn];
-            [abtn addSubview:useCloseIV];
-            [useCloseIV setHidden:YES];
+            [abtn addSubview:brandBtn_0];
+            [view1 addSubview:triangle];
+            [triangle setHidden:NO];
+
+          
             break;
         case 1:
             [abtn addSubview:modelBtn];
+            [abtn addSubview:modelBtn_1];
+            [view1 addSubview:triangle_1];
+            [triangle_1 setHidden:NO];
+
+
+
+      
             break;
         case 2:
             [abtn addSubview:useBtn];
+            [abtn addSubview:useBtn_2];
+            [view1 addSubview:triangle_2];
+            [triangle_2 setHidden:NO];
+
+
+
+   
+
             break;
         case 3:
             [abtn addSubview:specBtn];
+            [abtn addSubview:specBtn_3];
+            [view1 addSubview:triangle_3];
+            [triangle_3 setHidden:NO];
+
+
+
+
             break;
      }
     
@@ -1219,7 +1379,7 @@
 //        }
 //        else
 //        {
-////            选中的btn
+//           选中的btn
 //            for(UIButton *btn in headBtnArray)
 //            {
 //                [cell.contentView addSubview:btn];
@@ -1243,17 +1403,41 @@
 -(void)headerClicked:(id)sender
 {
 	int sectionIndex = ((UIButton*)sender).tag;
-    
 	UIButton *btn = (UIButton *)sender;
 	flag[sectionIndex] = !flag[sectionIndex];
-    
     UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
+    switch (sectionIndex) {
+        case 0:
+            if(!flag[sectionIndex])
+                triangle.transform = CGAffineTransformMakeRotation(-M_PI);
+            else
+                triangle.transform = CGAffineTransformMakeRotation(0);
+            break;
+        case 1:
+            if(!flag[sectionIndex])
+                triangle_1.transform = CGAffineTransformMakeRotation(-M_PI);
+            else
+                triangle_1.transform = CGAffineTransformMakeRotation(0);
+            break;
+        case 2:
+            if(!flag[sectionIndex])
+                triangle_2.transform = CGAffineTransformMakeRotation(-M_PI);
+            else
+                triangle_2.transform = CGAffineTransformMakeRotation(0);
+            break;
+        case 3:
+            if(!flag[sectionIndex])
+                triangle_3.transform = CGAffineTransformMakeRotation(-M_PI);
+            else
+                triangle_3.transform = CGAffineTransformMakeRotation(0);
+            break;
+       
+    }
     
-	if(flag[sectionIndex])
+    
+ if(flag[sectionIndex])
 	{
-        
-        
-		btn.selected = YES;
+     btn.selected = YES;
 //       [iv setImage:[UIImage imageNamed:@"click1.png"]];
        iv.transform = CGAffineTransformMakeRotation(M_2_PI);
 	}

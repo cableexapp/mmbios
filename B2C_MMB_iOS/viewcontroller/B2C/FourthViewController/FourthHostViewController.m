@@ -88,7 +88,7 @@
     [self.waitForSend setSelected:NO];
     [self.waitForSureBtn setSelected:NO];
     [self.waitForDiscussBtn setSelected:NO];
-
+    
     for(int i=0;i<btnArray.count;i++)
     {
         UIButton *btn = (UIButton *)[btnArray objectAtIndex:i];
@@ -102,16 +102,16 @@
         [btn setTag:i];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-//        if([btn.titleLabel.text isEqualToString:_myStatus])
-//        {
-//            [btn setSelected:YES];
-//        }
-//        else
-//        {
-//            [btn setSelected:NO];
-//        }
+        //        if([btn.titleLabel.text isEqualToString:_myStatus])
+        //        {
+        //            [btn setSelected:YES];
+        //        }
+        //        else
+        //        {
+        //            [btn setSelected:NO];
+        //        }
     }
-//    [self loadRequest:_myStatus];
+    //    [self loadRequest:_myStatus];
     [self loadRequest:@""];
 }
 
@@ -229,7 +229,7 @@
                 
                 if(intTotal == 0)
                 {
-                    [moreCell noDataAnimation];
+                    [moreCell HomeImprovementGalleryOrders];
                 }
                 else
                 {
@@ -248,7 +248,7 @@
     }
     if(URLTag == URLSureReceiveTag)
     {
-
+        
         [DCFStringUtil showNotice:msg];
         if(result == 1)
         {
@@ -749,8 +749,8 @@
     {
         return;
     }
-
-
+    
+    
     
     NSString *s1 = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"month"];
     NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
@@ -765,16 +765,16 @@
     
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
-
+    
     fourOrderDetailViewController.theLogiId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] logisticsId]];
     fourOrderDetailViewController.theLogiNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] logisticsNum]];
-
+    
     
     fourOrderDetailViewController.theLogiArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
     fourOrderDetailViewController.theShopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] shopId]];
     fourOrderDetailViewController.theOrderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] orderNum]];
     fourOrderDetailViewController.theDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:indexPath.section] subDate]];
-
+    
     int status = [[[dataArray objectAtIndex:indexPath.section] status] intValue];
     if(status == 1)
     {
@@ -875,7 +875,7 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     LookForCustomViewController *custom = [self.storyboard instantiateViewControllerWithIdentifier:@"lookForCustomViewController"];
-//    custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    //    custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
     
     //这部分暂时写死了
     custom.orderNum = @"201404234998770799";
@@ -943,18 +943,18 @@
         }
         total = [NSString stringWithFormat:@"%.2f",shopPrice];
     }
-
-//
+    
+    //
     [self setHidesBottomBarWhenPushed:YES];
-
+    
     AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
-//
+    //
     ali.shopName = shopName;
     ali.productName = productTitle;
     ali.productPrice = total;
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
     NSLog(@"%@  %@  %@  %@",ali.shopName,ali.productName,ali.productPrice,ali.productOrderNum);
-
+    
     [self.navigationController pushViewController:ali animated:YES];
 }
 

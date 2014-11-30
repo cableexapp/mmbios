@@ -17,5 +17,6 @@
 - (void)noDataAnimation;
 - (void) noClasses;
 - (void) noB2BInvoice;
+- (void) HomeImprovementGalleryOrders;
 
 @end

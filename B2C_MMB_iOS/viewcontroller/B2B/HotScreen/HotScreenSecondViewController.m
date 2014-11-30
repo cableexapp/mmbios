@@ -54,8 +54,9 @@
     
     if(memberid.length == 0)
     {
-        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+        memberid = @"";
+//        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+//        [self presentViewController:loginNavi animated:YES completion:nil];
         
     }
     return memberid;
@@ -67,9 +68,10 @@
     
     if(userName.length == 0)
     {
+        userName = @"";
 //        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+//        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+//        [self presentViewController:loginNavi animated:YES completion:nil];
     }
     return userName;
     
@@ -111,7 +113,7 @@
     
     NSString *content = [NSString stringWithFormat:@"%@%@",self.topLabel.text,self.myTextView.text];
 #pragma mark - 一级分类
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&membername=%@&phone=%@&linkman=%@&content=%@",token,[self getMemberId],[self getUserName],self.myTextField.text,[self getUserName],content];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@",token,[self getMemberId],[self getUserName],self.myTextField.text,[self getUserName],content,@"5"];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
     

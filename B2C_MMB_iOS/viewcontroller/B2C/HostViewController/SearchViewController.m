@@ -169,7 +169,7 @@
     [self.view addSubview:mySearchBar];
     
     leftBtn = [[UILabel alloc] init];
-    leftBtn.frame = CGRectMake(0, 0, 81, 45);
+    leftBtn.frame = CGRectMake(0, 0, 82, 45);
     leftBtn.backgroundColor = [UIColor colorWithRed:198.0/255 green:198.0/255 blue:203.0/255 alpha:1.0];
     leftBtn.font = [UIFont systemFontOfSize:12];
     leftBtn.textAlignment = NSTextAlignmentCenter;

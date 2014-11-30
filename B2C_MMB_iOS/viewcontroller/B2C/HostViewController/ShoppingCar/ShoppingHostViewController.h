@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
 
-@interface ShoppingHostViewController : UIViewController<UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface ShoppingHostViewController : UIViewController<UITextFieldDelegate,UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,ConnectionDelegate>
 {
+    DCFConnectionUtil *conn;
+    
     UIScrollView *sv;
     
     UITableView *tv;

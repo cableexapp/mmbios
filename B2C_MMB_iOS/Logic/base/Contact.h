@@ -33,6 +33,8 @@ enum {
     
     URLShopListTag,  //购物车列表
     
+    URLHotSaleProductTag,  //热销商品
+    
     URLB2CGoodsListTag,  //商铺商品列表
     
     URLB2CGetShopProductTypeTag,  //商铺商品页筛选分类

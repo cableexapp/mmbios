@@ -10,7 +10,7 @@
 #import "DCFConnectionUtil.h"
 #import "B2BMyCableOrderListData.h"
 
-@interface MyCableOrderB2BViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,UISearchDisplayDelegate,ConnectionDelegate,UIAlertViewDelegate>
+@interface MyCableOrderB2BViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,UIAlertViewDelegate>
 {
     DCFConnectionUtil *conn;
     NSString *fromFlag;

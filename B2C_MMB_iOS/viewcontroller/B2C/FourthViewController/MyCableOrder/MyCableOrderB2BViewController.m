@@ -27,7 +27,7 @@
 @interface MyCableOrderB2BViewController ()
 {
     UISearchBar *search;
-    UISearchDisplayController *searchDisplayController;
+
     NSMutableArray *searchResults;
     NSMutableArray *dataArray;
     UIStoryboard *mySB;
@@ -37,6 +37,9 @@
     NSMutableArray *upTimeLabelArray;  //提交时间数组
 
     int index;  //确认收货时用到
+    NSMutableArray *tempOrderNum;
+    
+    BOOL isSearch;
 }
 
 @end
@@ -71,7 +74,7 @@
     
     dataArray = [[NSMutableArray alloc] init];
     
-//    tempOrderNum = [[NSMutableArray alloc] init];
+    tempOrderNum = [[NSMutableArray alloc] init];
     self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44,self.view.frame.size.width,self.view.frame.size.height-109) style:UITableViewStylePlain];
     self.myTableView.delegate = self;
     self.myTableView.dataSource = self;
@@ -88,14 +91,6 @@
     search.autocapitalizationType = UITextAutocapitalizationTypeNone;
     search.placeholder = @"输入搜索内容";
     [self.view addSubview:search];
-    
-    searchDisplayController = [[UISearchDisplayController alloc]initWithSearchBar:search contentsController:self];
-    searchDisplayController.active = NO;
-    searchDisplayController.searchResultsDataSource = self;
-    searchDisplayController.searchResultsDelegate = self;
-    searchDisplayController.delegate = self;
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -144,15 +139,13 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSString *msg = [dicRespon objectForKey:@"msg"];
-    NSLog(@"msg = %@",msg);
     if(URLTag == URLB2BOrderListAllTag)
     {
         NSLog(@"B2B全部订单 = %@",dicRespon);
         [dataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:[dicRespon objectForKey:@"items"]]];
+        tempOrderNum = [dicRespon objectForKey:@"items"];
         [self.myTableView reloadData];
     }
-
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -161,7 +154,11 @@
     {
         return 1;
     }
-    return dataArray.count+1;
+    return dataArray.count;
+    if (isSearch == YES)
+    {
+        return searchResults.count;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -172,10 +169,12 @@
     }
     else
     {
-//       return  [[[dataArray objectAtIndex:section] myItems] count] + 2;
         return 3;
     }
-      NSLog(@"count = %d", [[[dataArray objectAtIndex:section] myItems] count]);
+    if (isSearch == YES)
+    {
+        return searchResults.count;
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -186,7 +185,11 @@
     }
     if(section == dataArray.count)
     {
-        return 0;
+        return  40;
+    }
+    if(dataArray.count > 0)
+    {
+         return 40;
     }
     return 40;
 }
@@ -288,13 +291,9 @@
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:request WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                 height = height + size.height;
             }
-            
             return height + 10;
         }
-        
     }
-    
-    
     return 44;
 }
 
@@ -568,9 +567,6 @@
                 
             }
         }
-        
-        
-        
         [cell.contentView addSubview:orderNumLabel];
         [cell.contentView addSubview:numLabel];
         [cell.contentView addSubview:timeLabel];
@@ -626,10 +622,7 @@
             [statusBtn setTag:indexPath.section];
             [cell.contentView addSubview:statusBtn];
         }
-        
     }
-    //    }
-    
     return cell;
 }
 
@@ -683,13 +676,6 @@
     }
 }
 
-- (void) pushToDetailVCWithData:(B2BMyCableOrderListData *)data
-{
-    [self setHidesBottomBarWhenPushed:YES];
-    MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
-    myCableOrderDetailViewController.b2bMyCableOrderListData = data;
-    [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
-}
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -727,56 +713,50 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [search resignFirstResponder];
-    search.frame = CGRectMake(0, 20,self.view.frame.size.width, 45);
 }
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    search.frame = CGRectMake(0, 20,self.view.frame.size.width, 45);
-    self.searchDisplayController.searchResultsTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+   
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    if (search.text.length > 0)
-    {
-        search.frame = CGRectMake(0, 20,self.view.frame.size.width, 45);
-    }
-}
 
-- (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
-{
-    NSLog(@"searchDisplayControllerWillBeginSearch");
-}
-- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
-{
-    NSLog(@"searchDisplayControllerDidBeginSearch");
-}
-- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
-{
-    NSLog(@"searchDisplayControllerWillEndSearch");
-    search.frame = CGRectMake(0, 0,self.view.frame.size.width, 45);
-}
-- (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
-{
-    NSLog(@"searchDisplayControllerDidEndSearch");
-    [dataArray removeAllObjects];
-    [self loadRequestB2BOrderListAllWithStatus:@"0"];
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView
-{
-    NSLog(@"willHideSearchResultsTableView");
-}
-- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
-{
-    NSLog(@"didHideSearchResultsTableView");
 }
 
 - (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    NSLog(@"searchBarShouldBeginEditing");
     return YES;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    searchResults = [[NSMutableArray alloc]init];
+    for (int i=0; i<tempOrderNum.count; i++)
+    {
+        if([[tempOrderNum[i] objectForKey:@"orderserial"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"model"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"spec"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"voltage"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"require"] rangeOfString:search.text].location !=NSNotFound)
+        {
+            [searchResults addObject:tempOrderNum[i]];
+        }
+    }
+    isSearch = YES;
+    NSLog(@"searchResults = %@",searchResults);
+    if ([searchText isEqualToString:@""])
+    {
+        [dataArray removeAllObjects];
+        [self loadRequestB2BOrderListAllWithStatus:@"0"];
+    }
+    if (searchResults.count == 0)
+    {
+        dataArray = searchResults;
+    }
+    else
+    {
+        [dataArray removeAllObjects];
+        [dataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:searchResults]];
+    }
+    [self.myTableView reloadData];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView

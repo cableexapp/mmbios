@@ -102,7 +102,6 @@
 //    NSLog(@"dicRespon = %@",dicRespon);
     if(URLTag == URLGetCountNumTag)
     {
-        
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
@@ -111,7 +110,7 @@
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
-                cellBtn.backgroundColor = [UIColor whiteColor];
+//                cellBtn.backgroundColor = [UIColor redColor];
                 NSString *s = [NSString stringWithFormat:@"%@",[badgeArray objectAtIndex:i]];
    
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -140,7 +139,7 @@
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
                         NSLog(@"3= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 15, 18, 18)];
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 15, 18, 18)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
                     [btn setTitle:s forState:UIControlStateNormal];
@@ -170,7 +169,7 @@
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
                         NSLog(@"3= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 15, 18, 18)];
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 15, 18, 18)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
                     [btn setTitle:@"99+" forState:UIControlStateNormal];

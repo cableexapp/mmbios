@@ -188,7 +188,6 @@
             {
                 if(result == 1)
                 {
-//                        [dataArray addObjectsFromArray:[B2CMyOrderData getListArray:[dicRespon objectForKey:@"items"]]];
                     dataArray = [dicRespon objectForKey:@"items"];
                     tempOrderNum = [dicRespon objectForKey:@"items"];
                     intTotal = [[dicRespon objectForKey:@"total"] intValue];
@@ -199,7 +198,7 @@
                     }
                     else
                     {
-                        [moreCell stopAnimation];
+                        [moreCell noSearchResult];
                     }
                 }
                 else
@@ -207,8 +206,6 @@
                     [moreCell failAcimation];
                 }
             }
-        NSLog(@"tempOrderNum = %d",tempOrderNum.count);
-        NSLog(@"dataArray = %@",[[dicRespon objectForKey:@"items"] objectAtIndex:0]);
         [self.myTableView reloadData];
     }
 }
@@ -275,7 +272,6 @@
         NSString *has = [NSString stringWithFormat:@"%@%@",URL_PIC_DEV,s2];
         
         pic = [NSString stringWithFormat:@"%@",has];
-        
     }
     else
     {
@@ -338,7 +334,6 @@
 #pragma mark - 取消
 - (void) cancelOrderBtnClick:(UIButton *) sender
 {
-    
     [self setHidesBottomBarWhenPushed:YES];
     CancelOrderViewController *cancelOrderViewController = [mySB instantiateViewControllerWithIdentifier:@"cancelOrderViewController"];
     cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
@@ -517,6 +512,7 @@
     if(!dataArray || dataArray.count == 0)
     {
         return [self returnMoreCell:tableView];
+//        cell.textLabel.text = @"123";
     }
     else if(dataArray > 0)
     {
@@ -717,6 +713,11 @@
         [cell addSubview:lookForCustomBtn];
         [cell addSubview:lookForTradeBtn];
         [cell addSubview:receiveBtn];
+        
+        UIView *lineView = [[UIView alloc] init];
+        lineView.frame = CGRectMake(0, 187, cell.frame.size.width, 1);
+        lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        [cell addSubview:lineView];
     }
     return cell;
 }
@@ -836,37 +837,41 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     searchResults = [[NSMutableArray alloc]init];
-    for (int i=0; i<tempOrderNum.count; i++)
+    for (int i=0; i<dataArray.count; i++)
     {
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF CONTAINS %@",searchText];
-        searchArray = [NSMutableArray arrayWithArray:[[tempOrderNum[i] objectForKey:@"orderNum"] filteredArrayUsingPredicate:pred]];
-        if (searchArray.count > 0)
+        if([[dataArray[i] objectForKey:@"orderNum"] rangeOfString:search.text].location !=NSNotFound || [[[[dataArray[i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productItmeTitle"] rangeOfString:search.text].location !=NSNotFound)
         {
-             [searchResults addObject:tempOrderNum[i]];
+            [searchResults addObject:dataArray[i]];
         }
-//        searchArray = [NSMutableArray arrayWithArray:[[tempOrderNum[i] objectForKey:@"orderNum"] filteredArrayUsingPredicate:pred]];
-//        
-//        if([[tempOrderNum[i] objectForKey:@"orderNum"] rangeOfString:search.text].location !=NSNotFound || [[[[tempOrderNum[i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productItmeTitle"] rangeOfString:search.text].location !=NSNotFound)
-//        {
-//            [searchResults addObject:tempOrderNum[i]];
-//        }
     }
-    NSLog(@"searchArray = %@",searchArray);
-    if (searchArray.count == 0)
+//    [self.myTableView reloadData];
+    if (searchResults.count == 0)
     {
         dataArray = searchResults;
     }
     else
     {
-//        [dataArray removeAllObjects];
-//        [dataArray addObjectsFromArray:[B2CMyOrderData getListArray:searchResults]];
-        dataArray = searchArray;
+        [self.myTableView removeFromSuperview];
+        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
+        self.myTableView.delegate = self;
+        self.myTableView.dataSource = self;
+        self.myTableView.scrollEnabled = YES;
+        self.myTableView.backgroundColor = [UIColor clearColor];
+        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+        [self.view addSubview:self.myTableView];
+        dataArray = searchResults;
+      [self.myTableView reloadData];
+
     }
     if ([searchBar.text isEqualToString:@""])
     {
-//        [dataArray removeAllObjects];
-        [self loadRequestB2COrderListAllWithStatus:@"1"];
+        [dataArray removeAllObjects];
+        dataArray = tempOrderNum;
+        [self.myTableView reloadData];
+//        [self loadRequestB2COrderListAllWithStatus:@"1"];
     }
+    NSLog(@"dataArray = %@",dataArray);
     [self.myTableView reloadData];
 }
 

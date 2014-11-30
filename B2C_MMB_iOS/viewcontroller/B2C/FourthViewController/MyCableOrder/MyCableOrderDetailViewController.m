@@ -43,15 +43,17 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"电缆订单详情"];
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
     
-    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.sureBtn.layer.borderWidth = 1.0f;
+    
     self.sureBtn.layer.cornerRadius = 5.0f;
-    [self.sureBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.sureBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:144/255.0 blue:1/255.0 alpha:1.0];
     [self.sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     NSString *status = [[NSString alloc] initWithFormat:@"%@",_b2bMyCableOrderListData.status];
@@ -98,7 +100,7 @@
     }
     [self.myOrderNumberLabel setFrame:CGRectMake(5, 2, ScreenWidth-5-self.myOrderTimeLabel.frame.size.width, 20)];
     [self.myOrderNumberLabel setText:[NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial]];
-    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime]];
+    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"提交时间%@",_b2bMyCableOrderListData.cableOrderTime]];
     [self.myOrderStatusLabel setText:[NSString stringWithFormat:@"状态: %@",_b2bMyCableOrderListData.myStatus]];
     [self.myOrderTotalLabel setText:[NSString stringWithFormat:@"订单总额: %@",_b2bMyCableOrderListData.ordertotal]];
 }
@@ -106,18 +108,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -70,6 +70,8 @@
     UIButton *payBtn;
     
     NSMutableArray *shopIdArray;
+    
+    BOOL flag;  //商品数组section是否为空
 }
 @end
 
@@ -426,8 +428,7 @@
         {
             [DCFStringUtil showNotice:msg];
             
-   
-            for(int i=0;i<cellBtnArray.count;i++)
+            for(int i=cellBtnArray.count-1;i>=0;i--)
             {
                 NSMutableArray *arr = [cellBtnArray objectAtIndex:i];
                 
@@ -443,6 +444,7 @@
                         
                         NSMutableArray *data = [dataArray objectAtIndex:section];
                         [data removeObject:car];
+
                         
                         [chooseGoodsArray removeObject:car];
                         
@@ -467,17 +469,16 @@
             for( int i=0;i<dataArray.count;i++)
             {
                 NSMutableArray *array = [dataArray objectAtIndex:i];
-                if(array.count == 0)
-                {
-                    [rightBtn setHidden:YES];
-                }
-                else
-                {
-                    [rightBtn setHidden:NO];
-                }
                 total = total + array.count;
             }
-            
+            if(total == 0)
+            {
+                [rightBtn setHidden:YES];
+            }
+            else
+            {
+                [rightBtn setHidden:NO];
+            }
             
             
             for(int i=dataArray.count-1;i>=0;i--)
@@ -498,7 +499,6 @@
             }
             
   
-            
             [moneyLabel setText:[DCFCustomExtra notRounding:0.00 afterPoint:2]];
             
             [buttomBtn setSelected:NO];
@@ -937,6 +937,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         
         NSString *items = nil;
+        NSLog(@"chooseGoodsArray = %@",chooseGoodsArray);
         if(chooseGoodsArray && chooseGoodsArray.count != 0)
         {
             for(int i=0;i<chooseGoodsArray.count;i++)
@@ -993,22 +994,26 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(dataArray)
-    {
-        for(NSMutableArray *testArr in dataArray)
-        {
-            if(testArr.count == 0)
-            {
-                return 0;
-            }
-        }
-        if(dataArray.count == 0)
-        {
-            return 0;
-        }
-    }
+//    if(dataArray)
+//    {
+//        for(NSMutableArray *testArr in dataArray)
+//        {
+//            if(testArr.count == 0)
+//            {
+//                return 0;
+//            }
+//        }
+//        if(dataArray.count == 0)
+//        {
+//            return 0;
+//        }
+//    }
     
     if(!dataArray)
+    {
+        return 0;
+    }
+    if([[dataArray objectAtIndex:section] count] == 0)
     {
         return 0;
     }
@@ -1048,7 +1053,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
+    NSLog(@"****   %@  *******",dataArray);
     if(!dataArray || dataArray.count == 0)
     {
         return 1;
@@ -1160,13 +1165,25 @@ NSComparator cmptr = ^(id obj1, id obj2){
 {
     if(dataArray)
     {
-        for(int i=0;i<dataArray.count;i++)
+        NSMutableArray *arr = [dataArray objectAtIndex:indexPath.section];
+        if(arr.count != 0 )
         {
-            NSMutableArray *arr = [dataArray objectAtIndex:i];
-            if(arr.count == 0 && i == dataArray.count-1)
-            {
-                return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
-            }
+            //商品数组不为空
+//            [
+//            (
+//            "<B2CShopCarListData: 0x1806be80>"
+//            ),
+//            (
+//            )
+//             ]
+            flag = NO;
+        }
+        if(arr.count == 0 && indexPath.section == dataArray.count-1 && flag == NO)
+        {
+        }
+        else
+        {
+            return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
         }
     }
     

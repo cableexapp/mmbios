@@ -947,7 +947,12 @@
 
                     
                     float money = [number intValue] * [price floatValue];
-                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
+                    NSLog(@"%f",money);
+//                    money = 0.123;
+//                    + (NSString *) decimalwithFormat:(NSString *)format  floatV:(float)floatV
+
+                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra decimalwithFormat:@"0.00"  floatV:money]];
+                    NSLog(@"smallCal = %@",smallCal);
                     UILabel *totalLabel = nil;
                     if(smallCal.length == 0)
                     {
@@ -1196,6 +1201,9 @@
 {
     
 }
+
+
+
 
 - (void) pickerView:(NSString *)title WithTag:(int)tag
 {

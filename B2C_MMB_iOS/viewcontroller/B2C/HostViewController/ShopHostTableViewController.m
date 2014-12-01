@@ -53,8 +53,7 @@
     if(self = [super init])
     {
         _myTitle = title;
-//        _shopId = shopId;
-        _shopId = @"263";
+        _shopId = shopId;
         
         shopUse = use;
     }

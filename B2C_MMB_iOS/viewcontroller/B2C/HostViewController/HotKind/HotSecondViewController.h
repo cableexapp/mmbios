@@ -26,6 +26,9 @@
 //提交信息
 - (IBAction)submitNews:(UIButton *)sender;
 
+// 字数计数
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *labelText;
 

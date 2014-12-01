@@ -187,6 +187,10 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
             }
             
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"defaultReceiveAddress"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [DCFStringUtil showNotice:@"退出成功"];

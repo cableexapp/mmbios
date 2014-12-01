@@ -231,19 +231,7 @@
     return array;
 }
 
-#pragma mark - 用途按钮选中点击
-- (void) useBtnClick:(UIButton *) sender
-{
-    int sectionIndex = ((UIButton*)sender).tag;
-    flag[sectionIndex] = !flag[sectionIndex];
-    useString = sender.titleLabel.text;
-    [useBtn setHidden:NO];
-    [useBtn_2 setHidden:NO];
-    [triangle_2 setHidden:YES];
-    [useBtn setTitle:useString forState:UIControlStateNormal];
-    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
- 
-}
+
 
 #pragma mark - 品牌按钮点击
 - (void) brandBtnClick:(UIButton *) sender
@@ -276,6 +264,20 @@
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
 
+#pragma mark - 用途按钮选中点击
+- (void) useBtnClick:(UIButton *) sender
+{
+    int sectionIndex = ((UIButton*)sender).tag;
+    flag[sectionIndex] = !flag[sectionIndex];
+    useString = sender.titleLabel.text;
+    [useBtn setHidden:NO];
+    [useBtn_2 setHidden:NO];
+    [triangle_2 setHidden:YES];
+    [useBtn setTitle:useString forState:UIControlStateNormal];
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+    
+}
+
 #pragma mark - 横截面按钮点击
 - (void) specBtnClick:(UIButton *) sender
 {
@@ -285,29 +287,12 @@
     [specBtn setHidden:NO];
     [specBtn_3 setHidden:NO];
     [triangle_3 setHidden:YES];
-
-
     [specBtn setTitle:specString forState:UIControlStateNormal];
     
     specString = [self getNumFromString:specString];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
 
-#pragma mark - 更新第一组里面的按钮
-- (void) upDateHeadBtnArray:(int) btnTag
-{
-    if(headBtnArray && headBtnArray.count != 0)
-    {
-        for(int i=0;i<headBtnArray.count;i++)
-        {
-            UIButton *B  = [headBtnArray objectAtIndex:i];
-            if(B.tag == btnTag)
-            {
-                [headBtnArray removeObject:B];
-            }
-        }
-    }
-}
 
 
 - (void) addHeadView
@@ -433,7 +418,6 @@
 
         [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateDisabled];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btn setEnabled:YES];
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(useBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -502,13 +486,13 @@
         [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateDisabled];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-        [btn setEnabled:YES];
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(brandBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [btn.layer setCornerRadius:2.0]; //设置矩圆角半径
         [btn.layer setBorderWidth:1.0];   //边框宽度
         [btn setTag:0];
+        [btn setEnabled:YES];
         btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [array2 addObject:btn];
         
@@ -862,10 +846,10 @@
 {
     int sectionIndex = ((UIButton*)button).tag;
     flag[sectionIndex] = !flag[sectionIndex];
-  [useBtn setHidden:YES];
-  [useBtn_2 setHidden:YES];
+    [useBtn setHidden:YES];
+    [useBtn_2 setHidden:YES];
+     useString = @"";
     showUseCell = YES;
-    useString = @"";
     [triangle_2 setHidden:NO];
 
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
@@ -968,23 +952,10 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if(indexPath.section == 0)
-//    {
-//        if(!headBtnArray || headBtnArray.count == 0)
-//        {
-//            return 0;
-//        }
-//        else
-//        {
-//            return [[headBtnArray lastObject] frame].origin.y + [[headBtnArray lastObject] frame].size.height + 5;
-//        }
-//    }
-//    else
-//    {
         [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section]] count];
         UIButton *btn = (UIButton *)[[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section]] lastObject];
 
-        if(indexPath.section == 0)
+        if(indexPath.section == 2)
         {
             
             if(showUseCell == YES)
@@ -1021,7 +992,7 @@
                 return 0;
             }
         }
-        if(indexPath.section == 2)
+        if(indexPath.section == 3)
         {
             if(showSpecCell == YES)
             {
@@ -1039,7 +1010,7 @@
                 return 0;
             }
         }
-        if(indexPath.section == 3)
+        if(indexPath.section == 0)
         {
             if(showBrandCell == YES)
             {
@@ -1058,19 +1029,14 @@
             }
         }
         return btn.frame.origin.y + btn.frame.size.height +5;
-//    }
-
     
     return 0;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-//    if(section == 0)
-//    {
-//        return 0;
-//    }
-    if(section == 0)
+
+    if(section == 2)
     {
         if(showUseCell == YES)
         {
@@ -1092,7 +1058,7 @@
             return 0;
         }
     }
-    if(section == 2)
+    if(section == 3)
     {
         if(showSpecCell == YES)
         {
@@ -1103,7 +1069,7 @@
             return 0;
         }
     }
-    if(section == 3)
+    if(section == 0)
     {
         if(showBrandCell == YES)
         {
@@ -1153,13 +1119,6 @@
     abtn.backgroundColor = [UIColor clearColor];
 	[view2 addSubview:abtn];
     
-//  展开的小三角
-//    triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
-//    [triangle setFrame:CGRectMake(200, 15, 20, 20)];
-//    [abtn addSubview:triangle];
-//    [triangleAaary addObject:useCloseIV_1];
-    
-    
 	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, myRect.size.width, 30)];
 	label1.backgroundColor = [UIColor clearColor];
     [label1 setFont:[UIFont systemFontOfSize:13]];
@@ -1183,8 +1142,6 @@
             [abtn addSubview:modelBtn_1];
             [triangView addSubview:triangle_1];
 
-
-
       
             break;
         case 2:
@@ -1192,18 +1149,11 @@
             [abtn addSubview:useBtn_2];
             [triangView addSubview:triangle_2];
 
-
-
-   
-
             break;
         case 3:
             [abtn addSubview:specBtn];
             [abtn addSubview:specBtn_3];
             [triangView addSubview:triangle_3];
-
-
-
 
             break;
      }

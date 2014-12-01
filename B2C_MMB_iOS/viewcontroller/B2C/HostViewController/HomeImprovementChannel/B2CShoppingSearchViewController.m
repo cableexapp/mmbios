@@ -240,7 +240,6 @@
     [useBtn setHidden:NO];
     [useBtn_2 setHidden:NO];
     [triangle_2 setHidden:YES];
-
     [useBtn setTitle:useString forState:UIControlStateNormal];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
  
@@ -310,118 +309,6 @@
     }
 }
 
-#pragma mark - 第一组按钮点击事件
-- (void) headBtnClick:(UIButton *) sender
-{
-    if(headBtnArray && headBtnArray.count != 0)
-    {
-
-        UIButton *btn = sender;
-        if(btn.tag == 1)
-        {
-            showUseCell = YES;
-            useString = @"";
-        }
-        if(btn.tag == 2)
-        {
-            modelString = @"";
-            showModelCell = YES;
-            
-        }
-        if(btn.tag == 3)
-        {
-            specString = @"";
-            showSpecCell = YES;
-        }
-        if(btn.tag == 4)
-        {
-            brandString = @"";
-            showBrandCell = YES;
-        }
-        if(btn.tag == sender.tag)
-        {
-            [headBtnArray removeObject:btn];
-        }
- 
-        [self setHeadBtnFrame];
-    }
-    if(headBtnArray.count == 0)
-    {
-        for(UIButton *btn in array2)
-        {
-            [btn setEnabled:YES];
-        }
-        for(UIButton *btn in array3)
-        {
-            [btn setEnabled:YES];
-        }
-        for(UIButton *btn in array4)
-        {
-            [btn setEnabled:YES];
-        }
-    }
-    
-    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
-    
-    if(headBtnArray.count != 0)
-    {
-        for(UIButton *btn in headBtnArray)
-        {
-            if(btn.tag == 1)
-            {
-                
-            }
-        }
-    }
-}
-
-#pragma mark - 设置第一组按钮frame
-- (void) setHeadBtnFrame
-{
-    if(headBtnArray && headBtnArray.count != 0)
-    {
-        for(int i=0;i<headBtnArray.count;i++)
-        {
-            float width = (myRect.size.width-20)/2;
-            UIButton *B  = [headBtnArray objectAtIndex:i];
-
-           [B setTitle:B.titleLabel.text forState:UIControlStateNormal];
-            [B addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-
-            switch (i)
-            {
-                case 0:
-                    [B setFrame:CGRectMake(15, 5, width-60, 30)];
-                    break;
-                case 1:
-                    [B setFrame:CGRectMake(15+width-10, 5, width-60, 30)];
-
-                    break;
-                case 2:
-                    [B setFrame:CGRectMake(15, 40, width-60, 30)];
-                    break;
-                case 3:
-                    [B setFrame:CGRectMake(15+width-10, 40, width-60, 30)];
-                    break;
-                default:
-                    break;
-            }
-            
-        
-     
-        }
-    }
-    [tv reloadData];
-}
-
-#pragma mark - 单独刷新第一组
-- (void) reloadSection
-{
-    NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
-    NSArray *arr = [NSArray arrayWithObjects:path, nil];
-    [tv reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];
-    
-}
 
 - (void) addHeadView
 {
@@ -847,8 +734,8 @@
     
     brandBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //   [brandBtn setTitle:brandString forState:UIControlStateNormal];
+     [brandBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
     [brandBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [brandBtn setFrame:CGRectMake(myRect.size.width-160, 5, 80, 30)];
     [brandBtn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     brandBtn.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
     brandBtn.layer.borderWidth = 1.0f;
@@ -967,9 +854,7 @@
     modelString = @"";
     showModelCell = YES;
     [triangle_1 setHidden:NO];
-
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
-//    [self reloadSection];
 
 }
 

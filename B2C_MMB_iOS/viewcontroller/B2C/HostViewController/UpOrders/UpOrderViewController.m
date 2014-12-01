@@ -794,8 +794,8 @@
                     [countlabel setFont:[UIFont systemFontOfSize:12]];
                     
                     float money = [number intValue] * [data.price floatValue];
-
-                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra decimalwithFormat:@"0.00" floatV:money]];
+                    NSLog(@"money = %f",money);
+                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
                     CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
                     UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
                     [totalLabel setText:smallCal];

@@ -146,7 +146,8 @@ enum {
     URLChangePasswordTag,  //修改密码（未绑定手机或者邮箱）
     URLSendEmailTag,  //发送验证码
     URLSendMsgTag,   //发送验证码
-    URLChangeBindPhoneTag  //修改绑定手机
+    URLChangeBindPhoneTag,  //修改绑定手机
+    URLCheckPhoneTag   //校验手机是否已经被绑定
 };
 typedef NSUInteger URLTag;
 

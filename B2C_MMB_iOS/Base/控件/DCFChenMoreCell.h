@@ -19,4 +19,6 @@
 - (void) noB2BInvoice;
 - (void) HomeImprovementGalleryOrders;
 
+-(void)noSearchResult;
+
 @end

@@ -217,6 +217,13 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    for(UIView *view in self.navigationController.navigationBar.subviews)
+    {
+        if([view tag] == 100 || [view isKindOfClass:[UIButton class]] || [view tag] == 101)
+        {
+            [view setHidden:YES];
+        }
+    }
     num = @"0";
 }
 
@@ -835,11 +842,11 @@
                 NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"loginName"];
                 if(s1.length != 0)
                 {
-                    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s1 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s1 WithSize:CGSizeMake(MAXFLOAT, 30)];
                     UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width+10, 15)];
                     [nameLabel setText:s1];
                     [nameLabel setTextAlignment:NSTextAlignmentLeft];
-                    [nameLabel setFont:[UIFont systemFontOfSize:12]];
+                    [nameLabel setFont:[UIFont systemFontOfSize:10]];
                     [nameLabel setTextColor:[UIColor blackColor]];
                     [cell.contentView addSubview:nameLabel];
                     
@@ -847,20 +854,20 @@
                     NSString *finalMonth = [NSString stringWithFormat:@"%d",[month intValue] + 1];
                     NSString *date = [[[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"createDate"] objectForKey:@"date"];
                     NSString *s2 = [NSString stringWithFormat:@"评价日期:%@.%@",finalMonth,date];
-                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s2 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s2 WithSize:CGSizeMake(MAXFLOAT, 30)];
                     UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 30, 5, size_2.width, 15)];
                     [dateLabel setTextAlignment:NSTextAlignmentCenter];
                     [dateLabel setText:s2];
-                    [dateLabel setFont:[UIFont systemFontOfSize:12]];
+                    [dateLabel setFont:[UIFont systemFontOfSize:10]];
                     [cell.contentView addSubview:dateLabel];
                     
                     NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"colorName"];
                     NSString *s3 = [NSString stringWithFormat:@"颜色分类:%@",color];
-                    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s3 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s3 WithSize:CGSizeMake(MAXFLOAT, 30)];
                     UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 5, size_3.width, 15)];
                     [colorLabel setText:s3];
                     [colorLabel setTextAlignment:NSTextAlignmentLeft];
-                    [colorLabel setFont:[UIFont systemFontOfSize:12]];
+                    [colorLabel setFont:[UIFont systemFontOfSize:10]];
                     [cell.contentView addSubview:colorLabel];
                     
                     NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"judgementContent"];

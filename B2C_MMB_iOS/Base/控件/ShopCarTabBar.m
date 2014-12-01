@@ -1,18 +1,18 @@
 //
-//  FifthNaviViewController.m
+//  ShopCarTabBar.m
 //  B2C_MMB_iOS
 //
-//  Created by App01 on 14-10-25.
+//  Created by developer on 14-12-1.
 //  Copyright (c) 2014年 YUANDONG. All rights reserved.
 //
 
-#import "FifthNaviViewController.h"
+#import "ShopCarTabBar.h"
 
-@interface FifthNaviViewController ()
+@interface ShopCarTabBar ()
 
 @end
 
-@implementation FifthNaviViewController
+@implementation ShopCarTabBar
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,8 +26,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+     [self.navigationController.tabBarController setSelectedIndex:0];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning

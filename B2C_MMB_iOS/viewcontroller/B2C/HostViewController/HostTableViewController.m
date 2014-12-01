@@ -25,6 +25,11 @@
 #import "UIImageView+WebCache.h"
 #import "B2CHotSaleData.h"
 #import "GoodsDetailViewController.h"
+#import "KxMenu.h"
+#import "MyShoppingListViewController.h"
+#import "B2BAskPriceCarViewController.h"
+
+int isgo = 1;
 
 @interface HostTableViewController ()
 {
@@ -44,6 +49,12 @@
     
     NSMutableArray *dataArray;
 //    NSMutableArray *picArray;
+ 
+    UIView *secondBarView;
+    
+    NSMutableArray *arr;
+    
+    
 }
 @end
 
@@ -61,6 +72,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    isgo = 1;
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [self setHidesBottomBarWhenPushed:NO];
     for(UIView *view in self.navigationController.navigationBar.subviews)
@@ -76,6 +88,13 @@
         }
     }
 }
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+    isgo = 2;
+}
+
 - (void) viewWillDisappear:(BOOL)animated
 {
     
@@ -100,7 +119,7 @@
 - (void) searchTap:(UITapGestureRecognizer *) sender
 {
     SearchViewController *searchVC = [[SearchViewController alloc] init];
-    [self setHidesBottomBarWhenPushed:YES];
+//    [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 
@@ -119,7 +138,7 @@
     {
         if(result == 1)
         {
-            NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+            NSMutableArray *dataArrayy = [[NSMutableArray alloc] init];
             
             typeIdArray = [[NSMutableArray alloc] init];
             
@@ -127,12 +146,12 @@
             {
                 NSDictionary *dic = [[dicRespon objectForKey:@"items"] objectAtIndex:i];
                 NSString  *typeName = [dic objectForKey:@"typeName"];
-                [dataArray addObject:typeName];
+                [dataArrayy addObject:typeName];
                 NSString *typeId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"typeId"]];
                 [typeIdArray addObject:typeId];
             }
 #pragma mark - 数组里的字符串按长度重新排序
-            typeArray = [dataArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            typeArray = [dataArrayy sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                 NSUInteger len0 = [(NSString *)obj1 length];
                 NSUInteger len1 = [(NSString *)obj2 length];
                 return len0 > len1 ? NSOrderedAscending : NSOrderedDescending;
@@ -319,11 +338,72 @@
     
     [self.tableView setShowsVerticalScrollIndicator:NO];
     
-
+    secondBarView = [[UIView alloc] init];
+    secondBarView.frame = CGRectMake(self.view.frame.size.width/5, 0, self.view.frame.size.width/5, 49);
+    [self.navigationController.tabBarController.tabBar addSubview:secondBarView];
     
+    UITapGestureRecognizer *popShopCarTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popShopCarTap:)];
+    [secondBarView addGestureRecognizer:popShopCarTap];
+  
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
+}
+
+- (void)popShopCarTap:(UITapGestureRecognizer *)sender
+{
+    NSLog(@"购物车");
+    if (isgo == 1)
+    {
+        NSArray *menuItems =
+        @[[KxMenuItem menuItem:@"  购物车  "
+                         image:nil
+                        target:self
+                        action:@selector(pushMenuItem:)],
+          
+          [KxMenuItem menuItem:@"  询价车  "
+                         image:nil
+                        target:self
+                        action:@selector(pushMenuItem:)],
+          ];
+        
+        [KxMenu showMenuInView:self.view
+                      fromRect:CGRectMake(self.view.frame.size.width/5-15, self.view.frame.size.height, self.view.frame.size.height/5, 49)
+                     menuItems:menuItems];
+    }
+    else if (isgo == 2)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"popShopCar" object:nil];
+    }
+   
+}
+
+- (void)pushMenuItem:(id)sender
+{
+    NSLog(@"sender = %@",sender);
+    NSLog(@"123 = %@",[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0]);
+    
+    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
+    {
+        NSLog(@"购物车");
+//        [self setHidesBottomBarWhenPushed:YES];
+        MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
+        [self.navigationController pushViewController:shop animated:YES];
+       
+    }
+    else
+    {
+        NSLog(@"询价车");
+//        [self setHidesBottomBarWhenPushed:YES];
+        B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+        [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
+    }
+
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [KxMenu dismissMenu];
 }
 
 -(void)goToChatView:(NSNotification *)goToChat
@@ -1027,7 +1107,7 @@
     int tag = [[tap view] tag];
     NSLog(@"tag = %d",tag);
     NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:tag] myProductId]];
-    [self setHidesBottomBarWhenPushed:YES];
+//    [self setHidesBottomBarWhenPushed:YES];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];
     [self.navigationController pushViewController:goodsDetail animated:YES];
     //    [self setHidesBottomBarWhenPushed:NO];

@@ -113,7 +113,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    
+    [self setHidesBottomBarWhenPushed:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101 )
@@ -121,6 +121,13 @@
             [view setHidden:YES];
         }
     }
+    [self setHidesBottomBarWhenPushed:YES];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void)viewDidLoad

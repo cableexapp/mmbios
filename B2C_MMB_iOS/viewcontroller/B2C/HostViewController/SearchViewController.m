@@ -591,6 +591,7 @@
         [self readHistoryData];
         [self refreshClearButton];
         [self.serchResultView reloadData];
+        countLabel.hidden = YES;
     }
     else
     {
@@ -599,7 +600,7 @@
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"询价车" forState:UIControlStateNormal];
         tempType = @"1";
-        countLabel.hidden = YES;
+        countLabel.hidden = NO;
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     speakButton.hidden = NO;

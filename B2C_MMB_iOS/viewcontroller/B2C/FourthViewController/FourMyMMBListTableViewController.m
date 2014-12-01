@@ -90,6 +90,7 @@
         [badgeArray removeAllObjects];
         badgeArray = nil;
     }
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (NSString *) getMemberId
@@ -204,9 +205,6 @@
 {
     [super viewWillAppear:YES];
     
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
-    [self setHidesBottomBarWhenPushed:NO];
-    
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [self getMemberId];
     
@@ -219,6 +217,7 @@
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetCountNumTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 - (void)viewDidLoad
@@ -359,27 +358,24 @@
 
 - (void)pushMenuItem:(id)sender
 {
-    NSLog(@"sender = %@",sender);
-    NSLog(@"123 = %@",[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0]);
-    
+    [self setHidesBottomBarWhenPushed:YES];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
     {
-        NSLog(@"购物车");
-//        [self setHidesBottomBarWhenPushed:YES];
         MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
         [self.navigationController pushViewController:shop animated:YES];
-        
     }
     else
     {
-        NSLog(@"询价车");
-//        [self setHidesBottomBarWhenPushed:YES];
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
-    
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [KxMenu dismissMenu];
+}
 
 - (void)didReceiveMemoryWarning
 {

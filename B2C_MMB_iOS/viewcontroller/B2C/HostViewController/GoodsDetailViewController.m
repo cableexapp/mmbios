@@ -211,12 +211,14 @@
         [chooseColorAndCountView removeFromSuperview];
         chooseColorAndCountView = nil;
     }
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    [self setHidesBottomBarWhenPushed:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view isKindOfClass:[UIButton class]] || [view tag] == 101)

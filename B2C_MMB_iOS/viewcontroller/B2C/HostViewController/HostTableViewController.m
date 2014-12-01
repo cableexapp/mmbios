@@ -73,8 +73,8 @@ int isgo = 1;
 {
     [super viewWillAppear:YES];
     isgo = 1;
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
-    [self setHidesBottomBarWhenPushed:NO];
+//
+//    [self setHidesBottomBarWhenPushed:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101)
@@ -87,6 +87,7 @@ int isgo = 1;
             [view setHidden:YES];
         }
     }
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -105,22 +106,23 @@ int isgo = 1;
         conn = nil;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-//    [self.navigationController.tabBarController.tabBar setHidden:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
 }
 
 
 - (void) searchTap:(UITapGestureRecognizer *) sender
 {
+     [self setHidesBottomBarWhenPushed:YES];
     SearchViewController *searchVC = [[SearchViewController alloc] init];
-//    [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:searchVC animated:YES];
+     [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) search:(UIButton *) sender
@@ -353,6 +355,7 @@ int isgo = 1;
 - (void)popShopCarTap:(UITapGestureRecognizer *)sender
 {
     NSLog(@"购物车");
+//    self.tableView.scrollEnabled = NO;
     if (isgo == 1)
     {
         NSArray *menuItems =
@@ -380,9 +383,7 @@ int isgo = 1;
 
 - (void)pushMenuItem:(id)sender
 {
-    NSLog(@"sender = %@",sender);
-    NSLog(@"123 = %@",[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0]);
-    
+    [self setHidesBottomBarWhenPushed:YES];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
     {
         NSLog(@"购物车");
@@ -394,11 +395,18 @@ int isgo = 1;
     else
     {
         NSLog(@"询价车");
-//        [self setHidesBottomBarWhenPushed:YES];
+        
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+//        [self setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
+    [self setHidesBottomBarWhenPushed:NO];
+}
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+//    self.tableView.scrollEnabled = YES;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -894,7 +902,7 @@ int isgo = 1;
             }
             button.layer.borderWidth = 0.5;
             button.titleLabel.textAlignment = NSTextAlignmentRight;
-            button.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             button.backgroundColor = [UIColor whiteColor];
             [cell addSubview:button];
             label.text = [useArray objectAtIndex:i];
@@ -930,7 +938,7 @@ int isgo = 1;
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             button.layer.borderWidth = 0.5;
-            button.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
             label.text = [useArray objectAtIndex:i];
             label.backgroundColor = [UIColor clearColor];
@@ -966,7 +974,7 @@ int isgo = 1;
                 label.numberOfLines = 2;
             }
             button.layer.borderWidth = 0.5;
-            button.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
             label.text = [useArray objectAtIndex:i];
             label.backgroundColor = [UIColor clearColor];
@@ -1105,12 +1113,11 @@ int isgo = 1;
 {
     UITapGestureRecognizer *tap = (UITapGestureRecognizer *) sender;
     int tag = [[tap view] tag];
-    NSLog(@"tag = %d",tag);
     NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:tag] myProductId]];
-//    [self setHidesBottomBarWhenPushed:YES];
+   [self setHidesBottomBarWhenPushed:YES];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];
     [self.navigationController pushViewController:goodsDetail animated:YES];
-    //    [self setHidesBottomBarWhenPushed:NO];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void)didReceiveMemoryWarning

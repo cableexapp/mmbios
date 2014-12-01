@@ -82,7 +82,7 @@
     UIView *content_lineViewUp = [[UIView alloc] init];
     content_lineViewUp.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
     content_lineViewUp.frame = CGRectMake(0, self.content_Tv.frame.origin.y, ScreenWidth, 1);
-    [self.view addSubview:content_lineViewUp];
+//    [self.view addSubview:content_lineViewUp];
     
     UIView *content_lineView = [[UIView alloc] init];
     content_lineView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];

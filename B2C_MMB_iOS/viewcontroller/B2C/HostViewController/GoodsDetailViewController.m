@@ -317,8 +317,6 @@
  
     
     cellBtnArray = [[NSMutableArray alloc] init];
-    
-    NSLog(@"GoodsDetailUrl = %@",self.GoodsDetailUrl);
 }
 
 - (void) loadRequest
@@ -905,12 +903,8 @@
 
 - (void) firstTap:(UITapGestureRecognizer *) sender
 {
-    UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
-    
-    //    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:label.text];
     [self setHidesBottomBarWhenPushed:YES];
     ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:detailData.shopName WithShopId:detailData.shopId WithUse:@""];
-    
     [self.navigationController pushViewController:shopHost animated:YES];
 }
 
@@ -921,11 +915,9 @@
 
 -(void)IMChatClick
 {
-    NSLog(@"家装线商品详情");
     ChatListViewController *chatVC = [[ChatListViewController alloc] init];
     NSString *urlString = [NSString stringWithFormat:@"%@%@@%@",GoodsDetail_URL,producturl,@"家装线商品详情"];
     chatVC.fromString = urlString;
-    NSLog(@"chatVC.fromString = %@",chatVC.fromString);
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
@@ -1059,6 +1051,7 @@
             
             [chooseColorBtnArray addObject:btn];
             [chooseColorAndCountView addSubview:btn];
+            
         }
         
         for(int i=0;i<3;i++)

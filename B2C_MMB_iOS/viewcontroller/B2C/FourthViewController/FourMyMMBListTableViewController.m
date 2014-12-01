@@ -17,6 +17,9 @@
 #import "MyInquiryListFirstViewController.h"
 #import "MyCableOrderHostViewController.h"
 #import "LoginViewController.h"
+#import "MyShoppingListViewController.h"
+#import "B2BAskPriceCarViewController.h"
+#import "KxMenu.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -27,6 +30,8 @@
     NSMutableArray *badgeArray;
     
     UIStoryboard *sb;
+    
+    NSMutableArray *arr;
 }
 @end
 
@@ -199,6 +204,9 @@
 {
     [super viewWillAppear:YES];
     
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+    [self setHidesBottomBarWhenPushed:NO];
+    
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [self getMemberId];
     
@@ -216,11 +224,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self pushAndPopStyle];
-    
-    
+
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;
     
@@ -327,7 +334,52 @@
         UIButton *btn = (UIButton *)[cellBtnArray objectAtIndex:i];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar:) name:@"popShopCar" object:nil];
+    
 }
+
+- (void)popShopCar:(NSNotification *)sender
+{
+        NSArray *menuItems =
+        @[[KxMenuItem menuItem:@"  购物车  "
+                         image:nil
+                        target:self
+                        action:@selector(pushMenuItem:)],
+          
+          [KxMenuItem menuItem:@"  询价车  "
+                         image:nil
+                        target:self
+                        action:@selector(pushMenuItem:)],
+          ];
+        
+        [KxMenu showMenuInView:self.view
+                      fromRect:CGRectMake(self.view.frame.size.width/5-15, self.view.frame.size.height, self.view.frame.size.height/5, 49)
+                     menuItems:menuItems];
+}
+
+- (void)pushMenuItem:(id)sender
+{
+    NSLog(@"sender = %@",sender);
+    NSLog(@"123 = %@",[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0]);
+    
+    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
+    {
+        NSLog(@"购物车");
+//        [self setHidesBottomBarWhenPushed:YES];
+        MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
+        [self.navigationController pushViewController:shop animated:YES];
+        
+    }
+    else
+    {
+        NSLog(@"询价车");
+//        [self setHidesBottomBarWhenPushed:YES];
+        B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+        [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
+    }
+    
+}
+
 
 - (void)didReceiveMemoryWarning
 {

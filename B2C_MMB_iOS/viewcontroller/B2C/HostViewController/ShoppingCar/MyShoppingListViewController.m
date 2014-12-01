@@ -112,7 +112,7 @@
     }
     if(btn.selected == YES)
     {
-        for(int i=0;i<headLabelArray.count;i++)
+        for(int i=0;i<dataArray.count;i++)
         {
             [[headBtnArray objectAtIndex:i] setSelected:YES];
             
@@ -131,7 +131,7 @@
     }
     if(btn.selected == NO)
     {
-        for(int i=0;i<headLabelArray.count;i++)
+        for(int i=0;i<dataArray.count;i++)
         {
             [[headBtnArray objectAtIndex:i] setSelected:NO];
             
@@ -233,23 +233,25 @@
             for(int i=0;i<tempArray.count;i++)
             {
                 NSString *sShopName = [[tempArray objectAtIndex:i] shopId];
+                NSMutableArray *shopNameArray = [NSMutableArray arrayWithObject:sShopName];
                 if(i == 0)
                 {
-                    [headLabelArray addObject:sShopName];
+                    [headLabelArray addObject:shopNameArray];
                 }
                 if(i > 0)
                 {
-                    if([headLabelArray containsObject:sShopName] == YES)
+                    if([headLabelArray containsObject:shopNameArray] == YES)
                     {
                         
                     }
                     else
                     {
-                        [headLabelArray addObject:sShopName];
+                        [headLabelArray addObject:shopNameArray];
                     }
                 }
             }
             
+            NSLog(@"headLabelArray =  %@  ******",headLabelArray);
             
             headBtnArray = [[NSMutableArray alloc] init];
             for(int i=0;i<headLabelArray.count;i++)
@@ -262,24 +264,26 @@
                 [headBtn setSelected:NO];
                 [headBtn setTag:i];
                 [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                [headBtnArray addObject:headBtn];
+                NSMutableArray *arr = [NSMutableArray arrayWithObject:headBtn];
+
+                [headBtnArray addObject:arr];
             }
             
-            for(NSString *str in headLabelArray)
+            for(NSArray *str in headLabelArray)
             {
                 NSMutableArray *array = [[NSMutableArray alloc] init];
                 
                 for(B2CShopCarListData *data in tempArray)
                 {
                     NSString *s = data.shopId;
-                    if([s isEqualToString:str])
+                    if([s isEqualToString:(NSString *)[str lastObject]])
                     {
                         [array addObject:data];
                     }
                 }
                 [dataArray addObject:array];
             }
-            
+            NSLog(@"测试  %@",dataArray);
             
 #pragma mark - 添加cell里面的btn,图片
             cellBtnArray = [[NSMutableArray alloc] init];
@@ -474,30 +478,28 @@
             if(total == 0)
             {
                 [rightBtn setHidden:YES];
+                [dataArray removeAllObjects];
+                dataArray = nil;
             }
             else
             {
                 [rightBtn setHidden:NO];
             }
             
-            
+            NSLog(@"dataArray = %@",dataArray);
+            NSLog(@"headLabel = %@",headLabelArray);
+            NSLog(@"headBtn = %@",headBtnArray);
             for(int i=dataArray.count-1;i>=0;i--)
             {
                 if([[dataArray objectAtIndex:i] count] == 0)
                 {
-                    [headLabelArray removeObjectAtIndex:i];
+                    [[headLabelArray objectAtIndex:i] removeAllObjects];
                     
-                    [headBtnArray removeObjectAtIndex:i];
+                    [[headBtnArray objectAtIndex:i] removeAllObjects];
                 }
             }
-            
-            
-            if(total == 0)
-            {
-                [dataArray removeAllObjects];
-                dataArray = nil;
-            }
-            
+            NSLog(@"headLabel_11111 = %@",headLabelArray);
+            NSLog(@"headBtn_11111 = %@",headBtnArray);
   
             [moneyLabel setText:[DCFCustomExtra notRounding:0.00 afterPoint:2]];
             
@@ -715,6 +717,9 @@
     [tv setDelegate:self];
     [self.view addSubview:tv];
     
+    
+    noCell = [[UITableViewCell alloc] init];
+    [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
 }
 
 
@@ -1008,8 +1013,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
 //            return 0;
 //        }
 //    }
-    
-    if(!dataArray)
+    if(section == dataArray.count)
+    {
+        return 0;
+    }
+    if(!dataArray || dataArray.count == 0)
     {
         return 0;
     }
@@ -1022,6 +1030,42 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.section == dataArray.count)
+    {
+        if(dataArray)
+        {
+            for(NSMutableArray *arr in dataArray)
+            {
+                if(arr.count != 0)
+                {
+                    if(noCell)
+                    {
+                        for(UIView *view in noCell.subviews)
+                        {
+                            [view setHidden:YES];
+                            [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, 0)];
+                        }
+                    }
+                    return 0;
+                }
+                for(UIView *view in noCell.subviews)
+                {
+                    [view setHidden:NO];
+                    [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
+                }
+            }
+            return ScreenHeight-34;
+        }
+        else
+        {
+            for(UIView *view in noCell.subviews)
+            {
+                [view setHidden:NO];
+                [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
+            }
+            return ScreenHeight-34;
+        }
+    }
     if(!dataArray || dataArray.count == 0)
     {
         return ScreenHeight - 34;
@@ -1039,30 +1083,38 @@ NSComparator cmptr = ^(id obj1, id obj2){
             return size.height + 50;
         }
     }
-    return ScreenHeight - 34;
+    return 0;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if(!headLabelArray || headLabelArray.count == 0)
-    {
-        return 1;
-    }
-    return headLabelArray.count;
-}
-
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    NSLog(@"****   %@  *******",dataArray);
     if(!dataArray || dataArray.count == 0)
     {
         return 1;
     }
+    return dataArray.count+1;
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(section == dataArray.count)
+    {
+        return 1;
+    }
+    if(!dataArray || [dataArray count] == 0)
+    {
+        return 1;
+    }
+
     return [[dataArray objectAtIndex:section] count];
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if(section == dataArray.count)
+    {
+        return nil;
+    }
     if(!dataArray || dataArray.count == 0)
     {
         return nil;
@@ -1073,7 +1125,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     
     
-    [view addSubview:[headBtnArray objectAtIndex:section]];
+    [view addSubview:[[headBtnArray objectAtIndex:section] lastObject]];
     
     NSString *title = [[[dataArray objectAtIndex:section] lastObject] sShopName];
     UILabel *sectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 200, 30)];
@@ -1100,13 +1152,13 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
 {
-    static NSString *moreCellId = @"moreCell";
-    UITableViewCell *noCell = [tableView cellForRowAtIndexPath:indexPath];
-    if(!noCell)
-    {
-        noCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:moreCellId];
-        [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-    }
+//    static NSString *moreCellId = @"moreCell";
+//    UITableViewCell *noCell = [tableView cellForRowAtIndexPath:indexPath];
+//    if(!noCell)
+//    {
+//        noCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:moreCellId];
+//        [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+//    }
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
     [view setBackgroundColor:[UIColor whiteColor]];
@@ -1116,7 +1168,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [noCell.contentView addSubview:view];
     
     UIButton *logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [logBtn setTitle:@"登陆" forState:UIControlStateNormal];
+    [logBtn setTitle:@"登录" forState:UIControlStateNormal];
     [logBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     logBtn.layer.borderWidth = 1.0F;
     logBtn.layer.borderColor = MYCOLOR.CGColor;
@@ -1156,13 +1208,19 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [buyBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [buyBtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [noCell.contentView addSubview:buyBtn];
-    
+    NSLog(@"noCell = %@",noCell);
     return noCell;
     
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.section == dataArray.count)
+    {
+        return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
+
+    }
+    
     if(dataArray)
     {
         NSMutableArray *arr = [dataArray objectAtIndex:indexPath.section];
@@ -1178,19 +1236,21 @@ NSComparator cmptr = ^(id obj1, id obj2){
 //             ]
             flag = NO;
         }
-        if(arr.count == 0 && indexPath.section == dataArray.count-1 && flag == NO)
-        {
-        }
         else
+        {
+            flag = YES;
+        }
+        
+        if(arr.count == 0 && indexPath.section == dataArray.count-1 && flag == YES)
         {
             return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
         }
+        else
+        {
+        }
     }
     
-    if(!dataArray || dataArray.count == 0)
-    {
-        return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
-    }
+
     
     
     static NSString *cellId = @"cellId";
@@ -1315,11 +1375,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     if(count == [[dataArray objectAtIndex:section] count])
     {
-        [[headBtnArray objectAtIndex:section] setSelected:YES];
+        [[[headBtnArray objectAtIndex:section] lastObject] setSelected:YES];
     }
     else
     {
-        [[headBtnArray objectAtIndex:section] setSelected:NO];
+        [[[headBtnArray objectAtIndex:section] lastObject] setSelected:NO];
     }
     
 
@@ -1327,9 +1387,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
     NSLog(@"chooseGoodsArray = %@",chooseGoodsArray);
     [self calculateTotalMoney];
     [self payBtnChange];
+
     
-    for(UIButton *btn in headBtnArray)
+    for(int i=0;i<headBtnArray.count;i++)
     {
+        UIButton *btn = (UIButton *)[[headBtnArray objectAtIndex:i] lastObject];
         if(btn.selected == YES)
         {
             [buttomBtn setSelected:YES];

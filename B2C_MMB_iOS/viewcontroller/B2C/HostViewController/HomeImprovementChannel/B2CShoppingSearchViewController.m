@@ -239,6 +239,8 @@
     useString = sender.titleLabel.text;
     [useBtn setHidden:NO];
     [useBtn_2 setHidden:NO];
+    [triangle_2 setHidden:YES];
+
     [useBtn setTitle:useString forState:UIControlStateNormal];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
  
@@ -250,15 +252,11 @@
 
     int sectionIndex = ((UIButton*)sender).tag;
     flag[sectionIndex] = !flag[sectionIndex];
-    [triangle setHidden:YES];
     brandString = sender.titleLabel.text;
     [brandBtn setHidden:NO];
     [brandBtn_0 setHidden:NO];
+    [triangle setHidden:YES];
     [brandBtn setTitle:brandString forState:UIControlStateNormal];
-    
-    
-    
-    
     
     
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
@@ -287,7 +285,8 @@
     specString = sender.titleLabel.text;
     [specBtn setHidden:NO];
     [specBtn_3 setHidden:NO];
-    NSLog(@"tag = %d", sender.tag);
+    [triangle_3 setHidden:YES];
+
 
     [specBtn setTitle:specString forState:UIControlStateNormal];
     
@@ -541,10 +540,13 @@
             [btn setTitle:@"音频" forState:UIControlStateNormal];
             
                     }
+        
+ 
        
 
         [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateDisabled];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setEnabled:YES];
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:167.0/255.0 green:167.0/255.0 blue:167.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(useBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -841,12 +843,7 @@
 {
     
     [super viewDidLoad];
-//    backView = [[UIView alloc] init];
-//    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-//    backView.alpha = 0.6;
-//    backView.hidden = NO;
-//    backView.backgroundColor = [UIColor lightGrayColor];
-//    [self.view insertSubview:backView aboveSubview:tv];
+
     
     brandBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //   [brandBtn setTitle:brandString forState:UIControlStateNormal];
@@ -933,27 +930,15 @@
    
     triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
     [triangle setTag:0];
-    [triangle setFrame:CGRectMake(200, 12, 20, 20)];
-    [triangle setHidden:YES];
     
     triangle_1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
     [triangle_1 setTag:1];
-    [triangle_1 setFrame:CGRectMake(200, 12, 20, 20)];
-    [triangle_1 setHidden:YES];
-
-
     
     triangle_2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
     [triangle_2 setTag:2];
-    [triangle_2 setFrame:CGRectMake(200, 12, 20, 20)];
-    [triangle_2 setHidden:YES];
-
-
     
     triangle_3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
     [triangle_3 setTag:3];
-    [triangle_3 setFrame:CGRectMake(200, 15, 20, 20)];
-    [triangle_3 setHidden:YES];
 
 
     
@@ -1270,6 +1255,11 @@
 	[view1 addSubview:view2];
 
    
+    UIView *triangView = [[UIView alloc]init];
+    triangView.frame = CGRectMake(200, 10, 30, 30);
+    triangView.backgroundColor = [UIColor clearColor];
+    [view2 addSubview:triangView];
+    
     abtn = [UIButton buttonWithType:UIButtonTypeCustom];
     abtn.backgroundColor = [UIColor clearColor];
     abtn.frame = CGRectMake(0, 0,myRect.size.width, 50);
@@ -1291,13 +1281,7 @@
 	label1.text = [[_myDic allKeys] objectAtIndex:section];
     [abtn addSubview:label1];
     
-
-//    triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
-//    [triangle setTag:0];
-//    [triangle setFrame:CGRectMake(200, 12, 20, 20)];
-////    [triangle setHidden:NO];
-//    [view2 addSubview:triangle];
-//   
+ 
     switch (section)
     {
             
@@ -1305,16 +1289,14 @@
             
             [abtn addSubview:brandBtn];
             [abtn addSubview:brandBtn_0];
-            [view1 addSubview:triangle];
-            [triangle setHidden:NO];
+            [triangView addSubview:triangle];
 
           
             break;
         case 1:
             [abtn addSubview:modelBtn];
             [abtn addSubview:modelBtn_1];
-            [view1 addSubview:triangle_1];
-            [triangle_1 setHidden:NO];
+            [triangView addSubview:triangle_1];
 
 
 
@@ -1323,8 +1305,7 @@
         case 2:
             [abtn addSubview:useBtn];
             [abtn addSubview:useBtn_2];
-            [view1 addSubview:triangle_2];
-            [triangle_2 setHidden:NO];
+            [triangView addSubview:triangle_2];
 
 
 
@@ -1334,8 +1315,7 @@
         case 3:
             [abtn addSubview:specBtn];
             [abtn addSubview:specBtn_3];
-            [view1 addSubview:triangle_3];
-            [triangle_3 setHidden:NO];
+            [triangView addSubview:triangle_3];
 
 
 

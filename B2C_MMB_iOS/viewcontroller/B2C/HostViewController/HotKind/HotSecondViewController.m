@@ -217,7 +217,6 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    NSLog(@"shouldChangeTextInRange");
     if ([text isEqualToString:@"\n"])
     {
         [self.secondTextView resignFirstResponder];
@@ -234,11 +233,13 @@
     return YES;
 }
 
-
-
-//textview文本框里的备注
 - (void) textViewDidChange:(UITextView *)textView
 {
+    [self.countLabel setText:[NSString stringWithFormat:@"%d",self.secondTextView.text.length]];
+    if(self.secondTextView.text.length > 1000)
+    {
+        [self.countLabel setTextColor:[UIColor redColor]];
+    }
     if(self.secondTextView.text.length == 0)
     {
         [self.labelText setHidden:NO];
@@ -247,6 +248,21 @@
     {
         [self.labelText setHidden:YES];
     }
-    
 }
+
+
+
+////textview文本框里的备注
+//- (void) textViewDidChange:(UITextView *)textView
+//{
+//    if(self.secondTextView.text.length == 0)
+//    {
+//        [self.labelText setHidden:NO];
+//    }
+//    else
+//    {
+//        [self.labelText setHidden:YES];
+//    }
+//    
+//}
 @end

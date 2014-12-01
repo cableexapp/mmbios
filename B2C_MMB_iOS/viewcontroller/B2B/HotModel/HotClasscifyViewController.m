@@ -243,8 +243,6 @@
     [badgeBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     [askPriceBtn addSubview:badgeBtn];
     
-
-    
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:askPriceBtn];
     self.navigationItem.rightBarButtonItem = item;
  
@@ -501,14 +499,12 @@
     }
 }
 
-
 - (IBAction)hotLineBtnClick:(id)sender
 {
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
     [av setTag:20];
     [av show];
 }
-
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

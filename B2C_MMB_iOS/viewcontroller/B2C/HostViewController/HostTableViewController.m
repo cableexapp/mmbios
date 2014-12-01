@@ -938,8 +938,8 @@
                     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width, 35)];
                     [contentLabel setBackgroundColor:[UIColor clearColor]];
                     [contentLabel setNumberOfLines:0];
-                    [contentLabel setText:content];
-                    [contentLabel setFont:[UIFont systemFontOfSize:10]];
+                    [contentLabel setText:[NSString stringWithFormat:@" %@",content]];
+                    [contentLabel setFont:[UIFont systemFontOfSize:12]];
                     [cabelShowView addSubview:contentLabel];
                     
                     UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height + 5, pic.frame.size.width, 20)];
@@ -950,10 +950,8 @@
                     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
                     cell.backgroundColor = [UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0];
                 }
-   
             }
         }
- 
     }
 }
     return cell;

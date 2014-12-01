@@ -169,7 +169,7 @@
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
                         NSLog(@"3= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 15, 18, 18)];
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-24, 14, 18, 18)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
                     [btn setTitle:@"99+" forState:UIControlStateNormal];

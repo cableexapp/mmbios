@@ -107,7 +107,7 @@
     }
     [self readHistoryData];
     NSLog(@"viewWillAppear");
-    
+     [self loadbadgeCount];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -169,7 +169,7 @@
     [self.view addSubview:mySearchBar];
     
     leftBtn = [[UILabel alloc] init];
-    leftBtn.frame = CGRectMake(0, 0, 81, 45);
+    leftBtn.frame = CGRectMake(0, 0, 82, 45);
     leftBtn.backgroundColor = [UIColor colorWithRed:198.0/255 green:198.0/255 blue:203.0/255 alpha:1.0];
     leftBtn.font = [UIFont systemFontOfSize:12];
     leftBtn.textAlignment = NSTextAlignmentCenter;
@@ -224,7 +224,7 @@
     [rightButtonView addSubview:rightBtn];
     
     countLabel = [[UILabel alloc] init];
-    countLabel.frame = CGRectMake(50, 2, 18, 18);
+    countLabel.frame = CGRectMake(46, 2, 18, 18);
     countLabel.layer.borderWidth = 1;
     countLabel.layer.cornerRadius = 10;
     countLabel.textColor = [UIColor whiteColor];
@@ -265,7 +265,7 @@
         leftBtn.text = @"家装线专卖";
         tempType = @"2";
         sectionBtnIv.frame = CGRectMake(72,17.5,10,10);
-         [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
+        [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
         mySearchBar.text = [[self.searchFlag componentsSeparatedByString:@"+"] objectAtIndex:1];
         searchBarText = [[self.searchFlag componentsSeparatedByString:@"+"] objectAtIndex:1];
         speakButton.hidden = YES;
@@ -273,6 +273,39 @@
         [self sendRquest];
     }
     NSLog(@"viewDidLoad");
+   
+}
+
+-(void)loadbadgeCount
+{
+    //请求询价车商品数量
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 -(void)coverClearButton
@@ -286,6 +319,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    
     if (URLTag == URLSearchProductTypeTag)
     {
          [self refreshTableView];
@@ -307,6 +341,25 @@
         {
             self.serchResultView.scrollEnabled = NO;
             [self remindNoSearchResult];
+        }
+    }
+    if (URLTag == URLInquiryCartCountTag)
+    {
+        NSLog(@"dicRespon = %@",[dicRespon objectForKey:@"value"]);
+        if ([[dicRespon objectForKey:@"value"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"value"] intValue] >= 1 && [[dicRespon objectForKey:@"value"] intValue] < 99)
+        {
+            countLabel.hidden = NO;
+            countLabel.text = [dicRespon objectForKey:@"value"];
+        }
+        else if ([[dicRespon objectForKey:@"value"] intValue] > 99)
+        {
+            countLabel.frame = CGRectMake(50, 2, 20, 18);
+            countLabel.hidden = NO;
+            countLabel.text = @"99+";
         }
     }
 }
@@ -439,12 +492,6 @@
     [self refreshClearButton];
 }
 
-//-(void)shopCarArray:(NSNotification*)array
-//{
-//    NSLog(@"+++++++++++array = %@",array.object);
-//    arr = array.object;
-//    
-//}
 
 - (void) rightBtnClick:(UIButton *)sender
 {
@@ -456,19 +503,8 @@
     }
     else if ([tempType isEqualToString:@"2"])
     {
-//        if (arr.count > 0)
-//        {
-//            countLabel.hidden = NO;
-//            countLabel.text = [NSString stringWithFormat:@"%d",arr.count];
-//        }
-//        else if (arr.count == 0)
-//        {
-//            countLabel.hidden = YES;
-//        }
         [self setHidesBottomBarWhenPushed:YES];
         MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
-//        NSLog(@"arr = %@",arr);
-//        countLabel.hidden = NO;
         [self.navigationController pushViewController:shop animated:YES];
     }
     
@@ -563,6 +599,7 @@
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"询价车" forState:UIControlStateNormal];
         tempType = @"1";
+        countLabel.hidden = YES;
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     speakButton.hidden = NO;

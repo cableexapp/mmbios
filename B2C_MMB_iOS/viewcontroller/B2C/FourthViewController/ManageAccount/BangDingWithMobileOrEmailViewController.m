@@ -87,7 +87,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改登陆密码"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改登录密码"];
     self.navigationItem.titleView = top;
     
     [self.tf_getValidate setDelegate:self];

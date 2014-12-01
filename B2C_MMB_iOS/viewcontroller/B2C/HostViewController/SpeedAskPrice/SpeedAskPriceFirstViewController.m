@@ -68,10 +68,27 @@
     //    hasClickPicBtn = NO;
     
     [self pushAndPopStyle];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     self.tel_Tf.placeholder = @"手机号码/固定号码";
     self.tel_Tf.layer.borderWidth = 0.5; 
     self.tel_Tf.layer.borderColor = [[UIColor clearColor] CGColor];
+    
+    UIView *tel_lineView = [[UIView alloc] init];
+    tel_lineView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
+    tel_lineView.frame = CGRectMake(0, self.tel_Tf.frame.origin.y+self.tel_Tf.frame.size.height-1, ScreenWidth, 1);
+    [self.view addSubview:tel_lineView];
+    
+    
+    UIView *content_lineViewUp = [[UIView alloc] init];
+    content_lineViewUp.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
+    content_lineViewUp.frame = CGRectMake(0, self.content_Tv.frame.origin.y, ScreenWidth, 1);
+//    [self.view addSubview:content_lineViewUp];
+    
+    UIView *content_lineView = [[UIView alloc] init];
+    content_lineView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
+    content_lineView.frame = CGRectMake(0, self.content_Tv.frame.origin.y+self.content_Tv.frame.size.height-1, ScreenWidth, 1);
+    [self.view addSubview:content_lineView];
+    
 
     self.upBtn.layer.cornerRadius = 6;
     self.upBtn.layer.backgroundColor = [[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] CGColor];

@@ -794,8 +794,7 @@
                     [countlabel setFont:[UIFont systemFontOfSize:12]];
                     
                     float money = [number intValue] * [data.price floatValue];
-                    NSLog(@"money = %f",money);
-                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
+                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra decimalwithFormat:@"0.00" floatV:money]];
                     CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
                     UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
                     [totalLabel setText:smallCal];
@@ -947,7 +946,12 @@
 
                     
                     float money = [number intValue] * [price floatValue];
-                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
+                    NSLog(@"%f",money);
+//                    money = 0.123;
+//                    + (NSString *) decimalwithFormat:(NSString *)format  floatV:(float)floatV
+
+                    NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra decimalwithFormat:@"0.00"  floatV:money]];
+                    NSLog(@"smallCal = %@",smallCal);
                     UILabel *totalLabel = nil;
                     if(smallCal.length == 0)
                     {
@@ -1196,6 +1200,9 @@
 {
     
 }
+
+
+
 
 - (void) pickerView:(NSString *)title WithTag:(int)tag
 {

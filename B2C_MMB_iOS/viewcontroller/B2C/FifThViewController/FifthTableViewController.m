@@ -53,13 +53,12 @@
     {
         [HUD hide:YES];
     }
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
-    [self setHidesBottomBarWhenPushed:NO];
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"])
     {
         [self.logOutBtn setHidden:YES];
@@ -68,6 +67,7 @@
     {
         [self.logOutBtn setHidden:NO];
     }
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 - (void)viewDidLoad
@@ -114,27 +114,24 @@
 
 - (void)pushMenuItem:(id)sender
 {
-    NSLog(@"sender = %@",sender);
-    NSLog(@"123 = %@",[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0]);
-    
+    [self setHidesBottomBarWhenPushed:YES];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
     {
-        NSLog(@"购物车");
-//        [self setHidesBottomBarWhenPushed:YES];
         MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
         [self.navigationController pushViewController:shop animated:YES];
-        
     }
     else
     {
-        NSLog(@"询价车");
-//        [self setHidesBottomBarWhenPushed:YES];
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
-    
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [KxMenu dismissMenu];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -149,9 +146,6 @@
         [HUD setLabelText:@"正在退出"];
         [HUD setDelegate:self];
     }
-    
-    
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteAppCartItems",time];
     NSString *token = [DCFCustomExtra md5:string];

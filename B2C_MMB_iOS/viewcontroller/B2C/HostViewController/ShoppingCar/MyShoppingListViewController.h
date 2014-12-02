@@ -17,7 +17,11 @@
     
     
     DCFConnectionUtil *conn;
+    
+    UITableViewCell *noCell;
 }
 
 - (id) initWithDataArray:(NSArray *) arr;
+
+
 @end

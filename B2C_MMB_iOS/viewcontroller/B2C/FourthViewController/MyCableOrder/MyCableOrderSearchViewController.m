@@ -174,6 +174,7 @@
 
     if(URLTag == URLB2COrderListAllTag)
     {
+        NSLog(@"dicRespon = %@",[[dicRespon objectForKey:@"items"] objectAtIndex:0]);
         int intTotal;
         int result = [[dicRespon objectForKey:@"result"] intValue];
         if(URLTag == ULRGetOrderListTag)
@@ -310,10 +311,15 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     DiscussViewController *disCuss = [mySB instantiateViewControllerWithIdentifier:@"discussViewController"];
-    disCuss.itemArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:sender.tag/10] myItems]];
-    disCuss.shopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] shopId]];
-    disCuss.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:sender.tag/10] subDate]];
+//    disCuss.itemArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:sender.tag/10] myItems]];
+//    disCuss.shopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] shopId]];
+//    disCuss.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+//    disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:sender.tag/10] subDate]];
+    
+    disCuss.itemArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:sender.tag] objectForKey:@"items"]];
+    disCuss.shopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"shopId"]];
+    disCuss.orderNum = [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
+    disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:sender.tag] objectForKey:@"subDate"]];
     
     [self.navigationController pushViewController:disCuss animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
@@ -325,8 +331,8 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     logisticsTrackingViewController *logisticsTrackingView = [mySB instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
-    logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsId]];
-    logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsNum]];
+    logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"logisticsId"]];
+    logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"logisticsNum"]];
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -336,8 +342,8 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     CancelOrderViewController *cancelOrderViewController = [mySB instantiateViewControllerWithIdentifier:@"cancelOrderViewController"];
-    cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    cancelOrderViewController.myStatus = [[dataArray objectAtIndex:sender.tag/10] status];
+    cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
+    cancelOrderViewController.myStatus = [[dataArray objectAtIndex:sender.tag] objectForKey:@"status"];
     [self.navigationController pushViewController:cancelOrderViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -346,13 +352,13 @@
 - (void) onLinePayBtnClick:(UIButton *) sender
 {
     
-    NSString *shopName = [[dataArray objectAtIndex:sender.tag/10] shopName];
+    NSString *shopName = [[dataArray objectAtIndex:sender.tag] objectForKey:@"shopName"];
     
     NSString *productTitle = @"";
     NSString *total = nil;
     float shopPrice = 0.00;
     
-    NSArray *itemsArray = [[dataArray objectAtIndex:sender.tag/10] myItems];
+    NSArray *itemsArray = [[dataArray objectAtIndex:sender.tag] objectForKey:@"items"];
     if(itemsArray.count != 0)
     {
         for(NSDictionary *dic in itemsArray)
@@ -372,7 +378,7 @@
     ali.shopName = shopName;
     ali.productName = productTitle;
     ali.productPrice = total;
-    ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
     NSLog(@"%@  %@  %@  %@",ali.shopName,ali.productName,ali.productPrice,ali.productOrderNum);
     
     [self.navigationController pushViewController:ali animated:YES];
@@ -413,7 +419,7 @@
 {
     NSLog(@"receiveBtnClick");
     
-    sureReceiveNumber = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    sureReceiveNumber = [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
     
     UIAlertView *sureAlert = [[UIAlertView alloc] initWithTitle:nil message:@"您确认要收货嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
     [sureAlert show];
@@ -689,22 +695,40 @@
                 }
             }
         }
-        [lookForCustomBtn setTag:indexPath.section*10];
+//        [lookForCustomBtn setTag:indexPath.section*10];
+//        [lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        [discussBtn setTag:indexPath.section*10+1];
+//        [discussBtn addTarget:self action:@selector(discussBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        [lookForTradeBtn setTag:indexPath.section*10+2];
+//        [lookForTradeBtn addTarget:self action:@selector(lookForTradeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        [cancelOrderBtn setTag:indexPath.section*10+3];
+//        [cancelOrderBtn addTarget:self action:@selector(cancelOrderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        [onLinePayBtn setTag:indexPath.section*10+4];
+//        [onLinePayBtn addTarget:self action:@selector(onLinePayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        
+//        [receiveBtn setTag:indexPath.section*10+5];
+//        [receiveBtn addTarget:self action:@selector(receiveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [lookForCustomBtn setTag:indexPath.row];
         [lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [discussBtn setTag:indexPath.section*10+1];
+        [discussBtn setTag:indexPath.row];
         [discussBtn addTarget:self action:@selector(discussBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [lookForTradeBtn setTag:indexPath.section*10+2];
+        [lookForTradeBtn setTag:indexPath.row];
         [lookForTradeBtn addTarget:self action:@selector(lookForTradeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [cancelOrderBtn setTag:indexPath.section*10+3];
+        [cancelOrderBtn setTag:indexPath.row];
         [cancelOrderBtn addTarget:self action:@selector(cancelOrderBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [onLinePayBtn setTag:indexPath.section*10+4];
+        [onLinePayBtn setTag:indexPath.row];
         [onLinePayBtn addTarget:self action:@selector(onLinePayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [receiveBtn setTag:indexPath.section*10+5];
+        [receiveBtn setTag:indexPath.row];
         [receiveBtn addTarget:self action:@selector(receiveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
         [cell addSubview:onLinePayBtn];

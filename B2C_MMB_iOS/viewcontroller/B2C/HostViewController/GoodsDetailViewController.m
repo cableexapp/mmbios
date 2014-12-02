@@ -70,6 +70,10 @@
     UIView *backView;
     
     NSString *producturl;//商品链接地址
+    
+    UIButton *rightBtn;
+    
+    UIBarButtonItem *right;
 }
 @end
 
@@ -211,12 +215,14 @@
         [chooseColorAndCountView removeFromSuperview];
         chooseColorAndCountView = nil;
     }
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    [self setHidesBottomBarWhenPushed:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view isKindOfClass:[UIButton class]] || [view tag] == 101)
@@ -225,6 +231,18 @@
         }
     }
     num = @"0";
+    
+//    NSLog(@"rightBtn = %@",rightBtn);
+//    if(!rightBtn)
+//    {
+        rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
+//        [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
+        [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
+        [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
+        right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+//    }
+    self.navigationItem.rightBarButtonItem = right;
 }
 
 - (void)viewDidLoad
@@ -298,14 +316,7 @@
     backView.alpha = 0.8;
     [self.view insertSubview:backView aboveSubview:tv];
     
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
-    [rightBtn setFrame:CGRectMake(0, 5, 34, 34)];
-    [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = right;
+ 
     
     cellBtnArray = [[NSMutableArray alloc] init];
 }

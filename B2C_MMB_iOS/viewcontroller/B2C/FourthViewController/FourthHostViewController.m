@@ -950,11 +950,11 @@
     
     AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
     //
-    ali.shopName = shopName;
+//    ali.shopName = shopName;
+    ali.shopName = @"家装馆产品";
     ali.productName = productTitle;
     ali.productPrice = total;
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    NSLog(@"%@  %@  %@  %@",ali.shopName,ali.productName,ali.productPrice,ali.productOrderNum);
     
     [self.navigationController pushViewController:ali animated:YES];
 }

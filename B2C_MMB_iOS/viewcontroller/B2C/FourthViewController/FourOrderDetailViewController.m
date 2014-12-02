@@ -95,15 +95,15 @@
     if(self.showOrHideDisCussBtn == YES || self.showOrHideTradeBtn == YES)
     {
         [self.buttomView setHidden:NO];
-
+        
         [self.discussBtn setHidden:!self.showOrHideDisCussBtn];
         
         [self.tradeBtn setHidden:!self.showOrHideTradeBtn];
         
-//        for(UIButton *btn in self.buttomView.subviews)
-//        {
-//            [btn setHidden: NO];
-//        }
+        //        for(UIButton *btn in self.buttomView.subviews)
+        //        {
+        //            [btn setHidden: NO];
+        //        }
         [self.tableBackView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-self.buttomView.frame.size.height-64)];
         [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
     }
@@ -141,7 +141,7 @@
 - (IBAction)discussBtnClick:(id)sender
 {
     DiscussViewController *disCuss = [self.storyboard instantiateViewControllerWithIdentifier:@"discussViewController"];
-
+    
     disCuss.itemArray = [[NSMutableArray alloc] initWithArray:self.theLogiArray];
     disCuss.shopId = [NSString stringWithFormat:@"%@",self.theShopId];
     disCuss.orderNum = [NSString stringWithFormat:@"%@",self.theOrderNum];
@@ -340,7 +340,7 @@
                 CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:orderTotal WithSize:CGSizeMake(MAXFLOAT, 26)];
                 UILabel *orderTotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 2, size_3.width, 26)];
                 [orderTotalLabel setTextAlignment:NSTextAlignmentRight];
-                [orderTotalLabel setText:tradeMoney];
+                [orderTotalLabel setText:orderTotal];
                 [orderTotalLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:orderTotalLabel];
             }

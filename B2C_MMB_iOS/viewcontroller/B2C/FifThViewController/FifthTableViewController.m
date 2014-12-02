@@ -26,6 +26,7 @@
     AppDelegate *app;
     NSMutableArray *arr;
     UIStoryboard *sb;
+    BOOL isPopShow;
 }
 @end
 
@@ -54,6 +55,15 @@
         [HUD hide:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];
+    if (isPopShow == YES)
+    {
+        isPopShow = NO;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -91,25 +101,37 @@
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar:) name:@"popShopCar" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
 
 - (void)popShopCar:(NSNotification *)sender
 {
-    NSArray *menuItems =
-    @[[KxMenuItem menuItem:@"  购物车  "
-                     image:nil
-                    target:self
-                    action:@selector(pushMenuItem:)],
-      
-      [KxMenuItem menuItem:@"  询价车  "
-                     image:nil
-                    target:self
-                    action:@selector(pushMenuItem:)],
-      ];
-    
-    [KxMenu showMenuInView:self.view
-                  fromRect:CGRectMake(self.view.frame.size.width/5-15, self.view.frame.size.height, self.view.frame.size.height/5, 49)
-                 menuItems:menuItems];
+    if (isPopShow == YES)
+    {
+        [KxMenu dismissMenu];
+        isPopShow = NO;
+        self.tableView.scrollEnabled = YES;
+    }
+    else
+    {
+        NSArray *menuItems =
+        @[[KxMenuItem menuItem:@"  购物车  "
+                         image:nil
+                        target:self
+                        action:@selector(pushMenuItem:)],
+          
+          [KxMenuItem menuItem:@"  询价车  "
+                         image:nil
+                        target:self
+                        action:@selector(pushMenuItem:)],
+          ];
+        
+        [KxMenu showMenuInView:self.view
+                      fromRect:CGRectMake(self.view.frame.size.width/5-15, self.view.frame.size.height, self.view.frame.size.height/5, 49)
+                     menuItems:menuItems];
+        isPopShow = YES;
+        self.tableView.scrollEnabled = NO;
+    }
 }
 
 - (void)pushMenuItem:(id)sender
@@ -128,9 +150,18 @@
     [self setHidesBottomBarWhenPushed:NO];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+-(void)changeClick:(NSNotification *)viewChanged
 {
-    [KxMenu dismissMenu];
+    if (isPopShow == YES)
+    {
+        isPopShow = NO;
+        self.tableView.scrollEnabled = YES;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -244,6 +275,7 @@
     }
     
 }
+
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

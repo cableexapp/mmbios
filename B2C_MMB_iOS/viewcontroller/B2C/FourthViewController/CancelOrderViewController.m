@@ -82,7 +82,7 @@
     
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setTitle:@"完成" forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor colorWithRed:24.0/255.0 green:120.0/255.0 blue:249.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [rightBtn setFrame:CGRectMake(0, 0, 50, 50)];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     

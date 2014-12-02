@@ -491,6 +491,14 @@
         [receiveBtn setTitle:@"确认收货" forState:UIControlStateNormal];
         receiveBtn.layer.cornerRadius = 5;
         
+        [cell addSubview:onLinePayBtn];
+        [cell addSubview:cancelOrderBtn];
+        [cell addSubview:discussBtn];
+        [cell addSubview:lookForCustomBtn];
+        [cell addSubview:lookForTradeBtn];
+        [cell addSubview:receiveBtn];
+        
+        
         titleBackView = [[UIView alloc] init];
         titleBackView.frame = CGRectMake(0, 0, cell.frame.size.width, 56);
         titleBackView.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
@@ -547,8 +555,6 @@
         int status = [[dataArray[indexPath.row] objectForKey:@"status"] intValue];
         if(status == 1)
         {
-            [onLinePayBtn setHidden:NO];
-            [cancelOrderBtn setHidden:NO];
             onLinePayBtn.layer.borderColor = [[UIColor clearColor] CGColor];
             [onLinePayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             onLinePayBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
@@ -557,9 +563,10 @@
             [cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
             
-            [onLinePayBtn setFrame:CGRectMake(10, 151, cell.contentView.frame.size.width-20, 30)];
-            [cancelOrderBtn setFrame:CGRectMake(onLinePayBtn.frame.origin.x + onLinePayBtn.frame.size.width + 45, 151, onLinePayBtn.frame.size.width, 30)];
-            
+            [onLinePayBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-30)/2, 30)];
+            [cancelOrderBtn setFrame:CGRectMake(onLinePayBtn.frame.origin.x + onLinePayBtn.frame.size.width + 10, 151, onLinePayBtn.frame.size.width, 30)];
+            [onLinePayBtn setHidden:NO];
+            [cancelOrderBtn setHidden:NO];
             [discussBtn setHidden:YES];
             [lookForCustomBtn setHidden:YES];
             [lookForTradeBtn setHidden:YES];
@@ -593,8 +600,8 @@
             [lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
             
-            [receiveBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-25)/2, 30)];
-            [lookForTradeBtn setFrame:CGRectMake(receiveBtn.frame.origin.x + receiveBtn.frame.size.width + 5, 151,receiveBtn.frame.size.width, 30)];
+            [receiveBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-30)/2, 30)];
+            [lookForTradeBtn setFrame:CGRectMake(receiveBtn.frame.origin.x + receiveBtn.frame.size.width + 10, 151,receiveBtn.frame.size.width, 30)];
             
             [discussBtn setHidden:YES];
             [lookForCustomBtn setHidden:YES];
@@ -630,10 +637,10 @@
                     [cancelOrderBtn setHidden:YES];
                     [receiveBtn setHidden:YES];
                     
-                    [discussBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-30)/3, 30)];
+                    [discussBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-40)/3, 30)];
                     
-                    [lookForCustomBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 5, 151, discussBtn.frame.size.width, 30)];
-                    [lookForTradeBtn setFrame:CGRectMake(lookForCustomBtn.frame.origin.x + lookForCustomBtn.frame.size.width + 5, 151, lookForCustomBtn.frame.size.width, 30)];
+                    [lookForCustomBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 10, 151, discussBtn.frame.size.width, 30)];
+                    [lookForTradeBtn setFrame:CGRectMake(lookForCustomBtn.frame.origin.x + lookForCustomBtn.frame.size.width + 10, 151, lookForCustomBtn.frame.size.width, 30)];
                 }
                 else
                 {
@@ -647,8 +654,8 @@
                     [lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                     lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                     
-                    [discussBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-25)/2, 30)];
-                    [lookForTradeBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 5, 151, discussBtn.frame.size.width, 30)];
+                    [discussBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-30)/2, 30)];
+                    [lookForTradeBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 10, 151, discussBtn.frame.size.width, 30)];
                     
                     [lookForCustomBtn setHidden:YES];
                     [onLinePayBtn setHidden:YES];
@@ -731,12 +738,6 @@
         [receiveBtn setTag:indexPath.row];
         [receiveBtn addTarget:self action:@selector(receiveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [cell addSubview:onLinePayBtn];
-        [cell addSubview:cancelOrderBtn];
-        [cell addSubview:discussBtn];
-        [cell addSubview:lookForCustomBtn];
-        [cell addSubview:lookForTradeBtn];
-        [cell addSubview:receiveBtn];
         
         UIView *lineView = [[UIView alloc] init];
         lineView.frame = CGRectMake(0, 187, cell.frame.size.width, 1);

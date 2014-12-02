@@ -45,6 +45,9 @@
     NSMutableArray *contentArray;
     NSMutableArray *searchLabelArray;
     NSMutableArray *searchBtnArray;
+    
+    UIView *rightButtonView;
+    UILabel *countLabel;
 }
 @end
 
@@ -62,6 +65,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    rightButtonView.hidden = NO;
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     flag = NO;
     if(addToCarArray)
@@ -96,6 +100,8 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+    [self loadbadgeCount];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -106,8 +112,40 @@
     {
         [conn stopConnection];
     }
+    rightButtonView.hidden = YES;
 }
 
+-(void)loadbadgeCount
+{
+    //请求询价车商品数量
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
 
 - (void)viewDidLoad
 {
@@ -124,17 +162,30 @@
     addToCarArray = [[NSMutableArray alloc] init];
     
     
+    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-70, 0, 60, 44)];
+    [self.navigationController.navigationBar addSubview:rightButtonView];
+    
     askPriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [askPriceBtn setBackgroundColor:[UIColor clearColor]];
     [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
     [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
+    [askPriceBtn setFrame:CGRectMake(0, 0, 60, 44)];
     [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [rightButtonView addSubview:askPriceBtn];
     
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:askPriceBtn];
-    self.navigationItem.rightBarButtonItem = item;
-    
-    
+    countLabel = [[UILabel alloc] init];
+    countLabel.frame = CGRectMake(46, 2, 18, 18);
+    countLabel.layer.borderWidth = 1;
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.font = [UIFont systemFontOfSize:11];
+    countLabel.textAlignment = 1;
+    countLabel.hidden = YES;
+    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+    [rightButtonView addSubview:countLabel];
+
     if(!topLabel)
     {
         topLabel = [[UILabel alloc] init];
@@ -373,11 +424,30 @@
         }
         if(carCount > 0)
         {
-            [askPriceBtn setTitle:[NSString stringWithFormat:@"询价车 +%d",carCount] forState:UIControlStateNormal];
+            [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
+            
         }
         else
         {
             [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
+        }
+    }
+    if (URLTag == URLInquiryCartCountTag)
+    {
+        if ([[dicRespon objectForKey:@"value"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"value"] intValue] >= 1 && [[dicRespon objectForKey:@"value"] intValue] < 99)
+        {
+            countLabel.hidden = NO;
+            countLabel.text = [dicRespon objectForKey:@"value"];
+        }
+        else if ([[dicRespon objectForKey:@"value"] intValue] > 99)
+        {
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
+            countLabel.hidden = NO;
+            countLabel.text = @"99+";
         }
     }
 }
@@ -400,8 +470,6 @@
     }
     
     btnTag = sender.tag;
-    
-    
     
     NSString *firstType = nil;
     NSString *secondType = nil;
@@ -429,7 +497,6 @@
                 thirdType = [self.myTitle substringFromIndex:i+1];
             }
         }
-        
     }
     
     NSString *text = nil;
@@ -441,7 +508,6 @@
     {
         text = [NSString stringWithFormat:@"%@",[searchArray objectAtIndex:btnTag]];
     }
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -449,9 +515,7 @@
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -461,15 +525,9 @@
     {
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&model=%@&firsttype=%@&secondtype=%@&thirdtype=%@",visitorid,token,text,firstType,secondType,thirdType];
     }
-    
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLJoinInquiryCartTag delegate:self];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/JoinInquiryCart.html?"];
-    
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
 }
 
 
@@ -480,17 +538,18 @@
     NSString *str = nil;
     if(badge <= 0)
     {
-        str = [NSString stringWithFormat:@"%@",@"询价车"];
+        str = @"询价车";
     }
     else
     {
-        str = [NSString stringWithFormat:@"询价车 +%d",badge];
+//        str = [NSString stringWithFormat:@"询价车 +%d",badge];
+        str = @"询价车";
+        countLabel.text = [NSString stringWithFormat:@"%d",badge];
+        countLabel.hidden = NO;
     }
     [askPriceBtn setTitle:str forState:UIControlStateNormal];
     
-    
     transitionLayer.opacity = 0;
-    
     CALayer *transitionLayer1 = [[CALayer alloc] init];
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -498,7 +557,6 @@
     transitionLayer1.frame = [[UIApplication sharedApplication].keyWindow convertRect:askPriceBtn.bounds fromView:askPriceBtn];
     [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer1];
     [CATransaction commit];
-    
 }
 
 #pragma mark - searchBar
@@ -524,7 +582,6 @@
             [cancel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
     }
-    
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -542,7 +599,6 @@
     {
         [searchBtnArray removeAllObjects];
     }
-    
     
     NSString *str = [mySearch.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if(str.length == 0)
@@ -567,9 +623,6 @@
             [label setTextColor:[UIColor redColor]];
             [label setFont:[UIFont systemFontOfSize:13]];
             [searchLabelArray addObject:label];
-            
-         
-            
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
@@ -631,10 +684,9 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     return 44;
-    
 }
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(flag == NO)
@@ -657,7 +709,8 @@
         {
             cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         }
-        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+        {
             [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
         }
         

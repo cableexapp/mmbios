@@ -54,7 +54,7 @@ int isgo = 1;
     
     NSMutableArray *arr;
     
-    
+    BOOL isPopShow;
 }
 @end
 
@@ -107,6 +107,15 @@ int isgo = 1;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
     [self setHidesBottomBarWhenPushed:NO];
+    if (isPopShow == YES)
+    {
+        isPopShow = NO;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 
@@ -350,35 +359,45 @@ int isgo = 1;
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
+    
+     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
 
 - (void)popShopCarTap:(UITapGestureRecognizer *)sender
 {
-    NSLog(@"购物车");
-//    self.tableView.scrollEnabled = NO;
     if (isgo == 1)
     {
-        NSArray *menuItems =
-        @[[KxMenuItem menuItem:@"  购物车  "
-                         image:nil
-                        target:self
-                        action:@selector(pushMenuItem:)],
-          
-          [KxMenuItem menuItem:@"  询价车  "
-                         image:nil
-                        target:self
-                        action:@selector(pushMenuItem:)],
-          ];
-        
-        [KxMenu showMenuInView:self.view
-                      fromRect:CGRectMake(self.view.frame.size.width/5-15, self.view.frame.size.height, self.view.frame.size.height/5, 49)
-                     menuItems:menuItems];
+        if (isPopShow == YES)
+        {
+            [KxMenu dismissMenu];
+            isPopShow = NO;
+            self.tableView.scrollEnabled = YES;
+        }
+        else
+        {
+            self.tableView.scrollEnabled = NO;
+            NSArray *menuItems =
+            @[[KxMenuItem menuItem:@"  购物车  "
+                             image:nil
+                            target:self
+                            action:@selector(pushMenuItem:)],
+              
+              [KxMenuItem menuItem:@"  询价车  "
+                             image:nil
+                            target:self
+                            action:@selector(pushMenuItem:)],
+              ];
+            
+            [KxMenu showMenuInView:self.view
+                          fromRect:CGRectMake(self.view.frame.size.width/5-15, self.view.frame.size.height, self.view.frame.size.height/5, 49)
+                         menuItems:menuItems];
+            isPopShow = YES;
+        }
     }
     else if (isgo == 2)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"popShopCar" object:nil];
     }
-   
 }
 
 - (void)pushMenuItem:(id)sender
@@ -386,32 +405,29 @@ int isgo = 1;
     [self setHidesBottomBarWhenPushed:YES];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
     {
-        NSLog(@"购物车");
-//        [self setHidesBottomBarWhenPushed:YES];
         MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
         [self.navigationController pushViewController:shop animated:YES];
-       
     }
     else
     {
-        NSLog(@"询价车");
-        
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
-//        [self setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];
 }
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)changeClick:(NSNotification *)viewChanged
 {
-    [self.view endEditing:YES];
-//    self.tableView.scrollEnabled = YES;
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    [KxMenu dismissMenu];
+    if (isPopShow == YES)
+    {
+        isPopShow = NO;
+        self.tableView.scrollEnabled = YES;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 -(void)goToChatView:(NSNotification *)goToChat

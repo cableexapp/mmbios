@@ -110,12 +110,14 @@
     {
         [chooseGoodsArray removeAllObjects];
     }
+    NSLog(@"dataArray = %d",dataArray.count);
+     NSLog(@"headBtnArray = %d",headBtnArray.count);
+    NSLog(@"cellBtnArray = %d",cellBtnArray.count);
     if(btn.selected == YES)
     {
         for(int i=0;i<dataArray.count;i++)
         {
-            [[headBtnArray objectAtIndex:i] setSelected:YES];
-            
+            [[[headBtnArray objectAtIndex:i] lastObject] setSelected:YES];
             NSMutableArray *cellbtnArray = [cellBtnArray objectAtIndex:i];
             for(UIButton *btn in cellbtnArray)
             {
@@ -133,7 +135,7 @@
     {
         for(int i=0;i<dataArray.count;i++)
         {
-            [[headBtnArray objectAtIndex:i] setSelected:NO];
+            [[[headBtnArray objectAtIndex:i] lastObject] setSelected:NO];
             
             NSMutableArray *cellbtnArray = [cellBtnArray objectAtIndex:i];
             for(UIButton *btn in cellbtnArray)
@@ -351,9 +353,7 @@
             {
                 NSMutableArray *arr = [dataArray objectAtIndex:i];
                 total = total + arr.count;
-            }
-            
-            
+            }                                                                                                                                                                                                           
             [tv reloadData];
         }
         else if (result == 0)
@@ -680,7 +680,7 @@
     [buttomView addSubview:buttomTopView];
     
     buttomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttomBtn setFrame:CGRectMake(5, 13, 30, 30)];
+    [buttomBtn setFrame:CGRectMake(5, 13, 28, 28)];
     [buttomBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
     [buttomBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
     [buttomBtn setSelected:NO];
@@ -703,12 +703,11 @@
     
     payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [payBtn setFrame:CGRectMake(moneyLabel.frame.origin.x + moneyLabel.frame.size.width + 10, 10, 100, 34)];
-    payBtn.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
-    payBtn.layer.borderWidth = 1.0f;
-    payBtn.layer.cornerRadius = 2.0f;
+    payBtn.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0];
+    [payBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    payBtn.layer.cornerRadius = 5.0f;
     payBtn.layer.masksToBounds = YES;
     [self payBtnChange];
-    [payBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [buttomView addSubview:payBtn];
     
@@ -942,7 +941,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         
         NSString *items = nil;
-        NSLog(@"chooseGoodsArray = %@",chooseGoodsArray);
+        NSLog(@"chooseGoodsArray123 = %@",chooseGoodsArray);
         if(chooseGoodsArray && chooseGoodsArray.count != 0)
         {
             for(int i=0;i<chooseGoodsArray.count;i++)

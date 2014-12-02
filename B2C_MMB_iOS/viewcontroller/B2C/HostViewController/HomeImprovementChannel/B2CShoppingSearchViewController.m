@@ -133,26 +133,31 @@
             modelsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"models"]]];
             specsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"specs"]]];
             
-            for(UIButton *btn in array2)
-            {
-                NSString *str = btn.titleLabel.text;
-                for(int i=0;i<brandsArray.count;i++)
-                {
-                    if([str isEqualToString:[brandsArray objectAtIndex:i]])
-                    {
-                        [btn setEnabled:YES];
-                        break;
-                    }
-                    else
-                    {
-                        [btn setEnabled:NO];
-                    }
-                }
-                if(brandsArray.count == 0)
-                {
-                    [btn setEnabled:NO];
-                }
-            }
+            
+            
+        
+#pragma mark     -  选中的列表选项处理
+            
+//            for(UIButton *btn in array2)
+//            {
+//                NSString *str = btn.titleLabel.text;
+//                for(int i=0;i<brandsArray.count;i++)
+//                {
+//                    if([str isEqualToString:[brandsArray objectAtIndex:i]])
+//                    {
+//                        [btn setEnabled:YES];
+//                        break;
+//                    }
+//                    else
+//                    {
+//                        [btn setEnabled:NO];
+//                    }
+//                }
+//                if(brandsArray.count == 0)
+//                {
+//                    [btn setEnabled:NO];
+//                }
+//            }
             for(UIButton *btn in array3)
             {
                 NSString *str = btn.titleLabel.text;
@@ -662,11 +667,11 @@
               array4,@"横截面",nil];
     
     ivArray = [[NSMutableArray alloc] init];
-    
+   
     for(int i=0;i<[[_myDic allKeys] count];i++)
     {
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 1, 23, 27)];
-        [iv setImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+        [iv setImage:[UIImage imageNamed:@"YellowDownArrow"]];
         [ivArray addObject:iv];
     }
     

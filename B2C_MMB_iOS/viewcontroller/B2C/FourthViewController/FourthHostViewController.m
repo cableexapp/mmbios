@@ -143,7 +143,7 @@
     
     rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
     [self.navigationController.navigationBar addSubview:rightButtonView];
-
+    
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundColor:[UIColor clearColor]];
     [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -196,7 +196,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-//    NSLog(@"我的家装馆订单 = %@",dicRespon);
+    //    NSLog(@"我的家装馆订单 = %@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
@@ -225,7 +225,8 @@
                 }
                 [dataArray addObjectsFromArray:[B2CMyOrderData getListArray:[dicRespon objectForKey:@"items"]]];
                 
-                intTotal = [[dicRespon objectForKey:@"total"] intValue];
+                //                intTotal = [[dicRespon objectForKey:@"total"] intValue];
+                intTotal = [[dicRespon objectForKey:@"items"] count];
                 
                 if(intTotal == 0)
                 {
@@ -505,7 +506,7 @@
     NSURL *url = [NSURL URLWithString:picString];
     [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
     [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
-
+    
     [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
     
     [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
@@ -608,7 +609,7 @@
                 [cell.receiveBtn setHidden:YES];
                 
                 [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/3, 30)];
-        
+                
                 [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
                 [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
                 

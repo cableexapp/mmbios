@@ -339,6 +339,7 @@
 
 - (void)popShopCar:(NSNotification *)sender
 {
+    NSLog(@"我的买卖宝-购物车");
         NSArray *menuItems =
         @[[KxMenuItem menuItem:@"  购物车  "
                          image:nil

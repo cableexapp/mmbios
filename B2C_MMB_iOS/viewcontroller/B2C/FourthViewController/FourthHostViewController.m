@@ -535,8 +535,8 @@
         [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
-        [cell.onLinePayBtn setFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-20, 30)];
-        [cell.cancelOrderBtn setFrame:CGRectMake(cell.onLinePayBtn.frame.origin.x + cell.onLinePayBtn.frame.size.width + 45, 5, cell.onLinePayBtn.frame.size.width, 30)];
+        [cell.onLinePayBtn setFrame:CGRectMake(10, 5,(cell.contentView.frame.size.width-30)/2, 30)];
+        [cell.cancelOrderBtn setFrame:CGRectMake(cell.onLinePayBtn.frame.origin.x + cell.onLinePayBtn.frame.size.width + 10, 5, cell.onLinePayBtn.frame.size.width, 30)];
         
         [cell.discussBtn setHidden:YES];
         [cell.lookForCustomBtn setHidden:YES];
@@ -571,8 +571,8 @@
         [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
-        [cell.receiveBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
-        [cell.lookForTradeBtn setFrame:CGRectMake(cell.receiveBtn.frame.origin.x + cell.receiveBtn.frame.size.width + 5, 5, cell.receiveBtn.frame.size.width, 30)];
+        [cell.receiveBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/2, 30)];
+        [cell.lookForTradeBtn setFrame:CGRectMake(cell.receiveBtn.frame.origin.x + cell.receiveBtn.frame.size.width + 10, 5, cell.receiveBtn.frame.size.width, 30)];
         
         [cell.discussBtn setHidden:YES];
         [cell.lookForCustomBtn setHidden:YES];
@@ -608,13 +608,10 @@
                 [cell.cancelOrderBtn setHidden:YES];
                 [cell.receiveBtn setHidden:YES];
                 
-                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/3, 30)];
+                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-40)/3, 30)];
                 
-                [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
-                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
-                
-                
-                
+                [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 10, 5, cell.discussBtn.frame.size.width, 30)];
+                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 10, 5, cell.lookForCustomBtn.frame.size.width, 30)];
             }
             else
             {
@@ -628,8 +625,8 @@
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
-                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
-                [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
+                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/2, 30)];
+                [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 10, 5, cell.discussBtn.frame.size.width, 30)];
                 
                 [cell.lookForCustomBtn setHidden:YES];
                 [cell.onLinePayBtn setHidden:YES];
@@ -651,8 +648,8 @@
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
-                [cell.lookForCustomBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
-                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
+                [cell.lookForCustomBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/2, 30)];
+                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 10, 5, cell.lookForCustomBtn.frame.size.width, 30)];
                 
                 [cell.discussBtn setHidden:YES];
                 [cell.onLinePayBtn setHidden:YES];

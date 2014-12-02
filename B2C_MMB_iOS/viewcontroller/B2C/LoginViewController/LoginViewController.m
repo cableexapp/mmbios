@@ -251,7 +251,7 @@
         {
             if(msg.length == 0)
             {
-                [DCFStringUtil showNotice:@"登录失败"];
+                [DCFStringUtil showNotice:@"您输入的密码和账户名不匹配，请重新输入"];
             }
             else
             {
@@ -261,6 +261,8 @@
         }
         else
         {
+            [DCFStringUtil showNotice:@"登录成功"];
+            
             logInSuccess = YES;
             
             NSDictionary *iems = [NSDictionary dictionaryWithDictionary:[dicRespon objectForKey:@"items"]];

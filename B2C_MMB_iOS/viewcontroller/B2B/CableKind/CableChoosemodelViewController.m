@@ -471,8 +471,6 @@
     
     btnTag = sender.tag;
     
-    
-    
     NSString *firstType = nil;
     NSString *secondType = nil;
     NSString *thirdType = nil;
@@ -499,7 +497,6 @@
                 thirdType = [self.myTitle substringFromIndex:i+1];
             }
         }
-        
     }
     
     NSString *text = nil;
@@ -511,7 +508,6 @@
     {
         text = [NSString stringWithFormat:@"%@",[searchArray objectAtIndex:btnTag]];
     }
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -519,9 +515,7 @@
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -531,15 +525,9 @@
     {
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&model=%@&firsttype=%@&secondtype=%@&thirdtype=%@",visitorid,token,text,firstType,secondType,thirdType];
     }
-    
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLJoinInquiryCartTag delegate:self];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/JoinInquiryCart.html?"];
-    
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
 }
 
 
@@ -561,9 +549,7 @@
     }
     [askPriceBtn setTitle:str forState:UIControlStateNormal];
     
-    
     transitionLayer.opacity = 0;
-    
     CALayer *transitionLayer1 = [[CALayer alloc] init];
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
@@ -571,7 +557,6 @@
     transitionLayer1.frame = [[UIApplication sharedApplication].keyWindow convertRect:askPriceBtn.bounds fromView:askPriceBtn];
     [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer1];
     [CATransaction commit];
-    
 }
 
 #pragma mark - searchBar
@@ -597,7 +582,6 @@
             [cancel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         }
     }
-    
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -615,7 +599,6 @@
     {
         [searchBtnArray removeAllObjects];
     }
-    
     
     NSString *str = [mySearch.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     if(str.length == 0)
@@ -640,9 +623,6 @@
             [label setTextColor:[UIColor redColor]];
             [label setFont:[UIFont systemFontOfSize:13]];
             [searchLabelArray addObject:label];
-            
-         
-            
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
@@ -704,10 +684,9 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     return 44;
-    
 }
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(flag == NO)
@@ -730,7 +709,8 @@
         {
             cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         }
-        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+        {
             [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
         }
         

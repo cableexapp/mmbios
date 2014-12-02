@@ -185,18 +185,7 @@
     countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
     countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
     [rightButtonView addSubview:countLabel];
-    
-//    askPriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [askPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [askPriceBtn setTitle:@"询价车" forState:UIControlStateNormal];
-//    [askPriceBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-//    [askPriceBtn setFrame:CGRectMake(0, 0, 80, 50)];
-//    [askPriceBtn addTarget:self action:@selector(askPriceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:askPriceBtn];
-//    self.navigationItem.rightBarButtonItem = item;
-    
-    
+
     if(!topLabel)
     {
         topLabel = [[UILabel alloc] init];
@@ -456,7 +445,7 @@
         }
         else if ([[dicRespon objectForKey:@"value"] intValue] > 99)
         {
-            countLabel.frame = CGRectMake(50, 2, 20, 18);
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
             countLabel.hidden = NO;
             countLabel.text = @"99+";
         }

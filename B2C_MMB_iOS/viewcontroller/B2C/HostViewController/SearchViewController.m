@@ -359,7 +359,7 @@
         }
         else if ([[dicRespon objectForKey:@"value"] intValue] > 99)
         {
-            countLabel.frame = CGRectMake(50, 2, 20, 18);
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
             countLabel.hidden = NO;
             countLabel.text = @"99+";
         }

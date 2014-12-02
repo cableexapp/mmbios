@@ -83,11 +83,31 @@
         btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSend,self.waitForSureBtn,self.waitForDiscussBtn, nil];
     }
     
-    [self.allBtn setSelected:YES];
-    [self.waitForPayBtn setSelected:NO];
-    [self.waitForSend setSelected:NO];
-    [self.waitForSureBtn setSelected:NO];
-    [self.waitForDiscussBtn setSelected:NO];
+    if([self.myStatus isEqualToString:@"0"])
+    {
+        [self.allBtn setSelected:YES];
+    }
+    if([self.myStatus isEqualToString:@"1"])
+    {
+        [self.waitForPayBtn setSelected:YES];
+    }
+    if([self.myStatus isEqualToString:@"2"])
+    {
+        [self.waitForSend setSelected:YES];
+    }
+    if([self.myStatus isEqualToString:@"3"])
+    {
+        [self.waitForSureBtn setSelected:YES];
+    }
+    if([self.myStatus isEqualToString:@"4"])
+    {
+        [self.waitForDiscussBtn setSelected:YES];
+    }
+//    [self.allBtn setSelected:YES];
+//    [self.waitForPayBtn setSelected:NO];
+//    [self.waitForSend setSelected:NO];
+//    [self.waitForSureBtn setSelected:NO];
+//    [self.waitForDiscussBtn setSelected:NO];
     
     for(int i=0;i<btnArray.count;i++)
     {
@@ -112,7 +132,7 @@
         //        }
     }
     //    [self loadRequest:_myStatus];
-    [self loadRequest:@""];
+    [self loadRequest:self.myStatus];
 }
 
 - (void)viewDidLoad
@@ -253,11 +273,18 @@
         [DCFStringUtil showNotice:msg];
         if(result == 1)
         {
-            
+            [DCFStringUtil showNotice:msg];
         }
         else
         {
-            
+            if([DCFCustomExtra validateString:msg] == NO)
+            {
+                [DCFStringUtil showNotice:@"确认收货失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
         }
     }
 }
@@ -500,6 +527,7 @@
         cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     NSArray *itemsArray = [[dataArray objectAtIndex:path.section] myItems];
+//    NSLog(@"itemsArray=%@",itemsArray);
     NSDictionary *itemDic = [itemsArray objectAtIndex:path.row];
     
     NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
@@ -507,7 +535,7 @@
     [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
     [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
     
-    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
+    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:path.section] orderTotal]]];
     
     [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
     
@@ -941,7 +969,8 @@
         }
         total = [NSString stringWithFormat:@"%.2f",shopPrice];
     }
-    
+
+    total = [NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:sender.tag/10] orderTotal]];
     //
     [self setHidesBottomBarWhenPushed:YES];
     
@@ -952,7 +981,6 @@
     ali.productName = productTitle;
     ali.productPrice = total;
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    
     [self.navigationController pushViewController:ali animated:YES];
 }
 

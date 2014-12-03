@@ -15,6 +15,7 @@
     UILabel *noNet;
     UIImageView *noNetView;
     UILabel *noNetMessage;
+    NSMutableArray *isOneArray;
 }
 
 @end
@@ -39,6 +40,8 @@ int flagPage = 0;
 {
     [super viewDidLoad];
     self.view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+    
+    isOneArray = [[NSMutableArray alloc] init];
     
     //导航栏标题
     UILabel *naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,190, 44)];
@@ -130,6 +133,10 @@ int flagPage = 0;
     
     //接收分组列表
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (memberGroupList:) name:@"memberGroupName" object:nil];
+    
+//    NSLog(@"self.appDelegate.roster = %@",self.appDelegate.roster);
+    
+   
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -155,6 +162,27 @@ int flagPage = 0;
             [view setHidden:YES];
         }
     }
+//    if (isOneArray.count == 0)
+//    {
+//        [isOneArray addObject:[self.appDelegate.roster objectAtIndex:0]];
+//        NSLog(@"isOneArray = %@",isOneArray);
+//    }
+//    if (isOneArray.count == 1)
+//    {
+//        WaitViewController *waitVC = [[WaitViewController alloc] init];
+//        waitVC.tempGroup = [NSString stringWithFormat:@"%@",isOneArray[0]];
+//        NSLog(@"tempGroup = %@",[NSString stringWithFormat:@"%@",isOneArray[0]]);
+//        waitVC.tempFrom = self.fromString;
+//        CATransition *transition = [CATransition animation];
+//        transition.duration = 0.5f;
+//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//        transition.type =  kCATransitionMoveIn;
+//        transition.subtype =  kCATransitionFromTop;
+//        transition.delegate = self;
+//        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+//        [self.navigationController pushViewController:waitVC animated:NO];
+//    }
+
 }
 
 //网络连接后刷新加载客服列表
@@ -233,6 +261,8 @@ int flagPage = 0;
 {
     [self.memberTableView removeFromSuperview];
     self.tempArray = memberList.object;
+//    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithObjects:<#(NSArray *)#> forKeys:<#(NSArray *)#>];
+    
     self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
     self.memberTableView.dataSource = self;
     self.memberTableView.delegate = self;

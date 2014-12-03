@@ -603,7 +603,6 @@
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
-                
                 [cell.onLinePayBtn setHidden:YES];
                 [cell.cancelOrderBtn setHidden:YES];
                 [cell.receiveBtn setHidden:YES];

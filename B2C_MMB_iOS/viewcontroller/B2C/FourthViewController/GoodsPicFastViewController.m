@@ -347,7 +347,7 @@
     //    UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
     //
 //   [self setHidesBottomBarWhenPushed:YES];
-    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:self.myShopName WithShopId:self.mySnapId WithUse:@""];
+    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:self.myShopName WithShopId:self.myShopId WithUse:@""];
     [self.navigationController pushViewController:shopHost animated:YES];
 }
 

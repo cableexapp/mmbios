@@ -132,6 +132,8 @@
         //        }
     }
     //    [self loadRequest:_myStatus];
+    
+    intPage = 1;
     [self loadRequest:self.myStatus];
 }
 
@@ -551,6 +553,7 @@
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     int status = [[[dataArray objectAtIndex:path.section] status] intValue];
+    NSLog(@"status = %d",status);
     if(status == 1)
     {
         [cell.onLinePayBtn setHidden:NO];

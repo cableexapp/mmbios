@@ -110,7 +110,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"dicRespon = %@",[[dicRespon objectForKey:@"ctems"] objectAtIndex:0]);
     if(URLTag == URLInquiryListTag)
     {
         if(_reloading == YES)

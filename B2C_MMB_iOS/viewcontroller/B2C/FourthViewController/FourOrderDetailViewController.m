@@ -17,11 +17,14 @@
 #import "GoodsPicFastViewController.h"
 #import "logisticsTrackingViewController.h"
 #import "DiscussViewController.h"
+#import "ShopHostTableViewController.h"
 
 @interface FourOrderDetailViewController ()
 {
     NSMutableArray *dataArray;
     UITableView *tv;
+    
+    UIButton *nameBtn;
 }
 @end
 
@@ -129,10 +132,36 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetOrderDetailTag)
     {
-        
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CGetOrderDetailData getListArray:[dicRespon objectForKey:@"items"]]];
+            
+            NSString *shopName = [[dataArray lastObject] shopName];
+   
+            nameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [nameBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [nameBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+            if([DCFCustomExtra validateString:shopName] == NO)
+            {
+                [nameBtn setFrame:CGRectMake(10, 0, 100, 30)];
+            }
+            else
+            {
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:shopName WithSize:CGSizeMake(MAXFLOAT, 30)];
+                [nameBtn setFrame:CGRectMake(10, 0, size.width, 30)];
+            }
+            [nameBtn setTitle:[[dataArray lastObject] shopName] forState:UIControlStateNormal];
+            [nameBtn addTarget:self action:@selector(nameBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            
+//            nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
+//            [nameLabel setTextColor:[UIColor blackColor]];
+//            [nameLabel setFont:[UIFont systemFontOfSize:13]];
+//            [nameLabel setText:[[dataArray lastObject] shopName]];
+//            [nameLabel setTextAlignment:NSTextAlignmentLeft];
+//            
+//            UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)];
+//            [nameLabel addGestureRecognizer:labelTap];
+            
             [tv reloadData];
         }
     }
@@ -292,9 +321,11 @@
 }
 
 - (void) nameBtnClick:(UIButton *) sender
-{
-    NSLog(@"test");
+{    
+    ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:[[dataArray lastObject] shopName] WithShopId:[[dataArray lastObject] shopId] WithUse:@""];
+    [self.navigationController pushViewController:shopHost animated:YES];
 }
+
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -319,16 +350,6 @@
         {
             if(indexPath.row == 0)
             {
-//                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
-                
-                UIButton *nameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                [nameBtn setBackgroundColor:[UIColor redColor]];
-                [nameBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                [nameBtn setFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
-                [nameBtn setTitle:[[dataArray lastObject] shopName] forState:UIControlStateNormal];
-//                [nameBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0)];
-                [nameBtn addTarget:self action:@selector(nameBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//                [label setText:[[dataArray lastObject] shopName]];
                 [cell.contentView addSubview:nameBtn];
             }
             if(indexPath.row == [[[dataArray lastObject] myItems] count]+1)
@@ -448,7 +469,6 @@
             GoodsPicFastViewController *goodsPicFastViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"goodsPicFastViewController"];
             
             NSString *snapId = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"snapId"];
-            
             goodsPicFastViewController.mySnapId = snapId;
             goodsPicFastViewController.myShopName = [[dataArray lastObject] shopName];
             goodsPicFastViewController.myShopId = [[dataArray lastObject] shopId];

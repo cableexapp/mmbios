@@ -365,6 +365,7 @@
 		8B89E1DB1A1B07B500AA33C2 /* PinYinForObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1D31A1B07B500AA33C2 /* PinYinForObjc.m */; };
 		8B89E1DC1A1B07B500AA33C2 /* PinyinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1D51A1B07B500AA33C2 /* PinyinHelper.m */; };
 		8B89E1E01A1B204F00AA33C2 /* ZSYPopoverListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1DF1A1B204F00AA33C2 /* ZSYPopoverListView.m */; };
+		8B8B984C1A2ED6E900697375 /* emptyShopCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8B984B1A2ED6E900697375 /* emptyShopCar.png */; };
 		8BA14F861A2C282E00FA0892 /* carSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA14F841A2C282E00FA0892 /* carSelect.png */; };
 		8BA14F871A2C282E00FA0892 /* carUnSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA14F851A2C282E00FA0892 /* carUnSelect.png */; };
 		8BA7C05C1A10A85500758B0F /* chat_timeline_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA7BF631A10A85500758B0F /* chat_timeline_bg.png */; };
@@ -1365,6 +1366,7 @@
 		8B89E1D51A1B07B500AA33C2 /* PinyinHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinyinHelper.m; sourceTree = "<group>"; };
 		8B89E1DE1A1B204F00AA33C2 /* ZSYPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSYPopoverListView.h; sourceTree = "<group>"; };
 		8B89E1DF1A1B204F00AA33C2 /* ZSYPopoverListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSYPopoverListView.m; sourceTree = "<group>"; };
+		8B8B984B1A2ED6E900697375 /* emptyShopCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptyShopCar.png; sourceTree = "<group>"; };
 		8BA14F841A2C282E00FA0892 /* carSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = carSelect.png; sourceTree = "<group>"; };
 		8BA14F851A2C282E00FA0892 /* carUnSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = carUnSelect.png; sourceTree = "<group>"; };
 		8BA7BF631A10A85500758B0F /* chat_timeline_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_timeline_bg.png; sourceTree = "<group>"; };
@@ -2566,6 +2568,7 @@
 				61DF89EE19FB9CD700D47430 /* HomeUnSelect.png */,
 				8B7549411A26FB2E00271985 /* close.png */,
 				61828B5F1A247A790028AB4C /* back.png */,
+				8B8B984B1A2ED6E900697375 /* emptyShopCar.png */,
 				8BA14F841A2C282E00FA0892 /* carSelect.png */,
 				8BA14F851A2C282E00FA0892 /* carUnSelect.png */,
 				8BCAFD3E1A281D6B005702FD /* YellowDownArrow.png */,
@@ -4672,6 +4675,7 @@
 				8BA7C0C21A10A85500758B0F /* 左极@2x.png in Resources */,
 				8BA7C08D1A10A85500758B0F /* 发怒.png in Resources */,
 				6181A4DA19CFC4C2000E2D14 /* magnifying glass.png in Resources */,
+				8B8B984C1A2ED6E900697375 /* emptyShopCar.png in Resources */,
 				8BA7C07C1A10A85500758B0F /* 便便@2x.png in Resources */,
 				8BD9B8B31A13562F0037FB65 /* chatto_bg_focused.png in Resources */,
 				8BBB2CAA1A1E162800895B4C /* 0.png in Resources */,

@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "B2BAskPriceDetailData.h"
 #import "B2BAskPriceInquirySheetViewController.h"
+#import "LoginNaviViewController.h"
 
 @interface B2BAskPriceCarViewController ()
 {
@@ -43,6 +44,10 @@
     UIButton *subViewBtn;   //加载编辑界面的按钮
     B2BAskPriceCarEditViewController *b2bAskPriceCarEditViewController;
     int deleteBtnTag;
+
+    UIStoryboard *sb;
+    
+    UIButton *buyBtn;
 }
 @end
 
@@ -136,8 +141,12 @@
     
     [self pushAndPopStyle];
     
+    self.view.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"询价车"];
     self.navigationItem.titleView = top;
+    
+    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
@@ -162,12 +171,12 @@
     {
         tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-buttomView.frame.size.height-64)];
         [tv setDataSource:self];
+        tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
         [tv setDelegate:self];
         [tv setShowsHorizontalScrollIndicator:NO];
         [tv setShowsVerticalScrollIndicator:NO];
         [self.view addSubview:tv];
     }
-    
     [self loadRequest];
 }
 
@@ -309,9 +318,11 @@
             if(dataArray.count == 0)
             {
                 [moreCell noDataAnimation];
+                buyBtn.hidden = NO;
             }
             else
             {
+                buyBtn.hidden = YES;
                 for(int i=0;i<dataArray.count;i++)
                 {
                     [chooseArray addObject:[dataArray objectAtIndex:i]];
@@ -450,6 +461,7 @@
             if(dataArray.count == 0)
             {
                 [moreCell noDataAnimation];
+                buyBtn.hidden = NO;
             }
             [tv reloadData];
         }
@@ -597,22 +609,99 @@
 }
 
 
-//- (UITableViewCell *) returnCellWithTableView:(UITableView *) tableView WithIndexPath:(NSIndexPath *) indexPath
-//{
-//   }
+- (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
+{
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
+    [view setBackgroundColor:[UIColor whiteColor]];
+    view.layer.cornerRadius = 5;
+    view.layer.masksToBounds = YES;
+    [cell.contentView addSubview:view];
+    
+    UIButton *logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [logBtn setTitle:@"登录" forState:UIControlStateNormal];
+    [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    logBtn.layer.cornerRadius = 5;
+    [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
+    [logBtn addTarget:self action:@selector(logBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:logBtn];
+    
+    UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(logBtn.frame.origin.x + logBtn.frame.size.width + 15, logBtn.frame.origin.y, 200, 40)];
+    [label_1 setBackgroundColor:[UIColor clearColor]];
+    [label_1 setTextAlignment:NSTextAlignmentLeft];
+    [label_1 setFont:[UIFont systemFontOfSize:12]];
+    [label_1 setTextColor:[UIColor blackColor]];
+    [label_1 setNumberOfLines:0];
+    [label_1 setText:@"登陆后可以同步电脑和手机端的商品,并保存在账户中"];
+    [view addSubview:label_1];
+    
+    
+    UIImageView *shopcar = [[UIImageView alloc] init];
+    shopcar.frame = CGRectMake(20, 130, 61, 60);
+    shopcar.image = [UIImage imageNamed:@"emptyShopCar"];
+    [cell.contentView addSubview:shopcar];
+    
+    NSString *string = @"您的购物车中暂时没有商品,现在去浏览选购商品~";
+    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
+    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
+    [label_2 setBackgroundColor:[UIColor clearColor]];
+    [label_2 setTextAlignment:NSTextAlignmentLeft];
+    [label_2 setFont:[UIFont systemFontOfSize:15]];
+    [label_2 setTextColor:[UIColor blackColor]];
+    [label_2 setNumberOfLines:0];
+    [label_2 setText:string];
+    [cell.contentView addSubview:label_2];
+    
+    buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
+    [buyBtn setTitle:@"去选购商品" forState:UIControlStateNormal];
+    buyBtn.backgroundColor = [UIColor whiteColor];
+    buyBtn.layer.cornerRadius = 5.0f;
+    [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [buyBtn addTarget:self action:@selector(buyBtnClick) forControlEvents:UIControlEventTouchUpInside];
+
+    [self.view insertSubview:buyBtn aboveSubview:tv];
+
+    buttomView.hidden = YES;
+    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    return cell;
+}
+
+-(void)logBtnClick
+{
+     NSLog(@"logBtnClick");
+    LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+    [self presentViewController:loginNavi animated:YES completion:nil];
+}
+
+-(void)buyBtnClick
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if(!dataArray || dataArray.count == 0)
+//    if(!dataArray || dataArray.count == 0)
+    if(indexPath.section == dataArray.count)
     {
         
-        if(moreCell == nil)
-        {
-            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-        }
-        return moreCell;
+//        if(moreCell == nil)
+//        {
+//            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+//            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+//        }
+//        return moreCell;
+        return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
     }
     
     
@@ -621,7 +710,7 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+//        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)

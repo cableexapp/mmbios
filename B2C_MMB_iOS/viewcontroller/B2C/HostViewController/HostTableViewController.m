@@ -30,6 +30,7 @@
 #import "B2BAskPriceCarViewController.h"
 
 int isgo = 1;
+BOOL isPopShow = NO;
 
 @interface HostTableViewController ()
 {
@@ -54,7 +55,7 @@ int isgo = 1;
     
     NSMutableArray *arr;
     
-    BOOL isPopShow;
+   
 }
 @end
 
@@ -88,6 +89,15 @@ int isgo = 1;
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    if (isPopShow == NO)
+    {
+        isPopShow = NO;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -107,15 +117,8 @@ int isgo = 1;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
     [self setHidesBottomBarWhenPushed:NO];
-    if (isPopShow == YES)
-    {
-        isPopShow = NO;
-    }
-    else
-    {
-        isPopShow = YES;
-        
-    }
+
+    isPopShow = NO;
 }
 
 

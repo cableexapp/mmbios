@@ -162,26 +162,26 @@ int flagPage = 0;
             [view setHidden:YES];
         }
     }
-//    if (isOneArray.count == 0)
-//    {
-//        [isOneArray addObject:[self.appDelegate.roster objectAtIndex:0]];
-//        NSLog(@"isOneArray = %@",isOneArray);
-//    }
-//    if (isOneArray.count == 1)
-//    {
-//        WaitViewController *waitVC = [[WaitViewController alloc] init];
-//        waitVC.tempGroup = [NSString stringWithFormat:@"%@",isOneArray[0]];
-//        NSLog(@"tempGroup = %@",[NSString stringWithFormat:@"%@",isOneArray[0]]);
-//        waitVC.tempFrom = self.fromString;
-//        CATransition *transition = [CATransition animation];
-//        transition.duration = 0.5f;
-//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//        transition.type =  kCATransitionMoveIn;
-//        transition.subtype =  kCATransitionFromTop;
-//        transition.delegate = self;
-//        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//        [self.navigationController pushViewController:waitVC animated:NO];
-//    }
+    if (isOneArray.count == 0)
+    {
+        [isOneArray addObject:[self.appDelegate.roster objectAtIndex:0]];
+        NSLog(@"isOneArray = %@",isOneArray);
+    }
+    if (isOneArray.count == 1)
+    {
+        WaitViewController *waitVC = [[WaitViewController alloc] init];
+        waitVC.tempGroup = [NSString stringWithFormat:@"%@",isOneArray[0]];
+        NSLog(@"tempGroup = %@",[NSString stringWithFormat:@"%@",isOneArray[0]]);
+        waitVC.tempFrom = self.fromString;
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.5f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:waitVC animated:NO];
+    }
 
 }
 

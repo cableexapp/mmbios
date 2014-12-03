@@ -20,6 +20,7 @@
 #import "UIImageView+WebCache.h"
 #import "B2CUpOrderData.h"
 #import "AppDelegate.h"
+#import "ShoppingHostViewController.h"
 
 @interface MyShoppingListViewController ()
 {
@@ -72,6 +73,8 @@
     NSMutableArray *shopIdArray;
     
     BOOL flag;  //商品数组section是否为空
+    
+    UIView *backView;
 }
 @end
 
@@ -110,9 +113,6 @@
     {
         [chooseGoodsArray removeAllObjects];
     }
-    NSLog(@"dataArray = %d",dataArray.count);
-     NSLog(@"headBtnArray = %d",headBtnArray.count);
-    NSLog(@"cellBtnArray = %d",cellBtnArray.count);
     if(btn.selected == YES)
     {
         for(int i=0;i<dataArray.count;i++)
@@ -285,8 +285,16 @@
                 }
                 [dataArray addObject:array];
             }
-            NSLog(@"测试  %@",dataArray);
-            
+            if (dataArray.count > 0)
+            {
+                backView.hidden = YES;
+                tv.scrollEnabled = YES;
+            }
+            else
+            {
+                backView.hidden = NO;
+                tv.scrollEnabled = NO;
+            }
 #pragma mark - 添加cell里面的btn,图片
             cellBtnArray = [[NSMutableArray alloc] init];
             cellImageViewArray = [[NSMutableArray alloc] init];
@@ -485,10 +493,11 @@
             {
                 [rightBtn setHidden:NO];
             }
-            
-            NSLog(@"dataArray = %@",dataArray);
-            NSLog(@"headLabel = %@",headLabelArray);
-            NSLog(@"headBtn = %@",headBtnArray);
+            if (dataArray.count == 0)
+            {
+                backView.hidden = NO;
+                tv.scrollEnabled = NO;
+            }
             for(int i=dataArray.count-1;i>=0;i--)
             {
                 if([[dataArray objectAtIndex:i] count] == 0)
@@ -498,11 +507,7 @@
                     [[headBtnArray objectAtIndex:i] removeAllObjects];
                 }
             }
-            NSLog(@"headLabel_11111 = %@",headLabelArray);
-            NSLog(@"headBtn_11111 = %@",headBtnArray);
-  
             [moneyLabel setText:[DCFCustomExtra notRounding:0.00 afterPoint:2]];
-            
             [buttomBtn setSelected:NO];
             [tv reloadData];
             [self payBtnChange];
@@ -671,11 +676,13 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 114, 320, 54)];
+    buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - 114, ScreenWidth, 54)];
     [buttomView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:buttomView];
     
-    UIView *buttomTopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+    [self hiddenButtomView];
+    
+    UIView *buttomTopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];
     [buttomTopView setBackgroundColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
     [buttomView addSubview:buttomTopView];
     
@@ -711,16 +718,25 @@
     [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [buttomView addSubview:payBtn];
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight - 54-54)];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 54-54)];
     [tv setDataSource:self];
+    tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
     [tv setDelegate:self];
     [self.view addSubview:tv];
-    
-    
+
     noCell = [[UITableViewCell alloc] init];
-    [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+    [noCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
 }
 
+
+-(void)hiddenButtomView
+{
+    backView = [[UIView alloc] init];
+    backView.frame = CGRectMake(0, ScreenHeight - 114, ScreenWidth, 54);
+    backView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+    [self.view insertSubview:backView aboveSubview:buttomView];
+    backView.hidden = YES;
+}
 
 #pragma mark - section里面的按钮点击事件
 - (void) headBtnClick:(UIButton *) sender
@@ -876,16 +892,9 @@
     else
     {
         pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
-        
-        
-        
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
-        
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
-  
-    
-    
 }
 
 
@@ -939,7 +948,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     else
     {
-        
         NSString *items = nil;
         NSLog(@"chooseGoodsArray123 = %@",chooseGoodsArray);
         if(chooseGoodsArray && chooseGoodsArray.count != 0)
@@ -958,22 +966,13 @@ NSComparator cmptr = ^(id obj1, id obj2){
             }
             items = [items substringWithRange:NSMakeRange(0, items.length-1)];
         }
-        
         NSString *time = [DCFCustomExtra getFirstRunTime];
-        
         NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteCartItems",time];
-        
         NSString *token = [DCFCustomExtra md5:string];
-        
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/deleteCartItems.html?"];
-        
-        
         NSString  *pushString = [NSString stringWithFormat:@"cartids=%@&token=%@",items,token];
-        
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarDeleteTag delegate:self];
-        
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        
     }
 }
 
@@ -1119,11 +1118,8 @@ NSComparator cmptr = ^(id obj1, id obj2){
         return nil;
     }
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
     [view setBackgroundColor:[UIColor whiteColor]];
-    
-    
-    
     [view addSubview:[[headBtnArray objectAtIndex:section] lastObject]];
     
     NSString *title = [[[dataArray objectAtIndex:section] lastObject] sShopName];
@@ -1147,6 +1143,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (void) buyBtnClick:(UIButton *) sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
+    ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
+    [self.navigationController pushViewController:shoppingHost animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
@@ -1161,16 +1161,14 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
     [view setBackgroundColor:[UIColor whiteColor]];
-    view.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
-    view.layer.borderWidth = 1.0f;
+    view.layer.cornerRadius = 5;
     view.layer.masksToBounds = YES;
     [noCell.contentView addSubview:view];
     
     UIButton *logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [logBtn setTitle:@"登录" forState:UIControlStateNormal];
-    [logBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-    logBtn.layer.borderWidth = 1.0F;
-    logBtn.layer.borderColor = MYCOLOR.CGColor;
+    [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     logBtn.layer.cornerRadius = 5;
     [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
     [logBtn addTarget:self action:@selector(logBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -1186,40 +1184,57 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [view addSubview:label_1];
     
     
-    NSString *string = @"您的购物车中暂时没有商品,现在去浏览选购商品~";
-    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
-    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(60, 150, 200, size.height)];
-    [label_2 setBackgroundColor:[UIColor clearColor]];
-    [label_2 setTextAlignment:NSTextAlignmentLeft];
-    [label_2 setFont:[UIFont systemFontOfSize:15]];
-    [label_2 setTextColor:[UIColor blackColor]];
-    [label_2 setNumberOfLines:0];
-    [label_2 setText:string];
-    [noCell.contentView addSubview:label_2];
+    UIImageView *shopcar = [[UIImageView alloc] init];
+    shopcar.frame = CGRectMake(20, 130, 61, 60);
+    shopcar.image = [UIImage imageNamed:@"emptyShopCar"];
+    [noCell.contentView addSubview:shopcar];
     
+//    NSString *string = @"您的购物车中暂时没有商品,现在去浏览选购商品~";
+//    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
+//    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
+//    [label_2 setBackgroundColor:[UIColor clearColor]];
+//    [label_2 setTextAlignment:NSTextAlignmentLeft];
+//    [label_2 setFont:[UIFont systemFontOfSize:15]];
+//    [label_2 setTextColor:[UIColor blackColor]];
+//    [label_2 setNumberOfLines:0];
+//    [label_2 setText:string];
+//    [noCell.contentView addSubview:label_2];
+    
+    NSString *string = @"您的购物车中暂时没有商品,现在去\n浏览选购商品~";
+    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
+    UIButton *labelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    labelButton.frame = CGRectMake(85, 150, ScreenWidth-105, size.height);
+    [labelButton setTitle:string forState:UIControlStateNormal];
+    [labelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    labelButton.enabled = NO;
+    [labelButton.titleLabel setNumberOfLines:2];
+    [labelButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [noCell.contentView addSubview:labelButton];
     
     UIButton *buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
-    [buyBtn setTitle:@"选购商品" forState:UIControlStateNormal];
-    buyBtn.layer.borderColor = MYCOLOR.CGColor;
-    buyBtn.layer.borderWidth = 1.0f;
+    [buyBtn setFrame:CGRectMake(100, labelButton.frame.origin.y + labelButton.frame.size.height + 50, 120, 40)];
+    [buyBtn setTitle:@"去选购商品" forState:UIControlStateNormal];
+    buyBtn.backgroundColor = [UIColor whiteColor];
     buyBtn.layer.cornerRadius = 5.0f;
-    [buyBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [buyBtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [noCell.contentView addSubview:buyBtn];
-    NSLog(@"noCell = %@",noCell);
+    
+    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+    noCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return noCell;
     
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == dataArray.count)
+   if(indexPath.section == dataArray.count)
     {
         return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
-
+        
     }
-    
+
     if(dataArray)
     {
         NSMutableArray *arr = [dataArray objectAtIndex:indexPath.section];
@@ -1248,10 +1263,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
         {
         }
     }
-    
-
-    
-    
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     //    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
@@ -1285,7 +1296,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [introduceLabel setFont:[UIFont systemFontOfSize:12]];
     [introduceLabel setText:content];
     [cell.contentView addSubview:introduceLabel];
-    
     
     UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(introduceLabel.frame.origin.x, introduceLabel.frame.origin.y + introduceLabel.frame.size.height + 10, 30, 20)];
     [countLabel setText:@"数量:"];
@@ -1380,10 +1390,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         [[[headBtnArray objectAtIndex:section] lastObject] setSelected:NO];
     }
-    
 
-    
-    NSLog(@"chooseGoodsArray = %@",chooseGoodsArray);
     [self calculateTotalMoney];
     [self payBtnChange];
 

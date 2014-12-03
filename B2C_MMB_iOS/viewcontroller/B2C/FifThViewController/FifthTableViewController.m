@@ -78,6 +78,7 @@
         [self.logOutBtn setHidden:NO];
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    isPopShow = NO;
 }
 
 - (void)viewDidLoad

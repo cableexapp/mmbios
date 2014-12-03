@@ -15,7 +15,6 @@
 {
     UITableView *tv;
     
-    
     DCFConnectionUtil *conn;
     
     UITableViewCell *noCell;

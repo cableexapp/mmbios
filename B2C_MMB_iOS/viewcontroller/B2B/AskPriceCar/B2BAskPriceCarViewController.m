@@ -319,10 +319,12 @@
             {
                 [moreCell noDataAnimation];
                 buyBtn.hidden = NO;
+                tv.scrollEnabled = NO;
             }
             else
             {
                 buyBtn.hidden = YES;
+                tv.scrollEnabled = YES;
                 for(int i=0;i<dataArray.count;i++)
                 {
                     [chooseArray addObject:[dataArray objectAtIndex:i]];
@@ -462,6 +464,7 @@
             {
                 [moreCell noDataAnimation];
                 buyBtn.hidden = NO;
+                tv.scrollEnabled = NO;
             }
             [tv reloadData];
         }
@@ -648,7 +651,7 @@
     shopcar.image = [UIImage imageNamed:@"emptyShopCar"];
     [cell.contentView addSubview:shopcar];
     
-    NSString *string = @"您的购物车中暂时没有商品,现在去浏览选购商品~";
+    NSString *string = @"您的询价车中暂时没有商品,现在去浏览选购商品~";
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
     UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
     [label_2 setBackgroundColor:[UIColor clearColor]];
@@ -661,7 +664,7 @@
     
     buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
-    [buyBtn setTitle:@"去选购商品" forState:UIControlStateNormal];
+    [buyBtn setTitle:@"去首页看看" forState:UIControlStateNormal];
     buyBtn.backgroundColor = [UIColor whiteColor];
     buyBtn.layer.cornerRadius = 5.0f;
     [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -670,6 +673,7 @@
     [self.view insertSubview:buyBtn aboveSubview:tv];
 
     buttomView.hidden = YES;
+        tv.scrollEnabled = NO;
     tv.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return cell;

@@ -99,7 +99,8 @@
         float pagecontrolHeight=20.0f;
         if(myTag == 0)
         {
-            pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake((self.frame.size.width-pageControlWidth)/2,18, pageControlWidth, pagecontrolHeight)];
+//            pageControl=[[UIPageControl alloc]initWithFrame:CGRectMake((self.frame.size.width-pageControlWidth)/2,18, pageControlWidth, pagecontrolHeight)];
+            pageControl.hidden = YES;
         }
         else
         {

@@ -524,7 +524,7 @@ BOOL isPopShow = NO;
     }
     else if (indexPath.section == 0)
     {
-        return 80;
+        return 100;
     }
     else if (indexPath.section == 1)
     {
@@ -575,7 +575,7 @@ BOOL isPopShow = NO;
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 35)];
-    [headBackView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [headBackView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0]];
 
     UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake( 10, 0, 200, 35)];
     headLabel.font = [UIFont systemFontOfSize:18];
@@ -765,7 +765,7 @@ BOOL isPopShow = NO;
         if(!es)
         {
             NSArray *imageArray = [[NSArray alloc] initWithObjects:@"sv_1.png",@"sv_2.png",@"sv_3.png", nil];
-            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 80) ImageArray:imageArray TitleArray:nil WithTag:0];
+            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 100) ImageArray:imageArray TitleArray:nil WithTag:0];
             es.delegate = self;
             [cell.contentView addSubview:es];
         }
@@ -1055,7 +1055,7 @@ BOOL isPopShow = NO;
                     [moneyLabel setTextColor:[UIColor redColor]];
                     [cabelShowView addSubview:moneyLabel];
                     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-                    cell.backgroundColor = [UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0];
+                    cell.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0];
                 }
             }
         }

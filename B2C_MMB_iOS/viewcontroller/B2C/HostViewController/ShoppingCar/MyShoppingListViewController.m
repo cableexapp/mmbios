@@ -1186,7 +1186,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     UIImageView *shopcar = [[UIImageView alloc] init];
     shopcar.frame = CGRectMake(20, 130, 61, 60);
-    shopcar.image = [UIImage imageNamed:@"emptyShopCar"];
+    shopcar.image = [UIImage imageNamed:@"shoppingCar"];
     [noCell.contentView addSubview:shopcar];
     
 //    NSString *string = @"您的购物车中暂时没有商品,现在去浏览选购商品~";

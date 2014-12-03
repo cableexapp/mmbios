@@ -141,6 +141,11 @@
 //    [self readHistoryData];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     NSLog(@"viewDidDisappear");
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
 }
 
 

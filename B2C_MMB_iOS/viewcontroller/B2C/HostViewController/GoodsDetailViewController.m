@@ -74,6 +74,8 @@
     UIButton *rightBtn;
     
     UIBarButtonItem *right;
+    
+    UILabel *countLabel;
 }
 @end
 
@@ -241,6 +243,18 @@
         [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
         [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
         right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    countLabel = [[UILabel alloc] init];
+    countLabel.frame = CGRectMake(22, 0, 18, 18);
+    countLabel.layer.borderWidth = 1;
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.font = [UIFont systemFontOfSize:11];
+    countLabel.textAlignment = 1;
+    countLabel.hidden = NO;
+    countLabel.text = @"1";
+    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+    [rightBtn addSubview:countLabel];
 //    }
     self.navigationItem.rightBarButtonItem = right;
 }

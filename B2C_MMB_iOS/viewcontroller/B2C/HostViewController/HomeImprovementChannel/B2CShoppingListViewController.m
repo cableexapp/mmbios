@@ -18,6 +18,7 @@
 #import "DCFCustomExtra.h"
 #import "GoodsDetailViewController.h"
 #import "SearchViewController.h"
+#import "MyShoppingListViewController.h"
 
 #pragma mark - 少一个total字段,筛选部分
 @interface B2CShoppingListViewController ()
@@ -46,6 +47,10 @@
     
     UIView *searchView;  //搜索试图
     B2CShoppingSearchViewController *search;
+    UIButton *rightBtn;
+    UILabel *countLabel;
+    
+    NSArray *arr;
 }
 @end
 
@@ -82,6 +87,26 @@
             [view setHidden:YES];
         }
     }
+    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
+    //        [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
+    [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
+    [rightBtn addTarget:self action:@selector(rightItemClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    countLabel = [[UILabel alloc] init];
+    countLabel.frame = CGRectMake(22, 0, 18, 18);
+    countLabel.layer.borderWidth = 1;
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.font = [UIFont systemFontOfSize:11];
+    countLabel.textAlignment = 1;
+    countLabel.hidden = NO;
+    countLabel.text = @"1";
+    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+    [rightBtn addSubview:countLabel];
+    //    }
+    self.navigationItem.rightBarButtonItem = right;
 }
 
 #pragma mark - delegate
@@ -151,9 +176,6 @@
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:tv];
     
-    
-    
- 
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDuration:0.3];
@@ -273,6 +295,8 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
     self.navigationItem.titleView = top;
+    
+    
     
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
     [topView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
@@ -412,6 +436,13 @@
 //    设置隐藏背景VIEW的通知事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeBackView" object:nil];
     
+}
+
+-(void)rightItemClick
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
+    [self.navigationController pushViewController:shop animated:YES];
 }
 
 -(void)closeView:(NSNotification *)close

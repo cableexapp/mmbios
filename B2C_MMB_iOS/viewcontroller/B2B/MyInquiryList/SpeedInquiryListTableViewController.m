@@ -298,7 +298,7 @@
     [view addSubview:firstLabel];
     
 #pragma mark - 这里的单号暂时用oemId代替
-    NSString *orderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:section] oemId]];
+    NSString *orderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:section] oemNo]];
     UILabel *orderNumLabel = [[UILabel alloc] init];
     if(orderNum.length == 0 || [orderNum isKindOfClass:[NSNull class]])
     {

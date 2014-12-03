@@ -32,6 +32,8 @@
     UIStoryboard *sb;
     
     NSMutableArray *arr;
+    
+    BOOL isPopShow;
 }
 @end
 
@@ -91,6 +93,15 @@
         badgeArray = nil;
     }
     [self setHidesBottomBarWhenPushed:NO];
+    if (isPopShow == YES)
+    {
+        isPopShow = NO;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 - (NSString *) getMemberId
@@ -334,12 +345,19 @@
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar:) name:@"popShopCar" object:nil];
-    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
 
 - (void)popShopCar:(NSNotification *)sender
 {
-    NSLog(@"我的买卖宝-购物车");
+    if (isPopShow == YES)
+    {
+        [KxMenu dismissMenu];
+        isPopShow = NO;
+        self.tableView.scrollEnabled = YES;
+    }
+    else
+    {
         NSArray *menuItems =
         @[[KxMenuItem menuItem:@"  购物车  "
                          image:nil
@@ -355,6 +373,10 @@
         [KxMenu showMenuInView:self.view
                       fromRect:CGRectMake(self.view.frame.size.width/5-15, self.view.frame.size.height, self.view.frame.size.height/5, 49)
                      menuItems:menuItems];
+        isPopShow = YES;
+        self.tableView.scrollEnabled = NO;
+    }
+    
 }
 
 - (void)pushMenuItem:(id)sender
@@ -373,9 +395,18 @@
     [self setHidesBottomBarWhenPushed:NO];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+-(void)changeClick:(NSNotification *)viewChanged
 {
-    [KxMenu dismissMenu];
+    if (isPopShow == YES)
+    {
+        isPopShow = NO;
+        self.tableView.scrollEnabled = YES;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -543,7 +574,22 @@
 {
     UIButton *btn = (UIButton *) sender;
     NSString *text = btn.titleLabel.text;
-    
+    if([text isEqualToString:@"待付款"])
+    {
+        text = @"1";
+    }
+    if([text isEqualToString:@"待发货"])
+    {
+        text = @"2";
+    }
+    if([text isEqualToString:@"待收货"])
+    {
+        text = @"3";
+    }
+    if([text isEqualToString:@"待评价"])
+    {
+        text = @"4";
+    }
     [self setHidesBottomBarWhenPushed:YES];
     FourthHostViewController *fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     fourthHostViewController.myStatus = text;

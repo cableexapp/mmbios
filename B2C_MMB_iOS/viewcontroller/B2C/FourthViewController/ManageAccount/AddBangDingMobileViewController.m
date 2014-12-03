@@ -172,6 +172,35 @@
         }
     }
 
+    if(URLTag == URLCheckPhoneTag)
+    {
+        
+        if(result == 0)
+        {
+            if([DCFCustomExtra validateString:msg] == YES)
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:@"此用户已经存在"];
+            }
+        }
+        else if(result == 1)
+        {
+            timer_tel = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
+            [timer_tel fire];
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"sendMessage",time];
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@&username=%@",self.teltf.text,token,[self getUserName]];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendMsgTag delegate:self];
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendMessage.html?"];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        }
+    }
     
     if(URLTag == URLChangeBindPhoneTag)
     {
@@ -212,17 +241,13 @@
     [self.teltf resignFirstResponder];
     [self.validateTf resignFirstResponder];
     
-    timer_tel = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
-    [timer_tel fire];
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"sendMessage",time];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@&username=%@",self.teltf.text,token,[self getUserName]];
-    NSLog(@"push = %@",pushString);
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendMsgTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendMessage.html?"];
+    NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@",self.teltf.text,token];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCheckPhoneTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/CheckPhone.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 

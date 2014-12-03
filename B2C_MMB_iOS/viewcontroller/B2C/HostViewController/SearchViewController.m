@@ -76,6 +76,8 @@
     UIImageView *searchImageView;
     
     UILabel *searchResultLabel;
+    
+    int tempCount;
 }
 @end
 
@@ -345,7 +347,7 @@
     }
     if (URLTag == URLInquiryCartCountTag)
     {
-        NSLog(@"dicRespon = %@",[dicRespon objectForKey:@"value"]);
+        tempCount = [[dicRespon objectForKey:@"value"] intValue];
         if ([[dicRespon objectForKey:@"value"] intValue] == 0)
         {
             countLabel.hidden = YES;
@@ -357,7 +359,7 @@
         }
         else if ([[dicRespon objectForKey:@"value"] intValue] > 99)
         {
-            countLabel.frame = CGRectMake(50, 2, 20, 18);
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
             countLabel.hidden = NO;
             countLabel.text = @"99+";
         }
@@ -600,7 +602,11 @@
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"询价车" forState:UIControlStateNormal];
         tempType = @"1";
-        countLabel.hidden = NO;
+        if (tempCount > 0)
+        {
+            countLabel.hidden = NO;
+        }
+        
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     speakButton.hidden = NO;

@@ -83,11 +83,31 @@
         btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSend,self.waitForSureBtn,self.waitForDiscussBtn, nil];
     }
     
-    [self.allBtn setSelected:YES];
-    [self.waitForPayBtn setSelected:NO];
-    [self.waitForSend setSelected:NO];
-    [self.waitForSureBtn setSelected:NO];
-    [self.waitForDiscussBtn setSelected:NO];
+    if([self.myStatus isEqualToString:@"0"])
+    {
+        [self.allBtn setSelected:YES];
+    }
+    if([self.myStatus isEqualToString:@"1"])
+    {
+        [self.waitForPayBtn setSelected:YES];
+    }
+    if([self.myStatus isEqualToString:@"2"])
+    {
+        [self.waitForSend setSelected:YES];
+    }
+    if([self.myStatus isEqualToString:@"3"])
+    {
+        [self.waitForSureBtn setSelected:YES];
+    }
+    if([self.myStatus isEqualToString:@"4"])
+    {
+        [self.waitForDiscussBtn setSelected:YES];
+    }
+//    [self.allBtn setSelected:YES];
+//    [self.waitForPayBtn setSelected:NO];
+//    [self.waitForSend setSelected:NO];
+//    [self.waitForSureBtn setSelected:NO];
+//    [self.waitForDiscussBtn setSelected:NO];
     
     for(int i=0;i<btnArray.count;i++)
     {
@@ -112,7 +132,7 @@
         //        }
     }
     //    [self loadRequest:_myStatus];
-    [self loadRequest:@""];
+    [self loadRequest:self.myStatus];
 }
 
 - (void)viewDidLoad
@@ -143,7 +163,7 @@
     
     rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
     [self.navigationController.navigationBar addSubview:rightButtonView];
-
+    
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundColor:[UIColor clearColor]];
     [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -196,7 +216,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-//    NSLog(@"我的家装馆订单 = %@",dicRespon);
+    //    NSLog(@"我的家装馆订单 = %@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
@@ -225,7 +245,8 @@
                 }
                 [dataArray addObjectsFromArray:[B2CMyOrderData getListArray:[dicRespon objectForKey:@"items"]]];
                 
-                intTotal = [[dicRespon objectForKey:@"total"] intValue];
+                //                intTotal = [[dicRespon objectForKey:@"total"] intValue];
+                intTotal = [[dicRespon objectForKey:@"items"] count];
                 
                 if(intTotal == 0)
                 {
@@ -252,11 +273,18 @@
         [DCFStringUtil showNotice:msg];
         if(result == 1)
         {
-            
+            [DCFStringUtil showNotice:msg];
         }
         else
         {
-            
+            if([DCFCustomExtra validateString:msg] == NO)
+            {
+                [DCFStringUtil showNotice:@"确认收货失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
         }
     }
 }
@@ -499,14 +527,15 @@
         cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     NSArray *itemsArray = [[dataArray objectAtIndex:path.section] myItems];
+//    NSLog(@"itemsArray=%@",itemsArray);
     NSDictionary *itemDic = [itemsArray objectAtIndex:path.row];
     
     NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
     NSURL *url = [NSURL URLWithString:picString];
     [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
     [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
-
-    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
+    
+    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:path.section] orderTotal]]];
     
     [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
     
@@ -534,8 +563,8 @@
         [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
-        [cell.onLinePayBtn setFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-20, 30)];
-        [cell.cancelOrderBtn setFrame:CGRectMake(cell.onLinePayBtn.frame.origin.x + cell.onLinePayBtn.frame.size.width + 45, 5, cell.onLinePayBtn.frame.size.width, 30)];
+        [cell.onLinePayBtn setFrame:CGRectMake(10, 5,(cell.contentView.frame.size.width-30)/2, 30)];
+        [cell.cancelOrderBtn setFrame:CGRectMake(cell.onLinePayBtn.frame.origin.x + cell.onLinePayBtn.frame.size.width + 10, 5, cell.onLinePayBtn.frame.size.width, 30)];
         
         [cell.discussBtn setHidden:YES];
         [cell.lookForCustomBtn setHidden:YES];
@@ -570,8 +599,8 @@
         [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
-        [cell.receiveBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
-        [cell.lookForTradeBtn setFrame:CGRectMake(cell.receiveBtn.frame.origin.x + cell.receiveBtn.frame.size.width + 5, 5, cell.receiveBtn.frame.size.width, 30)];
+        [cell.receiveBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/2, 30)];
+        [cell.lookForTradeBtn setFrame:CGRectMake(cell.receiveBtn.frame.origin.x + cell.receiveBtn.frame.size.width + 10, 5, cell.receiveBtn.frame.size.width, 30)];
         
         [cell.discussBtn setHidden:YES];
         [cell.lookForCustomBtn setHidden:YES];
@@ -607,13 +636,10 @@
                 [cell.cancelOrderBtn setHidden:YES];
                 [cell.receiveBtn setHidden:YES];
                 
-                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/3, 30)];
-        
-                [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
-                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
+                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-40)/3, 30)];
                 
-                
-                
+                [cell.lookForCustomBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 10, 5, cell.discussBtn.frame.size.width, 30)];
+                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 10, 5, cell.lookForCustomBtn.frame.size.width, 30)];
             }
             else
             {
@@ -627,8 +653,8 @@
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
-                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
-                [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 5, 5, cell.discussBtn.frame.size.width, 30)];
+                [cell.discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/2, 30)];
+                [cell.lookForTradeBtn setFrame:CGRectMake(cell.discussBtn.frame.origin.x + cell.discussBtn.frame.size.width + 10, 5, cell.discussBtn.frame.size.width, 30)];
                 
                 [cell.lookForCustomBtn setHidden:YES];
                 [cell.onLinePayBtn setHidden:YES];
@@ -650,8 +676,8 @@
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
-                [cell.lookForCustomBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-25)/2, 30)];
-                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 5, 5, cell.lookForCustomBtn.frame.size.width, 30)];
+                [cell.lookForCustomBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-30)/2, 30)];
+                [cell.lookForTradeBtn setFrame:CGRectMake(cell.lookForCustomBtn.frame.origin.x + cell.lookForCustomBtn.frame.size.width + 10, 5, cell.lookForCustomBtn.frame.size.width, 30)];
                 
                 [cell.discussBtn setHidden:YES];
                 [cell.onLinePayBtn setHidden:YES];
@@ -943,18 +969,18 @@
         }
         total = [NSString stringWithFormat:@"%.2f",shopPrice];
     }
-    
+
+    total = [NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:sender.tag/10] orderTotal]];
     //
     [self setHidesBottomBarWhenPushed:YES];
     
     AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
     //
-    ali.shopName = shopName;
+//    ali.shopName = shopName;
+    ali.shopName = @"家装馆产品";
     ali.productName = productTitle;
     ali.productPrice = total;
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    NSLog(@"%@  %@  %@  %@",ali.shopName,ali.productName,ali.productPrice,ali.productOrderNum);
-    
     [self.navigationController pushViewController:ali animated:YES];
 }
 

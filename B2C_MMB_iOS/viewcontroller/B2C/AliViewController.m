@@ -136,7 +136,7 @@
 		Product *product = [[Product alloc] init];
 		product.subject = [subjects objectAtIndex:i];
 		product.body = [body objectAtIndex:i];
-        product.price = [_productPrice floatValue];
+        product.price = [[self getNumFromString:_productPrice] floatValue];
 //		if (1==i) {
 //			product.price = 1;
 //		}
@@ -174,6 +174,20 @@
 	[subjects release], subjects = nil;
 	[body release], body = nil;
 #endif
+}
+
+- (NSString *) getNumFromString:(NSString *) string
+{
+    NSString *price = @"";
+    for(int i=0;i<string.length;i++)
+    {
+        char c = [string characterAtIndex:i];
+        if(c == '.' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9')
+        {
+            price = [price stringByAppendingFormat:@"%c",c];
+        }
+    }
+    return price;
 }
 
 #pragma mark -

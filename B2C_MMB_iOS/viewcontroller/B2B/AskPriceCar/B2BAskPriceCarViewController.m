@@ -651,7 +651,7 @@
     shopcar.image = [UIImage imageNamed:@"emptyShopCar"];
     [cell.contentView addSubview:shopcar];
     
-    NSString *string = @"您的询价车中暂时没有商品,现在去浏览选购商品~";
+    NSString *string = @"您的询价车中暂时没有商品,现在去浏览选购电缆吧~";
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
     UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
     [label_2 setBackgroundColor:[UIColor clearColor]];

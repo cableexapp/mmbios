@@ -933,35 +933,30 @@
                     UILabel *countlabel = nil;
                     if(number.length == 0)
                     {
-                        countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 20, priceLabel.frame.origin.y, 30, 20)];
+                        countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 5, priceLabel.frame.origin.y, 30, 20)];
                         [countlabel setText:[NSString stringWithFormat:@"*%@",@""]];
                     }
                     else
                     {
                         CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"*%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
-                        countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 20, priceLabel.frame.origin.y, size_2.width, 20)];
+                        countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 5, priceLabel.frame.origin.y, size_2.width, 20)];
                         [countlabel setText:[NSString stringWithFormat:@"*%@",number]];
                     }
                     [countlabel setFont:[UIFont systemFontOfSize:12]];
 
                     
                     float money = [number intValue] * [price floatValue];
-                    NSLog(@"%f",money);
-//                    money = 0.123;
-//                    + (NSString *) decimalwithFormat:(NSString *)format  floatV:(float)floatV
-
                     NSString *smallCal = [NSString stringWithFormat:@"小计: ¥%@",[DCFCustomExtra decimalwithFormat:@"0.00"  floatV:money]];
-                    NSLog(@"smallCal = %@",smallCal);
                     UILabel *totalLabel = nil;
                     if(smallCal.length == 0)
                     {
-                        totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-30, countlabel.frame.origin.y, 30, 20)];
+                        totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-30-30, countlabel.frame.origin.y, 30, 20)];
                         [totalLabel setText:@""];
                     }
                     else
                     {
                         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
-                        totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
+                        totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
                         [totalLabel setText:smallCal];
                     }
                     [totalLabel setFont:[UIFont systemFontOfSize:12]];

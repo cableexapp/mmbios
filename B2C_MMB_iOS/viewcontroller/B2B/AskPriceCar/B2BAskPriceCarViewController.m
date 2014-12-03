@@ -133,6 +133,12 @@
 {
     [super viewWillDisappear:YES];
 //    [self setHidesBottomBarWhenPushed:NO];
+    
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
 }
 
 - (void)viewDidLoad

@@ -121,6 +121,8 @@
     
     self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:137/255.0 blue:0/255.0 alpha:1.0];
     self.upBtn.layer.cornerRadius = 5;
+    
+
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -225,7 +227,7 @@
 //    NSLog(@"indexPath = %zi",indexPath.row);
     if (tableView.tag == 33)
     {
-        self.testTableView.frame = CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-88);
+        self.testTableView.frame = CGRectMake(0, 36, self.view.frame.size.width, self.view.frame.size.height-73);
         self.selectView.hidden = NO;
         self.clearBtn.hidden = NO;
         self.testSubTableView.hidden = YES;
@@ -264,7 +266,7 @@
     [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
     if (selectArray.count == 0)
     {
-        self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+        self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);
         backView.hidden = YES;
         _testSubTableView.hidden = YES;
         _testTableView.userInteractionEnabled = YES;
@@ -311,7 +313,7 @@ if ( _opend )
    else
     {
         self.opend = YES;
-        backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
+        backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         backView.alpha = 0.6;
         backView.hidden = NO;
         if (selectArray.count != 0)
@@ -359,7 +361,7 @@ if ( _opend )
     if (buttonIndex != 0) return;
     self.opend = NO;
     backView.hidden = YES;
-    self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+    self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);
     self.selectView.hidden = YES;
     _testSubTableView.hidden = YES;
     _testTableView.userInteractionEnabled = YES;

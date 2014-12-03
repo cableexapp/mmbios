@@ -197,12 +197,7 @@
     }
     
     NSString *memberid = [self getMemberId];
-//    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]] || memberid == NULL)
-//    {
-//        
-//    }
-//    else
-//    {
+
         NSString *time = [DCFCustomExtra getFirstRunTime];
         NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
         NSString *token = [DCFCustomExtra md5:string];
@@ -212,7 +207,7 @@
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-//    }
+
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -221,14 +216,6 @@
     {
         [self.secondTextView resignFirstResponder];
         return NO;
-    }
-    if(self.secondTextView.text.length == 0)
-    {
-        [self.labelText setHidden:NO];
-    }
-    else
-    {
-        [self.labelText setHidden:YES];
     }
     return YES;
 }
@@ -252,17 +239,5 @@
 
 
 
-////textview文本框里的备注
-//- (void) textViewDidChange:(UITextView *)textView
-//{
-//    if(self.secondTextView.text.length == 0)
-//    {
-//        [self.labelText setHidden:NO];
-//    }
-//    else
-//    {
-//        [self.labelText setHidden:YES];
-//    }
-//    
-//}
+
 @end

@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"更多"];
     self.navigationItem.titleView = top;
     

@@ -30,6 +30,7 @@
 #import "B2BAskPriceCarViewController.h"
 
 int isgo = 1;
+BOOL isPopShow = NO;
 
 @interface HostTableViewController ()
 {
@@ -54,7 +55,7 @@ int isgo = 1;
     
     NSMutableArray *arr;
     
-    BOOL isPopShow;
+   
 }
 @end
 
@@ -88,6 +89,15 @@ int isgo = 1;
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    if (isPopShow == NO)
+    {
+        isPopShow = NO;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -107,15 +117,8 @@ int isgo = 1;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
     [self setHidesBottomBarWhenPushed:NO];
-    if (isPopShow == YES)
-    {
-        isPopShow = NO;
-    }
-    else
-    {
-        isPopShow = YES;
-        
-    }
+
+    isPopShow = NO;
 }
 
 
@@ -916,7 +919,7 @@ int isgo = 1;
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
-            button.layer.borderWidth = 0.5;
+            button.layer.borderWidth = 1;
             button.titleLabel.textAlignment = NSTextAlignmentRight;
             button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             button.backgroundColor = [UIColor whiteColor];
@@ -953,7 +956,7 @@ int isgo = 1;
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
-            button.layer.borderWidth = 0.5;
+            button.layer.borderWidth = 1;
             button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
             label.text = [useArray objectAtIndex:i];
@@ -989,7 +992,7 @@ int isgo = 1;
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
                 label.numberOfLines = 2;
             }
-            button.layer.borderWidth = 0.5;
+            button.layer.borderWidth = 1;
             button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
             label.text = [useArray objectAtIndex:i];

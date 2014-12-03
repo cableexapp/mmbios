@@ -136,7 +136,7 @@
 		Product *product = [[Product alloc] init];
 		product.subject = [subjects objectAtIndex:i];
 		product.body = [body objectAtIndex:i];
-        product.price = [_productPrice floatValue];
+        product.price = [[self getNumFromString:_productPrice] floatValue];
 //		if (1==i) {
 //			product.price = 1;
 //		}
@@ -174,6 +174,20 @@
 	[subjects release], subjects = nil;
 	[body release], body = nil;
 #endif
+}
+
+- (NSString *) getNumFromString:(NSString *) string
+{
+    NSString *price = @"";
+    for(int i=0;i<string.length;i++)
+    {
+        char c = [string characterAtIndex:i];
+        if(c == '.' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9')
+        {
+            price = [price stringByAppendingFormat:@"%c",c];
+        }
+    }
+    return price;
 }
 
 #pragma mark -
@@ -239,8 +253,8 @@
 	 *生成订单信息及签名
 	 *由于demo的局限性，采用了将私钥放在本地签名的方法，商户可以根据自身情况选择签名方法(为安全起见，在条件允许的前提下，我们推荐从商户服务器获取完整的订单信息)
 	 */
-    
-    NSString *appScheme = @"MyAliPay";
+#pragma mark - 这里修改appScheme,跳回自己app,同时info里面的URL Type里面也要修改
+    NSString *appScheme = @"far.east.Far-East-MMB-iOS";
     NSString* orderInfo = [self getOrderInfo:indexPath.row];
     NSString* signedStr = [self doRsa:orderInfo];
     

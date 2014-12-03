@@ -243,7 +243,7 @@
     {
         [label setText:@" 收货地址"];
     }
-    else
+    if(section == 2)
     {
         [label setText:@" 发票信息"];
     }
@@ -291,6 +291,11 @@
     return pic;
 }
 
+- (void) nameBtnClick:(UIButton *) sender
+{
+    NSLog(@"test");
+}
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"cellId";
@@ -314,9 +319,17 @@
         {
             if(indexPath.row == 0)
             {
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
-                [label setText:[[dataArray lastObject] shopName]];
-                [cell.contentView addSubview:label];
+//                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
+                
+                UIButton *nameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [nameBtn setBackgroundColor:[UIColor redColor]];
+                [nameBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [nameBtn setFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
+                [nameBtn setTitle:[[dataArray lastObject] shopName] forState:UIControlStateNormal];
+//                [nameBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -20, 0, 0)];
+                [nameBtn addTarget:self action:@selector(nameBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//                [label setText:[[dataArray lastObject] shopName]];
+                [cell.contentView addSubview:nameBtn];
             }
             if(indexPath.row == [[[dataArray lastObject] myItems] count]+1)
             {

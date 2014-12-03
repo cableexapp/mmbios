@@ -574,7 +574,22 @@
 {
     UIButton *btn = (UIButton *) sender;
     NSString *text = btn.titleLabel.text;
-    
+    if([text isEqualToString:@"待付款"])
+    {
+        text = @"1";
+    }
+    if([text isEqualToString:@"待发货"])
+    {
+        text = @"2";
+    }
+    if([text isEqualToString:@"待收货"])
+    {
+        text = @"3";
+    }
+    if([text isEqualToString:@"待评价"])
+    {
+        text = @"4";
+    }
     [self setHidesBottomBarWhenPushed:YES];
     FourthHostViewController *fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     fourthHostViewController.myStatus = text;

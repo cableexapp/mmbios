@@ -79,6 +79,8 @@
         }
 
         _treatment = [NSString stringWithFormat:@"%@",[dic objectForKey:@"treatment"]];
+        
+        _oemNo = [NSString stringWithFormat:@"%@",[dic objectForKey:@"oemNo"]];
 
     }
     return self;

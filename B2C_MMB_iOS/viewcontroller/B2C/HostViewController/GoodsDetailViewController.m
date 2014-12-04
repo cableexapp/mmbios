@@ -23,7 +23,6 @@
 #import "UpOrderViewController.h"
 #import "B2CUpOrderData.h"
 #import "ChatListViewController.h"
-
 #define GoodsDetail_URL @"http://mmb.fgame.com:8083/"
 
 @interface GoodsDetailViewController ()
@@ -74,6 +73,8 @@
     UIButton *rightBtn;
     
     UIBarButtonItem *right;
+    
+    UILabel *countLabel;
 }
 @end
 
@@ -241,6 +242,18 @@
         [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
         [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
         right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    countLabel = [[UILabel alloc] init];
+    countLabel.frame = CGRectMake(22, 0, 18, 18);
+    countLabel.layer.borderWidth = 1;
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.font = [UIFont systemFontOfSize:11];
+    countLabel.textAlignment = 1;
+    countLabel.hidden = NO;
+    countLabel.text = @"1";
+    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+    [rightBtn addSubview:countLabel];
 //    }
     self.navigationItem.rightBarButtonItem = right;
 }
@@ -991,7 +1004,7 @@
         
         chooseCountBtnArray = [[NSMutableArray alloc] init];
         
-        chooseColorAndCountView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-220, 320, 290)];
+        chooseColorAndCountView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-220, ScreenWidth, 290)];
         [chooseColorAndCountView setBackgroundColor:[UIColor whiteColor]];
         
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
@@ -1021,11 +1034,14 @@
         [colorKindLabel setTextAlignment:NSTextAlignmentLeft];
         [chooseColorAndCountView addSubview:colorKindLabel];
         
+        NSLog(@"%@",detailData.coloritems);
         for(int i = 0;i < detailData.coloritems.count;i++)
         {
             NSString *colorName = [[detailData.coloritems objectAtIndex:i] objectForKey:@"colorName"];
-            
+            productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:i] objectForKey:@"productNum"]];
+
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
             if(i >= 4)
             {
                 [btn setFrame:CGRectMake(10+80*(i-4), colorKindLabel.frame.origin.y + colorKindLabel.frame.size.height + 50, 60, 30)];
@@ -1037,7 +1053,7 @@
             }
             if(i == 0)
             {
-                [btn setSelected:YES];
+//                [btn setSelected:YES];
             }
             [btn setTitle:colorName forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -1051,6 +1067,14 @@
             [btn setTag:i];
             [btn addTarget:self action:@selector(chooseColorClick:) forControlEvents:UIControlEventTouchUpInside];
             
+            if([DCFCustomExtra validateString:productNum] == NO || [productNum isEqualToString:@"0"])
+            {
+                [btn setEnabled:NO];
+            }
+            else
+            {
+                [btn setEnabled:YES];
+            }
             [chooseColorBtnArray addObject:btn];
             [chooseColorAndCountView addSubview:btn];
             
@@ -1063,29 +1087,23 @@
             switch (i) {
                 case 2:
                 {
-                    NSString *colorName = [[detailData.coloritems objectAtIndex:0] objectForKey:@"colorName"];
-                    [label setText:[NSString stringWithFormat:@"已选属性:%@",colorName]];
+                    [label setHidden:YES];
                     break;
                 }
                 case 0:
                 {
-                    NSString *colorPrice = [[detailData.coloritems objectAtIndex:0] objectForKey:@"colorPrice"];
-                    NSString *s = [NSString stringWithFormat:@"¥ %@",colorPrice];
-                    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
-                    label.textColor = [UIColor redColor];
-                    [label setAttributedText:str];
+                    [label setHidden:YES];
                     break;
                 }
                 case 1:
                 {
-                    productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:0] objectForKey:@"productNum"]];
-                    [label setText:[NSString stringWithFormat:@"(库存%@)",productNum]];
-                    [label setTextColor:[UIColor blackColor]];
+                    [label setText:@"请选择颜色:"];
                     break;
                 }
                 default:
                     break;
             }
+        
             [label setTextAlignment:NSTextAlignmentLeft];
             [label setBackgroundColor:[UIColor clearColor]];
             [chooseColorAndCountView addSubview:label];
@@ -1176,27 +1194,40 @@
     NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorPrice"]];
     productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"productNum"]];
     
-    
-    for(int i=0; i< 3; i++)
+    if(detailData.coloritems.count == 0 || [detailData.coloritems isKindOfClass:[NSNull class]])
     {
-        UILabel *label = (UILabel *)[colorLabelArray objectAtIndex:i];
-        if(i == 2)
-        {
-            [label setText:[NSString stringWithFormat:@"已选颜色:%@",colorName]];
-        }
-        if(i == 0)
-        {
-            NSString *s = [NSString stringWithFormat:@"¥ %@",colorPrice];
-            
-            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
-            label.textColor = [UIColor redColor];
-            [label setAttributedText:str];
-        }
-        if(i == 1)
-        {
-            [label setText:[NSString stringWithFormat:@"库存:%@",productNum]];
-        }
+        
     }
+    else
+    {
+        for(int j=0;j<[detailData.coloritems count];j++)
+        {
+            for(int i=0; i< 3; i++)
+            {
+//                NSString *colorPrice = [[detailData.coloritems objectAtIndex:j] objectForKey:@"colorPrice"];
+                UILabel *label = (UILabel *)[colorLabelArray objectAtIndex:i];
+                [label setHidden:NO];
+                if(i == 2)
+                {
+                    [label setText:[NSString stringWithFormat:@"已选颜色:%@",colorName]];
+                }
+                if(i == 0)
+                {
+                    NSString *s = [NSString stringWithFormat:@"¥ %@",colorPrice];
+                    
+                    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
+                    label.textColor = [UIColor redColor];
+                    [label setAttributedText:str];
+                }
+                if(i == 1)
+                {
+                    [label setText:[NSString stringWithFormat:@"库存:%@",productNum]];
+                }
+            }
+        }
+
+    }
+
     
     for(UIButton *b in chooseColorBtnArray)
     {

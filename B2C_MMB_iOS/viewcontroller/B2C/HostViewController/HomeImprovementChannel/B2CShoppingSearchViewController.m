@@ -711,6 +711,11 @@
         [HUD hide:YES];
         HUD = nil;
     }
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
 }
 
 

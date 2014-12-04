@@ -132,6 +132,8 @@
         //        }
     }
     //    [self loadRequest:_myStatus];
+    
+    intPage = 1;
     [self loadRequest:self.myStatus];
 }
 
@@ -551,6 +553,7 @@
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     int status = [[[dataArray objectAtIndex:path.section] status] intValue];
+    NSLog(@"status = %d",status);
     if(status == 1)
     {
         [cell.onLinePayBtn setHidden:NO];
@@ -630,7 +633,6 @@
                 cell.lookForTradeBtn.layer.borderColor = [[UIColor clearColor] CGColor];
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
-                
                 
                 [cell.onLinePayBtn setHidden:YES];
                 [cell.cancelOrderBtn setHidden:YES];

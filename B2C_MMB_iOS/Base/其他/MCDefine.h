@@ -24,7 +24,7 @@
 
 //#define URL_HOST_CHEN @"http://10.10.6.134:8080" //HJ
 //#define URL_HOST_CHEN @"http://58.215.20.140:9989" //公司测试环境外网
-//#define URL_HOST_CHEN @"http://58.215.20.72:8081" //黄金测试环境外网
+//#define URL_HOST_CHEN @"http://58.215.20.68:8008" //加息测试环境外网
 #define URL_HOST_CHEN @"http://58.215.20.140:8001" //测试库环境
 
 #define URL_PIC_DEV   @"http://58.215.20.140:8083/"  //测试库图片（测试环境）

@@ -30,6 +30,7 @@
 #import "B2BAskPriceCarViewController.h"
 
 int isgo = 1;
+BOOL isPopShow = NO;
 
 @interface HostTableViewController ()
 {
@@ -54,7 +55,7 @@ int isgo = 1;
     
     NSMutableArray *arr;
     
-    BOOL isPopShow;
+   
 }
 @end
 
@@ -88,6 +89,15 @@ int isgo = 1;
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    if (isPopShow == NO)
+    {
+        isPopShow = NO;
+    }
+    else
+    {
+        isPopShow = YES;
+        
+    }
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -107,15 +117,8 @@ int isgo = 1;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
     [self setHidesBottomBarWhenPushed:NO];
-    if (isPopShow == YES)
-    {
-        isPopShow = NO;
-    }
-    else
-    {
-        isPopShow = YES;
-        
-    }
+
+    isPopShow = NO;
 }
 
 
@@ -521,7 +524,7 @@ int isgo = 1;
     }
     else if (indexPath.section == 0)
     {
-        return 80;
+        return 100;
     }
     else if (indexPath.section == 1)
     {
@@ -572,7 +575,7 @@ int isgo = 1;
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 35)];
-    [headBackView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [headBackView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0]];
 
     UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake( 10, 0, 200, 35)];
     headLabel.font = [UIFont systemFontOfSize:18];
@@ -762,7 +765,7 @@ int isgo = 1;
         if(!es)
         {
             NSArray *imageArray = [[NSArray alloc] initWithObjects:@"sv_1.png",@"sv_2.png",@"sv_3.png", nil];
-            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 80) ImageArray:imageArray TitleArray:nil WithTag:0];
+            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 100) ImageArray:imageArray TitleArray:nil WithTag:0];
             es.delegate = self;
             [cell.contentView addSubview:es];
         }
@@ -916,7 +919,7 @@ int isgo = 1;
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
-            button.layer.borderWidth = 0.5;
+            button.layer.borderWidth = 1;
             button.titleLabel.textAlignment = NSTextAlignmentRight;
             button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             button.backgroundColor = [UIColor whiteColor];
@@ -953,7 +956,7 @@ int isgo = 1;
                 label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
-            button.layer.borderWidth = 0.5;
+            button.layer.borderWidth = 1;
             button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
             label.text = [useArray objectAtIndex:i];
@@ -989,7 +992,7 @@ int isgo = 1;
                 imageView.frame = CGRectMake(0, 2.5, 40, 40);
                 label.numberOfLines = 2;
             }
-            button.layer.borderWidth = 0.5;
+            button.layer.borderWidth = 1;
             button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
             label.text = [useArray objectAtIndex:i];
@@ -1052,7 +1055,7 @@ int isgo = 1;
                     [moneyLabel setTextColor:[UIColor redColor]];
                     [cabelShowView addSubview:moneyLabel];
                     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-                    cell.backgroundColor = [UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0];
+                    cell.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0];
                 }
             }
         }

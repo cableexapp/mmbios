@@ -81,7 +81,6 @@
     
     [self pushAndPopStyle];
 
-    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
     self.navigationItem.titleView = top;
     

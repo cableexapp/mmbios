@@ -253,8 +253,8 @@
 	 *生成订单信息及签名
 	 *由于demo的局限性，采用了将私钥放在本地签名的方法，商户可以根据自身情况选择签名方法(为安全起见，在条件允许的前提下，我们推荐从商户服务器获取完整的订单信息)
 	 */
-    
-    NSString *appScheme = @"MyAliPay";
+#pragma mark - 这里修改appScheme,跳回自己app,同时info里面的URL Type里面也要修改
+    NSString *appScheme = @"far.east.Far-East-MMB-iOS";
     NSString* orderInfo = [self getOrderInfo:indexPath.row];
     NSString* signedStr = [self doRsa:orderInfo];
     

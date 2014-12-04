@@ -75,9 +75,14 @@
     BOOL flag;  //商品数组section是否为空
     
     UIView *backView;
-    UIView *logBackView;
     UILabel *label_1;
     
+    UIImageView *shopcarView;
+    
+    UILabel *label_2;
+    
+    UIButton *buyBtn;
+    UIView *loginView;
     UIButton *logBtn;
 }
 @end
@@ -688,11 +693,12 @@
     
     buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - 114, ScreenWidth, 54)];
     [self.view addSubview:buttomView];
-    
-    logBackView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
-    [logBackView setBackgroundColor:[UIColor whiteColor]];
-    logBackView.layer.cornerRadius = 5;
-    logBackView.layer.masksToBounds = YES;
+
+    loginView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 60)];
+    [loginView setBackgroundColor:[UIColor whiteColor]];
+    loginView.layer.cornerRadius = 5;
+    loginView.layer.masksToBounds = YES;
+//    [noCell.contentView addSubview:loginView];
     
     logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [logBtn setTitle:@"登录" forState:UIControlStateNormal];
@@ -759,6 +765,7 @@
 
     noCell = [[UITableViewCell alloc] init];
     [noCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+    [noCell setSelectionStyle:0];
 }
 
 
@@ -1201,55 +1208,24 @@ NSComparator cmptr = ^(id obj1, id obj2){
     NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     if([DCFCustomExtra validateString:myMemberid] == NO)
     {
-        [noCell.contentView addSubview:logBackView];
-        [logBackView addSubview:logBtn];
-        [logBackView addSubview:label_1];
+        [noCell.contentView addSubview:loginView];
+        [loginView addSubview:logBtn];
+        [loginView addSubview:label_1];
     }
     else
     {
-        if(logBackView)
+        if(loginView)
         {
             [logBtn removeFromSuperview];
             logBtn = nil;
             [label_1 removeFromSuperview];
             label_1 = nil;
-            [logBackView removeFromSuperview];
-            logBackView = nil;
+            [loginView removeFromSuperview];
+            loginView = nil;
         }
     }
-    
-    UIImageView *shopcar = [[UIImageView alloc] init];
-    shopcar.frame = CGRectMake(20, 130, 61, 60);
-    if (shopcar.image == nil)
-    {
-        loginView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
-        [loginView setBackgroundColor:[UIColor whiteColor]];
-        loginView.layer.cornerRadius = 5;
-        loginView.layer.masksToBounds = YES;
-        [noCell.contentView addSubview:loginView];
-    }
-    if (!logBtn)
-    {
-        logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [logBtn setTitle:@"登录" forState:UIControlStateNormal];
-        [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
-        logBtn.layer.cornerRadius = 5;
-        [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
-        [logBtn addTarget:self action:@selector(logBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [loginView addSubview:logBtn];
-    }
-    if (!label_1)
-    {
-        label_1 = [[UILabel alloc] initWithFrame:CGRectMake(logBtn.frame.origin.x + logBtn.frame.size.width + 15, logBtn.frame.origin.y, 200, 40)];
-        [label_1 setBackgroundColor:[UIColor clearColor]];
-        [label_1 setTextAlignment:NSTextAlignmentLeft];
-        [label_1 setFont:[UIFont systemFontOfSize:12]];
-        [label_1 setTextColor:[UIColor blackColor]];
-        [label_1 setNumberOfLines:0];
-        [label_1 setText:@"登陆后可以同步电脑和手机端的商品,并保存在账户中"];
-        [loginView addSubview:label_1];
-    }
+
+
     if (!shopcarView)
     {
         shopcarView = [[UIImageView alloc] init];

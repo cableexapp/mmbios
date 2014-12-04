@@ -285,6 +285,9 @@
                 }
                 [dataArray addObject:array];
             }
+            
+            NSLog(@"dataArray = %@",dataArray);
+            
             if (dataArray.count > 0)
             {
                 backView.hidden = YES;
@@ -1186,7 +1189,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     UIImageView *shopcar = [[UIImageView alloc] init];
     shopcar.frame = CGRectMake(20, 130, 61, 60);
-    shopcar.image = [UIImage imageNamed:@"shoppingCar"];
+    if (shopcar.image == nil)
+    {
+        
+    }shopcar.image = [UIImage imageNamed:@"shoppingCar"];
+    
     [noCell.contentView addSubview:shopcar];
     
 //    NSString *string = @"您的购物车中暂时没有商品,现在去浏览选购商品~";
@@ -1204,7 +1211,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
     UIButton *labelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     labelButton.frame = CGRectMake(85, 150, ScreenWidth-105, size.height);
-    [labelButton setTitle:string forState:UIControlStateNormal];
+    if (labelButton.titleLabel.text.length == 0)
+    {
+        [labelButton setTitle:string forState:UIControlStateNormal];
+    }
     [labelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     labelButton.enabled = NO;
     [labelButton.titleLabel setNumberOfLines:2];

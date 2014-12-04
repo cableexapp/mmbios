@@ -86,6 +86,12 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
+#pragma mark - 获取购物车商品数量
+-(void)loadShopCarCount
+{
+    
+}
+
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     if(URLTag == URLHotSaleProductTag)

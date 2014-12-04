@@ -15,6 +15,7 @@
 {
     DCFConnectionUtil *conn;
     MBProgressHUD *HUD;
+
     UITableView *tv;
     EScrollerView *es;
     NSString *GoodsDetailUrl;

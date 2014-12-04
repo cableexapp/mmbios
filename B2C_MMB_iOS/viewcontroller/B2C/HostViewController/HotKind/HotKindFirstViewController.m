@@ -235,7 +235,7 @@
         [dataArray removeObjectAtIndex:indexPath.row];
     }
     [_testTableView reloadData];
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+    [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
 
     if (self.isOpened)
     {
@@ -306,7 +306,11 @@ if ( _opend )
     {
         self.opend = NO;
         backView.hidden = YES;
-        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+        // 2.动画
+        [UIView animateWithDuration:0.5 animations:^{
+         self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+        }];
+
         _testTableView.userInteractionEnabled = YES;
         _testSubTableView.hidden = YES;
     }
@@ -320,7 +324,9 @@ if ( _opend )
         {
          _testSubTableView.hidden = YES;
         }
-        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);
+        [UIView animateWithDuration:0.5 animations:^{
+            self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);  //三角按钮旋转
+        }];
         _testSubTableView.hidden = NO;
         _testTableView.userInteractionEnabled = NO;   // 未选列表不能选中
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
@@ -369,7 +375,9 @@ if ( _opend )
     [dataArray addObjectsFromArray:selectArray];
     [selectArray removeAllObjects];
     [_testTableView reloadData];
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+    [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+    self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

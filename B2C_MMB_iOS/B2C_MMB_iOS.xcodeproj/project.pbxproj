@@ -729,7 +729,6 @@
 		8BBB2CAE1A1E1BC100895B4C /* 8.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB2CAC1A1E1BC100895B4C /* 8.png */; };
 		8BBB2CB01A1E1BC800895B4C /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB2CAF1A1E1BC800895B4C /* 4.png */; };
 		8BC2AD8B1A19B81F00E44BC2 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD8A1A19B81F00E44BC2 /* SearchViewController.m */; };
-		8BC2AD8D1A19CCAB00E44BC2 /* searchSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8BC2AD8C1A19CCAB00E44BC2 /* searchSound.wav */; };
 		8BC2AD9F1A19F0E100E44BC2 /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC2AD901A19F0E100E44BC2 /* libBPush.a */; };
 		8BC2ADA01A19F0E100E44BC2 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD931A19F0E100E44BC2 /* Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8BC2ADA11A19F0E100E44BC2 /* BPushClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD961A19F0E100E44BC2 /* BPushClass.m */; };
@@ -1860,7 +1859,6 @@
 		8BBB2CAF1A1E1BC800895B4C /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
 		8BC2AD891A19B81F00E44BC2 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		8BC2AD8A1A19B81F00E44BC2 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
-		8BC2AD8C1A19CCAB00E44BC2 /* searchSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = searchSound.wav; sourceTree = "<group>"; };
 		8BC2AD8F1A19F0E100E44BC2 /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
 		8BC2AD901A19F0E100E44BC2 /* libBPush.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBPush.a; sourceTree = "<group>"; };
 		8BC2AD921A19F0E100E44BC2 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
@@ -3357,7 +3355,6 @@
 				8BA7BF721A10A85500758B0F /* del_emoji_select@2x.png */,
 				8BA7BF731A10A85500758B0F /* inactive_page_image.png */,
 				8BA7BF741A10A85500758B0F /* inactive_page_image@2x.png */,
-				8BC2AD8C1A19CCAB00E44BC2 /* searchSound.wav */,
 				8BA7BF751A10A85500758B0F /* sms01.mp3 */,
 				8BD9B8AA1A1355330037FB65 /* icon01.png */,
 				8BD9B8B41A13573B0037FB65 /* icon02.png */,
@@ -4724,7 +4721,6 @@
 				8BA7C2DA1A10A8DD00758B0F /* README.txt in Resources */,
 				8BA7C0BE1A10A85500758B0F /* 尴尬@2x.png in Resources */,
 				8B1F0FC81A16FCEA00F819D1 /* clock.png in Resources */,
-				8BC2AD8D1A19CCAB00E44BC2 /* searchSound.wav in Resources */,
 				8BA7C1161A10A85500758B0F /* 糗了@2x.png in Resources */,
 				6181A4EE19CFC4C2000E2D14 /* Set.png in Resources */,
 				8BA7C07B1A10A85500758B0F /* 便便.png in Resources */,

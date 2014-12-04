@@ -152,7 +152,6 @@
         {
             [DCFStringUtil showNotice:msg];
         }
-        
     }
     if(URLTag == URLInquiryCartCountTag)
     {
@@ -164,21 +163,18 @@
         {
             carCount = 0;
         }
-        
-
         if(carCount < 99 && carCount > 0)
         {
-            [badgeBtn setFrame:CGRectMake(askPriceBtn.frame.size.width-15, 10, 18, 18)];
+            [badgeBtn setFrame:CGRectMake(askPriceBtn.frame.size.width-22, 5, 18, 18)];
             [badgeBtn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
             [badgeBtn setTitle:[NSString stringWithFormat:@"%d",carCount] forState:UIControlStateNormal];
         }
         else if (carCount >= 99)
         {
-            [badgeBtn setFrame:CGRectMake(askPriceBtn.frame.size.width-15, 10, 24, 18)];
+            [badgeBtn setFrame:CGRectMake(askPriceBtn.frame.size.width-22, 5, 24, 18)];
             [badgeBtn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
             [badgeBtn setTitle:@"99+" forState:UIControlStateNormal];
         }
-   
         if(carCount == 0)
         {
             [badgeBtn setHidden:YES];
@@ -187,10 +183,6 @@
         {
             [badgeBtn setHidden:NO];
         }
-
-        
-        
-
     }
 }
 
@@ -224,7 +216,6 @@
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"热门型号"];
     self.navigationItem.titleView = top;

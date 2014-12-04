@@ -18,6 +18,7 @@
 #import "OneStepViewController.h"
 #import "B2CHotSaleData.h"
 #import "UIImageView+WebCache.h"
+#import "AppDelegate.h"
 
 @interface ShoppingHostViewController ()
 {
@@ -32,6 +33,10 @@
     NSArray *picArray;
     
     NSMutableArray *dataArray;
+    
+    UILabel *countLabel;
+    
+    AppDelegate *app;
 }
 @end
 
@@ -67,6 +72,7 @@
             [view setHidden:YES];
         }
     }
+    [self loadShopCarCount];
 }
 
 #pragma mark - 查看热销商品
@@ -86,9 +92,35 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
+
+
 #pragma mark - 获取购物车商品数量
 -(void)loadShopCarCount
 {
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
 }
 
@@ -198,6 +230,27 @@
         
         [tv reloadData];
     }
+    if (URLTag == URLShopCarCountTag)
+    {
+        NSLog(@"家装馆频道dicRespon = %@",dicRespon);
+        if ([[dicRespon objectForKey:@"total"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
+        {
+            countLabel.hidden = NO;
+            
+            countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
+        {
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
+            countLabel.hidden = NO;
+            countLabel.text = @"99+";
+        }
+    }
+
 }
 
 - (void)viewDidLoad
@@ -249,7 +302,17 @@
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
     [rightBtn setFrame:CGRectMake(0, 5, 37, 34)];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
+    countLabel = [[UILabel alloc] init];
+    countLabel.frame = CGRectMake(22, 0, 18, 18);
+    countLabel.layer.borderWidth = 1;
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.font = [UIFont systemFontOfSize:11];
+    countLabel.textAlignment = 1;
+    countLabel.hidden = NO;
+    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+    [rightBtn addSubview:countLabel];
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = right;
 }

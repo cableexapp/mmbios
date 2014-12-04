@@ -27,7 +27,6 @@
 
 @interface SearchViewController ()
 {
-    AppDelegate *app;
     NSMutableArray *cabelNameArray;
     
     UILabel *leftBtn;
@@ -78,6 +77,8 @@
     UILabel *searchResultLabel;
     
     int tempCount;
+    
+    int tempShopCar;
 }
 @end
 
@@ -283,16 +284,16 @@
    
 }
 
+//请求询价车商品数量
 -(void)loadbadgeCount
 {
-    //请求询价车商品数量
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
     NSString *token = [DCFCustomExtra md5:string];
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
-    NSString *visitorid = [app getUdid];
+    NSString *visitorid = [self.appDelegate getUdid];
     
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
@@ -305,15 +306,39 @@
     {
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
     }
-    
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
-    
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
+
+//获取购物车商品数量
+-(void)loadShopCarCount
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [self.appDelegate getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+
+}
+
 
 -(void)coverClearButton
 {
@@ -360,9 +385,30 @@
         else if ([[dicRespon objectForKey:@"value"] intValue] >= 1 && [[dicRespon objectForKey:@"value"] intValue] < 99)
         {
             countLabel.hidden = NO;
+            
             countLabel.text = [dicRespon objectForKey:@"value"];
         }
         else if ([[dicRespon objectForKey:@"value"] intValue] > 99)
+        {
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
+            countLabel.hidden = NO;
+            countLabel.text = @"99+";
+        }
+    }
+    if (URLTag == URLShopCarCountTag)
+    {
+        tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        if ([[dicRespon objectForKey:@"total"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
+        {
+            countLabel.hidden = NO;
+            
+            countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
         {
             countLabel.frame = CGRectMake(46, 2, 21, 19);
             countLabel.hidden = NO;
@@ -589,7 +635,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dissMiss" object:nil];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0] isEqualToString:@"家装线专卖"])
     {
-        NSLog(@"家装线专卖");
         sectionBtnIv.frame = CGRectMake(72,17.5,10,10);
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
@@ -598,18 +643,30 @@
         [self readHistoryData];
         [self refreshClearButton];
         [self.serchResultView reloadData];
-        countLabel.hidden = YES;
+        [self loadShopCarCount];
+       if (tempShopCar > 0)
+        {
+            countLabel.hidden = NO;
+        }
+        else
+        {
+            countLabel.hidden = YES;
+        }
     }
     else
     {
-        NSLog(@"询价车");
         sectionBtnIv.frame = CGRectMake(68,17.5,10,10);
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"询价车" forState:UIControlStateNormal];
         tempType = @"1";
+        [self loadbadgeCount];
         if (tempCount > 0)
         {
             countLabel.hidden = NO;
+        }
+        else
+        {
+            countLabel.hidden = YES;
         }
         
     }
@@ -823,8 +880,6 @@
             [self saveType:@"2" ProductId:productId ProductName:productName];
             [self.navigationController pushViewController:detail animated:YES];
         }
-    NSLog(@"cstVC.myTitle = %@",cstVC.myTitle);
-    NSLog(@"cstVC.typeId = %@",cstVC.typeId);
 }
 
 

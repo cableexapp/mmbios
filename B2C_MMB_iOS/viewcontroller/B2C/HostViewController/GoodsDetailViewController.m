@@ -106,17 +106,18 @@
 
 - (void) btnClick:(UIButton *) sender
 {
-    if(num.length == 0 || [num intValue] == 0)
-    {
-        [DCFStringUtil showNotice:@"请选择数量"];
-        return;
-    }
-    if(itemid.length == 0)
-    {
-        [DCFStringUtil showNotice:@"请选择颜色"];
-        return;
-    }
-    
+//    if(num.length == 0 || [num intValue] == 0)
+//    {
+//        [DCFStringUtil showNotice:@"请选择数量"];
+//        return;
+//    }
+//    if(itemid.length == 0)
+//    {
+//        [DCFStringUtil showNotice:@"请选择颜色"];
+//        return;
+//    }
+    [self.view.window addSubview:[self loadChooseColorAndCount]];
+    backView.hidden = NO;
     [self setHidesBottomBarWhenPushed:YES];
     int tag = [sender tag];
     
@@ -218,6 +219,7 @@
         [chooseColorAndCountView removeFromSuperview];
         chooseColorAndCountView = nil;
     }
+    backView.hidden = YES;
 //    [self setHidesBottomBarWhenPushed:NO];
 }
 
@@ -248,11 +250,11 @@
     countLabel.font = [UIFont systemFontOfSize:11];
     countLabel.textAlignment = 1;
     countLabel.hidden = NO;
-    countLabel.text = @"1";
     countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
     countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
     [rightBtn addSubview:countLabel];
     self.navigationItem.rightBarButtonItem = right;
+    [self loadShopCarCount];
 }
 
 - (void)viewDidLoad
@@ -346,6 +348,34 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
+//获取购物车商品数量
+-(void)loadShopCarCount
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+}
+
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
@@ -420,7 +450,25 @@
             }
         }
     }
-    
+    if (URLTag == URLShopCarCountTag)
+    {
+        if ([[dicRespon objectForKey:@"total"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
+        {
+            countLabel.hidden = NO;
+            
+            countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
+        {
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
+            countLabel.hidden = NO;
+            countLabel.text = @"99+";
+        }
+    }
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -1017,12 +1065,19 @@
         [chooseColorAndCountView addSubview:iv];
         
         UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [closeBtn setFrame:CGRectMake(self.view.frame.size.width-10-35, 15, 35, 30)];
+        [closeBtn setFrame:CGRectMake(ScreenWidth-45, 15, 35, 30)];
         [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [closeBtn setBackgroundImage:[UIImage imageNamed:@"close.png"] forState:UIControlStateNormal];
         [closeBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-        [closeBtn addTarget:self action:@selector(closeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [chooseColorAndCountView addSubview:closeBtn];
+        
+        UIView *closeView = [[UIView alloc] init];
+        closeView.frame = CGRectMake(ScreenWidth-50, 0, 60, 50);
+        closeView.backgroundColor = [UIColor clearColor];
+        [chooseColorAndCountView addSubview:closeView];
+        
+        UITapGestureRecognizer *closeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeTap:)];
+        [closeView addGestureRecognizer:closeTap];
         
         UILabel *colorKindLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, iv.frame.origin.y+iv.frame.size.height+10, 200, 20)];
         [colorKindLabel setText:@"颜色"];
@@ -1170,7 +1225,7 @@
     return nil;
 }
 
-- (void) closeBtnClick:(UIButton *) sender
+-(void)closeTap:(UIGestureRecognizer *)sender
 {
     if(chooseColorAndCountView)
     {

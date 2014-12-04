@@ -235,7 +235,7 @@
         [dataArray removeObjectAtIndex:indexPath.row];
     }
     [_testTableView reloadData];
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+    [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
 
     if (self.isOpened)
     {
@@ -375,7 +375,9 @@ if ( _opend )
     [dataArray addObjectsFromArray:selectArray];
     [selectArray removeAllObjects];
     [_testTableView reloadData];
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+    [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+    self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

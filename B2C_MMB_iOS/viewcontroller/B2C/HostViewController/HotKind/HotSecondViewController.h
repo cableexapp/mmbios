@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
+
 
 @interface HotSecondViewController : UIViewController<UIActionSheetDelegate,ConnectionDelegate,UITextFieldDelegate,UITextViewDelegate>
 {
     DCFConnectionUtil *conn;
+    MBProgressHUD *HUD;
+
 }
 
 //传过来的数组属性

@@ -10,7 +10,6 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MBProgressHUD.h"
-
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
 #import "LoginNaviViewController.h"
@@ -42,10 +41,10 @@
         [conn stopConnection];
         conn = nil;
     }
-//    if(HUD)
-//    {
-//        [HUD hide:YES];
-//    }
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
 
 }
 

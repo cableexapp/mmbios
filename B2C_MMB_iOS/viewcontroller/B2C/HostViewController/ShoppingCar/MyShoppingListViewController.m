@@ -75,6 +75,15 @@
     BOOL flag;  //商品数组section是否为空
     
     UIView *backView;
+    
+    UIImageView *shopcarView;
+    
+    UILabel *label_2;
+    
+    UIButton *buyBtn;
+    UIView *loginView;
+    UIButton *logBtn;
+    UILabel *label_1;
 }
 @end
 
@@ -101,7 +110,6 @@
     }
     
     [self loadRequest];
-
 }
 
 - (void) buttomBtnClick:(UIButton *) sender
@@ -212,6 +220,8 @@
     return memberid;
 }
 
+
+
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     
@@ -285,6 +295,9 @@
                 }
                 [dataArray addObject:array];
             }
+            
+            NSLog(@"dataArray = %@",dataArray);
+            
             if (dataArray.count > 0)
             {
                 backView.hidden = YES;
@@ -1151,75 +1164,68 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
 {
-//    static NSString *moreCellId = @"moreCell";
-//    UITableViewCell *noCell = [tableView cellForRowAtIndexPath:indexPath];
-//    if(!noCell)
-//    {
-//        noCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:moreCellId];
-//        [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-//    }
-    
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
-    [view setBackgroundColor:[UIColor whiteColor]];
-    view.layer.cornerRadius = 5;
-    view.layer.masksToBounds = YES;
-    [noCell.contentView addSubview:view];
-    
-    UIButton *logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [logBtn setTitle:@"登录" forState:UIControlStateNormal];
-    [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
-    logBtn.layer.cornerRadius = 5;
-    [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
-    [logBtn addTarget:self action:@selector(logBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:logBtn];
-    
-    UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(logBtn.frame.origin.x + logBtn.frame.size.width + 15, logBtn.frame.origin.y, 200, 40)];
-    [label_1 setBackgroundColor:[UIColor clearColor]];
-    [label_1 setTextAlignment:NSTextAlignmentLeft];
-    [label_1 setFont:[UIFont systemFontOfSize:12]];
-    [label_1 setTextColor:[UIColor blackColor]];
-    [label_1 setNumberOfLines:0];
-    [label_1 setText:@"登陆后可以同步电脑和手机端的商品,并保存在账户中"];
-    [view addSubview:label_1];
-    
-    
-    UIImageView *shopcar = [[UIImageView alloc] init];
-    shopcar.frame = CGRectMake(20, 130, 61, 60);
-    shopcar.image = [UIImage imageNamed:@"shoppingCar"];
-    [noCell.contentView addSubview:shopcar];
-    
-//    NSString *string = @"您的购物车中暂时没有商品,现在去浏览选购商品~";
-//    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
-//    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
-//    [label_2 setBackgroundColor:[UIColor clearColor]];
-//    [label_2 setTextAlignment:NSTextAlignmentLeft];
-//    [label_2 setFont:[UIFont systemFontOfSize:15]];
-//    [label_2 setTextColor:[UIColor blackColor]];
-//    [label_2 setNumberOfLines:0];
-//    [label_2 setText:string];
-//    [noCell.contentView addSubview:label_2];
-    
-    NSString *string = @"您的购物车中暂时没有商品,现在去\n浏览选购商品~";
-    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
-    UIButton *labelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    labelButton.frame = CGRectMake(85, 150, ScreenWidth-105, size.height);
-    [labelButton setTitle:string forState:UIControlStateNormal];
-    [labelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    labelButton.enabled = NO;
-    [labelButton.titleLabel setNumberOfLines:2];
-    [labelButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [noCell.contentView addSubview:labelButton];
-    
-    UIButton *buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buyBtn setFrame:CGRectMake(100, labelButton.frame.origin.y + labelButton.frame.size.height + 50, 120, 40)];
-    [buyBtn setTitle:@"去选购商品" forState:UIControlStateNormal];
-    buyBtn.backgroundColor = [UIColor whiteColor];
-    buyBtn.layer.cornerRadius = 5.0f;
-    [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [buyBtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [noCell.contentView addSubview:buyBtn];
-    
+    if (!loginView)
+    {
+        loginView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
+        [loginView setBackgroundColor:[UIColor whiteColor]];
+        loginView.layer.cornerRadius = 5;
+        loginView.layer.masksToBounds = YES;
+        [noCell.contentView addSubview:loginView];
+    }
+    if (!logBtn)
+    {
+        logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [logBtn setTitle:@"登录" forState:UIControlStateNormal];
+        [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        logBtn.layer.cornerRadius = 5;
+        [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
+        [logBtn addTarget:self action:@selector(logBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [loginView addSubview:logBtn];
+    }
+    if (!label_1)
+    {
+        label_1 = [[UILabel alloc] initWithFrame:CGRectMake(logBtn.frame.origin.x + logBtn.frame.size.width + 15, logBtn.frame.origin.y, 200, 40)];
+        [label_1 setBackgroundColor:[UIColor clearColor]];
+        [label_1 setTextAlignment:NSTextAlignmentLeft];
+        [label_1 setFont:[UIFont systemFontOfSize:12]];
+        [label_1 setTextColor:[UIColor blackColor]];
+        [label_1 setNumberOfLines:0];
+        [label_1 setText:@"登陆后可以同步电脑和手机端的商品,并保存在账户中"];
+        [loginView addSubview:label_1];
+    }
+    if (!shopcarView)
+    {
+        shopcarView = [[UIImageView alloc] init];
+        shopcarView.frame = CGRectMake(20, 130, 61, 60);
+        
+        shopcarView.image = [UIImage imageNamed:@"shoppingCar"];
+        [noCell.contentView addSubview:shopcarView];
+    }
+    if (!label_2)
+    {
+        NSString *string = @"您的购物车中暂时没有商品,现在去浏览选购商品~";
+        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
+        label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
+        [label_2 setBackgroundColor:[UIColor clearColor]];
+        [label_2 setTextAlignment:NSTextAlignmentLeft];
+        [label_2 setFont:[UIFont systemFontOfSize:15]];
+        [label_2 setTextColor:[UIColor blackColor]];
+        [label_2 setNumberOfLines:0];
+        [label_2 setText:string];
+        [noCell.contentView addSubview:label_2];
+    }
+    if (!buyBtn)
+    {
+        buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
+        [buyBtn setTitle:@"去选购商品" forState:UIControlStateNormal];
+        buyBtn.backgroundColor = [UIColor whiteColor];
+        buyBtn.layer.cornerRadius = 5.0f;
+        [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [buyBtn addTarget:self action:@selector(buyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [noCell.contentView addSubview:buyBtn];
+    }
     tv.separatorStyle = UITableViewCellSeparatorStyleNone;
     noCell.selectionStyle = UITableViewCellSelectionStyleNone;
     

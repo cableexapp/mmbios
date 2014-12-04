@@ -52,6 +52,8 @@
     UILabel *countLabel;
     
     NSArray *arr;
+    
+    AppDelegate *app;
 }
 @end
 
@@ -90,7 +92,6 @@
     }
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
-    //        [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
     [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
     [rightBtn addTarget:self action:@selector(rightItemClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
@@ -102,12 +103,11 @@
     countLabel.font = [UIFont systemFontOfSize:11];
     countLabel.textAlignment = 1;
     countLabel.hidden = NO;
-    countLabel.text = @"1";
     countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
     countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
     [rightBtn addSubview:countLabel];
-    //    }
     self.navigationItem.rightBarButtonItem = right;
+    [self loadShopCarCount];
 }
 
 #pragma mark - delegate
@@ -487,6 +487,35 @@
 }
 
 
+//获取购物车商品数量
+-(void)loadShopCarCount
+{
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+}
+
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     if(URLTag == URLB2CGoodsListTag)
@@ -535,6 +564,25 @@
             }
         }
         [tv reloadData];
+    }
+    if (URLTag == URLShopCarCountTag)
+    {
+        if ([[dicRespon objectForKey:@"total"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
+        {
+            countLabel.hidden = NO;
+            
+            countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
+        {
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
+            countLabel.hidden = NO;
+            countLabel.text = @"99+";
+        }
     }
 }
 

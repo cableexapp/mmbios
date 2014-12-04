@@ -48,6 +48,8 @@ enum {
     
     URLShopCarAddTag,    //购物车增加商品数目
     
+    URLShopCarCountTag,  //购物车商品数量查询
+    
     URLShopCarDeleteTag,  //购物车删除商品
     
     URLAddInvoiceTag,    //新增发票

@@ -14,6 +14,7 @@
 #import "UIImageView+WebCache.h"
 #import "DCFCustomExtra.h"
 #import "AppDelegate.h"
+
 #import "B2CGoodsListData.h"
 #import "DCFCustomExtra.h"
 #import "GoodsDetailViewController.h"

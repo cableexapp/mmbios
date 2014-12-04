@@ -306,7 +306,11 @@ if ( _opend )
     {
         self.opend = NO;
         backView.hidden = YES;
-        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+        // 2.动画
+        [UIView animateWithDuration:0.5 animations:^{
+         self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+        }];
+
         _testTableView.userInteractionEnabled = YES;
         _testSubTableView.hidden = YES;
     }
@@ -320,7 +324,9 @@ if ( _opend )
         {
          _testSubTableView.hidden = YES;
         }
-        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);
+        [UIView animateWithDuration:0.5 animations:^{
+            self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);  //三角按钮旋转
+        }];
         _testSubTableView.hidden = NO;
         _testTableView.userInteractionEnabled = NO;   // 未选列表不能选中
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;

@@ -10,12 +10,12 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MBProgressHUD.h"
+
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
 #import "LoginNaviViewController.h"
 #import "MCDefine.h"
 
-#define kMaxLength 11
 
 @interface HotSecondViewController ()
 
@@ -42,8 +42,12 @@
         [conn stopConnection];
         conn = nil;
     }
-}
+//    if(HUD)
+//    {
+//        [HUD hide:YES];
+//    }
 
+}
 
 - (void)viewDidLoad
 {
@@ -65,7 +69,6 @@
     [self.submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.submit.layer.cornerRadius = 5;
     self.submit.frame = CGRectMake(5, self.view.frame.size.height-190,self.view.frame.size.width-37 , 40);
-    
     self.secondTextView.delegate = self;
 //    数据加载到文本框
     NSString *str = @"";
@@ -89,11 +92,11 @@
 - (void)textViewDidBeginEditing:(UITextField *)textView
 {
     CGRect frame = textView.frame;
-    int offset = frame.origin.y + 60 - (self.view.frame.size.height-236.0);
+    int offset = frame.origin.y + 60 - (self.view.frame.size.height-200.0);
     NSTimeInterval animationDuration=0.30f;
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
-    if (offset > 0)
+    if (offset)
     {
         self.view.frame=CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
         [UIView commitAnimations];
@@ -207,6 +210,8 @@
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+ 
 
 }
 

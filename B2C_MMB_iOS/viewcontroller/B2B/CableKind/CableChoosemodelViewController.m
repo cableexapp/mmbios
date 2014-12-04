@@ -79,6 +79,7 @@
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSString *visitorid = [app getUdid];
     
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
@@ -512,12 +513,13 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+//    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
     NSString *visitorid = [app getUdid];
+    NSLog(@"%@",visitorid);
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     NSString *pushString = nil;
-    if(hasLogin == YES)
+    if([DCFCustomExtra validateString:memberid] == YES)
     {
         pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&model=%@&firsttype=%@&secondtype=%@&thirdtype=%@",memberid,token,text,firstType,secondType,thirdType];
     }

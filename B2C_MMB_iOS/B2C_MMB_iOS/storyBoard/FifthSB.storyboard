@@ -309,11 +309,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="KtR-tr-yWE">
-                                <rect key="frame" x="0.0" y="140" width="319.99996763068287" height="50"/>
+                                <rect key="frame" x="0.0" y="140" width="319.99993959126397" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="清除本地缓存图片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hZK-7S-2oZ">
-                                        <rect key="frame" x="26" y="8" width="180.99997169639582" height="30"/>
+                                        <rect key="frame" x="26" y="8" width="180.99994717883405" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>

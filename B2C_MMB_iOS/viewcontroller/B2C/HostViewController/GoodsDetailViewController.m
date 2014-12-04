@@ -177,13 +177,15 @@
             arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
             //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
             pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
-            
         }
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
         
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         
         num = @"0";
+        
+        NSLog(@"arr.count = %@",arr);
+        NSLog(@"arr.count = %d",arr.count);
     }
 }
 
@@ -232,16 +234,12 @@
         }
     }
     num = @"0";
-    
-//    NSLog(@"rightBtn = %@",rightBtn);
-//    if(!rightBtn)
-//    {
-        rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
-//        [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
-        [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
-        [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
-        right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+
+    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
+    [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
+    [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     countLabel = [[UILabel alloc] init];
     countLabel.frame = CGRectMake(22, 0, 18, 18);
     countLabel.layer.borderWidth = 1;
@@ -254,7 +252,6 @@
     countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
     countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
     [rightBtn addSubview:countLabel];
-//    }
     self.navigationItem.rightBarButtonItem = right;
 }
 

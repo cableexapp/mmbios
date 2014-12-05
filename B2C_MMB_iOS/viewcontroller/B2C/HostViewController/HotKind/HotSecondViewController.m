@@ -182,10 +182,10 @@
 
 - (IBAction)submitNews:(UIButton *)sender {
     
-    if(sender == self.submit)
-    {
+//    if(sender == self.submit)
+//    {
         [self.PhoneNumber resignFirstResponder];
-    }
+//    }
     if(self.PhoneNumber.text.length == 0)
     {
         [DCFStringUtil showNotice:@"手机号码不能为空"];
@@ -195,6 +195,11 @@
     if([DCFCustomExtra validateMobile:self.PhoneNumber.text] == NO)
     {
         [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+        return;
+    }
+    if(self.secondTextView.text.length > 1000)
+    {
+        [DCFStringUtil showNotice:@"备注内容已超出1000字"];
         return;
     }
     
@@ -230,6 +235,9 @@
     if(self.secondTextView.text.length > 1000)
     {
         [self.countLabel setTextColor:[UIColor redColor]];
+    }else{
+        [self.countLabel setTextColor:[UIColor blackColor]];
+
     }
     if(self.secondTextView.text.length == 0)
     {

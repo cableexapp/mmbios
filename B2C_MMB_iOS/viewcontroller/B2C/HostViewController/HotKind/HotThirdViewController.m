@@ -33,12 +33,27 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //每个界面都要加这句话
-    [self pushAndPopStyle];
+//    [self pushAndPopStyle];
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交成功"];
     self.navigationItem.titleView = top;
     [super viewDidLoad];
-
     
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+}
+
+
+- (void) back:(id) sender
+{
+    //  跳转到首页
+    NSLog(@"%@",self.navigationController.viewControllers);
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,10 +70,8 @@
   //  返回上一级
 //   [self.navigationController popViewControllerAnimated:YES];
     
- //  跳转到首页
-    [self.navigationController popToRootViewControllerAnimated:YES];
-    
 
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 
@@ -66,8 +79,12 @@
 - (IBAction)backSecond:(id)sender
 {
      //  倒退到页面2
-    [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+//    [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+
 }
+
+
 
 - (IBAction)taPhone:(id)sender
 {

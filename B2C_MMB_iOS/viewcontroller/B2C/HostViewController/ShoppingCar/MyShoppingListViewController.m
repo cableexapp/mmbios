@@ -75,6 +75,7 @@
     BOOL flag;  //商品数组section是否为空
     
     UIView *backView;
+    UILabel *label_1;
     
     UIImageView *shopcarView;
     
@@ -83,7 +84,6 @@
     UIButton *buyBtn;
     UIView *loginView;
     UIButton *logBtn;
-    UILabel *label_1;
 }
 @end
 
@@ -108,6 +108,8 @@
             [view setHidden:YES];
         }
     }
+    
+
     
     [self loadRequest];
 }
@@ -690,8 +692,32 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
     buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - 114, ScreenWidth, 54)];
-    [buttomView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:buttomView];
+
+    loginView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 60)];
+    [loginView setBackgroundColor:[UIColor whiteColor]];
+    loginView.layer.cornerRadius = 5;
+    loginView.layer.masksToBounds = YES;
+//    [noCell.contentView addSubview:loginView];
+    
+    logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [logBtn setTitle:@"登录" forState:UIControlStateNormal];
+    [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    logBtn.layer.cornerRadius = 5;
+    [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
+    [logBtn addTarget:self action:@selector(logBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    label_1 = [[UILabel alloc] initWithFrame:CGRectMake(logBtn.frame.origin.x + logBtn.frame.size.width + 15, logBtn.frame.origin.y, 200, 40)];
+    [label_1 setBackgroundColor:[UIColor clearColor]];
+    [label_1 setTextAlignment:NSTextAlignmentLeft];
+    [label_1 setFont:[UIFont systemFontOfSize:12]];
+    [label_1 setTextColor:[UIColor blackColor]];
+    [label_1 setNumberOfLines:0];
+    [label_1 setText:@"登录后可以同步电脑和手机端的商品,并保存在账户中"];
+    
+    
+
     
     [self hiddenButtomView];
     
@@ -739,6 +765,7 @@
 
     noCell = [[UITableViewCell alloc] init];
     [noCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+    [noCell setSelectionStyle:0];
 }
 
 
@@ -1043,7 +1070,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
 {
     if(indexPath.section == dataArray.count)
     {
-        if(dataArray)
+        if(dataArray && dataArray.count != 0)
         {
             for(NSMutableArray *arr in dataArray)
             {
@@ -1059,11 +1086,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
                     }
                     return 0;
                 }
-                for(UIView *view in noCell.subviews)
-                {
-                    [view setHidden:NO];
-                    [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
-                }
+//                for(UIView *view in noCell.subviews)
+//                {
+//                    [view setHidden:NO];
+//                    [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
+//                }
             }
             return ScreenHeight-34;
         }
@@ -1099,6 +1126,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
+    NSLog(@"numberOfSectionsInTableView = %@",dataArray);
     if(!dataArray || dataArray.count == 0)
     {
         return 1;
@@ -1164,36 +1192,40 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
 {
-    if (!loginView)
+//    static NSString *moreCellId = @"moreCell";
+//    UITableViewCell *noCell = [tableView cellForRowAtIndexPath:indexPath];
+//    if(!noCell)
+//    {
+//        noCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:moreCellId];
+//        [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+//    }
+    
+//    if(rightBtn)
+//    {
+//        [rightBtn setHidden:YES]
+//    }
+
+    NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    if([DCFCustomExtra validateString:myMemberid] == NO)
     {
-        loginView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
-        [loginView setBackgroundColor:[UIColor whiteColor]];
-        loginView.layer.cornerRadius = 5;
-        loginView.layer.masksToBounds = YES;
         [noCell.contentView addSubview:loginView];
-    }
-    if (!logBtn)
-    {
-        logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [logBtn setTitle:@"登录" forState:UIControlStateNormal];
-        [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
-        logBtn.layer.cornerRadius = 5;
-        [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
-        [logBtn addTarget:self action:@selector(logBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [loginView addSubview:logBtn];
-    }
-    if (!label_1)
-    {
-        label_1 = [[UILabel alloc] initWithFrame:CGRectMake(logBtn.frame.origin.x + logBtn.frame.size.width + 15, logBtn.frame.origin.y, 200, 40)];
-        [label_1 setBackgroundColor:[UIColor clearColor]];
-        [label_1 setTextAlignment:NSTextAlignmentLeft];
-        [label_1 setFont:[UIFont systemFontOfSize:12]];
-        [label_1 setTextColor:[UIColor blackColor]];
-        [label_1 setNumberOfLines:0];
-        [label_1 setText:@"登陆后可以同步电脑和手机端的商品,并保存在账户中"];
         [loginView addSubview:label_1];
     }
+    else
+    {
+        if(loginView)
+        {
+            [logBtn removeFromSuperview];
+            logBtn = nil;
+            [label_1 removeFromSuperview];
+            label_1 = nil;
+            [loginView removeFromSuperview];
+            loginView = nil;
+        }
+    }
+
+
     if (!shopcarView)
     {
         shopcarView = [[UIImageView alloc] init];
@@ -1261,13 +1293,13 @@ NSComparator cmptr = ^(id obj1, id obj2){
             flag = YES;
         }
         
-        if(arr.count == 0 && indexPath.section == dataArray.count-1 && flag == YES)
-        {
-            return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
-        }
-        else
-        {
-        }
+//        if(arr.count == 0 && indexPath.section == dataArray.count-1 && flag == YES)
+//        {
+//            return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
+//        }
+//        else
+//        {
+//        }
     }
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];

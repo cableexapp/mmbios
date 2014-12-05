@@ -20,7 +20,7 @@
 {
     NSMutableArray *dataArray;
     NSMutableArray *selectArray;
-    UIView *backView;
+    UIButton *backView;
     UIView *rightButtonView;
 }
 
@@ -113,9 +113,10 @@
     self.testTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
-    backView = [[UIView alloc] init];
+    backView = [[UIButton alloc] init];
     backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
     backView.hidden = YES;
+    [backView addTarget:self action:@selector(shadow) forControlEvents:UIControlEventTouchUpInside];
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:self.testTableView];
     
@@ -123,6 +124,15 @@
     self.upBtn.layer.cornerRadius = 5;
     
 
+}
+
+-(void)shadow
+{
+    backView.hidden = YES;
+    self.selectView.hidden = YES;
+    _testSubTableView.hidden = YES;
+    _testTableView.userInteractionEnabled = YES;
+    self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -263,7 +273,7 @@
     }
     [_testTableView reloadData];
     
-    [_typeBtn setTitle:[NSString stringWithFormat:@"已经选中的分类  %d",selectArray.count] forState:UIControlStateNormal];
+    [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
     if (selectArray.count == 0)
     {
         self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);

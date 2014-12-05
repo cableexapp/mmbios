@@ -182,6 +182,8 @@ int flagPage = 0;
 //        [self.navigationController.view.layer addAnimation:transition forKey:nil];
 //        [self.navigationController pushViewController:waitVC animated:NO];
 //    }
+    
+    NSLog(@"qqqq = %@",self.fromString);
 
 }
 
@@ -292,10 +294,6 @@ int flagPage = 0;
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    else if([[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
     else if([self.fromString isEqualToString:@"热门型号在线咨询"])
     {
         flagPage = 1;
@@ -303,6 +301,13 @@ int flagPage = 0;
     else
     {
         [self.tabBarController setSelectedIndex:0];
+    }
+    if ([self.fromString rangeOfString:@"@"].location != NSNotFound)
+    {
+        if([[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 
@@ -324,10 +329,6 @@ int flagPage = 0;
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    else if([[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
     else if([self.fromString isEqualToString:@"热门型号在线咨询"])
     {
         [self.navigationController popViewControllerAnimated:YES];
@@ -339,6 +340,13 @@ int flagPage = 0;
     else
     {
         [self.tabBarController setSelectedIndex:0];
+    }
+    if ([self.fromString rangeOfString:@"@"].location != NSNotFound)
+    {
+        if([[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 

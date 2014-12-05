@@ -305,7 +305,7 @@
     
     for(int i=0;i<2;i++)
     {
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0+39*i, 320, 1)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0+39*i, ScreenWidth, 1)];
         [lineView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
         [topView addSubview:lineView];
     }
@@ -336,7 +336,7 @@
     [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:searchBtn];
     
-    selectBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height+13, 320, 60)];
+    selectBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height+13, ScreenWidth, 60)];
     [selectBtnView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:selectBtnView];
     
@@ -412,7 +412,7 @@
         [btnArray addObject:selctBtn];
     }
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, 320, ScreenHeight - 175) style:0];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 175) style:0];
     [tv setDelegate:self];
     [tv setDataSource:self];
     tv.backgroundColor = [UIColor whiteColor];
@@ -426,7 +426,7 @@
     dataArray = [[NSMutableArray alloc] init];
     
     //ADD REFRESH VIEW
-    _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, 320, 300)];
+    _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, ScreenWidth, 300)];
     [self.refreshView setDelegate:self];
     [tv addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
@@ -537,7 +537,6 @@
             NSString *result = [dicRespon objectForKey:@"result"];
             if([result isEqualToString:@"1"])
             {
-                
                 if(intPage == 1)
                 {
                     [dataArray removeAllObjects];
@@ -603,16 +602,16 @@
         CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
         
         
-        CGFloat h = size_1.height + 30;
+//        CGFloat h = size_1.height + 30;
         
-        if(h <= 60)
-        {
-            return 80;
-        }
-        else
-        {
-            return size_1.height + 30 + 20;
-        }
+//        if(h <= 60)
+//        {
+//            return 80;
+//        }
+//        else
+//        {
+            return size_1.height + 60 + 20;
+//        }
     }
     else
     {
@@ -667,15 +666,23 @@
         
         if(indexPath.row == 0)
         {
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 3)];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 3)];
             [view setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
             [cell.contentView addSubview:view];
         }
         
         
         NSString *content = [[dataArray objectAtIndex:indexPath.row] productName];
-        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
-        UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 10, 220, size_1.height)];
+        CGSize size_1;
+        if([DCFCustomExtra validateString:content] == NO)
+        {
+            size_1 = CGSizeMake(100, 30);
+        }
+        else
+        {
+            size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
+        }
+        UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 10, ScreenWidth-100, size_1.height)];
         [contentLabel setText:content];
         [contentLabel setNumberOfLines:0];
         [contentLabel setFont:[UIFont boldSystemFontOfSize:15]];
@@ -683,7 +690,15 @@
         [cell.contentView addSubview:contentLabel];
         
         NSString *price = [NSString stringWithFormat:@"¥ %@",[[dataArray objectAtIndex:indexPath.row] productPrice]];
-        CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:price WithSize:CGSizeMake(MAXFLOAT, 30)];
+        CGSize size_2;
+        if([DCFCustomExtra validateString:price] == NO)
+        {
+            size_2 = CGSizeMake(100, 30);
+        }
+        else
+        {
+            size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:price WithSize:CGSizeMake(MAXFLOAT, 30)];
+        }
         UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height, size_2.width, 30)];
         [priceLabel setText:price];
         [priceLabel setFont:[UIFont systemFontOfSize:12]];
@@ -691,28 +706,49 @@
         [priceLabel setTextColor:[UIColor redColor]];
         [cell.contentView addSubview:priceLabel];
         
-        
+        CGSize size_3;
         NSString *saleOut = [NSString stringWithFormat:@"%@%@",@"已售出",[[dataArray objectAtIndex:indexPath.row] saleNum]];
-        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:saleOut WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *saleOutLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-10-size_3.width, priceLabel.frame.origin.y, size_3.width, 30)];
+        if([DCFCustomExtra validateString:saleOut] == NO)
+        {
+            size_3 = CGSizeMake(30, 30);
+        }
+        else
+        {
+            size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:saleOut WithSize:CGSizeMake(MAXFLOAT, 30)];
+        }
+        UILabel *saleOutLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, priceLabel.frame.origin.y, size_3.width, 30)];
         [saleOutLabel setText:saleOut];
         [saleOutLabel setFont:[UIFont systemFontOfSize:12]];
         [saleOutLabel setTextAlignment:NSTextAlignmentLeft];
         [saleOutLabel setTextColor:[UIColor colorWithRed:118.0/255.0 green:118.0/255.0 blue:118.0/255.0 alpha:1.0]];
         [cell.contentView addSubview:saleOutLabel];
         
-        
-        UIImageView *cellIv = [[UIImageView alloc] init];
-        if(size_1.height + 30 <= 60)
+        CGSize size_4;
+        NSString *shopName = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] shopName]];
+        if([DCFCustomExtra validateString:shopName] == NO)
         {
-            [cellIv setFrame:CGRectMake(10, 10, 60, 60)];
+            size_4 = CGSizeMake(100, 30);
         }
         else
         {
-            [cellIv setFrame:CGRectMake(10, (size_1.height+30+20)/2 - 30, 60, 60)];
+            size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:shopName WithSize:CGSizeMake(ScreenWidth-100, 30)];
         }
+        UILabel *shopNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, saleOutLabel.frame.origin.y+saleOutLabel.frame.size.height, size_4.width, 30)];
+        [shopNameLabel setText:shopName];
+        [shopNameLabel setFont:[UIFont systemFontOfSize:14]];
+        [cell.contentView addSubview:shopNameLabel];
+        
+        UIImageView *cellIv = [[UIImageView alloc] init];
+//        if(size_1.height + 30 <= 60)
+//        {
+//            [cellIv setFrame:CGRectMake(10, 10, 60, 60)];
+//        }
+//        else
+//        {
+        [cellIv setFrame:CGRectMake(10, (size_1.height+20)/2, 60, 60)];
+//        }
         NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
-        NSLog(@"picUrl = %@",picUrl);
+//        NSLog(@"picUrl = %@",picUrl);
         [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
         [cellIv.layer setCornerRadius:2.0]; //设置矩圆角半径
         [cellIv.layer setBorderWidth:1.0];   //边框宽度
@@ -762,7 +798,11 @@
     [self.navigationController pushViewController:detail animated:YES];
 }
 
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    backView.hidden = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeChooseView" object:nil];
+}
 
 //#pragma mark -
 #pragma mark SCROLLVIEW DELEGATE METHODS

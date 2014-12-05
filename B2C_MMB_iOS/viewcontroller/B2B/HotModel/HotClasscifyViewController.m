@@ -40,6 +40,10 @@
     UIButton *badgeBtn;
     
     BOOL flag;//判断取消是在返回还是点击加入询价车情况下点击
+    
+    UIButton *btn;
+    
+    UIPageControl *pageControl;
 }
 @end
 
@@ -102,7 +106,27 @@
             [view setHidden:YES];
         }
     }
+    [self loadAskPriceCarCount];
     
+
+    if (addToCarArray.count > 0)
+    {
+        for(UIView *view in self.sv.subviews)
+        {
+            if(view.frame.origin.x >= 1820)
+            {
+            }
+            else
+            {
+                for(UIButton *subBtn in view.subviews)
+                {
+                    subBtn.selected = NO;
+
+                }
+            }
+        }
+        [addToCarArray removeAllObjects];
+    }
 }
 
 - (void) askPriceBtnClick:(UIButton *) sender
@@ -243,22 +267,18 @@
     [_sv setContentSize:CGSizeMake(ScreenWidth*7, self.sv.frame.size.height-200)];
     [_sv setBounces:NO];
     
+    pageControl = [[UIPageControl alloc] init];
+    pageControl.frame = CGRectMake(0, ScreenHeight-145, ScreenWidth, 30);
+    pageControl.currentPage=0;
+    pageControl.numberOfPages=7;
+    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1.0];
+    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
+    [self.view addSubview:pageControl];
     
-    self.hotLineBtn.layer.borderColor = [UIColor colorWithRed:51.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-    self.hotLineBtn.layer.borderWidth = 1.0f;
-    self.hotLineBtn.layer.cornerRadius = 2.0f;
-    
-    self.imBtn.layer.borderColor = [UIColor colorWithRed:51.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-    self.imBtn.layer.borderWidth = 1.0f;
-    self.imBtn.layer.cornerRadius = 2.0f;
-    
-    self.moreModelBtn.layer.borderColor = [UIColor colorWithRed:51.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-    self.moreModelBtn.layer.borderWidth = 1.0f;
-    self.moreModelBtn.layer.cornerRadius = 2.0f;
-    
-    self.directBtn.layer.borderColor = [UIColor colorWithRed:51.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-    self.directBtn.layer.borderWidth = 1.0f;
-    self.directBtn.layer.cornerRadius = 2.0f;
+    self.hotLineBtn.layer.cornerRadius = 5.0f;
+    self.imBtn.layer.cornerRadius = 5.0f;
+    self.moreModelBtn.layer.cornerRadius = 5.0f;
+    self.directBtn.layer.cornerRadius = 5.0f;
     
     btnArray = [[NSMutableArray alloc] init];
     for(UIView *view in self.sv.subviews)
@@ -294,6 +314,10 @@
     [self allKinds:btnArray];
     
     
+   }
+
+-(void)loadAskPriceCarCount
+{
     //请求询价车商品数量
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
@@ -322,6 +346,7 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+
 }
 
 
@@ -335,7 +360,7 @@
 
 - (void) hotModelBtnClick:(UIButton *) sender
 {
-    UIButton *btn = (UIButton *) sender;
+    btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     UILabel *b = nil;
     for(UIView *view in btn.subviews)
@@ -345,11 +370,12 @@
             b = (UILabel *)view;
         }
     }
-    
+   
     if(btn.selected == YES)
     {
         [addToCarArray addObject:btn];
-
+        NSLog(@"btn.tag = %d",btn.tag);
+        NSLog(@"addToCarArray = %@",addToCarArray);
     }
     else
     {
@@ -377,6 +403,7 @@
 {
     CGFloat pageWidth = self.view.frame.size.width;
     page = floor((scrollView.contentOffset.x - pageWidth/2)/pageWidth) + 1;
+    pageControl.currentPage = page;
     
 }
 
@@ -398,9 +425,9 @@
     }
     
     NSMutableArray *modelListArray = [[NSMutableArray alloc] init];
-    for(UIButton *btn in addToCarArray)
+    for(UIButton *btnn in addToCarArray)
     {
-        NSString *s = [btn titleLabel].text;
+        NSString *s = [btnn titleLabel].text;
         
         NSDictionary *d = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:s]];
         

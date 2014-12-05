@@ -18,7 +18,7 @@
         self.layer.borderWidth = 1.0f;
         [self setBackgroundColor:[UIColor whiteColor]];
         self.layer.masksToBounds = YES;
-        
+//        
 //        UIToolbar *topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
 //        [topView setBarStyle:UIBarStyleBlackOpaque];
 //        UIBarButtonItem *helloBtn = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:self action:nil];
@@ -28,6 +28,7 @@
 //        [topView setItems:array];
 //        [self setInputAccessoryView:topView];
     }
+    
     return self;
 }
 

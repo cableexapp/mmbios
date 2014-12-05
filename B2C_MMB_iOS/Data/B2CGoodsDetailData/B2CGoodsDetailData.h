@@ -30,6 +30,10 @@
 
 @property (strong,nonatomic) NSString *goodsName;
 
+@property (strong,nonatomic) NSString *isShowparam;
+
+@property (strong,nonatomic) NSString *phoneDescribe;
+
 @property (strong,nonatomic) NSString *goodsTitle;
 
 @property (strong,nonatomic) NSString *productPrice;

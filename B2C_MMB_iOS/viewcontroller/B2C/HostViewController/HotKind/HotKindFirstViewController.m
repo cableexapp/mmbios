@@ -109,9 +109,10 @@
     // 超出边框的内容不需要裁剪
     self.triangleBtn.imageView.clipsToBounds = NO;
     
-   
-    self.testTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.testTableView.separatorColor = [UIColor lightGrayColor];
+    self.testTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
+    self.testSubTableView.separatorColor = [UIColor lightGrayColor];
+    self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
     
     backView = [[UIButton alloc] init];
     backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
@@ -120,10 +121,8 @@
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:self.testTableView];
     
-    self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:137/255.0 blue:0/255.0 alpha:1.0];
+    self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     self.upBtn.layer.cornerRadius = 5;
-    
-
 }
 
 -(void)shadow
@@ -209,7 +208,7 @@
 //        cell.textLabel.text = str;
 //        cell.textLabel.font = [UIFont systemFontOfSize:13];
 //        cell.textLabel.textAlignment = 1;
-
+      
         return cell;
         
 }else
@@ -227,6 +226,7 @@
         [cell.textLabel setText:str];
         [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
         cell.textLabel.textAlignment = 1;
+        
         return cell;
     }
     

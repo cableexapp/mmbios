@@ -44,10 +44,20 @@
     UIButton *subViewBtn;   //加载编辑界面的按钮
     B2BAskPriceCarEditViewController *b2bAskPriceCarEditViewController;
     int deleteBtnTag;
-
+    
     UIStoryboard *sb;
     
     UIButton *buyBtn;
+    
+    UIView *backView;
+    
+    UIButton *logBtn;
+    
+    UILabel *label_1;
+    
+    UIImageView *shopcar;
+    
+    UILabel *label_2;
 }
 @end
 
@@ -127,12 +137,15 @@
         }
     }
     [self setHidesBottomBarWhenPushed:YES];
+    
+    [self loadRequest];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-//    [self setHidesBottomBarWhenPushed:NO];
+    //    [self setHidesBottomBarWhenPushed:NO];
     
     if(conn)
     {
@@ -158,7 +171,7 @@
     
     if(!buttomView || !upBtn || !backToHostBtn)
     {
-        buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, MainScreenHeight-60-64, ScreenWidth, 60)];
+        buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-60-64, ScreenWidth, 60)];
         [self.view addSubview:buttomView];
         
         
@@ -173,6 +186,32 @@
         [buttomView addSubview:upBtn];
     }
     
+
+    
+    noCell = [[UITableViewCell alloc] init];
+    [noCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+    
+    backView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 60)];
+    [backView setBackgroundColor:[UIColor whiteColor]];
+    backView.layer.cornerRadius = 5;
+    backView.layer.masksToBounds = YES;
+    
+    logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [logBtn setTitle:@"登录" forState:UIControlStateNormal];
+    [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    logBtn.layer.cornerRadius = 5;
+    [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
+    [logBtn addTarget:self action:@selector(logBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    label_1 = [[UILabel alloc] initWithFrame:CGRectMake(logBtn.frame.origin.x + logBtn.frame.size.width + 15, logBtn.frame.origin.y, 200, 40)];
+    [label_1 setBackgroundColor:[UIColor clearColor]];
+    [label_1 setTextAlignment:NSTextAlignmentLeft];
+    [label_1 setFont:[UIFont systemFontOfSize:12]];
+    [label_1 setTextColor:[UIColor blackColor]];
+    [label_1 setNumberOfLines:0];
+    [label_1 setText:@"登录后可以同步电脑和手机端的商品,并保存在账户中"];
+    
     if(!tv)
     {
         tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-buttomView.frame.size.height-64)];
@@ -183,7 +222,6 @@
         [tv setShowsVerticalScrollIndicator:NO];
         [self.view addSubview:tv];
     }
-    [self loadRequest];
 }
 
 - (void) subViewBtnClick:(UIButton *) sender
@@ -246,10 +284,10 @@
     b2bAskPriceCarEditViewController.myCartId = data.cartId;
     b2bAskPriceCarEditViewController.view.layer.cornerRadius = 6;
     b2bAskPriceCarEditViewController.view.frame = CGRectMake(20, 20, subViewBtn.frame.size.width-40, subViewBtn.frame.size.height-70);
-//    UILabel *tempLabel = [[UILabel alloc] init];
-//    tempLabel.frame = CGRectMake(0, 25, b2bAskPriceCarEditViewController.view.frame.size.width, 8);
-//    tempLabel.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
-//    [b2bAskPriceCarEditViewController.view addSubview:tempLabel];
+    //    UILabel *tempLabel = [[UILabel alloc] init];
+    //    tempLabel.frame = CGRectMake(0, 25, b2bAskPriceCarEditViewController.view.frame.size.width, 8);
+    //    tempLabel.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
+    //    [b2bAskPriceCarEditViewController.view addSubview:tempLabel];
     b2bAskPriceCarEditViewController.delegate = self;
     [self addChildViewController:b2bAskPriceCarEditViewController];
     [subViewBtn addSubview:b2bAskPriceCarEditViewController.view];
@@ -316,7 +354,7 @@
         editAndDelBtnArray = [[NSMutableArray alloc] init];
         
         chooseArray = [[NSMutableArray alloc] init];
-    
+        
         if(result == 1)
         {
             [dataArray addObjectsFromArray:[B2BAskPriceDetailData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -342,7 +380,7 @@
                     
                     [sectionHeadBtn setTag:i];
                     [sectionHeadBtn addTarget:self action:@selector(sectionHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//                    [sectionHeadBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+                    //                    [sectionHeadBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
                     [sectionHeadBtn setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
                     
                     //编辑删除按钮
@@ -398,7 +436,7 @@
                     }
                     [cellHeightArray addObject:[NSNumber numberWithFloat:height]];
                     
-          
+                    
                     
                     //计算head高度
                     UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, ScreenWidth-20,20)];
@@ -413,7 +451,7 @@
                     [kindLabel setFont:[UIFont systemFontOfSize:11]];
                     [kindLabel setNumberOfLines:0];
                     [sectionHeadBtn addSubview:kindLabel];
-
+                    
                     
                     
                     UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];
@@ -423,7 +461,7 @@
                     
                     UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(0, height-1, ScreenWidth, 1)];
                     [secondLine setBackgroundColor:[UIColor lightGrayColor]];
-//                    [sectionHeadBtn addSubview:secondLine];
+                    //                    [sectionHeadBtn addSubview:secondLine];
                     
                     [sectionHeadBtn setFrame:CGRectMake(0, 0, ScreenWidth, size_head.height+30)];
                     [sectionHeadBtnArray addObject:sectionHeadBtn];
@@ -589,11 +627,19 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    if(!dataArray || dataArray.count == 0)
+    NSLog(@"%@",dataArray);
+    if(indexPath.section == dataArray.count)
     {
-        return 44;
+        if(!dataArray || dataArray.count == 0)
+        {
+            return ScreenHeight-34;
+        }
+        else
+        {
+            return 0;
+        }
     }
+
     
     if(indexPath.row == 0)
     {
@@ -620,74 +666,83 @@
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
 {
-    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//    if (cell == nil)
+//    {
+//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+//        cell.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    
+    [noCell setSelectionStyle:0];
         
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
-    [view setBackgroundColor:[UIColor whiteColor]];
-    view.layer.cornerRadius = 5;
-    view.layer.masksToBounds = YES;
-    [cell.contentView addSubview:view];
+        NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
-    UIButton *logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [logBtn setTitle:@"登录" forState:UIControlStateNormal];
-    [logBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    logBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
-    logBtn.layer.cornerRadius = 5;
-    [logBtn setFrame:CGRectMake(10, 10, 70, 40)];
-    [logBtn addTarget:self action:@selector(logBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:logBtn];
+        if([DCFCustomExtra validateString:myMemberid] == NO)
+        {
+            [noCell.contentView addSubview:backView];
+            [backView addSubview:logBtn];
+            [backView addSubview:label_1];
+        }
+        else
+        {
+            if(backView)
+            {
+                [logBtn removeFromSuperview];
+                logBtn = nil;
+                [label_1 removeFromSuperview];
+                label_1 = nil;
+                [backView removeFromSuperview];
+                backView = nil;
+            }
+        }
     
-    UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(logBtn.frame.origin.x + logBtn.frame.size.width + 15, logBtn.frame.origin.y, 200, 40)];
-    [label_1 setBackgroundColor:[UIColor clearColor]];
-    [label_1 setTextAlignment:NSTextAlignmentLeft];
-    [label_1 setFont:[UIFont systemFontOfSize:12]];
-    [label_1 setTextColor:[UIColor blackColor]];
-    [label_1 setNumberOfLines:0];
-    [label_1 setText:@"登陆后可以同步电脑和手机端的商品,并保存在账户中"];
-    [view addSubview:label_1];
-    
-    
-    UIImageView *shopcar = [[UIImageView alloc] init];
-    shopcar.frame = CGRectMake(20, 130, 61, 60);
-    shopcar.image = [UIImage imageNamed:@"shoppingCar"];
-    [cell.contentView addSubview:shopcar];
-    
-    NSString *string = @"您的询价车中暂时没有商品,现在去浏览选购电缆吧~";
-    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
-    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
-    [label_2 setBackgroundColor:[UIColor clearColor]];
-    [label_2 setTextAlignment:NSTextAlignmentLeft];
-    [label_2 setFont:[UIFont systemFontOfSize:15]];
-    [label_2 setTextColor:[UIColor blackColor]];
-    [label_2 setNumberOfLines:0];
-    [label_2 setText:string];
-    [cell.contentView addSubview:label_2];
-    
-    buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
-    [buyBtn setTitle:@"去首页看看" forState:UIControlStateNormal];
-    buyBtn.backgroundColor = [UIColor whiteColor];
-    buyBtn.layer.cornerRadius = 5.0f;
-    [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [buyBtn addTarget:self action:@selector(buyBtnClick) forControlEvents:UIControlEventTouchUpInside];
-
-    [self.view insertSubview:buyBtn aboveSubview:tv];
-
-    buttomView.hidden = YES;
-        tv.scrollEnabled = NO;
-    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+    if (!shopcar)
+    {
+        shopcar = [[UIImageView alloc] init];
+        shopcar.frame = CGRectMake(20, 130, 61, 60);
+        shopcar.image = [UIImage imageNamed:@"shoppingCar"];
+        [noCell.contentView addSubview:shopcar];
     }
-    return cell;
+    if (!label_2)
+    {
+        NSString *string = @"您的询价车中暂时没有商品,现在去浏览选购电缆吧~";
+        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
+        label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
+        [label_2 setBackgroundColor:[UIColor clearColor]];
+        [label_2 setTextAlignment:NSTextAlignmentLeft];
+        [label_2 setFont:[UIFont systemFontOfSize:15]];
+        [label_2 setTextColor:[UIColor blackColor]];
+        [label_2 setNumberOfLines:0];
+        [label_2 setText:string];
+        [noCell.contentView addSubview:label_2];
+    }
+    if (!buyBtn)
+    {
+        buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
+        [buyBtn setTitle:@"去首页看看" forState:UIControlStateNormal];
+        buyBtn.backgroundColor = [UIColor whiteColor];
+        buyBtn.layer.cornerRadius = 5.0f;
+        [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [buyBtn addTarget:self action:@selector(buyBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [noCell addSubview:buyBtn];
+    }
+        
+    
+        
+    
+//        [self.view insertSubview:buyBtn aboveSubview:tv];
+    
+        buttomView.hidden = YES;
+        tv.scrollEnabled = NO;
+        tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    }
+    return noCell;
 }
 
 -(void)logBtnClick
 {
-     NSLog(@"logBtnClick");
+    NSLog(@"logBtnClick");
     LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
     [self presentViewController:loginNavi animated:YES completion:nil];
 }
@@ -700,27 +755,18 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-//    if(!dataArray || dataArray.count == 0)
     if(indexPath.section == dataArray.count)
     {
-        
-//        if(moreCell == nil)
-//        {
-//            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-//            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-//        }
-//        return moreCell;
         return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
     }
     
-    
+    [buttomView setHidden:NO];
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-//        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+        //        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)

@@ -25,7 +25,7 @@
     {
         if(IS_IOS_7)
         {
-            //    获取当前文本的属性            
+            //    获取当前文本的属性
             NSDictionary * tdic = [NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil];
             
             //ios7方法，获取文本需要的size，限制宽度
@@ -68,24 +68,9 @@
 }
 
 #pragma mark - 截取小数点后2位，四舍五入，如果不要，修改NSRoundUp
-+ (NSString *)notRounding:(float)price afterPoint:(int)position
++ (NSString *)notRounding:(double)price afterPoint:(int)position
 {
-    
-    NSDecimalNumberHandler* roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown scale:position raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-    
-    NSDecimalNumber *ouncesDecimal;
-    
-    NSDecimalNumber *roundedOunces;
-    
-    
-    
-    ouncesDecimal = [[NSDecimalNumber alloc] initWithFloat:price];
-    
-    roundedOunces = [ouncesDecimal decimalNumberByRoundingAccordingToBehavior:roundingBehavior];
-    
-    
-    return [NSString stringWithFormat:@"%@",roundedOunces];
-    
+    return [NSString stringWithFormat:@"%.2f",round(price*100)/100];
 }
 
 #pragma mark - 缩放图片
@@ -499,7 +484,7 @@
     //     27         * 号码：七位或八位
     //     28         */
     NSString *PHS = @"^([\\+][0-9]{1,3}[ \\.\\-])?([\\(]{1}[0-9]{2,6}[\\)])?([0-9 \\.\\-\\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$";
-//    ^([\\+][0-9]{1,3}[ \\.\\-])?([\\(]{1}[0-9]{2,6}[\\)])?([0-9 \\.\\-\\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$
+    //    ^([\\+][0-9]{1,3}[ \\.\\-])?([\\(]{1}[0-9]{2,6}[\\)])?([0-9 \\.\\-\\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$
     NSPredicate *regextestTel = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", PHS];
     BOOL isMatch = [regextestTel evaluateWithObject:tel];
     if (isMatch == YES)

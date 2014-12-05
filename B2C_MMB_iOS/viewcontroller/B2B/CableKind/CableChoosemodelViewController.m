@@ -79,6 +79,7 @@
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSString *visitorid = [app getUdid];
     
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
@@ -371,9 +372,9 @@
             //路径曲线
             UIBezierPath *movePath = [UIBezierPath bezierPath];
             [movePath moveToPoint:transitionLayer.position];
-            CGPoint toPoint = CGPointMake(askPriceBtn.center.x, askPriceBtn.center.y+20);
+            CGPoint toPoint = CGPointMake(ScreenWidth-askPriceBtn.center.x, askPriceBtn.center.y+20);
             [movePath addQuadCurveToPoint:toPoint
-                             controlPoint:CGPointMake(askPriceBtn.center.x,transitionLayer.position.y)];
+                             controlPoint:CGPointMake(ScreenWidth-askPriceBtn.center.x,transitionLayer.position.y)];
             
             UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
@@ -512,12 +513,13 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+//    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
     NSString *visitorid = [app getUdid];
+    NSLog(@"%@",visitorid);
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     NSString *pushString = nil;
-    if(hasLogin == YES)
+    if([DCFCustomExtra validateString:memberid] == YES)
     {
         pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&model=%@&firsttype=%@&secondtype=%@&thirdtype=%@",memberid,token,text,firstType,secondType,thirdType];
     }

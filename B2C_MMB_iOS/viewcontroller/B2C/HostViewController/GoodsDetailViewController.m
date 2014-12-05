@@ -61,7 +61,7 @@
     
     B2CUpOrderData *orderData;
     
-    float chooseColorPrice;
+    double chooseColorPrice;
     
     
     NSString *productNum;  //库存数量
@@ -75,6 +75,12 @@
     UIBarButtonItem *right;
     
     UILabel *countLabel;
+    
+    int btnTag;
+    
+    NSString *colorName;
+    
+    int scoreNum;
 }
 @end
 
@@ -106,6 +112,12 @@
 
 - (void) btnClick:(UIButton *) sender
 {
+    [self.view.window addSubview:[self loadChooseColorAndCount]];
+    backView.hidden = NO;
+    [self setHidesBottomBarWhenPushed:YES];
+    int tag = [sender tag];
+    btnTag = tag;
+    
 //    if(num.length == 0 || [num intValue] == 0)
 //    {
 //        [DCFStringUtil showNotice:@"请选择数量"];
@@ -116,78 +128,75 @@
 //        [DCFStringUtil showNotice:@"请选择颜色"];
 //        return;
 //    }
-    [self.view.window addSubview:[self loadChooseColorAndCount]];
-    backView.hidden = NO;
-    [self setHidesBottomBarWhenPushed:YES];
-    int tag = [sender tag];
-    
-    
-    if(tag == 100)
-    {
-#pragma mark - 立即购买
-        
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
-        
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
-        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
-        
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        
-        
-    }
-    else
-    {
-        
-#pragma mark - 加入购物车
-        [self setHidesBottomBarWhenPushed:YES];
-        
-        NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
-        NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
-        
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        NSString *visitorid = [app getUdid];
-        
-        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-        
-        
-        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-        
-        
-        
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
-        
-        NSString *pushString = nil;
-        
-        if(hasLogin == YES)
-        {
-            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
-            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
-            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
-        }
-        else
-        {
-            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
-            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
-            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
-        }
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
-        
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        
-        num = @"0";
-        
-        NSLog(@"arr.count = %@",arr);
-        NSLog(@"arr.count = %d",arr.count);
-    }
+//    //    [self.view.window addSubview:[self loadChooseColorAndCount]];
+//    //    backView.hidden = NO;
+//    [self setHidesBottomBarWhenPushed:YES];
+//    int tag = [sender tag];
+//    
+//    
+//    if(tag == 100)
+//    {
+//#pragma mark - 立即购买
+//        
+//        NSString *time = [DCFCustomExtra getFirstRunTime];
+//        
+//        NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
+//        
+//        NSString *token = [DCFCustomExtra md5:string];
+//        
+//        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+//        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
+//        
+//        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
+//        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
+//        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//        
+//        
+//    }
+//    else
+//    {
+//        
+//#pragma mark - 加入购物车
+//        [self setHidesBottomBarWhenPushed:YES];
+//        
+//        NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
+//        NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
+//        
+//        NSString *time = [DCFCustomExtra getFirstRunTime];
+//        NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
+//        NSString *token = [DCFCustomExtra md5:string];
+//        
+//        NSString *visitorid = [app getUdid];
+//        
+//        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+//        
+//        
+//        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+//        
+//        
+//        
+//        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
+//        
+//        NSString *pushString = nil;
+//        
+//        if(hasLogin == YES)
+//        {
+//            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
+//            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+//            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
+//        }
+//        else
+//        {
+//            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
+//            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+//            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
+//        }
+//        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
+//        
+//        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//        
+//        num = @"0";
+//    }
 }
 
 - (void)rightItemClick:(id) sender
@@ -220,7 +229,7 @@
         chooseColorAndCountView = nil;
     }
     backView.hidden = YES;
-//    [self setHidesBottomBarWhenPushed:NO];
+    //    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -236,7 +245,7 @@
         }
     }
     num = @"0";
-
+    
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
     [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
@@ -328,7 +337,7 @@
     backView.alpha = 0.8;
     [self.view insertSubview:backView aboveSubview:tv];
     
- 
+    
     
     cellBtnArray = [[NSMutableArray alloc] init];
 }
@@ -382,7 +391,9 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
-        NSLog(@"%@",dicRespon);
+        scoreNum = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue] +[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
+        NSLog(@"scoreNum = %d",scoreNum);
+        
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         producturl = [dicRespon objectForKey:@"producturl"];
@@ -406,18 +417,20 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
-        
-        
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
-            
+            num = @"0";
+            itemid = @"";
+            [self loadShopCarCount];
         }
         else
         {
+            
             if(msg.length != 0)
             {
                 [DCFStringUtil showNotice:msg];
+                
             }
             else
             {
@@ -433,9 +446,11 @@
             orderData = [[B2CUpOrderData alloc] initWithDataDic:dicRespon];
             NSMutableArray *chooseGoodsArray = [[NSMutableArray alloc] initWithObjects:orderData, nil];
             
-            float totalMoney = [num intValue]*chooseColorPrice;
+            double totalMoney = [num intValue]*chooseColorPrice;
             UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData WithTag:0];
             [self.navigationController pushViewController:order animated:YES];
+            num = @"0";
+            itemid = @"";
             
         }
         else
@@ -459,7 +474,6 @@
         else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
         {
             countLabel.hidden = NO;
-            
             countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
         }
         else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
@@ -515,7 +529,7 @@
             if(detailData)
             {
                 CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[NSString stringWithFormat:@"%@ %@",@"¥",detailData.productPrice] WithSize:CGSizeMake(MAXFLOAT, 30)];
-
+                
                 
                 NSString *FreightType = detailData.freightType;
                 NSString *string = nil;
@@ -553,19 +567,8 @@
                 
             }
         }
- 
+        
         return 50;
-    }
-    if (indexPath.row == 5)
-    {
-        if(showCell == YES)
-        {
-            return 179;
-        }
-        else
-        {
-            return 54;
-        }
     }
     if(indexPath.row == 4)
     {
@@ -579,6 +582,18 @@
             return 40;
         }
     }
+    if (indexPath.row == 5)
+    {
+        if(showCell == YES)
+        {
+            return 179;
+        }
+        else
+        {
+            return 54;
+        }
+    }
+
     if(indexPath.row == 6)
     {
         return 54;
@@ -605,7 +620,6 @@
                 }
                 else
                 {
-                    
                     CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT)];
                     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, size_4.height)];
                     [contentLabel setText:s4];
@@ -613,11 +627,8 @@
                     [contentLabel setNumberOfLines:0];
                     return contentLabel.frame.size.height;
                 }
-                
             }
-            
         }
-        
     }
     return 0;
 }
@@ -720,13 +731,13 @@
                 if(size_3.height < 30)
                 {
                     [label setFrame:CGRectMake(10, 10, size_1.width, 30)];
-
+                    
                     tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width, 10, ScreenWidth-20-label.frame.size.width, 30)];
                 }
                 else
                 {
                     [label setFrame:CGRectMake(10, (size_3.height-30)/2, size_1.width, 30)];
-
+                    
                     tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width, 10, ScreenWidth-20-label.frame.size.width, size_3.height)];
                 }
                 [tradeLabel setText:string];
@@ -1043,6 +1054,9 @@
     }
     else
     {
+        num = @"0";
+        itemid = @"";
+        
         colorLabelArray = [[NSMutableArray alloc] init];
         
         chooseColorBtnArray = [[NSMutableArray alloc] init];
@@ -1086,12 +1100,11 @@
         [colorKindLabel setTextAlignment:NSTextAlignmentLeft];
         [chooseColorAndCountView addSubview:colorKindLabel];
         
-        NSLog(@"%@",detailData.coloritems);
         for(int i = 0;i < detailData.coloritems.count;i++)
         {
             NSString *colorName = [[detailData.coloritems objectAtIndex:i] objectForKey:@"colorName"];
             productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:i] objectForKey:@"productNum"]];
-
+            
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
             if(i >= 4)
@@ -1105,7 +1118,7 @@
             }
             if(i == 0)
             {
-//                [btn setSelected:YES];
+                //                [btn setSelected:YES];
             }
             [btn setTitle:colorName forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -1155,14 +1168,14 @@
                 default:
                     break;
             }
-        
+            
             [label setTextAlignment:NSTextAlignmentLeft];
             [label setBackgroundColor:[UIColor clearColor]];
             [chooseColorAndCountView addSubview:label];
             [colorLabelArray addObject:label];
         }
         
-        itemid = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:0] objectForKey:@"recordId"]];
+        
         
         UILabel *chooseCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, 80, 20)];
         [chooseCountLabel setText:@"购买数量"];
@@ -1213,7 +1226,7 @@
         [chooseColorAndCountView addSubview:sureBtn];
         
         NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:0] objectForKey:@"colorPrice"]];
-        chooseColorPrice = [colorPrice floatValue];
+        chooseColorPrice = [colorPrice doubleValue];
         
         UIView *back = [[UIView alloc] init];
         back.frame = CGRectMake(0, 80, ScreenWidth, 157);
@@ -1242,44 +1255,98 @@
     
     int tag = btn.tag;
     
-    NSString *colorName = [[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorName"];
-    NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorPrice"]];
-    productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"productNum"]];
-    
-    if(detailData.coloritems.count == 0 || [detailData.coloritems isKindOfClass:[NSNull class]])
+    colorName = nil;
+    NSString *colorPrice = nil;
+    if(btn.selected == YES)
     {
+        colorName = [[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorName"];
+        colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"colorPrice"]];
+        productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"productNum"]];
+        
+        itemid = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"recordId"]];
+        
+        if(detailData.coloritems.count == 0 || [detailData.coloritems isKindOfClass:[NSNull class]])
+        {
+            
+        }
+        else
+        {
+            for(int j=0;j<[detailData.coloritems count];j++)
+            {
+                for(int i=0; i< 3; i++)
+                {
+                    //                NSString *colorPrice = [[detailData.coloritems objectAtIndex:j] objectForKey:@"colorPrice"];
+                    UILabel *label = (UILabel *)[colorLabelArray objectAtIndex:i];
+                    [label setHidden:NO];
+                    if(i == 2)
+                    {
+                        [label setText:[NSString stringWithFormat:@"已选颜色:%@",colorName]];
+                    }
+                    if(i == 0)
+                    {
+                        NSString *s = [NSString stringWithFormat:@"¥ %@",colorPrice];
+                        
+                        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
+                        label.textColor = [UIColor redColor];
+                        [label setAttributedText:str];
+                    }
+                    if(i == 1)
+                    {
+                        [label setText:[NSString stringWithFormat:@"库存:%@",productNum]];
+                    }
+                }
+            }
+            
+        }
+        chooseColorPrice = [colorPrice doubleValue];
         
     }
     else
     {
-        for(int j=0;j<[detailData.coloritems count];j++)
+        colorName = @"";
+        colorPrice = @"";
+        productNum = @"";
+        
+        itemid = @"";
+        
+        if(detailData.coloritems.count == 0 || [detailData.coloritems isKindOfClass:[NSNull class]])
         {
-            for(int i=0; i< 3; i++)
+            
+        }
+        else
+        {
+            for(int j=0;j<[detailData.coloritems count];j++)
             {
-//                NSString *colorPrice = [[detailData.coloritems objectAtIndex:j] objectForKey:@"colorPrice"];
-                UILabel *label = (UILabel *)[colorLabelArray objectAtIndex:i];
-                [label setHidden:NO];
-                if(i == 2)
+                for(int i=0; i< 3; i++)
                 {
-                    [label setText:[NSString stringWithFormat:@"已选颜色:%@",colorName]];
-                }
-                if(i == 0)
-                {
-                    NSString *s = [NSString stringWithFormat:@"¥ %@",colorPrice];
-                    
-                    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
-                    label.textColor = [UIColor redColor];
-                    [label setAttributedText:str];
-                }
-                if(i == 1)
-                {
-                    [label setText:[NSString stringWithFormat:@"库存:%@",productNum]];
+                    //                NSString *colorPrice = [[detailData.coloritems objectAtIndex:j] objectForKey:@"colorPrice"];
+                    UILabel *label = (UILabel *)[colorLabelArray objectAtIndex:i];
+                    switch (i) {
+                        case 2:
+                        {
+                            [label setHidden:YES];
+                            break;
+                        }
+                        case 0:
+                        {
+                            [label setHidden:YES];
+                            break;
+                        }
+                        case 1:
+                        {
+                            [label setText:@"请选择颜色:"];
+                            break;
+                        }
+                        default:
+                            break;
+                    }
                 }
             }
+            
         }
-
+        chooseColorPrice = 0.00;
     }
-
+    
     
     for(UIButton *b in chooseColorBtnArray)
     {
@@ -1293,9 +1360,7 @@
         }
     }
     
-    itemid = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"recordId"]];
     
-    chooseColorPrice = [colorPrice floatValue];
 }
 
 - (void) chooseCountClick:(UIButton *) sender
@@ -1338,12 +1403,90 @@
 
 - (void) sureBtnClick:(UIButton *) sender
 {
-    if(chooseColorAndCountView)
+
+    if(colorName.length == 0)
     {
-        backView.hidden = YES;
-        [chooseColorAndCountView removeFromSuperview];
-        chooseColorAndCountView = nil;
+        [DCFStringUtil showNotice:@"请选择颜色"];
+        return;
     }
+    if(num.length == 0 || [num intValue] == 0)
+    {
+        [DCFStringUtil showNotice:@"请选择数量"];
+        return;
+    }
+    if (colorName.length > 0 && num.length >0)
+    {
+        
+        
+        if(btnTag == 100)
+        {
+#pragma mark - 立即购买
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
+            
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+            NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        }
+        else
+        {
+            
+#pragma mark - 加入购物车
+            [self setHidesBottomBarWhenPushed:YES];
+            
+            NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
+            NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *visitorid = [app getUdid];
+            
+            NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+            
+            BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+            
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
+            
+            NSString *pushString = nil;
+            
+            if(hasLogin == YES)
+            {
+                arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
+                //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+                pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
+            }
+            else
+            {
+                arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
+                //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+                pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
+            }
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
+            
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            
+            num = @"0";
+            
+            
+        }
+        if(chooseColorAndCountView)
+        {
+            backView.hidden = YES;
+            [chooseColorAndCountView removeFromSuperview];
+            chooseColorAndCountView = nil;
+        }
+//        [self loadShopCarCount];
+    }
+
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

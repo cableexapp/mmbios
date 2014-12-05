@@ -15,18 +15,19 @@
 {
     if(self = [super init])
     {
-        _productName = [dic objectForKey:@"productName"];
+        _productName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productName"]];
         
-        _productPrice = [dic objectForKey:@"productPrice"];
+        _productPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productPrice"]];
         
-        _saleNum = [dic objectForKey:@"saleNum"];
+        _saleNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"saleNum"]];
         
-        _shopId = [dic objectForKey:@"shopId"];
+        _shopId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopId"]];
         
-        _p1Path = [dic objectForKey:@"p1Path"];
+        _p1Path = [NSString stringWithFormat:@"%@",[dic objectForKey:@"p1Path"]];
         
-        _productId = [dic objectForKey:@"productId"];
+        _productId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productId"]];
         
+        _shopName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopName"]];
         //.的下标
         int docIndex = _p1Path.length-4;
         if([_p1Path characterAtIndex:docIndex] == '.')

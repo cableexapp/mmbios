@@ -406,7 +406,7 @@
     {
         if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
-            return 90;
+            return 122;
         }
         if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
@@ -541,6 +541,8 @@
     
     [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
     
+    NSString *status = [DCFCustomExtra compareStatus:[[dataArray objectAtIndex:path.section] status]];
+    [cell.STATUSlABEL setText:[NSString stringWithFormat:@"订单状态:%@",status]];
     return cell;
 }
 

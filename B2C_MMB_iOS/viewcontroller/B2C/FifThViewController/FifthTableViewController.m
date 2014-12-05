@@ -55,15 +55,16 @@
         [HUD hide:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];
-    if (isPopShow == YES)
-    {
-        isPopShow = NO;
-    }
-    else
-    {
-        isPopShow = YES;
-        
-    }
+//    if (isPopShow == YES)
+//    {
+//        isPopShow = NO;
+//    }
+//    else
+//    {
+//        isPopShow = YES;
+//        
+//    }
+    isPopShow = NO;
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -79,6 +80,7 @@
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     isPopShow = NO;
+//
 }
 
 - (void)viewDidLoad
@@ -101,17 +103,18 @@
     self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 60);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar:) name:@"popShopCar" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
 
-- (void)popShopCar:(NSNotification *)sender
+- (void)popShopCar_more:(NSNotification *)sender
 {
     if (isPopShow == YES)
     {
         [KxMenu dismissMenu];
         isPopShow = NO;
         self.tableView.scrollEnabled = YES;
+         NSLog(@"通知更多111");
     }
     else
     {
@@ -119,12 +122,12 @@
         @[[KxMenuItem menuItem:@"  购物车  "
                          image:nil
                         target:self
-                        action:@selector(pushMenuItem:)],
+                        action:@selector(pushMenuItem_more:)],
           
           [KxMenuItem menuItem:@"  询价车  "
                          image:nil
                         target:self
-                        action:@selector(pushMenuItem:)],
+                        action:@selector(pushMenuItem_more:)],
           ];
         
         [KxMenu showMenuInView:self.view
@@ -132,10 +135,11 @@
                      menuItems:menuItems];
         isPopShow = YES;
         self.tableView.scrollEnabled = NO;
+         NSLog(@"通知更多222");
     }
 }
 
-- (void)pushMenuItem:(id)sender
+- (void)pushMenuItem_more:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])

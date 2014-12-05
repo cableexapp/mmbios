@@ -22,6 +22,7 @@
 #import "GoodsDetailViewController.h"
 #import "B2BAskPriceCarViewController.h"
 #import "MyShoppingListViewController.h"
+#import "DCFStringUtil.h"
 
 #define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
 
@@ -79,6 +80,16 @@
     int tempCount;
     
     int tempShopCar;
+    
+    int tempSearch;
+    
+    NSMutableArray *btnArray;
+    
+    int btnTag;
+    
+    NSMutableArray *addToCarArray;  //加入询价车数组
+    
+    int carCount;  //询价车数量
 }
 @end
 
@@ -98,6 +109,10 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    if(addToCarArray)
+    {
+        [addToCarArray removeAllObjects];
+    }
     rightBtn.hidden = NO;
     rightButtonView.hidden = NO;
     [self.navigationController.tabBarController.tabBar setHidden:YES];
@@ -169,6 +184,17 @@
     self.navigationItem.backBarButtonItem = backButton;
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    
+    addToCarArray = [[NSMutableArray alloc] init];
+    
+    if(btnArray)
+    {
+        [btnArray removeAllObjects];
+    }
+    else
+    {
+        btnArray = [[NSMutableArray alloc] init];
+    }
     
     mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(81, 0,self.view.frame.size.width-81, 45)];
     [mySearchBar setDelegate:self];
@@ -351,7 +377,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    
+    int result = [[dicRespon objectForKey:@"result"] intValue];
     if (URLTag == URLSearchProductTypeTag)
     {
          [self refreshTableView];
@@ -361,6 +387,11 @@
             [self.serchResultView reloadData];
             coverView.hidden = YES;
             [mySearchBar resignFirstResponder];
+            if ([[dicRespon objectForKey:@"types"] count] == 0)
+            {
+                self.serchResultView.scrollEnabled = NO;
+                [self remindNoSearchResult];
+            }
         }
         else if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"] && [[dicRespon objectForKey:@"products"] count] != 0)
         {
@@ -368,16 +399,69 @@
             coverView.hidden = YES;
             [self.serchResultView reloadData];
             [mySearchBar resignFirstResponder];
+            if ([[dicRespon objectForKey:@"products"] count] == 0)
+            {
+                self.serchResultView.scrollEnabled = NO;
+                [self remindNoSearchResult];
+            }
         }
-        else if ([[dicRespon objectForKey:@"types"] count] == 0 || [[dicRespon objectForKey:@"products"] count] == 0)
+        
+        if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"items"] count] != 0)
         {
-            self.serchResultView.scrollEnabled = NO;
-            [self remindNoSearchResult];
+            dataArray = [dicRespon objectForKey:@"items"];
+            tempSearch = 2;
+            [self.serchResultView reloadData];
+            coverView.hidden = YES;
+            [mySearchBar resignFirstResponder];
+            if ([[dicRespon objectForKey:@"items"] count] == 0)
+            {
+                self.serchResultView.scrollEnabled = NO;
+                [self remindNoSearchResult];
+            }
+            else
+            {
+                 self.serchResultView.scrollEnabled = YES;
+            }
+            
+            if(btnArray)
+            {
+                [btnArray removeAllObjects];
+            }
+           
+            btnArray = [[NSMutableArray alloc] init];
+         
+            for(int i=0;i<dataArray.count;i++)
+            {
+                
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
+                [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
+                [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [btn setTag:i];
+                [btn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
+                btn.layer.cornerRadius = 5.0f;
+                [btn addTarget:self action:@selector(addtoAskCarClick:) forControlEvents:UIControlEventTouchUpInside];
+                
+                UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+                [btnLabel setText:@"+1"];
+                [btnLabel setBackgroundColor:[UIColor clearColor]];
+                [btnLabel setTextColor:[UIColor redColor]];
+                [btnLabel setFont:[UIFont systemFontOfSize:23]];
+                [btnLabel setAlpha:0];
+                [btn addSubview:btnLabel];
+                
+                [btnArray addObject:btn];
+            }
+            
+            [self.serchResultView reloadData];
+
         }
     }
     if (URLTag == URLInquiryCartCountTag)
     {
         tempCount = [[dicRespon objectForKey:@"value"] intValue];
+      
         if ([[dicRespon objectForKey:@"value"] intValue] == 0)
         {
             countLabel.hidden = YES;
@@ -393,6 +477,14 @@
             countLabel.frame = CGRectMake(46, 2, 21, 19);
             countLabel.hidden = NO;
             countLabel.text = @"99+";
+        }
+        if(result == 1)
+        {
+            carCount = [[dicRespon objectForKey:@"value"] intValue];
+        }
+        else
+        {
+            carCount = 0;
         }
     }
     if (URLTag == URLShopCarCountTag)
@@ -415,6 +507,82 @@
             countLabel.text = @"99+";
         }
     }
+    if(URLTag == URLJoinInquiryCartTag)
+    {
+        int result = [[dicRespon objectForKey:@"result"] intValue];
+        NSString *msg = [dicRespon objectForKey:@"msg"];
+        if(result == 1)
+        {
+            [DCFStringUtil showNotice:msg];
+            UIButton *btn = [btnArray objectAtIndex:btnTag];
+            UILabel *label = nil;
+            for(UIView *view in btn.subviews)
+            {
+                if([view isKindOfClass:[UILabel class]])
+                {
+                    label = (UILabel *)view;
+                }
+            }
+            
+            [addToCarArray addObject:btn];
+            
+            //加入购物车动画效果
+            CALayer *transitionLayer = [[CALayer alloc] init];
+            [CATransaction begin];
+            [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+            transitionLayer.opacity = 1.0;
+            transitionLayer.contents = label.layer.contents;
+            
+            //修改动画路线宽度
+            transitionLayer.frame = [[UIApplication sharedApplication].keyWindow convertRect:CGRectMake(0, 0, 20, 20) fromView:btn.titleLabel];
+            [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer];
+            [CATransaction commit];
+            
+            //路径曲线
+            UIBezierPath *movePath = [UIBezierPath bezierPath];
+            [movePath moveToPoint:transitionLayer.position];
+            CGPoint toPoint = CGPointMake(ScreenWidth-rightBtn.center.x, rightBtn.center.y+20);
+            [movePath addQuadCurveToPoint:toPoint
+                             controlPoint:CGPointMake(ScreenWidth-rightBtn.center.x,transitionLayer.position.y)];
+            
+            UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            UIImageView *imgView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+            imgView.image = img;
+            [self.view addSubview:imgView];
+            
+            //关键帧
+            CAKeyframeAnimation *positionAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+            positionAnimation.path = movePath.CGPath;
+            positionAnimation.removedOnCompletion = YES;
+            //
+            CAAnimationGroup *group = [CAAnimationGroup animation];
+            group.beginTime = CACurrentMediaTime();
+            group.duration = 0.8;
+            group.animations = [NSArray arrayWithObjects:positionAnimation,nil];
+            group.timingFunction=[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+            group.delegate = self;
+            group.fillMode = kCAFillModeForwards;
+            group.removedOnCompletion = NO;
+            group.autoreverses= NO;
+            //
+            [transitionLayer addAnimation:group forKey:@"opacity"];
+            [self performSelector:@selector(addShopFinished:) withObject:transitionLayer afterDelay:1.0];
+        }
+        else
+        {
+            if(msg.length == 0)
+            {
+                [DCFStringUtil showNotice:@"加入询价车失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
+
 }
 
 //提示没有符合查询条件的数据
@@ -753,6 +921,65 @@
     return 44;
 }
 
+-(void)addtoAskCarClick:(UIButton *)sender
+{
+    NSString *text = nil;
+    
+    btnTag = sender.tag;
+ 
+    text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"model"]];
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    //    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [self.appDelegate getUdid];
+    NSString *firstType = @"";
+    NSString *secondType = @"";
+    NSString *thirdType = @"";
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    NSString *pushString = nil;
+    if([DCFCustomExtra validateString:memberid] == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&model=%@&firsttype=%@&secondtype=%@&thirdtype=%@",memberid,token,text,firstType,secondType,thirdType];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&model=%@&firsttype=%@&secondtype=%@&thirdtype=%@",visitorid,token,text,firstType,secondType,thirdType];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLJoinInquiryCartTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/JoinInquiryCart.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+
+}
+
+- (void)addShopFinished:(CALayer*)transitionLayer
+{
+    if(addToCarArray.count+carCount <= 0)
+    {
+        
+    }
+    else
+    {
+        countLabel.text = [NSString stringWithFormat:@"%d",addToCarArray.count+carCount];
+        countLabel.hidden = NO;
+        if(addToCarArray.count+carCount >= 50)
+        {
+            [DCFStringUtil showNotice:@"数目不能超过50个"];
+            return;
+        }
+    }
+    transitionLayer.opacity = 0;
+    CALayer *transitionLayer1 = [[CALayer alloc] init];
+    [CATransaction begin];
+    [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+    transitionLayer1.contents = (id)rightBtn.layer.contents;
+    transitionLayer1.frame = [[UIApplication sharedApplication].keyWindow convertRect:rightBtn.bounds fromView:rightBtn];
+    [[UIApplication sharedApplication].keyWindow.layer addSublayer:transitionLayer1];
+    [CATransaction commit];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
@@ -772,6 +999,11 @@
         searchResultLabel.font = [UIFont systemFontOfSize:16];
         [cell addSubview:searchResultLabel];
         
+        if (tempSearch == 2)
+        {
+             [cell.contentView addSubview:(UIButton *)[btnArray objectAtIndex:indexPath.row]];
+        }
+    
         if ([imageFlag isEqualToString:@"1"])
         {
             searchImageView.image = [UIImage imageNamed:@"clock"];
@@ -801,6 +1033,10 @@
                 else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
                 {
                     searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
+                }
+                if (tempSearch == 2)
+                {
+                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"model"];
                 }
             }
             else if ([tempType isEqualToString:@"2"])

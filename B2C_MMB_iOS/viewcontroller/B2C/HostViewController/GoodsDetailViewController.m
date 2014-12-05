@@ -75,6 +75,10 @@
     UIBarButtonItem *right;
     
     UILabel *countLabel;
+    
+    int btnTag;
+    
+    NSString *colorName;
 }
 @end
 
@@ -106,85 +110,91 @@
 
 - (void) btnClick:(UIButton *) sender
 {
-    if(num.length == 0 || [num intValue] == 0)
-    {
-        [DCFStringUtil showNotice:@"请选择数量"];
-        return;
-    }
-    if(itemid.length == 0)
-    {
-        [DCFStringUtil showNotice:@"请选择颜色"];
-        return;
-    }
-    //    [self.view.window addSubview:[self loadChooseColorAndCount]];
-    //    backView.hidden = NO;
+    [self.view.window addSubview:[self loadChooseColorAndCount]];
+    backView.hidden = NO;
     [self setHidesBottomBarWhenPushed:YES];
     int tag = [sender tag];
+    btnTag = tag;
     
-    
-    if(tag == 100)
-    {
-#pragma mark - 立即购买
-        
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
-        
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
-        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
-        
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        
-        
-    }
-    else
-    {
-        
-#pragma mark - 加入购物车
-        [self setHidesBottomBarWhenPushed:YES];
-        
-        NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
-        NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
-        
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        NSString *visitorid = [app getUdid];
-        
-        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-        
-        
-        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-        
-        
-        
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
-        
-        NSString *pushString = nil;
-        
-        if(hasLogin == YES)
-        {
-            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
-            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
-            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
-        }
-        else
-        {
-            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
-            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
-            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
-        }
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
-        
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        
-        num = @"0";
-    }
+//    if(num.length == 0 || [num intValue] == 0)
+//    {
+//        [DCFStringUtil showNotice:@"请选择数量"];
+//        return;
+//    }
+//    if(itemid.length == 0)
+//    {
+//        [DCFStringUtil showNotice:@"请选择颜色"];
+//        return;
+//    }
+//    //    [self.view.window addSubview:[self loadChooseColorAndCount]];
+//    //    backView.hidden = NO;
+//    [self setHidesBottomBarWhenPushed:YES];
+//    int tag = [sender tag];
+//    
+//    
+//    if(tag == 100)
+//    {
+//#pragma mark - 立即购买
+//        
+//        NSString *time = [DCFCustomExtra getFirstRunTime];
+//        
+//        NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
+//        
+//        NSString *token = [DCFCustomExtra md5:string];
+//        
+//        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+//        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
+//        
+//        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
+//        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
+//        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//        
+//        
+//    }
+//    else
+//    {
+//        
+//#pragma mark - 加入购物车
+//        [self setHidesBottomBarWhenPushed:YES];
+//        
+//        NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
+//        NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
+//        
+//        NSString *time = [DCFCustomExtra getFirstRunTime];
+//        NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
+//        NSString *token = [DCFCustomExtra md5:string];
+//        
+//        NSString *visitorid = [app getUdid];
+//        
+//        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+//        
+//        
+//        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+//        
+//        
+//        
+//        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
+//        
+//        NSString *pushString = nil;
+//        
+//        if(hasLogin == YES)
+//        {
+//            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
+//            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+//            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
+//        }
+//        else
+//        {
+//            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
+//            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+//            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
+//        }
+//        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
+//        
+//        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//        
+//        num = @"0";
+//    }
 }
 
 - (void)rightItemClick:(id) sender
@@ -1243,7 +1253,7 @@
     
     int tag = btn.tag;
     
-    NSString *colorName = nil;
+    colorName = nil;
     NSString *colorPrice = nil;
     if(btn.selected == YES)
     {
@@ -1392,12 +1402,89 @@
 - (void) sureBtnClick:(UIButton *) sender
 {
 
-    if(chooseColorAndCountView)
+    if(colorName.length == 0)
     {
-        backView.hidden = YES;
-        [chooseColorAndCountView removeFromSuperview];
-        chooseColorAndCountView = nil;
+        [DCFStringUtil showNotice:@"请选择颜色"];
+        return;
     }
+    if(num.length == 0 || [num intValue] == 0)
+    {
+        [DCFStringUtil showNotice:@"请选择数量"];
+        return;
+    }
+    if (colorName.length > 0 && num.length >0)
+    {
+        
+        
+        if(btnTag == 100)
+        {
+#pragma mark - 立即购买
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
+            
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+            NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        }
+        else
+        {
+            
+#pragma mark - 加入购物车
+            [self setHidesBottomBarWhenPushed:YES];
+            
+            NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
+            NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *visitorid = [app getUdid];
+            
+            NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+            
+            BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+            
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
+            
+            NSString *pushString = nil;
+            
+            if(hasLogin == YES)
+            {
+                arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
+                //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+                pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
+            }
+            else
+            {
+                arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
+                //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+                pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
+            }
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
+            
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            
+            num = @"0";
+            
+            
+        }
+        if(chooseColorAndCountView)
+        {
+            backView.hidden = YES;
+            [chooseColorAndCountView removeFromSuperview];
+            chooseColorAndCountView = nil;
+        }
+        [self loadShopCarCount];
+    }
+
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

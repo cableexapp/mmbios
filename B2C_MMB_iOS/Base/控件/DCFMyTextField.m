@@ -19,15 +19,16 @@
         [self setBackgroundColor:[UIColor whiteColor]];
         self.layer.masksToBounds = YES;
         
-//        UIToolbar *topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-//        [topView setBarStyle:UIBarStyleBlackOpaque];
-//        UIBarButtonItem *helloBtn = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:self action:nil];
-//        UIBarButtonItem *btnSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-//        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
-//        NSArray *array = [NSArray arrayWithObjects:helloBtn,btnSpace,doneBtn, nil];
-//        [topView setItems:array];
-//        [self setInputAccessoryView:topView];
+        UIToolbar *topView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+        [topView setBarStyle:UIBarStyleBlackOpaque];
+        UIBarButtonItem *helloBtn = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:self action:nil];
+        UIBarButtonItem *btnSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(dismissKeyBoard)];
+        NSArray *array = [NSArray arrayWithObjects:helloBtn,btnSpace,doneBtn, nil];
+        [topView setItems:array];
+        [self setInputAccessoryView:topView];
     }
+    
     return self;
 }
 

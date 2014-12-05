@@ -25,7 +25,7 @@
 @interface MyShoppingListViewController ()
 {
     AppDelegate *app;
-
+    
     DCFChenMoreCell *moreCell;
     
     NSMutableArray *cellBtnArray;   //cell前面选择的按钮
@@ -56,7 +56,7 @@
     
     UILabel *moneyLabel;
     
-    float totalMoney;
+    double totalMoney;
     
     int subtractNum;
     int addNum;
@@ -109,8 +109,15 @@
         }
     }
     
-
-    
+    if(moneyLabel)
+    {
+        [moneyLabel setText:@"0"];
+        totalMoney = 0.00;
+    }
+    if(buttomBtn)
+    {
+        [buttomBtn setSelected:NO];
+    }
     [self loadRequest];
 }
 
@@ -133,7 +140,7 @@
             {
                 [btn setSelected:YES];
             }
-         
+            
             NSMutableArray *goosArray = [dataArray objectAtIndex:i];
             for(B2CShopCarListData *carList in goosArray)
             {
@@ -203,7 +210,7 @@
 {
     if(self = [super init])
     {
-//        [self loadRequest];
+        //        [self loadRequest];
     }
     return self;
 }
@@ -242,7 +249,7 @@
             
             chooseGoodsArray = [[NSMutableArray alloc] init];
             
-//            shopIdArray = [[NSMutableArray alloc] init];
+            //            shopIdArray = [[NSMutableArray alloc] init];
             
             for(int i=0;i<tempArray.count;i++)
             {
@@ -279,7 +286,7 @@
                 [headBtn setTag:i];
                 [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 NSMutableArray *arr = [NSMutableArray arrayWithObject:headBtn];
-
+                
                 [headBtnArray addObject:arr];
             }
             
@@ -376,7 +383,7 @@
             {
                 NSMutableArray *arr = [dataArray objectAtIndex:i];
                 total = total + arr.count;
-            }                                                                                                                                                                                                           
+            }
             [tv reloadData];
         }
         else if (result == 0)
@@ -471,7 +478,7 @@
                         
                         NSMutableArray *data = [dataArray objectAtIndex:section];
                         [data removeObject:car];
-
+                        
                         
                         [chooseGoodsArray removeObject:car];
                         
@@ -565,7 +572,7 @@
 
 - (void) subtractBtnClick:(UIButton *) sender
 {
-
+    
     subtractBtnRow = sender.tag%1000;
     subtractBtnSection = sender.tag/1000;
     
@@ -647,7 +654,7 @@
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
     
-   
+    
     
     //    [tv reloadData];
     //    NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:section];
@@ -680,10 +687,10 @@
     
     
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [rightBtn setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateHighlighted];
-//    [rightBtn setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+    //    [rightBtn setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateHighlighted];
+    //    [rightBtn setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [rightBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    //    [rightBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [rightBtn setFrame:CGRectMake(0, 0, 60, 40)];
     [rightBtn setTitle:@"删除" forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -693,12 +700,12 @@
     
     buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - 114, ScreenWidth, 54)];
     [self.view addSubview:buttomView];
-
+    
     loginView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 60)];
     [loginView setBackgroundColor:[UIColor whiteColor]];
     loginView.layer.cornerRadius = 5;
     loginView.layer.masksToBounds = YES;
-//    [noCell.contentView addSubview:loginView];
+    //    [noCell.contentView addSubview:loginView];
     
     logBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [logBtn setTitle:@"登录" forState:UIControlStateNormal];
@@ -717,7 +724,7 @@
     [label_1 setText:@"登录后可以同步电脑和手机端的商品,并保存在账户中"];
     
     
-
+    
     
     [self hiddenButtomView];
     
@@ -740,9 +747,11 @@
     [buttomView addSubview:countLabel];
     
     moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(countLabel.frame.origin.x + countLabel.frame.size.width+5, 13, 100, 30)];
+    [moneyLabel setFont:[UIFont systemFontOfSize:13]];
     [moneyLabel setTextColor:[UIColor redColor]];
     totalMoney = 0.00;
-    [moneyLabel setText:[DCFCustomExtra decimalwithFormat:@"0.00" floatV:totalMoney]];
+    //    [moneyLabel setText:totalMoney];
+    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
     [moneyLabel setTextAlignment:NSTextAlignmentLeft];
     [buttomView addSubview:moneyLabel];
     
@@ -762,7 +771,7 @@
     tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
     [tv setDelegate:self];
     [self.view addSubview:tv];
-
+    
     noCell = [[UITableViewCell alloc] init];
     [noCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [noCell setSelectionStyle:0];
@@ -837,7 +846,7 @@
             }
             
         }
- 
+        
     }
     else
     {
@@ -924,7 +933,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
     NSString *pushString = nil;
     
-
+    
     if([[self getMemberId] length] == 0 || [[self getMemberId] isKindOfClass:[NSNull class]])
     {
         
@@ -1037,20 +1046,20 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-//    if(dataArray)
-//    {
-//        for(NSMutableArray *testArr in dataArray)
-//        {
-//            if(testArr.count == 0)
-//            {
-//                return 0;
-//            }
-//        }
-//        if(dataArray.count == 0)
-//        {
-//            return 0;
-//        }
-//    }
+    //    if(dataArray)
+    //    {
+    //        for(NSMutableArray *testArr in dataArray)
+    //        {
+    //            if(testArr.count == 0)
+    //            {
+    //                return 0;
+    //            }
+    //        }
+    //        if(dataArray.count == 0)
+    //        {
+    //            return 0;
+    //        }
+    //    }
     if(section == dataArray.count)
     {
         return 0;
@@ -1086,11 +1095,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
                     }
                     return 0;
                 }
-//                for(UIView *view in noCell.subviews)
-//                {
-//                    [view setHidden:NO];
-//                    [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
-//                }
+                //                for(UIView *view in noCell.subviews)
+                //                {
+                //                    [view setHidden:NO];
+                //                    [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
+                //                }
             }
             return ScreenHeight-34;
         }
@@ -1144,7 +1153,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         return 1;
     }
-
+    
     return [[dataArray objectAtIndex:section] count];
 }
 
@@ -1165,7 +1174,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     NSString *title = [[[dataArray objectAtIndex:section] lastObject] sShopName];
     UILabel *sectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 200, 30)];
-//    [sectionLabel setText:[headLabelArray objectAtIndex:section]];
+    //    [sectionLabel setText:[headLabelArray objectAtIndex:section]];
     [sectionLabel setText:title];
     [sectionLabel setTextAlignment:NSTextAlignmentLeft];
     [sectionLabel setTextColor:[UIColor blackColor]];
@@ -1192,19 +1201,19 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
 {
-//    static NSString *moreCellId = @"moreCell";
-//    UITableViewCell *noCell = [tableView cellForRowAtIndexPath:indexPath];
-//    if(!noCell)
-//    {
-//        noCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:moreCellId];
-//        [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-//    }
+    //    static NSString *moreCellId = @"moreCell";
+    //    UITableViewCell *noCell = [tableView cellForRowAtIndexPath:indexPath];
+    //    if(!noCell)
+    //    {
+    //        noCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:moreCellId];
+    //        [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+    //    }
     
-//    if(rightBtn)
-//    {
-//        [rightBtn setHidden:YES]
-//    }
-
+    //    if(rightBtn)
+    //    {
+    //        [rightBtn setHidden:YES]
+    //    }
+    
     NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     if([DCFCustomExtra validateString:myMemberid] == NO)
     {
@@ -1224,8 +1233,8 @@ NSComparator cmptr = ^(id obj1, id obj2){
             loginView = nil;
         }
     }
-
-
+    
+    
     if (!shopcarView)
     {
         shopcarView = [[UIImageView alloc] init];
@@ -1267,25 +1276,25 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   if(indexPath.section == dataArray.count)
+    if(indexPath.section == dataArray.count)
     {
         return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
         
     }
-
+    
     if(dataArray)
     {
         NSMutableArray *arr = [dataArray objectAtIndex:indexPath.section];
         if(arr.count != 0 )
         {
             //商品数组不为空
-//            [
-//            (
-//            "<B2CShopCarListData: 0x1806be80>"
-//            ),
-//            (
-//            )
-//             ]
+            //            [
+            //            (
+            //            "<B2CShopCarListData: 0x1806be80>"
+            //            ),
+            //            (
+            //            )
+            //             ]
             flag = NO;
         }
         else
@@ -1293,13 +1302,13 @@ NSComparator cmptr = ^(id obj1, id obj2){
             flag = YES;
         }
         
-//        if(arr.count == 0 && indexPath.section == dataArray.count-1 && flag == YES)
-//        {
-//            return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
-//        }
-//        else
-//        {
-//        }
+        //        if(arr.count == 0 && indexPath.section == dataArray.count-1 && flag == YES)
+        //        {
+        //            return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
+        //        }
+        //        else
+        //        {
+        //        }
     }
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
@@ -1428,10 +1437,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         [[[headBtnArray objectAtIndex:section] lastObject] setSelected:NO];
     }
-
+    
     [self calculateTotalMoney];
     [self payBtnChange];
-
+    
     
     for(int i=0;i<headBtnArray.count;i++)
     {
@@ -1457,10 +1466,9 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         B2CShopCarListData *carlist = [chooseGoodsArray objectAtIndex:i];
         NSString *price = carlist.price;
-        totalMoney = [price floatValue]*[carlist.num intValue] + totalMoney;
+        totalMoney = [price doubleValue]*[carlist.num intValue] + totalMoney;
     }
-    
-    [moneyLabel setText:[DCFCustomExtra decimalwithFormat:@"0.00" floatV:totalMoney]];
+    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

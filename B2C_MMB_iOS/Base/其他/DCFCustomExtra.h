@@ -32,7 +32,7 @@
 + (BOOL)isValidateEmail:(NSString *)email;
 
 + (NSString *) compareSessionKey:(NSString *) sessionKey;
-+ (NSString *)notRounding:(float)price afterPoint:(int)position;
++ (NSString *)notRounding:(double)price afterPoint:(int)position;
 
 + (CGSize) adjustWithFont:(UIFont*) font WithText:(NSString *) text WithSize:(CGSize) size;
 

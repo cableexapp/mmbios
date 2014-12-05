@@ -20,10 +20,10 @@
     
     NSMutableArray *goodsListArray;  //有几组商品
     
-    float goodsMoney;
+    double goodsMoney;
     
     B2CUpOrderData *b2cOrderData;
 }
 
-- (id) initWithDataArray:(NSMutableArray *) dataArray WithMoney:(float) money WithOrderData:(B2CUpOrderData *) orderData WithTag:(int) tag;
+- (id) initWithDataArray:(NSMutableArray *) dataArray WithMoney:(double) money WithOrderData:(B2CUpOrderData *) orderData WithTag:(int) tag;
 @end

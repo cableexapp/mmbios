@@ -112,6 +112,7 @@ BOOL isPopShow = NO;
 //    {
 //        isPopShow = YES;
 //    }
+//    self.tableView.scrollEnabled = YES;
     isPopShow = NO;
 }
 

@@ -565,17 +565,6 @@
         
         return 50;
     }
-    if (indexPath.row == 5)
-    {
-        if(showCell == YES)
-        {
-            return 179;
-        }
-        else
-        {
-            return 54;
-        }
-    }
     if(indexPath.row == 4)
     {
         NSString *discuss = detailData.score;
@@ -588,6 +577,18 @@
             return 40;
         }
     }
+    if (indexPath.row == 5)
+    {
+        if(showCell == YES)
+        {
+            return 179;
+        }
+        else
+        {
+            return 54;
+        }
+    }
+
     if(indexPath.row == 6)
     {
         return 54;

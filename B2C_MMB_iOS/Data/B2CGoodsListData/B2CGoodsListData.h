@@ -18,6 +18,7 @@
 @property (strong,nonatomic) NSString *p1Path;
 @property (strong,nonatomic) NSString *shopId;
 @property (strong,nonatomic) NSString *productId;
+@property (strong,nonatomic) NSString *shopName;
 
 + (NSMutableArray *) getListArray:(NSMutableArray *) array;
 - (id) initWithDic:(NSDictionary *) dic;

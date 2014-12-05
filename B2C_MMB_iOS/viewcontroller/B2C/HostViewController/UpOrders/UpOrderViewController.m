@@ -578,14 +578,14 @@
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationDelegate:self];
-    if(ScreenHeight < 500)
-    {
+//    if(ScreenHeight < 500)
+//    {
         [self.view setFrame:CGRectMake(0, -kbSize.height+150, ScreenWidth, ScreenHeight)];
-    }
-    else
-    {
-        
-    }
+//    }
+//    else
+//    {
+//        
+//    }
     [UIView commitAnimations];
 }
 
@@ -1247,18 +1247,17 @@
             }
             else if(indexPath.row == 2)
             {
-                if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
-                {
-                    
-                }
-                else
-                {
-                   
-                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
-                    pickerView.delegate = self;
-                    [self.view.window setBackgroundColor:[UIColor blackColor]];
-                    [self.view.window addSubview:pickerView];
-                }
+                //                if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
+                //                {
+                //
+                //                }
+                //                else
+                //                {
+                //                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
+                //                    pickerView.delegate = self;
+                //                    [self.view.window setBackgroundColor:[UIColor blackColor]];
+                //                    [self.view.window addSubview:pickerView];
+                //                }
                 
                 
             }
@@ -1275,17 +1274,17 @@
             }
             else if(indexPath.row == 2)
             {
-                if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
-                {
-                    
-                }
-                else
-                {
-                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0,ScreenWidth, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
-                    pickerView.delegate = self;
-                    [self.view.window setBackgroundColor:[UIColor blackColor]];
-                    [self.view.window addSubview:pickerView];
-                }
+                //                if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
+                //                {
+                //
+                //                }
+                //                else
+                //                {
+                //                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
+                //                    pickerView.delegate = self;
+                //                    [self.view.window setBackgroundColor:[UIColor blackColor]];
+                //                    [self.view.window addSubview:pickerView];
+                //                }
                 
                 
             }

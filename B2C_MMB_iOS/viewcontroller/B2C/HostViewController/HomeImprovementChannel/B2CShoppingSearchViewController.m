@@ -820,10 +820,8 @@
     
     triangle_3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
     [triangle_3 setTag:3];
-
-
-    
-
+  
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeChooseView" object:nil];
 }
 
 - (void)branBtnMet_0:(UIButton *)button
@@ -880,7 +878,13 @@
 }
 
 
-
+-(void)closeView:(NSNotification *)sender
+{
+    [self.view.superview removeFromSuperview];
+    [self.view removeFromSuperview];
+    self.view = nil;
+    [self removeFromParentViewController];
+}
 
 
 - (void) clear:(UIButton *) sender

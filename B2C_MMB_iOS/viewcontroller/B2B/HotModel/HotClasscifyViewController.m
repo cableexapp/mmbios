@@ -42,6 +42,8 @@
     BOOL flag;//判断取消是在返回还是点击加入询价车情况下点击
     
     UIButton *btn;
+    
+    UIPageControl *pageControl;
 }
 @end
 
@@ -265,24 +267,18 @@
     [_sv setContentSize:CGSizeMake(ScreenWidth*7, self.sv.frame.size.height-200)];
     [_sv setBounces:NO];
     
+    pageControl = [[UIPageControl alloc] init];
+    pageControl.frame = CGRectMake(0, ScreenHeight-145, ScreenWidth, 30);
+    pageControl.currentPage=0;
+    pageControl.numberOfPages=7;
+    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1.0];
+    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
+    [self.view addSubview:pageControl];
     
-    self.hotLineBtn.layer.borderColor = [UIColor colorWithRed:51.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-    self.hotLineBtn.layer.borderWidth = 1.0f;
-    self.hotLineBtn.frame = CGRectMake((ScreenWidth-150)/2, 100, 150, 40);
-    self.hotLineBtn.backgroundColor = [UIColor whiteColor];
-    self.hotLineBtn.layer.cornerRadius = 2.0f;
-    
-    self.imBtn.layer.borderColor = [UIColor colorWithRed:51.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-    self.imBtn.layer.borderWidth = 1.0f;
-    self.imBtn.layer.cornerRadius = 2.0f;
-    
-    self.moreModelBtn.layer.borderColor = [UIColor colorWithRed:51.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-    self.moreModelBtn.layer.borderWidth = 1.0f;
-    self.moreModelBtn.layer.cornerRadius = 2.0f;
-    
-    self.directBtn.layer.borderColor = [UIColor colorWithRed:51.0/255.0 green:112.0/255.0 blue:245.0/255.0 alpha:1.0].CGColor;
-    self.directBtn.layer.borderWidth = 1.0f;
-    self.directBtn.layer.cornerRadius = 2.0f;
+    self.hotLineBtn.layer.cornerRadius = 5.0f;
+    self.imBtn.layer.cornerRadius = 5.0f;
+    self.moreModelBtn.layer.cornerRadius = 5.0f;
+    self.directBtn.layer.cornerRadius = 5.0f;
     
     btnArray = [[NSMutableArray alloc] init];
     for(UIView *view in self.sv.subviews)
@@ -407,6 +403,7 @@
 {
     CGFloat pageWidth = self.view.frame.size.width;
     page = floor((scrollView.contentOffset.x - pageWidth/2)/pageWidth) + 1;
+    pageControl.currentPage = page;
     
 }
 

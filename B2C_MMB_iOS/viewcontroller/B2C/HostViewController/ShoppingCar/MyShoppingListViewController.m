@@ -716,9 +716,6 @@
     [label_1 setNumberOfLines:0];
     [label_1 setText:@"登录后可以同步电脑和手机端的商品,并保存在账户中"];
     
-    
-
-    
     [self hiddenButtomView];
     
     UIView *buttomTopView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];

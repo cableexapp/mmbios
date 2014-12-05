@@ -129,10 +129,13 @@
 -(void)shadow
 {
     backView.hidden = YES;
-    self.selectView.hidden = YES;
+//    self.selectView.hidden = YES;
     _testSubTableView.hidden = YES;
     _testTableView.userInteractionEnabled = YES;
+    self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
     self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);
+    [_testSubTableView reloadData];
+
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView

@@ -54,6 +54,10 @@
     UIButton *logBtn;
     
     UILabel *label_1;
+    
+    UIImageView *shopcar;
+    
+    UILabel *label_2;
 }
 @end
 
@@ -187,7 +191,7 @@
     noCell = [[UITableViewCell alloc] init];
     [noCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     
-    backView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 300, 60)];
+    backView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 60)];
     [backView setBackgroundColor:[UIColor whiteColor]];
     backView.layer.cornerRadius = 5;
     backView.layer.masksToBounds = YES;
@@ -672,6 +676,7 @@
     [noCell setSelectionStyle:0];
         
         NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
         if([DCFCustomExtra validateString:myMemberid] == NO)
         {
             [noCell.contentView addSubview:backView];
@@ -690,16 +695,19 @@
                 backView = nil;
             }
         }
-        
-        
-        UIImageView *shopcar = [[UIImageView alloc] init];
+    
+    if (!shopcar)
+    {
+        shopcar = [[UIImageView alloc] init];
         shopcar.frame = CGRectMake(20, 130, 61, 60);
         shopcar.image = [UIImage imageNamed:@"shoppingCar"];
         [noCell.contentView addSubview:shopcar];
-        
+    }
+    if (!label_2)
+    {
         NSString *string = @"您的询价车中暂时没有商品,现在去浏览选购电缆吧~";
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:string WithSize:CGSizeMake(200, MAXFLOAT)];
-        UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
+        label_2 = [[UILabel alloc] initWithFrame:CGRectMake(85, 150, 200, size.height)];
         [label_2 setBackgroundColor:[UIColor clearColor]];
         [label_2 setTextAlignment:NSTextAlignmentLeft];
         [label_2 setFont:[UIFont systemFontOfSize:15]];
@@ -707,7 +715,9 @@
         [label_2 setNumberOfLines:0];
         [label_2 setText:string];
         [noCell.contentView addSubview:label_2];
-        
+    }
+    if (!buyBtn)
+    {
         buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
         [buyBtn setTitle:@"去首页看看" forState:UIControlStateNormal];
@@ -715,7 +725,12 @@
         buyBtn.layer.cornerRadius = 5.0f;
         [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [buyBtn addTarget:self action:@selector(buyBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [noCell addSubview:buyBtn];
+        [noCell addSubview:buyBtn];
+    }
+        
+    
+        
+    
 //        [self.view insertSubview:buyBtn aboveSubview:tv];
     
         buttomView.hidden = YES;

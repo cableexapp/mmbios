@@ -45,7 +45,7 @@
     [self pushAndPopStyle];
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-50-64)];
-    [tv setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:222.0/255.0 blue:237.0/255.0 alpha:1.0]];
+    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsHorizontalScrollIndicator:NO];
@@ -137,9 +137,13 @@
             }
             
         }
-        if(indexPath.row == 2 || indexPath.row == 3 ||indexPath.row == 4 || indexPath.row == 5 )
+        if(indexPath.row == 2  || indexPath.row == 5 )
         {
             return 44;
+        }
+        if (indexPath.row == 3 ||indexPath.row == 4 )
+        {
+            return 54;
         }
         if(indexPath.row == 6)
         {
@@ -152,16 +156,13 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    [tableView setSeparatorStyle:0];
-    
-    
-    
+
     NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:231.0/255.0 green:229.0/255.0 blue:240.0/255.0 alpha:1.0]];
+        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
         [cell setSelectionStyle:0];
         
         if(!dataArray || dataArray.count == 0)
@@ -177,55 +178,61 @@
                 NSURL *picUrl = [NSURL URLWithString:picStr];
                 [cellIv setImageWithURL:picUrl placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                 [cell.contentView addSubview:cellIv];
+                
+                UIView *lineView = [[UIView alloc] init];
+                lineView.frame = CGRectMake(0, 155, ScreenWidth, 0.5);
+                lineView.backgroundColor = [UIColor lightGrayColor];
+                [cell.contentView addSubview:lineView];
             }
             if(indexPath.row == 1)
             {
                 if(data.productName.length != 0)
                 {
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:data.productName WithSize:CGSizeMake(300, MAXFLOAT)];
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, size.height)];
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:data.productName WithSize:CGSizeMake(300, MAXFLOAT)];
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 5, ScreenWidth-20, size.height)];
                     [label setText:data.productName];
                     [label setNumberOfLines:0];
-                    [label setFont:[UIFont systemFontOfSize:13]];
+                    [label setFont:[UIFont systemFontOfSize:15]];
                     [label setTextAlignment:NSTextAlignmentLeft];
                     [label setTextColor:[UIColor blackColor]];
                     [cell.contentView addSubview:label];
                     [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+                    
+                    UIView *lineView = [[UIView alloc] init];
+                    lineView.frame = CGRectMake(10, size.height+13, ScreenWidth-20, 0.5);
+                    lineView.backgroundColor = [UIColor lightGrayColor];
+                    [cell.contentView addSubview:lineView];
                 }
                 else
                 {
                     
                 }
-                
-                
             }
             if(indexPath.row == 2)
             {
                 if(data.price.length != 0)
                 {
-                    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"价格" WithSize:CGSizeMake(MAXFLOAT, 30)];
+                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:data.price WithSize:CGSizeMake(MAXFLOAT, 30)];
                     
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
-                    [label setText:@"价格"];
-                    [label setFont:[UIFont systemFontOfSize:13]];
-                    [label setTextAlignment:NSTextAlignmentLeft];
-                    [cell.contentView addSubview:label];
-                    
-                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:data.price WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    
-                    UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 20, 5, size_2.width, 30)];
+                    UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 13.5,ScreenWidth-25, 30)];
                     [priceLabel setTextAlignment:NSTextAlignmentLeft];
-                    [priceLabel setText:data.price];
-                    [priceLabel setFont:[UIFont systemFontOfSize:13]];
+                    [priceLabel setText:[NSString stringWithFormat:@"¥%@",data.price]];
+                    priceLabel.textColor = [UIColor redColor];
+                    [priceLabel setFont:[UIFont systemFontOfSize:15]];
                     [cell.contentView addSubview:priceLabel];
                     
-                    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"运费5元" WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    UILabel *tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-size_3.width-10, 5, size_3.width, 30)];
+                    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:@"运费5元" WithSize:CGSizeMake(MAXFLOAT, 30)];
+                    UILabel *tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-size_3.width-10, 5, size_3.width, 30)];
                     [tradeLabel setText:@"运费5元"];
                     [tradeLabel setTextAlignment:NSTextAlignmentRight];
                     [tradeLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
                     [tradeLabel setFont:[UIFont systemFontOfSize:12]];
                     //            [cell.contentView addSubview:tradeLabel];
+                    
+                    UIView *lineView = [[UIView alloc] init];
+                    lineView.frame = CGRectMake(0, size_2.height+30, ScreenWidth, 0.5);
+                    lineView.backgroundColor = [UIColor lightGrayColor];
+                    [cell.contentView addSubview:lineView];
                 }
                 else
                 {
@@ -238,21 +245,19 @@
             {
                 if(data.color.length != 0)
                 {
-                    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:@"颜色分类:" WithSize:CGSizeMake(MAXFLOAT, 30)];
+            
+                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:data.color WithSize:CGSizeMake(MAXFLOAT, 30)];
                     
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
-                    [label setText:@"颜色分类:"];
-                    [label setFont:[UIFont systemFontOfSize:13]];
-                    [label setTextAlignment:NSTextAlignmentLeft];
-                    [cell.contentView addSubview:label];
-                    
-                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:data.color WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    
-                    UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 20, 5, size_2.width, 30)];
+                    UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 13.5,ScreenWidth-25, 30)];
                     [colorLabel setTextAlignment:NSTextAlignmentLeft];
-                    [colorLabel setText:data.color];
-                    [colorLabel setFont:[UIFont systemFontOfSize:12]];
+                    colorLabel.text = [NSString stringWithFormat:@"颜色分类:%@",data.color];
+                    [colorLabel setFont:[UIFont systemFontOfSize:15]];
                     [cell.contentView addSubview:colorLabel];
+                    
+                    UIView *lineView = [[UIView alloc] init];
+                    lineView.frame = CGRectMake(0, size_2.height+30, ScreenWidth, 10);
+                    lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+                    [cell.contentView addSubview:lineView];
                 }
                 else
                 {
@@ -263,15 +268,15 @@
             {
                 if(self.myShopName.length != 0)
                 {
-                    UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 30, 30)];
-                    [firstIv setImage:[UIImage imageNamed:@"Set.png"]];
+                    UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(12, 7, 30, 30)];
+                    [firstIv setImage:[UIImage imageNamed:@"shopPic"]];
                     
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:self.myShopName WithSize:CGSizeMake(MAXFLOAT,30)];
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, size.width, 30)];
-                    [label setFont:[UIFont systemFontOfSize:13]];
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:self.myShopName WithSize:CGSizeMake(MAXFLOAT,30)];
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(47, 7, size.width, 30)];
+                    [label setFont:[UIFont systemFontOfSize:15]];
                     [label setText:self.myShopName];
                     [label setTextAlignment:NSTextAlignmentLeft];
-                    [label setTextColor:MYCOLOR];
+                    [label setTextColor:[UIColor blackColor]];
                     
                     UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 7, label.frame.size.width+40, 30)];
                     [firstView addSubview:firstIv];
@@ -282,13 +287,18 @@
                     [firstView addGestureRecognizer:tap_1];
                     
                     
-                    UIImageView *chatIv = [[UIImageView alloc] initWithFrame:CGRectMake(320-40, 7, 30, 30)];
-                    [chatIv setUserInteractionEnabled:YES];
-                    [chatIv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
+//                    UIImageView *chatIv = [[UIImageView alloc] initWithFrame:CGRectMake(320-40, 7, 30, 30)];
+//                    [chatIv setUserInteractionEnabled:YES];
+//                    [chatIv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
+//                    
+//                    UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatTap:)];
+//                    [chatIv addGestureRecognizer:chatTap];
+//                    [cell.contentView addSubview:chatIv];
                     
-                    UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatTap:)];
-                    [chatIv addGestureRecognizer:chatTap];
-                    [cell.contentView addSubview:chatIv];
+                    UIView *lineView = [[UIView alloc] init];
+                    lineView.frame = CGRectMake(0, size.height+30, ScreenWidth, 10);
+                    lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+                    [cell.contentView addSubview:lineView];
                 }
                 else
                 {
@@ -299,12 +309,17 @@
             if(indexPath.row == 5)
             {
                 
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 140, 30)];
-                [label setFont:[UIFont systemFontOfSize:13]];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 7, 140, 30)];
+                [label setFont:[UIFont systemFontOfSize:15]];
                 [label setText:@"商品详情快照"];
                 [label setTextAlignment:NSTextAlignmentLeft];
-                [label setTextColor:MYCOLOR];
+                [label setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:label];
+                
+                UIView *lineView = [[UIView alloc] init];
+                lineView.frame = CGRectMake(0, 43.5, ScreenWidth, 0.5);
+                lineView.backgroundColor = [UIColor lightGrayColor];
+                [cell.contentView addSubview:lineView];
             }
             if(indexPath.row == 6)
             {
@@ -324,8 +339,9 @@
                 
                 [customCell.voltageLabel setText:data.voltage];
                 
-                return customCell;
+                customCell.contentView.backgroundColor = [UIColor whiteColor];
                 
+                return customCell;
             }
             else
             {
@@ -354,6 +370,7 @@
 
 - (void) chatTap:(UITapGestureRecognizer *) sender
 {
+    
 }
 
 
@@ -370,18 +387,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

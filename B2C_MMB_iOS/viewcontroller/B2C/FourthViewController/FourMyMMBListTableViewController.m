@@ -93,15 +93,16 @@
         badgeArray = nil;
     }
     [self setHidesBottomBarWhenPushed:NO];
-    if (isPopShow == YES)
-    {
-        isPopShow = NO;
-    }
-    else
-    {
-        isPopShow = YES;
-        
-    }
+//    if (isPopShow == YES)
+//    {
+//        isPopShow = NO;
+//    }
+//    else
+//    {
+//        isPopShow = YES;
+//        
+//    }
+//    isPopShow = NO;
 }
 
 - (NSString *) getMemberId
@@ -145,7 +146,6 @@
                         {
                             [btn setFrame:CGRectMake(cellBtn.frame.size.width-65, 15, 18, 18)];
                         }
-                        
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
@@ -175,7 +175,6 @@
                         {
                             [btn setFrame:CGRectMake(cellBtn.frame.size.width-65, 15, 18, 18)];
                         }
-                        
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
@@ -215,7 +214,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    isPopShow = NO;
+    
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [self getMemberId];
     
@@ -229,6 +228,8 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    
+//    isPopShow = NO;
 }
 
 - (void)viewDidLoad
@@ -237,7 +238,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self pushAndPopStyle];
-
+//    isPopShow = NO;
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;
     
@@ -344,17 +345,19 @@
         UIButton *btn = (UIButton *)[cellBtnArray objectAtIndex:i];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar:) name:@"popShopCar" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
 
-- (void)popShopCar:(NSNotification *)sender
+
+- (void)popShopCar_mmb:(NSNotification *)sender
 {
     if (isPopShow == YES)
     {
         [KxMenu dismissMenu];
         isPopShow = NO;
         self.tableView.scrollEnabled = YES;
+        NSLog(@"买卖宝-----11");
     }
     else
     {
@@ -362,12 +365,12 @@
         @[[KxMenuItem menuItem:@"  购物车  "
                          image:nil
                         target:self
-                        action:@selector(pushMenuItem:)],
+                        action:@selector(pushMenuItem_mmb:)],
           
           [KxMenuItem menuItem:@"  询价车  "
                          image:nil
                         target:self
-                        action:@selector(pushMenuItem:)],
+                        action:@selector(pushMenuItem_mmb:)],
           ];
         
         [KxMenu showMenuInView:self.view
@@ -375,11 +378,12 @@
                      menuItems:menuItems];
         isPopShow = YES;
         self.tableView.scrollEnabled = NO;
+        NSLog(@"买卖宝-----22");
     }
-    
+
 }
 
-- (void)pushMenuItem:(id)sender
+- (void)pushMenuItem_mmb:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])

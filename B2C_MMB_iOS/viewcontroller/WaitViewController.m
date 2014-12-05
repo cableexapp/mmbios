@@ -462,9 +462,12 @@ double secondsCountDown =0;
         {
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
         }
-        else if([[[self.tempFrom componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+        else if ([self.tempFrom rangeOfString:@"@"].location != NSNotFound)
         {
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+            if([[[self.tempFrom componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+            }
         }
         else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
         {

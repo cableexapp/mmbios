@@ -762,7 +762,11 @@
     [self.navigationController pushViewController:detail animated:YES];
 }
 
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    backView.hidden = YES;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeChooseView" object:nil];
+}
 
 //#pragma mark -
 #pragma mark SCROLLVIEW DELEGATE METHODS

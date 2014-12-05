@@ -79,6 +79,8 @@
     int btnTag;
     
     NSString *colorName;
+    
+    int scoreNum;
 }
 @end
 
@@ -389,6 +391,9 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
+        scoreNum = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue] +[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
+        NSLog(@"scoreNum = %d",scoreNum);
+        
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         producturl = [dicRespon objectForKey:@"producturl"];
@@ -614,7 +619,6 @@
                 }
                 else
                 {
-                    
                     CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT)];
                     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, size_4.height)];
                     [contentLabel setText:s4];
@@ -622,11 +626,8 @@
                     [contentLabel setNumberOfLines:0];
                     return contentLabel.frame.size.height;
                 }
-                
             }
-            
         }
-        
     }
     return 0;
 }

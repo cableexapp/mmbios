@@ -372,9 +372,9 @@
             //路径曲线
             UIBezierPath *movePath = [UIBezierPath bezierPath];
             [movePath moveToPoint:transitionLayer.position];
-            CGPoint toPoint = CGPointMake(askPriceBtn.center.x, askPriceBtn.center.y+20);
+            CGPoint toPoint = CGPointMake(ScreenWidth-askPriceBtn.center.x, askPriceBtn.center.y+20);
             [movePath addQuadCurveToPoint:toPoint
-                             controlPoint:CGPointMake(askPriceBtn.center.x,transitionLayer.position.y)];
+                             controlPoint:CGPointMake(ScreenWidth-askPriceBtn.center.x,transitionLayer.position.y)];
             
             UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();

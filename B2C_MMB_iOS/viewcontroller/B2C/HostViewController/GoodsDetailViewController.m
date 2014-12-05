@@ -417,19 +417,20 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
-        
-        
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
             num = @"0";
             itemid = @"";
+            [self loadShopCarCount];
         }
         else
         {
+            
             if(msg.length != 0)
             {
                 [DCFStringUtil showNotice:msg];
+                
             }
             else
             {
@@ -473,7 +474,6 @@
         else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
         {
             countLabel.hidden = NO;
-            
             countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
         }
         else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
@@ -1483,7 +1483,7 @@
             [chooseColorAndCountView removeFromSuperview];
             chooseColorAndCountView = nil;
         }
-        [self loadShopCarCount];
+//        [self loadShopCarCount];
     }
 
 }

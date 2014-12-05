@@ -55,7 +55,7 @@ BOOL isPopShow = NO;
     
     NSMutableArray *arr;
     
-   
+    NSString *fromPage;
 }
 @end
 
@@ -89,26 +89,12 @@ BOOL isPopShow = NO;
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    if (isPopShow == NO)
-    {
-        isPopShow = NO;
-    }
-    else
-    {
-        isPopShow = YES;
-        
-    }
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:YES];
-    isgo = 2;
+    isPopShow = NO;
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
-    
+    isgo = 2;
     [super viewWillDisappear:YES];
     if(conn)
     {
@@ -118,6 +104,14 @@ BOOL isPopShow = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
     [self setHidesBottomBarWhenPushed:NO];
 
+//    if (isPopShow == NO)
+//    {
+//        isPopShow = NO;
+//    }
+//    else
+//    {
+//        isPopShow = YES;
+//    }
     isPopShow = NO;
 }
 
@@ -368,6 +362,7 @@ BOOL isPopShow = NO;
 
 - (void)popShopCarTap:(UITapGestureRecognizer *)sender
 {
+     NSLog(@"首页-------");
     if (isgo == 1)
     {
         if (isPopShow == YES)

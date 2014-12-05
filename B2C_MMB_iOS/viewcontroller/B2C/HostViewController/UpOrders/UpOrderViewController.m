@@ -1131,7 +1131,8 @@
                 }
                 else
                 {
-                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
+                   
+                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
                     pickerView.delegate = self;
                     [self.view.window setBackgroundColor:[UIColor blackColor]];
                     [self.view.window addSubview:pickerView];
@@ -1159,7 +1160,7 @@
                 }
                 else
                 {
-                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
+                    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0,ScreenWidth, self.view.window.frame.size.height) WithArray:[chooseSendMethodArray objectAtIndex:indexPath.section-3] WithTag:indexPath.section-3];
                     pickerView.delegate = self;
                     [self.view.window setBackgroundColor:[UIColor blackColor]];
                     [self.view.window addSubview:pickerView];

@@ -112,7 +112,8 @@ BOOL isPopShow = NO;
 //    {
 //        isPopShow = YES;
 //    }
-//    self.tableView.scrollEnabled = YES;
+    self.tableView.scrollEnabled = YES;
+    [KxMenu dismissMenu];
     isPopShow = NO;
 }
 
@@ -364,6 +365,7 @@ BOOL isPopShow = NO;
 - (void)popShopCarTap:(UITapGestureRecognizer *)sender
 {
      NSLog(@"首页-------");
+//    [self.navigationController.tabBarController setSelectedIndex:0];
     if (isgo == 1)
     {
         if (isPopShow == YES)
@@ -425,6 +427,7 @@ BOOL isPopShow = NO;
     else
     {
         isPopShow = YES;
+        self.tableView.scrollEnabled = YES;
         
     }
 }

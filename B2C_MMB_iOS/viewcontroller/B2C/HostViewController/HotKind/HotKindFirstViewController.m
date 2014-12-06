@@ -60,7 +60,10 @@
 {
     [super viewWillDisappear:YES];
     rightButtonView.hidden = YES;
+//    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"您确定要清空吗？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [sheet showInView:self.view];
 }
+
 
 - (void)viewDidLoad
 {

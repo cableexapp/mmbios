@@ -52,7 +52,7 @@
     NSMutableArray *brandsArray;
     NSMutableArray *modelsArray;
     NSMutableArray *specsArray;
-    NSMutableArray *uses;
+    NSMutableArray *usesArray;
     NSMutableArray * triangleAaary;
     
     
@@ -132,8 +132,8 @@
             brandsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"brands"]]];
             modelsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"models"]]];
             specsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"specs"]]];
-            
-            
+            usesArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"uses"]]];
+
             
         
 #pragma mark     -  选中的列表选项处理
@@ -158,6 +158,31 @@
 //                    [btn setEnabled:NO];
 //                }
 //            }
+  
+            
+            for(UIButton *btn in array1)
+            {
+                NSString *str = btn.titleLabel.text;
+                for(int i=0;i<usesArray.count;i++)
+                {
+                    if([str isEqualToString:[usesArray objectAtIndex:i]])
+                    {
+                        [btn setEnabled:YES];
+                        break;
+                    }
+                    else
+                    {
+                        [btn setEnabled:NO];
+                    }
+                }
+                if(usesArray.count == 0)
+                {
+                    [btn setEnabled:NO];
+                }
+            }
+
+ 
+            
             for(UIButton *btn in array3)
             {
                 NSString *str = btn.titleLabel.text;
@@ -738,7 +763,7 @@
     
     
     brandBtn_0 = [[UIButton alloc] init];
-    useCloseIV = [UIImage imageNamed:@"Set.png"];
+    useCloseIV = [UIImage imageNamed:@"close_btn"];
     [brandBtn_0 setBackgroundImage:useCloseIV forState:UIControlStateNormal];
     [brandBtn_0 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
     brandBtn_0.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
@@ -759,7 +784,7 @@
     
     
     modelBtn_1 = [[UIButton alloc] init];
-    useCloseIV_1 = [UIImage imageNamed:@"Set.png"];
+    useCloseIV_1 = [UIImage imageNamed:@"close_btn"];
     [modelBtn_1 setBackgroundImage:useCloseIV_1 forState:UIControlStateNormal];
     [modelBtn_1 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
     modelBtn_1.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
@@ -780,7 +805,7 @@
     
     
     useBtn_2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    useCloseIV_2 = [UIImage imageNamed:@"Set.png"];
+    useCloseIV_2 = [UIImage imageNamed:@"close_btn"];
     [useBtn_2 setBackgroundImage:useCloseIV_2 forState:UIControlStateNormal];
     [useBtn_2 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
     useBtn_2.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;
@@ -800,7 +825,7 @@
     
    
     specBtn_3 = [[UIButton alloc] init];
-    useCloseIV_3 = [UIImage imageNamed:@"Set.png"];
+    useCloseIV_3 = [UIImage imageNamed:@"close_btn"];
     [specBtn_3 setBackgroundImage:useCloseIV_3 forState:UIControlStateNormal];
     [specBtn_3 setFrame:CGRectMake(myRect.size.width-80, 5, 30, 30)];
     specBtn_3.layer.borderColor = [UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0].CGColor;

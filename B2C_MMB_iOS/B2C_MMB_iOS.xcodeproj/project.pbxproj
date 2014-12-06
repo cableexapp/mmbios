@@ -11,6 +11,9 @@
 		0D73C0C21A133F4C004A9B95 /* HotThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D73C0C11A133F4C004A9B95 /* HotThirdViewController.m */; };
 		0DABE3291A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE3271A12FA2000C64FB7 /* XMPPUserCoreDataStorageObject.m */; };
 		0DABE32C1A1306FB00C64FB7 /* HotSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */; };
+		0DCA61151A32DB3000FC86DB /* close_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DCA61141A32DB3000FC86DB /* close_btn.png */; };
+		0DCA61171A32DBE200FC86DB /* choose_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DCA61161A32DBE200FC86DB /* choose_btn.png */; };
+		0DCA61191A32DDED00FC86DB /* arrow_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DCA61181A32DDED00FC86DB /* arrow_btn.png */; };
 		0DF9FEF81A11F96600E8BE24 /* HotKindFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */; };
 		0DF9FEF91A11FA5700E8BE24 /* HotKindFirstViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */; };
 		6114F7A41A187DFE007DAC39 /* AddBangDingMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6114F7A31A187DFE007DAC39 /* AddBangDingMobileViewController.m */; };
@@ -780,6 +783,9 @@
 		0DABE32B1A1306FB00C64FB7 /* HotSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotSecondViewController.m; sourceTree = "<group>"; };
 		0DACD7D91A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewTableViewCell.h; sourceTree = "<group>"; };
 		0DACD7DA1A0CB0E300F6E025 /* HotKindFirstViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewTableViewCell.m; sourceTree = "<group>"; };
+		0DCA61141A32DB3000FC86DB /* close_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_btn.png; sourceTree = "<group>"; };
+		0DCA61161A32DBE200FC86DB /* choose_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose_btn.png; sourceTree = "<group>"; };
+		0DCA61181A32DDED00FC86DB /* arrow_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_btn.png; sourceTree = "<group>"; };
 		0DF9FEF61A11F96600E8BE24 /* HotKindFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotKindFirstViewController.h; sourceTree = "<group>"; };
 		0DF9FEF71A11F96600E8BE24 /* HotKindFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotKindFirstViewController.m; sourceTree = "<group>"; };
 		6114F7A21A187DFE007DAC39 /* AddBangDingMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBangDingMobileViewController.h; sourceTree = "<group>"; };
@@ -2548,15 +2554,18 @@
 				6114F7AE1A189E25007DAC39 /* WelCome */,
 				6140E7C51A01DE4C00E349E3 /* hotModelSelected */,
 				61B710F419FF67A1001CC3BD /* 首页 */,
-				61DF89F519FB9D4900D47430 /* HomeSelect.png */,
 				61DF89EE19FB9CD700D47430 /* HomeUnSelect.png */,
 				8B7549411A26FB2E00271985 /* close.png */,
+				61DF89F519FB9D4900D47430 /* HomeSelect.png */,
+				0DCA61161A32DBE200FC86DB /* choose_btn.png */,
 				61828B5F1A247A790028AB4C /* back.png */,
 				8BCAFD3E1A281D6B005702FD /* YellowDownArrow.png */,
 				8B7549431A27013600271985 /* chatBtn.png */,
+				0DCA61141A32DB3000FC86DB /* close_btn.png */,
 				8BB350981A2425AC00E76495 /* choose.png */,
 				8B7549451A270A4B00271985 /* shopPic.png */,
 				8B1F9D9D1A2819060001E45F /* color_select.png */,
+				0DCA61181A32DDED00FC86DB /* arrow_btn.png */,
 				8BB350991A2425AC00E76495 /* unchoose.png */,
 				8B3149E01A20522B00B7DAFC /* question.png */,
 				8B8B98631A2F250C00697375 /* shoppingCar.png */,
@@ -4640,6 +4649,7 @@
 				8BA7C0AD1A10A85500758B0F /* 困了.png in Resources */,
 				61DF89E919FB9AD000D47430 /* classifySelect.png in Resources */,
 				8BA7C09A1A10A85500758B0F /* 太极@2x.png in Resources */,
+				0DCA61171A32DBE200FC86DB /* choose_btn.png in Resources */,
 				8BCC0C8F1A1F7586004F0EF8 /* homeOrder.png in Resources */,
 				61B710D119FF3B53001CC3BD /* OneStepCell.xib in Resources */,
 				8BA7C0CD1A10A85500758B0F /* 心碎.png in Resources */,
@@ -4696,6 +4706,7 @@
 				61DF89F119FB9CD700D47430 /* classifyUnSelect.png in Resources */,
 				8BA7C0801A10A85500758B0F /* 傲慢@2x.png in Resources */,
 				8BA7C0841A10A85500758B0F /* 冷汗@2x.png in Resources */,
+				0DCA61191A32DDED00FC86DB /* arrow_btn.png in Resources */,
 				61B710EC19FF3B53001CC3BD /* ChooseReceiveAddressViewController.xib in Resources */,
 				8BA7C12C1A10A85500758B0F /* 跳跳@2x.png in Resources */,
 				61CCBCE519CFFF150008A46B /* Icon.png in Resources */,
@@ -4713,6 +4724,7 @@
 				8B8B985B1A2F165500697375 /* 热门型号.png in Resources */,
 				8BA7C0CB1A10A85500758B0F /* 微笑.png in Resources */,
 				6166ED5519D2B06800D9A219 /* addAddress.png in Resources */,
+				0DCA61151A32DB3000FC86DB /* close_btn.png in Resources */,
 				8BA7C1471A10A85500758B0F /* 返回.png in Resources */,
 				61CCBCE119CFFF150008A46B /* Icon-40@2x.png in Resources */,
 				8B49698E1A1DB05E008C75DF /* board_emoji@2x.png in Resources */,

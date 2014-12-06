@@ -107,6 +107,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
+//        最后一行分割线
         if (indexPath.row == ListArray.count)
         {
             UIView *lineView = [[UIView alloc] init];
@@ -148,12 +149,13 @@
 
 
 
-
+//  去掉没有数据的部分分割线
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     return [UIView new];
 }
 
+//  去掉没有数据的部分分割线
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.1;

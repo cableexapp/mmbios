@@ -128,13 +128,11 @@
 -(void)shadow
 {
     backView.hidden = YES;
-//    self.selectView.hidden = YES;
     _testSubTableView.hidden = YES;
     _testTableView.userInteractionEnabled = YES;
     self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
     self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);
-    [_testSubTableView reloadData];
-
+    self.opend = NO;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -319,8 +317,9 @@ if ( _opend )
     {
         self.opend = NO;
         backView.hidden = YES;
-        // 2.动画
-        [UIView animateWithDuration:0.5 animations:^{
+        
+//     2.动画效果
+        [UIView animateWithDuration:0.3 animations:^{
          self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
         }];
 
@@ -337,7 +336,8 @@ if ( _opend )
         {
          _testSubTableView.hidden = YES;
         }
-        [UIView animateWithDuration:0.5 animations:^{
+//        动画效果
+        [UIView animateWithDuration:0.3 animations:^{
             self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);  //三角按钮旋转
         }];
         _testSubTableView.hidden = NO;

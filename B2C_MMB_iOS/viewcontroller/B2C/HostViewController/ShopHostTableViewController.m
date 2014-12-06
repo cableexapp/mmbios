@@ -30,6 +30,7 @@
     BOOL _reloading;
     
     NSArray *scoreArray;
+    UIView * shadowView;
     
     NSArray *typeArray;
     
@@ -60,6 +61,7 @@
     return self;
 }
 
+// 返回时调用此方法
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
@@ -73,6 +75,9 @@
     {
         [moreCell stopAnimation];
     }
+    
+    //   点击调转控制器事件
+    [shadowView setHidden:YES];
     if(preVC)
     {
         [preVC.view removeFromSuperview];
@@ -86,6 +91,7 @@
         [preView removeFromSuperview];
         preView = nil;
     }
+    
 }
 
 - (void)viewDidLoad
@@ -133,8 +139,10 @@
     return  YES;
 }
 
+//   点击调转控制器事件
 - (void) preViewTap
 {
+    [shadowView setHidden:YES];
     if(preVC)
     {
         [preVC.view removeFromSuperview];
@@ -460,47 +468,42 @@
     else
     {
         intPage = 1;
+        
 
         preView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
         [preView setBackgroundColor:[UIColor colorWithRed:203.0/255.0 green:203.0/255.0 blue:203.0/255.0 alpha:0.6]];
         [self.view.window addSubview:preView];
-//        [self.view insertSubview:preView aboveSubview:self.tableView];
-        
-       
         
         preVC = [[ShopHostPreTableViewController alloc] initWithScoreArray:scoreArray WithListArray:typeArray WithTitle:_myTitle];
-        
-        NSLog(@"typeArray = %@",typeArray);
-        NSLog(@"_myTitle = %@",_myTitle);
-    
         preVC.delegate = self;
+        
         [preVC.view setFrame:CGRectMake(preView.frame.size.width-200, 0, 200, preView.frame.size.height)];
-        
-        
-
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(preViewTap)];
         [tap setDelegate:self];
         [self.view addGestureRecognizer:tap];
-
-        
         [preView addSubview:preVC.view];
         [self addChildViewController:preVC];
         
         UILabel *label = [[UILabel alloc] init];
         label.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-//        label.text = _myTitle;
         label.text = [NSString stringWithFormat:@"   %@",_myTitle];
         label.frame = CGRectMake(preView.frame.size.width-200, 0, 200, 50);
         [preView insertSubview:label aboveSubview:preVC.view];
-        
+ 
+        // 点击阴影部分时关闭视图
+        shadowView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 120, 416)];
+        [shadowView setBackgroundColor:[UIColor clearColor]];
+        [self.view.window addSubview:shadowView];
         UITapGestureRecognizer *closeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closePreViewTap)];
         [closeTap setDelegate:self];
-        [preView addGestureRecognizer:closeTap];
+        [shadowView addGestureRecognizer:closeTap];
     }
 }
 
+//   点击调转控制器事件
 -(void)closePreViewTap
 {
+    [shadowView setHidden:YES];
     if(preVC)
     {
         [preVC.view removeFromSuperview];

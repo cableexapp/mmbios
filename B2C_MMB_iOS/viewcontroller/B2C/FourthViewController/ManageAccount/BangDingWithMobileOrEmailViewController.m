@@ -92,15 +92,15 @@
     
     [self.tf_getValidate setDelegate:self];
     
-    [_chooseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _chooseBtn.frame = CGRectMake(166, 15, 105,68);
-    [_chooseBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    _chooseBtn.backgroundColor = [UIColor colorWithRed:4.0/255.0 green:94.0/255.0 blue:253.0/255.0 alpha:1.0];
-    _chooseBtn.layer.cornerRadius = 5.0f;
-    
     _getValidateBtn.layer.cornerRadius = 5;
     _getValidateBtn.layer.masksToBounds = YES;
     [_getValidateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [_chooseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _chooseBtn.frame = CGRectMake(_getValidateBtn.frame.origin.x, (_getValidateBtn.frame.origin.y-_getValidateBtn.frame.size.height-18)                            , _getValidateBtn.frame.size.width,_getValidateBtn.frame.size.height+5);
+    [_chooseBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        _chooseBtn.backgroundColor = [UIColor colorWithRed:4.0/255.0 green:94.0/255.0 blue:253.0/255.0 alpha:1.0];
+    _chooseBtn.layer.cornerRadius = 5.0f;
    
     
     UITapGestureRecognizer *TAP = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
@@ -222,7 +222,7 @@
     
     [self.tf_getValidate setFrame:CGRectMake(self.tf_getValidate.frame.origin.x, 122, self.tf_getValidate.frame.size.width, 38)];
     
-   
+    _chooseBtn.frame = CGRectMake(_getValidateBtn.frame.origin.x, (_getValidateBtn.frame.origin.y-_getValidateBtn.frame.size.height-20)                            , _getValidateBtn.frame.size.width,_getValidateBtn.frame.size.height);
 
     [self.chooseBtn setTitle:@"已验证手机" forState:UIControlStateNormal];
 
@@ -258,6 +258,8 @@
     [self.showLabel setFrame:CGRectMake(self.showLabel.frame.origin.x, 67, self.showLabel.frame.size.width, 40)];
     
     [self.getValidateBtn setFrame:CGRectMake(self.getValidateBtn.frame.origin.x, 67, self.getValidateBtn.frame.size.width, 40)];
+    
+     _chooseBtn.frame = CGRectMake(_getValidateBtn.frame.origin.x, (_getValidateBtn.frame.origin.y-_getValidateBtn.frame.size.height-20)                            , _getValidateBtn.frame.size.width,_getValidateBtn.frame.size.height);
     
     [self.secondLine setFrame:CGRectMake(self.secondLine.frame.origin.x, 113, self.secondLine.frame.size.width, 0)];
     

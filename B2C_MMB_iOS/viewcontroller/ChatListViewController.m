@@ -263,7 +263,6 @@ int flagPage = 0;
 {
     [self.memberTableView removeFromSuperview];
     self.tempArray = memberList.object;
-//    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithObjects:<#(NSArray *)#> forKeys:<#(NSArray *)#>];
     
     self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
     self.memberTableView.dataSource = self;
@@ -393,7 +392,9 @@ int flagPage = 0;
         [cell addSubview:groupView];
         
         UILabel *cellText = [[UILabel alloc] initWithFrame:CGRectMake(55, 5, self.view.frame.size.width-55, 50)];
-        cellText.text = [[[NSString stringWithFormat:@"%@",self.tempArray[indexPath.row]] componentsSeparatedByString:@"@"] objectAtIndex:0];
+        NSString *searvice_name = [[[NSString stringWithFormat:@"%@",self.tempArray[indexPath.row]] componentsSeparatedByString:@"@"] objectAtIndex:0];
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"买卖宝客服",searvice_name, nil];
+        cellText.text = [dictionary objectForKey:searvice_name];
         cellText.font = [UIFont systemFontOfSize:16];
         cellText.backgroundColor = [UIColor clearColor];
         [cell addSubview:cellText];

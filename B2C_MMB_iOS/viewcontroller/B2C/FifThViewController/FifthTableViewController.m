@@ -65,6 +65,7 @@
 //        
 //    }
     isPopShow = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -79,7 +80,10 @@
         [self.logOutBtn setHidden:NO];
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    self.tableView.scrollEnabled = YES;
     isPopShow = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 //
 }
 
@@ -103,8 +107,7 @@
     self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 60);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
+    
 }
 
 - (void)popShopCar_more:(NSNotification *)sender
@@ -165,7 +168,7 @@
     else
     {
         isPopShow = YES;
-        
+        self.tableView.scrollEnabled = YES;
     }
 }
 

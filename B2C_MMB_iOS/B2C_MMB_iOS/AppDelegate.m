@@ -473,7 +473,7 @@ NSString *strUserId = @"";
     [xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
     // 域名和端口
-    [xmppStream setHostName:@"117.79.154.178"];
+    [xmppStream setHostName:@"58.215.50.9"];
     [xmppStream setHostPort:5222];
 }
 
@@ -488,7 +488,7 @@ NSString *strUserId = @"";
     isRegister = YES;
     NSError *error;
     NSString *UUID = [PhoneHelper getDeviceId];
-    NSString *hostName = @"117.79.154.178";
+    NSString *hostName = @"58.215.50.9";
     NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",UUID,hostName];
     if ([xmppStream isConnected])
     {
@@ -614,7 +614,7 @@ NSString *strUserId = @"";
     NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
     [iq addAttributeWithName:@"from" stringValue:self.personName];
     [iq addAttributeWithName:@"id" stringValue:@"disco2"];
-    [iq addAttributeWithName:@"to"stringValue:@"workgroup.fgame.com"];
+    [iq addAttributeWithName:@"to"stringValue:@"workgroup.cableex.com"];
     [iq addAttributeWithName:@"type"stringValue:@"get"];
     NSXMLElement *query = [NSXMLElement elementWithName:@"query"];
     [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
@@ -627,7 +627,7 @@ NSString *strUserId = @"";
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-    //    NSLog(@"[IQ description] = %@\n\n",[iq description]);
+//        NSLog(@"[IQ description] = %@\n\n",[iq description]);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])
@@ -644,6 +644,10 @@ NSString *strUserId = @"";
                 }
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"memberGroupName" object:self.roster];
             }
+        }
+        if (self.roster.count == 0)
+        {
+            [self queryRoster];
         }
     }
     return NO;

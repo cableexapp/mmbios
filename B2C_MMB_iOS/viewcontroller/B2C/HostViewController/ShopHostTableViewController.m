@@ -30,6 +30,7 @@
     BOOL _reloading;
     
     NSArray *scoreArray;
+    UIView * shadowView;
     
     NSArray *typeArray;
     
@@ -60,6 +61,7 @@
     return self;
 }
 
+// 返回时调用此方法
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
@@ -73,6 +75,23 @@
     {
         [moreCell stopAnimation];
     }
+    
+    //   点击调转控制器事件
+    [shadowView setHidden:YES];
+    if(preVC)
+    {
+        [preVC.view removeFromSuperview];
+        preVC.view = nil;
+        
+        [preVC removeFromParentViewController];
+        preVC = nil;
+    }
+    if(preView)
+    {
+        [preView removeFromSuperview];
+        preView = nil;
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -87,8 +106,7 @@
     intPage = 1;
     
     dataArray = [[NSMutableArray alloc] init];
-    
-    //ADD REFRESH VIEW
+        //ADD REFRESH VIEW
     _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, 320, 300)];
     [self.refreshView setDelegate:self];
     [self.tableView addSubview:self.refreshView];
@@ -121,8 +139,10 @@
     return  YES;
 }
 
+//   点击调转控制器事件
 - (void) preViewTap
 {
+    [shadowView setHidden:YES];
     if(preVC)
     {
         [preVC.view removeFromSuperview];
@@ -196,10 +216,7 @@
             }
         }
     }
-//    else
-//    {
         return 43;
-//    }
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -291,25 +308,151 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    return 170;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-    [headView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [headView setBackgroundColor:[UIColor whiteColor]];
     
-    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 250, 40)];
-    [headLabel setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-    [headLabel setText:[NSString stringWithFormat:@"   %@",_myTitle]];
-    [headLabel setTextColor:MYCOLOR];
-    [headLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    UIView *sepView = [[UIView alloc] initWithFrame:CGRectMake(0, 160, 320, 10)];
+    [sepView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    [headView addSubview:sepView];
+    UIView *sepView_1 = [[UIView alloc] initWithFrame:CGRectMake(0, 60, 320, 1)];
+    [sepView_1 setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    [headView addSubview:sepView_1];
+    UIView *sepView_2 = [[UIView alloc] initWithFrame:CGRectMake(230, 10, 1, 40)];
+    [sepView_2 setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    [headView addSubview:sepView_2];
+    
+    UIView *sepView_3 = [[UIView alloc] initWithFrame:CGRectMake(80, 70, 1, 40)];
+    [sepView_3 setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    [headView addSubview:sepView_3];
+    UIView *sepView_4 = [[UIView alloc] initWithFrame:CGRectMake(160, 70, 1, 40)];
+    [sepView_4 setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    [headView addSubview:sepView_4];
+    UIView *sepView_5 = [[UIView alloc] initWithFrame:CGRectMake(240, 70, 1, 40)];
+    [sepView_5 setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    [headView addSubview:sepView_5];
+    
+    
+    UILabel *scoreLabel =[[UILabel alloc] initWithFrame:CGRectMake(245, 0, 80, 30)];
+    [scoreLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    [scoreLabel setText:@"综合评分"];
+    [scoreLabel setTextColor:[UIColor grayColor]];
+    [headView addSubview:scoreLabel];
+    UILabel *scoreLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(250, 22, 30, 30)];
+    [scoreLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
+    [scoreLabel_1 setText:@"5.0"];
+    [scoreLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
+    [headView addSubview:scoreLabel_1];
+    UIButton *scoreLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [scoreLabel_2 setFrame:CGRectMake(275, 25, 25, 25)];
+    [scoreLabel_2 setBackgroundColor:[UIColor orangeColor]];
+    [scoreLabel_2 setTitle:@"高" forState:UIControlStateNormal];
+    [scoreLabel_2.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [scoreLabel_2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [scoreLabel_2.layer setCornerRadius:5.0]; //设置矩圆角半径
+    [headView addSubview:scoreLabel_2];
+    
+    UILabel *describeLabel =[[UILabel alloc] initWithFrame:CGRectMake(10, 60, 80, 30)];
+    [describeLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    [describeLabel setText:@"描述相符"];
+    [describeLabel setTextColor:[UIColor grayColor]];
+    [headView addSubview:describeLabel];
+    UILabel *describeLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(15, 82, 30, 30)];
+    [describeLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
+    [describeLabel_1 setText:@"5.0"];
+    [describeLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
+    [headView addSubview:describeLabel_1];
+    UIButton *describeLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [describeLabel_2 setFrame:CGRectMake(40, 85, 25, 25)];
+    [describeLabel_2 setBackgroundColor:[UIColor orangeColor]];
+    [describeLabel_2 setTitle:@"高" forState:UIControlStateNormal];
+    [describeLabel_2.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [describeLabel_2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [describeLabel_2.layer setCornerRadius:5.0]; //设置矩圆角半径
+    [headView addSubview:describeLabel_2];
+    
+    UILabel *serviceLabel =[[UILabel alloc] initWithFrame:CGRectMake(90, 60, 80, 30)];
+    [serviceLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    [serviceLabel setText:@"服务态度"];
+    [serviceLabel setTextColor:[UIColor grayColor]];
+    [headView addSubview:serviceLabel];
+    UILabel *serviceLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(95, 82, 30, 30)];
+    [serviceLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
+    [serviceLabel_1 setText:@"5.0"];
+    [serviceLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
+    [headView addSubview:serviceLabel_1];
+    UIButton *serviceLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [serviceLabel_2 setFrame:CGRectMake(120, 85, 25, 25)];
+    [serviceLabel_2 setBackgroundColor:[UIColor orangeColor]];
+    [serviceLabel_2 setTitle:@"高" forState:UIControlStateNormal];
+    [serviceLabel_2.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [serviceLabel_2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [serviceLabel_2.layer setCornerRadius:5.0]; //设置矩圆角半径
+    [headView addSubview:serviceLabel_2];
+    
+    UILabel *deliveryLabel =[[UILabel alloc] initWithFrame:CGRectMake(170, 60, 80, 30)];
+    [deliveryLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    [deliveryLabel setText:@"发货速度"];
+    [deliveryLabel setTextColor:[UIColor grayColor]];
+    [headView addSubview:deliveryLabel];
+    UILabel *deliveryLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(175, 82, 30, 30)];
+    [deliveryLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
+    [deliveryLabel_1 setText:@"5.0"];
+    [deliveryLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
+    [headView addSubview:deliveryLabel_1];
+    UIButton *deliveryLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [deliveryLabel_2 setFrame:CGRectMake(200, 85, 25, 25)];
+    [deliveryLabel_2 setBackgroundColor:[UIColor orangeColor]];
+    [deliveryLabel_2 setTitle:@"高" forState:UIControlStateNormal];
+    [deliveryLabel_2.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [deliveryLabel_2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [deliveryLabel_2.layer setCornerRadius:5.0]; //设置矩圆角半径
+    [headView addSubview:deliveryLabel_2];
+    
+    UILabel *qualityLabel =[[UILabel alloc] initWithFrame:CGRectMake(250, 60, 80, 30)];
+    [qualityLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    [qualityLabel setText:@"商品质量"];
+    [qualityLabel setTextColor:[UIColor grayColor]];
+    [headView addSubview:qualityLabel];
+    UILabel *qualityLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(255, 82, 30, 30)];
+    [qualityLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
+    [qualityLabel_1 setText:@"5.0"];
+    [qualityLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
+    [headView addSubview:qualityLabel_1];
+    UIButton *qualityLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    [qualityLabel_2 setFrame:CGRectMake(280, 85, 25, 25)];
+    [qualityLabel_2 setBackgroundColor:[UIColor orangeColor]];
+    [qualityLabel_2 setTitle:@"高" forState:UIControlStateNormal];
+    [qualityLabel_2.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [qualityLabel_2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [qualityLabel_2.layer setCornerRadius:5.0]; //设置矩圆角半径
+    [headView addSubview:qualityLabel_2];
+    
+    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 250, 30)];
+    [headLabel setText:[NSString stringWithFormat:@"%@",_myTitle]];
+    [headLabel setTextColor:[UIColor blackColor]];
+    [headLabel setFont:[UIFont boldSystemFontOfSize:18]];
     [headView addSubview:headLabel];
+    UILabel *headLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(8, 25, 250, 30)];
+    [headLabel_1 setText:[NSString stringWithFormat:@"(公司：%@)",_myTitle]];
+    [headLabel_1 setTextColor:[UIColor grayColor]];
+    [headLabel_1 setFont:[UIFont boldSystemFontOfSize:13]];
+    [headView addSubview:headLabel_1];
     
     UIButton *preBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [preBtn setFrame:CGRectMake(320-40, 5, 30, 30)];
-    [preBtn setBackgroundImage:[UIImage imageNamed:@"Set.png"] forState:UIControlStateNormal];
+    [preBtn setFrame:CGRectMake(110, 125, 100, 25)];
+    [preBtn setTitle:@"查看用途分类" forState:UIControlStateNormal];
+    [preBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [preBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [preBtn.layer setCornerRadius:5.0]; //设置矩圆角半径
+    [preBtn.layer setBorderWidth:1.0];   //边框宽度
+     preBtn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
     [preBtn addTarget:self action:@selector(preBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [preBtn setBackgroundColor:[UIColor clearColor]];
     [headView addSubview:preBtn];
     
     return headView;
@@ -325,25 +468,62 @@
     else
     {
         intPage = 1;
+        
 
-        preView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 320, ScreenHeight)];
+        preView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
         [preView setBackgroundColor:[UIColor colorWithRed:203.0/255.0 green:203.0/255.0 blue:203.0/255.0 alpha:0.6]];
         [self.view.window addSubview:preView];
         
         preVC = [[ShopHostPreTableViewController alloc] initWithScoreArray:scoreArray WithListArray:typeArray WithTitle:_myTitle];
         preVC.delegate = self;
+        
         [preVC.view setFrame:CGRectMake(preView.frame.size.width-200, 0, 200, preView.frame.size.height)];
-
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(preViewTap)];
         [tap setDelegate:self];
         [self.view addGestureRecognizer:tap];
-
-        
         [preView addSubview:preVC.view];
         [self addChildViewController:preVC];
+        
+        UILabel *label = [[UILabel alloc] init];
+        label.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        label.text = [NSString stringWithFormat:@"   %@",_myTitle];
+        label.frame = CGRectMake(preView.frame.size.width-200, 0, 200, 50);
+        [preView insertSubview:label aboveSubview:preVC.view];
+ 
+        // 点击阴影部分时关闭视图
+        shadowView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 120, 416)];
+        [shadowView setBackgroundColor:[UIColor clearColor]];
+        [self.view.window addSubview:shadowView];
+        UITapGestureRecognizer *closeTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closePreViewTap)];
+        [closeTap setDelegate:self];
+        [shadowView addGestureRecognizer:closeTap];
     }
 }
 
+//   点击调转控制器事件
+-(void)closePreViewTap
+{
+    [shadowView setHidden:YES];
+    if(preVC)
+    {
+        [preVC.view removeFromSuperview];
+        preVC.view = nil;
+        
+        [preVC removeFromParentViewController];
+        preVC = nil;
+    }
+    if(preView)
+    {
+        [preView removeFromSuperview];
+        preView = nil;
+    }
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    preView.hidden = YES;
+    
+}
 
 
 #pragma mark - Table view data source

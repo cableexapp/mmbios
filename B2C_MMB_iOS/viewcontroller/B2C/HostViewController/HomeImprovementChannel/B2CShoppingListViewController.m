@@ -793,9 +793,11 @@
     {
         return;
     }
+    [self setHidesBottomBarWhenPushed:YES];
     NSString *productId = [[dataArray objectAtIndex:indexPath.row] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     [self.navigationController pushViewController:detail animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

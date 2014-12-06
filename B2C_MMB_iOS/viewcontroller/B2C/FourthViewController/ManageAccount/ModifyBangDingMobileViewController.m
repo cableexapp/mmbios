@@ -91,6 +91,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改绑定手机"];
     self.navigationItem.titleView = top;
     
+    self.view.backgroundColor = [UIColor whiteColor];
     
     self.validateBtn.layer.borderColor = MYCOLOR.CGColor;
     self.validateBtn.layer.borderWidth = 1.0f;

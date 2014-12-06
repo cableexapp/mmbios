@@ -181,7 +181,7 @@
         [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         upBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
         upBtn.layer.cornerRadius = 5.0f;
-        [upBtn setFrame:CGRectMake(ScreenWidth-120, 15, 100, 30)];
+        [upBtn setFrame:CGRectMake(ScreenWidth-140, 10, 120, 40)];
         [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [buttomView addSubview:upBtn];
     }
@@ -216,7 +216,7 @@
     {
         tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-buttomView.frame.size.height-64)];
         [tv setDataSource:self];
-        tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+//        tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
         [tv setDelegate:self];
         [tv setShowsHorizontalScrollIndicator:NO];
         [tv setShowsVerticalScrollIndicator:NO];

@@ -391,6 +391,8 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
+        NSLog(@"dicRespon------ = %@",[dicRespon objectForKey:@"items"]);
+        
         scoreNum = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue] +[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
         NSLog(@"scoreNum = %d",scoreNum);
         
@@ -875,15 +877,15 @@
                 [customCell.barndLabel setText:detailData.goodsBrand];
                 [customCell.kindLabel setText:detailData.goodsModel];
                 [customCell.voltageLabel setText:detailData.goodsVoltage];
-                [customCell.surfaceLabel setText:detailData.spec];
+                [customCell.surfaceLabel setText:[NSString stringWithFormat:@"%@平方",detailData.spec]];
                 [customCell.useLabel setText:detailData.use];
                 [customCell.threadLabel setText:detailData.coreNum];
                 [customCell.standLabel setText:detailData.standard];
                 [customCell.unitLabel setText:detailData.unit];
-                [customCell.thicknessLabel setText:detailData.insulationThickness];
-                [customCell.lengthLabel setText:detailData.avgLength];
-                [customCell.topLabel setText:detailData.avgDiameter];
-                [customCell.weightLabel setText:detailData.weight];
+                [customCell.thicknessLabel setText:[NSString stringWithFormat:@"%@mm",detailData.insulationThickness]];
+                [customCell.lengthLabel setText:[NSString stringWithFormat:@"%@米",detailData.avgLength]];
+                [customCell.topLabel setText:[NSString stringWithFormat:@"%@mm",detailData.avgDiameter]];
+                [customCell.weightLabel setText:[NSString stringWithFormat:@"%@KG",detailData.weight]];
                 [customCell.contentView setBackgroundColor:[UIColor whiteColor]];
                 
                 UIView *lineView = [[UIView alloc] init];

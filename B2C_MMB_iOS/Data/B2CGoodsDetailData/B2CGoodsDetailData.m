@@ -108,9 +108,7 @@
     }
     
     _isShowparam = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isShowparam"]];
-    
     _phoneDescribe = [NSString stringWithFormat:@"%@",[dic objectForKey:@"phoneDescribe"]];
-
     _productPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productPrice"]];
     
     _goodsName = [dic objectForKey:@"productName"];

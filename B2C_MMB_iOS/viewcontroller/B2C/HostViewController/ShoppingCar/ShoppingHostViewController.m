@@ -335,7 +335,6 @@
     UITapGestureRecognizer *tap = (UITapGestureRecognizer *) sender;
     int tag = [[tap view] tag]-10;
     NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:tag] myProductId]];
-    NSLog(@"s = %@",s);
     [self setHidesBottomBarWhenPushed:YES];
 //    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];

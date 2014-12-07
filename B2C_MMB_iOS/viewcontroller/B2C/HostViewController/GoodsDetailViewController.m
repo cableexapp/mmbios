@@ -1163,26 +1163,26 @@
     
     if(btn.tag == 1000)
     {
-        if(btn.selected == YES)
-        {
+//        if(btn.selected == YES)
+//        {
             showCell = YES;
-            
-        }
-        else
-        {
-            showCell = NO;
-        }
+//            
+//        }
+//        else
+//        {
+//            showCell = NO;
+//        }
     }
     if(btn.tag == 1001)
     {
-        if(btn.selected == YES)
-        {
+//        if(btn.selected == YES)
+//        {
             showCell = NO;
-        }
-        else
-        {
-            showCell = YES;
-        }
+//        }
+//        else
+//        {
+//            showCell = YES;
+//        }
     }
     
     //    for(UIButton *btn in cellBtnArray)

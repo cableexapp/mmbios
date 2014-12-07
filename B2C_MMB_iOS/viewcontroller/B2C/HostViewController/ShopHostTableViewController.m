@@ -253,7 +253,6 @@
                 scoreArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"score"]];
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
-                NSLog(@"total = %d",intTotal);
                 if(intTotal == 0)
                 {
                     [moreCell noDataAnimation];

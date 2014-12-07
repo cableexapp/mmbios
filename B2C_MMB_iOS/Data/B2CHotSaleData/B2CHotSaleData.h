@@ -18,6 +18,7 @@
 
 @property (strong,nonatomic) NSString *productPrice;
 
+@property (strong,nonatomic) NSString *productName;
 
 - (id) initWithDic:(NSDictionary *) dic;
 

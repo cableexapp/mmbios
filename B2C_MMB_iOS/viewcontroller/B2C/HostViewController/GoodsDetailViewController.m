@@ -491,6 +491,7 @@
     {
         return 9;
     }
+    NSLog(@"detailData.ctems.count = %d",detailData.ctems.count);
     return 8 + detailData.ctems.count;
 }
 
@@ -503,7 +504,7 @@
     }
     if(indexPath.row == 1)
     {
-        if(detailData.goodsName.length == 0)
+        if([DCFCustomExtra validateString:detailData.goodsName] == NO)
         {
             return 0;
         }
@@ -633,7 +634,7 @@
             }
         }
     }
-    else
+    else if(detailData.ctems.count != 0)
     {
         if(indexPath.row >= 6 && indexPath.row <detailData.ctems.count+6)
         {
@@ -643,21 +644,18 @@
             }
             else
             {
-                NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
                 
-                if(s4.length == 0)
+                NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
+                if([DCFCustomExtra validateString:s4] == NO)
                 {
                     return 0;
                 }
                 else
                 {
                     
-                    CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT)];
-                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, size_4.height)];
-                    [contentLabel setText:s4];
-                    [contentLabel setFont:[UIFont systemFontOfSize:12]];
-                    [contentLabel setNumberOfLines:0];
-                    return contentLabel.frame.size.height;
+                    CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+
+                    return size_4.height+36;
                 }
                 
             }
@@ -970,60 +968,67 @@
                 }
                 else
                 {
-                    NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
-                    if(s1.length != 0)
+                    NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
+                    if([DCFCustomExtra validateString:s4] == YES)
                     {
-                        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s1 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width+10, 15)];
-                        [nameLabel setText:s1];
-                        [nameLabel setTextAlignment:NSTextAlignmentLeft];
-                        [nameLabel setFont:[UIFont systemFontOfSize:10]];
-                        [nameLabel setTextColor:[UIColor blackColor]];
-                        [cell.contentView addSubview:nameLabel];
-                        
-                        NSString *month = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"month"];
-                        NSString *finalMonth = [NSString stringWithFormat:@"%d",[month intValue] + 1];
-                        
-                        NSString *date = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"date"];
-                        
-                        NSString *s2 = [NSString stringWithFormat:@"评价日期:%@.%@",finalMonth,date];
-                        CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s2 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 30, 5, size_2.width, 15)];
-                        [dateLabel setTextAlignment:NSTextAlignmentCenter];
-                        [dateLabel setText:s2];
-                        [dateLabel setFont:[UIFont systemFontOfSize:10]];
-                        [cell.contentView addSubview:dateLabel];
-                        
-                        NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"colorName"];
-                        NSString *s3 = [NSString stringWithFormat:@"颜色分类:%@",color];
-                        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s3 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                        UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 5, size_3.width, 15)];
-                        [colorLabel setText:s3];
-                        [colorLabel setTextAlignment:NSTextAlignmentLeft];
-                        [colorLabel setFont:[UIFont systemFontOfSize:10]];
-                        [cell.contentView addSubview:colorLabel];
-                        
-                        NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"judgementContent"];
-                        CGSize size_4;
-                        if([DCFCustomExtra validateString:s4] == NO)
-                        {
-                            size_4 = CGSizeMake(30, 30);
-                        }
-                        else
-                        {
-                            size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(320, MAXFLOAT)];
-                        }
-                        UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, ScreenWidth-10, size_4.height)];
-                        [contentLabel setTextAlignment:NSTextAlignmentLeft];
-                        [contentLabel setText:s4];
-                        [contentLabel setFont:[UIFont systemFontOfSize:12]];
-                        [contentLabel setNumberOfLines:0];
-                        [cell.contentView addSubview:contentLabel];
-                        
-                        UIView *lineView = [[UIView alloc] init];
-                        lineView.frame = CGRectMake(10, cell.frame.size.height-0.5,self.view.frame.size.width-20, 0.5);
-                        lineView.backgroundColor = [UIColor lightGrayColor];
-                        [cell.contentView addSubview:lineView];
+        
+                            CGSize size_4;
+
+                            size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                            
+                            UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 35, ScreenWidth-20, size_4.height)];
+                            [contentLabel setTextAlignment:NSTextAlignmentLeft];
+                            [contentLabel setText:s4];
+                            [contentLabel setFont:[UIFont systemFontOfSize:12]];
+                            [contentLabel setNumberOfLines:0];
+                            [cell.contentView addSubview:contentLabel];
+                            
+                            NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
+                            
+                            CGSize size_1;
+                            if([DCFCustomExtra validateString:s1] == NO)
+                            {
+                                size_1 = CGSizeMake(30, 30);
+                            }
+                            else
+                            {
+                                size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s1 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                            }
+                            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width+10, 30)];
+                            [nameLabel setText:s1];
+                            [nameLabel setTextAlignment:NSTextAlignmentLeft];
+                            [nameLabel setFont:[UIFont systemFontOfSize:10]];
+                            [nameLabel setTextColor:[UIColor blackColor]];
+                            [cell.contentView addSubview:nameLabel];
+                            
+                            NSString *month = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"month"];
+                            NSString *finalMonth = [NSString stringWithFormat:@"%d",[month intValue] + 1];
+                            
+                            NSString *date = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"date"];
+                            
+                            NSString *s2 = [NSString stringWithFormat:@"评价日期:%@.%@",finalMonth,date];
+                            CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s2 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                            UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 30, 5, size_2.width, 30)];
+                            [dateLabel setTextAlignment:NSTextAlignmentCenter];
+                            [dateLabel setText:s2];
+                            [dateLabel setFont:[UIFont systemFontOfSize:10]];
+                            [cell.contentView addSubview:dateLabel];
+                            
+                            NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"colorName"];
+                            NSString *s3 = [NSString stringWithFormat:@"颜色分类:%@",color];
+                            CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s3 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                            UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 5, size_3.width, 30)];
+                            [colorLabel setText:s3];
+                            [colorLabel setTextAlignment:NSTextAlignmentLeft];
+                            [colorLabel setFont:[UIFont systemFontOfSize:10]];
+                            [cell.contentView addSubview:colorLabel];
+                            
+                            
+                            
+                            UIView *lineView = [[UIView alloc] init];
+                            lineView.frame = CGRectMake(10, contentLabel.frame.origin.y+contentLabel.frame.size.height,ScreenWidth-20, 1);
+                            lineView.backgroundColor = [UIColor lightGrayColor];
+                            [cell.contentView addSubview:lineView];
                     }
                     else
                     {
@@ -1043,7 +1048,7 @@
                     return  [self loadCustomCell:indexPath WithTableView:tableView];
                 }
             }
-            else
+            else if(indexPath.row > detailData.ctems.count + 6)
             {
                 return   [self loadShopName:indexPath WithTableView:tableView];
             }

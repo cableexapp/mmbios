@@ -158,7 +158,7 @@
             {
                 B2CHotSaleData *data = (B2CHotSaleData *)[dataArray objectAtIndex:i];
                 [moneyArray addObject:data.productPrice];
-                [contentArray addObject:data.productTitle];
+                [contentArray addObject:data.productName];
                 [arr addObject:data.p1Path];
             }
         }
@@ -206,7 +206,7 @@
 //                size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[contentArray objectAtIndex:i] WithSize:CGSizeMake(svImageView.frame.size.width, MAXFLOAT)];//获取视图大小
 //            }
             
-            [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height, svImageView.frame.size.width, 35)];  //设置该cell的高度
+            [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height, svImageView.frame.size.width, 40)];  //设置该cell的高度
             [contentLabel setFont:[UIFont systemFontOfSize:11]];
             [contentLabel setText:[contentArray objectAtIndex:i]];
             [contentLabel setBackgroundColor:[UIColor clearColor]];
@@ -335,6 +335,7 @@
     UITapGestureRecognizer *tap = (UITapGestureRecognizer *) sender;
     int tag = [[tap view] tag]-10;
     NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:tag] myProductId]];
+    NSLog(@"s = %@",s);
     [self setHidesBottomBarWhenPushed:YES];
 //    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];

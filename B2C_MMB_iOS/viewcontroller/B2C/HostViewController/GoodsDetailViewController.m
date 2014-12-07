@@ -415,6 +415,7 @@
             [DCFStringUtil showNotice:msg];
             num = @"0";
             itemid = @"";
+            [self loadShopCarCount];
         }
         else
         {
@@ -452,6 +453,7 @@
             else
             {
                 [DCFStringUtil showNotice:msg];
+//                [self loadShopCarCount];
             }
         }
     }

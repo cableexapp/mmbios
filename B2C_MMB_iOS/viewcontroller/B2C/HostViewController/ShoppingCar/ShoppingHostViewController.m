@@ -72,6 +72,24 @@
             [view setHidden:YES];
         }
     }
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
+    [rightBtn setFrame:CGRectMake(0, 5, 37, 34)];
+    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    countLabel = [[UILabel alloc] init];
+    countLabel.frame = CGRectMake(22, 0, 18, 18);
+    countLabel.layer.borderWidth = 1;
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.font = [UIFont systemFontOfSize:11];
+    countLabel.textAlignment = 1;
+    countLabel.hidden = NO;
+    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+    [rightBtn addSubview:countLabel];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = right;
     [self loadShopCarCount];
 }
 
@@ -296,25 +314,6 @@
     [self.view addSubview:tv];
 
     [self loadScrollview];
-    
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
-    [rightBtn setFrame:CGRectMake(0, 5, 37, 34)];
-    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    countLabel = [[UILabel alloc] init];
-    countLabel.frame = CGRectMake(22, 0, 18, 18);
-    countLabel.layer.borderWidth = 1;
-    countLabel.layer.cornerRadius = 10;
-    countLabel.textColor = [UIColor whiteColor];
-    countLabel.font = [UIFont systemFontOfSize:11];
-    countLabel.textAlignment = 1;
-    countLabel.hidden = NO;
-    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
-    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
-    [rightBtn addSubview:countLabel];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = right;
 }
 
 - (void) rightBtnClick:(UIButton *) sender

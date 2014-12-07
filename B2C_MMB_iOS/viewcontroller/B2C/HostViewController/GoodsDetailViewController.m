@@ -79,8 +79,6 @@
     int btnTag;
     
     NSString *colorName;
-    
-    int scoreNum;
 }
 @end
 
@@ -118,85 +116,85 @@
     int tag = [sender tag];
     btnTag = tag;
     
-//    if(num.length == 0 || [num intValue] == 0)
-//    {
-//        [DCFStringUtil showNotice:@"请选择数量"];
-//        return;
-//    }
-//    if(itemid.length == 0)
-//    {
-//        [DCFStringUtil showNotice:@"请选择颜色"];
-//        return;
-//    }
-//    //    [self.view.window addSubview:[self loadChooseColorAndCount]];
-//    //    backView.hidden = NO;
-//    [self setHidesBottomBarWhenPushed:YES];
-//    int tag = [sender tag];
-//    
-//    
-//    if(tag == 100)
-//    {
-//#pragma mark - 立即购买
-//        
-//        NSString *time = [DCFCustomExtra getFirstRunTime];
-//        
-//        NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
-//        
-//        NSString *token = [DCFCustomExtra md5:string];
-//        
-//        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
-//        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
-//        
-//        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
-//        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
-//        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-//        
-//        
-//    }
-//    else
-//    {
-//        
-//#pragma mark - 加入购物车
-//        [self setHidesBottomBarWhenPushed:YES];
-//        
-//        NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
-//        NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
-//        
-//        NSString *time = [DCFCustomExtra getFirstRunTime];
-//        NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
-//        NSString *token = [DCFCustomExtra md5:string];
-//        
-//        NSString *visitorid = [app getUdid];
-//        
-//        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-//        
-//        
-//        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-//        
-//        
-//        
-//        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
-//        
-//        NSString *pushString = nil;
-//        
-//        if(hasLogin == YES)
-//        {
-//            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
-//            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
-//            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
-//        }
-//        else
-//        {
-//            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
-//            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
-//            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
-//        }
-//        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
-//        
-//        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-//        
-//        num = @"0";
-//    }
+    //    if(num.length == 0 || [num intValue] == 0)
+    //    {
+    //        [DCFStringUtil showNotice:@"请选择数量"];
+    //        return;
+    //    }
+    //    if(itemid.length == 0)
+    //    {
+    //        [DCFStringUtil showNotice:@"请选择颜色"];
+    //        return;
+    //    }
+    //    //    [self.view.window addSubview:[self loadChooseColorAndCount]];
+    //    //    backView.hidden = NO;
+    //    [self setHidesBottomBarWhenPushed:YES];
+    //    int tag = [sender tag];
+    //
+    //
+    //    if(tag == 100)
+    //    {
+    //#pragma mark - 立即购买
+    //
+    //        NSString *time = [DCFCustomExtra getFirstRunTime];
+    //
+    //        NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
+    //
+    //        NSString *token = [DCFCustomExtra md5:string];
+    //
+    //        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
+    //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
+    //
+    //        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
+    //        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
+    //        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    //
+    //
+    //    }
+    //    else
+    //    {
+    //
+    //#pragma mark - 加入购物车
+    //        [self setHidesBottomBarWhenPushed:YES];
+    //
+    //        NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
+    //        NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
+    //
+    //        NSString *time = [DCFCustomExtra getFirstRunTime];
+    //        NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
+    //        NSString *token = [DCFCustomExtra md5:string];
+    //
+    //        NSString *visitorid = [app getUdid];
+    //
+    //        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    //
+    //
+    //        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    //
+    //
+    //
+    //        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
+    //
+    //        NSString *pushString = nil;
+    //
+    //        if(hasLogin == YES)
+    //        {
+    //            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
+    //            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+    //            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
+    //        }
+    //        else
+    //        {
+    //            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
+    //            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
+    //            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
+    //        }
+    //        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
+    //
+    //        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    //
+    //        num = @"0";
+    //    }
 }
 
 - (void)rightItemClick:(id) sender
@@ -391,11 +389,6 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
-        NSLog(@"dicRespon------ = %@",[dicRespon objectForKey:@"items"]);
-        
-        scoreNum = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue] +[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
-        NSLog(@"scoreNum = %d",scoreNum);
-        
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         producturl = [dicRespon objectForKey:@"producturl"];
@@ -419,20 +412,19 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
+        
+        
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
             num = @"0";
             itemid = @"";
-            [self loadShopCarCount];
         }
         else
         {
-            
             if(msg.length != 0)
             {
                 [DCFStringUtil showNotice:msg];
-                
             }
             else
             {
@@ -476,6 +468,7 @@
         else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
         {
             countLabel.hidden = NO;
+            
             countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
         }
         else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
@@ -496,9 +489,10 @@
 {
     if( [detailData.ctems isKindOfClass:[NSNull class]] ||  detailData.ctems.count == 0)
     {
-        return 8;
+        return 9;
     }
-    return 7 + detailData.ctems.count;
+    NSLog(@"detailData.ctems.count = %d",detailData.ctems.count);
+    return 8 + detailData.ctems.count;
 }
 
 
@@ -510,7 +504,7 @@
     }
     if(indexPath.row == 1)
     {
-        if(detailData.goodsName.length == 0)
+        if([DCFCustomExtra validateString:detailData.goodsName] == NO)
         {
             return 0;
         }
@@ -574,61 +568,120 @@
     }
     if(indexPath.row == 4)
     {
-        NSString *discuss = detailData.score;
-        if(discuss.length == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return 40;
-        }
+        //        NSString *discuss = detailData.score;
+        //        if(discuss.length == 0)
+        //        {
+        //            return 0;
+        //        }
+        //        else
+        //        {
+        return 40;
+        //        }
     }
     if (indexPath.row == 5)
     {
-        if(showCell == YES)
+        if([detailData.isShowparam isEqualToString:@"1"])
         {
-            return 179;
+            
         }
-        else
-        {
-            return 54;
-        }
-    }
-
-    if(indexPath.row == 6)
-    {
-        return 54;
-    }
-    if (indexPath.row > 5)
-    {
-        if(showCell == YES)
+        else if(![detailData.isShowparam isEqualToString:@"1"])
         {
             return 0;
         }
+        if(showCell == YES)
+        {
+            return 160;
+        }
         else
         {
-            if([detailData.ctems isKindOfClass:[NSNull class]] || detailData.ctems.count == 0)
+            return 0;
+        }
+    }
+    
+    if(detailData.ctems.count == 0)
+    {
+        if(indexPath.row == 6)
+        {
+            if(showCell == YES)
             {
-                return 44;
+                return 0;
             }
-            else
+            return 54;
+        }
+        else if(indexPath.row > 6)
+        {
+            if(indexPath.row == 7)
             {
-                NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-7] objectForKey:@"judgementContent"];
-                
-                if(s4.length == 0)
+                if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
                 {
                     return 0;
                 }
                 else
                 {
-                    CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT)];
-                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, size_4.height)];
-                    [contentLabel setText:s4];
-                    [contentLabel setFont:[UIFont systemFontOfSize:12]];
-                    [contentLabel setNumberOfLines:0];
-                    return contentLabel.frame.size.height;
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                    return size.height+15;
                 }
+                
+            }
+            if(indexPath.row == 8)
+            {
+                NSString *discuss = detailData.score;
+                if(discuss.length != 0)
+                {
+                    return 54;
+                }
+                return 0;
+            }
+        }
+    }
+    else if(detailData.ctems.count != 0)
+    {
+        if(indexPath.row >= 6 && indexPath.row <detailData.ctems.count+6)
+        {
+            if(showCell == YES)
+            {
+                return 0;
+            }
+            else
+            {
+                
+                NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
+                if([DCFCustomExtra validateString:s4] == NO)
+                {
+                    return 0;
+                }
+                else
+                {
+                    
+                    CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+
+                    return size_4.height+36;
+                }
+                
+            }
+        }
+        else if(indexPath.row == detailData.ctems.count+7 || indexPath.row == detailData.ctems.count+6)
+        {
+            if(indexPath.row == detailData.ctems.count + 6)
+            {
+                if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
+                {
+                    return 0;
+                }
+                else
+                {
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                    return size.height+15;
+                }
+            }
+            if(indexPath.row == detailData.ctems.count + 7)
+            {
+                NSString *discuss = detailData.score;
+                if(discuss.length != 0)
+                {
+                    return 54;
+                }
+                return 0;
             }
         }
     }
@@ -777,39 +830,6 @@
             [cell addSubview:lineView];
             
         }
-        if(indexPath.row == 6)
-        {
-            NSString *discuss = detailData.score;
-            if(discuss.length != 0)
-            {
-                UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 30, 30)];
-                [firstIv setImage:[UIImage imageNamed:@"shopPic"]];
-                
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,30)];
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(45,0, size.width, 30)];
-                [label setFont:[UIFont systemFontOfSize:15]];
-                [label setText:[detailData shopName]];
-                [label setTextAlignment:NSTextAlignmentLeft];
-                [label setTextColor:[UIColor blackColor]];
-                
-                UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, label.frame.size.width+40, 44)];
-                [firstView addSubview:firstIv];
-                [firstView addSubview:label];
-                [cell.contentView addSubview:firstView];
-                
-                UITapGestureRecognizer *tap_1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstTap:)];
-                [firstView addGestureRecognizer:tap_1];
-                
-                UIView *lineView = [[UIView alloc] init];
-                lineView.frame = CGRectMake(0, cell.frame.size.height-10, cell.frame.size.width, 10);
-                lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-                [cell addSubview:lineView];
-            }
-            else
-            {
-                
-            }
-        }
         if(indexPath.row == 4)
         {
             
@@ -867,113 +887,255 @@
                 [cell.contentView insertSubview:selectView aboveSubview:btn];
             }
         }
+        //商品参数
         if(indexPath.row == 5)
         {
-            
-            if(showCell == YES)
+            if([detailData.isShowparam isEqualToString:@"1"])
             {
-                GoodsDetailTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsDetailTableViewCell" owner:self options:nil] lastObject];
-                
-                [customCell.barndLabel setText:detailData.goodsBrand];
-                [customCell.kindLabel setText:detailData.goodsModel];
-                [customCell.voltageLabel setText:detailData.goodsVoltage];
-                [customCell.surfaceLabel setText:[NSString stringWithFormat:@"%@平方",detailData.spec]];
-                [customCell.useLabel setText:detailData.use];
-                [customCell.threadLabel setText:detailData.coreNum];
-                [customCell.standLabel setText:detailData.standard];
-                [customCell.unitLabel setText:detailData.unit];
-                [customCell.thicknessLabel setText:[NSString stringWithFormat:@"%@mm",detailData.insulationThickness]];
-                [customCell.lengthLabel setText:[NSString stringWithFormat:@"%@米",detailData.avgLength]];
-                [customCell.topLabel setText:[NSString stringWithFormat:@"%@mm",detailData.avgDiameter]];
-                [customCell.weightLabel setText:[NSString stringWithFormat:@"%@KG",detailData.weight]];
-                [customCell.contentView setBackgroundColor:[UIColor whiteColor]];
-                
-                UIView *lineView = [[UIView alloc] init];
-                lineView.frame = CGRectMake(0, customCell.frame.size.height-10,self.view.frame.size.width, 10);
-                lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-                [customCell.contentView addSubview:lineView];
-                return customCell;
-            }
-            else
-            {
-                
-            }
-        }
-        //        if(indexPath.row > 5 && indexPath.row < 6)
-        if(indexPath.row == 5 )
-        {
-            if(showCell == YES)
-            {
-            }
-            else
-            {
-                if([detailData.ctems isKindOfClass:[NSNull class]] || detailData.ctems.count == 0)
+                if(showCell == YES)
                 {
-                    static NSString *moreCellId = @"moreCell";
-                    moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
-                    if(moreCell == nil)
-                    {
-                        moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-                        [moreCell.contentView setBackgroundColor:[UIColor whiteColor]];
-                        [moreCell noDataAnimation];
-                    }
-                    return moreCell;
-                }
-                NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"loginName"];
-                if(s1.length != 0)
-                {
-                    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s1 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width+10, 15)];
-                    [nameLabel setText:s1];
-                    [nameLabel setTextAlignment:NSTextAlignmentLeft];
-                    [nameLabel setFont:[UIFont systemFontOfSize:10]];
-                    [nameLabel setTextColor:[UIColor blackColor]];
-                    [cell.contentView addSubview:nameLabel];
+                    GoodsDetailTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsDetailTableViewCell" owner:self options:nil] lastObject];
                     
-                    NSString *month = [[[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"createDate"] objectForKey:@"month"];
-                    NSString *finalMonth = [NSString stringWithFormat:@"%d",[month intValue] + 1];
-                    NSString *date = [[[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"createDate"] objectForKey:@"date"];
-                    NSString *s2 = [NSString stringWithFormat:@"评价日期:%@.%@",finalMonth,date];
-                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s2 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 30, 5, size_2.width, 15)];
-                    [dateLabel setTextAlignment:NSTextAlignmentCenter];
-                    [dateLabel setText:s2];
-                    [dateLabel setFont:[UIFont systemFontOfSize:10]];
-                    [cell.contentView addSubview:dateLabel];
-                    
-                    NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"colorName"];
-                    NSString *s3 = [NSString stringWithFormat:@"颜色分类:%@",color];
-                    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s3 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 5, size_3.width, 15)];
-                    [colorLabel setText:s3];
-                    [colorLabel setTextAlignment:NSTextAlignmentLeft];
-                    [colorLabel setFont:[UIFont systemFontOfSize:10]];
-                    [cell.contentView addSubview:colorLabel];
-                    
-                    NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-5] objectForKey:@"judgementContent"];
-                    CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(320, MAXFLOAT)];
-                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, ScreenWidth-10, size_4.height)];
-                    [contentLabel setTextAlignment:NSTextAlignmentLeft];
-                    [contentLabel setText:s4];
-                    [contentLabel setFont:[UIFont systemFontOfSize:12]];
-                    [contentLabel setNumberOfLines:0];
-                    [cell.contentView addSubview:contentLabel];
+                    [customCell.barndLabel setText:detailData.goodsBrand];
+                    [customCell.kindLabel setText:detailData.goodsModel];
+                    [customCell.voltageLabel setText:detailData.goodsVoltage];
+                    [customCell.surfaceLabel setText:detailData.spec];
+                    [customCell.useLabel setText:detailData.use];
+                    [customCell.threadLabel setText:detailData.coreNum];
+                    [customCell.standLabel setText:detailData.standard];
+                    [customCell.unitLabel setText:detailData.unit];
+                    [customCell.thicknessLabel setText:detailData.insulationThickness];
+                    [customCell.lengthLabel setText:detailData.avgLength];
+                    [customCell.topLabel setText:detailData.avgDiameter];
+                    [customCell.weightLabel setText:detailData.weight];
+                    [customCell.contentView setBackgroundColor:[UIColor whiteColor]];
                     
                     UIView *lineView = [[UIView alloc] init];
-                    lineView.frame = CGRectMake(10, cell.frame.size.height-0.5,self.view.frame.size.width-20, 0.5);
-                    lineView.backgroundColor = [UIColor lightGrayColor];
-                    [cell.contentView addSubview:lineView];
+                    lineView.frame = CGRectMake(0, customCell.frame.size.height-10,self.view.frame.size.width, 10);
+                    lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+                    [customCell.contentView addSubview:lineView];
+                    return customCell;
                 }
                 else
                 {
                     
                 }
             }
+            else
+            {
+                
+            }
+        }
+        //评价
+        if([detailData.ctems isKindOfClass:[NSNull class]] || detailData.ctems.count == 0)
+        {
+            if(indexPath.row == 6)
+            {
+                static NSString *moreCellId = @"moreCell";
+                moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
+                if(moreCell == nil)
+                {
+                    moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+                    [moreCell.lblContent setText:@"暂无评论哦~~"];
+                    [moreCell.contentView setBackgroundColor:[UIColor whiteColor]];
+                    //                    [moreCell noDataAnimation];
+                }
+                return moreCell;
+                
+            }
+            if(indexPath.row == 7)
+            {
+                if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
+                {
+                    
+                }
+                else
+                {
+                    return  [self loadCustomCell:indexPath WithTableView:tableView];
+                }
+            }
+            if(indexPath.row == 8)
+            {
+                return   [self loadShopName:indexPath WithTableView:tableView];
+            }
+        }
+        else
+        {
+            if(indexPath.row >= 6 && indexPath.row < detailData.ctems.count+6)
+            {
+                if(showCell == YES)
+                {
+                }
+                else
+                {
+                    NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
+                    if([DCFCustomExtra validateString:s4] == YES)
+                    {
+        
+                            CGSize size_4;
+
+                            size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                            
+                            UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 35, ScreenWidth-20, size_4.height)];
+                            [contentLabel setTextAlignment:NSTextAlignmentLeft];
+                            [contentLabel setText:s4];
+                            [contentLabel setFont:[UIFont systemFontOfSize:12]];
+                            [contentLabel setNumberOfLines:0];
+                            [cell.contentView addSubview:contentLabel];
+                            
+                            NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
+                            
+                            CGSize size_1;
+                            if([DCFCustomExtra validateString:s1] == NO)
+                            {
+                                size_1 = CGSizeMake(30, 30);
+                            }
+                            else
+                            {
+                                size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s1 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                            }
+                            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width+10, 30)];
+                            [nameLabel setText:s1];
+                            [nameLabel setTextAlignment:NSTextAlignmentLeft];
+                            [nameLabel setFont:[UIFont systemFontOfSize:10]];
+                            [nameLabel setTextColor:[UIColor blackColor]];
+                            [cell.contentView addSubview:nameLabel];
+                            
+                            NSString *month = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"month"];
+                            NSString *finalMonth = [NSString stringWithFormat:@"%d",[month intValue] + 1];
+                            
+                            NSString *date = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"date"];
+                            
+                            NSString *s2 = [NSString stringWithFormat:@"评价日期:%@.%@",finalMonth,date];
+                            CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s2 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                            UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 30, 5, size_2.width, 30)];
+                            [dateLabel setTextAlignment:NSTextAlignmentCenter];
+                            [dateLabel setText:s2];
+                            [dateLabel setFont:[UIFont systemFontOfSize:10]];
+                            [cell.contentView addSubview:dateLabel];
+                            
+                            NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"colorName"];
+                            NSString *s3 = [NSString stringWithFormat:@"颜色分类:%@",color];
+                            CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s3 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                            UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 5, size_3.width, 30)];
+                            [colorLabel setText:s3];
+                            [colorLabel setTextAlignment:NSTextAlignmentLeft];
+                            [colorLabel setFont:[UIFont systemFontOfSize:10]];
+                            [cell.contentView addSubview:colorLabel];
+                            
+                            
+                            
+                            UIView *lineView = [[UIView alloc] init];
+                            lineView.frame = CGRectMake(10, contentLabel.frame.origin.y+contentLabel.frame.size.height,ScreenWidth-20, 1);
+                            lineView.backgroundColor = [UIColor lightGrayColor];
+                            [cell.contentView addSubview:lineView];
+                    }
+                    else
+                    {
+                        
+                    }
+                    
+                }
+            }
+            else if (indexPath.row == detailData.ctems.count +6)
+            {
+                if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
+                {
+                    
+                }
+                else
+                {
+                    return  [self loadCustomCell:indexPath WithTableView:tableView];
+                }
+            }
+            else if(indexPath.row > detailData.ctems.count + 6)
+            {
+                return   [self loadShopName:indexPath WithTableView:tableView];
+            }
         }
     }
     return cell;
 }
 
+#pragma mark - 商家自定义内容
+- (UITableViewCell *) loadCustomCell:(NSIndexPath *) path WithTableView:(UITableView *) tableview
+{
+    static NSString *cellId = @"customCellId";
+    UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:cellId];
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+    }
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    }
+    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, size.height)];
+    [label setFont:[UIFont systemFontOfSize:14]];
+    [label setNumberOfLines:0];
+    [label setText:detailData.phoneDescribe];
+    [cell.contentView addSubview:label];
+    
+    UIView *lineView = [[UIView alloc] init];
+    lineView.frame = CGRectMake(0, label.frame.origin.y + label.frame.size.height, cell.frame.size.width, 10);
+    lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    [cell.contentView addSubview:lineView];
+    return cell;
+}
+
+
+#pragma mark - 商铺名字
+- (UITableViewCell *) loadShopName:(NSIndexPath *) path WithTableView:(UITableView *) tableview
+{
+    static NSString *cellId = @"shopNameCell";
+    UITableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:cellId];
+    if(cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+    }
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+    }
+    NSString *discuss = detailData.score;
+    if(discuss.length != 0)
+    {
+        UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
+        [firstIv setImage:[UIImage imageNamed:@"shopPic"]];
+        
+        CGSize size;
+        if([DCFCustomExtra validateString:detailData.shopName] == NO)
+        {
+            size = CGSizeMake(100, 30);
+        }
+        else
+        {
+            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,30)];
+        }
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(45,5, size.width, 30)];
+        [label setFont:[UIFont systemFontOfSize:15]];
+        [label setText:[detailData shopName]];
+        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setTextColor:[UIColor blackColor]];
+        
+        UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, label.frame.size.width+40, 44)];
+        [firstView addSubview:firstIv];
+        [firstView addSubview:label];
+        [cell.contentView addSubview:firstView];
+        
+        UITapGestureRecognizer *tap_1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstTap:)];
+        [firstView addGestureRecognizer:tap_1];
+        
+        UIView *lineView = [[UIView alloc] init];
+        lineView.frame = CGRectMake(0, firstView.frame.origin.y + firstView.frame.size.height, cell.frame.size.width, 10);
+        lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        [cell.contentView addSubview:lineView];
+    }
+    else
+    {
+        
+    }
+    return cell;
+}
 - (void) firstTap:(UITapGestureRecognizer *) sender
 {
     [self setHidesBottomBarWhenPushed:YES];
@@ -1023,17 +1185,17 @@
         }
     }
     
-    for(UIButton *btn in cellBtnArray)
-    {
-        if(btn.tag == [sender tag])
-        {
-            
-        }
-        else
-        {
-            [btn setSelected:NO];
-        }
-    }
+    //    for(UIButton *btn in cellBtnArray)
+    //    {
+    //        if(btn.tag == [sender tag])
+    //        {
+    //
+    //        }
+    //        else
+    //        {
+    //            [btn setSelected:NO];
+    //        }
+    //    }
     
     [tv reloadData];
 }
@@ -1405,7 +1567,7 @@
 
 - (void) sureBtnClick:(UIButton *) sender
 {
-
+    
     if(colorName.length == 0)
     {
         [DCFStringUtil showNotice:@"请选择颜色"];
@@ -1486,9 +1648,9 @@
             [chooseColorAndCountView removeFromSuperview];
             chooseColorAndCountView = nil;
         }
-//        [self loadShopCarCount];
+        [self loadShopCarCount];
     }
-
+    
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

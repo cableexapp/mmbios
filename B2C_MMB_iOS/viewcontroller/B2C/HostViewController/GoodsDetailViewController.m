@@ -335,8 +335,6 @@
     backView.alpha = 0.8;
     [self.view insertSubview:backView aboveSubview:tv];
     
-    
-    
     cellBtnArray = [[NSMutableArray alloc] init];
 }
 
@@ -412,8 +410,6 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
-        
-        
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];

@@ -402,7 +402,7 @@
         [hotLabel setText:@"  家装线主题馆"];
     }
     [hotLabel setTextAlignment:NSTextAlignmentLeft];
-    [hotLabel setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [hotLabel setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [hotLabel setFont:[UIFont boldSystemFontOfSize:14]];
     return hotLabel;
 }

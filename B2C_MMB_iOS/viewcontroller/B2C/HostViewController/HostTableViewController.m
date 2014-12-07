@@ -575,10 +575,11 @@ BOOL isPopShow = NO;
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 35)];
-    [headBackView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0]];
+    [headBackView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
 
-    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake( 10, 0, 200, 35)];
-    headLabel.font = [UIFont systemFontOfSize:18];
+    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0,ScreenWidth-10, 35)];
+    headLabel.font = [UIFont systemFontOfSize:17];
+    
     if(section == 3)
     {
         [headLabel setText:@"电线用途"];

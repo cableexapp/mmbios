@@ -681,19 +681,19 @@
     [_popView setText:@"识别结束!"];
 }
 
-//-(void)refreshTableView
-//{
-//    [self.serchResultView removeFromSuperview];
-//    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-45) style:UITableViewStylePlain];
-//    self.serchResultView.dataSource = self;
-//    self.serchResultView.delegate = self;
-//    self.serchResultView.scrollEnabled = YES;
-//    self.serchResultView.backgroundColor = [UIColor whiteColor];
-//    self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-//    self.serchResultView.separatorColor = [UIColor lightGrayColor];
-//    self.serchResultView.showsVerticalScrollIndicator = NO;
-//    [self.view addSubview:self.serchResultView];
-//}
+-(void)refreshTableView
+{
+    [self.serchResultView removeFromSuperview];
+    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-45) style:UITableViewStylePlain];
+    self.serchResultView.dataSource = self;
+    self.serchResultView.delegate = self;
+    self.serchResultView.scrollEnabled = YES;
+    self.serchResultView.backgroundColor = [UIColor whiteColor];
+    self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    self.serchResultView.separatorColor = [UIColor lightGrayColor];
+    self.serchResultView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:self.serchResultView];
+}
 
 
 -(void)readHistoryData
@@ -829,10 +829,6 @@
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
         tempType = @"2";
-//        [self refreshTableView];
-        [self readHistoryData];
-//        [self refreshClearButton];
-        [self.serchResultView reloadData];
         [self loadShopCarCount];
        if (tempShopCar > 0)
         {
@@ -863,7 +859,7 @@
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     speakButton.hidden = NO;
     speakButtonView.hidden = NO;
-//    [self refreshTableView];
+    [self refreshTableView];
     [self readHistoryData];
 //    [self refreshClearButton];
     [self.serchResultView reloadData];
@@ -918,7 +914,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return dataArray.count;
+    int tempRow;
+    if (dataArray.count > 0)
+    {
+        tempRow = dataArray.count+1;
+    }
+    else
+    {
+        tempRow = dataArray.count;
+    }
+    return tempRow;
 }
 
 - (void)clearBtnClick:(UIButton *) sender
@@ -1042,32 +1047,52 @@
         else if ([tempFlag isEqualToString:@"4"])
         {
             coverView.hidden = YES;
-            if ([tempType isEqualToString:@"1"] && dataArray.count > 0)
+            if ([tempType isEqualToString:@"1"])
             {
-               
-                if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"1"])
+                if (indexPath.row == dataArray.count)
                 {
-                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                    searchImageView.image = nil;
+//                    searchResultLabel.text = @"清空历史记录 ";
+                    UIButton *clearBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    [clearBtn setBackgroundColor:[UIColor colorWithRed:12.0/255 green:63.0/255 blue:148.0/255 alpha:1.0]];
+                    [clearBtn setTitle:@"清空历史纪录" forState:UIControlStateNormal];
+                    clearBtn.frame = CGRectMake((ScreenWidth-100)/2, 4.5, 100, 35);
+                    [clearBtn setTintColor:[UIColor whiteColor]];
+//                    clearBtn.hidden = YES;
+                    [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                    clearBtn.layer.cornerRadius = 3;
+                    [cell addSubview:clearBtn];
+
                 }
-                else if([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"2"])
+                else
                 {
-                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"secondtype"];
+                    if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"1"])
+                    {
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                    }
+                    else if([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"2"])
+                    {
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"secondtype"];
+                    }
+                    else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
+                    {
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
+                    }
+                    if (tempSearch == 2)
+                    {
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"model"];
+                    }
                 }
-                else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
-                {
-                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
-                }
-                if (tempSearch == 2)
-                {
-                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"model"];
-                }
+                
+                
         }
-            else if ([tempType isEqualToString:@"2"] && dataArray.count > 0)
-            {
-                searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"productName"];
-            }
+        else if ([tempType isEqualToString:@"2"] && dataArray.count > 0)
+        {
+            searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"productName"];
         }
-    }
+        
+     }
+  }
         return cell;
 }
 

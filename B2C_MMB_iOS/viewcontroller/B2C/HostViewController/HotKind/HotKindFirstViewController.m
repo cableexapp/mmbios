@@ -106,7 +106,6 @@
         [_testTableView reloadData];
     }
       selectArray = [NSMutableArray arrayWithCapacity:dataArray.count];
-    
      [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, 0)];
     self.testSubTableView.hidden = YES;
     
@@ -120,6 +119,7 @@
     self.testSubTableView.separatorColor = [UIColor lightGrayColor];
     self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
     
+//    小三角按钮
     backView = [[UIButton alloc] init];
     backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
     backView.hidden = YES;
@@ -127,10 +127,51 @@
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:self.testTableView];
     
+//     返回按钮的操作
     self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     self.upBtn.layer.cornerRadius = 5;
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
 }
 
+//     返回按钮的操作
+- (void) back:(id) sender
+{
+    if ( selectArray.count == 0 ) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }else
+    {
+        //  跳转到首页
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚有分类未加入询价车,是否加入" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [av setTag:10];
+        [av show];
+    }
+   
+}
+
+//      返回按钮的代理
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != 0)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+        [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
+        return;
+    }else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }
+}
+
+//    小三角按钮
 -(void)shadow
 {
     backView.hidden = YES;
@@ -317,10 +358,14 @@
 #pragma mark - 展开已选按钮
 - (IBAction)typeBtn:(id)sender
 {
+    
 //类型转换
 //UIButton *button = (UIButton * ) sender;
+    
 if ( _opend )
     {
+//        判断字符串封装方法，如果为NO就为空。
+//        [DCFCustomExtra validateString:@"123"] == NO;
         self.opend = NO;
         backView.hidden = YES;
         
@@ -338,7 +383,7 @@ if ( _opend )
         backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         backView.alpha = 0.6;
         backView.hidden = NO;
-        if (selectArray.count != 0)
+        if (selectArray.count != 0) 
         {
          _testSubTableView.hidden = YES;
         }
@@ -404,34 +449,6 @@ if ( _opend )
     return YES;
 }
 
-
-
-- (void) loadAlertView
-{
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚有商品未加入询价车,是否加入" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [av setTag:10];
-    [av show];
-}
-
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(alertView.tag == 10)
-    {
-        if(flag == YES)
-        {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        else
-        {
-            [self setHidesBottomBarWhenPushed:YES];
-            HotKindFirstViewController *hotKindFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
-//            [self.navigationController pushViewController:B2BAskPriceCarViewController animated:YES];
-        }
-    }
-
-
-
-}
 
 
 

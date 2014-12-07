@@ -326,11 +326,10 @@
     [self.view addSubview:searchTextField];
     
     searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [searchBtn setFrame:CGRectMake(searchTextField.frame.origin.x + searchTextField.frame.size.width+5, 12, 35, 30)];
-    [searchBtn setTitle:@"筛选" forState:UIControlStateNormal];
+    [searchBtn setFrame:CGRectMake(searchTextField.frame.origin.x + searchTextField.frame.size.width+1, 9, 43, 39)];
+//    [searchBtn setTitle:@"筛选" forState:UIControlStateNormal];
+    [searchBtn setBackgroundImage:[UIImage imageNamed:@"choose_btn"] forState:UIControlStateNormal];
     [searchBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-    searchBtn.layer.borderWidth = 1.0f;
-    searchBtn.layer.borderColor = MYCOLOR.CGColor;
     searchBtn.layer.masksToBounds = YES;
     [searchBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -793,9 +792,11 @@
     {
         return;
     }
+    [self setHidesBottomBarWhenPushed:YES];
     NSString *productId = [[dataArray objectAtIndex:indexPath.row] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     [self.navigationController pushViewController:detail animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

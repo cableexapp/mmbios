@@ -75,18 +75,15 @@
 {
     if(indexPath.row == 0)
     {
-        return 190;
+        return 0;
     }
-    return 30;
+    return 40;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-    [headLabel setText:headTitle];
-    [headLabel setTextAlignment:NSTextAlignmentCenter];
+    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, 50)];
     [headLabel setFont:[UIFont systemFontOfSize:20]];
-    [headLabel setBackgroundColor:[UIColor whiteColor]];
     return headLabel;
 }
 
@@ -98,11 +95,26 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"cellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(!cell)
+//    static NSString *cellId = @"cellId";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+//    if(!cell)
+//    {
+//        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+//    }
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+//        最后一行分割线
+        if (indexPath.row == ListArray.count)
+        {
+            UIView *lineView = [[UIView alloc] init];
+            lineView.frame = CGRectMake(15, 39, cell.frame.size.width-15, 1);
+            lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+            [cell addSubview:lineView];
+        }
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
     {
@@ -117,11 +129,11 @@
             [cellLabel setTextAlignment:NSTextAlignmentCenter];
             if(i == 0 || i == 1)
             {
-                [cellLabel setText:[discussArray objectAtIndex:0]];
+//                [cellLabel setText:[discussArray objectAtIndex:0]];
             }
             else
             {
-                [cellLabel setText:[discussArray objectAtIndex:i-1]];
+//                [cellLabel setText:[discussArray objectAtIndex:i-1]];
             }
             [cell.contentView addSubview:cellLabel];
         }
@@ -129,12 +141,25 @@
     else
     {
         [cell.textLabel setText:[ListArray objectAtIndex:indexPath.row-1]];
+        cell.textLabel.font = [UIFont systemFontOfSize:15];
     }
+    
     return cell;
 }
 
 
 
+//  去掉没有数据的部分分割线
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
+//  去掉没有数据的部分分割线
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.1;
+}
 
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

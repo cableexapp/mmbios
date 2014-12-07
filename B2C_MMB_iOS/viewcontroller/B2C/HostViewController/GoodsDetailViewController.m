@@ -79,6 +79,8 @@
     int btnTag;
     
     NSString *colorName;
+    
+    int scoreNum;
 }
 @end
 
@@ -389,6 +391,11 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
+        NSLog(@"dicRespon------ = %@",[dicRespon objectForKey:@"items"]);
+        
+        scoreNum = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue] + [[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue] +[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
+        NSLog(@"scoreNum = %d",scoreNum);
+        
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         producturl = [dicRespon objectForKey:@"producturl"];
@@ -412,19 +419,20 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
-        
-        
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
             num = @"0";
             itemid = @"";
+            [self loadShopCarCount];
         }
         else
         {
+            
             if(msg.length != 0)
             {
                 [DCFStringUtil showNotice:msg];
+                
             }
             else
             {
@@ -468,7 +476,6 @@
         else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
         {
             countLabel.hidden = NO;
-            
             countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
         }
         else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
@@ -651,7 +658,6 @@
                 }
                 else
                 {
-                    
                     CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(self.view.frame.size.width, MAXFLOAT)];
                     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, size_4.height)];
                     [contentLabel setText:s4];
@@ -659,7 +665,6 @@
                     [contentLabel setNumberOfLines:0];
                     return contentLabel.frame.size.height;
                 }
-                
             }
         }
         else if(indexPath.row == detailData.ctems.count+7 || indexPath.row == detailData.ctems.count+6)
@@ -1643,7 +1648,7 @@
             [chooseColorAndCountView removeFromSuperview];
             chooseColorAndCountView = nil;
         }
-        [self loadShopCarCount];
+//        [self loadShopCarCount];
     }
     
 }

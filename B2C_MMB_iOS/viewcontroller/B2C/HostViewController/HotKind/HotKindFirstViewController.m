@@ -15,6 +15,8 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFStringUtil.h"
 #import "SearchViewController.h"
+#import "B2BAskPriceCarViewController.h"
+
 
 @interface HotKindFirstViewController ()
 {
@@ -22,6 +24,7 @@
     NSMutableArray *selectArray;
     UIButton *backView;
     UIView *rightButtonView;
+    BOOL flag;
 }
 
 @end
@@ -60,7 +63,9 @@
 {
     [super viewWillDisappear:YES];
     rightButtonView.hidden = YES;
+
 }
+
 
 - (void)viewDidLoad
 {
@@ -101,6 +106,7 @@
         [_testTableView reloadData];
     }
       selectArray = [NSMutableArray arrayWithCapacity:dataArray.count];
+    
      [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, 0)];
     self.testSubTableView.hidden = YES;
     
@@ -109,9 +115,10 @@
     // 超出边框的内容不需要裁剪
     self.triangleBtn.imageView.clipsToBounds = NO;
     
-   
-    self.testTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.testTableView.separatorColor = [UIColor lightGrayColor];
+    self.testTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
+    self.testSubTableView.separatorColor = [UIColor lightGrayColor];
+    self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
     
     backView = [[UIButton alloc] init];
     backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
@@ -120,19 +127,18 @@
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:self.testTableView];
     
-    self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:137/255.0 blue:0/255.0 alpha:1.0];
+    self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     self.upBtn.layer.cornerRadius = 5;
-    
-
 }
 
 -(void)shadow
 {
     backView.hidden = YES;
-    self.selectView.hidden = YES;
     _testSubTableView.hidden = YES;
     _testTableView.userInteractionEnabled = YES;
+    self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
     self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);
+    self.opend = NO;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -206,7 +212,7 @@
 //        cell.textLabel.text = str;
 //        cell.textLabel.font = [UIFont systemFontOfSize:13];
 //        cell.textLabel.textAlignment = 1;
-
+      
         return cell;
         
 }else
@@ -224,6 +230,7 @@
         [cell.textLabel setText:str];
         [cell.textLabel setFont:[UIFont systemFontOfSize:13]];
         cell.textLabel.textAlignment = 1;
+        
         return cell;
     }
     
@@ -316,8 +323,9 @@ if ( _opend )
     {
         self.opend = NO;
         backView.hidden = YES;
-        // 2.动画
-        [UIView animateWithDuration:0.5 animations:^{
+        
+//     2.动画效果
+        [UIView animateWithDuration:0.3 animations:^{
          self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
         }];
 
@@ -334,7 +342,8 @@ if ( _opend )
         {
          _testSubTableView.hidden = YES;
         }
-        [UIView animateWithDuration:0.5 animations:^{
+//        动画效果
+        [UIView animateWithDuration:0.3 animations:^{
             self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);  //三角按钮旋转
         }];
         _testSubTableView.hidden = NO;
@@ -394,6 +403,39 @@ if ( _opend )
 {
     return YES;
 }
+
+
+
+- (void) loadAlertView
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚有商品未加入询价车,是否加入" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [av setTag:10];
+    [av show];
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 10)
+    {
+        if(flag == YES)
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else
+        {
+            [self setHidesBottomBarWhenPushed:YES];
+            HotKindFirstViewController *hotKindFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+//            [self.navigationController pushViewController:B2BAskPriceCarViewController animated:YES];
+        }
+    }
+
+
+
+}
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {

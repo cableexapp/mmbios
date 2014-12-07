@@ -282,7 +282,9 @@
     }
     else if ([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
     {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+        
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
     }
     else if ([self.fromStringFlag isEqualToString:@"热门型号在线咨询"])

@@ -103,6 +103,7 @@
 //        
 //    }
 //    isPopShow = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 }
 
 - (NSString *) getMemberId
@@ -124,11 +125,12 @@
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
             NSLog(@"badge = %@",badgeArray);
-            
+//             UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:6];
+//            cellBtn.backgroundColor = [UIColor redColor];
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
-//                cellBtn.backgroundColor = [UIColor redColor];
+//
                 NSString *s = [NSString stringWithFormat:@"%@",[badgeArray objectAtIndex:i]];
    
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -137,60 +139,70 @@
                 {
                     if (cellBtn.frame.size.width >= 153)
                     {
-                        NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
+//                        NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
                         if (cellBtn.titleLabel.text.length == 5)
                         {
-                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-50, 15, 18, 18)];
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-50, 17, 18, 18)];
                         }
                         else
                         {
-                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-65, 15, 18, 18)];
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-65, 17, 18, 18)];
                         }
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
-                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
-
-                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 15, 18, 18)];
+//                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
+                        if (i == 8)
+                        {
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 13, 18, 18)];
+                        }
+                        else
+                        {
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-40, 17, 18, 18)];
+                        }
                     }
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
-                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 15, 18, 18)];
+//                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 17, 18, 18)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
                     [btn setTitle:s forState:UIControlStateNormal];
                 }
                 else if (s.intValue >= 99)
                 {
-//                    [btn setFrame:CGRectMake(cellBtn.frame.size.width-22, 13, 24, 18)];
                     if (cellBtn.frame.size.width >= 153)
                     {
-                        NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
+//                        NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
                         if (cellBtn.titleLabel.text.length == 5)
                         {
-                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-50, 15, 18, 18)];
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-50, 17, 22, 19)];
                         }
                         else
                         {
-                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-65, 15, 18, 18)];
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-65, 17, 22, 19)];
                         }
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
-                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
-                        
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 15, 18, 18)];
+//                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
+                        if (i == 8)
+                        {
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 13, 22, 19)];
+                        }
+                        else
+                        {
+                            [btn setFrame:CGRectMake(cellBtn.frame.size.width-40, 17, 22, 19)];
+                        }
                     }
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
-                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
-                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-24, 14, 18, 18)];
+//                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
+                        [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 17, 22, 19)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
                     [btn setTitle:@"99+" forState:UIControlStateNormal];
                 }
-                
                 [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
                 
                 if(s.intValue == 0)
@@ -228,8 +240,10 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    
-//    isPopShow = NO;
+    self.tableView.scrollEnabled = YES;
+    isPopShow = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
 
 - (void)viewDidLoad
@@ -338,15 +352,16 @@
         [headBtnArray addObject:btn];
     }
     
-    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_9,_btn_10,_btn_11,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
+//    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_9,_btn_10,_btn_11,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
+    
+     cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_11,_btn_9,_btn_10,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
     
     for(int i=0;i<cellBtnArray.count;i++)
     {
         UIButton *btn = (UIButton *)[cellBtnArray objectAtIndex:i];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
+   
 }
 
 
@@ -409,7 +424,7 @@
     else
     {
         isPopShow = YES;
-        
+        self.tableView.scrollEnabled = YES;
     }
 }
 

@@ -90,6 +90,7 @@ BOOL isPopShow = NO;
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     isPopShow = NO;
+    self.tableView.scrollEnabled = YES;
 }
 
 - (void) viewWillDisappear:(BOOL)animated

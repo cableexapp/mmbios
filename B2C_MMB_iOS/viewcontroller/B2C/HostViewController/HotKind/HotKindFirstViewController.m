@@ -15,6 +15,8 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFStringUtil.h"
 #import "SearchViewController.h"
+#import "B2BAskPriceCarViewController.h"
+
 
 @interface HotKindFirstViewController ()
 {
@@ -22,6 +24,7 @@
     NSMutableArray *selectArray;
     UIButton *backView;
     UIView *rightButtonView;
+    BOOL flag;
 }
 
 @end
@@ -60,7 +63,9 @@
 {
     [super viewWillDisappear:YES];
     rightButtonView.hidden = YES;
+
 }
+
 
 - (void)viewDidLoad
 {
@@ -101,6 +106,7 @@
         [_testTableView reloadData];
     }
       selectArray = [NSMutableArray arrayWithCapacity:dataArray.count];
+    
      [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, 0)];
     self.testSubTableView.hidden = YES;
     
@@ -397,6 +403,39 @@ if ( _opend )
 {
     return YES;
 }
+
+
+
+- (void) loadAlertView
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚有商品未加入询价车,是否加入" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [av setTag:10];
+    [av show];
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 10)
+    {
+        if(flag == YES)
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else
+        {
+            [self setHidesBottomBarWhenPushed:YES];
+            HotKindFirstViewController *hotKindFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+//            [self.navigationController pushViewController:B2BAskPriceCarViewController animated:YES];
+        }
+    }
+
+
+
+}
+
+
+
+
 
 - (void)didReceiveMemoryWarning
 {

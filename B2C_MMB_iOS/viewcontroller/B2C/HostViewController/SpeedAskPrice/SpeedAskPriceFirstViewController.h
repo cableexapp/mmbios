@@ -13,7 +13,7 @@
 #import "MBProgressHUD.h"
 #import "LookForBigPicViewController.h"
 
-@interface SpeedAskPriceFirstViewController : UIViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,QBImagePickerControllerDelegate,UINavigationControllerDelegate,MBProgressHUDDelegate,ConnectionDelegate,DeletePic,UITextViewDelegate>
+@interface SpeedAskPriceFirstViewController : UIViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,QBImagePickerControllerDelegate,UINavigationControllerDelegate,MBProgressHUDDelegate,ConnectionDelegate,DeletePic,UITextViewDelegate,UIScrollViewDelegate>
 {
     ELCImagePickerDemoViewController *elcImagePickerDemoViewController;
     MBProgressHUD *HUD;
@@ -27,4 +27,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *showlabel;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
+@property (weak, nonatomic) IBOutlet UIScrollView *mySv;
 @end

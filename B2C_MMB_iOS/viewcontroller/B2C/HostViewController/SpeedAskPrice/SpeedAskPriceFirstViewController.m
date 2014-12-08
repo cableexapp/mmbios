@@ -76,7 +76,7 @@
     UIView *tel_lineView = [[UIView alloc] init];
     tel_lineView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
     tel_lineView.frame = CGRectMake(0, self.tel_Tf.frame.origin.y+self.tel_Tf.frame.size.height-1, ScreenWidth, 1);
-    [self.view addSubview:tel_lineView];
+    [self.mySv addSubview:tel_lineView];
     
     
     UIView *content_lineViewUp = [[UIView alloc] init];
@@ -87,19 +87,23 @@
     UIView *content_lineView = [[UIView alloc] init];
     content_lineView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
     content_lineView.frame = CGRectMake(0, self.content_Tv.frame.origin.y+self.content_Tv.frame.size.height-1, ScreenWidth, 1);
-    [self.view addSubview:content_lineView];
+    [self.mySv addSubview:content_lineView];
     
 
     self.upBtn.layer.cornerRadius = 6;
     self.upBtn.layer.backgroundColor = [[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] CGColor];
     [self.upBtn setTitle:@"提交" forState:UIControlStateNormal];
-    self.upBtn.frame = CGRectMake(8, self.view.frame.size.height-55, self.view.frame.size.width-16, 40);
+//    self.upBtn.frame = CGRectMake(20, self.view.frame.size.height-55, self.view.frame.size.width-16, 40);
     [self.upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [self.lastUpPicBtn setTag:100];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
+    
+    [self.mySv setContentSize:CGSizeMake(ScreenWidth, self.upBtn.frame.origin.y+self.upBtn.frame.size.height+20)];
+    [self.mySv setShowsHorizontalScrollIndicator:NO];
+    [self.mySv setShowsVerticalScrollIndicator:NO];
 }
 
 - (void) tap:(UITapGestureRecognizer *) sender
@@ -300,7 +304,7 @@
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn.frame.size.width, btn.frame.size.height)];
         [iv setImage:(UIImage *)[chooseImageArray objectAtIndex:i]];
         [btn addSubview:iv];
-        [self.view addSubview:btn];
+        [self.mySv addSubview:btn];
         
         [btn addTarget:self action:@selector(picBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -322,8 +326,10 @@
 #pragma mark - 这里修改提交按钮frame
 //    if(cameraOrPhoto == 0)
 //    {
-        [self.upBtn setFrame:CGRectMake(20, self.lastUpPicBtn.frame.origin.y + self.lastUpPicBtn.frame.size.height + 25, ScreenWidth-40, 40)];
-        
+        [self.upBtn setFrame:CGRectMake(10, self.lastUpPicBtn.frame.origin.y + self.lastUpPicBtn.frame.size.height + 25, ScreenWidth-20, 40)];
+    
+    [self.mySv setContentSize:CGSizeMake(ScreenWidth, self.upBtn.frame.origin.y+self.upBtn.frame.size.height+20)];
+
 //    }
 //    else
 //    {

@@ -12,6 +12,12 @@
 #import "DCFTopLabel.h"
 #import "DCFConnectionUtil.h"
 
+@protocol ReceveAddress <NSObject>
+
+- (void) receveAddress:(NSDictionary *) dic;
+
+@end
+
 @interface ChooseReceiveAddressViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate>
 {
     UITableView *tv;
@@ -22,6 +28,14 @@
 @property (weak, nonatomic) IBOutlet UIView *buttomView;
 @property (weak, nonatomic) IBOutlet UIButton *buttomBtn;
 
+
+@property (assign,nonatomic) id<ReceveAddress> delegate;
+
 - (id) initWithDataArray:(NSMutableArray *) arr;
 
+- (void) loadRequest;
+
+- (void) cancelRequest;
+
 @end
+

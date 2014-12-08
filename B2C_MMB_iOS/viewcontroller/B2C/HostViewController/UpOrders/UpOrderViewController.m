@@ -9,7 +9,6 @@
 #import "UpOrderViewController.h"
 #import "DCFCustomExtra.h"
 #import "DCFTopLabel.h"
-#import "ChooseReceiveAddressViewController.h"
 #import "BillMsgManagerViewController.h"
 #import "ChoosePayTableViewController.h"
 #import "LoginNaviViewController.h"
@@ -75,6 +74,9 @@
     NSMutableArray *priceArray;
     
     DCFMyTextField *theTextField;
+    
+    
+    ChooseReceiveAddressViewController *chooseAddress;
 }
 @end
 
@@ -89,11 +91,82 @@
     return self;
 }
 
+- (void) receveAddress:(NSDictionary *)dic
+{
+    addressDic = [[NSDictionary alloc] initWithDictionary:dic];
+    if(!billReceiveAddressLabel_1)
+    {
+        billReceiveAddressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
+        [billReceiveAddressLabel_1 setFont:[UIFont systemFontOfSize:13]];
+    }
+    if(!billReceiveAddressLabel_2)
+    {
+        billReceiveAddressLabel_2 = [[UILabel alloc] init];
+        [billReceiveAddressLabel_2 setFont:[UIFont systemFontOfSize:13]];
+        [billReceiveAddressLabel_2 setNumberOfLines:0];
+    }
+    
+    if([[addressDic allKeys] count] == 0 || [addressDic isKindOfClass:[NSNull class]])
+    {
+        [billReceiveAddressLabel_1 setText:@"暂无收货地址"];
+        [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
+        
+        receiveaddress = @"";
+        receivecity = @"";
+        receivedistrict = @"";
+        receiveprovince = @"";
+        receiver = @"";
+        receiveTel = @"";
+        receiveAddressId = @"";
+        addressDic = [[NSDictionary alloc] init];
+        
+    }
+    else
+    {
+        //            NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+        
+        receiver = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiver"]];
+        receiveTel = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveTel"]];
+        receiveprovince = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveprovince"]];
+        receivecity = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receivecity"]];
+        receivedistrict = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receivedistrict"]];
+        receiveaddress = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveaddress"]];
+        receiveAddressId = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveAddressId"]];
+        
+        
+        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"%@    %@",receiver,receiveTel]];
+        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        if([DCFCustomExtra validateString:fullAddress] == NO)
+        {
+            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
+        }
+        else
+        {
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, size.height)];
+        }
+        //        [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 30)];
+        [billReceiveAddressLabel_2 setText:fullAddress];
+        
+    }
+    if(tv)
+    {
+        [tv reloadData];
+        //        NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+        //        NSArray *arr = [NSArray arrayWithObject:path];
+        //        [tv reloadRowsAtIndexPaths:arr withRowAnimation:0];
+    }
+}
+
 #pragma mark - tag为1表示从购物车列表进来，0表示从商品详情页点击立即购买进来
 - (id) initWithDataArray:(NSMutableArray *) dataArray WithMoney:(double) money WithOrderData:(B2CUpOrderData *) orderData WithTag:(int)tag
 {
     if(self = [super init])
     {
+        chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
+        chooseAddress.delegate = self;
+        [chooseAddress loadRequest];
+        
         goodsMoney = money;
         goodsListArray = [[NSMutableArray alloc] init];
         
@@ -458,59 +531,15 @@
     }
     
     
-    if(!billReceiveAddressLabel_1)
-    {
-        billReceiveAddressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
-        [billReceiveAddressLabel_1 setFont:[UIFont systemFontOfSize:13]];
-    }
-    if(!billReceiveAddressLabel_2)
-    {
-        billReceiveAddressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 30)];
-        [billReceiveAddressLabel_2 setFont:[UIFont systemFontOfSize:13]];
-        [billReceiveAddressLabel_2 setNumberOfLines:0];
-    }
-    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
-    {
-        [billReceiveAddressLabel_1 setText:@"暂无收货地址"];
-        [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
-        
-        receiveaddress = @"";
-        receivecity = @"";
-        receivedistrict = @"";
-        receiveprovince = @"";
-        receiver = @"";
-        receiveTel = @"";
-        receiveAddressId = @"";
-        addressDic = [[NSDictionary alloc] init];
-    }
-    else
-    {
-        NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
-        
-        receiver = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiver"]];
-        receiveTel = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveTel"]];
-        receiveprovince = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveprovince"]];
-        receivecity = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivecity"]];
-        receivedistrict = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivedistrict"]];
-        receiveaddress = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveaddress"]];
-        receiveAddressId = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveAddressId"]];
-        
-        addressDic = [[NSDictionary alloc] initWithDictionary:receiveDic];
-        
-        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"%@    %@",receiver,receiveTel]];
-        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
-        if(fullAddress.length == 0 || [fullAddress isKindOfClass:[NSNull class]])
-        {
-            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
-        }
-        else
-        {
-            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, size.height)];
-        }
-        [billReceiveAddressLabel_2 setText:fullAddress];
-        
-    }
+    
+    
+    //    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
+    //    {
+    //    }
+    //    else
+    //    {
+    //
+    //    }
     
     
     if(tv)
@@ -528,6 +557,10 @@
     {
         [conn stopConnection];
         conn = nil;
+    }
+    if(chooseAddress)
+    {
+        [chooseAddress cancelRequest];
     }
 }
 
@@ -573,19 +606,18 @@
 {
     NSDictionary*info=[note userInfo];
     CGSize kbSize=[[info objectForKey:UIKeyboardFrameEndUserInfoKey]CGRectValue].size;
-    NSLog(@"keyboard changed, keyboard width = %f, height = %f",
-          kbSize.width,kbSize.height);
+    
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
     [UIView setAnimationDelegate:self];
-//    if(ScreenHeight < 500)
-//    {
-        [self.view setFrame:CGRectMake(0, -kbSize.height+150, ScreenWidth, ScreenHeight)];
-//    }
-//    else
-//    {
-//        
-//    }
+    //    if(ScreenHeight < 500)
+    //    {
+    [self.view setFrame:CGRectMake(0, -kbSize.height+150, ScreenWidth, ScreenHeight)];
+    //    }
+    //    else
+    //    {
+    //
+    //    }
     [UIView commitAnimations];
 }
 
@@ -597,21 +629,21 @@
     [UIView setAnimationDuration:0.3];
     [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
     [UIView commitAnimations];
-//    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-//    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-//    
-//    // 获取输入框的位置和大小
-//    CGRect containerFrame = theTextField.frame;
-//    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
-//    
-//    // 动画改变位置
-//    [UIView animateWithDuration:[duration doubleValue] animations:^{
-//        [UIView setAnimationBeginsFromCurrentState:YES];
-//        [UIView setAnimationDuration:[duration doubleValue]];
-//        [UIView setAnimationCurve:[curve intValue]];
-//        // 更改输入框的位置
-//        theTextField.frame = containerFrame;
-//    }];
+    //    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    //    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    //
+    //    // 获取输入框的位置和大小
+    //    CGRect containerFrame = theTextField.frame;
+    //    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
+    //
+    //    // 动画改变位置
+    //    [UIView animateWithDuration:[duration doubleValue] animations:^{
+    //        [UIView setAnimationBeginsFromCurrentState:YES];
+    //        [UIView setAnimationDuration:[duration doubleValue]];
+    //        [UIView setAnimationCurve:[curve intValue]];
+    //        // 更改输入框的位置
+    //        theTextField.frame = containerFrame;
+    //    }];
 }
 
 - (void)viewDidLoad
@@ -732,25 +764,35 @@
     if(indexPath.section == 0)
     {
         
-        NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+        //        NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+        NSLog(@"%@",addressDic);
         
-        
-        receiver = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiver"]];
-        receiveTel = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveTel"]];
-        receiveprovince = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveprovince"]];
-        receivecity = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivecity"]];
-        receivedistrict = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receivedistrict"]];
-        receiveaddress = [NSString stringWithFormat:@"%@",[receiveDic objectForKey:@"receiveaddress"]];
-        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
-        if(fullAddress.length == 0 || [fullAddress isKindOfClass:[NSNull class]])
+        if(!addressDic || [[addressDic allKeys] count] == 0 || [addressDic isKindOfClass:[NSNull class]])
         {
             return 40;
         }
         else
         {
-            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-            return size.height+40;
+            receiver = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiver"]];
+            receiveTel = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveTel"]];
+            receiveprovince = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveprovince"]];
+            receivecity = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receivecity"]];
+            receivedistrict = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receivedistrict"]];
+            receiveaddress = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveaddress"]];
+            NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+            NSLog(@"full = %@",fullAddress);
+            if([DCFCustomExtra validateString:fullAddress] == NO)
+            {
+                return 40;
+            }
+            else
+            {
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                return size.height+40;
+            }
+            
         }
+        
     }
     if(indexPath.section == 2)
     {
@@ -871,9 +913,15 @@
     }
     if(indexPath.section == 0)
     {
-        
-        [cell.contentView addSubview:billReceiveAddressLabel_1];
-        [cell.contentView addSubview:billReceiveAddressLabel_2];
+        if([[addressDic allKeys] count] == 0 || [addressDic isKindOfClass:[NSNull class]])
+        {
+            [cell.textLabel setText:@"正在加载数据"];
+        }
+        else
+        {
+            [cell.contentView addSubview:billReceiveAddressLabel_1];
+            [cell.contentView addSubview:billReceiveAddressLabel_2];
+        }
         
     }
     if(indexPath.section == 1)
@@ -1181,16 +1229,6 @@
 {
     if(indexPath.section == 0)
     {
-        //        if(!b2cOrderData || b2cOrderData.addressArray.count == 0)
-        //        {
-        //
-        //        }
-        //        else
-        //        {
-        //            myAddressId = [[addressListDataArray objectAtIndex:indexPath.row] addressId];
-        
-        //            ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] initWithDataArray:addressListDataArray];
-        ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
         [self.navigationController pushViewController:chooseAddress animated:YES];
         //        }
         
@@ -1305,11 +1343,11 @@
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDelegate:self];
-//    [UIView setAnimationDuration:0.3f];
-//    [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
-//    [UIView commitAnimations];
+    //    [UIView beginAnimations:nil context:nil];
+    //    [UIView setAnimationDelegate:self];
+    //    [UIView setAnimationDuration:0.3f];
+    //    [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+    //    [UIView commitAnimations];
     return YES;
 }
 

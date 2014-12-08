@@ -7,6 +7,7 @@
 //
 
 #import "ShopHostTableViewController.h"
+#import "ShopHostPreTableViewController.h"
 #import "DCFTopLabel.h"
 #import "DCFConnectionUtil.h"
 #import "MCDefine.h"
@@ -30,6 +31,7 @@
     BOOL _reloading;
     
     NSArray *scoreArray;
+    NSMutableArray *discussArray;
     UIView * shadowView;
     
     NSArray *typeArray;
@@ -102,16 +104,13 @@
 
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
     self.navigationItem.titleView = top;
-    
     intPage = 1;
-    
     dataArray = [[NSMutableArray alloc] init];
         //ADD REFRESH VIEW
     _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, 320, 300)];
     [self.refreshView setDelegate:self];
     [self.tableView addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
-    
     [self loadRequest:_shopId WithUse:shopUse];
     
 
@@ -226,6 +225,7 @@
     if(URLTag == URLB2CGoodsListTag)
     {
 
+        NSLog(@"%@",dicRespon);
         
         if(_reloading == YES)
         {
@@ -251,6 +251,9 @@
                 [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
                 
                 scoreArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"score"]];
+                
+                NSLog(@"scoreArray======%@",scoreArray);
+
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 if(intTotal == 0)
@@ -287,6 +290,8 @@
     }
     if(URLTag == URLB2CGetShopProductTypeTag)
     {
+        NSLog(@"%@",dicRespon);
+
         if(result == 1)
         {
             typeArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"types"]];
@@ -336,14 +341,27 @@
     [headView addSubview:sepView_5];
     
     
+
+    
     UILabel *scoreLabel =[[UILabel alloc] initWithFrame:CGRectMake(245, 0, 80, 30)];
     [scoreLabel setFont:[UIFont boldSystemFontOfSize:15]];
     [scoreLabel setText:@"综合评分"];
     [scoreLabel setTextColor:[UIColor grayColor]];
     [headView addSubview:scoreLabel];
-    UILabel *scoreLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(250, 22, 30, 30)];
+    UILabel *scoreLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(250, 22, 50, 30)];
     [scoreLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-    [scoreLabel_1 setText:@"5.0"];
+    
+//    取scoreArray里的前4位元素
+    discussArray = [[NSMutableArray alloc] init];
+    if(scoreArray.count != 0)
+    {
+        for(int i=0;i<4;i++)
+        {
+            [discussArray addObject:[scoreArray objectAtIndex:i]];
+        }
+    }
+    float avg = [[discussArray valueForKeyPath:@"@avg.floatValue"] floatValue]; //取平均数
+    scoreLabel_1.text = [NSString stringWithFormat:@"%.1f",avg]; 
     [scoreLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:scoreLabel_1];
     UIButton *scoreLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -362,7 +380,8 @@
     [headView addSubview:describeLabel];
     UILabel *describeLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(15, 82, 30, 30)];
     [describeLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-    [describeLabel_1 setText:@"5.0"];
+//    [describeLabel_1 setText:@"5.0"];
+    [describeLabel_1 setText:[scoreArray objectAtIndex:0]];//取出数组里面第0个元素
     [describeLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:describeLabel_1];
     UIButton *describeLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -381,7 +400,8 @@
     [headView addSubview:serviceLabel];
     UILabel *serviceLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(95, 82, 30, 30)];
     [serviceLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-    [serviceLabel_1 setText:@"5.0"];
+//   [serviceLabel_1 setText:@"5.0"];
+    [serviceLabel_1 setText:[scoreArray objectAtIndex:1]];//取出数组里面第1个元素
     [serviceLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:serviceLabel_1];
     UIButton *serviceLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -400,7 +420,8 @@
     [headView addSubview:deliveryLabel];
     UILabel *deliveryLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(175, 82, 30, 30)];
     [deliveryLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-    [deliveryLabel_1 setText:@"5.0"];
+//    [deliveryLabel_1 setText:@"5.0"];
+    [deliveryLabel_1 setText:[scoreArray objectAtIndex:2]];//取出数组里面第2个元素
     [deliveryLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:deliveryLabel_1];
     UIButton *deliveryLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -419,7 +440,8 @@
     [headView addSubview:qualityLabel];
     UILabel *qualityLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(255, 82, 30, 30)];
     [qualityLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-    [qualityLabel_1 setText:@"5.0"];
+//    [qualityLabel_1 setText:@"5.0"];
+    [qualityLabel_1 setText:[scoreArray objectAtIndex:3]];//取出数组里面第3个元素
     [qualityLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:qualityLabel_1];
     UIButton *qualityLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];

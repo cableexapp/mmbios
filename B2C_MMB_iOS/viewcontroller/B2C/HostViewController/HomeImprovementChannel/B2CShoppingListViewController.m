@@ -102,7 +102,7 @@
     countLabel.textColor = [UIColor whiteColor];
     countLabel.font = [UIFont systemFontOfSize:11];
     countLabel.textAlignment = 1;
-    countLabel.hidden = NO;
+    countLabel.hidden = YES;
     countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
     countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
     [rightBtn addSubview:countLabel];

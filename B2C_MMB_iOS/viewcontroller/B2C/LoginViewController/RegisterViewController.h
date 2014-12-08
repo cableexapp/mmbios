@@ -11,7 +11,7 @@
 #import "DCFConnectionUtil.h"
 
 
-@interface RegisterViewController : UIViewController<UITextFieldDelegate,MBProgressHUDDelegate,ConnectionDelegate,UIScrollViewDelegate>
+@interface RegisterViewController : UIViewController<UITextFieldDelegate,MBProgressHUDDelegate,ConnectionDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate>
 {
     MBProgressHUD *HUD;
 }
@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
 
 
+- (IBAction)agreementBtn:(id)sender;
 
 @end
 

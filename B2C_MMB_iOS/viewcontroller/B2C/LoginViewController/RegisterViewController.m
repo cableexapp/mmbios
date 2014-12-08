@@ -12,6 +12,7 @@
 #import "DCFCustomExtra.h"
 #import "MCdes.h"
 #import "MCDefine.h"
+#import "RegisterAgreementViewController.h"
 
 @interface RegisterViewController ()
 {
@@ -151,7 +152,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"电缆买卖宝注册"];
     self.navigationItem.titleView = TOP;
     
@@ -162,6 +163,7 @@
     [self.sv setPagingEnabled:YES];
     [self.sv setBounces:NO];
     
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
     
@@ -170,8 +172,13 @@
     
 }
 
-
-
+- (IBAction)agreementBtn:(id)sender
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    RegisterAgreementViewController *registerVC = [[RegisterAgreementViewController alloc] init];
+    [self.navigationController pushViewController:registerVC animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
+}
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
@@ -654,6 +661,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 
 @end

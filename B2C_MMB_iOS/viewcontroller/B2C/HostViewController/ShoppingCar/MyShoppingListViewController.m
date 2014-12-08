@@ -32,6 +32,10 @@
     
     NSMutableArray *cellImageViewArray;
     
+    NSMutableArray *priceLabelArray;
+    
+    NSMutableArray *colorLabelArray;
+    
     UIView *buttomView;
     
     
@@ -322,6 +326,8 @@
             cellImageViewArray = [[NSMutableArray alloc] init];
             subtractArray = [[NSMutableArray alloc] init];
             addArray = [[NSMutableArray alloc] init];
+            priceLabelArray = [[NSMutableArray alloc] init];
+            colorLabelArray = [[NSMutableArray alloc] init];
             
             for(int i = 0;i < dataArray.count;i++)
             {
@@ -329,6 +335,8 @@
                 NSMutableArray *b = [[NSMutableArray alloc] init];
                 NSMutableArray *c = [[NSMutableArray alloc] init];
                 NSMutableArray *d = [[NSMutableArray alloc] init];
+                NSMutableArray *e = [[NSMutableArray alloc] init];
+                NSMutableArray *f = [[NSMutableArray alloc] init];
                 
                 for(int j=0;j<[[dataArray objectAtIndex:i] count];j++)
                 {
@@ -364,6 +372,12 @@
                     [addBtn setBackgroundColor:[UIColor whiteColor]];
                     [addBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                     
+                    UILabel *subPriceLabel = [[UILabel alloc] init];
+                    [subPriceLabel setText:@"单价:"];
+                    [subPriceLabel setFont:[UIFont systemFontOfSize:12]];
+                    
+                    UILabel *subColorLabel = [[UILabel alloc] init];
+                    [subColorLabel setFont:[UIFont systemFontOfSize:12]];
                     
                     [a addObject:cellBtn];
                     
@@ -372,11 +386,17 @@
                     [c addObject:subtractBtn];
                     
                     [d addObject:addBtn];
+                    
+                    [e addObject:subPriceLabel];
+
+                    [f addObject:subColorLabel];
                 }
                 [cellBtnArray addObject:a];
                 [cellImageViewArray addObject:b];
                 [subtractArray addObject:c];
                 [addArray addObject:d];
+                [priceLabelArray addObject:e];
+                [colorLabelArray addObject:f];
             }
             total = 0;
             for(int i=0;i<dataArray.count;i++)
@@ -495,6 +515,12 @@
                         
                         UIButton *cellBtn = [[cellBtnArray objectAtIndex:section] objectAtIndex:row];
                         [[cellBtnArray objectAtIndex:section] removeObject:cellBtn];
+                        
+                        UILabel *label = [[priceLabelArray objectAtIndex:section] objectAtIndex:row];
+                        [[priceLabelArray objectAtIndex:section] removeObject:label];
+                        
+                        UILabel *colorLab = [[colorLabelArray objectAtIndex:section] objectAtIndex:row];
+                        [[colorLabelArray objectAtIndex:section] removeObject:colorLab];
                     }
                 }
             }
@@ -1121,13 +1147,13 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         NSString *content = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItmeTitle];
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:content WithSize:CGSizeMake(160, MAXFLOAT)];
-        if(size.height + 50 <= 100)
+        if(size.height + 95 <= 100)
         {
             return 110;
         }
         else
         {
-            return size.height + 50;
+            return size.height + 95;
         }
     }
     return 0;
@@ -1374,9 +1400,19 @@ NSComparator cmptr = ^(id obj1, id obj2){
     numLabel.layer.borderWidth = 1.0f;
     numLabel.layer.masksToBounds = YES;
     [numLabel setBackgroundColor:[UIColor whiteColor]];
-    
     [cell.contentView addSubview:numLabel];
     
+    UILabel *label = [[priceLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    [label setFrame:CGRectMake(cellIv.frame.origin.x + cellIv.frame.size.width + 5, addBtn.frame.origin.y + addBtn.frame.size.height + 5, 160, 20)];
+    [label setText:[NSString stringWithFormat:@"单价:%@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] price]]];
+    [cell.contentView addSubview:label];
+
+    UILabel *subColorLab = [[colorLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    [subColorLab setFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y+label.frame.size.height, label.frame.size.width, 20)];
+    [subColorLab setText:[NSString stringWithFormat:@"颜色:%@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] colorName]]];
+    [cell.contentView addSubview:subColorLab];
+    
+    [cellIv setFrame:CGRectMake(cellIv.frame.origin.x, (cell.contentView.frame.size.height-100)/2, cellIv.frame.size.width, cellIv.frame.size.height)];
     
     return cell;
     //    }

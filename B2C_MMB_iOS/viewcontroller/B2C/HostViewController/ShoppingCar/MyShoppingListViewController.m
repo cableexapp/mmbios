@@ -21,6 +21,7 @@
 #import "B2CUpOrderData.h"
 #import "AppDelegate.h"
 #import "ShoppingHostViewController.h"
+#import "GoodsDetailViewController.h"
 
 @interface MyShoppingListViewController ()
 {
@@ -388,7 +389,7 @@
                     [d addObject:addBtn];
                     
                     [e addObject:subPriceLabel];
-
+                    
                     [f addObject:subColorLabel];
                 }
                 [cellBtnArray addObject:a];
@@ -643,6 +644,18 @@
     }
 }
 
+#pragma mark - 图片点击
+- (void) cellIvTap:(UITapGestureRecognizer *) sender
+{
+    int section = [[sender view] tag]/10000;
+    int row = [[sender view] tag] % 10000;
+    B2CShopCarListData *carListData = [[dataArray objectAtIndex:section] objectAtIndex:row];
+    NSString *productId = [carListData productId];
+    GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
+    [self.navigationController pushViewController:detail animated:YES];
+    
+    //    NSLog(@"tag = %d",[[sender view] subviews].tag);
+}
 
 - (void) addBtnClick:(UIButton *) sender
 {
@@ -1155,6 +1168,8 @@ NSComparator cmptr = ^(id obj1, id obj2){
         {
             return size.height + 95;
         }
+        NSLog(@"size.height)=%f",size.height);
+        
     }
     return 0;
 }
@@ -1343,7 +1358,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-        [cell setSelectionStyle:0];
+//        [cell setSelectionStyle:0];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
     {
@@ -1355,9 +1370,13 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [cell.contentView addSubview:cellBtn];
     
     UIImageView *cellIv = [[cellImageViewArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    cellIv.userInteractionEnabled = YES;
     NSURL *url = [NSURL URLWithString:[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItemPic]];
     [cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
     [cell.contentView addSubview:cellIv];
+    [cellIv setTag:10000*indexPath.section+indexPath.row];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellIvTap:)];
+    [cellIv addGestureRecognizer:tap];
     
     NSString *content = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItmeTitle];
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:content WithSize:CGSizeMake(160, MAXFLOAT)];
@@ -1406,13 +1425,15 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [label setFrame:CGRectMake(cellIv.frame.origin.x + cellIv.frame.size.width + 5, addBtn.frame.origin.y + addBtn.frame.size.height + 5, 160, 20)];
     [label setText:[NSString stringWithFormat:@"单价:%@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] price]]];
     [cell.contentView addSubview:label];
-
+    
     UILabel *subColorLab = [[colorLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [subColorLab setFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y+label.frame.size.height, label.frame.size.width, 20)];
     [subColorLab setText:[NSString stringWithFormat:@"颜色:%@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] colorName]]];
     [cell.contentView addSubview:subColorLab];
     
-    [cellIv setFrame:CGRectMake(cellIv.frame.origin.x, (cell.contentView.frame.size.height-100)/2, cellIv.frame.size.width, cellIv.frame.size.height)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, subColorLab.frame.origin.y+subColorLab.frame.size.height, ScreenWidth, 1)];
+    [lineView setBackgroundColor:[UIColor colorWithRed:231.0/255.0 green:231.0/255.0 blue:231.0/255.0 alpha:1.0]];
+    [cell.contentView addSubview:lineView];
     
     return cell;
     //    }

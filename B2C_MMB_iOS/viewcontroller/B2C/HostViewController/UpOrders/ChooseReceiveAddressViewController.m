@@ -90,6 +90,37 @@
     }
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [self cancelRequest];
+}
+- (void) cancelRequest
+{
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+}
+
+- (void) loadRequest
+{
+#pragma mark - 收货地址
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+    moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+    [moreCell startAnimation];
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -111,21 +142,9 @@
         }
     }
     
- 
     
-#pragma mark - 收货地址
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
-    NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
     
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
-    moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-    [moreCell startAnimation];
 }
 
 - (NSString *) getMemberId
@@ -178,7 +197,7 @@
                 [cellBtnArray addObject:btn];
                 
                 B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:i];
-
+                
                 if([[data isDefault] isEqualToString:@"1"])
                 {
                     [btn setSelected:YES];
@@ -188,7 +207,10 @@
                     }
                     NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
                     [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
-                    
+                    if([self.delegate respondsToSelector:@selector(receveAddress:)])
+                    {
+                        [self.delegate receveAddress:receiveDic];
+                    }
                 }
                 else
                 {
@@ -202,7 +224,7 @@
             [tv reloadData];
         }
     }
-
+    
 }
 - (void)viewDidLoad
 {
@@ -226,7 +248,7 @@
     [self.buttomView setFrame:CGRectMake(0, self.tvBackView.frame.size.height, 320, 49)];
     
     
-
+    
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height) style:0];
     [tv setDataSource:self];
@@ -292,7 +314,7 @@
     else
     {
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
-
+        
         NSString *name = addressData.receiver;
         CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
@@ -370,7 +392,7 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
     if(btn.hidden == YES)
     {
@@ -383,7 +405,7 @@
         
     }
     B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
-
+    
     NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
     [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
     

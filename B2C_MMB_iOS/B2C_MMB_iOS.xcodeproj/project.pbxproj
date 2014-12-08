@@ -761,6 +761,7 @@
 		8BEBDDB61A132B65007D0B48 /* ico_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BEBDDB41A132B65007D0B48 /* ico_error.png */; };
 		8BEBDDB71A132B65007D0B48 /* ico_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BEBDDB51A132B65007D0B48 /* ico_error@2x.png */; };
 		8BF5D5441A1F565300A3287C /* set_clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF5D5431A1F565300A3287C /* set_clear.png */; };
+		8BFCF9FF1A3599F6005774D1 /* RegisterAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFCF9FE1A3599F6005774D1 /* RegisterAgreementViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1902,6 +1903,8 @@
 		8BEBDDB41A132B65007D0B48 /* ico_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ico_error.png; sourceTree = "<group>"; };
 		8BEBDDB51A132B65007D0B48 /* ico_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ico_error@2x.png"; sourceTree = "<group>"; };
 		8BF5D5431A1F565300A3287C /* set_clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_clear.png; sourceTree = "<group>"; };
+		8BFCF9FD1A3599F6005774D1 /* RegisterAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterAgreementViewController.h; sourceTree = "<group>"; };
+		8BFCF9FE1A3599F6005774D1 /* RegisterAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterAgreementViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3148,6 +3151,8 @@
 				61B710A919FF3B53001CC3BD /* LoginViewController.m */,
 				61B710AA19FF3B53001CC3BD /* RegisterViewController.h */,
 				61B710AB19FF3B53001CC3BD /* RegisterViewController.m */,
+				8BFCF9FD1A3599F6005774D1 /* RegisterAgreementViewController.h */,
+				8BFCF9FE1A3599F6005774D1 /* RegisterAgreementViewController.m */,
 			);
 			path = LoginViewController;
 			sourceTree = "<group>";
@@ -4800,6 +4805,7 @@
 				61B710D519FF3B53001CC3BD /* ChooseListTableViewController.m in Sources */,
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
 				8BB7D49D1A29A70F00C716E4 /* MyCableOrderB2BViewController.m in Sources */,
+				8BFCF9FF1A3599F6005774D1 /* RegisterAgreementViewController.m in Sources */,
 				8BA7C17D1A10A8CC00758B0F /* FBShimmeringLayer.m in Sources */,
 				61551E911A0B4D6D004F50FF /* B2BAskPriceInquirySheetViewController.m in Sources */,
 				8BC2ADA11A19F0E100E44BC2 /* BPushClass.m in Sources */,

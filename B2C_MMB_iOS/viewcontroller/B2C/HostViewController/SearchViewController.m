@@ -88,8 +88,6 @@
     int carCount;  //询价车数量
     
     UIButton *clearBtn;
-    
-    BOOL isShowClearBtn;
 }
 @end
 
@@ -135,9 +133,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-//    [self readHistoryData];
-    
-    NSLog(@"viewDidAppear");
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -145,7 +140,6 @@
     [super viewDidDisappear:YES];
     [_iflyRecognizerView cancel];
     _iflyRecognizerView.delegate = nil;
-    NSLog(@"viewDidDisappear");
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -278,11 +272,6 @@
     
     _popView = [[PopupView alloc] initWithFrame:CGRectMake(100, 300, 0, 0)];
     _popView.ParentView = self.view;
-
-//    [self createDataBase_B2B];
-//    [self createDataBase_B2C];
-
-//    [dataArray removeAllObjects];
     
     if ([[[self.searchFlag componentsSeparatedByString:@"+"] objectAtIndex:0] isEqualToString:@"B2C"])
     {
@@ -298,8 +287,6 @@
         speakButtonView.hidden = YES;
         [self sendRquest];
     }
-    NSLog(@"viewDidLoad");
-   
 }
 
 //请求询价车商品数量
@@ -377,7 +364,7 @@
         {
             dataArray = [dicRespon objectForKey:@"types"];
             coverView.hidden = YES;
-            isShowClearBtn = YES;
+            
             [mySearchBar resignFirstResponder];
             if ([[dicRespon objectForKey:@"types"] count] == 0)
             {
@@ -389,7 +376,7 @@
         {
             dataArray = [dicRespon objectForKey:@"products"];
             coverView.hidden = YES;
-            isShowClearBtn = YES;
+            
             [mySearchBar resignFirstResponder];
             if ([[dicRespon objectForKey:@"products"] count] == 0)
             {
@@ -704,6 +691,7 @@
     NSLog(@"搜索历史 = %@",dataArray);
     if (dataArray.count > 0)
     {
+      
         NSLog(@"搜索历史firsttype = %@",[[dataArray objectAtIndex:0] objectForKey:@"firsttype"]);
         NSLog(@"搜索历史secondtype = %@",[[dataArray objectAtIndex:0] objectForKey:@"secondtype"]);
         NSLog(@"搜索历史thirdtype = %@",[[dataArray objectAtIndex:0] objectForKey:@"thirdtype"]);
@@ -809,6 +797,7 @@
     mySearchBar.text = nil;
     speakButton.hidden = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dissMiss" object:nil];
+    
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0] isEqualToString:@"家装线专卖"])
     {
         sectionBtnIv.frame = CGRectMake(72,17.5,10,10);
@@ -824,10 +813,10 @@
         {
             countLabel.hidden = YES;
         }
-
+        [self refreshTableView];
         [self SearchB2CDataFromDataBase];
          dataArray = [self arrayWithMemberIsOnly:B2ChistoryArray];
-//        [self.serchResultView reloadData];
+        [self.serchResultView reloadData];
     }
     else
     {
@@ -844,19 +833,15 @@
         {
             countLabel.hidden = YES;
         }
-    
+        [self refreshTableView];
         [self SearchB2BDataFromDataBase];
         dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
-       
-//        [self.serchResultView reloadData];
-//        [self refreshTableView];
+        [self.serchResultView reloadData];
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     speakButton.hidden = NO;
     speakButtonView.hidden = NO;
-    [self refreshTableView];
-
-    
+    [self readHistoryData];
 }
 
 -(void)changeClick:(NSNotification *)viewChanged
@@ -901,11 +886,11 @@
 {
     tempFlag = @"3";
     imageFlag = @"0";
-//    if(dataArray && dataArray.count != 0)
-//    {
-//         dataArray = tempArray;
-//        [self.serchResultView reloadData];
-//    }
+    if(dataArray && dataArray.count != 0)
+    {
+         dataArray = tempArray;
+        [self.serchResultView reloadData];
+    }
     [self.serchResultView reloadData];
     [self coverClearButton];
     [self deleteData];
@@ -1025,12 +1010,6 @@
                 {
                     if (B2BhistoryArray.count > 0)
                     {
-                        if (isShowClearBtn == YES)
-                        {
-                            
-                        }
-                        else
-                        {
                             searchImageView.image = nil;
                             clearBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
                             [clearBtn setBackgroundColor:[UIColor colorWithRed:0/255 green:86.0/255 blue:176.0/255 alpha:1.0]];
@@ -1040,7 +1019,6 @@
                             [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                             clearBtn.layer.cornerRadius = 3;
                             [cell addSubview:clearBtn];
-                        }
                         
                     }
                 }

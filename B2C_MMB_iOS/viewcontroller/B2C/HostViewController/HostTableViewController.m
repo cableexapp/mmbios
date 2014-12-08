@@ -542,7 +542,7 @@ BOOL isPopShow = NO;
         {
             return 0;
         }
-        return 230;
+        return 235;
     }
     return 0;
 }
@@ -575,10 +575,11 @@ BOOL isPopShow = NO;
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 35)];
-    [headBackView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0]];
+    [headBackView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
 
-    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake( 10, 0, 200, 35)];
-    headLabel.font = [UIFont systemFontOfSize:18];
+    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0,ScreenWidth-10, 35)];
+    headLabel.font = [UIFont systemFontOfSize:17];
+    
     if(section == 3)
     {
         [headLabel setText:@"电线用途"];
@@ -1021,7 +1022,7 @@ BOOL isPopShow = NO;
                 }
                 else
                 {
-                    UIView *cabelShowView = [[UIView alloc] initWithFrame:CGRectMake(10 + 155*i,0, 145, 210)];
+                    UIView *cabelShowView = [[UIView alloc] initWithFrame:CGRectMake(10 + 155*i,0, 145, 215)];
                     [cabelShowView setBackgroundColor:[UIColor whiteColor]];
                     cabelShowView.layer.borderWidth = 0.5;
                     cabelShowView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -1033,7 +1034,7 @@ BOOL isPopShow = NO;
                     [cell.contentView addSubview:cabelShowView];
                     
                     NSString *picUrl = [[dataArray objectAtIndex:indexPath.row*2 + i] p1Path];
-                    NSString *content = [[dataArray objectAtIndex:indexPath.row*2 + i] productTitle];
+                    NSString *content = [[dataArray objectAtIndex:indexPath.row*2 + i] productName];
                     NSString *price = [[dataArray objectAtIndex:indexPath.row*2 + i] productPrice];
                     
                     UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 145, 145)];
@@ -1042,11 +1043,11 @@ BOOL isPopShow = NO;
                     pic.layer.borderColor = [[UIColor lightGrayColor] CGColor];
                     [cabelShowView addSubview:pic];
                     
-                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width, 35)];
+                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width, 40)];
                     [contentLabel setBackgroundColor:[UIColor clearColor]];
                     [contentLabel setNumberOfLines:0];
                     [contentLabel setText:[NSString stringWithFormat:@" %@",content]];
-                    [contentLabel setFont:[UIFont systemFontOfSize:12]];
+                    [contentLabel setFont:[UIFont systemFontOfSize:11]];
                     [cabelShowView addSubview:contentLabel];
                     
                     UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height + 5, pic.frame.size.width, 20)];

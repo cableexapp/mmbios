@@ -72,6 +72,24 @@
             [view setHidden:YES];
         }
     }
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
+    [rightBtn setFrame:CGRectMake(0, 5, 37, 34)];
+    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    countLabel = [[UILabel alloc] init];
+    countLabel.frame = CGRectMake(22, 0, 18, 18);
+    countLabel.layer.borderWidth = 1;
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.font = [UIFont systemFontOfSize:11];
+    countLabel.textAlignment = 1;
+    countLabel.hidden = YES;
+    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+    [rightBtn addSubview:countLabel];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = right;
     [self loadShopCarCount];
 }
 
@@ -296,25 +314,6 @@
     [self.view addSubview:tv];
 
     [self loadScrollview];
-    
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
-    [rightBtn setFrame:CGRectMake(0, 5, 37, 34)];
-    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    countLabel = [[UILabel alloc] init];
-    countLabel.frame = CGRectMake(22, 0, 18, 18);
-    countLabel.layer.borderWidth = 1;
-    countLabel.layer.cornerRadius = 10;
-    countLabel.textColor = [UIColor whiteColor];
-    countLabel.font = [UIFont systemFontOfSize:11];
-    countLabel.textAlignment = 1;
-    countLabel.hidden = NO;
-    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
-    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
-    [rightBtn addSubview:countLabel];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = right;
 }
 
 - (void) rightBtnClick:(UIButton *) sender
@@ -335,7 +334,6 @@
     UITapGestureRecognizer *tap = (UITapGestureRecognizer *) sender;
     int tag = [[tap view] tag]-10;
     NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:tag] myProductId]];
-    NSLog(@"s = %@",s);
     [self setHidesBottomBarWhenPushed:YES];
 //    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];
@@ -403,7 +401,7 @@
         [hotLabel setText:@"  家装线主题馆"];
     }
     [hotLabel setTextAlignment:NSTextAlignmentLeft];
-    [hotLabel setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [hotLabel setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [hotLabel setFont:[UIFont boldSystemFontOfSize:14]];
     return hotLabel;
 }

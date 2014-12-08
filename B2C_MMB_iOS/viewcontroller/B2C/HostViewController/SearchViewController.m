@@ -47,11 +47,7 @@
     NSString *searchBarText;
     
     NSString *tempType;
-    
-//    UIButton *clearBtn;
-    
-    NSMutableArray *BBhistorySearch;
-    NSMutableArray *BChistorySearch;
+
     NSMutableArray *tempArray;
     NSMutableArray *typeIdArray;
     
@@ -90,6 +86,12 @@
     NSMutableArray *addToCarArray;  //加入询价车数组
     
     int carCount;  //询价车数量
+    
+    UIButton *clearBtn;
+    
+    int isShowClearBtn;
+    
+    int historyFlag;
 }
 @end
 
@@ -112,7 +114,6 @@
     if(addToCarArray)
     {
         [addToCarArray removeAllObjects];
-
     }
     rightBtn.hidden = NO;
     rightButtonView.hidden = NO;
@@ -132,9 +133,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-//    [self readHistoryData];
-    
-    NSLog(@"viewDidAppear");
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -142,7 +140,7 @@
     [super viewDidDisappear:YES];
     [_iflyRecognizerView cancel];
     _iflyRecognizerView.delegate = nil;
-    NSLog(@"viewDidDisappear");
+    isShowClearBtn = 1;
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -150,14 +148,13 @@
     [super viewWillDisappear:YES];
     rightButtonView.hidden = YES;
     rightBtn.hidden = YES;
-  
     imageFlag = @"1";
     tempFlag = @"4";
     
     [mySearchBar resignFirstResponder];
-//    [self readHistoryData];
+
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    NSLog(@"viewDidDisappear");
+
     if(conn)
     {
         [conn stopConnection];
@@ -187,6 +184,10 @@
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     addToCarArray = [[NSMutableArray alloc] init];
+    
+    //创建搜索数据库表
+    [self createDataBase_B2B];
+    [self createDataBase_B2C];
     
     if(btnArray)
     {
@@ -235,20 +236,7 @@
     speakButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width-30, 10, 25, 25)];
     [speakButton setBackgroundImage:[UIImage imageNamed:@"speak"] forState:UIControlStateNormal];
     [self.view insertSubview:speakButton atIndex:1];
-    if (!self.serchResultView)
-    {
-        self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-109) style:UITableViewStylePlain];
-        self.serchResultView.dataSource = self;
-        self.serchResultView.delegate = self;
-        self.serchResultView.scrollEnabled = YES;
-        self.serchResultView.backgroundColor = [UIColor whiteColor];
-        self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-        self.serchResultView.separatorColor = [UIColor lightGrayColor];
-        self.serchResultView.showsVerticalScrollIndicator = NO;
-        [self.view addSubview:self.serchResultView];
-    }
-    
-    
+
     rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-70, 0, 60, 44)];
     [self.navigationController.navigationBar addSubview:rightButtonView];
     
@@ -280,6 +268,16 @@
     typeIdArray = [[NSMutableArray alloc] init];
     B2BhistoryArray = [[NSMutableArray alloc] init];
     B2ChistoryArray = [[NSMutableArray alloc] init];
+    
+    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-45) style:UITableViewStylePlain];
+    self.serchResultView.dataSource = self;
+    self.serchResultView.delegate = self;
+    self.serchResultView.scrollEnabled = YES;
+    self.serchResultView.backgroundColor = [UIColor whiteColor];
+    self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    self.serchResultView.separatorColor = [UIColor lightGrayColor];
+    self.serchResultView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:self.serchResultView];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
     
@@ -289,11 +287,6 @@
     
     _popView = [[PopupView alloc] initWithFrame:CGRectMake(100, 300, 0, 0)];
     _popView.ParentView = self.view;
-    
-    [self createDataBase_B2B];
-    [self createDataBase_B2C];
-
-    [dataArray removeAllObjects];
     
     if ([[[self.searchFlag componentsSeparatedByString:@"+"] objectAtIndex:0] isEqualToString:@"B2C"])
     {
@@ -309,8 +302,6 @@
         speakButtonView.hidden = YES;
         [self sendRquest];
     }
-    NSLog(@"viewDidLoad");
-   
 }
 
 //请求询价车商品数量
@@ -383,24 +374,27 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if (URLTag == URLSearchProductTypeTag)
     {
-//         [self refreshTableView];
+         [self refreshTableView];
         if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"types"] count] != 0)
         {
             dataArray = [dicRespon objectForKey:@"types"];
-            [self.serchResultView reloadData];
             coverView.hidden = YES;
+            isShowClearBtn = 2;
+            tempSearch = 0;
             [mySearchBar resignFirstResponder];
             if ([[dicRespon objectForKey:@"types"] count] == 0)
             {
                 self.serchResultView.scrollEnabled = NO;
                 [self remindNoSearchResult];
             }
+      
         }
         else if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"] && [[dicRespon objectForKey:@"products"] count] != 0)
         {
             dataArray = [dicRespon objectForKey:@"products"];
             coverView.hidden = YES;
-            [self.serchResultView reloadData];
+            isShowClearBtn = 2;
+            tempSearch = 0;
             [mySearchBar resignFirstResponder];
             if ([[dicRespon objectForKey:@"products"] count] == 0)
             {
@@ -412,8 +406,8 @@
         if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"items"] count] != 0)
         {
             dataArray = [dicRespon objectForKey:@"items"];
+            NSLog(@"加入询价车 = %@",[dicRespon objectForKey:@"items"]);
             tempSearch = 2;
-            [self.serchResultView reloadData];
             coverView.hidden = YES;
             [mySearchBar resignFirstResponder];
             if ([[dicRespon objectForKey:@"items"] count] == 0)
@@ -423,6 +417,7 @@
             }
             else
             {
+                isShowClearBtn = 2;
                  self.serchResultView.scrollEnabled = YES;
             }
             
@@ -435,7 +430,6 @@
          
             for(int i=0;i<dataArray.count;i++)
             {
-                
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
                 [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
@@ -456,10 +450,10 @@
                 
                 [btnArray addObject:btn];
             }
-            
-            [self.serchResultView reloadData];
-
         }
+     
+        [self.serchResultView reloadData];
+  
     }
     if (URLTag == URLInquiryCartCountTag)
     {
@@ -516,8 +510,17 @@
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 1)
         {
+           ;
             [DCFStringUtil showNotice:msg];
+//            if (historyFlag == 1)
+//            {
+//                return;
+//            }
+//
+            NSLog(@"btnArray = %@",btnArray);
+            
             UIButton *btn = [btnArray objectAtIndex:btnTag];
+            
             UILabel *label = nil;
             for(UIView *view in btn.subviews)
             {
@@ -585,7 +588,6 @@
             }
         }
     }
-
 }
 
 //提示没有符合查询条件的数据
@@ -629,22 +631,21 @@
 //键盘手动搜索
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-//    clearBtn.hidden = YES;
     tempFlag = @"4";
     imageFlag = @"0";
     [self sendRquest];
+    clearBtn.hidden = YES;
 }
 
 //语音搜索
 -(void)soundSrarchTap:(UITapGestureRecognizer *) sender
 {
-//    clearBtn.hidden = YES;
     tempFlag = @"4";
     imageFlag = @"0";
     [mySearchBar resignFirstResponder];
     //启动识别服务
     [_iflyRecognizerView start];
-
+    
 }
 
 /*识别结果返回代理
@@ -670,6 +671,7 @@
         speakButtonView.hidden = YES;
         speakButton.hidden = YES;
         [self sendRquest];
+        clearBtn.hidden = YES;
     }
 }
 /*识别会话错误返回代理
@@ -681,19 +683,19 @@
     [_popView setText:@"识别结束!"];
 }
 
-//-(void)refreshTableView
-//{
-//    [self.serchResultView removeFromSuperview];
-//    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-45) style:UITableViewStylePlain];
-//    self.serchResultView.dataSource = self;
-//    self.serchResultView.delegate = self;
-//    self.serchResultView.scrollEnabled = YES;
-//    self.serchResultView.backgroundColor = [UIColor whiteColor];
-//    self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-//    self.serchResultView.separatorColor = [UIColor lightGrayColor];
-//    self.serchResultView.showsVerticalScrollIndicator = NO;
-//    [self.view addSubview:self.serchResultView];
-//}
+-(void)refreshTableView
+{
+    [self.serchResultView removeFromSuperview];
+    self.serchResultView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, self.view.frame.size.width, self.view.frame.size.height-45) style:UITableViewStylePlain];
+    self.serchResultView.dataSource = self;
+    self.serchResultView.delegate = self;
+    self.serchResultView.scrollEnabled = YES;
+    self.serchResultView.backgroundColor = [UIColor whiteColor];
+    self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    self.serchResultView.separatorColor = [UIColor lightGrayColor];
+    self.serchResultView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:self.serchResultView];
+}
 
 
 -(void)readHistoryData
@@ -702,22 +704,37 @@
     self.serchResultView.scrollEnabled = YES;
     imageFlag = @"1";
     tempFlag = @"4";
+    [self refreshTableView];
     if ([tempType isEqualToString:@"1"])
     {
         [self SearchB2BDataFromDataBase];
-//        dataArray = B2BhistoryArray;
-        dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
+//        if ((tempArray.count == 0 && B2BhistoryArray>0) || (dataArray.count > 0 && B2BhistoryArray == 0))
+//        {
+//            dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
+//        }
+         dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
+//        if (tempArray.count > 0 && B2BhistoryArray>0)
+//        {
+//            for (int i = 0; i < tempArray.count; i++)
+//            {
+//               [B2BhistoryArray insertObject:[tempArray objectAtIndex:i] atIndex:B2BhistoryArray.count];
+//            }
+//            dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
+//        }
+        
     }
     else if ([tempType isEqualToString:@"2"])
     {
         [self SearchB2CDataFromDataBase];
         dataArray = [self arrayWithMemberIsOnly:B2ChistoryArray];
     }
+    
     [self.serchResultView reloadData];
     
     NSLog(@"搜索历史 = %@",dataArray);
     if (dataArray.count > 0)
     {
+        isShowClearBtn = 1;
         NSLog(@"搜索历史firsttype = %@",[[dataArray objectAtIndex:0] objectForKey:@"firsttype"]);
         NSLog(@"搜索历史secondtype = %@",[[dataArray objectAtIndex:0] objectForKey:@"secondtype"]);
         NSLog(@"搜索历史thirdtype = %@",[[dataArray objectAtIndex:0] objectForKey:@"thirdtype"]);
@@ -823,16 +840,13 @@
     mySearchBar.text = nil;
     speakButton.hidden = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dissMiss" object:nil];
+   
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0] isEqualToString:@"家装线专卖"])
     {
         sectionBtnIv.frame = CGRectMake(72,17.5,10,10);
         [rightBtn setTitle:nil forState:UIControlStateNormal];
         [rightBtn setTitle:@"购物车" forState:UIControlStateNormal];
         tempType = @"2";
-//        [self refreshTableView];
-        [self readHistoryData];
-//        [self refreshClearButton];
-        [self.serchResultView reloadData];
         [self loadShopCarCount];
        if (tempShopCar > 0)
         {
@@ -858,15 +872,11 @@
         {
             countLabel.hidden = YES;
         }
-        
     }
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     speakButton.hidden = NO;
     speakButtonView.hidden = NO;
-//    [self refreshTableView];
     [self readHistoryData];
-//    [self refreshClearButton];
-    [self.serchResultView reloadData];
 }
 
 -(void)changeClick:(NSNotification *)viewChanged
@@ -876,33 +886,6 @@
         currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
     }];
 }
-
-//-(void)refreshClearButton
-//{
-//    [clearBtn removeFromSuperview];
-//    clearBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [clearBtn setBackgroundColor:[UIColor colorWithRed:12.0/255 green:63.0/255 blue:148.0/255 alpha:1.0]];
-//    [clearBtn setTitle:@"清空历史纪录" forState:UIControlStateNormal];
-//    [clearBtn setTintColor:[UIColor whiteColor]];
-//    clearBtn.hidden = YES;
-//    [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    clearBtn.layer.cornerRadius = 3;
-//    [self.view insertSubview:clearBtn aboveSubview:self.serchResultView];
-//    if (dataArray.count > 0 && dataArray.count < 9)
-//    {
-//        [clearBtn setFrame:CGRectMake((self.view.frame.size.width-230)/2,dataArray.count*50+50, 230, 35)];
-//        clearBtn.hidden = NO;
-//    }
-//    else if (dataArray.count == 0)
-//    {
-//        clearBtn.hidden = YES;
-//    }
-//    else
-//    {
-//        [clearBtn setFrame:CGRectMake((self.view.frame.size.width-230)/2,self.view.frame.size.height-42, 230, 35)];
-//        clearBtn.hidden = NO;
-//    }
-//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -918,19 +901,32 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return dataArray.count;
+    int tempRow = 0;
+    if (dataArray.count > 0)
+    {
+        tempRow = dataArray.count;
+    }
+    if (B2BhistoryArray.count > 0 && [tempType isEqualToString:@"1"])
+    {
+        tempRow = dataArray.count+1;
+    }
+    if (B2ChistoryArray.count > 0 && [tempType isEqualToString:@"2"])
+    {
+        tempRow = dataArray.count+1;
+    }
+    return tempRow;
 }
 
 - (void)clearBtnClick:(UIButton *) sender
 {
     tempFlag = @"3";
     imageFlag = @"0";
-//    clearBtn.hidden = YES;
     if(dataArray && dataArray.count != 0)
     {
          dataArray = tempArray;
         [self.serchResultView reloadData];
     }
+    [self.serchResultView reloadData];
     [self coverClearButton];
     [self deleteData];
     
@@ -949,10 +945,26 @@
     
     btnTag = sender.tag;
  
-    text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"model"]];
+    NSLog(@"addtoAskCarClick_sender.tag = %d",sender.tag);
+   
+    if (historyFlag == 1)
+    {
+         NSLog(@"addtoAskCarClick_dataArray = %@",dataArray);
+         text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"firsttype"]];
+    }
+    else
+    {
+        text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"model"]];
+    }
+    
+    NSLog(@"addtoAskCarClick_text = %@",text);
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"JoinInquiryCart",time];
     NSString *token = [DCFCustomExtra md5:string];
+    
+    //数据存入数据库
+//    [self saveType:@"1" Fid:[NSString stringWithFormat:@"%d",sender.tag] Firsttype:text SecondType:@"" Seq:@"0" Sid:@"" ThridType:@"" Tid:@""];
+    [self saveType:@"1" Fid:@"" Firsttype:text SecondType:@"" Seq:@"0" Sid:@"" ThridType:@"" Tid:@""];
     
     //    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
@@ -1009,8 +1021,7 @@
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        
-        cell.backgroundColor = [UIColor colorWithRed:232.0/255 green:232.0/255 blue:232.0/255 alpha:1.0];
+        cell.backgroundColor = [UIColor whiteColor];
        
         searchImageView = [[UIImageView alloc] init];
         searchImageView.frame = CGRectMake(8, 12, 20, 20);
@@ -1021,11 +1032,12 @@
         searchResultLabel.font = [UIFont systemFontOfSize:16];
         [cell addSubview:searchResultLabel];
         
+        NSLog(@"清除按钮 = %d",isShowClearBtn);
+  
         if (tempSearch == 2)
         {
              [cell.contentView addSubview:(UIButton *)[btnArray objectAtIndex:indexPath.row]];
         }
-    
         if ([imageFlag isEqualToString:@"1"])
         {
             searchImageView.image = [UIImage imageNamed:@"clock"];
@@ -1037,45 +1049,133 @@
         
         if ([tempFlag isEqualToString:@"3"])
         {
-            searchResultLabel.text = dataArray[indexPath.row];
+//            searchResultLabel.text = dataArray[indexPath.row];
         }
         else if ([tempFlag isEqualToString:@"4"])
         {
             coverView.hidden = YES;
-            if ([tempType isEqualToString:@"1"] && dataArray.count > 0)
+            if ([tempType isEqualToString:@"1"])
             {
-               
-                if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"1"])
+                if (indexPath.row == dataArray.count)
                 {
-                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                    if (isShowClearBtn == 2)
+                    {
+                         searchImageView.image = nil;
+                    }
+                    else if (isShowClearBtn == 1)
+                    {
+                        searchImageView.image = nil;
+                        clearBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                        [clearBtn setBackgroundColor:[UIColor colorWithRed:0/255 green:86.0/255 blue:176.0/255 alpha:1.0]];
+                        [clearBtn setTitle:@"清空历史纪录" forState:UIControlStateNormal];
+                        clearBtn.frame = CGRectMake((ScreenWidth-120)/2, 4.5, 120, 35);
+                        [clearBtn setTintColor:[UIColor whiteColor]];
+                        [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                        clearBtn.layer.cornerRadius = 3;
+                        [cell addSubview:clearBtn];
+                    }
                 }
-                else if([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"2"])
+                else
                 {
-                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"secondtype"];
-                }
-                else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
-                {
-                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
-                }
-                if (tempSearch == 2)
-                {
-                    searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"model"];
+                    if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"0"])
+                    {
+                        historyFlag = 1;
+//                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+//                        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//                        [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
+//                        [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
+//                        [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+//                        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                        [btn setTag:indexPath.row];
+//                        NSLog(@"btn.tag = %d",indexPath.row);
+//                        [btn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
+//                        btn.layer.cornerRadius = 5.0f;
+//                        [btn addTarget:self action:@selector(addtoAskCarClick:) forControlEvents:UIControlEventTouchUpInside];
+//                        [cell addSubview:btn];
+////                         [btnArray addObject:btn];
+                         searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                        for(int i=0;i<dataArray.count;i++)
+                        {
+                            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                            [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
+                            [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
+                            [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+                            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                            [btn setTag:i];
+                            [btn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
+                            btn.layer.cornerRadius = 5.0f;
+                            [btn addTarget:self action:@selector(addtoAskCarClick:) forControlEvents:UIControlEventTouchUpInside];
+                            [cell addSubview:btn];
+                            
+                            UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+                            [btnLabel setText:@"+1"];
+                            [btnLabel setBackgroundColor:[UIColor clearColor]];
+                            [btnLabel setTextColor:[UIColor redColor]];
+                            [btnLabel setFont:[UIFont systemFontOfSize:23]];
+                            [btnLabel setAlpha:0];
+                            [btn addSubview:btnLabel];
+                            
+                             [btnArray addObject:btn];
+                        }
+                    }
+                    if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"1"])
+                    {
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                    }
+                    else if([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"2"])
+                    {
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"secondtype"];
+                    }
+                    else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
+                    {
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
+                    }
+                    if (tempSearch == 2)
+                    {
+                        searchResultLabel.font = [UIFont systemFontOfSize:13];
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"model"];
+                    }
                 }
         }
-            else if ([tempType isEqualToString:@"2"] && dataArray.count > 0)
+        else if ([tempType isEqualToString:@"2"] )
+        {
+            if (indexPath.row == dataArray.count)
+            {
+                if (isShowClearBtn == 2)
+                {
+                    searchImageView.image = nil;
+                }
+                else if (isShowClearBtn == 1)
+                {
+                    searchImageView.image = nil;
+                    clearBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    [clearBtn setBackgroundColor:[UIColor colorWithRed:0/255 green:86.0/255 blue:176.0/255 alpha:1.0]];
+                    [clearBtn setTitle:@"清空历史纪录" forState:UIControlStateNormal];
+                    clearBtn.frame = CGRectMake((ScreenWidth-120)/2, 4.5, 120, 35);
+                    [clearBtn setTintColor:[UIColor whiteColor]];
+                    [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                    clearBtn.layer.cornerRadius = 3;
+                    [cell addSubview:clearBtn];
+                }
+            }
+            else
             {
                 searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"productName"];
             }
         }
-    }
+        
+     }
+  }
         return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
     if (dataArray.count > 0)
     {
+        [self setHidesBottomBarWhenPushed:YES];
         CableSecondAndThirdStepViewController *cstVC = [sb instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
         CableChoosemodelViewController *ccmVC = [sb instantiateViewControllerWithIdentifier:@"cableChoosemodelViewController"];
         if ([tempType isEqualToString:@"1"])
@@ -1087,20 +1187,22 @@
                 
                 NSString *Fid = [dataArray[indexPath.row] objectForKey:@"fid"];
                 NSString *Firsttype = [dataArray[indexPath.row] objectForKey:@"firsttype"];
-                //                NSString *SecondType = [dataArray[indexPath.row] objectForKey:@"secondtype"];
+                NSString *SecondType = [dataArray[indexPath.row] objectForKey:@"secondtype"];
                 NSString *Seq = [dataArray[indexPath.row] objectForKey:@"seq"];
-                //                NSString *Sid = [dataArray[indexPath.row] objectForKey:@"sid"];
-                //                NSString *ThridType = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
-                //                NSString *Tid = [dataArray[indexPath.row] objectForKey:@"tid"];
+                NSString *Sid = [dataArray[indexPath.row] objectForKey:@"sid"];
+                NSString *ThridType = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
+                NSString *Tid = [dataArray[indexPath.row] objectForKey:@"tid"];
                 //数据存入数据库
-                //                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
-                
-                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:nil Seq:Seq Sid:nil ThridType:nil Tid:nil];
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
+               
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
                 
                 [self.navigationController pushViewController:cstVC animated:YES];
+                [self setHidesBottomBarWhenPushed:NO];
             }
             else if([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"2"])
             {
+                [self setHidesBottomBarWhenPushed:YES];
                 cstVC.myTitle = [dataArray[indexPath.row] objectForKey:@"firsttype"];
                 cstVC.typeId = [dataArray[indexPath.row] objectForKey:@"fid"];
                 
@@ -1108,46 +1210,52 @@
                 NSString *Firsttype = [dataArray[indexPath.row] objectForKey:@"firsttype"];
                 NSString *SecondType = [dataArray[indexPath.row] objectForKey:@"secondtype"];
                 NSString *Seq = [dataArray[indexPath.row] objectForKey:@"seq"];
-                //                NSString *Sid = [dataArray[indexPath.row] objectForKey:@"sid"];
-                //                NSString *ThridType = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
-                //                NSString *Tid = [dataArray[indexPath.row] objectForKey:@"tid"];
-                //数据存入数据库
-                //                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
-                
-                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:nil ThridType:nil Tid:nil];
-                
-                [self.navigationController pushViewController:cstVC animated:YES];
-            }
-            else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
-            {
-                ccmVC.myTitle = [NSString stringWithFormat:@"%@>%@>%@",[dataArray[indexPath.row] objectForKey:@"firsttype"],[dataArray[indexPath.row] objectForKey:@"secondtype"],[dataArray[indexPath.row] objectForKey:@"thirdtype"]];
-                ccmVC.myTypeId = [dataArray[indexPath.row] objectForKey:@"tid"];
-                
-                //                NSString *Fid = [dataArray[indexPath.row] objectForKey:@"fid"];
-                NSString *Firsttype = [dataArray[indexPath.row] objectForKey:@"firsttype"];
-                NSString *SecondType = [dataArray[indexPath.row] objectForKey:@"secondtype"];
-                NSString *Seq = [dataArray[indexPath.row] objectForKey:@"seq"];
-                //                NSString *Sid = [dataArray[indexPath.row] objectForKey:@"sid"];
+                NSString *Sid = [dataArray[indexPath.row] objectForKey:@"sid"];
                 NSString *ThridType = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
                 NSString *Tid = [dataArray[indexPath.row] objectForKey:@"tid"];
                 //数据存入数据库
-                //                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
                 
-                [self saveType:@"1" Fid:nil Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:nil ThridType:ThridType Tid:Tid];
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
+              
+                [self.navigationController pushViewController:cstVC animated:YES];
+                [self setHidesBottomBarWhenPushed:NO];
+            }
+            else if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"3"])
+            {
+                [self setHidesBottomBarWhenPushed:YES];
+                ccmVC.myTitle = [NSString stringWithFormat:@"%@>%@>%@",[dataArray[indexPath.row] objectForKey:@"firsttype"],[dataArray[indexPath.row] objectForKey:@"secondtype"],[dataArray[indexPath.row] objectForKey:@"thirdtype"]];
+                ccmVC.myTypeId = [dataArray[indexPath.row] objectForKey:@"tid"];
+                
+                                NSString *Fid = [dataArray[indexPath.row] objectForKey:@"fid"];
+                NSString *Firsttype = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                NSString *SecondType = [dataArray[indexPath.row] objectForKey:@"secondtype"];
+                NSString *Seq = [dataArray[indexPath.row] objectForKey:@"seq"];
+                                NSString *Sid = [dataArray[indexPath.row] objectForKey:@"sid"];
+                NSString *ThridType = [dataArray[indexPath.row] objectForKey:@"thirdtype"];
+                NSString *Tid = [dataArray[indexPath.row] objectForKey:@"tid"];
+                //数据存入数据库
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
+                
+                [self saveType:@"1" Fid:Fid Firsttype:Firsttype SecondType:SecondType Seq:Seq Sid:Sid ThridType:ThridType Tid:Tid];
+                
                 [self.navigationController pushViewController:ccmVC animated:YES];
+                [self setHidesBottomBarWhenPushed:NO];
             }
         }
         else if ([tempType isEqualToString:@"2"])
         {
+            [self setHidesBottomBarWhenPushed:YES];
             NSString *productId = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"productId"];
             NSString *productName = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"productName"];
             GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
-            
+            [self saveType:@"2" ProductId:productId ProductName:productName];
             [self saveType:@"2" ProductId:productId ProductName:productName];
             [self.navigationController pushViewController:detail animated:YES];
+             [self setHidesBottomBarWhenPushed:NO];
         }
-
     }
+   
 }
 
 
@@ -1240,6 +1348,8 @@
     }
 }
 
+
+
 //查询B2B数据
 - (void)SearchB2BDataFromDataBase
 {
@@ -1255,14 +1365,6 @@
         {
             if (sqlite3_step(statement) == SQLITE_ROW)
             {
-                NSDictionary *dic;
-                if (B2BhistoryArray.count > 0)
-                {
-//                    [B2BhistoryArray removeAllObjects];
-                   
-                }
-                if (B2BhistoryArray.count == 0)
-                {
                     while (sqlite3_step(statement) == SQLITE_ROW)
                     {
                         
@@ -1283,15 +1385,26 @@
                         NSLog(@"查询结果 = %@ %@ %@ %@ %@ %@ %@",fid,firsttype,secondtype,seq,sid,thirdtype,tid);
                         NSLog(@"已查到结果\n\n");
                         
-                        dic = [[NSDictionary alloc] initWithObjectsAndKeys:fid,@"fid",firsttype,@"firsttype",secondtype,@"secondtype",seq,@"seq",sid,@"sid",thirdtype,@"thirdtype",tid,@"tid",nil];
-                        NSLog(@"dic = %@\n\n",dic);
-                        
-                        [B2BhistoryArray addObject:dic];
-
-//                        [self.serchResultView reloadData];
-                        NSLog(@"B2Bhistory = %@",B2BhistoryArray);
+//                        if (![seq isEqualToString:@"0"])
+//                        {
+                            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:fid,@"fid",firsttype,@"firsttype",secondtype,@"secondtype",seq,@"seq",sid,@"sid",thirdtype,@"thirdtype",tid,@"tid",nil];
+                            NSLog(@"dic = %@\n\n",dic);
+                            
+                            [B2BhistoryArray addObject:dic];
+                            
+                            NSLog(@"B2Bhistory = %@",B2BhistoryArray);
+//                        }
+//                        else
+//                        {
+//                            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:fid,@"fid",firsttype,@"model",secondtype,@"secondtype",seq,@"0",sid,@"sid", thirdtype,@"thirdtype",tid,@"tid" ,nil];
+//                            NSLog(@"加入询价车dic = %@\n\n",dic);
+//                            
+//                            [tempArray addObject:dic];
+//                            
+//                            NSLog(@"加入询价车tempArray = %@",tempArray);
+//                        }
+                       
                     }
-                }
             }
             else
             {
@@ -1358,7 +1471,6 @@
         sqlite3_finalize(statement);
         sqlite3_close(contactDBB2C);
     }
-
 }
 
 //查询B2C数据
@@ -1376,13 +1488,6 @@
         {
             if (sqlite3_step(statement) == SQLITE_ROW)
             {
-                NSDictionary *dic;
-                if (B2ChistoryArray.count > 0)
-                {
-                    //                    [historyArray removeAllObjects];
-                }
-                else if (B2ChistoryArray.count == 0)
-                {
                     while (sqlite3_step(statement) == SQLITE_ROW)
                     {
                         
@@ -1393,15 +1498,13 @@
                         NSLog(@"查询结果 = %@ %@",productId,productName);
                         NSLog(@"已查到结果\n\n");
                         
-                        dic = [[NSDictionary alloc] initWithObjectsAndKeys:productId,@"productId",productName,@"productName",nil];
+                        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:productId,@"productId",productName,@"productName",nil];
                         NSLog(@"dic = %@\n\n",dic);
                         
                         [B2ChistoryArray addObject:dic];
-//                        [self.serchResultView reloadData];
+
                         NSLog(@"self.history = %@",B2ChistoryArray);
                     }
-                    
-                }
             }
             else
             {
@@ -1409,10 +1512,8 @@
             }
             sqlite3_finalize(statement);
         }
-        
         sqlite3_close(contactDBB2C);
     }
-
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

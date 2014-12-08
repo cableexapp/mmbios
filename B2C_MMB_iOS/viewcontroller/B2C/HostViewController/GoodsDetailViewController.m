@@ -256,7 +256,7 @@
     countLabel.textColor = [UIColor whiteColor];
     countLabel.font = [UIFont systemFontOfSize:11];
     countLabel.textAlignment = 1;
-    countLabel.hidden = NO;
+    countLabel.hidden = YES;
     countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
     countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
     [rightBtn addSubview:countLabel];
@@ -335,8 +335,6 @@
     backView.alpha = 0.8;
     [self.view insertSubview:backView aboveSubview:tv];
     
-    
-    
     cellBtnArray = [[NSMutableArray alloc] init];
 }
 
@@ -412,13 +410,12 @@
     }
     if(URLTag == URLAddToShopCatTag)
     {
-        
-        
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
             num = @"0";
             itemid = @"";
+            [self loadShopCarCount];
         }
         else
         {
@@ -456,6 +453,7 @@
             else
             {
                 [DCFStringUtil showNotice:msg];
+//                [self loadShopCarCount];
             }
         }
     }
@@ -1163,26 +1161,26 @@
     
     if(btn.tag == 1000)
     {
-        if(btn.selected == YES)
-        {
+//        if(btn.selected == YES)
+//        {
             showCell = YES;
-            
-        }
-        else
-        {
-            showCell = NO;
-        }
+//            
+//        }
+//        else
+//        {
+//            showCell = NO;
+//        }
     }
     if(btn.tag == 1001)
     {
-        if(btn.selected == YES)
-        {
+//        if(btn.selected == YES)
+//        {
             showCell = NO;
-        }
-        else
-        {
-            showCell = YES;
-        }
+//        }
+//        else
+//        {
+//            showCell = YES;
+//        }
     }
     
     //    for(UIButton *btn in cellBtnArray)

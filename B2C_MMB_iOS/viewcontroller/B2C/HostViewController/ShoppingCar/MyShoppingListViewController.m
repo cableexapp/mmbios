@@ -89,6 +89,8 @@
     UIButton *buyBtn;
     UIView *loginView;
     UIButton *logBtn;
+    
+    UILabel *countLabel;
 }
 @end
 
@@ -343,7 +345,7 @@
                 {
                     UIButton *cellBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                     
-                    [cellBtn setFrame:CGRectMake(5, 45, 30, 30)];
+                    [cellBtn setFrame:CGRectMake(5, 40, 30, 30)];
                     
                     [cellBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
                     [cellBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
@@ -352,7 +354,7 @@
                     //                    [cellBtn setTag:i];
                     [cellBtn setSelected:NO];
                     
-                    UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(cellBtn.frame.origin.x + cellBtn.frame.size.width + 5, 5, 100, 100)];
+                    UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(cellBtn.frame.origin.x + cellBtn.frame.size.width + 10, 20, 70, 70)];
                     
                     UIButton *subtractBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                     [subtractBtn setTitle:@"-" forState:UIControlStateNormal];
@@ -778,25 +780,16 @@
     [buttomBtn setSelected:NO];
     [buttomBtn addTarget:self action:@selector(buttomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [buttomView addSubview:buttomBtn];
-    
-    UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 13, 50, 30)];
-    [countLabel setTextColor:[UIColor blackColor]];
-    [countLabel setTextAlignment:NSTextAlignmentLeft];
-    [countLabel setText:@"合计 ¥"];
-    [buttomView addSubview:countLabel];
-    
-    moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(countLabel.frame.origin.x + countLabel.frame.size.width+5, 13, 100, 30)];
-    [moneyLabel setFont:[UIFont systemFontOfSize:13]];
-    [moneyLabel setTextColor:[UIColor redColor]];
-    totalMoney = 0.00;
-    //    [moneyLabel setText:totalMoney];
-    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
-    [moneyLabel setTextAlignment:NSTextAlignmentLeft];
-    [buttomView addSubview:moneyLabel];
-    
+
+    CGSize allLabelSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"全选" WithSize:CGSizeMake(MAXFLOAT, 28)];
+    UILabel *allLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttomBtn.frame.origin.x+buttomBtn.frame.size.width+5, buttomBtn.frame.origin.y, allLabelSize.width, 28)];
+    [allLabel setText:@"全选"];
+    [allLabel setFont:[UIFont systemFontOfSize:12]];
+    [allLabel setTextAlignment:NSTextAlignmentLeft];
+    [buttomView addSubview:allLabel];
     
     payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [payBtn setFrame:CGRectMake(moneyLabel.frame.origin.x + moneyLabel.frame.size.width + 10, 10, 100, 34)];
+    [payBtn setFrame:CGRectMake(ScreenWidth-110, 10, 100, 34)];
     payBtn.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0];
     [payBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     payBtn.layer.cornerRadius = 5.0f;
@@ -804,6 +797,35 @@
     [self payBtnChange];
     [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [buttomView addSubview:payBtn];
+    
+    
+
+    
+    moneyLabel = [[UILabel alloc] init];
+//    [moneyLabel setBackgroundColor:[UIColor colorWithRed:203.0/255.0 green:24.0/255.0 blue:0.0/255.0 alpha:1.0]];
+
+    totalMoney = 0.00;
+    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:totalMoney afterPoint:2] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
+    [moneyLabel setFont:[UIFont systemFontOfSize:12]];
+    [moneyLabel setTextColor:[UIColor colorWithRed:203.0/255.0 green:24.0/255.0 blue:0.0/255.0 alpha:1.0]];
+    [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
+    [moneyLabel setTextAlignment:NSTextAlignmentRight];
+    [buttomView addSubview:moneyLabel];
+    
+    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
+    [countLabel setTextColor:[UIColor blackColor]];
+    [countLabel setFont:[UIFont systemFontOfSize:12]];
+    [countLabel setTextAlignment:NSTextAlignmentRight];
+    [countLabel setText:@"合计:¥"];
+    [buttomView addSubview:countLabel];
+    
+    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(countLabel.frame.origin.x, countLabel.frame.origin.y+countLabel.frame.size.height, countLabel.frame.size.width+moneyLabel.frame.size.width+5, 14)];
+    [l setTextAlignment:NSTextAlignmentRight];
+    [l setFont:[UIFont systemFontOfSize:12]];
+    [l setText:@"不含运费"];
+    [buttomView addSubview:l];
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 54-54)];
     [tv setDataSource:self];
@@ -1111,7 +1133,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         return 0;
     }
-    return 40;
+    return 46;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1158,17 +1180,18 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     if(dataArray && [[dataArray objectAtIndex:indexPath.section] count] != 0)
     {
-        NSString *content = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItmeTitle];
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:content WithSize:CGSizeMake(160, MAXFLOAT)];
-        if(size.height + 95 <= 100)
-        {
-            return 110;
-        }
-        else
-        {
-            return size.height + 95;
-        }
-        NSLog(@"size.height)=%f",size.height);
+        return 120;
+//        NSString *content = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItmeTitle];
+//        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:content WithSize:CGSizeMake(160, MAXFLOAT)];
+//        if(size.height + 95 <= 100)
+//        {
+//            return 110;
+//        }
+//        else
+//        {
+//            return size.height + 95;
+//        }
+//        NSLog(@"size.height)=%f",size.height);
         
     }
     return 0;
@@ -1209,7 +1232,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
         return nil;
     }
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 30)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 46)];
     [view setBackgroundColor:[UIColor whiteColor]];
     [view addSubview:[[headBtnArray objectAtIndex:section] lastObject]];
     
@@ -1221,6 +1244,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [sectionLabel setTextColor:[UIColor blackColor]];
     [sectionLabel setFont:[UIFont systemFontOfSize:13]];
     [view addSubview:sectionLabel];
+    
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, sectionLabel.frame.origin.y+sectionLabel.frame.size.height+10, ScreenWidth-10, 1)];
+    [lineView setBackgroundColor:[UIColor colorWithRed:232.0/255.0 green:233.0/255.0 blue:232.0/255.0 alpha:1.0]];
+    [view addSubview:lineView];
     
     return view;
 }
@@ -1357,7 +1385,8 @@ NSComparator cmptr = ^(id obj1, id obj2){
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+//        [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
 //        [cell setSelectionStyle:0];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -1378,40 +1407,65 @@ NSComparator cmptr = ^(id obj1, id obj2){
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellIvTap:)];
     [cellIv addGestureRecognizer:tap];
     
-    NSString *content = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItmeTitle];
-    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:content WithSize:CGSizeMake(160, MAXFLOAT)];
+    //单价
+    NSString *shopPrice = [NSString stringWithFormat:@"¥%@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] price]];
+    CGSize shopPriceSize;
+    if([DCFCustomExtra validateString:shopPrice] == NO)
+    {
+        shopPriceSize = CGSizeMake(30, 30);
+    }
+    else
+    {
+        shopPriceSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:shopPrice WithSize:CGSizeMake(MAXFLOAT, 30)];
+    }
+    UILabel *label = [[priceLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    [label setFrame:CGRectMake(cell.contentView.frame.size.width-10-shopPriceSize.width,25, shopPriceSize.width, 30)];
+    [label setText:shopPrice];
+    [label setFont:[UIFont systemFontOfSize:12]];
+    [label setTextColor:[UIColor blackColor]];
+    [label setTextAlignment:NSTextAlignmentRight];
+    [cell.contentView addSubview:label];
     
-    UILabel *introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake(cellIv.frame.origin.x + cellIv.frame.size.width + 5, 5, 160, size.height)];
+    //颜色
+    NSString *shopColor = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] colorName];
+    CGSize shopColorSize;
+    if([DCFCustomExtra validateString:shopColor] == NO)
+    {
+        shopColorSize = CGSizeMake(30, 30);
+    }
+    else
+    {
+        shopColorSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:shopColor WithSize:CGSizeMake(MAXFLOAT, 30)];
+    }
+    UILabel *subColorLab = [[colorLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    [subColorLab setFrame:CGRectMake(cell.contentView.frame.size.width-10-shopColorSize.width,label.frame.origin.y+label.frame.size.height,shopColorSize.width,30)];
+    [subColorLab setText:shopColor];
+    [subColorLab setFont:[UIFont systemFontOfSize:12]];
+    [subColorLab setTextColor:[UIColor lightGrayColor]];
+    [subColorLab setTextAlignment:NSTextAlignmentRight];
+    [cell.contentView addSubview:subColorLab];
+    
+    CGFloat maxWidth = (shopPriceSize.width >= shopColorSize.width)?shopPriceSize.width:shopColorSize.width;
+
+    
+    //商品介绍
+    NSString *content = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItmeTitle];
+    UILabel *introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake(cellIv.frame.origin.x + cellIv.frame.size.width + 10, 20, ScreenWidth-155-maxWidth, 40)];
     [introduceLabel setTextAlignment:NSTextAlignmentLeft];
     [introduceLabel setTextColor:[UIColor blackColor]];
     [introduceLabel setNumberOfLines:0];
     [introduceLabel setFont:[UIFont systemFontOfSize:12]];
     [introduceLabel setText:content];
     [cell.contentView addSubview:introduceLabel];
-    
-    UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(introduceLabel.frame.origin.x, introduceLabel.frame.origin.y + introduceLabel.frame.size.height + 10, 30, 20)];
-    [countLabel setText:@"数量:"];
-    [countLabel setTextAlignment:NSTextAlignmentLeft];
-    [countLabel setTextColor:[UIColor blackColor]];
-    [countLabel setFont:[UIFont systemFontOfSize:12]];
-    [cell.contentView addSubview:countLabel];
-    
-    
-    float x = countLabel.frame.origin.x + countLabel.frame.size.width + 10;
-    float y = countLabel.frame.origin.y;
+
     
     UIButton *subBtn = [[subtractArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [subBtn setFrame:CGRectMake(x,y,30, 30)];
+    [subBtn setFrame:CGRectMake(introduceLabel.frame.origin.x,introduceLabel.frame.origin.y+introduceLabel.frame.size.height,35, 30)];
     [subBtn setTag:indexPath.row + indexPath.section*1000];
     [cell.contentView addSubview:subBtn];
-    
-    UIButton *addBtn = [[addArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [addBtn setFrame:CGRectMake(x+90, y, 30, 30)];
-    [addBtn setTag:indexPath.row + indexPath.section*1000];
-    [cell.contentView addSubview:addBtn];
-    
+    //
     UILabel *numLabel = [[UILabel alloc] init];
-    [numLabel setFrame:CGRectMake(x+35, y, 50, 30)];
+    [numLabel setFrame:CGRectMake(subBtn.frame.origin.x + subBtn.frame.size.width, subBtn.frame.origin.y, 30, 30)];
     [numLabel setText:[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] num]];
     [numLabel setTextAlignment:NSTextAlignmentCenter];
     [numLabel setTextColor:[UIColor blackColor]];
@@ -1421,18 +1475,16 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [numLabel setBackgroundColor:[UIColor whiteColor]];
     [cell.contentView addSubview:numLabel];
     
-    UILabel *label = [[priceLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [label setFrame:CGRectMake(cellIv.frame.origin.x + cellIv.frame.size.width + 5, addBtn.frame.origin.y + addBtn.frame.size.height + 5, 160, 20)];
-    [label setText:[NSString stringWithFormat:@"单价:%@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] price]]];
-    [cell.contentView addSubview:label];
-    
-    UILabel *subColorLab = [[colorLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [subColorLab setFrame:CGRectMake(label.frame.origin.x, label.frame.origin.y+label.frame.size.height, label.frame.size.width, 20)];
-    [subColorLab setText:[NSString stringWithFormat:@"颜色:%@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] colorName]]];
-    [cell.contentView addSubview:subColorLab];
-    
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, subColorLab.frame.origin.y+subColorLab.frame.size.height, ScreenWidth, 1)];
-    [lineView setBackgroundColor:[UIColor colorWithRed:231.0/255.0 green:231.0/255.0 blue:231.0/255.0 alpha:1.0]];
+    UIButton *addBtn = [[addArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    [addBtn setFrame:CGRectMake(numLabel.frame.origin.x+numLabel.frame.size.width, subBtn.frame.origin.y, 35, 30)];
+    [addBtn setTag:indexPath.row + indexPath.section*1000];
+    [cell.contentView addSubview:addBtn];
+    //
+
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, subColorLab.frame.origin.y+subColorLab.frame.size.height+20, ScreenWidth, 10)];
+    [lineView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    lineView.layer.borderColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0].CGColor;
+    lineView.layer.borderWidth = 1.0f;
     [cell.contentView addSubview:lineView];
     
     return cell;
@@ -1525,6 +1577,9 @@ NSComparator cmptr = ^(id obj1, id obj2){
         NSString *price = carlist.price;
         totalMoney = [price doubleValue]*[carlist.num intValue] + totalMoney;
     }
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:totalMoney afterPoint:2] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
+    [countLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
     [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
 }
 

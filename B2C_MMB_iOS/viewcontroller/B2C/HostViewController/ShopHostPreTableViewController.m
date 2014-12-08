@@ -31,15 +31,15 @@
         discussArray = [[NSMutableArray alloc] init];
         if(scoreArray.count != 0)
         {
-            for(int i=0;i<4;i++)
+            for(int i=0;i<4;i++) 
             {
                 [discussArray addObject:[scoreArray objectAtIndex:i]];
             }
         }
-        NSLog(@"%@",discussArray);
+        
         
         ListArray = [[NSArray alloc] initWithArray:listArray];
-        NSLog(@"%@",ListArray);
+
         
         headTitle = title;
     }

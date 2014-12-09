@@ -427,7 +427,6 @@
                     else
                     {
                         size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-                        
                     }
                     if(size.height < 20)
                     {

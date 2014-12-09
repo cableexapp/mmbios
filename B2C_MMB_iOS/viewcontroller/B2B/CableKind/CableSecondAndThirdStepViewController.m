@@ -48,7 +48,13 @@
             [view setHidden:YES];
         }
     }
-    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:@"搜索" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn setFrame:CGRectMake(0, 0, 50, 40)];
+    [btn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 - (void) changeWithTypeId:(NSString *)typeId WithTypeName:(NSString *)typeName
@@ -70,6 +76,7 @@
 
 - (void) searchBtnClick:(UIButton *) sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
     if ([self.fromPage isEqualToString:@"电缆选购"] || [self.fromPage isEqualToString:@"电缆分类"])
     {
         SearchViewController *searchVC = [[SearchViewController alloc] init];
@@ -79,6 +86,7 @@
     {
          [self.navigationController popViewControllerAnimated:YES];
     }
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void)viewDidLoad
@@ -91,14 +99,6 @@
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setTitle:@"搜索" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn setFrame:CGRectMake(0, 0, 50, 40)];
-    [btn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.navigationItem.rightBarButtonItem = rightItem;
     
     second = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondStepTableViewController"];
     second.delegate = self;

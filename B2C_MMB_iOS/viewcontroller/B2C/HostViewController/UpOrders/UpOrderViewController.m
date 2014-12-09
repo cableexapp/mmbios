@@ -17,6 +17,7 @@
 #import "B2CShopCarListData.h"
 #import "UIImageView+WebCache.h"
 #import "DCFMyTextField.h"
+#import "DCFColorUtil.h"
 
 @interface UpOrderViewController ()
 {
@@ -96,20 +97,23 @@
     addressDic = [[NSDictionary alloc] initWithDictionary:dic];
     if(!billReceiveAddressLabel_1)
     {
-        billReceiveAddressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
-        [billReceiveAddressLabel_1 setFont:[UIFont systemFontOfSize:13]];
+        billReceiveAddressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(53, 5, ScreenWidth-63, 30)];
+        [billReceiveAddressLabel_1 setFont:[UIFont systemFontOfSize:15]];
+         billReceiveAddressLabel_1.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
     }
     if(!billReceiveAddressLabel_2)
     {
         billReceiveAddressLabel_2 = [[UILabel alloc] init];
         [billReceiveAddressLabel_2 setFont:[UIFont systemFontOfSize:13]];
-        [billReceiveAddressLabel_2 setNumberOfLines:0];
+        billReceiveAddressLabel_2.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
+        [billReceiveAddressLabel_2 setNumberOfLines:2];
+//        billReceiveAddressLabel_2.backgroundColor = [UIColor redColor];
     }
     
     if([[addressDic allKeys] count] == 0 || [addressDic isKindOfClass:[NSNull class]])
     {
         [billReceiveAddressLabel_1 setText:@"暂无收货地址"];
-        [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
+        [billReceiveAddressLabel_2 setFrame:CGRectMake(53, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-63, 0)];
         
         receiveaddress = @"";
         receivecity = @"";
@@ -134,19 +138,20 @@
         receiveAddressId = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveAddressId"]];
         
         
-        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"%@    %@",receiver,receiveTel]];
+        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"收货人: %@           %@",receiver,receiveTel]];
+       
         NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
         if([DCFCustomExtra validateString:fullAddress] == NO)
         {
-            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
+            [billReceiveAddressLabel_2 setFrame:CGRectMake(53, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-63, 0)];
         }
         else
         {
-            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-            [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, size.height)];
+//            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            [billReceiveAddressLabel_2 setFrame:CGRectMake(53, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height-5, ScreenWidth-83, 45)];
         }
         //        [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 30)];
-        [billReceiveAddressLabel_2 setText:fullAddress];
+        [billReceiveAddressLabel_2 setText:[NSString stringWithFormat:@"收货地址: %@",fullAddress]];
         
     }
     if(tv)
@@ -677,25 +682,65 @@
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
+    tv.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15);
     [tv setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:tv];
     
     buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-50-64, ScreenWidth, 50)];
-    [buttomView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+    [buttomView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [self.view addSubview:buttomView];
+
+    UILabel *moneyLabel = [[UILabel alloc] init];
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:goodsMoney afterPoint:2] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    [moneyLabel setText:[DCFCustomExtra notRounding:goodsMoney afterPoint:2]];
+    [moneyLabel setFont:[UIFont systemFontOfSize:12]];
+    [moneyLabel setTextColor:[UIColor colorWithRed:203.0/255.0 green:24.0/255.0 blue:0.0/255.0 alpha:1.0]];
+    [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
+    [moneyLabel setTextAlignment:NSTextAlignmentRight];
+    [buttomView addSubview:moneyLabel];
     
-    totalMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 50)];
-    
-    [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra notRounding:goodsMoney afterPoint:2]]];
-    [totalMoneyLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    totalMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
     [totalMoneyLabel setTextColor:[UIColor blackColor]];
-    [totalMoneyLabel setBackgroundColor:[UIColor clearColor]];
+    [totalMoneyLabel setFont:[UIFont systemFontOfSize:12]];
+    [totalMoneyLabel setTextAlignment:NSTextAlignmentRight];
+    [totalMoneyLabel setText:@"合计:¥"];
     [buttomView addSubview:totalMoneyLabel];
     
+    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(totalMoneyLabel.frame.origin.x, totalMoneyLabel.frame.origin.y+totalMoneyLabel.frame.size.height, totalMoneyLabel.frame.size.width+moneyLabel.frame.size.width+5, 14)];
+    [l setTextAlignment:NSTextAlignmentRight];
+    [l setFont:[UIFont systemFontOfSize:12]];
+    [l setText:@"含运费"];
+    [buttomView addSubview:l];
+   
+    
+    /*
+    totalMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-270, 5, 40, 25)];
+    [totalMoneyLabel setText:@"合计:"];
+    [totalMoneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
+//    totalMoneyLabel.backgroundColor = [UIColor redColor];
+    [totalMoneyLabel setTextAlignment:NSTextAlignmentRight];
+    [totalMoneyLabel setTextColor:[UIColor blackColor]];
+    [buttomView addSubview:totalMoneyLabel];
+    
+    
+    UILabel *MoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-230, 5, 100, 25)];
+    [MoneyLabel setText:[NSString stringWithFormat:@" ¥%@",[DCFCustomExtra notRounding:goodsMoney afterPoint:2]]];
+    [MoneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    MoneyLabel.backgroundColor = [UIColor greenColor];
+    [MoneyLabel setTextAlignment:NSTextAlignmentLeft];
+    [MoneyLabel setTextColor:[UIColor redColor]];
+    [buttomView addSubview:MoneyLabel];
+    
+    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-230,25,40,25)];
+    [l setTextAlignment:NSTextAlignmentRight];
+    [l setFont:[UIFont systemFontOfSize:12]];
+    [l setText:@"含运费"];
+    [buttomView addSubview:l];
+    */
     UIButton *upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [upBtn setTitle:@"提交" forState:UIControlStateNormal];
     [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [upBtn setFrame:CGRectMake(ScreenWidth-100, 5, 80, 40)];
+    [upBtn setFrame:CGRectMake(ScreenWidth-100, 5, 90, 40)];
     [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     upBtn.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0];
     upBtn.layer.cornerRadius = 5.0f;
@@ -751,11 +796,15 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section == 0)
+    {
+        return 0.1;
+    }
     if(section > 2)
     {
         return 0;
     }
-    return 30;
+    return 35;
 }
 
 
@@ -788,7 +837,7 @@
             else
             {
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-                return size.height+40;
+                return size.height+70;
             }
             
         }
@@ -865,12 +914,20 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(-1, 0, 322, 30)];
-    [label setTextAlignment:NSTextAlignmentLeft];
-    [label setBackgroundColor:[UIColor whiteColor]];
+    UILabel *label;
+    if (section == 0)
+    {
+        
+    }
+    else
+    {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(-1, 0, 322, 30)];
+        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
+    }
     if(section == 0)
     {
-        [label setText:@"  收货地址"];
+//        [label setText:@"  收货地址"];
     }
     if(section == 1)
     {
@@ -880,10 +937,8 @@
     {
         [label setText:@"  商品信息"];
     }
-    [label setTextColor:MYCOLOR];
+    [label setTextColor:[UIColor blackColor]];
     [label setFont:[UIFont boldSystemFontOfSize:14]];
-    label.layer.borderColor = MYCOLOR.CGColor;
-    label.layer.borderWidth = 1.5f;
     return label;
     
     if(section > 2 )
@@ -902,11 +957,15 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+        if ((indexPath.section == 0 && indexPath.row == 0) || (indexPath.section > 2 && indexPath.section <= totalSection -1))
+        {
+            
+        }
+        else
+        {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
         [cell setSelectionStyle:0];
-        
-        
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
@@ -918,7 +977,17 @@
             [cell.textLabel setText:@"正在加载数据"];
         }
         else
-        {
+        {   UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.frame = CGRectMake(10, (cell.frame.size.height-40)/2+20, 40, 40);
+            imageView.image = [UIImage imageNamed:@"location"];
+            [cell addSubview:imageView];
+            
+            UIImageView *arrowImageView = [[UIImageView alloc] init];
+            arrowImageView.frame = CGRectMake(ScreenWidth-30, (cell.frame.size.height-20)/2+20, 20, 20);
+            arrowImageView.image = [UIImage imageNamed:@"location_arrow"];
+            [cell addSubview:arrowImageView];
+            
+            cell.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f8e9cb"];
             [cell.contentView addSubview:billReceiveAddressLabel_1];
             [cell.contentView addSubview:billReceiveAddressLabel_2];
         }
@@ -927,7 +996,6 @@
     if(indexPath.section == 1)
     {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
-        [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
         [cell.contentView addSubview:view];
         [cell.textLabel setText:billMsg];
     }
@@ -953,32 +1021,42 @@
                 
                 NSString *str = [data productItmeTitle];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
-                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, iv.frame.origin.y, 220, size.height)];
+                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-5, 160, 50)];
                 [titleLabel setText:str];
                 [titleLabel setFont:[UIFont systemFontOfSize:12]];
                 [titleLabel setNumberOfLines:0];
                 
-                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:data.price WithSize:CGSizeMake(MAXFLOAT, 20)];
-                UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, titleLabel.frame.origin.y + titleLabel.frame.size.height, size_1.width, 20)];
-                [priceLabel setText:data.price];
-                [priceLabel setFont:[UIFont systemFontOfSize:12]];
-                
-                NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",data.num]];
-                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"*%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
-                UILabel *countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 20, priceLabel.frame.origin.y, size_2.width, 20)];
-                [countlabel setText:[NSString stringWithFormat:@"*%@",number]];
-                [countlabel setFont:[UIFont systemFontOfSize:12]];
-                
-                double money = [number intValue] * [data.price doubleValue];
-                NSString *smallCal = [NSString stringWithFormat:@"小计:¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
+                NSString *numberr = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",data.num]];
+                double money = [numberr intValue] * [data.price doubleValue];
+                NSString *smallCal = [NSString stringWithFormat:@"合计: ¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
                 CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
-                UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
+                UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 60, size_3.width, 20)];
                 [totalLabel setText:smallCal];
                 [totalLabel setFont:[UIFont systemFontOfSize:12]];
                 
+                NSString *color = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"颜色:%@",data.colorName]];
+                CGSize size_color = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
+                UILabel *colorLabel = [[UILabel alloc] init];
+                colorLabel.frame = CGRectMake(ScreenWidth-size_color.width, 25, size_color.width, 20);
+                colorLabel.text = color;
+                colorLabel.font = [UIFont systemFontOfSize:12];
+                
+                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"¥%@",data.price] WithSize:CGSizeMake(MAXFLOAT, 20)];
+                UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_1.width,5, size_1.width, 20)];
+                [priceLabel setText:[NSString stringWithFormat:@"¥%@",data.price]];
+                [priceLabel setFont:[UIFont systemFontOfSize:12]];
+                
+                NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",data.num]];
+                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"×%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
+                UILabel *countlabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-size_2.width-10,42, size_2.width, 20)];
+                [countlabel setText:[NSString stringWithFormat:@"×%@",number]];
+                [countlabel setFont:[UIFont systemFontOfSize:12]];
+                
+               
+                
                 
                 UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+//                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                 CGFloat height = size.height+size_1.height;
                 if(height <= 40)
                 {
@@ -995,6 +1073,7 @@
                 [cell.contentView addSubview:priceLabel];
                 [cell.contentView addSubview:countlabel];
                 [cell.contentView addSubview:totalLabel];
+                [cell.contentView addSubview:colorLabel];
             }
             else
             {
@@ -1002,15 +1081,15 @@
                 {
                     //                    [cell.textLabel setText:@"商品备注"];
                     DCFMyTextField *tf = [cellTextFieldArray objectAtIndex:indexPath.section-3];
-                    [tf setFrame:CGRectMake(0, 0, ScreenWidth, cell.contentView.frame.size.height)];
-                    [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    [tf setFrame:CGRectMake(15, -0.5, ScreenWidth-30, cell.contentView.frame.size.height+0.5)];
+//                    [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                     [tf setPlaceholder:@"商品备注"];
                     [cell addSubview:tf];
                 }
                 else
                 {
                     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
-                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+//                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                     [cell.contentView addSubview:view];
                     
                     NSString *str = nil;
@@ -1022,7 +1101,7 @@
                     {
                         if([[chooseSendMethodArray objectAtIndex:indexPath.section-3] count] == 0)
                         {
-                            str = @"配送费由商家承担";
+                            str = @"快递免邮";
                         }
                         else
                         {
@@ -1112,19 +1191,19 @@
                 if(number.length == 0)
                 {
                     countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 5, priceLabel.frame.origin.y, 30, 20)];
-                    [countlabel setText:[NSString stringWithFormat:@"*%@",@""]];
+                    [countlabel setText:[NSString stringWithFormat:@"×%@",@""]];
                 }
                 else
                 {
-                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"*%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
+                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"×%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
                     countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 5, priceLabel.frame.origin.y, size_2.width, 20)];
-                    [countlabel setText:[NSString stringWithFormat:@"*%@",number]];
+                    [countlabel setText:[NSString stringWithFormat:@"×%@",number]];
                 }
                 [countlabel setFont:[UIFont systemFontOfSize:12]];
                 
                 
                 double money = [number intValue] * [price doubleValue];
-                NSString *smallCal = [NSString stringWithFormat:@"小计:¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
+                NSString *smallCal = [NSString stringWithFormat:@"合计:¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
                 UILabel *totalLabel = nil;
                 if(smallCal.length == 0)
                 {
@@ -1166,7 +1245,7 @@
                 {
                     //                    [cell.textLabel setText:@"商品备注"];
                     DCFMyTextField *tf = [cellTextFieldArray lastObject];
-                    [tf setFrame:CGRectMake(0, 0, ScreenWidth, cell.contentView.frame.size.height)];
+                    [tf setFrame:CGRectMake(15, -0.5, ScreenWidth-15, cell.contentView.frame.size.height+0.5)];
                     [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                     [tf setPlaceholder:@"商品备注"];
                     [cell addSubview:tf];

@@ -115,6 +115,10 @@
     {
         [addToCarArray removeAllObjects];
     }
+    
+    //初始化语音识别控件
+    _iflyRecognizerView = [[IFlyRecognizerView alloc] initWithCenter:self.view.center];
+    _iflyRecognizerView.delegate = self;
    
     rightBtn.hidden = NO;
     rightButtonView.hidden = NO;
@@ -281,10 +285,6 @@
     [self.view addSubview:self.serchResultView];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
-    
-    //初始化语音识别控件
-    _iflyRecognizerView = [[IFlyRecognizerView alloc] initWithCenter:self.view.center];
-    _iflyRecognizerView.delegate = self;
     
     _popView = [[PopupView alloc] initWithFrame:CGRectMake(100, 300, 0, 0)];
     _popView.ParentView = self.view;
@@ -943,7 +943,9 @@
     if (historyFlag == 1)
     {
          NSLog(@"addtoAskCarClick_dataArray = %@",dataArray);
-         text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"firsttype"]];
+        UITableViewCell * cell = (UITableViewCell *)[sender superview];
+        NSIndexPath * path = [self.serchResultView indexPathForCell:cell];
+        text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:path.row] objectForKey:@"firsttype"]];
     }
     else
     {

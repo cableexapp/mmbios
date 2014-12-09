@@ -66,7 +66,7 @@
     //自定义导航条
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
     nameLabel.textColor = [UIColor whiteColor];
-    nameLabel.backgroundColor = [UIColor colorWithRed:10.0/255.0 green:88.0/255.0 blue:173.0/255.0 alpha:1.0];
+    nameLabel.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
     nameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view insertSubview:nameLabel atIndex:1];
     

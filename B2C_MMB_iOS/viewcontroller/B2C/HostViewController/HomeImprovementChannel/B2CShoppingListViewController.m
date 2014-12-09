@@ -314,7 +314,7 @@
     [searchTextField setDelegate:self];
     [searchTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等"];
     [searchTextField setBackgroundColor:[UIColor whiteColor]];
-    UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 40, 38)];
+    UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 30, 30)];
     [leftView setImage:[UIImage imageNamed:@"magnifying glass.png"]];
     [searchTextField setLeftView:leftView];
     [searchTextField setFont:[UIFont systemFontOfSize:12]];

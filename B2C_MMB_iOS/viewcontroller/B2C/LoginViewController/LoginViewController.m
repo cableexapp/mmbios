@@ -212,7 +212,7 @@
     
     HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [HUD setDelegate:self];
-    [HUD setLabelText:@"正在登陆....."];
+    [HUD setLabelText:@"正在登录....."];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     

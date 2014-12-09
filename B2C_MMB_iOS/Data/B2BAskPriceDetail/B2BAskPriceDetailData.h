@@ -39,6 +39,7 @@
 @property (strong,nonatomic) NSString *unit;
 @property (strong,nonatomic) NSString *visitorId;
 
+@property (strong,nonatomic) NSString *chooseKind;
 
 - (id) initWithDic:(NSDictionary *) dic;
 

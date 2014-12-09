@@ -63,7 +63,7 @@
         
         _visitorId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"visitorId"]];
         
-
+        _chooseKind = [NSString stringWithFormat:@"%@%@%@",_firstType,_secondType,_thridType];
     }
     return self;
 }

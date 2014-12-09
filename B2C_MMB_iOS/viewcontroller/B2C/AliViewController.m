@@ -101,79 +101,31 @@
  */
 - (void)generateData
 {
-//	NSArray *subjects = [[NSArray alloc] initWithObjects:
-//                         @"话费充值",
-//						 @"魅力香水",
-//                         @"珍珠项链",
-//                         @"三星 原装移动硬盘",
-//						 @"发箍发带",
-//                         @"台版N97I",
-//                         @"苹果手机",
-//						 @"蝴蝶结",
-//                         @"韩版雪纺",
-//                         @"五皇纸箱",
-//                         nil];
-    
-    NSArray *subjects = [[NSArray alloc] initWithObjects:_shopName, nil];
-    
-//	NSArray *body = [[NSArray alloc] initWithObjects:
-//                     @"[四钻信誉]北京移动30元 电脑全自动充值 1到10分钟内到账",
-//					 @"新年特惠 adidas 阿迪达斯走珠 香体止汗走珠 多种香型可选",
-//					 @"[2元包邮]韩版 韩国 流行饰品太阳花小巧雏菊 珍珠项链2M15",
-//					 @"三星 原装移动硬盘 S2 320G 带加密 三星S2 韩国原装 全国联保",
-//					 @"[肉来来]超热卖 百变小领巾 兔耳朵布艺发箍发带",
-//					 @"台版N97I 有迷你版 双卡双待手机 挂QQ JAVA 炒股 来电归属地 同款比价",
-//					 @"山寨国产红苹果手机 Hiphone I9 JAVA QQ后台 飞信 炒股 UC",
-//					 @"[饰品实物拍摄]满30包邮 三层绸缎粉色 蝴蝶结公主发箍多色入",
-//					 @"饰品批发价 韩版雪纺纱圆点布花朵 山茶玫瑰花 发圈胸针两用 6002",
-//					 @"加固纸箱 会员包快递拍好去运费冲纸箱首个五皇",nil];
-	
-    NSArray *body = [[NSArray alloc] initWithObjects:_productName, nil];
-    
-	_products = [[NSMutableArray alloc] init];
-    
-	for (int i = 0; i < [subjects count]; ++i) {
-		Product *product = [[Product alloc] init];
-		product.subject = [subjects objectAtIndex:i];
-		product.body = [body objectAtIndex:i];
-        product.price = [[self getNumFromString:_productPrice] floatValue];
-//		if (1==i) {
-//			product.price = 1;
-//		}
-//		else if(2==i)
-//		{
-//			product.price = 10;
-//		}
-//		else if(3==i)
-//		{
-//			product.price = 100;
-//		}
-//		else if(4==i)
-//		{
-//			product.price = 1000;
-//		}
-//		else if(5==i)
-//		{
-//			product.price = 2000;
-//		}
-//		else if(6==i)
-//		{
-//			product.price = 6000;
-//		}
-//		else {
-//			product.price = 0.01;
-//		}
-		
-		[_products addObject:product];
-#if ! __has_feature(objc_arc)
-		[product release];
-#endif
-	}
-	
-#if ! __has_feature(objc_arc)
-	[subjects release], subjects = nil;
-	[body release], body = nil;
-#endif
+
+//    NSArray *subjects = [[NSArray alloc] initWithObjects:_shopName, nil];
+//
+//    NSArray *body = [[NSArray alloc] initWithObjects:_productName, nil];
+//    
+//	_products = [[NSMutableArray alloc] init];
+//    
+//	for (int i = 0; i < [subjects count]; ++i)
+//    {
+//		Product *product = [[Product alloc] init];
+//		product.subject = [subjects objectAtIndex:i];
+//		product.body = [body objectAtIndex:i];
+//        NSLog(@"_productPrice = %@",_productPrice);
+//        product.price = [[self getNumFromString:_productPrice] floatValue];
+//
+//		[_products addObject:product];
+//#if ! __has_feature(objc_arc)
+//		[product release];
+//#endif
+//	}
+//	
+//#if ! __has_feature(objc_arc)
+//	[subjects release], subjects = nil;
+//	[body release], body = nil;
+//#endif
 }
 
 - (NSString *) getNumFromString:(NSString *) string
@@ -188,6 +140,24 @@
         }
     }
     return price;
+}
+
+- (void) testPay
+{
+    /*
+	 *生成订单信息及签名
+	 *由于demo的局限性，采用了将私钥放在本地签名的方法，商户可以根据自身情况选择签名方法(为安全起见，在条件允许的前提下，我们推荐从商户服务器获取完整的订单信息)
+	 */
+#pragma mark - 这里修改appScheme,跳回自己app,同时info里面的URL Type里面也要修改
+    NSString *appScheme = @"far.east.Far-East-MMB-iOS";
+    NSString* orderInfo = [self getOrderInfo:0];
+    NSString* signedStr = [self doRsa:orderInfo];
+    
+    
+    NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                             orderInfo, signedStr, @"RSA"];
+	
+    [AlixLibService payOrder:orderString AndScheme:appScheme seletor:_result target:self];
 }
 
 #pragma mark -
@@ -249,25 +219,39 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*
-	 *生成订单信息及签名
-	 *由于demo的局限性，采用了将私钥放在本地签名的方法，商户可以根据自身情况选择签名方法(为安全起见，在条件允许的前提下，我们推荐从商户服务器获取完整的订单信息)
-	 */
-#pragma mark - 这里修改appScheme,跳回自己app,同时info里面的URL Type里面也要修改
-    NSString *appScheme = @"far.east.Far-East-MMB-iOS";
-    NSString* orderInfo = [self getOrderInfo:indexPath.row];
-    NSString* signedStr = [self doRsa:orderInfo];
-    
-    
-    NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                             orderInfo, signedStr, @"RSA"];
-	
-    [AlixLibService payOrder:orderString AndScheme:appScheme seletor:_result target:self];
+
     
 }
 
 -(NSString*)getOrderInfo:(NSInteger)index
 {
+    
+    NSArray *subjects = [[NSArray alloc] initWithObjects:_shopName, nil];
+    
+    NSArray *body = [[NSArray alloc] initWithObjects:_productName, nil];
+    
+	_products = [[NSMutableArray alloc] init];
+    
+	for (int i = 0; i < [subjects count]; ++i)
+    {
+		Product *product = [[Product alloc] init];
+		product.subject = [subjects objectAtIndex:i];
+		product.body = [body objectAtIndex:i];
+        NSLog(@"_productPrice = %@",_productPrice);
+        product.price = [[self getNumFromString:_productPrice] floatValue];
+        
+		[_products addObject:product];
+#if ! __has_feature(objc_arc)
+		[product release];
+#endif
+	}
+	
+#if ! __has_feature(objc_arc)
+	[subjects release], subjects = nil;
+	[body release], body = nil;
+#endif
+    
+    
     /*
 	 *点击获取prodcut实例并初始化订单信息
 	 */
@@ -279,8 +263,8 @@
     order.tradeNO = [self generateTradeNO]; //订单ID（由商家自行制定）
 	order.productName = product.subject; //商品标题
 	order.productDescription = product.body; //商品描述
+    
 	order.amount = [NSString stringWithFormat:@"%.2f",product.price]; //商品价格
-
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/payment/alipay/alipay_notify_url.html"];
 
 	order.notifyURL =  urlString; //回调URL

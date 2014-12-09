@@ -346,7 +346,6 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLInquiryCartListTag)
     {
-        NSLog(@"%@",dicRespon);
         dataArray = [[NSMutableArray alloc] init];
         
         sectionHeadBtnArray = [[NSMutableArray alloc] init];
@@ -419,6 +418,7 @@
                     
                     NSString *require = [NSString stringWithFormat:@"特殊要求 %@",[[dataArray objectAtIndex:i] require]];
                     
+                    
                     CGSize size;
                     if(require.length == 0 || [require isKindOfClass:[NSNull class]])
                     {
@@ -430,11 +430,11 @@
                     }
                     if(size.height < 20)
                     {
-                        height = 90;
+                        height = 90+60;
                     }
                     else
                     {
-                        height = size.height+70;
+                        height = size.height+70+60;
                     }
                     [cellHeightArray addObject:[NSNumber numberWithFloat:height]];
                     

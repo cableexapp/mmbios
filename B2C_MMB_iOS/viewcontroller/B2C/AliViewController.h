@@ -37,4 +37,6 @@
 @property (strong,nonatomic) NSString *productOrderNum;;
 
 -(void)paymentResult:(NSString *)result;
+
+- (void) testPay;
 @end

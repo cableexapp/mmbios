@@ -10,7 +10,7 @@
 #import "DCFConnectionUtil.h"
 #import "MBProgressHUD.h"
 
-@interface FifthTableViewController : UITableViewController<ConnectionDelegate,MBProgressHUDDelegate>
+@interface FifthTableViewController : UITableViewController<ConnectionDelegate,MBProgressHUDDelegate,UIAlertViewDelegate>
 {
     MBProgressHUD *HUD;
     DCFConnectionUtil *conn;

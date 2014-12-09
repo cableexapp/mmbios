@@ -41,6 +41,7 @@
 
 - (IBAction)logOutBtnClick:(id)sender
 {
+    
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
     [self presentViewController:loginNavi animated:YES completion:nil];

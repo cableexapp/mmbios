@@ -177,48 +177,60 @@
     [super didReceiveMemoryWarning];
 }
 
+
+
 - (IBAction)logOutBtnClick:(id)sender
 {
-    if(!HUD)
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"退出登录"
+                                                        message:@"是否确定退出登录？"
+                                                       delegate:self
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"取消",@"确定", nil];
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
     {
-        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [HUD setLabelText:@"正在退出"];
-        [HUD setDelegate:self];
+        if(!HUD)
+        {
+            HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            [HUD setLabelText:@"正在退出"];
+            [HUD setDelegate:self];
+        }
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteAppCartItems",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+        
+        NSString *visitorid = [app getUdid];
+        
+        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+        
+        NSString *pushString = nil;
+        if(hasLogin == YES)
+        {
+            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+        }
+        else
+        {
+            pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+        }
+        
+        
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteAppCartItemsTag delegate:self];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/deleteAppCartItems.html?"];
+        
+        
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteAppCartItems",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
-    NSString *visitorid = [app getUdid];
-    
-    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
-    NSString *pushString = nil;
-    if(hasLogin == YES)
-    {
-        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
-    }
-    else
-    {
-        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
-    }
-    
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteAppCartItemsTag delegate:self];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/deleteAppCartItems.html?"];
-    
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
-    
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     if(HUD)
     {
         [HUD hide:YES];

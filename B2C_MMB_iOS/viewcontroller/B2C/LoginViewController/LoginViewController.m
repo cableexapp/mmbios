@@ -107,21 +107,26 @@
     
     self.loginBtn.frame =CGRectMake(20, 250, ScreenWidth-40, 50);
     [self.loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+    self.loginBtn.layer.cornerRadius = 5.0f;
     self.loginBtn.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
+    self.forgetBtn.frame = CGRectMake(ScreenWidth-93, 315, 80, 22);
+    [self.forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
+    [self.forgetBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [registerBtn setFrame:CGRectMake(0, 5, 40, 30)];
-    [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [registerBtn setFrame:CGRectMake(ScreenWidth-170, 277, 80, 22)];
+    [registerBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [registerBtn setTitle:@"用户注册" forState:UIControlStateNormal];
-    registerBtn.layer.borderColor = MYCOLOR.CGColor;
-    registerBtn.layer.borderWidth = 1.0f;
-    registerBtn.layer.cornerRadius = 5.0f;
-    registerBtn.layer.masksToBounds = 1.0f;
     [registerBtn addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:registerBtn];
-    
-    self.forgetBtn.frame = CGRectMake(ScreenWidth-100, 320, 100, 22);
  
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 35, 38);
+    [btn setBackgroundImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(cancelBtnClick:) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = left;
     
     for(int i = 0; i < 2; i++)
     {
@@ -145,41 +150,8 @@
         }
     }
     
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
-    
-    [self.forgetBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 20)];
-    
-    
-//    UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [registerBtn setFrame:CGRectMake(0, 5, 40, 30)];
-//    [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [registerBtn setTitle:@"注册" forState:UIControlStateNormal];
-//    registerBtn.layer.borderColor = MYCOLOR.CGColor;
-//    registerBtn.layer.borderWidth = 1.0f;
-//    registerBtn.layer.cornerRadius = 5.0f;
-//    registerBtn.layer.masksToBounds = 1.0f;
-//    [registerBtn addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:registerBtn];
-//    self.navigationItem.rightBarButtonItem = right;
-    
-    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [cancelBtn setFrame:CGRectMake(0, 5, 40, 30)];
-    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    cancelBtn.layer.borderColor = MYCOLOR.CGColor;
-    cancelBtn.layer.borderWidth = 1.0f;
-    cancelBtn.layer.cornerRadius = 5.0f;
-    cancelBtn.layer.masksToBounds = 1.0f;
-    [cancelBtn addTarget:self action:@selector(cancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:cancelBtn];
-    self.navigationItem.leftBarButtonItem = left;
-    
-    self.loginBtn.layer.cornerRadius = 5.0f;
-    
 }
 
 - (void) cancelBtnClick:(UIButton *) sender

@@ -333,8 +333,7 @@
     searchBtn.layer.masksToBounds = YES;
     [searchBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:searchBtn];
-    
+    [topView addSubview:searchBtn];    
     selectBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height+13, ScreenWidth, 60)];
     [selectBtnView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:selectBtnView];

@@ -313,6 +313,11 @@
 		61DF89F419FB9CD700D47430 /* moreUnSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61DF89F019FB9CD700D47430 /* moreUnSelect.png */; };
 		61DF89F619FB9D4900D47430 /* HomeSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61DF89F519FB9D4900D47430 /* HomeSelect.png */; };
 		61DF89F819FB9EB500D47430 /* p_centerUnSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61DF89F719FB9EB500D47430 /* p_centerUnSelect.png */; };
+		61E0E17D1A36DD0E00F6D5F1 /* choosePayMent.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E0E17B1A36DD0E00F6D5F1 /* choosePayMent.png */; };
+		61E0E17E1A36DD0E00F6D5F1 /* complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E0E17C1A36DD0E00F6D5F1 /* complete.png */; };
+		61E0E1801A36E99700F6D5F1 /* AliSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E0E17F1A36E99700F6D5F1 /* AliSelect.png */; };
+		61E0E1831A36FFD000F6D5F1 /* select.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E0E1811A36FFD000F6D5F1 /* select.png */; };
+		61E0E1841A36FFD000F6D5F1 /* unselect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61E0E1821A36FFD000F6D5F1 /* unselect.png */; };
 		61E65DD61A16F96300E22E2E /* AddInvoiceAddedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DD11A16F96300E22E2E /* AddInvoiceAddedTableViewController.m */; };
 		61E65DD71A16F96300E22E2E /* AddInvoiceNormalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DD31A16F96300E22E2E /* AddInvoiceNormalTableViewController.m */; };
 		61E65DD81A16F96300E22E2E /* AddInvoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DD51A16F96300E22E2E /* AddInvoiceViewController.m */; };
@@ -1289,6 +1294,11 @@
 		61DF89F019FB9CD700D47430 /* moreUnSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moreUnSelect.png; sourceTree = "<group>"; };
 		61DF89F519FB9D4900D47430 /* HomeSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HomeSelect.png; sourceTree = "<group>"; };
 		61DF89F719FB9EB500D47430 /* p_centerUnSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p_centerUnSelect.png; sourceTree = "<group>"; };
+		61E0E17B1A36DD0E00F6D5F1 /* choosePayMent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choosePayMent.png; sourceTree = "<group>"; };
+		61E0E17C1A36DD0E00F6D5F1 /* complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = complete.png; sourceTree = "<group>"; };
+		61E0E17F1A36E99700F6D5F1 /* AliSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AliSelect.png; sourceTree = "<group>"; };
+		61E0E1811A36FFD000F6D5F1 /* select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select.png; sourceTree = "<group>"; };
+		61E0E1821A36FFD000F6D5F1 /* unselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselect.png; sourceTree = "<group>"; };
 		61E65DD01A16F96300E22E2E /* AddInvoiceAddedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInvoiceAddedTableViewController.h; sourceTree = "<group>"; };
 		61E65DD11A16F96300E22E2E /* AddInvoiceAddedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddInvoiceAddedTableViewController.m; sourceTree = "<group>"; };
 		61E65DD21A16F96300E22E2E /* AddInvoiceNormalTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddInvoiceNormalTableViewController.h; sourceTree = "<group>"; };
@@ -2554,6 +2564,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				61E0E17A1A36DD0E00F6D5F1 /* AliImage */,
 				6114F7AE1A189E25007DAC39 /* WelCome */,
 				6140E7C51A01DE4C00E349E3 /* hotModelSelected */,
 				61B710F419FF67A1001CC3BD /* 首页 */,
@@ -3244,6 +3255,18 @@
 				61DF89D219FB83E400D47430 /* B2CGoodsFastPicData.m */,
 			);
 			path = B2CGoodsFastPicData;
+			sourceTree = "<group>";
+		};
+		61E0E17A1A36DD0E00F6D5F1 /* AliImage */ = {
+			isa = PBXGroup;
+			children = (
+				61E0E1811A36FFD000F6D5F1 /* select.png */,
+				61E0E1821A36FFD000F6D5F1 /* unselect.png */,
+				61E0E17F1A36E99700F6D5F1 /* AliSelect.png */,
+				61E0E17B1A36DD0E00F6D5F1 /* choosePayMent.png */,
+				61E0E17C1A36DD0E00F6D5F1 /* complete.png */,
+			);
+			path = AliImage;
 			sourceTree = "<group>";
 		};
 		61E65DD91A177F2B00E22E2E /* ManageAccount */ = {
@@ -4424,6 +4447,7 @@
 				8BA7C0A91A10A85500758B0F /* 安静.png in Resources */,
 				8BA7C0F51A10A85500758B0F /* 激动.png in Resources */,
 				8BA7C1241A10A85500758B0F /* 西瓜@2x.png in Resources */,
+				61E0E17D1A36DD0E00F6D5F1 /* choosePayMent.png in Resources */,
 				8BBB2CA91A1E162800895B4C /* 3.png in Resources */,
 				8BB3509B1A2425AC00E76495 /* unchoose.png in Resources */,
 				8BA7C13E1A10A85500758B0F /* 饥饿@2x.png in Resources */,
@@ -4451,6 +4475,7 @@
 				8BBB2CB01A1E1BC800895B4C /* 4.png in Resources */,
 				8BBB2CA81A1E162800895B4C /* 1.png in Resources */,
 				6181A4EC19CFC4C2000E2D14 /* Parents.png in Resources */,
+				61E0E1831A36FFD000F6D5F1 /* select.png in Resources */,
 				8BA7C07E1A10A85500758B0F /* 偷笑@2x.png in Resources */,
 				8BA7C1371A10A85500758B0F /* 阴险.png in Resources */,
 				8BA7C0F21A10A85500758B0F /* 流汗@2x.png in Resources */,
@@ -4458,6 +4483,7 @@
 				8BA7C0E61A10A85500758B0F /* 握手@2x.png in Resources */,
 				6140E7CA1A01DE4C00E349E3 /* hotModelSelected@2x.png in Resources */,
 				8BA7C0CF1A10A85500758B0F /* 哭了.png in Resources */,
+				61E0E1801A36E99700F6D5F1 /* AliSelect.png in Resources */,
 				8BA7C0EA1A10A85500758B0F /* 擦汗@2x.png in Resources */,
 				8BA7C1061A10A85500758B0F /* 瓢虫@2x.png in Resources */,
 				61DF89F819FB9EB500D47430 /* p_centerUnSelect.png in Resources */,
@@ -4536,6 +4562,7 @@
 				8BF5D5441A1F565300A3287C /* set_clear.png in Resources */,
 				8BA7C1311A10A85500758B0F /* 装酷.png in Resources */,
 				8BA7C1201A10A85500758B0F /* 街舞@2x.png in Resources */,
+				61E0E1841A36FFD000F6D5F1 /* unselect.png in Resources */,
 				8BA7C06D1A10A85500758B0F /* sms01.mp3 in Resources */,
 				8BA7C1021A10A85500758B0F /* 献吻@2x.png in Resources */,
 				8BA7C07F1A10A85500758B0F /* 傲慢.png in Resources */,
@@ -4612,6 +4639,7 @@
 				8BE6CA711A1F48310015277A /* about.png in Resources */,
 				8BBB2CA61A1E162800895B4C /* 5.png in Resources */,
 				8BA7C10D1A10A85500758B0F /* 磕头.png in Resources */,
+				61E0E17E1A36DD0E00F6D5F1 /* complete.png in Resources */,
 				8BA7C0E71A10A85500758B0F /* 撇嘴.png in Resources */,
 				8BA7C0CC1A10A85500758B0F /* 微笑@2x.png in Resources */,
 				8BA7C12D1A10A85500758B0F /* 转圈.png in Resources */,

@@ -20,6 +20,10 @@
     NSString *myValue;
     NSString *myShopName;
     NSString *myProductTitle;
+    
+    UIView *cellBackView;
+    
+    UIButton *payBtn;
 }
 @end
 
@@ -57,6 +61,66 @@
     
     [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
 
+    
+    cellBackView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 110)];
+    cellBackView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    cellBackView.layer.borderWidth = 1.0f;
+    
+    UILabel *chooseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cellBackView.frame.size.width, 40)];
+    [chooseLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [chooseLabel setText:@" 选择支付方式"];
+    [cellBackView addSubview:chooseLabel];
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, chooseLabel.frame.origin.y+chooseLabel.frame.size.height, cellBackView.frame.size.width, 1)];
+    [lineView setBackgroundColor:[UIColor lightGrayColor]];
+    [cellBackView addSubview:lineView];
+    
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, lineView.frame.origin.y+10, 50, 50)];
+    [iv setImage:[UIImage imageNamed:@"choosePayMent.png"]];
+    [cellBackView addSubview:iv];
+    
+    UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x+iv.frame.size.width+10, iv.frame.origin.y, 150, 25)];
+    [label_1 setText:@"支付宝快捷支付"];
+    [label_1 setFont:[UIFont systemFontOfSize:14]];
+    [cellBackView addSubview:label_1];
+    
+    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(label_1.frame.origin.x, label_1.frame.origin.y+label_1.frame.size.height, 200, 30)];
+    [label_2 setFont:[UIFont systemFontOfSize:13]];
+    [label_2 setText:@"无需跳转客户端,快捷支付!"];
+    [label_2 setTextColor:[UIColor colorWithRed:32.0/255.0 green:82.0/255.0 blue:134.0/255.0 alpha:1.0]];
+    [cellBackView addSubview:label_2];
+    
+    UIButton *selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [selectBtn setBackgroundImage:[UIImage imageNamed:@"select"] forState:UIControlStateNormal];
+    [selectBtn setFrame:CGRectMake(cellBackView.frame.size.width-50, label_1.frame.origin.y+10, 30, 30)];
+    [cellBackView addSubview:selectBtn];
+    
+    payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [payBtn setTitle:@"在线支付" forState:UIControlStateNormal];
+    [payBtn setBackgroundColor:[UIColor blueColor]];
+    [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [payBtn setFrame:CGRectMake(20, 10, ScreenWidth-40, 40)];
+}
+
+- (void) payBtnClick:(UIButton *) sender
+{
+#pragma mark - 支付宝校验
+    [self aliValidate:myValue With:myTotal];
+}
+
+- (void) selectBtnClick:(UIButton *) sender
+{
+    
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row == 0)
+    {
+        return 130;
+    }
+    return 60;
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,7 +138,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 2;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -88,29 +152,31 @@
     [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
 
     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(20, 40, 30, 30)];
-    [iv setImage:[UIImage imageNamed:@"choose.png"]];
+    [iv setImage:[UIImage imageNamed:@"complete.png"]];
     [view addSubview:iv];
     
-    UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, 250, 30)];
+    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, 250, 30)];
+    [label_2 setText:[NSString stringWithFormat:@"订单号:%@",myValue]];
+    [label_2 setTextAlignment:NSTextAlignmentLeft];
+    [label_2 setFont:[UIFont systemFontOfSize:12]];
+    [view addSubview:label_2];
+    
+    UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_2.frame.origin.y+label_2.frame.size.height, 250, 30)];
     [label_1 setText:@"您的订单已提交成功"];
     [label_1 setTextAlignment:NSTextAlignmentLeft];
     [label_1 setTextColor:MYCOLOR];
     [label_1 setFont:[UIFont systemFontOfSize:13]];
     [view addSubview:label_1];
     
-    UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_1.frame.origin.y + label_1.frame.size.height, 250, 30)];
-    [label_2 setText:[NSString stringWithFormat:@"订单号:%@",myValue]];
-    [label_2 setTextAlignment:NSTextAlignmentLeft];
-    [label_2 setFont:[UIFont systemFontOfSize:12]];
-    [view addSubview:label_2];
+ 
     
-    UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_2.frame.origin.y + label_2.frame.size.height, 250, 30)];
+    UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_1.frame.origin.y + label_1.frame.size.height, 250, 30)];
     NSString *s = [NSString stringWithFormat:@"订单金额:¥  %@",myTotal];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 8)];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(8, s.length-8)];
     [label_3 setAttributedText:str];
-    [self.view addSubview:label_3];
+    [view addSubview:label_3];
     
     return view;
 }
@@ -127,7 +193,15 @@
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-    [cell.textLabel setText:@"支付宝支付"];
+    
+    if(indexPath.row == 0)
+    {
+        [cell.contentView addSubview:cellBackView];
+    }
+    if(indexPath.row == 1)
+    {
+        [cell.contentView addSubview:payBtn];
+    }
     return cell;
 }
 
@@ -145,8 +219,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-#pragma mark - 支付宝校验
-    [self aliValidate:myValue With:myTotal];
+
 
 
 }
@@ -170,8 +243,10 @@
             ali.productName = myProductTitle;
             ali.productPrice = myTotal;
             ali.productOrderNum = myValue;
+            
+            [ali testPay];
 
-            [self.navigationController pushViewController:ali animated:YES];
+//            [self.navigationController pushViewController:ali animated:YES];
         }
         else
         {
@@ -190,7 +265,9 @@
                 ali.productPrice = myTotal;
                 ali.productOrderNum = myValue;
                 
-                [self.navigationController pushViewController:ali animated:YES];
+                [ali testPay];
+
+//                [self.navigationController pushViewController:ali animated:YES];
             }
             
         }

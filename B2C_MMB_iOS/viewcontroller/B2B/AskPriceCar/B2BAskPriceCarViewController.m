@@ -418,6 +418,7 @@
                     
                     NSString *require = [NSString stringWithFormat:@"特殊要求 %@",[[dataArray objectAtIndex:i] require]];
                     
+                    
                     CGSize size;
                     if(require.length == 0 || [require isKindOfClass:[NSNull class]])
                     {

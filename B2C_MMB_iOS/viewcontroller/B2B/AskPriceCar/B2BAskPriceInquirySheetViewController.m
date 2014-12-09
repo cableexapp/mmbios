@@ -388,9 +388,13 @@
             
             UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
             [modelLabel setText:[NSString stringWithFormat:@"型号:%@",data.cartModel]];
+            [modelLabel setFont:[UIFont systemFontOfSize:13]];
             [cell.contentView addSubview:modelLabel];
             
-            
+            UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, modelLabel.frame.origin.y+modelLabel.frame.size.height, ScreenWidth-20, 30)];
+            [kindLabel setFont:[UIFont systemFontOfSize:13]];
+            [kindLabel setText:[NSString stringWithFormat:@"分类:%@",data.chooseKind]];
+            [cell.contentView addSubview:kindLabel];
 
             CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
             
@@ -510,38 +514,38 @@
                 UILabel *cellLabel = [[UILabel alloc] init];
                 if(i == 0)
                 {
-                    [cellLabel setFrame:CGRectMake(10, 5, size_1.width, 20)];
+                    [cellLabel setFrame:CGRectMake(10, 65, size_1.width, 20)];
                     [cellLabel setAttributedText:myNum];
                 }
                 if(i == 1)
                 {
-                    [cellLabel setFrame:CGRectMake(halfWidth, 5, size_2.width, 20)];
+                    [cellLabel setFrame:CGRectMake(halfWidth, 65, size_2.width, 20)];
                     [cellLabel setAttributedText:myDeliver];
                 }
                 if(i == 2)
                 {
-                    [cellLabel setFrame:CGRectMake(10, 25, size_3.width, 20)];
+                    [cellLabel setFrame:CGRectMake(10, 85, size_3.width, 20)];
                     [cellLabel setAttributedText:myCartSpec];
                     
                 }
                 if(i == 3)
                 {
-                    [cellLabel setFrame:CGRectMake(halfWidth, 25, size_4.width, 20)];
+                    [cellLabel setFrame:CGRectMake(halfWidth, 85, size_4.width, 20)];
                     [cellLabel setAttributedText:myCartVoltage];
                 }
                 if(i == 4)
                 {
-                    [cellLabel setFrame:CGRectMake(10, 45, size_5.width, 20)];
+                    [cellLabel setFrame:CGRectMake(10, 105, size_5.width, 20)];
                     [cellLabel setAttributedText:myColor];
                 }
                 if(i == 5)
                 {
-                    [cellLabel setFrame:CGRectMake(halfWidth, 45, size_6.width, 20)];
+                    [cellLabel setFrame:CGRectMake(halfWidth, 105, size_6.width, 20)];
                     [cellLabel setAttributedText:myFeatureone];
                 }
                 if(i == 6)
                 {
-                    [cellLabel setFrame:CGRectMake(10, 65, cell.contentView.frame.size.width-20, size_7.height)];
+                    [cellLabel setFrame:CGRectMake(10, 125, cell.contentView.frame.size.width-20, size_7.height)];
                     [cellLabel setAttributedText:myRequire];
                 }
                 

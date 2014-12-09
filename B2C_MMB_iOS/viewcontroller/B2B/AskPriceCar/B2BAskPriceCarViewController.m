@@ -346,7 +346,6 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLInquiryCartListTag)
     {
-        NSLog(@"%@",dicRespon);
         dataArray = [[NSMutableArray alloc] init];
         
         sectionHeadBtnArray = [[NSMutableArray alloc] init];
@@ -430,11 +429,11 @@
                     }
                     if(size.height < 20)
                     {
-                        height = 90;
+                        height = 90+60;
                     }
                     else
                     {
-                        height = size.height+70;
+                        height = size.height+70+60;
                     }
                     [cellHeightArray addObject:[NSNumber numberWithFloat:height]];
                     

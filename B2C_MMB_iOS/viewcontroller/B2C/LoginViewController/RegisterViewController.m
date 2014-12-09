@@ -27,6 +27,8 @@
     NSTimer *timer_tel;
     
     int isRegisterFlag;
+    
+    NSString *remindMessage;
 }
 @end
 
@@ -103,7 +105,15 @@
     
     if (isRegisterFlag == 1)
     {
-        [DCFStringUtil showNotice:@"验证失败，手机号已存在!"];
+        if([DCFCustomExtra validateString:remindMessage] == YES)
+        {
+            [DCFStringUtil showNotice:remindMessage];
+        }
+        else
+        {
+            
+        }
+        
     }
     else
     {
@@ -373,6 +383,31 @@
 - (void) textFieldDidEndEditing:(UITextField *)textField
 {
     [self checkUseAndSec:textField];
+    if(textField == self.userTf)
+    {
+        [self.userTf resignFirstResponder];
+        
+        //校验是否是手机注册
+        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
+        {
+            phoneOrUserName = YES;
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@",self.userTf.text,token];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCheckPhoneTag delegate:self];
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/CheckPhone.html?"];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        }
+        else
+        {
+            phoneOrUserName = NO;
+        }
+        [self checkStatus];
+    }
+
 }
 
 #pragma mark - 纯字母
@@ -444,6 +479,8 @@
     }
     return YES;
 }
+
+
 
 - (void) regester
 {
@@ -627,7 +664,17 @@
         {
             if([DCFCustomExtra validateString:msg] == YES)
             {
-                [DCFStringUtil showNotice:msg];
+//                [DCFStringUtil showNotice:msg];
+                
+                remindMessage = msg;
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                    message:msg
+                                                                   delegate:self
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:nil];
+                [alertView show];
+                [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.5];
             }
             else
             {
@@ -641,6 +688,15 @@
         }
     }
 }
+
+- (void) dimissAlert:(UIAlertView *)alertView
+{
+    if(alertView)
+    {
+        [alertView dismissWithClickedButtonIndex:[alertView cancelButtonIndex] animated:YES];
+    }
+}
+
 
 - (IBAction)registerBtnClick:(id)sender
 {
@@ -670,9 +726,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-
 
 @end

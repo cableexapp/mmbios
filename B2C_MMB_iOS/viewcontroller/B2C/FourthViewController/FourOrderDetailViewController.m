@@ -46,7 +46,10 @@
     [self.myOederLabel setText:self.myOrderNum];
     [self.myTimeLabel setText:self.myTime];
     
+    self.myOederLabel.backgroundColor = [UIColor redColor];
+    self.myTimeLabel.backgroundColor = [UIColor greenColor];
     
+   
 }
 
 - (NSString *) getMemberId
@@ -71,7 +74,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆订单详情"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单详情"];
     self.navigationItem.titleView= top;
     
     self.discussBtn.layer.borderColor = MYCOLOR.CGColor;
@@ -124,6 +127,7 @@
     }
     [tv setDataSource:self];
     [tv setDelegate:self];
+    tv.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     [self.tableBackView addSubview:tv];
 }
 
@@ -140,14 +144,14 @@
    
             nameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             [nameBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [nameBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+            [nameBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
             if([DCFCustomExtra validateString:shopName] == NO)
             {
                 [nameBtn setFrame:CGRectMake(10, 0, 100, 30)];
             }
             else
             {
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:shopName WithSize:CGSizeMake(MAXFLOAT, 30)];
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:shopName WithSize:CGSizeMake(MAXFLOAT, 30)];
                 [nameBtn setFrame:CGRectMake(10, 0, size.width, 30)];
             }
             [nameBtn setTitle:[[dataArray lastObject] shopName] forState:UIControlStateNormal];
@@ -212,7 +216,16 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30;
+    CGFloat height;
+    if (section == 0)
+    {
+        height = 98;
+    }
+    else
+    {
+        height = 45;
+    }
+    return height;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -258,23 +271,65 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(-1, 1, ScreenWidth+2, 28)];
-    label.layer.borderColor = MYCOLOR.CGColor;
-    label.layer.borderWidth = 1.0f;
-    [label setTextAlignment:NSTextAlignmentLeft];
-    [label setTextColor:MYCOLOR];
-    [label setBackgroundColor:[UIColor whiteColor]];
+    UILabel *label;
+    UILabel *titleLabel;
+    if (section == 0)
+    {
+        NSLog(@"myOederLabel = %@",self.myOrderNum);
+        NSLog(@"myTimeLabel = %@",self.myTime);
+        
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 98)];
+
+        UILabel *orderNumLabel = [[UILabel alloc] init];
+        orderNumLabel.frame = CGRectMake(0, 0, 75, 25);
+        orderNumLabel.font = [UIFont systemFontOfSize:15];
+        orderNumLabel.text = @"  订单编号:";
+        [label addSubview:orderNumLabel];
+        
+        UILabel *tempOrderNumLabel = [[UILabel alloc] init];
+        tempOrderNumLabel.frame = CGRectMake(75, 0, ScreenWidth-75, 25);
+        tempOrderNumLabel.font = [UIFont systemFontOfSize:13];
+        tempOrderNumLabel.text = [NSString stringWithFormat:@" %@",self.myOrderNum];
+        [label addSubview:tempOrderNumLabel];
+        
+        UILabel *upTimeLabel = [[UILabel alloc] init];
+        upTimeLabel.frame = CGRectMake(0, 25,75, 25);
+        upTimeLabel.font = [UIFont systemFontOfSize:15];
+        upTimeLabel.text = @"  提交时间:";
+        [label addSubview:upTimeLabel];
+        
+        UILabel *tempUpTimeLabel = [[UILabel alloc] init];
+        tempUpTimeLabel.frame = CGRectMake(75, 25, ScreenWidth-75, 25);
+        tempUpTimeLabel.font = [UIFont systemFontOfSize:13];
+        tempUpTimeLabel.text = [NSString stringWithFormat:@" %@",self.myTime];
+        [label addSubview:tempUpTimeLabel];
+        
+        titleLabel = [[UILabel alloc] init];
+        titleLabel.frame = CGRectMake(0, 53, ScreenHeight, 45);
+        titleLabel.font = [UIFont systemFontOfSize:15];
+        titleLabel.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        [label addSubview:titleLabel];
+    }
+    else
+    {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
+        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setTextColor:[UIColor blackColor]];
+        label.font = [UIFont systemFontOfSize:15];
+        [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
+    }
+    
     if(section == 0)
     {
-        [label setText:@" 商品信息"];
+        [titleLabel setText:@"  商品信息"];
     }
     if(section == 1)
     {
-        [label setText:@" 收货地址"];
+        [label setText:@"  收货地址"];
     }
     if(section == 2)
     {
-        [label setText:@" 发票信息"];
+        [label setText:@"  发票信息"];
     }
     return label;
 }
@@ -348,61 +403,84 @@
     {
         if(indexPath.section == 0)
         {
+            UILabel *statusLabel;
             if(indexPath.row == 0)
             {
                 [cell.contentView addSubview:nameBtn];
+                
+                NSString *status = [DCFCustomExtra compareStatus:[[dataArray lastObject] status]];
+                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:status WithSize:CGSizeMake(MAXFLOAT, 26)];
+                
+                UILabel *tempStatusLabel = [[UILabel alloc] init];
+                tempStatusLabel.frame = CGRectMake(ScreenWidth-10-size_1.width-35, 0, 40, 26);
+                tempStatusLabel.text = @"状态:";
+                tempStatusLabel.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:tempStatusLabel];
+                statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_1.width, 0, size_1.width, 26)];
+                [statusLabel setText:status];
+                [statusLabel setFont:[UIFont systemFontOfSize:13]];
+                statusLabel.textColor = [UIColor redColor];
+                [statusLabel setTextAlignment:NSTextAlignmentRight];
+                [cell.contentView addSubview:statusLabel];
             }
             if(indexPath.row == [[[dataArray lastObject] myItems] count]+1)
             {
-                NSString *status = [DCFCustomExtra compareStatus:[[dataArray lastObject] status]];
-                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:status WithSize:CGSizeMake(MAXFLOAT, 26)];
-                UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, size_1.width, 26)];
-                [statusLabel setText:status];
-                [statusLabel setFont:[UIFont systemFontOfSize:12]];
-                [statusLabel setTextAlignment:NSTextAlignmentLeft];
-                [cell.contentView addSubview:statusLabel];
+                
                 
                 NSString *tradeMoney = [NSString stringWithFormat:@"运费: ¥%@",[[dataArray lastObject] logisticsPrice]];
-                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:tradeMoney WithSize:CGSizeMake(MAXFLOAT, 26)];
+                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tradeMoney WithSize:CGSizeMake(MAXFLOAT, 26)];
                 UILabel *tradeMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(statusLabel.frame.origin.x + statusLabel.frame.size.width + 20, 2, size_2.width, 26)];
                 [tradeMoneyLabel setTextAlignment:NSTextAlignmentCenter];
                 [tradeMoneyLabel setText:tradeMoney];
-                [tradeMoneyLabel setFont:[UIFont systemFontOfSize:12]];
+                tradeMoneyLabel.textColor = [UIColor lightGrayColor];
+                [tradeMoneyLabel setFont:[UIFont systemFontOfSize:13]];
                 [cell.contentView addSubview:tradeMoneyLabel];
                 
-                NSString *orderTotal = [NSString stringWithFormat:@"订单总额: ¥%@",[[dataArray lastObject] orderTotal]];
-                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:orderTotal WithSize:CGSizeMake(MAXFLOAT, 26)];
+                NSString *orderTotal = [NSString stringWithFormat:@" ¥%@",[[dataArray lastObject] orderTotal]];
+                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:orderTotal WithSize:CGSizeMake(MAXFLOAT, 26)];
+                
+                UILabel *tempOrderTotal = [[UILabel alloc] init];
+                tempOrderTotal.frame = CGRectMake(ScreenWidth-10-size_3.width-60, 2, 60, 26);
+                tempOrderTotal.text = @"订单总额:";
+                tempOrderTotal.font = [UIFont systemFontOfSize:13];
+                [cell.contentView addSubview:tempOrderTotal];
+                
                 UILabel *orderTotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 2, size_3.width, 26)];
                 [orderTotalLabel setTextAlignment:NSTextAlignmentRight];
                 [orderTotalLabel setText:orderTotal];
-                [orderTotalLabel setFont:[UIFont systemFontOfSize:12]];
+                orderTotalLabel.textColor = [UIColor redColor];
+                [orderTotalLabel setFont:[UIFont systemFontOfSize:13]];
                 [cell.contentView addSubview:orderTotalLabel];
             }
             else if(indexPath.row > 0 && indexPath.row <= [[[dataArray lastObject] myItems] count])
             {
                 NSString *s = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItmeTitle"];
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:s WithSize:CGSizeMake(ScreenWidth-70-5, MAXFLOAT)];
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(70, 5, ScreenWidth-70-5, size.height)];
+//                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:s WithSize:CGSizeMake(ScreenWidth-70-5, MAXFLOAT)];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(80, 8, ScreenWidth-190, 60)];
                 [label setText:s];
                 [label setFont:[UIFont systemFontOfSize:13]];
+                label.backgroundColor = [UIColor whiteColor];
                 [label setNumberOfLines:0];
                 [cell.contentView addSubview:label];
                 
                 NSString *color = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"colorName"];
-                UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, label.frame.origin.y + label.frame.size.height + 5, 150, 20)];
-                [colorLabel setTextAlignment:NSTextAlignmentLeft];
+                UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-110, 31, 100, 20)];
+                [colorLabel setTextAlignment:NSTextAlignmentRight];
+                colorLabel.backgroundColor = [UIColor whiteColor];
                 [colorLabel setText:[NSString stringWithFormat:@"颜色: %@",color]];
+                colorLabel.textColor = [UIColor lightGrayColor];
                 [colorLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:colorLabel];
                 
                 NSString *money = [NSString stringWithFormat:@"¥%@",[[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"price"]];
                 CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:money WithSize:CGSizeMake(MAXFLOAT, 20)];
-                UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, colorLabel.frame.origin.y + colorLabel.frame.size.height + 5, size_1.width, 20)];
+                UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-(size_1.width+10), 8, size_1.width, 20)];
                 [moneyLabel setText:money];
                 [moneyLabel setFont:[UIFont systemFontOfSize:12]];
+                moneyLabel.textColor = [UIColor redColor];
                 [cell.contentView addSubview:moneyLabel];
                 
-                NSString *count = [NSString stringWithFormat:@"*%@",[[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productNum"]];
+                NSString *count = [NSString stringWithFormat:@"×%@",[[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productNum"]];
                 CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:count WithSize:CGSizeMake(MAXFLOAT, 20)];
                 UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_2.width, colorLabel.frame.origin.y + colorLabel.frame.size.height + 5, size_2.width, 20)];
                 [countLabel setText:count];
@@ -410,9 +488,11 @@
                 [countLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:countLabel];
                 
-                UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(5, label.frame.size.height/2, 60, 60)];
+                UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(10,8, 60, 60)];
                 NSString *picStr = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItemPic"];
                 picStr = [self dealPic:picStr];
+//                cellIv.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+//                cellIv.layer.borderWidth = 0.5;
                 NSURL *picUrl = [NSURL URLWithString:picStr];
                 [cellIv setImageWithURL:picUrl placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                 [cell.contentView addSubview:cellIv];
@@ -421,7 +501,7 @@
         }
         if(indexPath.section == 1)
         {
-            NSString *name = [[dataArray lastObject] receiveMember];
+            NSString *name = [NSString stringWithFormat:@"收货人: %@",[[dataArray lastObject] receiveMember]];
             CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
             UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
             [nameLabel setFont:[UIFont systemFontOfSize:13]];
@@ -434,7 +514,7 @@
             [tel setTextAlignment:NSTextAlignmentCenter];
             [cell.contentView addSubview:tel];
             
-            NSString *add = [[dataArray lastObject] receiveAddr];
+            NSString *add = [NSString stringWithFormat:@"收货地址: %@",[[dataArray lastObject] receiveAddr]];
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:add WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, ScreenWidth-20, size.height)];
             [label setText:add];

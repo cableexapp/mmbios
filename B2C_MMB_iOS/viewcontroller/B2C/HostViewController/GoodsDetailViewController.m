@@ -346,7 +346,8 @@
     
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
+    //    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
+    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"1156",token];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
@@ -453,7 +454,7 @@
             else
             {
                 [DCFStringUtil showNotice:msg];
-//                [self loadShopCarCount];
+                //                [self loadShopCarCount];
             }
         }
     }
@@ -489,7 +490,6 @@
     {
         return 9;
     }
-    NSLog(@"detailData.ctems.count = %d",detailData.ctems.count);
     return 8 + detailData.ctems.count;
 }
 
@@ -643,19 +643,46 @@
             else
             {
                 
-                NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
+                NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
+                NSString *s5 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
+                
+                CGSize nameSize;
+                CGSize contentSize;
+                UILabel *nameLabel = nil;
                 if([DCFCustomExtra validateString:s4] == NO)
                 {
-                    return 0;
+                    nameSize = CGSizeMake(30, 0);
+                    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, nameSize.width, 0)];
                 }
                 else
                 {
+                    nameSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:s4 WithSize:CGSizeMake(MAXFLOAT, 30)];
+                    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, nameSize.width, 30)];
+                    [nameLabel setText:s4];
+                    [nameLabel setFont:[UIFont systemFontOfSize:13]];
                     
-                    CGSize size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-
-                    return size_4.height+36;
                 }
                 
+                UILabel *contentLabel = nil;
+                if([DCFCustomExtra validateString:s5] == NO)
+                {
+                    contentSize = CGSizeMake(30, 0);
+                    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y+nameLabel.frame.size.height, ScreenWidth-20, 0)];
+                }
+                else
+                {
+                    contentSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s5 WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                    
+                    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y+nameLabel.frame.size.height, ScreenWidth-20, contentSize.height)];
+                    [contentLabel setText:s5];
+                    [contentLabel setFont:[UIFont systemFontOfSize:12]];
+                    [contentLabel setNumberOfLines:0];
+                }
+                if([DCFCustomExtra validateString:s4] == NO && [DCFCustomExtra validateString:s5] == NO)
+                {
+                    return 0;
+                }
+                return nameLabel.frame.size.height+contentLabel.frame.size.height+10;
             }
         }
         else if(indexPath.row == detailData.ctems.count+7 || indexPath.row == detailData.ctems.count+6)
@@ -966,72 +993,93 @@
                 }
                 else
                 {
-                    NSString *s4 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
-                    if([DCFCustomExtra validateString:s4] == YES)
+                    NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
+                    NSMutableString *discussName = [[NSMutableString alloc] init];
+                    for(int i=0;i<s1.length-2;i++)
                     {
-        
-                            CGSize size_4;
-
-                            size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s4 WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-                            
-                            UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 35, ScreenWidth-20, size_4.height)];
-                            [contentLabel setTextAlignment:NSTextAlignmentLeft];
-                            [contentLabel setText:s4];
-                            [contentLabel setFont:[UIFont systemFontOfSize:12]];
-                            [contentLabel setNumberOfLines:0];
-                            [cell.contentView addSubview:contentLabel];
-                            
-                            NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
-                            
-                            CGSize size_1;
-                            if([DCFCustomExtra validateString:s1] == NO)
-                            {
-                                size_1 = CGSizeMake(30, 30);
-                            }
-                            else
-                            {
-                                size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s1 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                            }
-                            UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width+10, 30)];
-                            [nameLabel setText:s1];
-                            [nameLabel setTextAlignment:NSTextAlignmentLeft];
-                            [nameLabel setFont:[UIFont systemFontOfSize:10]];
-                            [nameLabel setTextColor:[UIColor blackColor]];
-                            [cell.contentView addSubview:nameLabel];
-                            
-                            NSString *month = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"month"];
-                            NSString *finalMonth = [NSString stringWithFormat:@"%d",[month intValue] + 1];
-                            
-                            NSString *date = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"date"];
-                            
-                            NSString *s2 = [NSString stringWithFormat:@"评价日期:%@.%@",finalMonth,date];
-                            CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s2 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                            UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 30, 5, size_2.width, 30)];
-                            [dateLabel setTextAlignment:NSTextAlignmentCenter];
-                            [dateLabel setText:s2];
-                            [dateLabel setFont:[UIFont systemFontOfSize:10]];
-                            [cell.contentView addSubview:dateLabel];
-                            
-                            NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"colorName"];
-                            NSString *s3 = [NSString stringWithFormat:@"颜色分类:%@",color];
-                            CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:s3 WithSize:CGSizeMake(MAXFLOAT, 30)];
-                            UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 5, size_3.width, 30)];
-                            [colorLabel setText:s3];
-                            [colorLabel setTextAlignment:NSTextAlignmentLeft];
-                            [colorLabel setFont:[UIFont systemFontOfSize:10]];
-                            [cell.contentView addSubview:colorLabel];
-                            
-                            
-                            
-                            UIView *lineView = [[UIView alloc] init];
-                            lineView.frame = CGRectMake(10, contentLabel.frame.origin.y+contentLabel.frame.size.height,ScreenWidth-20, 1);
-                            lineView.backgroundColor = [UIColor lightGrayColor];
-                            [cell.contentView addSubview:lineView];
+                        NSString *s = @"*";
+                        [discussName appendString:s];
+                    }
+                    NSRange range_1;
+                    range_1 = NSMakeRange(0, 1);
+                    NSString *firstStr = [s1 substringWithRange:range_1];
+                    
+                    NSRange range_2;
+                    range_2 = NSMakeRange(s1.length-1, 1);
+                    NSString *lastStr = [s1 substringWithRange:range_2];
+                    
+                    NSString *finalName = [NSString stringWithFormat:@"%@%@%@",firstStr,discussName,lastStr];
+                    
+                    CGSize nameSize;
+                    
+                    UILabel *nameLabel = nil;
+                    if([DCFCustomExtra validateString:finalName] == NO)
+                    {
+                        nameSize = CGSizeMake(30, 0);
+                        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, nameSize.width, 0)];
                     }
                     else
                     {
+                        nameSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:finalName WithSize:CGSizeMake(MAXFLOAT, 30)];
+                        
+                        nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, nameSize.width, 30)];
+                        [nameLabel setText:finalName];
+                        [nameLabel setTextAlignment:NSTextAlignmentLeft];
+                        [nameLabel setFont:[UIFont systemFontOfSize:13]];
+                        [nameLabel setTextColor:[UIColor blackColor]];
+                        [cell.contentView addSubview:nameLabel];
+                        
+                        
+                        NSString *month = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"month"];
+                        NSString *finalMonth = [NSString stringWithFormat:@"%d",[month intValue] + 1];
+                        
+                        NSString *date = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"date"];
+                        
+                        NSString *dateStr = [NSString stringWithFormat:@"评价日期:%@.%@",finalMonth,date];
+                        CGSize dateSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:dateStr WithSize:CGSizeMake(MAXFLOAT, 30)];
+                        
+                        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+10, 5, dateSize.width, 30)];
+                        [dateLabel setTextAlignment:NSTextAlignmentRight];
+                        [dateLabel setText:dateStr];
+                        [dateLabel setFont:[UIFont systemFontOfSize:10]];
+                        [cell.contentView addSubview:dateLabel];
+                        
+                        NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"colorName"];
+                        NSString *colorStr = [NSString stringWithFormat:@"颜色分类:%@",color];
+                        CGSize colorSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:colorStr WithSize:CGSizeMake(MAXFLOAT, 30)];
+                        UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-colorSize.width, 5, colorSize.width, 30)];
+                        [colorLabel setText:colorStr];
+                        [colorLabel setTextAlignment:NSTextAlignmentLeft];
+                        [colorLabel setFont:[UIFont systemFontOfSize:10]];
+                        [cell.contentView addSubview:colorLabel];
                         
                     }
+                    
+                    UILabel *contentLabel  = nil;
+                    NSString *judgementContent = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"judgementContent"];
+                    if([DCFCustomExtra validateString:judgementContent] == YES)
+                    {
+                        
+                        CGSize judgementContentSize;
+                        
+                        judgementContentSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:judgementContent WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                        
+                        contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y+nameLabel.frame.size.height, ScreenWidth-20, judgementContentSize.height)];
+                        [contentLabel setTextAlignment:NSTextAlignmentLeft];
+                        [contentLabel setText:judgementContent];
+                        [contentLabel setFont:[UIFont systemFontOfSize:12]];
+                        [contentLabel setNumberOfLines:0];
+                        [cell.contentView addSubview:contentLabel];
+                        
+                    }
+                    else
+                    {
+                        contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,nameLabel.frame.origin.y+nameLabel.frame.size.height, ScreenWidth-20, 0)];
+                    }
+                    UIView *lineView = [[UIView alloc] init];
+                    lineView.frame = CGRectMake(10, contentLabel.frame.origin.y+contentLabel.frame.size.height+4,ScreenWidth-20, 1);
+                    lineView.backgroundColor = [UIColor lightGrayColor];
+                    [cell.contentView addSubview:lineView];
                     
                 }
             }
@@ -1161,26 +1209,26 @@
     
     if(btn.tag == 1000)
     {
-//        if(btn.selected == YES)
-//        {
-            showCell = YES;
-//            
-//        }
-//        else
-//        {
-//            showCell = NO;
-//        }
+        //        if(btn.selected == YES)
+        //        {
+        showCell = YES;
+        //
+        //        }
+        //        else
+        //        {
+        //            showCell = NO;
+        //        }
     }
     if(btn.tag == 1001)
     {
-//        if(btn.selected == YES)
-//        {
-            showCell = NO;
-//        }
-//        else
-//        {
-//            showCell = YES;
-//        }
+        //        if(btn.selected == YES)
+        //        {
+        showCell = NO;
+        //        }
+        //        else
+        //        {
+        //            showCell = YES;
+        //        }
     }
     
     //    for(UIButton *btn in cellBtnArray)

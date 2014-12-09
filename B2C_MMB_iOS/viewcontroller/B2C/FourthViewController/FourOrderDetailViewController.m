@@ -71,7 +71,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆订单详情"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单详情"];
     self.navigationItem.titleView= top;
     
     self.discussBtn.layer.borderColor = MYCOLOR.CGColor;
@@ -212,7 +212,16 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30;
+    CGFloat height;
+    if (section == 0)
+    {
+        height = 90;
+    }
+    else
+    {
+        height = 45;
+    }
+    return height;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -258,15 +267,38 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(-1, 1, ScreenWidth+2, 28)];
-    label.layer.borderColor = MYCOLOR.CGColor;
-    label.layer.borderWidth = 1.0f;
-    [label setTextAlignment:NSTextAlignmentLeft];
-    [label setTextColor:MYCOLOR];
-    [label setBackgroundColor:[UIColor whiteColor]];
+    UILabel *label;
+    UILabel *titleLabel;
+    if (section == 0)
+    {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90)];
+        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setTextColor:[UIColor blackColor]];
+       
+        
+        UILabel *orderNumLabel = [[UILabel alloc] init];
+        orderNumLabel.frame = CGRectMake(0, 0, ScreenHeight, 45);
+        orderNumLabel.backgroundColor = [UIColor whiteColor];
+        [label addSubview:orderNumLabel];
+        
+        titleLabel = [[UILabel alloc] init];
+        titleLabel.frame = CGRectMake(0, 45, ScreenHeight, 45);
+        titleLabel.font = [UIFont systemFontOfSize:15];
+        titleLabel.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        [label addSubview:titleLabel];
+    }
+    else
+    {
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
+        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setTextColor:[UIColor blackColor]];
+        label.font = [UIFont systemFontOfSize:15];
+        [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
+    }
+    
     if(section == 0)
     {
-        [label setText:@" 商品信息"];
+        [titleLabel setText:@" 商品信息"];
     }
     if(section == 1)
     {

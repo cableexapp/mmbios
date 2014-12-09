@@ -117,8 +117,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-    moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-    [moreCell startAnimation];
+
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -248,7 +247,8 @@
     [self.buttomView setFrame:CGRectMake(0, self.tvBackView.frame.size.height, 320, 49)];
     
     
-    
+    moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+    [moreCell startAnimation];
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height) style:0];
     [tv setDataSource:self];

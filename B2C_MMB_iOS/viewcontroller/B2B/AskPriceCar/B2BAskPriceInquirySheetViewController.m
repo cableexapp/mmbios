@@ -228,7 +228,7 @@
     headLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     if(section == 0)
     {
-        [headLabel setText:@" 收货地址"];
+        [headLabel setText:@" 收货人信息"];
     }
     if(section == 1)
     {
@@ -384,6 +384,14 @@
         else
         {
             B2BAskPriceDetailData *data = [self.dataArray objectAtIndex:indexPath.row];
+            
+            
+            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
+            [modelLabel setText:[NSString stringWithFormat:@"型号:%@",data.cartModel]];
+            [cell.contentView addSubview:modelLabel];
+            
+            
+
             CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
             
             NSString *num = [NSString stringWithFormat:@"数量 %@",data.num];
@@ -542,6 +550,7 @@
                 
                 [cell.contentView addSubview:cellLabel];
             }
+            
         }
     }
 //    [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row]];

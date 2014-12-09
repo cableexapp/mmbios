@@ -346,8 +346,8 @@
     
     NSString *token = [DCFCustomExtra md5:string];
     
-    //    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
-    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"1156",token];
+    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
+//    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"1156",token];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
@@ -610,6 +610,16 @@
         {
             if(indexPath.row == 7)
             {
+                NSString *discuss = detailData.score;
+                if(discuss.length != 0)
+                {
+                    return 54;
+                }
+                return 0;
+                
+            }
+            if(indexPath.row == 8)
+            {
                 if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
                 {
                     return 0;
@@ -619,16 +629,6 @@
                     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                     return size.height+15;
                 }
-                
-            }
-            if(indexPath.row == 8)
-            {
-                NSString *discuss = detailData.score;
-                if(discuss.length != 0)
-                {
-                    return 54;
-                }
-                return 0;
             }
         }
     }
@@ -689,6 +689,16 @@
         {
             if(indexPath.row == detailData.ctems.count + 6)
             {
+                NSString *discuss = detailData.score;
+                if(discuss.length != 0)
+                {
+                    return 54;
+                }
+                return 0;
+            }
+            if(indexPath.row == detailData.ctems.count + 7)
+            {
+                
                 if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
                 {
                     return 0;
@@ -698,15 +708,7 @@
                     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                     return size.height+15;
                 }
-            }
-            if(indexPath.row == detailData.ctems.count + 7)
-            {
-                NSString *discuss = detailData.score;
-                if(discuss.length != 0)
-                {
-                    return 54;
-                }
-                return 0;
+
             }
         }
     }
@@ -970,6 +972,11 @@
             }
             if(indexPath.row == 7)
             {
+                return   [self loadShopName:indexPath WithTableView:tableView];
+
+            }
+            if(indexPath.row == 8)
+            {
                 if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
                 {
                     
@@ -978,10 +985,6 @@
                 {
                     return  [self loadCustomCell:indexPath WithTableView:tableView];
                 }
-            }
-            if(indexPath.row == 8)
-            {
-                return   [self loadShopName:indexPath WithTableView:tableView];
             }
         }
         else
@@ -1085,6 +1088,10 @@
             }
             else if (indexPath.row == detailData.ctems.count +6)
             {
+                return   [self loadShopName:indexPath WithTableView:tableView];
+            }
+            else if(indexPath.row > detailData.ctems.count + 6)
+            {
                 if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
                 {
                     
@@ -1094,13 +1101,28 @@
                     return  [self loadCustomCell:indexPath WithTableView:tableView];
                 }
             }
-            else if(indexPath.row > detailData.ctems.count + 6)
-            {
-                return   [self loadShopName:indexPath WithTableView:tableView];
-            }
         }
     }
     return cell;
+}
+
+#pragma mark - 去除html标签
+-(NSString *)filterHTML:(NSString *)html
+{
+    NSScanner * scanner = [NSScanner scannerWithString:html];
+    NSString * text = nil;
+    while([scanner isAtEnd]==NO)
+    {
+        //找到标签的起始位置
+        [scanner scanUpToString:@"<" intoString:nil];
+        //找到标签的结束位置
+        [scanner scanUpToString:@">" intoString:&text];
+        //替换字符
+        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
+    }
+    //    NSString * regEx = @"<([^>]*)>";
+    //    html = [html stringByReplacingOccurrencesOfString:regEx withString:@""];
+    return html;
 }
 
 #pragma mark - 商家自定义内容
@@ -1111,15 +1133,16 @@
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        [cell setSelectionStyle:0];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[self filterHTML:detailData.phoneDescribe] WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, size.height)];
     [label setFont:[UIFont systemFontOfSize:14]];
     [label setNumberOfLines:0];
-    [label setText:detailData.phoneDescribe];
+    [label setText:[self filterHTML:detailData.phoneDescribe]];
     [cell.contentView addSubview:label];
     
     UIView *lineView = [[UIView alloc] init];
@@ -1138,6 +1161,7 @@
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        [cell setSelectionStyle:0];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
@@ -1163,7 +1187,7 @@
         [label setTextAlignment:NSTextAlignmentLeft];
         [label setTextColor:[UIColor blackColor]];
         
-        UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, label.frame.size.width+40, 44)];
+        UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
         [firstView addSubview:firstIv];
         [firstView addSubview:label];
         [cell.contentView addSubview:firstView];

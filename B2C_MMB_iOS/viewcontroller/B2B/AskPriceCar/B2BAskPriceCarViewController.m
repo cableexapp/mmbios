@@ -77,6 +77,7 @@
 {
     
     B2BAskPriceInquirySheetViewController *b2bAskPriceInquirySheetViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceInquirySheetViewController"];
+    NSLog(@"chooseArray = %@",chooseArray);
     b2bAskPriceInquirySheetViewController.dataArray = [[NSMutableArray alloc] initWithArray:chooseArray];
     b2bAskPriceInquirySheetViewController.heightArray = [[NSMutableArray alloc] initWithArray:cellHeightArray];
     [self.navigationController pushViewController:b2bAskPriceInquirySheetViewController animated:YES];
@@ -345,6 +346,7 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLInquiryCartListTag)
     {
+        NSLog(@"%@",dicRespon);
         dataArray = [[NSMutableArray alloc] init];
         
         sectionHeadBtnArray = [[NSMutableArray alloc] init];

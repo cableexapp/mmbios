@@ -25,6 +25,8 @@
     
     NSString *code;
     NSTimer *timer_tel;
+    
+    int isRegisterFlag;
 }
 @end
 
@@ -99,18 +101,26 @@
         [self.secTf resignFirstResponder];
     }
     
+    if (isRegisterFlag == 1)
+    {
+        [DCFStringUtil showNotice:@"验证失败，手机号已存在!"];
+    }
+    else
+    {
+        timer_tel = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
+        [timer_tel fire];
+        
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"sendMessage",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@&username=%@",self.userTf.text,token,self.userTf.text];
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendMsgTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendMessage.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
     
-    timer_tel = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
-    [timer_tel fire];
     
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"sendMessage",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@&username=%@",self.userTf.text,token,self.userTf.text];
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendMsgTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendMessage.html?"];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void) timer:(NSTimer *) sender
@@ -623,10 +633,11 @@
             {
                 [DCFStringUtil showNotice:@"此用户已经存在"];
             }
+            isRegisterFlag = 1;
         }
         else
         {
-            
+            isRegisterFlag = 2;
         }
     }
 }

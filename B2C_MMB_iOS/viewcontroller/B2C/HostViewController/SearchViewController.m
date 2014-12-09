@@ -115,6 +115,7 @@
     {
         [addToCarArray removeAllObjects];
     }
+   
     rightBtn.hidden = NO;
     rightButtonView.hidden = NO;
     [self.navigationController.tabBarController.tabBar setHidden:YES];
@@ -374,7 +375,7 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if (URLTag == URLSearchProductTypeTag)
     {
-         [self refreshTableView];
+        [self refreshTableView];
         if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"types"] count] != 0)
         {
             dataArray = [dicRespon objectForKey:@"types"];
@@ -388,7 +389,6 @@
                 self.serchResultView.scrollEnabled = NO;
                 [self remindNoSearchResult];
             }
-      
         }
         else if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"] && [[dicRespon objectForKey:@"products"] count] != 0)
         {
@@ -707,31 +707,20 @@
     self.serchResultView.scrollEnabled = YES;
     imageFlag = @"1";
     tempFlag = @"4";
-    [self refreshTableView];
+//
     if ([tempType isEqualToString:@"1"])
     {
         [self SearchB2BDataFromDataBase];
-//        if ((tempArray.count == 0 && B2BhistoryArray>0) || (dataArray.count > 0 && B2BhistoryArray == 0))
-//        {
-//            dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
-//        }
-         dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
-//        if (tempArray.count > 0 && B2BhistoryArray>0)
-//        {
-//            for (int i = 0; i < tempArray.count; i++)
-//            {
-//               [B2BhistoryArray insertObject:[tempArray objectAtIndex:i] atIndex:B2BhistoryArray.count];
-//            }
-//            dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
-//        }
-        
+        dataArray = [self arrayWithMemberIsOnly:B2BhistoryArray];
+//       [self.serchResultView reloadData];   
     }
-    else if ([tempType isEqualToString:@"2"])
+    if ([tempType isEqualToString:@"2"])
     {
         [self SearchB2CDataFromDataBase];
         dataArray = [self arrayWithMemberIsOnly:B2ChistoryArray];
+//        [self.serchResultView reloadData];
     }
-    
+    [self refreshTableView];
     [self.serchResultView reloadData];
     
     NSLog(@"搜索历史 = %@",dataArray);
@@ -843,7 +832,7 @@
     mySearchBar.text = nil;
     speakButton.hidden = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dissMiss" object:nil];
-    
+//    [self refreshTableView];
     if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0] isEqualToString:@"家装线专卖"])
     {
         sectionBtnIv.frame = CGRectMake(72,17.5,10,10);
@@ -879,9 +868,8 @@
     leftBtn.text = [[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@">"] objectAtIndex:0];
     speakButton.hidden = NO;
     speakButtonView.hidden = NO;
-    [self refreshTableView];
+   
     [self readHistoryData];
-    
 }
 
 -(void)changeClick:(NSNotification *)viewChanged
@@ -1007,8 +995,6 @@
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/JoinInquiryCart.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
-   
-
 }
 
 - (void)addShopFinished:(CALayer*)transitionLayer
@@ -1057,7 +1043,7 @@
         
         NSLog(@"清除按钮 = %d",isShowClearBtn);
   
-        if (tempSearch == 2)
+        if (tempSearch == 2 && dataArray.count >0)
         {
             if (B2BhistoryArray.count ==0)
             {
@@ -1084,11 +1070,12 @@
             searchImageView.image = [UIImage imageNamed:@"search"];
         }
         
-        if ([tempFlag isEqualToString:@"3"])
-        {
-//            searchResultLabel.text = dataArray[indexPath.row];
-        }
-        else if ([tempFlag isEqualToString:@"4"])
+//        if ([tempFlag isEqualToString:@"3"])
+//        {
+////            searchResultLabel.text = dataArray[indexPath.row];
+//        }
+//        else
+            if ([tempFlag isEqualToString:@"4"] && dataArray.count > 0)
         {
             coverView.hidden = YES;
             if ([tempType isEqualToString:@"1"])
@@ -1117,7 +1104,9 @@
                     if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"0"])
                     {
                         historyFlag = 1;
-                         searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                         
+                        searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
+                        NSLog(@"加入询价车数组 = %@",searchResultLabel.text);
                         for(int i=0;i<dataArray.count;i++)
                         {
                             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1162,7 +1151,7 @@
                     }
                 }
         }
-        else if ([tempType isEqualToString:@"2"] )
+        else if ([tempType isEqualToString:@"2"] && dataArray.count > 0)
         {
             if (indexPath.row == dataArray.count)
             {

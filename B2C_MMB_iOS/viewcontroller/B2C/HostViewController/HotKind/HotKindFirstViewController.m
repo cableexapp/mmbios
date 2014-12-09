@@ -19,10 +19,13 @@
 
 
 @interface HotKindFirstViewController ()
+
 {
     NSMutableArray *dataArray;
     NSMutableArray *selectArray;
     UIButton *backView;
+    UIButton *backBtn;  //返回按钮
+    UIBarButtonItem *leftItem;
     UIView *rightButtonView;
     BOOL flag;
 }
@@ -130,13 +133,12 @@
 //     返回按钮的操作
     self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     self.upBtn.layer.cornerRadius = 5;
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
     [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
 }
 
 //     返回按钮的操作

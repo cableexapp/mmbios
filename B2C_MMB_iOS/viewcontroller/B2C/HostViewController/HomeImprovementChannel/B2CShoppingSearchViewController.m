@@ -138,26 +138,26 @@
         
 #pragma mark     -  选中的列表选项处理
             
-//            for(UIButton *btn in array2)
-//            {
-//                NSString *str = btn.titleLabel.text;
-//                for(int i=0;i<brandsArray.count;i++)
-//                {
-//                    if([str isEqualToString:[brandsArray objectAtIndex:i]])
-//                    {
-//                        [btn setEnabled:YES];
-//                        break;
-//                    }
-//                    else
-//                    {
-//                        [btn setEnabled:NO];
-//                    }
-//                }
-//                if(brandsArray.count == 0)
-//                {
-//                    [btn setEnabled:NO];
-//                }
-//            }
+            for(UIButton *btn in array2)
+            {
+                NSString *str = btn.titleLabel.text;
+                for(int i=0;i<brandsArray.count;i++)
+                {
+                    if([str isEqualToString:[brandsArray objectAtIndex:i]])
+                    {
+                        [btn setEnabled:YES];
+                        break;
+                    }
+                    else
+                    {
+                        [btn setEnabled:NO];
+                    }
+                }
+                if(brandsArray.count == 0)
+                {
+                    [btn setEnabled:NO];
+                }
+            }
   
             
             for(UIButton *btn in array1)
@@ -370,6 +370,7 @@
     
     
     
+    
     float btnWidth = (myRect.size.width-20)/3;
 #pragma mark - 用途数组
     array1 = [[NSMutableArray alloc] init];
@@ -525,6 +526,28 @@
         [btn setEnabled:YES];
         btn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
         [array2 addObject:btn];
+        
+        for(UIButton *btn in array2)
+        {
+            NSString *str = btn.titleLabel.text;
+            for(int i=0;i<brandsArray.count;i++)
+            {
+                if([str isEqualToString:[brandsArray objectAtIndex:i]])
+                {
+                    [btn setEnabled:YES];
+                    break;
+                }
+                else
+                {
+                    [btn setEnabled:NO];
+                }
+            }
+            if(brandsArray.count == 0)
+            {
+                [btn setEnabled:NO];
+            }
+        }
+
         
     }
     

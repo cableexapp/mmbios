@@ -350,7 +350,6 @@
     [headView addSubview:scoreLabel];
     UILabel *scoreLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(250, 22, 50, 30)];
     [scoreLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-    
 //    取scoreArray里的前4位元素
     discussArray = [[NSMutableArray alloc] init];
     if(scoreArray.count != 0)
@@ -361,7 +360,7 @@
         }
     }
     float avg = [[discussArray valueForKeyPath:@"@avg.floatValue"] floatValue]; //取平均数
-    scoreLabel_1.text = [NSString stringWithFormat:@"%.1f",avg]; 
+    [scoreLabel_1 setText:[DCFCustomExtra notRounding:avg afterPoint:1]];
     [scoreLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:scoreLabel_1];
     UIButton *scoreLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];

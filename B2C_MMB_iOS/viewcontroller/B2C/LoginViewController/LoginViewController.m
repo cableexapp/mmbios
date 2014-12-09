@@ -76,7 +76,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     logInSuccess = NO;
     
@@ -84,16 +85,43 @@
     
     [self pushAndPopStyle];
     
-    top = [[DCFTopLabel alloc] initWithTitle:@"电缆买卖宝登录"];
+    top = [[DCFTopLabel alloc] initWithTitle:@"用户登录"];
     self.navigationItem.titleView = top;
     
+    UIImageView *titleImageView = [[UIImageView alloc] init];
+    titleImageView.frame = CGRectMake(20, 0, ScreenWidth-40, 100);
+    titleImageView.image = [UIImage imageNamed:@"mmb"];
+    [self.view addSubview:titleImageView];
     
     _tf_BackView.layer.borderWidth = 1.0f;
-    _tf_BackView.layer.borderColor = [UIColor grayColor].CGColor;
+    _tf_BackView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    _tf_BackView.frame = CGRectMake(20, 100, ScreenWidth-40, 101);
     _tf_BackView.layer.masksToBounds = YES;
     
     [_tf_Account setReturnKeyType:UIReturnKeyNext];
+    _tf_Account.frame = CGRectMake(20, 0, ScreenWidth-40, 50);
+    _tf_Secrect.frame = CGRectMake(20, 51, ScreenWidth-40, 50);
+    
+    
     [_tf_Secrect setReturnKeyType:UIReturnKeyDone];
+    
+    self.loginBtn.frame =CGRectMake(20, 250, ScreenWidth-40, 50);
+    [self.loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+    self.loginBtn.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
+    
+    UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [registerBtn setFrame:CGRectMake(0, 5, 40, 30)];
+    [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [registerBtn setTitle:@"用户注册" forState:UIControlStateNormal];
+    registerBtn.layer.borderColor = MYCOLOR.CGColor;
+    registerBtn.layer.borderWidth = 1.0f;
+    registerBtn.layer.cornerRadius = 5.0f;
+    registerBtn.layer.masksToBounds = 1.0f;
+    [registerBtn addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:registerBtn];
+    
+    self.forgetBtn.frame = CGRectMake(ScreenWidth-100, 320, 100, 22);
+ 
     
     for(int i = 0; i < 2; i++)
     {
@@ -124,18 +152,18 @@
     [self.forgetBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 20)];
     
     
-    UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [registerBtn setFrame:CGRectMake(0, 5, 40, 30)];
-    [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [registerBtn setTitle:@"注册" forState:UIControlStateNormal];
-    registerBtn.layer.borderColor = MYCOLOR.CGColor;
-    registerBtn.layer.borderWidth = 1.0f;
-    registerBtn.layer.cornerRadius = 5.0f;
-    registerBtn.layer.masksToBounds = 1.0f;
-    [registerBtn addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:registerBtn];
-    self.navigationItem.rightBarButtonItem = right;
+//    UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [registerBtn setFrame:CGRectMake(0, 5, 40, 30)];
+//    [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [registerBtn setTitle:@"注册" forState:UIControlStateNormal];
+//    registerBtn.layer.borderColor = MYCOLOR.CGColor;
+//    registerBtn.layer.borderWidth = 1.0f;
+//    registerBtn.layer.cornerRadius = 5.0f;
+//    registerBtn.layer.masksToBounds = 1.0f;
+//    [registerBtn addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:registerBtn];
+//    self.navigationItem.rightBarButtonItem = right;
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [cancelBtn setFrame:CGRectMake(0, 5, 40, 30)];

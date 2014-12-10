@@ -40,4 +40,8 @@
 //用于编辑地址
 - (id) initWithAddressData:(B2CAddressData *) addressData;
 
+
+//校验地址是否已经存在
+- (void) validateAddress:(int) status;
+
 @end

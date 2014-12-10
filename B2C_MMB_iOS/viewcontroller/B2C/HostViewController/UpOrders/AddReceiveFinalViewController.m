@@ -35,6 +35,8 @@
     UIView *backView;
     
     UIButton *backBtn;
+    
+    UILabel *addressLabel_2;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -105,17 +107,43 @@
     return self;
 }
 
+- (void) validateAddress:(int) status
+{
+    //1-存在 0-不存在
+    if(status == 1)
+    {
+        [DCFStringUtil showNotice:@"该地址已经存在"];
+        return;
+    }
+    else
+    {
+        NSString *memberid = [self getMemberId];
+        
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,fixedLineTelephone.text];
+        
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
+}
+
 - (void) backBtnClick:(UIButton *) sender
 {
     [self dismissKeyBoard];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
+
     [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     
     [self pushAndPopStyle];
@@ -198,20 +226,16 @@
         return;
     }
     
+    
     //新增
     if(isEditOrAdd == YES)
     {
-        NSString *memberid = [self getMemberId];
-        
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,fixedLineTelephone.text];
-        
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        NSString *s1 = [addressLabel_2 text];
+        NSString *s2 = [(DCFMyTextField *)[textFieldArray objectAtIndex:1] text];
+        NSString *s = [NSString stringWithFormat:@"%@%@",s1,s2];
+        NSArray *arr = [NSArray arrayWithObjects:s,self, nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addressListDataArray" object:arr];
+
     }
     //编辑
     else
@@ -324,7 +348,7 @@
     [line_1 setBackgroundColor:[UIColor lightGrayColor]];
     [backView addSubview:line_1];
     
-    UILabel *addressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(addressLabel_1.frame.origin.x + addressLabel_1.frame.size.width + 10, addressLabel_1.frame.origin.y, backView.frame.size.width-30-addressLabel_1.frame.size.width, 30)];
+    addressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(addressLabel_1.frame.origin.x + addressLabel_1.frame.size.width + 10, addressLabel_1.frame.origin.y, backView.frame.size.width-30-addressLabel_1.frame.size.width, 30)];
     
     if(!b2cAddressData)
     {

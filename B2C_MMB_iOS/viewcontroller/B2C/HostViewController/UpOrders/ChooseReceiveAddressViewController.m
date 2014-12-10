@@ -141,8 +141,12 @@
         }
     }
     
-    
-    
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+    [self loadRequest];
     
 }
 
@@ -182,6 +186,7 @@
         else if (result == 1)
         {
             addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
+
             
             cellBtnArray = [[NSMutableArray alloc] init];
             
@@ -225,10 +230,43 @@
     }
     
 }
+
+- (void) doSomething:(NSNotification *) noti
+{
+    AddReceiveFinalViewController *notiAddReceiveFinalViewController = [[noti object] objectAtIndex:1];
+    NSString *notiStr = [[noti object] objectAtIndex:0];
+    
+    for(int i=0;i<addressListDataArray.count;i++)
+    {
+        B2CAddressData *addressData = [addressListDataArray objectAtIndex:i];
+        NSString *province = addressData.province;
+        NSString *city = addressData.city;
+        NSString *area = addressData.area;
+        NSString *str = [NSString stringWithFormat:@"%@%@%@",province,city,area];
+        
+        NSString *address = addressData.addressName;
+        
+        NSString *myStr = [NSString stringWithFormat:@"%@%@",str,address];
+        
+        if([myStr isEqualToString:notiStr])
+        {
+            [notiAddReceiveFinalViewController validateAddress:1];
+            return;
+        }
+        else
+        {
+            [notiAddReceiveFinalViewController validateAddress:0];
+        }
+    }
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doSomething:) name:@"addressListDataArray" object:nil];
+
     /*丁瑞修改*/
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
@@ -332,7 +370,7 @@
         [telLabel setText:tel];
         [telLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:telLabel];
-        
+
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
@@ -395,6 +433,11 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
+    
+    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
+    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+    
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
     if(btn.hidden == YES)
     {
@@ -406,10 +449,7 @@
     {
         
     }
-    B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
-    
-    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+ 
     
 }
 

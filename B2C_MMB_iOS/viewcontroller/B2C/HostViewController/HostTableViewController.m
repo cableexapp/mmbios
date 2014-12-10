@@ -349,6 +349,8 @@ BOOL isPopShow = NO;
     
     [self.tableView setShowsVerticalScrollIndicator:NO];
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     secondBarView = [[UIView alloc] init];
     secondBarView.frame = CGRectMake(self.view.frame.size.width/5, 0, self.view.frame.size.width/5, 49);
     [self.navigationController.tabBarController.tabBar addSubview:secondBarView];

@@ -177,8 +177,6 @@
     [super didReceiveMemoryWarning];
 }
 
-
-
 - (IBAction)logOutBtnClick:(id)sender
 {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"退出登录"

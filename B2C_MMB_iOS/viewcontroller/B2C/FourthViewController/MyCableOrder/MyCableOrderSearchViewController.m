@@ -7,8 +7,6 @@
 //
 
 #import "MyCableOrderSearchViewController.h"
-#import "ChineseInclude.h"
-#import "PinYinForObjc.h"
 #import "DCFCustomExtra.h"
 #import "MCDefine.h"
 #import "B2CMyOrderData.h"

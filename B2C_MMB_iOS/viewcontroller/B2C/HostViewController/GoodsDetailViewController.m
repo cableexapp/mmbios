@@ -79,6 +79,8 @@
     int btnTag;
     
     NSString *colorName;
+    
+    int statrScore;
 }
 @end
 
@@ -115,86 +117,6 @@
     [self setHidesBottomBarWhenPushed:YES];
     int tag = [sender tag];
     btnTag = tag;
-    
-    //    if(num.length == 0 || [num intValue] == 0)
-    //    {
-    //        [DCFStringUtil showNotice:@"请选择数量"];
-    //        return;
-    //    }
-    //    if(itemid.length == 0)
-    //    {
-    //        [DCFStringUtil showNotice:@"请选择颜色"];
-    //        return;
-    //    }
-    //    //    [self.view.window addSubview:[self loadChooseColorAndCount]];
-    //    //    backView.hidden = NO;
-    //    [self setHidesBottomBarWhenPushed:YES];
-    //    int tag = [sender tag];
-    //
-    //
-    //    if(tag == 100)
-    //    {
-    //#pragma mark - 立即购买
-    //
-    //        NSString *time = [DCFCustomExtra getFirstRunTime];
-    //
-    //        NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
-    //
-    //        NSString *token = [DCFCustomExtra md5:string];
-    //
-    //        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
-    //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
-    //
-    //        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
-    //        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
-    //        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    //
-    //
-    //    }
-    //    else
-    //    {
-    //
-    //#pragma mark - 加入购物车
-    //        [self setHidesBottomBarWhenPushed:YES];
-    //
-    //        NSString *shopid = [NSString stringWithFormat:@"%@",detailData.shopId];
-    //        NSString *productid = [NSString stringWithFormat:@"%@",detailData.productId];
-    //
-    //        NSString *time = [DCFCustomExtra getFirstRunTime];
-    //        NSString *string = [NSString stringWithFormat:@"%@%@",@"addToCart",time];
-    //        NSString *token = [DCFCustomExtra md5:string];
-    //
-    //        NSString *visitorid = [app getUdid];
-    //
-    //        NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    //
-    //
-    //        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    //
-    //
-    //
-    //        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddToShopCatTag delegate:self];
-    //
-    //        NSString *pushString = nil;
-    //
-    //        if(hasLogin == YES)
-    //        {
-    //            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
-    //            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
-    //            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
-    //        }
-    //        else
-    //        {
-    //            arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
-    //            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
-    //            pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
-    //        }
-    //        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
-    //
-    //        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    //
-    //        num = @"0";
-    //    }
 }
 
 - (void)rightItemClick:(id) sender
@@ -325,6 +247,8 @@
     [tv setDataSource:self];
     [tv setDelegate:self];
     tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+    tv.showsHorizontalScrollIndicator = NO;
+    tv.showsVerticalScrollIndicator = NO;
     [tv setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:tv];
     
@@ -388,6 +312,12 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLB2CProductDetailTag)
     {
+        if ([[dicRespon objectForKey:@"score"] count] > 0)
+        {
+            statrScore = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
+ 
+            NSLog(@"星星评分 = %d",statrScore);
+        }
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         producturl = [dicRespon objectForKey:@"producturl"];
@@ -698,7 +628,6 @@
             }
             if(indexPath.row == detailData.ctems.count + 7)
             {
-                
                 if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
                 {
                     return 0;
@@ -708,7 +637,6 @@
                     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                     return size.height+15;
                 }
-
             }
         }
     }
@@ -896,7 +824,15 @@
                         [btn setSelected:YES];
                         selectView.backgroundColor = [UIColor colorWithRed:19/255.0 green:90.0/255.0 blue:168/255.0 alpha:1.0];
                     }
-                    [btn setTitle:@"商品评价" forState:UIControlStateNormal];
+                    if (detailData.ctems.count == 0)
+                    {
+                        [btn setTitle:@"商品评价(0)" forState:UIControlStateNormal];
+                    }
+                    else
+                    {
+                        [btn setTitle:[NSString stringWithFormat:@"商品评价(%d)",detailData.ctems.count] forState:UIControlStateNormal];
+                    }
+                    
                 }
                 [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 
@@ -1186,6 +1122,73 @@
         [label setText:[detailData shopName]];
         [label setTextAlignment:NSTextAlignmentLeft];
         [label setTextColor:[UIColor blackColor]];
+        
+        UIImageView *starImageView;
+        for (int i = 0; i < 5; i++)
+        {
+            starImageView = [[UIImageView alloc] init];
+            starImageView.frame =CGRectMake((ScreenWidth-103)+20*i, 13, 18, 18);
+            starImageView.tag = i;
+            [cell.contentView addSubview:starImageView];
+            if (statrScore == 5)
+            {
+                if (starImageView.tag == i)
+                {
+                   starImageView.image = [UIImage imageNamed:@"star_selected"];
+                }
+            }
+            if (statrScore == 4)
+            {
+                if (starImageView.tag == 4)
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                }
+                else
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_selected"];
+                }
+            }
+            if (statrScore == 3)
+            {
+                if (starImageView.tag == 3 || starImageView.tag == 4)
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                }
+                else
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_selected"];
+                }
+            }
+            if (statrScore == 2)
+            {
+                if (starImageView.tag == 2 || starImageView.tag == 3 || starImageView.tag == 4)
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                }
+                else
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_selected"];
+                }
+            }
+            if (statrScore == 1)
+            {
+                if (starImageView.tag == 1 || starImageView.tag == 2 || starImageView.tag == 3 || starImageView.tag == 4)
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                }
+                else
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_selected"];
+                }
+            }
+            if (statrScore == 0)
+            {
+                if (starImageView.tag == i)
+                {
+                    starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                }
+            }
+        }
         
         UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
         [firstView addSubview:firstIv];

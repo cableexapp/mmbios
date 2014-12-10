@@ -20,7 +20,5 @@
 @property (weak, nonatomic) IBOutlet UITextField *tf_Secrect;
 @property (weak, nonatomic) IBOutlet UIView *tf_BackView;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
-@property (weak, nonatomic) IBOutlet UIButton *forgetBtn;
-
 
 @end

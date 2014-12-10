@@ -38,6 +38,17 @@
     self.navigationItem.titleView = top;
     [super viewDidLoad];
     
+    self.backBtn.frame = CGRectMake((self.view.frame.size.width-260)/3, 95, 130, 38);
+    self.backBtn.layer.cornerRadius = 5;
+    
+    self.oneMoreBtn .frame = CGRectMake(((self.view.frame.size.width-260)/3)*2+130, 95, 130, 38);
+    self.oneMoreBtn.layer.cornerRadius = 5;
+    
+    self.imBtn.frame = CGRectMake(148, 55, 110, 32);
+    self.imBtn.layer.borderWidth = 1;
+    self.imBtn.layer.cornerRadius = 5;
+    self.imBtn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+   
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0, 0, 18, 25)];

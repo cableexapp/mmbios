@@ -67,7 +67,7 @@
     self.submit.backgroundColor = [UIColor colorWithRed:237/255.0 green:137/255.0 blue:0/255.0 alpha:1.0];
     [self.submit setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.submit.layer.cornerRadius = 5;
-    self.submit.frame = CGRectMake(5, self.view.frame.size.height-190,self.view.frame.size.width-37 , 40);
+    self.submit.frame = CGRectMake(5, self.view.frame.size.height-160,self.view.frame.size.width-37 , 40);
     self.secondTextView.delegate = self;
 //    数据加载到文本框
     NSString *str = @"";

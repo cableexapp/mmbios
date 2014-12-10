@@ -38,10 +38,4 @@
 @property (weak, nonatomic) IBOutlet UIButton *triangleBtn;
 
 
-- (IBAction)serarchRightBtn:(id)sender;
-
-
-
-
-
 @end

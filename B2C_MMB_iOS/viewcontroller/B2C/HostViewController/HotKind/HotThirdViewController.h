@@ -19,5 +19,8 @@
 
 - (IBAction)clickAsk:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *backBtn;
+@property (weak, nonatomic) IBOutlet UIButton *oneMoreBtn;
+@property (weak, nonatomic) IBOutlet UIButton *imBtn;
 
 @end

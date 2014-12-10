@@ -110,12 +110,15 @@
     self.loginBtn.layer.cornerRadius = 5.0f;
     self.loginBtn.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
-    self.forgetBtn.frame = CGRectMake(ScreenWidth-93, 315, 80, 22);
-    [self.forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
-    [self.forgetBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    UIButton *forgetBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [forgetBtn setFrame:CGRectMake(ScreenWidth-93, 270, 80, 22)];
+    [forgetBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
+    [forgetBtn addTarget:self action:@selector(forgetBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:forgetBtn];
     
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [registerBtn setFrame:CGRectMake(ScreenWidth-170, 277, 80, 22)];
+    [registerBtn setFrame:CGRectMake(ScreenWidth-170, 270, 80, 22)];
     [registerBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [registerBtn setTitle:@"用户注册" forState:UIControlStateNormal];
     [registerBtn addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -297,7 +300,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)forgetBtnClick:(id)sender
+- (void)forgetBtnClick:(UIButton *)sender
 {
     NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
     NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];

@@ -798,12 +798,7 @@
     [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [buttomView addSubview:payBtn];
     
-    
-
-    
     moneyLabel = [[UILabel alloc] init];
-//    [moneyLabel setBackgroundColor:[UIColor colorWithRed:203.0/255.0 green:24.0/255.0 blue:0.0/255.0 alpha:1.0]];
-
     totalMoney = 0.00;
     [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
     CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:totalMoney afterPoint:2] WithSize:CGSizeMake(MAXFLOAT, 20)];
@@ -1435,7 +1430,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     else
     {
-        shopColorSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:shopColor WithSize:CGSizeMake(MAXFLOAT, 30)];
+        shopColorSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"颜色: %@",shopColor] WithSize:CGSizeMake(MAXFLOAT, 30)];
     }
     UILabel *subColorLab = [[colorLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [subColorLab setFrame:CGRectMake(cell.contentView.frame.size.width-10-shopColorSize.width,label.frame.origin.y+label.frame.size.height,shopColorSize.width,30)];
@@ -1481,10 +1476,8 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [cell.contentView addSubview:addBtn];
     //
 
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, subColorLab.frame.origin.y+subColorLab.frame.size.height+20, ScreenWidth, 10)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, subColorLab.frame.origin.y+subColorLab.frame.size.height+25, ScreenWidth, 10)];
     [lineView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
-    lineView.layer.borderColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0].CGColor;
-    lineView.layer.borderWidth = 1.0f;
     [cell.contentView addSubview:lineView];
     
     return cell;

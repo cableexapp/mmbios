@@ -244,6 +244,9 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"热门型号"];
     self.navigationItem.titleView = top;
     
+    [self.upBtn setTitle:@"上一页" forState:UIControlStateNormal];
+    [self.nextBtn setTitle:@"下一页" forState:UIControlStateNormal];
+    
     addToCarArray = [[NSMutableArray alloc] init];
     
     askPriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -374,8 +377,6 @@
     if(btn.selected == YES)
     {
         [addToCarArray addObject:btn];
-        NSLog(@"btn.tag = %d",btn.tag);
-        NSLog(@"addToCarArray = %@",addToCarArray);
     }
     else
     {

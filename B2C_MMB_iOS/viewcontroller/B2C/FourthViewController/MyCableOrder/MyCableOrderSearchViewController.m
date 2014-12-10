@@ -174,13 +174,11 @@
 
     if(URLTag == URLB2COrderListAllTag)
     {
-        NSLog(@"dicRespon = %@",[[dicRespon objectForKey:@"items"] objectAtIndex:0]);
-        int intTotal;
+//        NSLog(@"dicRespon = %@",[[dicRespon objectForKey:@"items"] objectAtIndex:0]);
+        int intTotal = [[dicRespon objectForKey:@"total"] intValue];
         int result = [[dicRespon objectForKey:@"result"] intValue];
         if(URLTag == ULRGetOrderListTag)
         {
-  
-            }
             if([[dicRespon allKeys] count] == 0)
             {
                 [moreCell noDataAnimation];
@@ -208,6 +206,7 @@
                 }
             }
         [self.myTableView reloadData];
+       }
     }
 }
 
@@ -433,6 +432,7 @@
     {
         moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
         [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+        [moreCell noDataAnimation];
     }
     return moreCell;
 }
@@ -526,9 +526,8 @@
     if(!dataArray || dataArray.count == 0)
     {
         return [self returnMoreCell:tableView];
-//        cell.textLabel.text = @"123";
     }
-    else if(dataArray > 0)
+    else if(dataArray.count > 0)
     {
         NSString *picString = [[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productItemPic"];
         NSString *picURL = [NSString stringWithFormat:@"%@%@",GoodsDetail_URL,picString];
@@ -538,7 +537,7 @@
 
         GoodsName.text = [[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productItmeTitle"];
         GoodsPrice.text = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"price"] stringValue];
-        NSString *stringNum = [NSString stringWithFormat:@"*%@",[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productNum"]];
+        NSString *stringNum = [NSString stringWithFormat:@"×%@",[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productNum"]];
         GoodsNum.text = stringNum;
   
         orderNumLabel.text = [NSString stringWithFormat:@"订单编号:  %@",[dataArray[indexPath.row] objectForKey:@"orderNum"]];

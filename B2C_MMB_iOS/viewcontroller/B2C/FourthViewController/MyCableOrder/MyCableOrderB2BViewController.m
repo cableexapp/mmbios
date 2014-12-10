@@ -137,11 +137,38 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    int intTotal;
     if(URLTag == URLB2BOrderListAllTag)
     {
-        NSLog(@"B2B全部订单 = %@",dicRespon);
-        [dataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:[dicRespon objectForKey:@"items"]]];
-        tempOrderNum = [dicRespon objectForKey:@"items"];
+        if([[dicRespon allKeys] count] == 0)
+        {
+            [moreCell noDataAnimation];
+        }
+        else
+        {
+            if(result == 1)
+            {
+                NSLog(@"B2B全部订单 = %@",dicRespon);
+                [dataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:[dicRespon objectForKey:@"items"]]];
+                tempOrderNum = [dicRespon objectForKey:@"items"];
+                
+                intTotal = [[dicRespon objectForKey:@"total"] intValue];
+                
+                if(intTotal == 0)
+                {
+                    [moreCell noDataAnimation];
+                }
+                else
+                {
+                    [moreCell noSearchResult];
+                }
+            }
+            else
+            {
+                [moreCell failAcimation];
+            }
+        }
         [self.myTableView reloadData];
     }
 }

@@ -173,7 +173,7 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
-    DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"电缆买卖宝注册"];
+    DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"用户注册"];
     self.navigationItem.titleView = TOP;
     
     self.regesterBtn.layer.cornerRadius = 5.0f;

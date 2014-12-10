@@ -298,7 +298,7 @@
     [topTextField setFont:[UIFont systemFontOfSize:13]];
     [topTextField setDelegate:self];
     [topTextField setReturnKeyType:UIReturnKeyDone];
-    UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 34)];
+    UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     [leftImageView setImage:[UIImage imageNamed:@"magnifying glass.png"]];
     [topTextField setLeftView:leftImageView];
     [topTextField setLeftViewMode:UITextFieldViewModeAlways];

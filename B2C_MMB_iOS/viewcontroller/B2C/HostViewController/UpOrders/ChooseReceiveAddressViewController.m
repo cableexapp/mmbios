@@ -165,6 +165,7 @@
 {
     if (URLTag == URLReceiveAddressTag)
     {
+        NSLog(@"%@",dicRespon);
         int result= [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         
@@ -229,7 +230,7 @@
 {
     [super viewDidLoad];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"收货地址管理"];
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];

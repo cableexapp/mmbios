@@ -20,6 +20,9 @@
     NSString *chooseCity;             //市
     NSString *chooseAddress;     //区和街道
     NSString *chooseAddressName;  //具体地址
+    NSString *chooseReceiver;
+    NSString *choosePhone;
+    NSString *chooseTel;
     
     NSString *chooseCode;
     

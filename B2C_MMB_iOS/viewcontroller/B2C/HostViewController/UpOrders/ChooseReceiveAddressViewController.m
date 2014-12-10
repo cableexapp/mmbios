@@ -201,7 +201,7 @@
                 [cellBtnArray addObject:btn];
                 
                 B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:i];
-                
+                NSLog(@"%@",data.tel);
                 if([[data isDefault] isEqualToString:@"1"])
                 {
                     [btn setSelected:YES];
@@ -441,7 +441,7 @@
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
     if(btn.hidden == YES)
     {
-        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:[addressListDataArray objectAtIndex:indexPath.row]];
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:data];
         [self.navigationController pushViewController:final animated:YES];
         [self showButtomView];
     }

@@ -27,7 +27,7 @@
 
 @property (nonatomic,strong) UITableView *serchResultView;
 
-@property (nonatomic,strong) PopupView *popView;
+//@property (nonatomic,strong) PopupView *popView;
 
 @property (nonatomic,strong) NSString *searchFlag;
 

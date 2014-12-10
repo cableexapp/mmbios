@@ -44,6 +44,8 @@
     UIButton *btn;
     
     UIPageControl *pageControl;
+    
+    NSTimer *timer;
 }
 @end
 
@@ -269,6 +271,7 @@
     self.addToAskPriceBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
     [_sv setContentSize:CGSizeMake(ScreenWidth*7, self.sv.frame.size.height-200)];
     [_sv setBounces:NO];
+    _sv.delegate = self;
     
     pageControl = [[UIPageControl alloc] init];
     pageControl.frame = CGRectMake(0, ScreenHeight-145, ScreenWidth, 30);
@@ -277,6 +280,11 @@
     pageControl.pageIndicatorTintColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1.0];
     pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
     [self.view addSubview:pageControl];
+    
+    if (pageControl.currentPage == 0)
+    {
+        self.upBtn.hidden = YES;
+    }
     
     self.hotLineBtn.layer.cornerRadius = 5.0f;
     self.imBtn.layer.cornerRadius = 5.0f;
@@ -316,8 +324,13 @@
     }
     [self allKinds:btnArray];
     
-    
-   }
+    timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(isShowPageControl) userInfo:nil repeats:NO];
+}
+
+-(void)isShowPageControl
+{
+    pageControl.hidden = YES;
+}
 
 -(void)loadAskPriceCarCount
 {
@@ -402,10 +415,28 @@
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    pageControl.hidden = NO;
     CGFloat pageWidth = self.view.frame.size.width;
     page = floor((scrollView.contentOffset.x - pageWidth/2)/pageWidth) + 1;
     pageControl.currentPage = page;
-    
+    if (pageControl.currentPage == 6)
+    {
+        self.nextBtn.hidden = YES;
+        self.upBtn.hidden = NO;
+    }
+    if (pageControl.currentPage != 0)
+    {
+        self.upBtn.hidden = NO;
+    }
+    if (pageControl.currentPage != 6)
+    {
+        self.nextBtn.hidden = NO;
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    pageControl.hidden = YES;
 }
 
 - (NSString *)dictoJSON:(NSDictionary *)theDic

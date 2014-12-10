@@ -11,7 +11,9 @@
 @interface HotScreenFirstViewController : UIViewController<UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *sv;
-@property (weak, nonatomic) IBOutlet UIButton *upBtn;
-@property (weak, nonatomic) IBOutlet UIButton *nextBtn;
+@property (weak, nonatomic) IBOutlet UIButton *hotTelBtn;
+@property (weak, nonatomic) IBOutlet UIButton *imBtn;
+@property (weak, nonatomic) IBOutlet UIButton *chooseBtn;
+@property (weak, nonatomic) IBOutlet UIButton *reViewBtn;
 
 @end

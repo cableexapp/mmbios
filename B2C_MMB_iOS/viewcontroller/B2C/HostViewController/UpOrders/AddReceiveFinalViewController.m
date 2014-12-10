@@ -32,9 +32,13 @@
     
     DCFMyTextField *fixedLineTelephone;   //固定电话
     
+    DCFMyTextField *fullAddressTf;
+    
     UIView *backView;
     
     UIButton *backBtn;
+    
+    UILabel *addressLabel_2;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,9 +56,17 @@
     {
         b2cAddressData = addressData;
 
+//        NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
+
+        
         chooseCity = b2cAddressData.city;
         chooseProvince = b2cAddressData.province;
         chooseAddress = b2cAddressData.area;
+        chooseAddressName = b2cAddressData.addressName;
+        chooseReceiver = b2cAddressData.receiver;
+        chooseCode = b2cAddressData.zip;
+        choosePhone = b2cAddressData.mobile;
+        chooseTel = b2cAddressData.tel;
         
 //        swith.on = [[_msgDic objectForKey:@"swithStatus"] boolValue];
         
@@ -105,17 +117,43 @@
     return self;
 }
 
+- (void) validateAddress:(int) status
+{
+    //1-存在 0-不存在
+    if(status == 1)
+    {
+        [DCFStringUtil showNotice:@"该地址已经存在"];
+        return;
+    }
+    else
+    {
+        NSString *memberid = [self getMemberId];
+        
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,fixedLineTelephone.text];
+        
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
+}
+
 - (void) backBtnClick:(UIButton *) sender
 {
     [self dismissKeyBoard];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
+
     [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     
     [self pushAndPopStyle];
@@ -170,6 +208,7 @@
     
     fixedLineTelephone = [textFieldArray lastObject];
     
+    
     if(receiverTf.text.length == 0)
     {
         [DCFStringUtil showNotice:@"请输入收货人信息"];
@@ -198,20 +237,16 @@
         return;
     }
     
+    
     //新增
     if(isEditOrAdd == YES)
     {
-        NSString *memberid = [self getMemberId];
-        
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,fixedLineTelephone.text];
-        
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        NSString *s1 = [addressLabel_2 text];
+        NSString *s2 = [(DCFMyTextField *)[textFieldArray objectAtIndex:1] text];
+        NSString *s = [NSString stringWithFormat:@"%@%@",s1,s2];
+        NSArray *arr = [NSArray arrayWithObjects:s,self, nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"addressListDataArray" object:arr];
+
     }
     //编辑
     else
@@ -222,8 +257,10 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"editMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&addressid=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,b2cAddressData.addressId];
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&addressid=%@&tel=%@&fulladdress=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,b2cAddressData.addressId,fixedLineTelephone.text,chooseAddressName];
+        NSLog(@"%@",pushString);
         
+//        memberid（用户id）,token,receiver(收货人),province(省份)city(城市),area(地区),addressname(街道),fulladdress(详细地址),zip(邮编),mobile(联系电话)，tel(固定电话)，addressid(收获地址id)
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/editMemberAddress.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -324,7 +361,7 @@
     [line_1 setBackgroundColor:[UIColor lightGrayColor]];
     [backView addSubview:line_1];
     
-    UILabel *addressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(addressLabel_1.frame.origin.x + addressLabel_1.frame.size.width + 10, addressLabel_1.frame.origin.y, backView.frame.size.width-30-addressLabel_1.frame.size.width, 30)];
+    addressLabel_2 = [[UILabel alloc] initWithFrame:CGRectMake(addressLabel_1.frame.origin.x + addressLabel_1.frame.size.width + 10, addressLabel_1.frame.origin.y, backView.frame.size.width-30-addressLabel_1.frame.size.width, 30)];
     
     if(!b2cAddressData)
     {
@@ -457,6 +494,35 @@
 //            }
         }
 
+        //陈晓修改
+        if(isEditOrAdd == NO)
+        {
+            for(int i=0;i<textFieldArray.count;i++)
+            {
+                DCFMyTextField *textField = [textFieldArray objectAtIndex:i];
+                if(i==0)
+                {
+                    [textField setText:chooseReceiver];
+                }
+                if(i == 1)
+                {
+                    [textField setText:chooseAddressName];
+                }
+                if(i == 2)
+                {
+                    [textField setText:chooseCode];
+                }
+                if(i == 3)
+                {
+                    [textField setText:choosePhone];
+                }
+                if(i == 4)
+                {
+                    NSLog(@"chooseTel = %@",chooseTel);
+                    [textField setText:chooseTel];
+                }
+            }
+        }
     }
 }
 

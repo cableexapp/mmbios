@@ -20,6 +20,9 @@
     NSString *chooseCity;             //市
     NSString *chooseAddress;     //区和街道
     NSString *chooseAddressName;  //具体地址
+    NSString *chooseReceiver;
+    NSString *choosePhone;
+    NSString *chooseTel;
     
     NSString *chooseCode;
     
@@ -39,5 +42,9 @@
 
 //用于编辑地址
 - (id) initWithAddressData:(B2CAddressData *) addressData;
+
+
+//校验地址是否已经存在
+- (void) validateAddress:(int) status;
 
 @end

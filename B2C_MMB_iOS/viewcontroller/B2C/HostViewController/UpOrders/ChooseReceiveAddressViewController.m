@@ -141,8 +141,12 @@
         }
     }
     
-    
-    
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+    [self loadRequest];
     
 }
 
@@ -182,6 +186,7 @@
         else if (result == 1)
         {
             addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
+
             
             cellBtnArray = [[NSMutableArray alloc] init];
             
@@ -196,7 +201,7 @@
                 [cellBtnArray addObject:btn];
                 
                 B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:i];
-                
+                NSLog(@"%@",data.tel);
                 if([[data isDefault] isEqualToString:@"1"])
                 {
                     [btn setSelected:YES];
@@ -225,10 +230,43 @@
     }
     
 }
+
+- (void) doSomething:(NSNotification *) noti
+{
+    AddReceiveFinalViewController *notiAddReceiveFinalViewController = [[noti object] objectAtIndex:1];
+    NSString *notiStr = [[noti object] objectAtIndex:0];
+    
+    for(int i=0;i<addressListDataArray.count;i++)
+    {
+        B2CAddressData *addressData = [addressListDataArray objectAtIndex:i];
+        NSString *province = addressData.province;
+        NSString *city = addressData.city;
+        NSString *area = addressData.area;
+        NSString *str = [NSString stringWithFormat:@"%@%@%@",province,city,area];
+        
+        NSString *address = addressData.addressName;
+        
+        NSString *myStr = [NSString stringWithFormat:@"%@%@",str,address];
+        
+        if([myStr isEqualToString:notiStr])
+        {
+            [notiAddReceiveFinalViewController validateAddress:1];
+            return;
+        }
+        else
+        {
+            [notiAddReceiveFinalViewController validateAddress:0];
+        }
+    }
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doSomething:) name:@"addressListDataArray" object:nil];
+
     /*丁瑞修改*/
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
@@ -327,12 +365,12 @@
         
         NSString *tel = addressData.tel;
         CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-50-size_2.width, 5, size_2.width, 30)];
+        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-50-size_2.width, 5, size_2.width, 30)];
         [telLabel setTextAlignment:NSTextAlignmentRight];
         [telLabel setText:tel];
         [telLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:telLabel];
-        
+
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
@@ -395,10 +433,15 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
+    
+    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
+    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+    
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
     if(btn.hidden == YES)
     {
-        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:[addressListDataArray objectAtIndex:indexPath.row]];
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:data];
         [self.navigationController pushViewController:final animated:YES];
         [self showButtomView];
     }
@@ -406,10 +449,7 @@
     {
         
     }
-    B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
-    
-    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+ 
     
 }
 

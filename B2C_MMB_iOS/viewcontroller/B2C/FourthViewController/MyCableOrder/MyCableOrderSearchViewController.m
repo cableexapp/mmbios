@@ -861,7 +861,7 @@
     searchResults = [[NSMutableArray alloc]init];
     for (int i=0; i<dataArray.count; i++)
     {
-        if([[dataArray[i] objectForKey:@"orderNum"] rangeOfString:search.text].location !=NSNotFound || [[[[dataArray[i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productItmeTitle"] rangeOfString:search.text].location !=NSNotFound)
+        if([[dataArray[i] objectForKey:@"orderNum"] rangeOfString:search.text].location !=NSNotFound || [[[[dataArray[i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productName"] rangeOfString:search.text].location !=NSNotFound || [[dataArray[i] objectForKey:@"shopName"] rangeOfString:search.text].location !=NSNotFound)
         {
             [searchResults addObject:dataArray[i]];
         }

@@ -733,6 +733,7 @@
 		8BBB2CB01A1E1BC800895B4C /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBB2CAF1A1E1BC800895B4C /* 4.png */; };
 		8BBC3A531A37EBB2007BA3C5 /* star_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBC3A511A37EBB2007BA3C5 /* star_selected.png */; };
 		8BBC3A541A37EBB2007BA3C5 /* star_unselect.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBC3A521A37EBB2007BA3C5 /* star_unselect.png */; };
+		8BBC3A561A382A71007BA3C5 /* noResult.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBC3A551A382A71007BA3C5 /* noResult.png */; };
 		8BC2AD8B1A19B81F00E44BC2 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD8A1A19B81F00E44BC2 /* SearchViewController.m */; };
 		8BC2AD9F1A19F0E100E44BC2 /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC2AD901A19F0E100E44BC2 /* libBPush.a */; };
 		8BC2ADA01A19F0E100E44BC2 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC2AD931A19F0E100E44BC2 /* Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1861,6 +1862,7 @@
 		8BBB2CAF1A1E1BC800895B4C /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
 		8BBC3A511A37EBB2007BA3C5 /* star_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_selected.png; sourceTree = "<group>"; };
 		8BBC3A521A37EBB2007BA3C5 /* star_unselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_unselect.png; sourceTree = "<group>"; };
+		8BBC3A551A382A71007BA3C5 /* noResult.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noResult.png; sourceTree = "<group>"; };
 		8BC2AD891A19B81F00E44BC2 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		8BC2AD8A1A19B81F00E44BC2 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		8BC2AD8F1A19F0E100E44BC2 /* BPush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPush.h; sourceTree = "<group>"; };
@@ -2558,6 +2560,7 @@
 				61DF89EE19FB9CD700D47430 /* HomeUnSelect.png */,
 				8B7549411A26FB2E00271985 /* close.png */,
 				8B1672521A36D72200C79A2B /* location.png */,
+				8BBC3A551A382A71007BA3C5 /* noResult.png */,
 				61DF89F519FB9D4900D47430 /* HomeSelect.png */,
 				0DCA61161A32DBE200FC86DB /* choose_btn.png */,
 				8BBC3A511A37EBB2007BA3C5 /* star_selected.png */,
@@ -4600,6 +4603,7 @@
 				8BA7C0BC1A10A85500758B0F /* 害羞@2x.png in Resources */,
 				8BA7C0F41A10A85500758B0F /* 流泪@2x.png in Resources */,
 				8BBB2CAE1A1E1BC100895B4C /* 8.png in Resources */,
+				8BBC3A561A382A71007BA3C5 /* noResult.png in Resources */,
 				6140E7CB1A01DE4C00E349E3 /* hotModelSelected@3x.png in Resources */,
 				619A62511A00C09900556B90 /* FifthSB.storyboard in Resources */,
 				6181A4EA19CFC4C2000E2D14 /* News.png in Resources */,

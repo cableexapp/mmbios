@@ -81,6 +81,8 @@
     NSString *colorName;
     
     int statrScore;
+    
+    UIButton *btn;
 }
 @end
 
@@ -212,7 +214,7 @@
     [buttomView addSubview:chatBtn];
     for(int i=0;i<2;i++)
     {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn = [UIButton buttonWithType:UIButtonTypeCustom];
         
         if(i == 0)
         {
@@ -343,7 +345,17 @@
     {
         if(result == 1)
         {
-            [DCFStringUtil showNotice:msg];
+           
+//            if (btn.tag == 100)
+//            {
+//                [btn becomeFirstResponder];
+//                
+//            }
+//            if (btn.tag == 101)
+//            {
+//                [btn becomeFirstResponder];
+//            }
+             [DCFStringUtil showNotice:msg];
             num = @"0";
             itemid = @"";
             [self loadShopCarCount];

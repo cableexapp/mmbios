@@ -34,7 +34,9 @@
     int index;  //确认收货时用到
     NSMutableArray *tempOrderNum;
     
-    BOOL isSearch;
+    NSMutableArray *tempDataArray;
+    
+    UIView *noResultView;
 }
 
 @end
@@ -55,7 +57,8 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    dataArray = [[NSMutableArray alloc] init];
+  
+    
     //导航栏标题
     UILabel *naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100, 44)];
     naviTitle.textColor = [UIColor whiteColor];
@@ -69,6 +72,8 @@
     
     dataArray = [[NSMutableArray alloc] init];
     
+    tempDataArray = [[NSMutableArray alloc] init];
+    
     tempOrderNum = [[NSMutableArray alloc] init];
     self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44,self.view.frame.size.width,self.view.frame.size.height-109) style:UITableViewStylePlain];
     self.myTableView.delegate = self;
@@ -78,6 +83,15 @@
     self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:self.myTableView];
+    
+    noResultView = [[UIView alloc] init];
+    noResultView.frame = CGRectMake(0, 45, ScreenWidth, ScreenHeight-45);
+    noResultView.backgroundColor = [UIColor whiteColor];
+    [self.view insertSubview:noResultView aboveSubview:self.myTableView];
+    UIImageView *noResultImageView = [[UIImageView alloc] init];
+    noResultImageView.frame = CGRectMake((ScreenWidth-130)/2, 40, 130, 75);
+    noResultImageView.image = [UIImage imageNamed:@"noResult"];
+    [noResultView addSubview:noResultImageView];
     
     search = [[UISearchBar alloc] init];
     search.frame = CGRectMake(0, 0,self.view.frame.size.width, 45);
@@ -133,6 +147,22 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
+//去除数组中重复数据
+-(NSMutableArray *)arrayWithMemberIsOnly:(NSMutableArray *)array
+{
+    NSMutableArray *categoryArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [array count]; i++)
+    {
+        {
+            if ([categoryArray containsObject:[array objectAtIndex:i]] == NO)
+            {
+                [categoryArray addObject:[array objectAtIndex:i]];
+            }
+        }
+    }
+    return categoryArray;
+}
+
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
@@ -148,9 +178,17 @@
             if(result == 1)
             {
                 NSLog(@"B2B全部订单 = %@",dicRespon);
-                [dataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:[dicRespon objectForKey:@"items"]]];
-                tempOrderNum = [dicRespon objectForKey:@"items"];
-                
+                if ([[dicRespon objectForKey:@"items"] count] > 0)
+                {
+                    noResultView.hidden = YES;
+                    [tempDataArray removeAllObjects];
+                    [tempDataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:[dicRespon objectForKey:@"items"]]];
+                    
+                    dataArray = [self arrayWithMemberIsOnly:tempDataArray];
+                    
+                    tempOrderNum = [dicRespon objectForKey:@"items"];
+                }
+    
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
                 if(intTotal == 0)
@@ -173,30 +211,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    int tempSection;
     if(!dataArray || dataArray.count == 0)
     {
-        return 1;
+        tempSection = 0;
     }
-    return dataArray.count;
-    if (isSearch == YES)
+    else if (dataArray.count > 0)
     {
-        return searchResults.count;
+        tempSection = dataArray.count;
     }
+    return tempSection;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(!dataArray || dataArray.count == 0)
     {
-        return 1;
+        return 0;
     }
     else
     {
         return 3;
-    }
-    if (isSearch == YES)
-    {
-        return searchResults.count;
     }
 }
 
@@ -392,86 +427,68 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    if(indexPath.section == dataArray.count)
+    if(dataArray.count == 0)
     {
         return cell;
-    }
-    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
-    {
-        [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-    }
-    UIView *lineView = [[UIView alloc] init];
-    lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    [cell addSubview:lineView];
-    if (indexPath.row == 0)
-    {
-//        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
-    }
-    else if (indexPath.row == 1)
-    {
-        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+        cell.textLabel.text = @"1111111";
     }
     else
     {
-        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
-    }
-    
-    CGFloat cellWidth = cell.contentView.frame.size.width;
-    
-    if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
-    {
-        NSArray *itemArray = [[dataArray objectAtIndex:indexPath.section] myItems];
-        
-        UILabel *orderNumLabel = [[UILabel alloc] init];
-        [orderNumLabel setFont:[UIFont systemFontOfSize:12]];
-        
-        UILabel *numLabel = [[UILabel alloc] init];
-        [numLabel setFont:[UIFont systemFontOfSize:12]];
-        
-        UILabel *timeLabel = [[UILabel alloc] init];
-        [timeLabel setTextAlignment:NSTextAlignmentRight];
-        [timeLabel setFont:[UIFont systemFontOfSize:12]];
-        
-        UILabel *priceLabel = [[UILabel alloc] init];
-        [priceLabel setTextAlignment:NSTextAlignmentRight];
-        [priceLabel setFont:[UIFont systemFontOfSize:12]];
-        
-        UILabel *specLabel = [[UILabel alloc] init];
-        [specLabel setFont:[UIFont systemFontOfSize:12]];
-        
-        UILabel *volLabel = [[UILabel alloc] init];
-        [volLabel setFont:[UIFont systemFontOfSize:12]];
-        
-        UILabel *feathLabel = [[UILabel alloc] init];
-        [feathLabel setFont:[UIFont systemFontOfSize:12]];
-        
-        UILabel *requestLabel = [[UILabel alloc] init];
-        [requestLabel setFont:[UIFont systemFontOfSize:12]];
-        [requestLabel setNumberOfLines:0];
-        
-        
-        if(itemArray.count == 0 || [itemArray isKindOfClass:[NSNull class]])
+        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
         {
-            [orderNumLabel setFrame:CGRectMake(10, 5, cellWidth-20, 0)];
-            
-            [numLabel setFrame:CGRectMake(10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, (cellWidth-20)/3, 0)];
-            
-            [timeLabel setFrame:CGRectMake(numLabel.frame.origin.x + numLabel.frame.size.width, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, (cellWidth-20)/3, 0)];
-            
-            [priceLabel setFrame:CGRectMake(cellWidth-10-cellWidth/3,  orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  (cellWidth-20)/3, 0)];
-            
-            [specLabel setFrame:CGRectMake(10, numLabel.frame.origin.y + numLabel.frame.size.height, (cellWidth-20)/2, 0)];
-            
-            [volLabel setFrame:CGRectMake(specLabel.frame.origin.x + specLabel.frame.size.width, timeLabel.frame.origin.y + timeLabel.frame.size.height, (cellWidth-20)/2, 0)];
-            
-            [feathLabel setFrame:CGRectMake(10, specLabel.frame.origin.y + specLabel.frame.size.height, (cellWidth-20)/2, 0)];
-            
-            [requestLabel setFrame:CGRectMake(10, feathLabel.frame.origin.y + feathLabel.frame.size.height, cellWidth-20, 0)];
+            [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+        }
+        UIView *lineView = [[UIView alloc] init];
+        lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        [cell addSubview:lineView];
+        if (indexPath.row == 0)
+        {
+            //        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+        }
+        else if (indexPath.row == 1)
+        {
+            lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
         }
         else
         {
-            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[itemArray objectAtIndex:indexPath.row]];
-            if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
+            lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+        }
+        
+        CGFloat cellWidth = cell.contentView.frame.size.width;
+        
+        if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
+        {
+            NSArray *itemArray = [[dataArray objectAtIndex:indexPath.section] myItems];
+            
+            UILabel *orderNumLabel = [[UILabel alloc] init];
+            [orderNumLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            UILabel *numLabel = [[UILabel alloc] init];
+            [numLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            UILabel *timeLabel = [[UILabel alloc] init];
+            [timeLabel setTextAlignment:NSTextAlignmentRight];
+            [timeLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            UILabel *priceLabel = [[UILabel alloc] init];
+            [priceLabel setTextAlignment:NSTextAlignmentRight];
+            [priceLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            UILabel *specLabel = [[UILabel alloc] init];
+            [specLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            UILabel *volLabel = [[UILabel alloc] init];
+            [volLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            UILabel *feathLabel = [[UILabel alloc] init];
+            [feathLabel setFont:[UIFont systemFontOfSize:12]];
+            
+            UILabel *requestLabel = [[UILabel alloc] init];
+            [requestLabel setFont:[UIFont systemFontOfSize:12]];
+            [requestLabel setNumberOfLines:0];
+            
+            
+            if(itemArray.count == 0 || [itemArray isKindOfClass:[NSNull class]])
             {
                 [orderNumLabel setFrame:CGRectMake(10, 5, cellWidth-20, 0)];
                 
@@ -491,175 +508,198 @@
             }
             else
             {
-                NSString *theModel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"model"]];
-                NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
-                
-                NSString *theNumber = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"num"],theUnit];
-                
-                NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
-                
-                NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
-                
-                NSString *theSpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]];
-                
-                NSString *theVol = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]];
-                
-                NSString *theFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]];
-                
-                NSString *request = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]];
-                //#pragma mark - color字段没有
-                //                    NSString *theColor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderId"]];
-                
-                if(theModel.length == 0 || [theModel isKindOfClass:[NSNull class]])
+                NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[itemArray objectAtIndex:indexPath.row]];
+                if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
                 {
                     [orderNumLabel setFrame:CGRectMake(10, 5, cellWidth-20, 0)];
-                }
-                else
-                {
-                    [orderNumLabel setFrame:CGRectMake(10, 5, cellWidth-20, 30)];
-                    [orderNumLabel setText:[NSString stringWithFormat:@"型号:%@",theModel]];
-                }
-                
-                if(theNumber.length == 0 || [theNumber isKindOfClass:[NSNull class]])
-                {
+                    
                     [numLabel setFrame:CGRectMake(10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, (cellWidth-20)/3, 0)];
                     
-                }
-                else
-                {
-                    NSString *s = [NSString stringWithFormat:@"采购数量: %@",theNumber];
-                    CGSize numSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    [numLabel setFrame:CGRectMake(10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,numSize.width, 30)];
-                    [numLabel setText:[NSString stringWithFormat:@"%@",s]];
-                    
-                }
-                
-                if(theTime.length == 0 || [theTime isKindOfClass:[NSNull class]])
-                {
                     [timeLabel setFrame:CGRectMake(numLabel.frame.origin.x + numLabel.frame.size.width, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, (cellWidth-20)/3, 0)];
-                }
-                else
-                {
-                    NSString *s = [NSString stringWithFormat:@"交货期: %@天",theTime];
-                    CGSize timeSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    [timeLabel setFrame:CGRectMake(numLabel.frame.origin.x + numLabel.frame.size.width+10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, timeSize.width, 30)];
-                    [timeLabel setText:s];
                     
-                }
-                
-                if(thePrice.length == 0 || [thePrice isKindOfClass:[NSNull class]])
-                {
                     [priceLabel setFrame:CGRectMake(cellWidth-10-cellWidth/3,  orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  (cellWidth-20)/3, 0)];
-                }
-                else
-                {
-                    NSString *s = [NSString stringWithFormat:@"¥ %@元/%@",thePrice,theUnit];
-                    CGSize priceSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
-                    [priceLabel setFrame:CGRectMake(cellWidth-10-cellWidth/3,   orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  priceSize.width, 30)];
-                    [priceLabel setText:s];
-                }
-                
-                if(theSpec.length == 0 || [theSpec isKindOfClass:[NSNull class]])
-                {
+                    
                     [specLabel setFrame:CGRectMake(10, numLabel.frame.origin.y + numLabel.frame.size.height, (cellWidth-20)/2, 0)];
-                }
-                else
-                {
-                    [specLabel setFrame:CGRectMake(10, numLabel.frame.origin.y + numLabel.frame.size.height, (cellWidth-20)/2, 30)];
-                    [specLabel setText:[NSString stringWithFormat:@"规格: %@",theSpec]];
-                }
-                
-                if(theVol.length == 0 || [theVol isKindOfClass:[NSNull class]])
-                {
+                    
                     [volLabel setFrame:CGRectMake(specLabel.frame.origin.x + specLabel.frame.size.width, timeLabel.frame.origin.y + timeLabel.frame.size.height, (cellWidth-20)/2, 0)];
-                }
-                else
-                {
-                    [volLabel setFrame:CGRectMake(specLabel.frame.origin.x + specLabel.frame.size.width, timeLabel.frame.origin.y + timeLabel.frame.size.height, (cellWidth-20)/2, 30)];
-                    [volLabel setText:[NSString stringWithFormat:@"电压: %@",theVol]];
-                }
-                
-                if(theFeature.length == 0 || [theFeature isKindOfClass:[NSNull class]])
-                {
+                    
                     [feathLabel setFrame:CGRectMake(10, specLabel.frame.origin.y + specLabel.frame.size.height, (cellWidth-20)/2, 0)];
-                }
-                else
-                {
-                    [feathLabel setFrame:CGRectMake(10, specLabel.frame.origin.y + specLabel.frame.size.height, (cellWidth-20)/2, 30)];
-                    [feathLabel setText:[NSString stringWithFormat:@"阻燃耐火: %@",theFeature]];
-                }
-                
-                if(request.length == 0 || [request isKindOfClass:[NSNull class]])
-                {
+                    
                     [requestLabel setFrame:CGRectMake(10, feathLabel.frame.origin.y + feathLabel.frame.size.height, cellWidth-20, 0)];
                 }
                 else
                 {
-                    NSString *s = @"特殊需求: ";
-                    request = [s stringByAppendingString:request];
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:request WithSize:CGSizeMake(cellWidth-20, MAXFLOAT)];
+                    NSString *theModel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"model"]];
+                    NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
                     
-                    [requestLabel setFrame:CGRectMake(10, feathLabel.frame.origin.y + feathLabel.frame.size.height, cellWidth-20, size.height)];
-                    [requestLabel setText:request];
+                    NSString *theNumber = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"num"],theUnit];
+                    
+                    NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
+                    
+                    NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
+                    
+                    NSString *theSpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]];
+                    
+                    NSString *theVol = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]];
+                    
+                    NSString *theFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]];
+                    
+                    NSString *request = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]];
+                    //#pragma mark - color字段没有
+                    //                    NSString *theColor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderId"]];
+                    
+                    if(theModel.length == 0 || [theModel isKindOfClass:[NSNull class]])
+                    {
+                        [orderNumLabel setFrame:CGRectMake(10, 5, cellWidth-20, 0)];
+                    }
+                    else
+                    {
+                        [orderNumLabel setFrame:CGRectMake(10, 5, cellWidth-20, 30)];
+                        [orderNumLabel setText:[NSString stringWithFormat:@"型号:%@",theModel]];
+                    }
+                    
+                    if(theNumber.length == 0 || [theNumber isKindOfClass:[NSNull class]])
+                    {
+                        [numLabel setFrame:CGRectMake(10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, (cellWidth-20)/3, 0)];
+                        
+                    }
+                    else
+                    {
+                        NSString *s = [NSString stringWithFormat:@"采购数量: %@",theNumber];
+                        CGSize numSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
+                        [numLabel setFrame:CGRectMake(10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,numSize.width, 30)];
+                        [numLabel setText:[NSString stringWithFormat:@"%@",s]];
+                        
+                    }
+                    
+                    if(theTime.length == 0 || [theTime isKindOfClass:[NSNull class]])
+                    {
+                        [timeLabel setFrame:CGRectMake(numLabel.frame.origin.x + numLabel.frame.size.width, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, (cellWidth-20)/3, 0)];
+                    }
+                    else
+                    {
+                        NSString *s = [NSString stringWithFormat:@"交货期: %@天",theTime];
+                        CGSize timeSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
+                        [timeLabel setFrame:CGRectMake(numLabel.frame.origin.x + numLabel.frame.size.width+10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, timeSize.width, 30)];
+                        [timeLabel setText:s];
+                        
+                    }
+                    
+                    if(thePrice.length == 0 || [thePrice isKindOfClass:[NSNull class]])
+                    {
+                        [priceLabel setFrame:CGRectMake(cellWidth-10-cellWidth/3,  orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  (cellWidth-20)/3, 0)];
+                    }
+                    else
+                    {
+                        NSString *s = [NSString stringWithFormat:@"¥ %@元/%@",thePrice,theUnit];
+                        CGSize priceSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
+                        [priceLabel setFrame:CGRectMake(cellWidth-10-cellWidth/3,   orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  priceSize.width, 30)];
+                        [priceLabel setText:s];
+                    }
+                    
+                    if(theSpec.length == 0 || [theSpec isKindOfClass:[NSNull class]])
+                    {
+                        [specLabel setFrame:CGRectMake(10, numLabel.frame.origin.y + numLabel.frame.size.height, (cellWidth-20)/2, 0)];
+                    }
+                    else
+                    {
+                        [specLabel setFrame:CGRectMake(10, numLabel.frame.origin.y + numLabel.frame.size.height, (cellWidth-20)/2, 30)];
+                        [specLabel setText:[NSString stringWithFormat:@"规格: %@",theSpec]];
+                    }
+                    
+                    if(theVol.length == 0 || [theVol isKindOfClass:[NSNull class]])
+                    {
+                        [volLabel setFrame:CGRectMake(specLabel.frame.origin.x + specLabel.frame.size.width, timeLabel.frame.origin.y + timeLabel.frame.size.height, (cellWidth-20)/2, 0)];
+                    }
+                    else
+                    {
+                        [volLabel setFrame:CGRectMake(specLabel.frame.origin.x + specLabel.frame.size.width, timeLabel.frame.origin.y + timeLabel.frame.size.height, (cellWidth-20)/2, 30)];
+                        [volLabel setText:[NSString stringWithFormat:@"电压: %@",theVol]];
+                    }
+                    
+                    if(theFeature.length == 0 || [theFeature isKindOfClass:[NSNull class]])
+                    {
+                        [feathLabel setFrame:CGRectMake(10, specLabel.frame.origin.y + specLabel.frame.size.height, (cellWidth-20)/2, 0)];
+                    }
+                    else
+                    {
+                        [feathLabel setFrame:CGRectMake(10, specLabel.frame.origin.y + specLabel.frame.size.height, (cellWidth-20)/2, 30)];
+                        [feathLabel setText:[NSString stringWithFormat:@"阻燃耐火: %@",theFeature]];
+                    }
+                    
+                    if(request.length == 0 || [request isKindOfClass:[NSNull class]])
+                    {
+                        [requestLabel setFrame:CGRectMake(10, feathLabel.frame.origin.y + feathLabel.frame.size.height, cellWidth-20, 0)];
+                    }
+                    else
+                    {
+                        NSString *s = @"特殊需求: ";
+                        request = [s stringByAppendingString:request];
+                        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:request WithSize:CGSizeMake(cellWidth-20, MAXFLOAT)];
+                        
+                        [requestLabel setFrame:CGRectMake(10, feathLabel.frame.origin.y + feathLabel.frame.size.height, cellWidth-20, size.height)];
+                        [requestLabel setText:request];
+                    }
+                    
                 }
-                
             }
+            [cell.contentView addSubview:orderNumLabel];
+            [cell.contentView addSubview:numLabel];
+            [cell.contentView addSubview:timeLabel];
+            [cell.contentView addSubview:priceLabel];
+            [cell.contentView addSubview:specLabel];
+            [cell.contentView addSubview:volLabel];
+            [cell.contentView addSubview:feathLabel];
+            [cell.contentView addSubview:requestLabel];
         }
-        [cell.contentView addSubview:orderNumLabel];
-        [cell.contentView addSubview:numLabel];
-        [cell.contentView addSubview:timeLabel];
-        [cell.contentView addSubview:priceLabel];
-        [cell.contentView addSubview:specLabel];
-        [cell.contentView addSubview:volLabel];
-        [cell.contentView addSubview:feathLabel];
-        [cell.contentView addSubview:requestLabel];
-    }
-    if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
-    {
-        NSString *time = [NSString stringWithFormat:@"生成时间: %@",[[dataArray objectAtIndex:indexPath.section] cableOrderTime]];
-        UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cellWidth-20, 30)];
-        [timeLabel setText:time];
-        [timeLabel setFont:[UIFont systemFontOfSize:12]];
-        [cell.contentView addSubview:timeLabel];
-    }
-    if (indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count] + 1)
-    {
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"状态" WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, 30)];
-        [firstLabel setText:@"状态"];
-        [firstLabel setFont:[UIFont systemFontOfSize:12]];
-        [cell.contentView addSubview:firstLabel];
-        
-        NSString *theStatus = [[dataArray objectAtIndex:indexPath.section] myStatus];
-        NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
-        
-        UILabel *secondLabel = [[UILabel alloc] initWithFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + 10, 5, 100, 30)];
-        [secondLabel setTextColor:[UIColor colorWithRed:132.0/255.0 green:0 blue:0 alpha:1.0]];
-        [secondLabel setText:theStatus];
-        [secondLabel setFont:[UIFont systemFontOfSize:12]];
-        [cell.contentView addSubview:secondLabel];
-        
-        if([status intValue] == 0 || [status intValue] == 5)
+        if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
-            UIButton *statusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [statusBtn setFrame:CGRectMake(cellWidth-120, 5, 100, 30)];
-            [statusBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-            if([status intValue] == 0)
-            {
-                [statusBtn setTitle:@"确认订单" forState:UIControlStateNormal];
-            }
-            if([status intValue] == 5)
-            {
-                [statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
-            }
-            [statusBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            statusBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:144/255.0 blue:1/255.0 alpha:1.0];
-            statusBtn.layer.cornerRadius = 5.0f;
-            [statusBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-            [statusBtn addTarget:self action:@selector(statusBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [statusBtn setTag:indexPath.section];
-            [cell.contentView addSubview:statusBtn];
+            NSString *time = [NSString stringWithFormat:@"生成时间: %@",[[dataArray objectAtIndex:indexPath.section] cableOrderTime]];
+            UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cellWidth-20, 30)];
+            [timeLabel setText:time];
+            [timeLabel setFont:[UIFont systemFontOfSize:12]];
+            [cell.contentView addSubview:timeLabel];
         }
+        if (indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count] + 1)
+        {
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"状态" WithSize:CGSizeMake(MAXFLOAT, 30)];
+            UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, 30)];
+            [firstLabel setText:@"状态"];
+            [firstLabel setFont:[UIFont systemFontOfSize:12]];
+            [cell.contentView addSubview:firstLabel];
+            
+            NSString *theStatus = [[dataArray objectAtIndex:indexPath.section] myStatus];
+            NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
+            
+            UILabel *secondLabel = [[UILabel alloc] initWithFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + 10, 5, 100, 30)];
+            [secondLabel setTextColor:[UIColor colorWithRed:132.0/255.0 green:0 blue:0 alpha:1.0]];
+            [secondLabel setText:theStatus];
+            [secondLabel setFont:[UIFont systemFontOfSize:12]];
+            [cell.contentView addSubview:secondLabel];
+            
+            if([status intValue] == 0 || [status intValue] == 5)
+            {
+                UIButton *statusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [statusBtn setFrame:CGRectMake(cellWidth-120, 5, 100, 30)];
+                [statusBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+                if([status intValue] == 0)
+                {
+                    [statusBtn setTitle:@"确认订单" forState:UIControlStateNormal];
+                }
+                if([status intValue] == 5)
+                {
+                    [statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+                }
+                [statusBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                statusBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:144/255.0 blue:1/255.0 alpha:1.0];
+                statusBtn.layer.cornerRadius = 5.0f;
+                [statusBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+                [statusBtn addTarget:self action:@selector(statusBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                [statusBtn setTag:indexPath.section];
+                [cell.contentView addSubview:statusBtn];
+            }
+        }
+
     }
     return cell;
 }
@@ -778,21 +818,26 @@
             [searchResults addObject:tempOrderNum[i]];
         }
     }
-    isSearch = YES;
+
     NSLog(@"searchResults = %@",searchResults);
     if ([searchText isEqualToString:@""])
     {
+        
         [dataArray removeAllObjects];
         [self loadRequestB2BOrderListAllWithStatus:@"0"];
+        noResultView.hidden = YES;
     }
     if (searchResults.count == 0)
     {
         dataArray = searchResults;
+        noResultView.hidden = NO;
     }
     else
     {
+        noResultView.hidden = YES;
         [dataArray removeAllObjects];
         [dataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:searchResults]];
+        NSLog(@"B2B_1 = %@",dataArray);
     }
     [self.myTableView reloadData];
 }

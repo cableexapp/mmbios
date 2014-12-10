@@ -92,6 +92,8 @@
     int isShowClearBtn;
     
     int historyFlag;
+    
+    UIView *noResultView;
 }
 @end
 
@@ -209,6 +211,8 @@
     mySearchBar.placeholder = @"输入搜索内容";
     [self.view addSubview:mySearchBar];
     
+  
+    
     leftBtn = [[UILabel alloc] init];
     leftBtn.frame = CGRectMake(0, 0, 82, 45);
     leftBtn.backgroundColor = [UIColor colorWithRed:198.0/255 green:198.0/255 blue:203.0/255 alpha:1.0];
@@ -283,7 +287,7 @@
     self.serchResultView.separatorColor = [UIColor lightGrayColor];
     self.serchResultView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.serchResultView];
-
+    
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
     
 //    _popView = [[PopupView alloc] initWithFrame:CGRectMake(100, 300, 0, 0)];
@@ -376,87 +380,89 @@
     if (URLTag == URLSearchProductTypeTag)
     {
         [self refreshTableView];
-        if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"types"] count] != 0)
+        if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"])
         {
-            dataArray = [dicRespon objectForKey:@"types"];
-            coverView.hidden = YES;
-            isShowClearBtn = 2;
-             historyFlag = 2;
-            tempSearch = 0;
-            [mySearchBar resignFirstResponder];
-            if ([[dicRespon objectForKey:@"types"] count] == 0)
+            if ([[dicRespon objectForKey:@"types"] count] > 0)
+            {
+                noResultView.hidden = YES;
+                self.serchResultView.scrollEnabled = YES;
+                dataArray = [dicRespon objectForKey:@"types"];
+                coverView.hidden = YES;
+                isShowClearBtn = 2;
+                historyFlag = 2;
+                tempSearch = 0;
+                [mySearchBar resignFirstResponder];
+            }
+            
+            if ([[dicRespon objectForKey:@"items"] count] > 0)
+            {
+                dataArray = [dicRespon objectForKey:@"items"];
+//                NSLog(@"加入询价车 = %@",[dicRespon objectForKey:@"items"]);
+                tempSearch = 2;
+                noResultView.hidden = YES;
+                [mySearchBar resignFirstResponder];
+                coverView.hidden = YES;
+                isShowClearBtn = 2;
+                historyFlag =2;
+                self.serchResultView.scrollEnabled = YES;
+                
+                if(btnArray.count > 0)
+                {
+                    [btnArray removeAllObjects];
+                }
+                
+                btnArray = [[NSMutableArray alloc] init];
+                
+                for(int i=0;i<dataArray.count;i++)
+                {
+                    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                    [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
+                    [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
+                    [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+                    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    [btn setTag:i];
+                    [btn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
+                    btn.layer.cornerRadius = 5.0f;
+                    [btn addTarget:self action:@selector(addtoAskCarClick:) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+                    [btnLabel setText:@"+1"];
+                    [btnLabel setBackgroundColor:[UIColor clearColor]];
+                    [btnLabel setTextColor:[UIColor redColor]];
+                    [btnLabel setFont:[UIFont systemFontOfSize:23]];
+                    [btnLabel setAlpha:0];
+                    [btn addSubview:btnLabel];
+                    
+                    [btnArray addObject:btn];
+                }
+            }
+
+            if ([[dicRespon objectForKey:@"items"] count] == 0 && [[dicRespon objectForKey:@"types"] count] == 0)
             {
                 self.serchResultView.scrollEnabled = NO;
-                [self remindNoSearchResult];
+                noResultView.hidden = NO;
             }
         }
-        else if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"] && [[dicRespon objectForKey:@"products"] count] != 0)
+       if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"])
         {
-            dataArray = [dicRespon objectForKey:@"products"];
-            coverView.hidden = YES;
-            isShowClearBtn = 2;
-             historyFlag =2;
-            tempSearch = 0;
-            [mySearchBar resignFirstResponder];
-            if ([[dicRespon objectForKey:@"products"] count] == 0)
+            if ([[dicRespon objectForKey:@"products"] count] > 0)
             {
-                self.serchResultView.scrollEnabled = NO;
-                [self remindNoSearchResult];
-            }
-        }
-        
-        if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"] && [[dicRespon objectForKey:@"items"] count] != 0)
-        {
-            dataArray = [dicRespon objectForKey:@"items"];
-            NSLog(@"加入询价车 = %@",[dicRespon objectForKey:@"items"]);
-            tempSearch = 2;
-            coverView.hidden = YES;
-            [mySearchBar resignFirstResponder];
-            if ([[dicRespon objectForKey:@"items"] count] == 0)
-            {
-                self.serchResultView.scrollEnabled = NO;
-                [self remindNoSearchResult];
+                noResultView.hidden = YES;
+                dataArray = [dicRespon objectForKey:@"products"];
+                coverView.hidden = YES;
+                self.serchResultView.scrollEnabled = YES;
+                isShowClearBtn = 2;
+                historyFlag =2;
+                tempSearch = 0;
+                [mySearchBar resignFirstResponder];
             }
             else
             {
-                isShowClearBtn = 2;
-                historyFlag =2;
-                 self.serchResultView.scrollEnabled = YES;
-            }
-            
-            if(btnArray.count > 0)
-            {
-                [btnArray removeAllObjects];
-            }
-           
-            btnArray = [[NSMutableArray alloc] init];
-         
-            for(int i=0;i<dataArray.count;i++)
-            {
-                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                [btn setFrame:CGRectMake(ScreenWidth-90, 7, 80, 30)];
-                [btn setTitle:@"加入询价车" forState:UIControlStateNormal];
-                [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [btn setTag:i];
-                [btn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
-                btn.layer.cornerRadius = 5.0f;
-                [btn addTarget:self action:@selector(addtoAskCarClick:) forControlEvents:UIControlEventTouchUpInside];
-                
-                UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-                [btnLabel setText:@"+1"];
-                [btnLabel setBackgroundColor:[UIColor clearColor]];
-                [btnLabel setTextColor:[UIColor redColor]];
-                [btnLabel setFont:[UIFont systemFontOfSize:23]];
-                [btnLabel setAlpha:0];
-                [btn addSubview:btnLabel];
-                
-                [btnArray addObject:btn];
+                self.serchResultView.scrollEnabled = NO;
+                noResultView.hidden = NO;
             }
         }
-     
         [self.serchResultView reloadData];
-  
     }
     if (URLTag == URLInquiryCartCountTag)
     {
@@ -513,13 +519,8 @@
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 1)
         {
-           ;
             [DCFStringUtil showNotice:msg];
-//            if (historyFlag == 1)
-//            {
-//                return;
-//            }
-//
+
             NSLog(@"btnArray = %@",btnArray);
             
             UIButton *btn = [btnArray objectAtIndex:btnTag];
@@ -698,6 +699,17 @@
     self.serchResultView.separatorColor = [UIColor lightGrayColor];
     self.serchResultView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.serchResultView];
+    
+    noResultView = [[UIView alloc] init];
+    noResultView.frame = CGRectMake(0, 45, ScreenWidth, ScreenHeight-45);
+    noResultView.backgroundColor = [UIColor whiteColor];
+    noResultView.hidden = YES;
+    [self.view insertSubview:noResultView aboveSubview:self.serchResultView];
+    
+    UIImageView *noResultImageView = [[UIImageView alloc] init];
+    noResultImageView.frame = CGRectMake((ScreenWidth-130)/2, 40, 130, 75);
+    noResultImageView.image = [UIImage imageNamed:@"noResult"];
+    [noResultView addSubview:noResultImageView];
 }
 
 
@@ -798,6 +810,7 @@
     {
         speakButton.hidden = NO;
         speakButtonView.hidden = NO;
+        noResultView.hidden = YES;
     }
     else
     {
@@ -1038,13 +1051,14 @@
         searchImageView.frame = CGRectMake(8, 12, 20, 20);
         [cell addSubview:searchImageView];
         
-       searchResultLabel = [[UILabel alloc] init];
-        searchResultLabel.frame = CGRectMake(38, 5, cell.frame.size.width-38, 34);
-        searchResultLabel.font = [UIFont systemFontOfSize:16];
+        searchResultLabel = [[UILabel alloc] init];
+        searchResultLabel.frame = CGRectMake(38, 0, cell.frame.size.width-38, 44);
+        searchResultLabel.numberOfLines = 3;
+        searchResultLabel.font = [UIFont systemFontOfSize:13];
         [cell addSubview:searchResultLabel];
         
         NSLog(@"清除按钮 = %d",isShowClearBtn);
-  
+
         if (tempSearch == 2 && dataArray.count >0)
         {
             if (B2BhistoryArray.count ==0)

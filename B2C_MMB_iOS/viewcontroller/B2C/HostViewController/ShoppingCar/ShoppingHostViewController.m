@@ -352,9 +352,11 @@
 //    [self.navigationController pushViewController:one animated:YES];
     if (topTextField.text.length > 0)
     {
+        [self setHidesBottomBarWhenPushed:YES];
         SearchViewController *searchVC = [[SearchViewController alloc] init];
         searchVC.searchFlag = [NSString stringWithFormat:@"B2C+%@",topTextField.text];
         [self.navigationController pushViewController:searchVC animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
     }
     
     return YES;

@@ -7,8 +7,6 @@
 //
 
 #import "MyCableOrderB2BViewController.h"
-#import "ChineseInclude.h"
-#import "PinYinForObjc.h"
 #import "DCFCustomExtra.h"
 #import "MCDefine.h"
 #import "UIImageView+WebCache.h"

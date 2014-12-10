@@ -286,8 +286,8 @@
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
     
-    _popView = [[PopupView alloc] initWithFrame:CGRectMake(100, 300, 0, 0)];
-    _popView.ParentView = self.view;
+//    _popView = [[PopupView alloc] initWithFrame:CGRectMake(100, 300, 0, 0)];
+//    _popView.ParentView = self.view;
     
     if ([[[self.searchFlag componentsSeparatedByString:@"+"] objectAtIndex:0] isEqualToString:@"B2C"])
     {
@@ -682,8 +682,8 @@
  */
 - (void)onError: (IFlySpeechError *) error
 {
-    [self.view addSubview:_popView];
-    [_popView setText:@"识别结束!"];
+//    [self.view addSubview:_popView];
+//    [_popView setText:@"识别结束!"];
 }
 
 -(void)refreshTableView

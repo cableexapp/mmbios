@@ -348,7 +348,7 @@
     [scoreLabel setText:@"综合评分"];
     [scoreLabel setTextColor:[UIColor grayColor]];
     [headView addSubview:scoreLabel];
-    UILabel *scoreLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(250, 22, 50, 30)];
+    UILabel *scoreLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(247, 22, 50, 30)];
     [scoreLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
 //    取scoreArray里的前4位元素
     discussArray = [[NSMutableArray alloc] init];
@@ -364,7 +364,7 @@
     [scoreLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:scoreLabel_1];
     UIButton *scoreLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [scoreLabel_2 setFrame:CGRectMake(275, 25, 25, 25)];
+    [scoreLabel_2 setFrame:CGRectMake(ScreenWidth-40, 25, 25, 25)];
     [scoreLabel_2 setBackgroundColor:[UIColor orangeColor]];
     [scoreLabel_2 setTitle:@"高" forState:UIControlStateNormal];
     [scoreLabel_2.titleLabel setFont:[UIFont systemFontOfSize:16]];

@@ -86,6 +86,10 @@
                 [moreCell stopAnimation];
                 dataArray = [[NSMutableArray alloc] initWithArray:[B2CGoodsFastPicData getListArray:[dicRespon objectForKey:@"items"]]];
                 data = [dataArray lastObject];
+                
+                NSLog(@"商品快照 = %@",dicRespon);
+                
+                NSLog(@"商品快照data = %@",data);
             }
             [tv reloadData];
         }
@@ -238,8 +242,6 @@
                 {
                     
                 }
-                
-                
             }
             if(indexPath.row == 3)
             {
@@ -268,20 +270,24 @@
             {
                 if(self.myShopName.length != 0)
                 {
-                    UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(12, 7, 30, 30)];
-                    [firstIv setImage:[UIImage imageNamed:@"shopPic"]];
                     
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:self.myShopName WithSize:CGSizeMake(MAXFLOAT,30)];
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(47, 7, size.width, 30)];
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:self.myShopName WithSize:CGSizeMake(MAXFLOAT,34)];
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(47, 10, size.width,34)];
                     [label setFont:[UIFont systemFontOfSize:15]];
                     [label setText:self.myShopName];
                     [label setTextAlignment:NSTextAlignmentLeft];
                     [label setTextColor:[UIColor blackColor]];
                     
-                    UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 7, label.frame.size.width+40, 30)];
+                    UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0,0,ScreenWidth,cell.frame.size.height)];
+                    [cell.contentView addSubview:firstView];
+                    
+                    UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(12, (cell.frame.size.height-20)/2, 30, 30)];
+                    [firstIv setImage:[UIImage imageNamed:@"shopPic"]];
+                    
+                   
                     [firstView addSubview:firstIv];
                     [firstView addSubview:label];
-                    [cell.contentView addSubview:firstView];
+                   
                     
                     UITapGestureRecognizer *tap_1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstTap:)];
                     [firstView addGestureRecognizer:tap_1];

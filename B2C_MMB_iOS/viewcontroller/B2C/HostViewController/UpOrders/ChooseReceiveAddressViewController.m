@@ -229,6 +229,8 @@
 {
     [super viewDidLoad];
     
+    /*丁瑞修改*/
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
     self.navigationItem.titleView = top;
     

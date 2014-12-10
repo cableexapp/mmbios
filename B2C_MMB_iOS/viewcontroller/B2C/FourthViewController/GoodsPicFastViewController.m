@@ -141,15 +141,15 @@
             }
             
         }
-        if(indexPath.row == 2  || indexPath.row == 5 )
+        if(indexPath.row == 2  || indexPath.row == 4 )
         {
             return 44;
         }
-        if (indexPath.row == 3 ||indexPath.row == 4 )
+        if (indexPath.row == 3 ||indexPath.row == 6 )
         {
             return 54;
         }
-        if(indexPath.row == 6)
+        if(indexPath.row == 5)
         {
             return 117;
         }
@@ -266,7 +266,7 @@
                     
                 }
             }
-            if(indexPath.row == 4)
+            if(indexPath.row == 6)
             {
                 if(self.myShopName.length != 0)
                 {
@@ -312,7 +312,7 @@
                 }
                 
             }
-            if(indexPath.row == 5)
+            if(indexPath.row == 4)
             {
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 7, 140, 30)];
@@ -327,7 +327,7 @@
                 lineView.backgroundColor = [UIColor lightGrayColor];
                 [cell.contentView addSubview:lineView];
             }
-            if(indexPath.row == 6)
+            if(indexPath.row == 5)
             {
                 GoodsFastPicTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsFastPicTableViewCell" owner:self options:nil] lastObject];
                 

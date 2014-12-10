@@ -165,7 +165,6 @@
 {
     if (URLTag == URLReceiveAddressTag)
     {
-        NSLog(@"%@",dicRespon);
         int result= [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         
@@ -230,7 +229,9 @@
 {
     [super viewDidLoad];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"收货地址管理"];
+    /*丁瑞修改*/
+    
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
@@ -326,7 +327,7 @@
         
         NSString *tel = addressData.tel;
         CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-50-size_2.width, 5, size_2.width, 30)];
+        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-50-size_2.width, 5, size_2.width, 30)];
         [telLabel setTextAlignment:NSTextAlignmentRight];
         [telLabel setText:tel];
         [telLabel setFont:[UIFont systemFontOfSize:13]];

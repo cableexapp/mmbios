@@ -1,4 +1,4 @@
-//
+    //
 //  UpOrderViewController.m
 //  B2C_MMB_iOS
 //
@@ -92,14 +92,15 @@
     return self;
 }
 
-- (void) receveAddress:(NSDictionary *)dic
+- (void) changeReceiveAddress:(NSDictionary *) dic
 {
     addressDic = [[NSDictionary alloc] initWithDictionary:dic];
+    
     if(!billReceiveAddressLabel_1)
     {
         billReceiveAddressLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(53, 5, ScreenWidth-63, 30)];
-        [billReceiveAddressLabel_1 setFont:[UIFont systemFontOfSize:15]];
-         billReceiveAddressLabel_1.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
+        [billReceiveAddressLabel_1 setFont:[UIFont systemFontOfSize:14]];
+        billReceiveAddressLabel_1.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
     }
     if(!billReceiveAddressLabel_2)
     {
@@ -107,7 +108,6 @@
         [billReceiveAddressLabel_2 setFont:[UIFont systemFontOfSize:13]];
         billReceiveAddressLabel_2.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
         [billReceiveAddressLabel_2 setNumberOfLines:2];
-//        billReceiveAddressLabel_2.backgroundColor = [UIColor redColor];
     }
     
     if([[addressDic allKeys] count] == 0 || [addressDic isKindOfClass:[NSNull class]])
@@ -127,7 +127,6 @@
     }
     else
     {
-        //            NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
         
         receiver = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiver"]];
         receiveTel = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveTel"]];
@@ -138,8 +137,8 @@
         receiveAddressId = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveAddressId"]];
         
         
-        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"收货人: %@           %@",receiver,receiveTel]];
-       
+        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"收货人: %@   %@",receiver,receiveTel]];
+        
         NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
         if([DCFCustomExtra validateString:fullAddress] == NO)
         {
@@ -147,7 +146,7 @@
         }
         else
         {
-//            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            //            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
             [billReceiveAddressLabel_2 setFrame:CGRectMake(53, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height-5, ScreenWidth-83, 45)];
         }
         //        [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 30)];
@@ -161,6 +160,11 @@
         //        NSArray *arr = [NSArray arrayWithObject:path];
         //        [tv reloadRowsAtIndexPaths:arr withRowAnimation:0];
     }
+}
+
+- (void) receveAddress:(NSDictionary *)dic
+{
+    [self changeReceiveAddress:dic];
 }
 
 #pragma mark - tag为1表示从购物车列表进来，0表示从商品详情页点击立即购买进来
@@ -521,6 +525,11 @@
 {
     [super viewWillAppear:YES];
     
+
+    
+    NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+    NSLog(@"receiveDic = %@",receiveDic);
+    [self changeReceiveAddress:receiveDic];
     
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
     {

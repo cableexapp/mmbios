@@ -99,6 +99,8 @@
         }
     }
     
+    
+    
     pageControl = [[UIPageControl alloc] init];
     pageControl.frame = CGRectMake(0, ScreenHeight-145, ScreenWidth, 30);
     pageControl.currentPage=0;

@@ -435,7 +435,6 @@
                     [btnArray addObject:btn];
                 }
             }
-
             if ([[dicRespon objectForKey:@"items"] count] == 0 && [[dicRespon objectForKey:@"types"] count] == 0)
             {
                 self.serchResultView.scrollEnabled = NO;

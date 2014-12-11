@@ -429,8 +429,7 @@
     }
     if(dataArray.count == 0)
     {
-        return cell;
-        cell.textLabel.text = @"1111111";
+        
     }
     else
     {
@@ -790,6 +789,26 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    searchResults = [[NSMutableArray alloc]init];
+    for (int i=0; i<tempOrderNum.count; i++)
+    {
+        if([[tempOrderNum[i] objectForKey:@"orderserial"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"model"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"spec"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"voltage"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"require"] rangeOfString:search.text].location !=NSNotFound)
+        {
+            [searchResults addObject:tempOrderNum[i]];
+        }
+    }
+    if (searchResults.count == 0)
+    {
+        dataArray = searchResults;
+        noResultView.hidden = NO;
+    }
+    else
+    {
+        noResultView.hidden = YES;
+        [dataArray removeAllObjects];
+        [dataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:searchResults]];
+    }
+    [self.myTableView reloadData];
     [search resignFirstResponder];
 }
 
@@ -810,36 +829,13 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    searchResults = [[NSMutableArray alloc]init];
-    for (int i=0; i<tempOrderNum.count; i++)
-    {
-        if([[tempOrderNum[i] objectForKey:@"orderserial"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"model"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"spec"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"voltage"] rangeOfString:search.text].location !=NSNotFound || [[[[[tempOrderNum objectAtIndex:i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"require"] rangeOfString:search.text].location !=NSNotFound)
-        {
-            [searchResults addObject:tempOrderNum[i]];
-        }
-    }
-
-    NSLog(@"searchResults = %@",searchResults);
-    if ([searchText isEqualToString:@""])
+    if ([search.text isEqualToString:@""])
     {
         
-        [dataArray removeAllObjects];
+//        [dataArray removeAllObjects];
         [self loadRequestB2BOrderListAllWithStatus:@"0"];
         noResultView.hidden = YES;
     }
-    if (searchResults.count == 0)
-    {
-        dataArray = searchResults;
-        noResultView.hidden = NO;
-    }
-    else
-    {
-        noResultView.hidden = YES;
-        [dataArray removeAllObjects];
-        [dataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:searchResults]];
-        NSLog(@"B2B_1 = %@",dataArray);
-    }
-    [self.myTableView reloadData];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView

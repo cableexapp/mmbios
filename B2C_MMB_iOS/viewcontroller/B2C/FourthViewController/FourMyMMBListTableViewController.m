@@ -292,7 +292,6 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:nil];
     }
-
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -312,6 +311,11 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    
+    [self loadbadgeCount];
+    
+    [self loadShopCarCount];
+    
     self.tableView.scrollEnabled = YES;
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
@@ -448,12 +452,12 @@
     else
     {
         NSArray *menuItems =
-        @[[KxMenuItem menuItem:@"  购物车  "
+        @[[KxMenuItem menuItem:[NSString stringWithFormat:@"购物车(%d)",tempShopCar]
                          image:nil
                         target:self
                         action:@selector(pushMenuItem_mmb:)],
           
-          [KxMenuItem menuItem:@"  询价车  "
+          [KxMenuItem menuItem:[NSString stringWithFormat:@"询价车(%d)",tempCount]
                          image:nil
                         target:self
                         action:@selector(pushMenuItem_mmb:)],
@@ -470,7 +474,7 @@
 - (void)pushMenuItem_mmb:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
-    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
+    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@"("] objectAtIndex:0] isEqualToString:@"购物车"])
     {
         MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
         [self.navigationController pushViewController:shop animated:YES];

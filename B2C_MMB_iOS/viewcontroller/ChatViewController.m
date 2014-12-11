@@ -79,8 +79,8 @@
     [self.view insertSubview:naviTitle atIndex:2];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(10, 24.5, 35, 38);
-    [btn setBackgroundImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 0, 15, 22);
+    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:btn];
     

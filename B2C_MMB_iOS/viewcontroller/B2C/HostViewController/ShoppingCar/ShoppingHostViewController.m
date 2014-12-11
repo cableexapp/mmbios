@@ -73,9 +73,9 @@
         }
     }
     UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateHighlighted];
-    [rightBtn setFrame:CGRectMake(0, 5, 37, 34)];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"购物车.png"] forState:UIControlStateNormal];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"购物车.png"] forState:UIControlStateHighlighted];
+    [rightBtn setFrame:CGRectMake(0, 5, 34, 34)];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     countLabel = [[UILabel alloc] init];
     countLabel.frame = CGRectMake(22, 0, 18, 18);
@@ -250,7 +250,6 @@
     }
     if (URLTag == URLShopCarCountTag)
     {
-        NSLog(@"家装馆频道dicRespon = %@",dicRespon);
         if ([[dicRespon objectForKey:@"total"] intValue] == 0)
         {
             countLabel.hidden = YES;
@@ -268,7 +267,6 @@
             countLabel.text = @"99+";
         }
     }
-
 }
 
 - (void)viewDidLoad
@@ -463,8 +461,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 //        [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-
-        
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT) {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];

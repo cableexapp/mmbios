@@ -16,6 +16,7 @@
 #import "DCFStringUtil.h"
 #import "SearchViewController.h"
 #import "B2BAskPriceCarViewController.h"
+#import "DCFColorUtil.h"
 
 
 @interface HotKindFirstViewController ()
@@ -60,6 +61,12 @@
         }
     }
     rightButtonView.hidden = NO;
+    backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(0, 0, 15, 22)];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -119,8 +126,10 @@
     
     self.testTableView.separatorColor = [UIColor lightGrayColor];
     self.testTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
-    self.testSubTableView.separatorColor = [UIColor lightGrayColor];
+    
+    self.testSubTableView.separatorColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
     self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
+    self.testSubTableView.backgroundColor = [UIColor redColor];
     
 //    小三角按钮
     backView = [[UIButton alloc] init];
@@ -133,18 +142,13 @@
 //     返回按钮的操作
     self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     self.upBtn.layer.cornerRadius = 5;
-     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
-    [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
-    leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = leftItem;
 }
 
 //     返回按钮的操作
 - (void) back:(id) sender
 {
-    if ( selectArray.count == 0 ) {
+    if ( selectArray.count == 0 )
+    {
         [self.navigationController popViewControllerAnimated:YES];
         return;
     }else
@@ -224,8 +228,8 @@
 #pragma mark - Tableview填充数据
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView.tag == 33) {
-
+    if (tableView.tag == 33)
+    {
         static NSString *cellId = @"hotKindFirstViewTableViewCell";
         HotKindFirstViewTableViewCell *cell = (HotKindFirstViewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
         if(!cell)
@@ -251,14 +255,10 @@
         [label setNumberOfLines:0];
         [cell.contentView addSubview:label];
         label.textAlignment = NSTextAlignmentCenter;
-       
-//        cell.textLabel.text = str;
-//        cell.textLabel.font = [UIFont systemFontOfSize:13];
-//        cell.textLabel.textAlignment = 1;
-      
-        return cell;
         
-}else
+        return cell;
+    }
+    else
     {
         static NSString *cellId = @"twohotKindFirstViewTableViewCell";
         HotKindFirstViewTableViewCell *cell = (HotKindFirstViewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
@@ -267,7 +267,7 @@
             cell = [[HotKindFirstViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
         }
         cell.contentView.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:228.0/255.0 blue:191.0/255.0 alpha:255.0/255.0];
-        tableView.separatorColor = [ UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:255.0/255.0];
+    
         //显示数据
         NSString *str = [NSString stringWithFormat:@"%@",[[selectArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
         [cell.textLabel setText:str];
@@ -341,7 +341,6 @@
         //设置是控制tableview的最大高度
         float height = (selectArray.count*40 < 200) ? selectArray.count*40 : 200;
         [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, height)];
-        
     }
 }
 
@@ -360,9 +359,6 @@
 #pragma mark - 展开已选按钮
 - (IBAction)typeBtn:(id)sender
 {
-    
-//类型转换
-//UIButton *button = (UIButton * ) sender;
     
 if ( _opend )
     {

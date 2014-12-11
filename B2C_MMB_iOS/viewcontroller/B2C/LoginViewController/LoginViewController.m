@@ -100,6 +100,7 @@
     
     [_tf_Account setReturnKeyType:UIReturnKeyNext];
     _tf_Account.frame = CGRectMake(20, 0, ScreenWidth-40, 50);
+    [_tf_Account setReturnKeyType:UIReturnKeyNext];
     _tf_Secrect.frame = CGRectMake(20, 51, ScreenWidth-40, 50);
     
     
@@ -125,8 +126,8 @@
     [self.view addSubview:registerBtn];
  
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, 35, 38);
-    [btn setBackgroundImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 0, 15, 23);
+    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(cancelBtnClick:) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem = left;
@@ -341,7 +342,8 @@
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    //    [textField resignFirstResponder];
+    
+     [_tf_Secrect becomeFirstResponder];
     
     if(textField == _tf_Secrect)
     {

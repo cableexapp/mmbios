@@ -535,7 +535,7 @@
     NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
     NSURL *url = [NSURL URLWithString:picString];
     [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
-    [cell.contentLabel setText:[itemDic objectForKey:@"productItmeTitle"]];
+    [cell.contentLabel setText:[itemDic objectForKey:@"productName"]];
     
     [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:path.section] orderTotal]]];
     

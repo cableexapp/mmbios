@@ -169,7 +169,7 @@
     num = @"0";
     
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"shoppingCar.png"] forState:UIControlStateNormal];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"购物车.png"] forState:UIControlStateNormal];
     [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
     [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
     right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];

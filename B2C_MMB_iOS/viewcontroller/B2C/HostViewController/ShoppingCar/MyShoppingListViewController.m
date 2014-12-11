@@ -278,9 +278,7 @@
                     }
                 }
             }
-            
-            NSLog(@"headLabelArray =  %@  ******",headLabelArray);
-            
+
             headBtnArray = [[NSMutableArray alloc] init];
             for(int i=0;i<headLabelArray.count;i++)
             {
@@ -311,8 +309,7 @@
                 }
                 [dataArray addObject:array];
             }
-            
-            NSLog(@"dataArray = %@",dataArray);
+
             
             if (dataArray.count > 0)
             {
@@ -434,7 +431,7 @@
         }
         if(result == 1)
         {
-            [DCFStringUtil showNotice:msg];
+//            [DCFStringUtil showNotice:msg];
             
             B2CShopCarListData *data =  [[dataArray objectAtIndex:subtractBtnSection] objectAtIndex:subtractBtnRow];
             data.num = [NSString stringWithFormat:@"%d",subtractNum];
@@ -450,6 +447,7 @@
     }
     if(URLTag == URLShopCarAddTag)
     {
+        
         if(result == 0)
         {
             addNum = addNum -1;
@@ -465,7 +463,7 @@
         }
         if(result == 1)
         {
-            [DCFStringUtil showNotice:msg];
+//            [DCFStringUtil showNotice:msg];
             
             B2CShopCarListData *data =  [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
             data.num = [NSString stringWithFormat:@"%d",addNum];
@@ -676,8 +674,6 @@
         addNum = [carListData.num intValue];
         addNum = addNum + 1;
         
-        
-        
         NSString *time = [DCFCustomExtra getFirstRunTime];
         
         NSString *string = [NSString stringWithFormat:@"%@%@",@"UpdateShoppingCart",time];
@@ -728,10 +724,7 @@
     
     
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    [rightBtn setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateHighlighted];
-    //    [rightBtn setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
     [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [rightBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [rightBtn setFrame:CGRectMake(0, 0, 60, 40)];
     [rightBtn setTitle:@"删除" forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -763,9 +756,6 @@
     [label_1 setTextColor:[UIColor blackColor]];
     [label_1 setNumberOfLines:0];
     [label_1 setText:@"登录后可以同步电脑和手机端的商品,并保存在账户中"];
-    
-    
-    
     
     [self hiddenButtomView];
     
@@ -854,7 +844,6 @@
     NSMutableArray *array = [cellBtnArray objectAtIndex:tag];
     
     NSMutableArray *a = [dataArray objectAtIndex:tag];
-    
     
     if(btn.selected == YES)
     {
@@ -1054,7 +1043,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
     else
     {
         NSString *items = nil;
-        NSLog(@"chooseGoodsArray123 = %@",chooseGoodsArray);
         if(chooseGoodsArray && chooseGoodsArray.count != 0)
         {
             for(int i=0;i<chooseGoodsArray.count;i++)
@@ -1097,25 +1085,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    //    if(dataArray)
-    //    {
-    //        for(NSMutableArray *testArr in dataArray)
-    //        {
-    //            if(testArr.count == 0)
-    //            {
-    //                return 0;
-    //            }
-    //        }
-    //        if(dataArray.count == 0)
-    //        {
-    //            return 0;
-    //        }
-    //    }
     if(section == dataArray.count)
     {
         return 0;
@@ -1151,11 +1124,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
                     }
                     return 0;
                 }
-                //                for(UIView *view in noCell.subviews)
-                //                {
-                //                    [view setHidden:NO];
-                //                    [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, view.frame.size.height)];
-                //                }
             }
             return ScreenHeight-34;
         }
@@ -1460,7 +1428,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [cell.contentView addSubview:subBtn];
     //
     UILabel *numLabel = [[UILabel alloc] init];
-    [numLabel setFrame:CGRectMake(subBtn.frame.origin.x + subBtn.frame.size.width, subBtn.frame.origin.y, 30, 30)];
+    [numLabel setFrame:CGRectMake(subBtn.frame.origin.x + subBtn.frame.size.width-0.5, subBtn.frame.origin.y, 35+0.5, 30)];
     [numLabel setText:[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] num]];
     [numLabel setTextAlignment:NSTextAlignmentCenter];
     [numLabel setTextColor:[UIColor blackColor]];
@@ -1471,7 +1439,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [cell.contentView addSubview:numLabel];
     
     UIButton *addBtn = [[addArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [addBtn setFrame:CGRectMake(numLabel.frame.origin.x+numLabel.frame.size.width, subBtn.frame.origin.y, 35, 30)];
+    [addBtn setFrame:CGRectMake(numLabel.frame.origin.x+numLabel.frame.size.width-0.5, subBtn.frame.origin.y, 35+0.5, 30)];
     [addBtn setTag:indexPath.row + indexPath.section*1000];
     [cell.contentView addSubview:addBtn];
     //

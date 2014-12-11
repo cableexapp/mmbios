@@ -424,6 +424,11 @@
         self.nextBtn.hidden = YES;
         self.upBtn.hidden = NO;
     }
+    if (pageControl.currentPage == 0)
+    {
+        self.nextBtn.hidden = NO;
+        self.upBtn.hidden = YES;
+    }
     if (pageControl.currentPage != 0)
     {
         self.upBtn.hidden = NO;

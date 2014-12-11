@@ -99,6 +99,8 @@
         }
     }
     
+    
+    
     pageControl = [[UIPageControl alloc] init];
     pageControl.frame = CGRectMake(0, ScreenHeight-145, ScreenWidth, 30);
     pageControl.currentPage=0;
@@ -106,6 +108,11 @@
     pageControl.pageIndicatorTintColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1.0];
     pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
     [self.view addSubview:pageControl];
+    
+    self.hotTelBtn.layer.cornerRadius = 5;
+    self.imBtn.layer.cornerRadius = 5;
+    self.chooseBtn.layer.cornerRadius = 5;
+    self.reViewBtn.layer.cornerRadius = 5;
     
 }
 

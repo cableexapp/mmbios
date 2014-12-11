@@ -183,7 +183,6 @@
 
     if(URLTag == URLB2COrderListAllTag)
     {
-        NSLog(@"dicRespon = %@",dicRespon);
         int intTotal = [[dicRespon objectForKey:@"total"] intValue];
         int result = [[dicRespon objectForKey:@"result"] intValue];
 
@@ -384,7 +383,7 @@
     ali.productName = productTitle;
     ali.productPrice = total;
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
-    NSLog(@"%@  %@  %@  %@",ali.shopName,ali.productName,ali.productPrice,ali.productOrderNum);
+//    NSLog(@"%@  %@  %@  %@",ali.shopName,ali.productName,ali.productPrice,ali.productOrderNum);
     
     [self.navigationController pushViewController:ali animated:YES];
 }
@@ -537,11 +536,11 @@
     {
         NSString *picString = [[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productItemPic"];
         NSString *picURL = [NSString stringWithFormat:@"%@%@",GoodsDetail_URL,picString];
-        NSLog(@"picString = %@",picString);
+      
         NSURL *url = [NSURL URLWithString:picURL];
         [GoodsPic setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
 
-        GoodsName.text = [[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productItmeTitle"];
+        GoodsName.text = [[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productName"];
         GoodsPrice.text = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"price"] stringValue];
         NSString *stringNum = [NSString stringWithFormat:@"×%@",[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productNum"]];
         GoodsNum.text = stringNum;
@@ -835,7 +834,35 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-   
+    searchResults = [[NSMutableArray alloc]init];
+    for (int i=0; i<dataArray.count; i++)
+    {
+        if([[dataArray[i] objectForKey:@"orderNum"] rangeOfString:search.text].location !=NSNotFound || [[[[dataArray[i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productName"] rangeOfString:search.text].location !=NSNotFound || [[dataArray[i] objectForKey:@"shopName"] rangeOfString:search.text].location !=NSNotFound)
+        {
+            [searchResults addObject:dataArray[i]];
+        }
+    }
+    if (searchResults.count == 0)
+    {
+        dataArray = searchResults;
+        noResultView.hidden = NO;
+    }
+    else
+    {
+        noResultView.hidden = YES;
+        [self.myTableView removeFromSuperview];
+        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
+        self.myTableView.delegate = self;
+        self.myTableView.dataSource = self;
+        self.myTableView.scrollEnabled = YES;
+        self.myTableView.backgroundColor = [UIColor clearColor];
+        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+        [self.view addSubview:self.myTableView];
+        dataArray = searchResults;
+    }
+    [self.myTableView reloadData];
+    [search resignFirstResponder];
 }
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -866,41 +893,12 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    searchResults = [[NSMutableArray alloc]init];
-    for (int i=0; i<dataArray.count; i++)
-    {
-        if([[dataArray[i] objectForKey:@"orderNum"] rangeOfString:search.text].location !=NSNotFound || [[[[dataArray[i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productName"] rangeOfString:search.text].location !=NSNotFound || [[dataArray[i] objectForKey:@"shopName"] rangeOfString:search.text].location !=NSNotFound)
-        {
-            [searchResults addObject:dataArray[i]];
-        }
-    }
-    if (searchResults.count == 0)
-    {
-        dataArray = searchResults;
-        noResultView.hidden = NO;
-    }
-    else
-    {
-        noResultView.hidden = YES;
-        [self.myTableView removeFromSuperview];
-        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
-        self.myTableView.delegate = self;
-        self.myTableView.dataSource = self;
-        self.myTableView.scrollEnabled = YES;
-        self.myTableView.backgroundColor = [UIColor clearColor];
-        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-        [self.view addSubview:self.myTableView];
-        dataArray = searchResults;
-    }
     if ([searchBar.text isEqualToString:@""])
     {
-        [dataArray removeAllObjects];
+//        [dataArray removeAllObjects];
         noResultView.hidden = YES;
         dataArray = tempOrderNum;
-//        [self loadRequestB2COrderListAllWithStatus:@"1"];
     }
-    NSLog(@"dataArray = %@",dataArray);
     [self.myTableView reloadData];
 }
 

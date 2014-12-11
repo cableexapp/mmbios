@@ -366,6 +366,13 @@ BOOL isPopShow = NO;
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
     
      [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (hidenShopCarRedPoint:) name:@"hidenRedPoint" object:nil];
+}
+
+-(void)hidenShopCarRedPoint:(NSNotification *)sender
+{
+    countLabel.hidden = YES;
 }
 
 //请求询价车商品数量

@@ -27,6 +27,8 @@
     NSMutableArray *arr;
     UIStoryboard *sb;
     BOOL isPopShow;
+    int tempCount;
+    int tempShopCar;
 }
 @end
 
@@ -80,6 +82,11 @@
         [self.logOutBtn setHidden:NO];
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    
+    [self loadbadgeCount];
+    
+    [self loadShopCarCount];
+    
     self.tableView.scrollEnabled = YES;
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
@@ -104,6 +111,7 @@
     self.logOutBtn.backgroundColor = [UIColor colorWithRed:0/255.0 green:99/255.0 blue:206/255.0 alpha:1.0];
     [self.logOutBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.logOutBtn.layer.cornerRadius = 5;
+    [self.logOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 60);
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
@@ -171,17 +179,16 @@
         [KxMenu dismissMenu];
         isPopShow = NO;
         self.tableView.scrollEnabled = YES;
-         NSLog(@"通知更多111");
     }
     else
     {
         NSArray *menuItems =
-        @[[KxMenuItem menuItem:@"  购物车  "
+        @[[KxMenuItem menuItem:[NSString stringWithFormat:@"购物车(%d)",tempShopCar]
                          image:nil
                         target:self
                         action:@selector(pushMenuItem_more:)],
           
-          [KxMenuItem menuItem:@"  询价车  "
+          [KxMenuItem menuItem:[NSString stringWithFormat:@"询价车(%d)",tempCount]
                          image:nil
                         target:self
                         action:@selector(pushMenuItem_more:)],
@@ -192,14 +199,13 @@
                      menuItems:menuItems];
         isPopShow = YES;
         self.tableView.scrollEnabled = NO;
-         NSLog(@"通知更多222");
     }
 }
 
 - (void)pushMenuItem_more:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
-    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
+    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@"("] objectAtIndex:0] isEqualToString:@"购物车"])
     {
         MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
         [self.navigationController pushViewController:shop animated:YES];
@@ -344,6 +350,22 @@
             
             [DCFStringUtil showNotice:@"退出成功"];
         }
+    }
+    if (URLTag == URLInquiryCartCountTag)
+    {
+        tempCount = [[dicRespon objectForKey:@"value"] intValue];
+    }
+    if (URLTag == URLShopCarCountTag)
+    {
+        tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+    }
+    if (tempCount > 0 || tempShopCar > 0)
+    {
+        
+    }
+    if (tempCount == 0 && tempShopCar == 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:nil];
     }
     
 }

@@ -83,6 +83,8 @@
 		61760A7B1A15D71200F3BA0B /* ManageInvoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A781A15D71200F3BA0B /* ManageInvoiceViewController.m */; };
 		61760A7C1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A7A1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m */; };
 		61760A801A15F22300F3BA0B /* B2BManagBillData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */; };
+		6178BDD61A398158001D270B /* ManagReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6178BDD41A398158001D270B /* ManagReceiveAddressViewController.m */; };
+		6178BDD71A398158001D270B /* ManagReceiveAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6178BDD51A398158001D270B /* ManagReceiveAddressViewController.xib */; };
 		617E52CC1A2AC0F600121C49 /* B2CHotSaleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E52CB1A2AC0F600121C49 /* B2CHotSaleData.m */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
@@ -912,6 +914,9 @@
 		61760A7A1A15D71200F3BA0B /* ManagerInvoiceSubTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagerInvoiceSubTableViewController.m; sourceTree = "<group>"; };
 		61760A7E1A15F22300F3BA0B /* B2BManagBillData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BManagBillData.h; sourceTree = "<group>"; };
 		61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BManagBillData.m; sourceTree = "<group>"; };
+		6178BDD31A398158001D270B /* ManagReceiveAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagReceiveAddressViewController.h; sourceTree = "<group>"; };
+		6178BDD41A398158001D270B /* ManagReceiveAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagReceiveAddressViewController.m; sourceTree = "<group>"; };
+		6178BDD51A398158001D270B /* ManagReceiveAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManagReceiveAddressViewController.xib; sourceTree = "<group>"; };
 		617E52CA1A2AC0F600121C49 /* B2CHotSaleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CHotSaleData.h; sourceTree = "<group>"; };
 		617E52CB1A2AC0F600121C49 /* B2CHotSaleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CHotSaleData.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3149,6 +3154,9 @@
 				61B710A019FF3B53001CC3BD /* ChooseReceiveAddressViewController.h */,
 				61B710A119FF3B53001CC3BD /* ChooseReceiveAddressViewController.m */,
 				61B710A219FF3B53001CC3BD /* ChooseReceiveAddressViewController.xib */,
+				6178BDD31A398158001D270B /* ManagReceiveAddressViewController.h */,
+				6178BDD41A398158001D270B /* ManagReceiveAddressViewController.m */,
+				6178BDD51A398158001D270B /* ManagReceiveAddressViewController.xib */,
 				61B710A319FF3B53001CC3BD /* UpOrderViewController.h */,
 				61B710A419FF3B53001CC3BD /* UpOrderViewController.m */,
 			);
@@ -4737,6 +4745,7 @@
 				6181A4F019CFC4C2000E2D14 /* Set@2x.png in Resources */,
 				6181A4E319CFC4C2000E2D14 /* cell_3.png in Resources */,
 				619C10081A0772EA002E9DF8 /* KindsPlist.plist in Resources */,
+				6178BDD71A398158001D270B /* ManagReceiveAddressViewController.xib in Resources */,
 				8BCAFD3F1A281D6B005702FD /* YellowDownArrow.png in Resources */,
 				8BA7C0E11A10A85500758B0F /* 拳头.png in Resources */,
 				8BA7C1351A10A85500758B0F /* 闭嘴.png in Resources */,
@@ -5018,6 +5027,7 @@
 				6181A51219CFC4C2000E2D14 /* SDWebImageDownloader.m in Sources */,
 				6181A50919CFC4C2000E2D14 /* MBProgressHUD.m in Sources */,
 				8BA7C2CF1A10A8DD00758B0F /* XMPPElement+Delay.m in Sources */,
+				6178BDD61A398158001D270B /* ManagReceiveAddressViewController.m in Sources */,
 				6122713C19CFC81500FE4DFF /* NSObject+SBJSON.m in Sources */,
 				6122713E19CFC81500FE4DFF /* SBJSON.m in Sources */,
 				8BC2ADA41A19F0E100E44BC2 /* OpenUDID.m in Sources */,

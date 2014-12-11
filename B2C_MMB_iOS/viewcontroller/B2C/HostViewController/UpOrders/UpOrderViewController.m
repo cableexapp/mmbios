@@ -172,9 +172,7 @@
 {
     if(self = [super init])
     {
-        chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
-        chooseAddress.delegate = self;
-        [chooseAddress loadRequest];
+ 
         
         goodsMoney = money;
         goodsListArray = [[NSMutableArray alloc] init];
@@ -525,11 +523,12 @@
 {
     [super viewWillAppear:YES];
     
-
+    chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
+    chooseAddress.delegate = self;
+    [chooseAddress loadRequest];
     
-    NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
-    NSLog(@"receiveDic = %@",receiveDic);
-    [self changeReceiveAddress:receiveDic];
+//    NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
+//    NSLog(@"receiveDic = %@",receiveDic);
     
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
     {
@@ -660,11 +659,21 @@
     //    }];
 }
 
+- (void) doBCReceiveAddressHasChange:(NSNotification *) noti
+{
+    NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[noti object]];
+    NSLog(@"dic = %@",dic);
+    [self changeReceiveAddress:dic];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doBCReceiveAddressHasChange:) name:@"B2CReceiveAddressHasChange" object:nil];
     
 #pragma mark - 监听键盘
     [[NSNotificationCenter defaultCenter] addObserver:self

@@ -1,12 +1,12 @@
 //
-//  ChooseReceiveAddressViewController.m
+//  ManagReceiveAddressViewController.m
 //  B2C_MMB_iOS
 //
-//  Created by App01 on 14-9-24.
+//  Created by App01 on 14-12-11.
 //  Copyright (c) 2014年 YUANDONG. All rights reserved.
 //
 
-#import "ChooseReceiveAddressViewController.h"
+#import "ManagReceiveAddressViewController.h"
 #import "DCFCustomExtra.h"
 #import "AddReceiveAddressViewController.h"
 #import "AddReceiveFinalViewController.h"
@@ -14,13 +14,14 @@
 #import "B2CAddressData.h"
 #import "LoginNaviViewController.h"
 #import "DCFStringUtil.h"
-#import "ManagReceiveAddressViewController.h"
 
-@interface ChooseReceiveAddressViewController ()
+@interface ManagReceiveAddressViewController ()
 {
     NSMutableArray *cellBtnArray;
     
     UIButton *rightItemBtn;
+    
+    BOOL rightItemBtnHasClick;
     
     UIStoryboard *sb;
     
@@ -30,7 +31,7 @@
 }
 @end
 
-@implementation ChooseReceiveAddressViewController
+@implementation ManagReceiveAddressViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,16 +43,15 @@
 }
 
 
-
 - (IBAction)buttomBtnClick:(id)sender
 {
-//    [self hideButtomView];
+    //    [self hideButtomView];
     
 }
 
 - (void) rightItemClick:(UIButton *) sender
 {
-//    [self showButtomView];
+    //    [self showButtomView];
     
     
     AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
@@ -59,32 +59,32 @@
 }
 
 
-//- (void) showButtomView
-//{
-//    rightItemBtnHasClick = NO;
-//    
-//    [self.buttomView setHidden:NO];
-//    [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height-64-49)];
-//    [tv setFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height)];
-//    
-//
-//}
+- (void) showButtomView
+{
+    rightItemBtnHasClick = NO;
+    
+    [self.buttomView setHidden:NO];
+    [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height-64-49)];
+    [tv setFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height)];
+    
+    
+}
 
-//- (void) hideButtomView
-//{
-//    rightItemBtnHasClick = YES;
-//    
-//    [self.buttomView setHidden:YES];
-//    [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height-64)];
-//    [tv setFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height)];
-//    
-//    [rightItemBtn setHidden:NO];
-//    
-//    for(UIButton *btn in cellBtnArray)
-//    {
-//        [btn setHidden:YES];
-//    }
-//}
+- (void) hideButtomView
+{
+    rightItemBtnHasClick = YES;
+    
+    [self.buttomView setHidden:YES];
+    [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height-64)];
+    [tv setFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height)];
+    
+    [rightItemBtn setHidden:NO];
+    
+    for(UIButton *btn in cellBtnArray)
+    {
+        [btn setHidden:YES];
+    }
+}
 
 - (void) viewWillDisappear:(BOOL)animated
 {
@@ -124,7 +124,18 @@
     {
         self.tvBackView.frame = tv.frame;
     }
-
+    
+    
+    [rightItemBtn setHidden:YES];
+    rightItemBtnHasClick = NO;
+    
+    if(cellBtnArray || cellBtnArray.count != 0)
+    {
+        for(UIButton *btn in cellBtnArray)
+        {
+            [btn setHidden:NO];
+        }
+    }
     
     if(conn)
     {
@@ -195,10 +206,10 @@
                     }
                     NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
 //                    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
-                    if([self.delegate respondsToSelector:@selector(receveAddress:)])
-                    {
-                        [self.delegate receveAddress:receiveDic];
-                    }
+//                    if([self.delegate respondsToSelector:@selector(receveAddress:)])
+//                    {
+//                        [self.delegate receveAddress:receiveDic];
+//                    }
                 }
                 else
                 {
@@ -255,13 +266,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doSomething:) name:@"addressListDataArray" object:nil];
     
     /*丁瑞修改*/
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"选择收货地址"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
     self.navigationItem.titleView = top;
     
     /*陈晓修改*/
+    [self.buttomBtn setTitle:@"新增收货地址" forState:UIControlStateNormal];
     self.buttomBtn.layer.cornerRadius = 5.0f;
     self.buttomBtn.layer.borderWidth = 1.0f;
-    
     
     [self pushAndPopStyle];
     
@@ -380,16 +391,16 @@
         [addressLabel setNumberOfLines:0];
         [cell.contentView addSubview:addressLabel];
         
-//        if(rightItemBtnHasClick == NO)
-//        {
-//            UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
-//            [btn setFrame:CGRectMake(280, (size_3.height + 70 - 30)/2, 30, 30)];
-//            [cell.contentView addSubview:btn];
-//        }
-//        else
-//        {
-//            
-//        }
+        if(rightItemBtnHasClick == NO)
+        {
+            UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
+            [btn setFrame:CGRectMake(280, (size_3.height + 70 - 30)/2, 30, 30)];
+            [cell.contentView addSubview:btn];
+        }
+        else
+        {
+            
+        }
         
         
         return cell;
@@ -416,11 +427,10 @@
             [btn setSelected:NO];
         }
     }
-    [self.navigationController popViewControllerAnimated:YES];
     B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:tag];
+    
     NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"B2CReceiveAddressHasChange" object:receiveDic userInfo:nil];
-//    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -431,16 +441,16 @@
     [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
     
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
-    [self cellBtnClick:btn];
-//    if(btn.hidden == YES)
-//    {
-//        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:data];
-//        [self.navigationController pushViewController:final animated:YES];
-//    }
-//    else
-//    {
-//        
-//    }
+    if(btn.hidden == YES)
+    {
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:data];
+        [self.navigationController pushViewController:final animated:YES];
+        //        [self showButtomView];
+    }
+    else
+    {
+        
+    }
     
     
 }
@@ -466,8 +476,8 @@
         B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
         NSString *addressId = [NSString stringWithFormat:@"%@",data.addressId];
         [self deleteRow:addressId];
-//        [addressListDataArray removeObjectAtIndex:indexPath.row];
-//        [tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];  //删除对应数据的cell
+        //        [addressListDataArray removeObjectAtIndex:indexPath.row];
+        //        [tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];  //删除对应数据的cell
     }
 }
 
@@ -493,6 +503,8 @@
 {
     return [UIView new];
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {

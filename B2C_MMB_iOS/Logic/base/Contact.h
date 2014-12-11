@@ -66,6 +66,8 @@ enum {
     
     URLEditMemberAddressTag,    //编辑收货地址
     
+    URLDeleteMemberAddressTag,  //删除收货地址
+    
     URLSubOrderTag,    //提交
     
     URLOrderConfirmTag,  //支付宝校验

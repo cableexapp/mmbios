@@ -364,7 +364,6 @@
 
 }
 
-
 -(void)coverClearButton
 {
     self.serchResultView.scrollEnabled = NO;

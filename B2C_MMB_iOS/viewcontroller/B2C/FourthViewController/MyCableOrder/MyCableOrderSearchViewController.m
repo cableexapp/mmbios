@@ -59,6 +59,7 @@
     
     UILabel *shopNameLabel;
 
+    UIView *noResultView;
 }
 
 @end
@@ -105,6 +106,16 @@
     self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:self.myTableView];
+    
+    noResultView = [[UIView alloc] init];
+    noResultView.frame = CGRectMake(0, 45, ScreenWidth, ScreenHeight-45);
+    noResultView.backgroundColor = [UIColor whiteColor];
+    noResultView.hidden = YES;
+    [self.view insertSubview:noResultView aboveSubview:self.myTableView];
+    UIImageView *noResultImageView = [[UIImageView alloc] init];
+    noResultImageView.frame = CGRectMake((ScreenWidth-130)/2, 40, 130, 75);
+    noResultImageView.image = [UIImage imageNamed:@"noResult"];
+    [noResultView addSubview:noResultImageView];
     
     search = [[UISearchBar alloc] init];
     search.frame = CGRectMake(0, 0,self.view.frame.size.width, 45);
@@ -172,11 +183,10 @@
 
     if(URLTag == URLB2COrderListAllTag)
     {
-//        NSLog(@"dicRespon = %@",[[dicRespon objectForKey:@"items"] objectAtIndex:0]);
+        NSLog(@"dicRespon = %@",dicRespon);
         int intTotal = [[dicRespon objectForKey:@"total"] intValue];
         int result = [[dicRespon objectForKey:@"result"] intValue];
-        if(URLTag == ULRGetOrderListTag)
-        {
+
             if([[dicRespon allKeys] count] == 0)
             {
                 [moreCell noDataAnimation];
@@ -185,17 +195,16 @@
             {
                 if(result == 1)
                 {
-                    dataArray = [dicRespon objectForKey:@"items"];
-                    tempOrderNum = [dicRespon objectForKey:@"items"];
-                    intTotal = [[dicRespon objectForKey:@"total"] intValue];
-                    
                     if(intTotal == 0)
                     {
                         [moreCell noDataAnimation];
                     }
                     else
                     {
-                        [moreCell noSearchResult];
+                        noResultView.hidden = YES;
+                        dataArray = [dicRespon objectForKey:@"items"];
+                        tempOrderNum = [dicRespon objectForKey:@"items"];
+                        intTotal = [[dicRespon objectForKey:@"total"] intValue];
                     }
                 }
                 else
@@ -205,7 +214,6 @@
             }
         [self.myTableView reloadData];
        }
-    }
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -213,7 +221,7 @@
     NSInteger row;
     if(!dataArray || dataArray.count == 0)
     {
-        row = 1;
+        row = 0;
     }
     else
     {
@@ -523,7 +531,7 @@
     }
     if(!dataArray || dataArray.count == 0)
     {
-        return [self returnMoreCell:tableView];
+//        return [self returnMoreCell:tableView];
     }
     else if(dataArray.count > 0)
     {
@@ -866,13 +874,14 @@
             [searchResults addObject:dataArray[i]];
         }
     }
-//    [self.myTableView reloadData];
     if (searchResults.count == 0)
     {
         dataArray = searchResults;
+        noResultView.hidden = NO;
     }
     else
     {
+        noResultView.hidden = YES;
         [self.myTableView removeFromSuperview];
         self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
         self.myTableView.delegate = self;
@@ -883,14 +892,12 @@
         self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
         [self.view addSubview:self.myTableView];
         dataArray = searchResults;
-      [self.myTableView reloadData];
-
     }
     if ([searchBar.text isEqualToString:@""])
     {
         [dataArray removeAllObjects];
+        noResultView.hidden = YES;
         dataArray = tempOrderNum;
-        [self.myTableView reloadData];
 //        [self loadRequestB2COrderListAllWithStatus:@"1"];
     }
     NSLog(@"dataArray = %@",dataArray);

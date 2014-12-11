@@ -28,6 +28,7 @@
 #import "KxMenu.h"
 #import "MyShoppingListViewController.h"
 #import "B2BAskPriceCarViewController.h"
+#import "AppDelegate.h"
 
 int isgo = 1;
 BOOL isPopShow = NO;
@@ -56,6 +57,12 @@ BOOL isPopShow = NO;
     NSMutableArray *arr;
     
     NSString *fromPage;
+    
+    UIImageView *countLabel;
+    
+    int tempCount;
+    
+    int tempShopCar;
 }
 @end
 
@@ -74,8 +81,6 @@ BOOL isPopShow = NO;
 {
     [super viewWillAppear:YES];
     isgo = 1;
-//
-//    [self setHidesBottomBarWhenPushed:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101)
@@ -89,8 +94,15 @@ BOOL isPopShow = NO;
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    countLabel = [[UIImageView alloc] init];
+    countLabel.frame = CGRectMake(self.view.frame.size.width/5-25, 2, 10, 10);
+    countLabel.hidden = YES;
+    countLabel.image = [UIImage imageNamed:@"msg_bq"];
+    [secondBarView addSubview:countLabel];
     isPopShow = NO;
     self.tableView.scrollEnabled = YES;
+    [self loadbadgeCount];
+    [self loadShopCarCount];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -104,15 +116,6 @@ BOOL isPopShow = NO;
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
     [self setHidesBottomBarWhenPushed:NO];
-
-//    if (isPopShow == NO)
-//    {
-//        isPopShow = NO;
-//    }
-//    else
-//    {
-//        isPopShow = YES;
-//    }
     self.tableView.scrollEnabled = YES;
     [KxMenu dismissMenu];
     isPopShow = NO;
@@ -180,14 +183,6 @@ BOOL isPopShow = NO;
                 [typeBtn setTag:i];
                 typeBtn.titleLabel.font = [UIFont systemFontOfSize:16];
                 [typeBtn addTarget:self action:@selector(typeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                
-                //                UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:typeBtn.bounds byRoundingCorners:(UIRectCornerTopRight | UIRectCornerBottomRight) cornerRadii:CGSizeMake(5, 5)];
-                //                CAShapeLayer *maskLayer = [CAShapeLayer layer];
-                //                maskLayer.frame = typeBtn.bounds;
-                //                maskLayer.path = maskPath.CGPath;
-                //                typeBtn.layer.mask = maskLayer;
-                
-                
                 [typeBtnArray addObject:typeBtn];
             }
             
@@ -201,19 +196,6 @@ BOOL isPopShow = NO;
     
     if(URLTag == URLHotSaleProductTag)
     {
-//        textViewDataArray = [[NSMutableArray alloc] initWithObjects:
-//                             @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在 ",
-//                             @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-//                             @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-//                             @"查看UIGestureRecognizer源码发现了问题，苹果已经给我们做了封装，获取他都父视图不是通过superview，而是在UIGestureRecognizer中声明了一个属性view，通过这个属性就可以获取它都父视图 ",
-//                             nil];
-//        
-//        moneyDataArray = [[NSMutableArray alloc] initWithObjects:@"98",@"99",@"100",@"101", nil];
-        
-//        moneyDataArray = [[NSMutableArray alloc] init];
-//        textViewDataArray = [[NSMutableArray alloc] init];
-//        picArray = [[NSMutableArray alloc] init];
-
         if([[dicRespon allKeys] copy] == 0 || [dicRespon isKindOfClass:[NSNull class]])
         {
             dataArray = [[NSMutableArray alloc] init];
@@ -225,15 +207,33 @@ BOOL isPopShow = NO;
         if([[dicRespon objectForKey:@"items"] count] != 0 || ![[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]])
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CHotSaleData getListArray:[dicRespon objectForKey:@"items"]]];
-//            for(int i=0;i<dataArray.count;i++)
-//            {
-//                B2CHotSaleData *data = (B2CHotSaleData *)[dataArray objectAtIndex:i];
-//                [moneyDataArray addObject:data.productPrice];
-//                [textViewDataArray addObject:data.productTitle];
-//                [picArray addObject:data.p1Path];
-//            }
         }
         [self.tableView reloadData];
+    }
+    if (URLTag == URLInquiryCartCountTag)
+    {
+        tempCount = [[dicRespon objectForKey:@"value"] intValue];
+        
+        if ([[dicRespon objectForKey:@"value"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"value"] intValue] > 0)
+        {
+            countLabel.hidden = NO;
+        }
+    }
+    if (URLTag == URLShopCarCountTag)
+    {
+        tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        if ([[dicRespon objectForKey:@"total"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] > 0)
+        {
+            countLabel.hidden = NO;
+        }
     }
 }
 
@@ -316,16 +316,14 @@ BOOL isPopShow = NO;
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getProductType.html?"];
     
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-    UIImage *naviimage = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"maimaibao" ofType:@"png"]];
-    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-8, 0, 120,44)];
-    [naviImageView setImage:naviimage];
+    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 4, 34,34)];
+    naviImageView.image = [UIImage imageNamed:@"global_main_logo"];
     [naviImageView setTag:100];
     [self.navigationController.navigationBar addSubview:naviImageView];
     
-    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(naviImageView.frame.origin.x + naviImageView.frame.size.width-8 , naviImageView.frame.origin.y+7, self.view.frame.size.width-(naviImageView.frame.origin.x + naviImageView.frame.size.width+2), 30)];
+    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(53,7,ScreenWidth-66, 30)];
     [searchImageView setUserInteractionEnabled:YES];
     [searchImageView setTag:101];
     searchImageView.backgroundColor = [UIColor whiteColor];
@@ -333,6 +331,11 @@ BOOL isPopShow = NO;
     searchImageView.layer.borderColor = [[UIColor clearColor] CGColor];
     searchImageView.layer.borderWidth = 1;
     [self.navigationController.navigationBar addSubview:searchImageView];
+    
+    UIImageView *speakView = [[UIImageView alloc] init];
+    speakView.frame = CGRectMake(searchImageView.frame.size.width-28, 3.5, 23, 23);
+    speakView.image = [UIImage imageNamed:@"speak"];
+    [searchImageView addSubview:speakView];
 
     UIImageView *search = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 22, 22)];
     search.image = [UIImage imageNamed:@"search"];
@@ -365,6 +368,65 @@ BOOL isPopShow = NO;
      [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
 }
 
+//请求询价车商品数量
+-(void)loadbadgeCount
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [self.appDelegate getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+//获取购物车商品数量
+-(void)loadShopCarCount
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [self.appDelegate getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (AppDelegate *)appDelegate
+{
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
 - (void)popShopCarTap:(UITapGestureRecognizer *)sender
 {
      NSLog(@"首页-------");
@@ -381,12 +443,12 @@ BOOL isPopShow = NO;
         {
             self.tableView.scrollEnabled = NO;
             NSArray *menuItems =
-            @[[KxMenuItem menuItem:@"  购物车  "
+            @[[KxMenuItem menuItem:[NSString stringWithFormat:@"购物车(%d)",tempShopCar]
                              image:nil
                             target:self
                             action:@selector(pushMenuItem:)],
               
-              [KxMenuItem menuItem:@"  询价车  "
+              [KxMenuItem menuItem:[NSString stringWithFormat:@"询价车(%d)",tempCount]
                              image:nil
                             target:self
                             action:@selector(pushMenuItem:)],
@@ -407,7 +469,8 @@ BOOL isPopShow = NO;
 - (void)pushMenuItem:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
-    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@"   "] objectAtIndex:1] componentsSeparatedByString:@"  >"] objectAtIndex:0] isEqualToString:@"购物车"])
+
+    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@"("] objectAtIndex:0] isEqualToString:@"购物车"])
     {
         MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
         [self.navigationController pushViewController:shop animated:YES];
@@ -431,7 +494,6 @@ BOOL isPopShow = NO;
     {
         isPopShow = YES;
         self.tableView.scrollEnabled = YES;
-        
     }
 }
 

@@ -20,6 +20,7 @@
 #import "MyShoppingListViewController.h"
 #import "B2BAskPriceCarViewController.h"
 #import "KxMenu.h"
+#import "AppDelegate.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -34,6 +35,10 @@
     NSMutableArray *arr;
     
     BOOL isPopShow;
+    
+    int tempCount;
+    
+    int tempShopCar;
 }
 @end
 
@@ -93,16 +98,7 @@
         badgeArray = nil;
     }
     [self setHidesBottomBarWhenPushed:NO];
-//    if (isPopShow == YES)
-//    {
-//        isPopShow = NO;
-//    }
-//    else
-//    {
-//        isPopShow = YES;
-//        
-//    }
-//    isPopShow = NO;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 }
 
@@ -113,6 +109,65 @@
     {
     }
     return memberid;
+}
+
+- (AppDelegate *)appDelegate
+{
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+//请求询价车商品数量
+-(void)loadbadgeCount
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [self.appDelegate getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+//获取购物车商品数量
+-(void)loadShopCarCount
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [self.appDelegate getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -221,6 +276,23 @@
         }
         [self.tableView reloadData];
     }
+    if (URLTag == URLInquiryCartCountTag)
+    {
+        tempCount = [[dicRespon objectForKey:@"value"] intValue];
+    }
+    if (URLTag == URLShopCarCountTag)
+    {
+        tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+    }
+    if (tempCount > 0 || tempShopCar > 0)
+    {
+        
+    }
+    if (tempCount == 0 && tempShopCar == 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:nil];
+    }
+
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -372,7 +444,6 @@
         [KxMenu dismissMenu];
         isPopShow = NO;
         self.tableView.scrollEnabled = YES;
-        NSLog(@"买卖宝-----11");
     }
     else
     {
@@ -393,9 +464,7 @@
                      menuItems:menuItems];
         isPopShow = YES;
         self.tableView.scrollEnabled = NO;
-        NSLog(@"买卖宝-----22");
     }
-
 }
 
 - (void)pushMenuItem_mmb:(id)sender

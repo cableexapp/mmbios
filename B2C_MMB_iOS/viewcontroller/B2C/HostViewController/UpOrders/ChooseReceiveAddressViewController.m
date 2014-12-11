@@ -117,7 +117,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -186,7 +186,7 @@
         else if (result == 1)
         {
             addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
-
+            
             
             cellBtnArray = [[NSMutableArray alloc] init];
             
@@ -201,7 +201,6 @@
                 [cellBtnArray addObject:btn];
                 
                 B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:i];
-                NSLog(@"%@",data.tel);
                 if([[data isDefault] isEqualToString:@"1"])
                 {
                     [btn setSelected:YES];
@@ -258,7 +257,7 @@
             [notiAddReceiveFinalViewController validateAddress:0];
         }
     }
-
+    
 }
 
 - (void)viewDidLoad
@@ -266,7 +265,7 @@
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doSomething:) name:@"addressListDataArray" object:nil];
-
+    
     /*丁瑞修改*/
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
@@ -370,7 +369,7 @@
         [telLabel setText:tel];
         [telLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:telLabel];
-
+        
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
@@ -449,8 +448,31 @@
     {
         
     }
- 
     
+    
+}
+
+
+#pragma mark - 陈晓新增tableview删除功能
+- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return UITableViewCellEditingStyleDelete;
+}
+
+/*改变删除按钮的title*/
+- (NSString *) tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
+}
+
+/*删除用到的函数*/
+- (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        [addressListDataArray removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];  //删除对应数据的cell
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

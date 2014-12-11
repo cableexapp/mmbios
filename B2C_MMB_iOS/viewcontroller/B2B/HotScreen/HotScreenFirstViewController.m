@@ -109,6 +109,11 @@
     pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
     [self.view addSubview:pageControl];
     
+    self.hotTelBtn.layer.cornerRadius = 5;
+    self.imBtn.layer.cornerRadius = 5;
+    self.chooseBtn.layer.cornerRadius = 5;
+    self.reViewBtn.layer.cornerRadius = 5;
+    
 }
 
 - (void) screenBtnClick:(UIButton *) sender

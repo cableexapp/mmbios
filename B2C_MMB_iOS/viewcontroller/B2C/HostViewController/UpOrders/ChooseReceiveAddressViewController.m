@@ -43,10 +43,11 @@
 
 
 
-- (IBAction)buttomBtnClick:(id)sender
+- (void)buttomBtnClick:(id)sender
 {
-//    [self hideButtomView];
-    
+    ManagReceiveAddressViewController *managReceiveAddressViewController = [[ManagReceiveAddressViewController alloc
+                                                                             ] init];
+    [self.navigationController pushViewController:managReceiveAddressViewController animated:YES];
 }
 
 - (void) rightItemClick:(UIButton *) sender
@@ -154,9 +155,11 @@
 {
     if (URLTag == URLReceiveAddressTag)
     {
+        NSLog(@"%@",dicRespon);
         int result= [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         
+        NSDictionary *receiveDic = nil;
         if(result == 0)
         {
             if(msg.length != 0)
@@ -167,6 +170,11 @@
             {
                 [DCFStringUtil showNotice:@"获取收货地址失败"];
             }
+            receiveDic = [[NSDictionary alloc] init];
+            if([self.delegate respondsToSelector:@selector(receveAddress:)])
+            {
+                [self.delegate receveAddress:receiveDic];
+            }
         }
         else if (result == 1)
         {
@@ -174,6 +182,15 @@
             
             
             cellBtnArray = [[NSMutableArray alloc] init];
+            
+            if(!addressListDataArray || addressListDataArray.count == 0)
+            {
+                receiveDic = [[NSDictionary alloc] init];
+                if([self.delegate respondsToSelector:@selector(receveAddress:)])
+                {
+                    [self.delegate receveAddress:receiveDic];
+                }
+            }
             
             for(int i=0;i<addressListDataArray.count;i++)
             {
@@ -193,8 +210,7 @@
                     {
                         
                     }
-                    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-//                    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+                    receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
                     if([self.delegate respondsToSelector:@selector(receveAddress:)])
                     {
                         [self.delegate receveAddress:receiveDic];
@@ -212,10 +228,6 @@
             [tv reloadData];
         }
     }
-    if(URLTag == URLDeleteMemberAddressTag)
-    {
-        NSLog(@"%@",dicRespon);
-    }
 }
 
 - (void) doSomething:(NSNotification *) noti
@@ -223,6 +235,15 @@
     AddReceiveFinalViewController *notiAddReceiveFinalViewController = [[noti object] objectAtIndex:1];
     NSString *notiStr = [[noti object] objectAtIndex:0];
     
+    if(!addressListDataArray || addressListDataArray.count == 0)
+    {
+        [notiAddReceiveFinalViewController validateAddress:0];
+        return;
+    }
+    NSLog(@"%@",addressListDataArray);
+    
+    
+    NSMutableArray *testArray = [[NSMutableArray alloc] init];
     for(int i=0;i<addressListDataArray.count;i++)
     {
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:i];
@@ -234,18 +255,19 @@
         NSString *address = addressData.addressName;
         
         NSString *myStr = [NSString stringWithFormat:@"%@%@",str,address];
-        
-        if([myStr isEqualToString:notiStr])
-        {
-            [notiAddReceiveFinalViewController validateAddress:1];
-            return;
-        }
-        else
-        {
-            [notiAddReceiveFinalViewController validateAddress:0];
-        }
+        [testArray addObject:myStr];
+
     }
     
+    if([testArray containsObject:notiStr] == YES)
+    {
+        [notiAddReceiveFinalViewController validateAddress:1];
+    }
+    else
+    {
+        [notiAddReceiveFinalViewController validateAddress:0];
+    }
+
 }
 
 - (void)viewDidLoad
@@ -259,24 +281,28 @@
     self.navigationItem.titleView = top;
     
     /*陈晓修改*/
-    self.buttomBtn.layer.cornerRadius = 5.0f;
-    self.buttomBtn.layer.borderWidth = 1.0f;
     
+    _tvBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-50-64)];
+    [self.view addSubview:_tvBackView];
+    
+    _buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, _tvBackView.frame.origin.y+_tvBackView.frame.size.height, ScreenWidth, 50)];
+    [self.view addSubview:_buttomView];
+    
+    _buttomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_buttomBtn setFrame:CGRectMake(10, 5, ScreenWidth-20, 40)];
+    [_buttomBtn addTarget:self action:@selector(buttomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    _buttomBtn.layer.cornerRadius = 5.0f;
+    _buttomBtn.layer.borderWidth = 1.0f;
+    _buttomBtn.layer.borderColor = [UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0].CGColor;
+    [_buttomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_buttomBtn setTitle:@"管理收货地址" forState:UIControlStateNormal];
+    [_buttomBtn setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0]];
+    [_buttomView addSubview:_buttomBtn];
+
     
     [self pushAndPopStyle];
     
-    rightItemBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightItemBtn setFrame:CGRectMake(0, 0, 25, 25)];
-    [rightItemBtn setBackgroundImage:[UIImage imageNamed:@"addAddress.png"] forState:UIControlStateNormal];
-    [rightItemBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightItemBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
-    [rightItemBtn setHidden:YES];
-    
-    [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height - 64 - 49)];
-    [self.buttomView setFrame:CGRectMake(0, self.tvBackView.frame.size.height, 320, 49)];
-    
+
     
     moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
     [moreCell startAnimation];
@@ -313,10 +339,7 @@
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
         NSString *address = addressData.addressName;
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
-        //    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 270, size_3.height)];
-        //    [addressLabel setText:address];
-        //    [addressLabel setFont:[UIFont systemFontOfSize:13]];
-        //    [addressLabel setNumberOfLines:0];
+
         return size_3.height + 70;
         
     }
@@ -348,7 +371,7 @@
         
         NSString *name = addressData.receiver;
         CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_1.width, 30)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, size_1.width, 30)];
         [nameLabel setText:name];
         [nameLabel setTextAlignment:NSTextAlignmentLeft];
         [nameLabel setFont:[UIFont systemFontOfSize:13]];
@@ -356,7 +379,7 @@
         
         NSString *tel = addressData.tel;
         CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-50-size_2.width, 5, size_2.width, 30)];
+        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_2.width, 5, size_2.width, 30)];
         [telLabel setTextAlignment:NSTextAlignmentRight];
         [telLabel setText:tel];
         [telLabel setFont:[UIFont systemFontOfSize:13]];
@@ -366,7 +389,7 @@
         NSString *city = addressData.city;
         NSString *area = addressData.area;
         NSString *str = [NSString stringWithFormat:@"%@%@%@",province,city,area];
-        UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height, 270, 30)];
+        UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y + nameLabel.frame.size.height, 270, 30)];
         [provinceLabel setText:str];
         [provinceLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:provinceLabel];
@@ -374,7 +397,7 @@
         
         NSString *address = addressData.addressName;
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
-        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
+        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
         [addressLabel setText:address];
         [addressLabel setFont:[UIFont systemFontOfSize:13]];
         [addressLabel setNumberOfLines:0];
@@ -382,9 +405,9 @@
         
 //        if(rightItemBtnHasClick == NO)
 //        {
-//            UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
-//            [btn setFrame:CGRectMake(280, (size_3.height + 70 - 30)/2, 30, 30)];
-//            [cell.contentView addSubview:btn];
+            UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
+            [btn setFrame:CGRectMake(10, (size_3.height + 70 - 30)/2, 30, 30)];
+            [cell.contentView addSubview:btn];
 //        }
 //        else
 //        {
@@ -425,64 +448,12 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
-    
-    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
     
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
     [self cellBtnClick:btn];
-//    if(btn.hidden == YES)
-//    {
-//        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:data];
-//        [self.navigationController pushViewController:final animated:YES];
-//    }
-//    else
-//    {
-//        
-//    }
-    
-    
+  
 }
 
-
-#pragma mark - 陈晓新增tableview删除功能
-- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewCellEditingStyleDelete;
-}
-
-/*改变删除按钮的title*/
-- (NSString *) tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return @"删除";
-}
-
-/*删除用到的函数*/
-- (void) tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
-        NSString *addressId = [NSString stringWithFormat:@"%@",data.addressId];
-        [self deleteRow:addressId];
-//        [addressListDataArray removeObjectAtIndex:indexPath.row];
-//        [tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];  //删除对应数据的cell
-    }
-}
-
-- (void) deleteRow:(NSString *) sender
-{
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteMemberAddress",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&addressid=%@",token,[self getMemberId],sender];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteMemberAddressTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/deleteMemberAddress.html?"];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-}
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {

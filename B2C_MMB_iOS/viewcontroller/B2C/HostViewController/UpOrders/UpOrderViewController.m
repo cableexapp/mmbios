@@ -173,6 +173,9 @@
     if(self = [super init])
     {
  
+        chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
+        chooseAddress.delegate = self;
+        [chooseAddress loadRequest];
         
         goodsMoney = money;
         goodsListArray = [[NSMutableArray alloc] init];
@@ -523,9 +526,7 @@
 {
     [super viewWillAppear:YES];
     
-    chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
-    chooseAddress.delegate = self;
-    [chooseAddress loadRequest];
+
     
 //    NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
 //    NSLog(@"receiveDic = %@",receiveDic);
@@ -662,7 +663,6 @@
 - (void) doBCReceiveAddressHasChange:(NSNotification *) noti
 {
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[noti object]];
-    NSLog(@"dic = %@",dic);
     [self changeReceiveAddress:dic];
 }
 
@@ -685,6 +685,8 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+
     
     [self pushAndPopStyle];
     
@@ -992,7 +994,7 @@
     {
         if([[addressDic allKeys] count] == 0 || [addressDic isKindOfClass:[NSNull class]])
         {
-            [cell.textLabel setText:@"正在加载数据"];
+            [cell.textLabel setText:@"暂无收货地址"];
         }
         else
         {   UIImageView *imageView = [[UIImageView alloc] init];

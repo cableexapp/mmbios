@@ -227,7 +227,10 @@
             [tv reloadData];
         }
     }
-    
+    if(URLTag == URLDeleteMemberAddressTag)
+    {
+        NSLog(@"%@",dicRespon);
+    }
 }
 
 - (void) doSomething:(NSNotification *) noti
@@ -470,9 +473,25 @@
 {
     if(editingStyle == UITableViewCellEditingStyleDelete)
     {
-        [addressListDataArray removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];  //删除对应数据的cell
+        B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
+        NSString *addressId = [NSString stringWithFormat:@"%@",data.addressId];
+        [self deleteRow:addressId];
+//        [addressListDataArray removeObjectAtIndex:indexPath.row];
+//        [tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];  //删除对应数据的cell
     }
+}
+
+- (void) deleteRow:(NSString *) sender
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteMemberAddress",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&addressid=%@",token,[self getMemberId],sender];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteMemberAddressTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/deleteMemberAddress.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

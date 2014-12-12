@@ -548,12 +548,22 @@
             {
                 NSDictionary *dic = (NSDictionary *)[mediaInfoArray objectAtIndex:i];
                 UIImage *img=[dic objectForKey:UIImagePickerControllerOriginalImage];
-                //图片压缩
-                CGSize imagesize = img.size;
-                imagesize.height = ScreenHeight;
-                imagesize.width = ScreenWidth;
-                img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
-                NSData *imageData = UIImageJPEGRepresentation(img, 0.25);
+//                //图片压缩
+//                CGSize imagesize = img.size;
+//                imagesize.height = ScreenWidth;
+//                imagesize.width = ScreenHeight;
+//                img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
+//                NSData *imageData = UIImageJPEGRepresentation(img, 0.0000000001);
+//                
+//                UIImage *upLoadImage = nil;
+//                if(upLoadImage == nil)
+//                {
+//                    upLoadImage = [UIImage imageWithData:imageData];
+//                }
+//                if (upLoadImage)
+//                {
+                    [chooseImageArray addObject:img];
+//                }
                 
                 UIImage *upLoadImage = nil;
                 if(upLoadImage == nil)

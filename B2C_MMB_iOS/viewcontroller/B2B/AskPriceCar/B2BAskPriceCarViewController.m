@@ -18,6 +18,8 @@
 #import "B2BAskPriceInquirySheetViewController.h"
 #import "LoginNaviViewController.h"
 
+#define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
+
 @interface B2BAskPriceCarViewController ()
 {
     UIView *buttomView;    //底部view
@@ -58,6 +60,10 @@
     UIImageView *shopcar;
     
     UILabel *label_2;
+    
+    BOOL isUp_Down;
+    
+    UIImageView *askView;
 }
 @end
 
@@ -388,12 +394,10 @@
                     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                     [editBtn setFrame:CGRectMake(ScreenWidth-120, 7, 50, 30)];
                     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
-                    [editBtn setTitleColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] forState:UIControlStateNormal];
+                    [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                     [editBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-                    [editBtn setBackgroundColor:[UIColor whiteColor]];
-                    editBtn.layer.borderWidth = 1.0f;
+                    [editBtn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
                     [editBtn setTag:i];
-                    editBtn.layer.borderColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
                     editBtn.layer.cornerRadius = 5.0f;
                     [editBtn addTarget:self action:@selector(edit:) forControlEvents:UIControlEventTouchUpInside];
                     
@@ -401,11 +405,9 @@
                     [delBtn setFrame:CGRectMake(ScreenWidth-60, 7, 50, 30)];
                     [delBtn setTitle:@"删除" forState:UIControlStateNormal];
                     [delBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-                    [delBtn setBackgroundColor:[UIColor whiteColor]];
-                    delBtn.layer.borderWidth = 1.0f;
-                    [delBtn setTitleColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] forState:UIControlStateNormal];
+                    [delBtn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
+                    [delBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                     [delBtn setTag:i];
-                    delBtn.layer.borderColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
                     delBtn.layer.cornerRadius = 5.0f;
                     [delBtn addTarget:self action:@selector(del:) forControlEvents:UIControlEventTouchUpInside];
                     
@@ -558,6 +560,11 @@
     //        [chooseArray removeAllObjects];
     //    }
     
+    UIImageView *currentIV= (UIImageView *)[self.view viewWithTag:3000];
+    [UIView animateWithDuration:0.3 animations:^{
+        currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
+    }];
+    
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     for(UIButton *b in sectionHeadBtnArray)
@@ -574,16 +581,10 @@
         }
         else
         {
-            
             [b setSelected:NO];
-            
         }
-        
-        
     }
-    
     [tv reloadData];
-    
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -594,6 +595,16 @@
     }
     
     UIButton *btn = (UIButton *)[sectionHeadBtnArray objectAtIndex:section];
+    
+    if (!askView)
+    {
+        askView = [[UIImageView alloc] init];
+        askView.frame = CGRectMake(ScreenWidth-35, (btn.frame.size.height-25)/2, 25, 25);
+        askView.image = [UIImage imageNamed:@"askPriceCar_arrow"];
+        askView.tag = 3000;
+        [btn addSubview:askView];
+    }
+    
     return btn;
 }
 
@@ -781,7 +792,7 @@
         CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
         
         NSString *num = [NSString stringWithFormat:@"数量 %@",[[dataArray objectAtIndex:indexPath.section] num]];
-        NSString *deliver = [NSString stringWithFormat:@"交货期 %@",[[dataArray objectAtIndex:indexPath.section] deliver]];
+        NSString *deliver = [NSString stringWithFormat:@"交货期 %@天",[[dataArray objectAtIndex:indexPath.section] deliver]];
         NSString *cartSpec = [NSString stringWithFormat:@"规格 %@",[[dataArray objectAtIndex:indexPath.section] cartSpec]];  //规格
         NSString *cartVoltage = [NSString stringWithFormat:@"电压 %@",[[dataArray objectAtIndex:indexPath.section] cartVoltage]];
         NSString *color = [NSString stringWithFormat:@"颜色 %@",[[dataArray objectAtIndex:indexPath.section] cartColor]];

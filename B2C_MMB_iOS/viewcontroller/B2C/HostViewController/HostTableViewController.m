@@ -213,27 +213,18 @@ BOOL isPopShow = NO;
     if (URLTag == URLInquiryCartCountTag)
     {
         tempCount = [[dicRespon objectForKey:@"value"] intValue];
-        
-        if ([[dicRespon objectForKey:@"value"] intValue] == 0)
-        {
-            countLabel.hidden = YES;
-        }
-        else if ([[dicRespon objectForKey:@"value"] intValue] > 0)
-        {
-            countLabel.hidden = NO;
-        }
     }
     if (URLTag == URLShopCarCountTag)
     {
         tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
-        if ([[dicRespon objectForKey:@"total"] intValue] == 0)
-        {
-            countLabel.hidden = YES;
-        }
-        else if ([[dicRespon objectForKey:@"total"] intValue] > 0)
-        {
-            countLabel.hidden = NO;
-        }
+    }
+    if (tempCount > 0 || tempShopCar > 0)
+    {
+         countLabel.hidden = NO;
+    }
+    if (tempCount == 0 && tempShopCar == 0)
+    {
+        countLabel.hidden = YES;
     }
 }
 

@@ -14,14 +14,13 @@
 
 @interface B2CShoppingSearchViewController ()
 {
-    NSMutableArray *ivArray;
     
+    NSMutableArray *ivArray;
     
     NSMutableArray *array1;
     NSMutableArray *array2;
     NSMutableArray *array3;
     NSMutableArray *array4;
-    
     
     UIImage *useCloseIV;  //用途右上角关闭
     UIImage *useCloseIV_1;
@@ -32,8 +31,6 @@
     UIImageView *triangle_1;  //展开的小三角
     UIImageView *triangle_2;  //展开的小三角
     UIImageView *triangle_3;  //展开的小三角
-
-    
 
     UIView *lineView_1;
     
@@ -134,8 +131,6 @@
             specsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"specs"]]];
             usesArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"uses"]]];
 
-            
-        
 #pragma mark     -  选中的列表选项处理
             
             for(UIButton *btn in array2)
@@ -367,10 +362,6 @@
     [tv setShowsVerticalScrollIndicator:NO];
     [self.view addSubview:tv];
     
-    
-    
-    
-    
     float btnWidth = (myRect.size.width-20)/3;
 #pragma mark - 用途数组
     array1 = [[NSMutableArray alloc] init];
@@ -444,9 +435,6 @@
             
                     }
         
- 
-       
-
         [btn setTitleColor:[UIColor colorWithRed:129.0/255.0 green:129.0/255.0 blue:129.0/255.0 alpha:1.0] forState:UIControlStateDisabled];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:217.0/255.0 green:217.0/255.0 blue:217.0/255.0 alpha:1.0 ] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
@@ -719,13 +707,12 @@
     for(int i=0;i<[[_myDic allKeys] count];i++)
     {
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 1, 23, 27)];
-        [iv setImage:[UIImage imageNamed:@"YellowDownArrow"]];
+        [iv setImage:[UIImage imageNamed:@"askPriceCar"]];
         [ivArray addObject:iv];
     }
     
     flag = (BOOL*)malloc([[_myDic allKeys] count]*sizeof(BOOL*));
     memset(flag, YES, sizeof(flag));
-    
 }
 
 - (id) initWithFrame:(CGRect) rect
@@ -857,16 +844,16 @@
     [specBtn_3 setTag:3];
     [specBtn_3 setHidden:YES];
    
-    triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    triangle = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"askPriceCar"]];
     [triangle setTag:0];
     
-    triangle_1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    triangle_1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"askPriceCar"]];
     [triangle_1 setTag:1];
     
-    triangle_2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    triangle_2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"askPriceCar"]];
     [triangle_2 setTag:2];
     
-    triangle_3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YellowDownArrow.png"]];
+    triangle_3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"askPriceCar"]];
     [triangle_3 setTag:3];
   
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeChooseView" object:nil];
@@ -922,7 +909,6 @@
     [triangle_3 setHidden:NO];
 
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
-    
 }
 
 
@@ -934,12 +920,11 @@
     [self removeFromParentViewController];
 }
 
-
 - (void) clear:(UIButton *) sender
 {
 
-    if(headBtnArray && headBtnArray.count != 0)
-    {
+//    if(headBtnArray && headBtnArray.count != 0)
+//    {
         [headBtnArray removeAllObjects];
         
         showUseCell = YES;
@@ -947,22 +932,31 @@
         showSpecCell = YES;
         showBrandCell = YES;
         
+        brandBtn.hidden = YES;
+        brandBtn_0.hidden = YES;
+        modelBtn.hidden = YES;
+        modelBtn_1.hidden = YES;
+        useBtn.hidden = YES;
+        useBtn_2.hidden = YES;
+        specBtn.hidden = YES;
+        specBtn_3.hidden = YES;
+
+         triangle.hidden = NO;
+         triangle_1.hidden = NO;
+         triangle_2.hidden = NO;
+         triangle_3.hidden = NO;
+    
         useString = @"";
         modelString = @"";
         specString = @"";
         brandString = @"";
         
         [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
-    }
-    
-    
-    [self.view.superview removeFromSuperview];
-    [self.view removeFromSuperview];
-     self.view = nil;
-    [self removeFromParentViewController];
-    
-    // 背影view的通知事件
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeBackView" object:nil];
+//    }
+
+//    
+//    // 背影view的通知事件
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeBackView" object:nil];
 }
 
 - (void) sure:(UIButton *) sender
@@ -1156,48 +1150,41 @@
 	view2 = nil;
 	view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 30)];
 	view1.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
-
     
-	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 30)];
+	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 40)];
 	view2.backgroundColor = [UIColor clearColor];
     
     UIView *lineView = [[UIView alloc]init];
-    lineView.frame = CGRectMake(0, 39, myRect.size.width, 3.0);
+    lineView.frame = CGRectMake(0, 39, myRect.size.width, 1.0);
     lineView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
     [view2 addSubview:lineView];
 	[view1 addSubview:view2];
 
-   
     UIView *triangView = [[UIView alloc]init];
-    triangView.frame = CGRectMake(200, 10, 30, 30);
-    triangView.backgroundColor = [UIColor clearColor];
+    triangView.frame = CGRectMake(210, 6, 28, 28);
     [view2 addSubview:triangView];
     
     abtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    abtn.backgroundColor = [UIColor clearColor];
-    abtn.frame = CGRectMake(0, 0,myRect.size.width, 50);
+    abtn.frame = CGRectMake(0, 0,myRect.size.width, 40);
     abtn.tag = section;
 	[abtn addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
     abtn.backgroundColor = [UIColor clearColor];
 	[view2 addSubview:abtn];
     
-	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 6, myRect.size.width, 30)];
+	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, myRect.size.width, 30)];
 	label1.backgroundColor = [UIColor clearColor];
     [label1 setFont:[UIFont systemFontOfSize:13]];
 	label1.text = [[_myDic allKeys] objectAtIndex:section];
     [abtn addSubview:label1];
-    
  
     switch (section)
     {
-            
         case 0:
             
             [abtn addSubview:brandBtn];
             [abtn addSubview:brandBtn_0];
             [triangView addSubview:triangle];
 
-          
             break;
         case 1:
             [abtn addSubview:modelBtn];

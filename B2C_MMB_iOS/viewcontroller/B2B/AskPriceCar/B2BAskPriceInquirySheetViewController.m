@@ -72,8 +72,6 @@
     
     if(URLTag == URLAddressListTag)
     {
-        
-        
         if(result == 1)
         {
             addressArray = [[NSMutableArray alloc] initWithArray:[B2BAddressData getListArray:[dicRespon objectForKey:@"items"]]];

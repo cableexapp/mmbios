@@ -113,12 +113,11 @@
     self.logOutBtn.layer.cornerRadius = 5;
     [self.logOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 60);
-//    self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.view1.backgroundColor = [UIColor lightGrayColor];
-    self.view2.backgroundColor = [UIColor lightGrayColor];
-    self.view3.backgroundColor = [UIColor lightGrayColor];
 
+    self.tableView.separatorColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view1.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view2.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.view3.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
 }
 
 //请求询价车商品数量

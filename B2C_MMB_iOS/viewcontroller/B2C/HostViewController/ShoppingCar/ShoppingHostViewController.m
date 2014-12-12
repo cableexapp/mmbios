@@ -234,10 +234,10 @@
             
             UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height+5, contentLabel.frame.size.width, 20)];
             [moneyLabel setTextAlignment:NSTextAlignmentLeft];
-            [moneyLabel setBackgroundColor:[UIColor clearColor]];
+            [moneyLabel setBackgroundColor:[UIColor clearColor]];                                                                                                              
             [moneyLabel setTextColor:[UIColor redColor]];
             [moneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
-            [moneyLabel setText:[moneyArray objectAtIndex:i]];
+            [moneyLabel setText:[NSString stringWithFormat:@"¥ %@",[moneyArray objectAtIndex:i]]];
             [sv addSubview:moneyLabel];
             
             [sv setFrame:CGRectMake(0, 0, ScreenWidth, moneyLabel.frame.origin.y + moneyLabel.frame.size.height + 5)];

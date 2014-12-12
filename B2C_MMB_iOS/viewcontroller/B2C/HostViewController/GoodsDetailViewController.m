@@ -874,15 +874,15 @@
                     [customCell.barndLabel setText:detailData.goodsBrand];
                     [customCell.kindLabel setText:detailData.goodsModel];
                     [customCell.voltageLabel setText:detailData.goodsVoltage];
-                    [customCell.surfaceLabel setText:detailData.spec];
+                    [customCell.surfaceLabel setText:[NSString stringWithFormat:@"%@平方",detailData.spec]];
                     [customCell.useLabel setText:detailData.use];
                     [customCell.threadLabel setText:detailData.coreNum];
                     [customCell.standLabel setText:detailData.standard];
                     [customCell.unitLabel setText:detailData.unit];
-                    [customCell.thicknessLabel setText:detailData.insulationThickness];
-                    [customCell.lengthLabel setText:detailData.avgLength];
-                    [customCell.topLabel setText:detailData.avgDiameter];
-                    [customCell.weightLabel setText:detailData.weight];
+                    [customCell.thicknessLabel setText:[NSString stringWithFormat:@"%@mm",detailData.insulationThickness]];
+                    [customCell.lengthLabel setText:[NSString stringWithFormat:@"%@米",detailData.avgLength]];
+                    [customCell.topLabel setText:[NSString stringWithFormat:@"%@mm",detailData.avgDiameter]];
+                    [customCell.weightLabel setText:[NSString stringWithFormat:@"%@KG",detailData.weight]];
                     [customCell.contentView setBackgroundColor:[UIColor whiteColor]];
                     
                     UIView *lineView = [[UIView alloc] init];
@@ -912,6 +912,7 @@
                 {
                     moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
                     [moreCell.lblContent setText:@"暂无评论哦~~"];
+                    moreCell.lblContent.font = [UIFont systemFontOfSize:13];
                     [moreCell.contentView setBackgroundColor:[UIColor whiteColor]];
                     //                    [moreCell noDataAnimation];
                 }

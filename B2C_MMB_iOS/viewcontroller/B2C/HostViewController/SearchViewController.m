@@ -384,7 +384,6 @@
             if ([[dicRespon objectForKey:@"types"] count] > 0)
             {
                 noResultView.hidden = YES;
-                self.serchResultView.scrollEnabled = YES;
                 dataArray = [dicRespon objectForKey:@"types"];
                 coverView.hidden = YES;
                 isShowClearBtn = 2;
@@ -403,8 +402,6 @@
                 coverView.hidden = YES;
                 isShowClearBtn = 2;
                 historyFlag =2;
-                self.serchResultView.scrollEnabled = YES;
-                
                 if(btnArray.count > 0)
                 {
                     [btnArray removeAllObjects];
@@ -437,8 +434,8 @@
             }
             if ([[dicRespon objectForKey:@"items"] count] == 0 && [[dicRespon objectForKey:@"types"] count] == 0)
             {
-                self.serchResultView.scrollEnabled = NO;
                 noResultView.hidden = NO;
+                dataArray = tempArray;
             }
         }
        if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"])
@@ -448,7 +445,6 @@
                 noResultView.hidden = YES;
                 dataArray = [dicRespon objectForKey:@"products"];
                 coverView.hidden = YES;
-                self.serchResultView.scrollEnabled = YES;
                 isShowClearBtn = 2;
                 historyFlag =2;
                 tempSearch = 0;
@@ -456,8 +452,8 @@
             }
             else
             {
-                self.serchResultView.scrollEnabled = NO;
                 noResultView.hidden = NO;
+                 dataArray = tempArray;
             }
         }
         [self.serchResultView reloadData];
@@ -1052,8 +1048,6 @@
         searchResultLabel.numberOfLines = 3;
         searchResultLabel.font = [UIFont systemFontOfSize:13];
         [cell addSubview:searchResultLabel];
-        
-        NSLog(@"清除按钮 = %d",isShowClearBtn);
 
         if (tempSearch == 2 && dataArray.count >0)
         {

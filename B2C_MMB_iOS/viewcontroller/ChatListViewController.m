@@ -72,8 +72,8 @@ int flagPage = 0;
         self.memberTableView.scrollEnabled = NO;
     }
     self.memberTableView.backgroundColor = [UIColor clearColor];
-    self.memberTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-    self.memberTableView.separatorColor = [UIColor clearColor];
+    
+    self.memberTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.memberTableView];
     
     UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-150, self.view.frame.size.width, 2)];

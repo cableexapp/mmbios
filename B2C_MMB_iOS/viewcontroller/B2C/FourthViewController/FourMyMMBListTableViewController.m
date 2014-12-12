@@ -432,7 +432,7 @@
         }
         if(i == 3)
         {
-            [label_1 setText:@"账户信息"];
+            [label_1 setText:@"账户安全"];
             
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"count.png"]];
@@ -759,7 +759,6 @@
             [label setText:userName];
         }
         [label setFont:[UIFont systemFontOfSize:16]];
-        [label setTextAlignment:NSTextAlignmentCenter];
         [label setTextColor:[UIColor blackColor]];
         [view addSubview:label];
         

@@ -821,12 +821,12 @@
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 54-54)];
     [tv setDataSource:self];
-    tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+    tv.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0];
     [tv setDelegate:self];
     [self.view addSubview:tv];
     
     noCell = [[UITableViewCell alloc] init];
-    [noCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+    [noCell.contentView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [noCell setSelectionStyle:0];
 }
 
@@ -835,7 +835,7 @@
 {
     backView = [[UIView alloc] init];
     backView.frame = CGRectMake(0, ScreenHeight - 114, ScreenWidth, 54);
-    backView.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+    backView.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0];
     [self.view insertSubview:backView aboveSubview:buttomView];
     backView.hidden = YES;
 }
@@ -1217,7 +1217,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, sectionLabel.frame.origin.y+sectionLabel.frame.size.height+10, ScreenWidth-10, 1)];
-    [lineView setBackgroundColor:[UIColor colorWithRed:232.0/255.0 green:233.0/255.0 blue:232.0/255.0 alpha:1.0]];
+    [lineView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [view addSubview:lineView];
     
     return view;

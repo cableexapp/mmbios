@@ -232,10 +232,33 @@
     }
 }
 
+#pragma mark - 输入框长度
+- (int)convertToInt:(NSString*)strtemp
+{
+    int strlength = 0;
+    char* p = (char*)[strtemp cStringUsingEncoding:NSUnicodeStringEncoding];
+    for (int i=0 ; i<[strtemp lengthOfBytesUsingEncoding:NSUnicodeStringEncoding] ;i++) {
+        if (*p) {
+            p++;
+            strlength++;
+        }
+        else {
+            p++;
+        }
+        
+    }
+    return strlength;
+}
+
+
 - (BOOL) checkUseAndSec:(UITextField *) sender
 {
+
+
+
     if(sender == self.userTf)
     {
+        int userTfLength = [self convertToInt:self.userTf.text];
         if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
         {
             phoneOrUserName = YES;
@@ -244,39 +267,45 @@
         {
             phoneOrUserName = NO;
         }
-        if(self.userTf.text.length < 4)
+        if(userTfLength < 4)
         {
             [DCFStringUtil showNotice:@"用户名长度不能小于4位"];
             return NO;
         }
-        if(self.userTf.text.length > 30)
+        if(userTfLength > 30)
         {
             [DCFStringUtil showNotice:@"用户名长度不能大于30位"];
             return NO;
         }
         
 #pragma mark - 只含有汉字、数字、字母、下划线，下划线位置不限：
-        NSString * regex_1 = @"^[a-zA-Z0-9_\u4e00-\u9fa5]{4,30}$";
-        NSPredicate *pred_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex_1];
-        BOOL isMatch_1 = [pred_1 evaluateWithObject:self.userTf.text];
-        if(isMatch_1 == NO)
+//        NSString * regex_1 = @"^[a-zA-Z0-9_\u4e00-\u9fa5]{4,30}$";
+//        NSPredicate *pred_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex_1];
+//        BOOL isMatch_1 = [pred_1 evaluateWithObject:self.userTf.text];
+//        if(isMatch_1 == NO)
+//        {
+//            [DCFStringUtil showNotice:@"用户名只支持数字、字母、下划线、中文"];
+//            return NO;
+//        }
+        
+
+//        NSString *allChinese_1 = @"^[\u4E00-\u9FA5]*$";
+//        NSPredicate *predallChinese_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", allChinese_1];
+//        BOOL isMatchAllChinese_1 = [predallChinese_1 evaluateWithObject:self.userTf.text];
+//        if(isMatchAllChinese_1 == YES)
+//        {
+//            [DCFStringUtil showNotice:@"用户名不能是纯中文"];
+//            return NO;
+//        }
+//        else
+//        {
+//        }
+        
+        if([self.userTf.text hasSuffix:@"_"] || [self.userTf.text hasPrefix:@"_"])
         {
-            [DCFStringUtil showNotice:@"用户名只支持数字、字母、下划线、中文"];
+            [DCFStringUtil showNotice:@"用户名不能以下划线开头或结尾"];
             return NO;
         }
-        
-        NSString *allChinese_1 = @"^[\u4E00-\u9FA5]*$";
-        NSPredicate *predallChinese_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", allChinese_1];
-        BOOL isMatchAllChinese_1 = [predallChinese_1 evaluateWithObject:self.userTf.text];
-        if(isMatchAllChinese_1 == YES)
-        {
-            [DCFStringUtil showNotice:@"用户名不能是纯中文"];
-            return NO;
-        }
-        else
-        {
-        }
-        
         
         if([self isAllNum:self.userTf.text] == YES && phoneOrUserName == NO)
         {
@@ -291,7 +320,7 @@
         }
         
         int n=0;
-        for(int i=0;i<self.userTf.text.length;i++)
+        for(int i=0;i<userTfLength;i++)
         {
             char c = [self.userTf.text characterAtIndex:i];
             if(c == '_')
@@ -299,7 +328,7 @@
                 n++;
             }
         }
-        if(n == self.userTf.text.length && self.userTf.text.length != 0)
+        if(n == userTfLength && userTfLength != 0)
         {
             [DCFStringUtil showNotice:@"用户名不能是纯字符"];
             return NO;
@@ -309,8 +338,10 @@
     }
     if(sender == self.secTf)
     {
+        int secTfLength = [self convertToInt:self.secTf.text];
+        NSLog(@"secTfLength = %d",secTfLength);
         int m=0;
-        for(int i=0;i<self.secTf.text.length;i++)
+        for(int i=0;i<secTfLength;i++)
         {
             char c = [self.secTf.text characterAtIndex:i];
             if(c == '_')
@@ -318,7 +349,7 @@
                 m++;
             }
         }
-        if(m == self.secTf.text.length && self.secTf.text.length != 0)
+        if(m == secTfLength && secTfLength != 0)
         {
             [DCFStringUtil showNotice:@"密码不能是纯字符"];
             return NO;
@@ -335,18 +366,18 @@
         }
         
         
-        if(self.secTf.text.length == 0)
+        if(secTfLength == 0)
         {
             [DCFStringUtil showNotice:@"密码长度不能为空"];
             return NO;
         }
         
-        if(self.secTf.text.length < 6)
+        if(secTfLength < 6)
         {
             [DCFStringUtil showNotice:@"密码长度不能小于6位"];
             return NO;
         }
-        if(self.secTf.text.length > 18)
+        if(secTfLength > 18)
         {
             [DCFStringUtil showNotice:@"密码长度不能大于18位"];
             return NO;

@@ -9,11 +9,10 @@
 #ifndef coin_MCDefine_h
 #define coin_MCDefine_h
 
-#define ScreenHeight self.view.frame.size.height
-#define ScreenWidth self.view.frame.size.width
+#define ScreenHeight [UIScreen mainScreen].bounds.size.height
+#define ScreenWidth [UIScreen mainScreen].bounds.size.width
 
 #define IS_IOS_7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
-#define MainScreenHeight [UIScreen mainScreen].bounds.size.height
 
 #define CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT [cell.contentView.subviews lastObject]
 

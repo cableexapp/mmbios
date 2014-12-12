@@ -473,11 +473,16 @@
         UIImage *img = [chooseImageArray objectAtIndex:i];
         
         //图片压缩
-        NSData *data = UIImageJPEGRepresentation(img, 0.000000001);
+        CGSize imagesize = img.size;
+        imagesize.height = ScreenHeight;
+        imagesize.width = ScreenWidth;
+        img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
+        NSData *data = UIImageJPEGRepresentation(img, 0.125);
+        
         UIImage *image = [UIImage imageWithData:data];
         image = [image fixOrientation];
 
-        [imgArr addObject:img];
+        [imgArr addObject:image];
 //        imgArr = [NSArray arrayWithObject:img];
         
         NSString *nameString = [NSString stringWithFormat:@"%@",img.description];

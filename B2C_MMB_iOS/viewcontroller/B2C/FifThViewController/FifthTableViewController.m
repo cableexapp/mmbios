@@ -345,6 +345,11 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
             }
             
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"headPortraitUrl"];
+            }
+            
             if([[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
             {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"defaultReceiveAddress"];

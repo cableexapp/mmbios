@@ -700,7 +700,7 @@
     
     
     
-    //    [tv reloadData];
+    [tv reloadData];
     //    NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:section];
     //    NSArray *arr = [NSArray arrayWithObject:path];
     //    [tv reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];

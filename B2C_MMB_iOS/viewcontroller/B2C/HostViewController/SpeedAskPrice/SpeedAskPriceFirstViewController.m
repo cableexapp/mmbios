@@ -204,7 +204,7 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDuration:0.3f];
-        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
+        [self.view setFrame:CGRectMake(0, 64, ScreenWidth, self.view.frame.size.height)];
         [UIView commitAnimations];
     }
     return YES;

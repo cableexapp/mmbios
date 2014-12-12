@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
-@interface B2BAskPriceInquirySheetViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate>
+@interface B2BAskPriceInquirySheetViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,MBProgressHUDDelegate>
 {
     UITableView *tv;
     DCFConnectionUtil *conn;
+    MBProgressHUD *HUD;
 }
 
 @property (strong,nonatomic) NSMutableArray *dataArray;

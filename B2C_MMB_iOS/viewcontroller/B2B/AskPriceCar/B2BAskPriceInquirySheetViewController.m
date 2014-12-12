@@ -27,7 +27,7 @@
     UIButton *upBtn;   //底部提交按钮
     
     DCFChenMoreCell *moreCell;
-
+    
     NSMutableArray *addressArray;
     
     B2BAddressData *addressData;
@@ -45,6 +45,19 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -67,6 +80,11 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
+    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
@@ -96,6 +114,7 @@
     [tv reloadData];
     if(URLTag == URLSubInquiryTag)
     {
+        [upBtn setEnabled:YES];
         if(result == 1)
         {
             B2BAskPriceUpSuccessViewController *b2bAskPriceUpSuccessViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceUpSuccessViewController"];
@@ -115,10 +134,16 @@
     }
 }
 
+- (void) hudWasHidden:(MBProgressHUD *)hud
+{
+    [HUD removeFromSuperview];
+    HUD = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [self pushAndPopStyle];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交询价单"];
@@ -158,8 +183,8 @@
     
     if([DCFCustomExtra validateString:memberid] == NO)
     {
-//        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-//        [self presentViewController:loginNavi animated:YES completion:nil];
+        //        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        //        [self presentViewController:loginNavi animated:YES completion:nil];
         memberid = @"";
     }
     return memberid;
@@ -177,10 +202,19 @@
         [DCFStringUtil showNotice:@"收货地址不能为空"];
         return;
     }
+    
+    if(!HUD)
+    {
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [HUD setLabelText:@"正在提交..."];
+        [HUD setDelegate:self];
+    }
+    
+    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"SubInquiry",time];
     NSString *token = [DCFCustomExtra md5:string];
-
+    
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&addressid=%@&type=%@",token,[self getMemberId],addressData.addressId,@"7"];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubInquiryTag delegate:self];
@@ -189,6 +223,8 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+    [upBtn setEnabled:NO];
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -248,7 +284,7 @@
         {
             return 44;
         }
-
+        
         NSString *str = [NSString stringWithFormat:@"%@",addressData.fullAddress];
         if(str.length == 0 || [str isKindOfClass:[NSNull class]])
         {
@@ -273,7 +309,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -292,7 +328,7 @@
             else
             {
                 [cell.textLabel setText:@""];
-
+                
                 flag = YES;
                 
                 NSString *name = [[addressArray lastObject] receiver];
@@ -361,7 +397,7 @@
         {
             
         }
-   
+        
     }
     if(indexPath.section == 1)
     {
@@ -392,7 +428,7 @@
             [kindLabel setFont:[UIFont systemFontOfSize:13]];
             [kindLabel setText:[NSString stringWithFormat:@"分类:%@",data.chooseKind]];
             [cell.contentView addSubview:kindLabel];
-
+            
             CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
             
             NSString *num = [NSString stringWithFormat:@"数量 %@",data.num];
@@ -554,7 +590,7 @@
             
         }
     }
-//    [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row]];
+    //    [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row]];
     return cell;
 }
 
@@ -592,14 +628,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -178,7 +178,7 @@
     self.navigationItem.titleView = top;
     
     /*陈晓修改*/
-    _tvBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-50-64)];
+    _tvBackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, MainScreenHeight-50-64)];
     [self.view addSubview:_tvBackView];
     
     _buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, _tvBackView.frame.origin.y+_tvBackView.frame.size.height, ScreenWidth, 50)];

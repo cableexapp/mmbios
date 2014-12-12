@@ -58,10 +58,11 @@
     [self pushAndPopStyle];
     
     self.againAskBtn.layer.cornerRadius = 5;
-    self.againAskBtn.frame = CGRectMake(15, self.view.frame.size.height-50,50, 40);
     self.againAskBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
-    [self.view addSubview:self.againAskBtn];
     
+    self.lookBtn.layer.cornerRadius = 5;
+    self.lookBtn.backgroundColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
+   
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的快速询价单"];
     self.navigationItem.titleView = top;
     
@@ -144,7 +145,9 @@
     int inquiryId = [[self.fastData inquiryId] intValue];
     if(inquiryId == 0)
     {
+        self.againAskBtn.frame = CGRectMake(15, 9, ScreenWidth-30, 40);
         [self.lookBtn setHidden:YES];
+        
     }
     else
     {

@@ -14,6 +14,10 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *anotherBtn;
 
+- (IBAction)hotLineBtn:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *imBtn;
+
+- (IBAction)imBtn:(id)sender;
 
 @end

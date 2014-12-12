@@ -34,12 +34,13 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交成功"];
     self.navigationItem.titleView = top;
+
+    self.backToHostBtn.layer.cornerRadius = 5;
+    self.anotherUpBtn.layer.cornerRadius = 5;
     
-    self.backToHostBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.backToHostBtn.layer.borderWidth = 1.0f;
-    
-    self.anotherUpBtn.layer.borderWidth = 1.0f;
-    self.anotherUpBtn.layer.borderColor = MYCOLOR.CGColor;
+    self.askBtn.layer.cornerRadius = 5;
+    self.askBtn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.askBtn.layer.borderWidth = 1;
     
     [self pushAndPopStyle];
 }
@@ -68,7 +69,7 @@
             
             break;
         case 1:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
             break;
         default:
             break;
@@ -78,7 +79,6 @@
 
 - (IBAction)askBtnClick:(id)sender
 {
-    NSLog(@"来自快速询价客服");
     ChatListViewController *chatVC = [[ChatListViewController alloc] init];
     chatVC.fromString = @"来自快速询价客服";
     CATransition *transition = [CATransition animation];
@@ -94,18 +94,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

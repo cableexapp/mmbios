@@ -38,13 +38,13 @@
     self.navigationItem.titleView = top;
     [super viewDidLoad];
     
-    self.backBtn.frame = CGRectMake((self.view.frame.size.width-260)/3, 95, 130, 38);
+    self.backBtn.frame = CGRectMake((self.view.frame.size.width-240)/3, 110, 120, 38);
     self.backBtn.layer.cornerRadius = 5;
     
-    self.oneMoreBtn .frame = CGRectMake(((self.view.frame.size.width-260)/3)*2+130, 95, 130, 38);
+    self.oneMoreBtn .frame = CGRectMake(((self.view.frame.size.width-240)/3)*2+120, 110, 120, 38);
     self.oneMoreBtn.layer.cornerRadius = 5;
     
-    self.imBtn.frame = CGRectMake(148, 55, 110, 32);
+//    self.imBtn.frame = CGRectMake(148, 55, 110, 32);
     self.imBtn.layer.borderWidth = 1;
     self.imBtn.layer.cornerRadius = 5;
     self.imBtn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
@@ -128,7 +128,7 @@
         case 0:
             break;
         case 1:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
             break;
         default:
             break;

@@ -34,6 +34,13 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交成功"];
     self.navigationItem.titleView = top;
     
+    self.backToHostBtn.layer.cornerRadius = 5;
+    self.anotherBtn.layer.cornerRadius = 5;
+    
+    self.imBtn.layer.borderWidth = 1;
+    self.imBtn.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.imBtn.layer.cornerRadius = 5;
+    
     [self pushAndPopStyle];
 }
 
@@ -53,11 +60,6 @@
     
 }
 
-- (IBAction)serviceBtnClick:(id)sender
-{
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
-    [av show];
-}
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -67,7 +69,7 @@
             
             break;
         case 1:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
             break;
         default:
             break;
@@ -76,10 +78,6 @@
     }
 }
 
-- (IBAction)imBtnClick:(id)sender
-{
-    
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -87,15 +85,13 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)hotLineBtn:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    [av show];
 }
-*/
-
+- (IBAction)imBtn:(id)sender
+{
+     NSLog(@"场合选择提交成功—在线咨询");
+}
 @end

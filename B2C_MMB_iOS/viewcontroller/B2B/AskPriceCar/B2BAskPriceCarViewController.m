@@ -187,7 +187,7 @@
         [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         upBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
         upBtn.layer.cornerRadius = 5.0f;
-        [upBtn setFrame:CGRectMake(20,10,ScreenWidth-40,40)];
+        [upBtn setFrame:CGRectMake(15,10,ScreenWidth-30,40)];
         [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [buttomView addSubview:upBtn];
     }

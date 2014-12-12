@@ -167,7 +167,7 @@
             
             break;
         case 1:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
             break;
         default:
             break;
@@ -175,7 +175,9 @@
 }
 
 
-- (IBAction)imBtnClick:(id)sender {
+- (IBAction)imBtnClick:(id)sender
+{
+    NSLog(@"场合选择最后一页-在线咨询");
 }
 
 - (IBAction)chooseBtnClick:(id)sender

@@ -11,5 +11,10 @@
 @interface B2BAskPriceUpSuccessViewController : UIViewController<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *lookForMyOrderBtn;
 @property (weak, nonatomic) IBOutlet UIButton *telBtn;
+@property (weak, nonatomic) IBOutlet UIButton *backToHomeBtn;
+- (IBAction)backToHomeBtn:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *imBTN;
+- (IBAction)imBtn:(id)sender;
+- (IBAction)telBtnClick:(id)sender;
 
 @end

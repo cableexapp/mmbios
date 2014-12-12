@@ -30,15 +30,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+
     [self pushAndPopStyle];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交成功"];
     self.navigationItem.titleView = top;
     
-    [self.lookForMyOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.lookForMyOrderBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     self.lookForMyOrderBtn.layer.cornerRadius = 5.0f;
+    
+    self.backToHomeBtn.layer.cornerRadius = 5.0f;
+    
+    self.imBTN.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.imBTN.layer.borderWidth = 1;
+    self.imBTN.layer.cornerRadius = 5;
 }
 
 - (IBAction)lookForMyOrderBtnClick:(id)sender
@@ -47,11 +52,10 @@
     [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
 }
 
-- (IBAction)telBtnClick:(id)sender
-{
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
-    [av show];
-}
+//- (IBAction)telBtnClick:(id)sender
+//{
+//    
+//}
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -61,7 +65,7 @@
             
             break;
         case 1:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
             break;
         default:
             break;
@@ -73,4 +77,19 @@
     [super didReceiveMemoryWarning];
 }
 
+- (IBAction)backToHomeBtn:(id)sender
+{
+     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)imBtn:(id)sender
+{
+    NSLog(@"热门型号提交成功—在线咨询");
+}
+
+- (IBAction)telBtnClick:(id)sender
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    [av show];
+}
 @end

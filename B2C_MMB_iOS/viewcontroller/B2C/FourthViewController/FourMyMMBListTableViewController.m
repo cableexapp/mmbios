@@ -23,6 +23,7 @@
 #import "AppDelegate.h"
 #import "UIImage (fixOrientation).h"
 #import "DCFStringUtil.h"
+#import "UIImageView+WebCache.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -114,6 +115,7 @@
     if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
     {
     }
+    NSLog(@"memberid = %@",memberid);
     return memberid;
 }
 
@@ -179,15 +181,13 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
 //    NSLog(@"dicRespon = %@",dicRespon);
     if(URLTag == URLGetCountNumTag)
     {
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
-            NSLog(@"badge = %@",badgeArray);
-//             UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:6];
-//            cellBtn.backgroundColor = [UIColor redColor];
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
@@ -200,7 +200,6 @@
                 {
                     if (cellBtn.frame.size.width >= 153)
                     {
-//                        NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
                         if (cellBtn.titleLabel.text.length == 5)
                         {
                             [btn setFrame:CGRectMake(cellBtn.frame.size.width-50, 17, 18, 18)];
@@ -224,7 +223,6 @@
                     }
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
-//                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
                         [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 17, 18, 18)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bq.png"] forState:UIControlStateNormal];
@@ -234,7 +232,6 @@
                 {
                     if (cellBtn.frame.size.width >= 153)
                     {
-//                        NSLog(@"1 = %d",cellBtn.titleLabel.text.length);
                         if (cellBtn.titleLabel.text.length == 5)
                         {
                             [btn setFrame:CGRectMake(cellBtn.frame.size.width-50, 17, 22, 19)];
@@ -246,7 +243,6 @@
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
-//                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
                         if (i == 8)
                         {
                             [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 13, 22, 19)];
@@ -301,6 +297,31 @@
     if(URLTag == URLUpImagePicTag)
     {
         NSLog(@"%@",dicRespon);
+        if(result == 1)
+        {
+            NSString *headUrl = [dicRespon objectForKey:@"headPortraitUrl"];
+            NSString *headPortraitUrl = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/",headUrl];
+            NSLog(@"headPortraitUrl = %@",headPortraitUrl);
+            [[NSUserDefaults standardUserDefaults] setObject:headPortraitUrl forKey:@"headPortraitUrl"];
+            
+            [self.tableView reloadData];
+//            NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
+//            NSArray *reload = [NSArray arrayWithObject:path];
+//            [self.tableView reloadRowsAtIndexPaths:reload withRowAnimation:0];
+            
+            [DCFStringUtil showNotice:msg];
+        }
+        else
+        {
+            if([DCFCustomExtra validateString:msg] == NO)
+            {
+                [DCFStringUtil showNotice:@"上传头像失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
     }
 }
 
@@ -458,8 +479,10 @@
 
 - (void)photoBtnAction:(id)sender
 {
-    changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像",@"查看头像", nil];
-    [changePhotoSheet showInView:self.view];
+    changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像", nil];
+    if (self.navigationController) {
+        [changePhotoSheet showInView:self.navigationController.navigationBar];
+    }
 }
 
 
@@ -467,22 +490,19 @@
 {
     if ([actionSheet isEqual:changePhotoSheet]) {
         
-        switch (buttonIndex) {
+        switch (buttonIndex)
+        {
+                NSLog(@"changePhotoSheet--->>%d",buttonIndex);
             case 0://更改头像
                 [self uploadPhoto];
                 break;
-            case 1://查看头像
-            {
-                UIImage *image = self.photoBtn.image;
-                //                ShowImgViewController *showImgViewCtrl = [[ShowImgViewController alloc] initWithImage:image goodName:nil];
-                //                [self.navigationController pushViewController:showImgViewCtrl animated:YES];
-            }
-                break;
-                
+
             default:
                 break;
         }
     }else if ([actionSheet isEqual:albumSheet]){
+        NSLog(@"albumSheet--->>%d",buttonIndex);
+
         
         switch (buttonIndex) {
             case 0://手机相册
@@ -544,7 +564,12 @@
 -(void)procesPic:(UIImage*)img
 {
     //图片压缩
-    NSData *data = UIImageJPEGRepresentation(img, 0.5);
+    CGSize imagesize = img.size;
+    imagesize.height =120;
+    imagesize.width = 120;
+    img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
+    NSData *data = UIImageJPEGRepresentation(img, 0.125);
+    
     UIImage *image = [UIImage imageWithData:data];
     self.userImage = image;
     image = [image fixOrientation];
@@ -555,7 +580,7 @@
     NSString *strImageFileName = nil;
     
     
-    [imgArr addObject:img];
+    [imgArr addObject:image];
     //        imgArr = [NSArray arrayWithObject:img];
     
     NSString *nameString = [NSString stringWithFormat:@"%@",img.description];
@@ -567,11 +592,9 @@
     nameString = [nameString substringWithRange:range_1];
     
     NSString *picName = [NSString stringWithFormat:@"%@.png",nameString];
-    NSLog(@"picName = %@",picName);
     [nameArr addObject:picName];
     
-    strImageFileName = [NSString stringWithFormat:@"pic%d",1];
-    NSLog(@"strImageFileName = %@",strImageFileName);
+    strImageFileName = [NSString stringWithFormat:@"%@",@"headPic"];
     [strImageFileNameArray addObject:strImageFileName];
     
     
@@ -581,7 +604,7 @@
     
     conn = [[DCFConnectionUtil alloc]initWithURLTag:URLUpImagePicTag delegate:self];
     
-    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&headPic=%@",[self getMemberId],token,strImageFileName];
+    NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@",[self getMemberId],token];
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2CAppRequest/setHeadPortrait.html?",strRequest];
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
     
@@ -697,7 +720,7 @@
     CGFloat height;
     if(section == 0)
     {
-        height = 95;
+        height = 96;
     }
     else
     {
@@ -710,21 +733,24 @@
 {
     if(section == 0)
     {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 95)];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 96)];
         
-#pragma mark - 暂时写死
-        [self.photoBtn setFrame:CGRectMake((self.view.frame.size.width-50)/2, 10, 50, 50)];
-        [self.photoBtn setImage:[UIImage imageNamed:@"headPic.png"]];
+        [self.photoBtn setFrame:CGRectMake(20, 18, 60, 60)];
+        [self.photoBtn.layer setCornerRadius:CGRectGetHeight([self.photoBtn bounds]) / 2];  //修改半径，实现头像的圆形化
+        self.photoBtn.layer.masksToBounds = YES;
+        NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
+        [self.photoBtn setImageWithURL:[NSURL URLWithString:headPortraitUrl] placeholderImage:[UIImage imageNamed:@"headPic.png"]];
         [view addSubview:self.photoBtn];
         
         UIImageView *backView = [[UIImageView alloc] init];
-        backView.frame = CGRectMake(0, 0, ScreenWidth, 95);
+        backView.frame = CGRectMake(0, 0, ScreenWidth, 96);
         backView.image = [UIImage imageNamed:@"headView.png"];
         [view insertSubview:backView belowSubview:self.photoBtn];
         
         NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width-200)/2, 70, 200, 20)];
-        if(userName.length == 0 || [userName isKindOfClass:[NSNull class]] || userName == NULL || userName == nil)
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.photoBtn.frame.origin.x +self.photoBtn.frame.size.width + 10, 33, 200, 30)];
+        [label setTextAlignment:NSTextAlignmentLeft];
+        if([DCFCustomExtra validateString:userName] == NO)
         {
             [label setText:@""];
         }

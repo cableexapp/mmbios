@@ -239,6 +239,7 @@
     
     if(URLTag == URLLoginTag)
     {
+
         if(HUD)
         {
             [HUD hide:YES];
@@ -288,6 +289,13 @@
             
             NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.tf_Account.text,@"registerAccount",self.tf_Secrect.text,@"registerSecrect", nil];
             [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
+            
+            //        NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
+
+            NSString *headPortraitUrl = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/",[iems objectForKey:@"ext2"]];
+            NSLog(@"headPortraitUrl = %@",headPortraitUrl);
+            
+            [[NSUserDefaults standardUserDefaults] setObject:headPortraitUrl forKey:@"headPortraitUrl"];
             
             [self dismissCurrentView];
         }

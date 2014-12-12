@@ -548,44 +548,8 @@
             {
                 NSDictionary *dic = (NSDictionary *)[mediaInfoArray objectAtIndex:i];
                 UIImage *img=[dic objectForKey:UIImagePickerControllerOriginalImage];
-//                //图片压缩
-//                CGSize imagesize = img.size;
-//                imagesize.height = ScreenWidth;
-//                imagesize.width = ScreenHeight;
-//                img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
-//                NSData *imageData = UIImageJPEGRepresentation(img, 0.0000000001);
-//                
-//                UIImage *upLoadImage = nil;
-//                if(upLoadImage == nil)
-//                {
-//                    upLoadImage = [UIImage imageWithData:imageData];
-//                }
-//                if (upLoadImage)
-//                {
-                    [chooseImageArray addObject:img];
-//                }
-                
-                UIImage *upLoadImage = nil;
-                if(upLoadImage == nil)
-                {
-                    upLoadImage = [UIImage imageWithData:imageData];
-                }
-                if (upLoadImage)
-                {
-                    //                    hasClickPicBtn = YES;
-                    //                    processPicCount = 0;
-                    [chooseImageArray addObject:upLoadImage];
-                }
-                
-                NSLog(@"upLoadImage = %@",upLoadImage);
-                
-                
+                [chooseImageArray addObject:img];
             }
-            
-        }
-        else
-        {
-            NSDictionary *mediaInfo = (NSDictionary *)info;
         }
     }
     //相机
@@ -729,11 +693,7 @@
         [HUD setLabelText:@"上传中....."];
         [HUD setDelegate:self];
     }
-
-
     [self procesPic:chooseImageArray];
-    
-
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode

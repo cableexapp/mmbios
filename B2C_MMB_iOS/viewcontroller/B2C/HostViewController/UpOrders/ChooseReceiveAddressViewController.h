@@ -24,10 +24,11 @@
     DCFConnectionUtil *conn;
     NSMutableArray *dataArray;
 }
-@property (weak, nonatomic) IBOutlet UIView *tvBackView;
-@property (weak, nonatomic) IBOutlet UIView *buttomView;
-@property (weak, nonatomic) IBOutlet UIButton *buttomBtn;
 
+
+@property (strong,nonatomic) UIView *tvBackView;
+@property (strong,nonatomic) UIView *buttomView;
+@property (strong,nonatomic) UIButton *buttomBtn;
 
 @property (assign,nonatomic) id<ReceveAddress> delegate;
 

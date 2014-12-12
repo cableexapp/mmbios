@@ -275,7 +275,6 @@
 		61B710E919FF3B53001CC3BD /* BillMsgManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7109D19FF3B53001CC3BD /* BillMsgManagerViewController.m */; };
 		61B710EA19FF3B53001CC3BD /* ChoosePayTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7109F19FF3B53001CC3BD /* ChoosePayTableViewController.m */; };
 		61B710EB19FF3B53001CC3BD /* ChooseReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B710A119FF3B53001CC3BD /* ChooseReceiveAddressViewController.m */; };
-		61B710EC19FF3B53001CC3BD /* ChooseReceiveAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B710A219FF3B53001CC3BD /* ChooseReceiveAddressViewController.xib */; };
 		61B710ED19FF3B53001CC3BD /* UpOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B710A419FF3B53001CC3BD /* UpOrderViewController.m */; };
 		61B710EE19FF3B53001CC3BD /* LoginNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B710A719FF3B53001CC3BD /* LoginNaviViewController.m */; };
 		61B710EF19FF3B53001CC3BD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B710A919FF3B53001CC3BD /* LoginViewController.m */; };
@@ -918,7 +917,6 @@
 		61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BManagBillData.m; sourceTree = "<group>"; };
 		6178BDD31A398158001D270B /* ManagReceiveAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagReceiveAddressViewController.h; sourceTree = "<group>"; };
 		6178BDD41A398158001D270B /* ManagReceiveAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagReceiveAddressViewController.m; sourceTree = "<group>"; };
-		6178BDD51A398158001D270B /* ManagReceiveAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManagReceiveAddressViewController.xib; sourceTree = "<group>"; };
 		617E52CA1A2AC0F600121C49 /* B2CHotSaleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CHotSaleData.h; sourceTree = "<group>"; };
 		617E52CB1A2AC0F600121C49 /* B2CHotSaleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CHotSaleData.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1246,7 +1244,6 @@
 		61B7109F19FF3B53001CC3BD /* ChoosePayTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoosePayTableViewController.m; sourceTree = "<group>"; };
 		61B710A019FF3B53001CC3BD /* ChooseReceiveAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseReceiveAddressViewController.h; sourceTree = "<group>"; };
 		61B710A119FF3B53001CC3BD /* ChooseReceiveAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseReceiveAddressViewController.m; sourceTree = "<group>"; };
-		61B710A219FF3B53001CC3BD /* ChooseReceiveAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseReceiveAddressViewController.xib; sourceTree = "<group>"; };
 		61B710A319FF3B53001CC3BD /* UpOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpOrderViewController.h; sourceTree = "<group>"; };
 		61B710A419FF3B53001CC3BD /* UpOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpOrderViewController.m; sourceTree = "<group>"; };
 		61B710A619FF3B53001CC3BD /* LoginNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNaviViewController.h; sourceTree = "<group>"; };
@@ -3161,10 +3158,8 @@
 				61B7109F19FF3B53001CC3BD /* ChoosePayTableViewController.m */,
 				61B710A019FF3B53001CC3BD /* ChooseReceiveAddressViewController.h */,
 				61B710A119FF3B53001CC3BD /* ChooseReceiveAddressViewController.m */,
-				61B710A219FF3B53001CC3BD /* ChooseReceiveAddressViewController.xib */,
 				6178BDD31A398158001D270B /* ManagReceiveAddressViewController.h */,
 				6178BDD41A398158001D270B /* ManagReceiveAddressViewController.m */,
-				6178BDD51A398158001D270B /* ManagReceiveAddressViewController.xib */,
 				61B710A319FF3B53001CC3BD /* UpOrderViewController.h */,
 				61B710A419FF3B53001CC3BD /* UpOrderViewController.m */,
 			);
@@ -4743,7 +4738,6 @@
 				8BA7C0801A10A85500758B0F /* 傲慢@2x.png in Resources */,
 				8BA7C0841A10A85500758B0F /* 冷汗@2x.png in Resources */,
 				0DCA61191A32DDED00FC86DB /* arrow_btn.png in Resources */,
-				61B710EC19FF3B53001CC3BD /* ChooseReceiveAddressViewController.xib in Resources */,
 				8BA7C12C1A10A85500758B0F /* 跳跳@2x.png in Resources */,
 				61CCBCE519CFFF150008A46B /* Icon.png in Resources */,
 				6181A4DD19CFC4C2000E2D14 /* up.png in Resources */,
@@ -4755,6 +4749,7 @@
 				6181A4E319CFC4C2000E2D14 /* cell_3.png in Resources */,
 				8BF4524E1A39A6A400E3665F /* deleat.png in Resources */,
 				619C10081A0772EA002E9DF8 /* KindsPlist.plist in Resources */,
+				8BCAFD3F1A281D6B005702FD /* YellowDownArrow.png in Resources */,
 				8BA7C0E11A10A85500758B0F /* 拳头.png in Resources */,
 				8BA7C1351A10A85500758B0F /* 闭嘴.png in Resources */,
 				8B8B985B1A2F165500697375 /* 热门型号.png in Resources */,

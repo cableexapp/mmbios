@@ -1349,6 +1349,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+//        [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)

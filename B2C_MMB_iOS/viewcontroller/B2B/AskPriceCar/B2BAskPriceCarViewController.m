@@ -181,19 +181,16 @@
         buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-60-64, ScreenWidth, 60)];
         [self.view addSubview:buttomView];
         
-        
         upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [upBtn setTitle:@"提交" forState:UIControlStateNormal];
         upBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         upBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
         upBtn.layer.cornerRadius = 5.0f;
-        [upBtn setFrame:CGRectMake(ScreenWidth-140, 10, 120, 40)];
+        [upBtn setFrame:CGRectMake(20,10,ScreenWidth-40,40)];
         [upBtn addTarget:self action:@selector(upBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [buttomView addSubview:upBtn];
     }
-    
-
     
     noCell = [[UITableViewCell alloc] init];
     [noCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
@@ -440,8 +437,6 @@
                     }
                     [cellHeightArray addObject:[NSNumber numberWithFloat:height]];
                     
-                    
-                    
                     //计算head高度
                     UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, ScreenWidth-20,20)];
                     [modelLabel setText:[NSString stringWithFormat:@"型号:  %@",[[dataArray objectAtIndex:i] cartModel]]];
@@ -456,12 +451,9 @@
                     [kindLabel setNumberOfLines:0];
                     [sectionHeadBtn addSubview:kindLabel];
                     
-                    
-                    
                     UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];
                     [firstLine setBackgroundColor:[UIColor lightGrayColor]];
                     [sectionHeadBtn addSubview:firstLine];
-                    
                     
                     UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(0, height-1, ScreenWidth, 1)];
                     [secondLine setBackgroundColor:[UIColor lightGrayColor]];
@@ -472,7 +464,6 @@
                 }
                 [moreCell stopAnimation];
             }
-            
         }
         else
         {
@@ -560,10 +551,10 @@
     //        [chooseArray removeAllObjects];
     //    }
     
-    UIImageView *currentIV= (UIImageView *)[self.view viewWithTag:3000];
-    [UIView animateWithDuration:0.3 animations:^{
-        currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
-    }];
+//    UIImageView *currentIV= (UIImageView *)[self.view viewWithTag:3000];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
+//    }];
     
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
@@ -596,14 +587,14 @@
     
     UIButton *btn = (UIButton *)[sectionHeadBtnArray objectAtIndex:section];
     
-    if (!askView)
-    {
-        askView = [[UIImageView alloc] init];
-        askView.frame = CGRectMake(ScreenWidth-35, (btn.frame.size.height-25)/2, 25, 25);
-        askView.image = [UIImage imageNamed:@"askPriceCar_arrow"];
-        askView.tag = 3000;
-        [btn addSubview:askView];
-    }
+//    if (!askView)
+//    {
+//        askView = [[UIImageView alloc] init];
+//        askView.frame = CGRectMake(ScreenWidth-35, (btn.frame.size.height-25)/2, 25, 25);
+//        askView.image = [UIImage imageNamed:@"askPriceCar_arrow"];
+//        askView.tag = 3000;
+//        [btn addSubview:askView];
+//    }
     
     return btn;
 }

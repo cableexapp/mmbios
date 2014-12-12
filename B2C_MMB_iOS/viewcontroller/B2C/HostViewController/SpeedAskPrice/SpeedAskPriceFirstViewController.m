@@ -72,6 +72,7 @@
     self.tel_Tf.placeholder = @"手机号码/固定号码";
     self.tel_Tf.layer.borderWidth = 0.5; 
     self.tel_Tf.layer.borderColor = [[UIColor clearColor] CGColor];
+    self.tel_Tf.tintColor = [UIColor redColor];
     
     UIView *tel_lineView = [[UIView alloc] init];
     tel_lineView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
@@ -89,6 +90,7 @@
     content_lineView.frame = CGRectMake(0, self.content_Tv.frame.origin.y+self.content_Tv.frame.size.height-1, ScreenWidth, 1);
     [self.mySv addSubview:content_lineView];
     
+    self.content_Tv.tintColor = [UIColor redColor];
 
     self.upBtn.layer.cornerRadius = 6;
     self.upBtn.layer.backgroundColor = [[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] CGColor];
@@ -524,7 +526,6 @@
         //          [chooseImageArray removeAllObjects];
     }
     
-    
     //相册
     if(cameraOrPhoto == 1)
     {
@@ -543,11 +544,11 @@
                 NSDictionary *dic = (NSDictionary *)[mediaInfoArray objectAtIndex:i];
                 UIImage *img=[dic objectForKey:UIImagePickerControllerOriginalImage];
                 //图片压缩
-//                CGSize imagesize = img.size;
-//                imagesize.height = 500;
-//                imagesize.width = 500;
-//                img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
-                NSData *imageData = UIImageJPEGRepresentation(img, 0.0000000001);
+                CGSize imagesize = img.size;
+                imagesize.height = ScreenHeight;
+                imagesize.width = ScreenWidth;
+                img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
+                NSData *imageData = UIImageJPEGRepresentation(img, 0.25);
                 
                 UIImage *upLoadImage = nil;
                 if(upLoadImage == nil)
@@ -560,6 +561,9 @@
                     //                    processPicCount = 0;
                     [chooseImageArray addObject:upLoadImage];
                 }
+                
+                NSLog(@"upLoadImage = %@",upLoadImage);
+                
                 
             }
             

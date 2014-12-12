@@ -695,6 +695,15 @@
             [secondLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:secondLabel];
             
+            if ([status intValue] == 2)
+            {
+                UILabel *messageLabel = [[UILabel alloc] init];
+                messageLabel.frame = CGRectMake(ScreenWidth-175, 5, 170, 30);
+                messageLabel.text = @"如果您已打款联系客服进行确认";
+                messageLabel.font = [UIFont systemFontOfSize:12];
+                [cell.contentView addSubview:messageLabel];
+            }
+            
             if([status intValue] == 0 || [status intValue] == 5)
             {
                 UIButton *statusBtn = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -271,15 +271,15 @@
 {
     [tableView setSeparatorColor:MYCOLOR];
     
-
-    
-    static NSString *cellId = @"cellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(!cell)
+    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+    {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
     if(indexPath.section == 0)
@@ -357,7 +357,6 @@
                 [cell.contentView addSubview:nameLabel];
                 [cell.contentView addSubview:telLabel];
                 [cell.contentView addSubview:addressLabel];
-                
             }
         }
         else

@@ -470,7 +470,7 @@
         {
             countLabel.hidden = YES;
         }
-        else if ([[dicRespon objectForKey:@"value"] intValue] >= 1 && [[dicRespon objectForKey:@"value"] intValue] < 99)
+        else if ([[dicRespon objectForKey:@"value"] intValue] > 0 && [[dicRespon objectForKey:@"value"] intValue] < 99)
         {
             countLabel.hidden = NO;
             
@@ -498,7 +498,7 @@
         {
             countLabel.hidden = YES;
         }
-        else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
+        else if ([[dicRespon objectForKey:@"total"] intValue] > 0 && [[dicRespon objectForKey:@"total"] intValue] < 99)
         {
             countLabel.hidden = NO;
             
@@ -518,8 +518,6 @@
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
-
-            NSLog(@"btnArray = %@",btnArray);
             
             UIButton *btn = [btnArray objectAtIndex:btnTag];
             

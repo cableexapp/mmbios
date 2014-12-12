@@ -46,9 +46,9 @@
         _shopId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopId"]];
         
         _visitorId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"visitorId"]];
-
+        
         _productItemPic = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productItemPic"]];
-
+        
         //.的下标
         int docIndex = _productItemPic.length-4;
         if([_productItemPic characterAtIndex:docIndex] == '.')
@@ -84,6 +84,7 @@
             _productItemPic = [NSString stringWithFormat:@"%@",has];
         }
         
+        _productNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productNum"]];
     }
     return self;
 }

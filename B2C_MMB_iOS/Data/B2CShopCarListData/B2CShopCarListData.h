@@ -27,6 +27,7 @@
 @property (strong,nonatomic) NSString *sShopName;
 @property (strong,nonatomic) NSString *shopId;
 @property (strong,nonatomic) NSString *visitorId;
+@property (strong,nonatomic) NSString *productNum;
 
 - (id) initWithDic:(NSDictionary *) dic;
 

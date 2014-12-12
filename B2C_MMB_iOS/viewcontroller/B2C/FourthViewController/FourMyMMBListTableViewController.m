@@ -21,6 +21,8 @@
 #import "B2BAskPriceCarViewController.h"
 #import "KxMenu.h"
 #import "AppDelegate.h"
+#import "UIImage (fixOrientation).h"
+#import "DCFStringUtil.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -39,6 +41,10 @@
     int tempCount;
     
     int tempShopCar;
+    
+    
+    UIActionSheet *changePhotoSheet;
+    UIActionSheet *albumSheet;
 }
 @end
 
@@ -292,6 +298,10 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:nil];
     }
+    if(URLTag == URLUpImagePicTag)
+    {
+        NSLog(@"%@",dicRespon);
+    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -438,8 +448,184 @@
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
     }
    
+    //陈晓修改头像上传
+    self.photoBtn = [[UIImageView alloc] init];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoBtnAction:)];
+    [self.photoBtn setUserInteractionEnabled:YES];
+    [self.photoBtn addGestureRecognizer:tapGesture];
+    
 }
 
+- (void)photoBtnAction:(id)sender
+{
+    changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像",@"查看头像", nil];
+    [changePhotoSheet showInView:self.view];
+}
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if ([actionSheet isEqual:changePhotoSheet]) {
+        
+        switch (buttonIndex) {
+            case 0://更改头像
+                [self uploadPhoto];
+                break;
+            case 1://查看头像
+            {
+                UIImage *image = self.photoBtn.image;
+                //                ShowImgViewController *showImgViewCtrl = [[ShowImgViewController alloc] initWithImage:image goodName:nil];
+                //                [self.navigationController pushViewController:showImgViewCtrl animated:YES];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }else if ([actionSheet isEqual:albumSheet]){
+        
+        switch (buttonIndex) {
+            case 0://手机相册
+                [self performSelector:@selector(openAlbum:) withObject:nil afterDelay:0.1];
+                break;
+            case 1://拍照
+                [self performSelector:@selector(takePhotos:) withObject:nil afterDelay:0.1];
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+}
+
+#pragma mark - 上传头像
+- (void)uploadPhoto
+{
+    albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
+    if (self.navigationController) {
+        [albumSheet showInView:self.navigationController.navigationBar];
+    }
+}
+
+- (void) openAlbum:(id) sender
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+    if([UIImagePickerController isSourceTypeAvailable:
+        UIImagePickerControllerSourceTypePhotoLibrary])
+    {
+        
+        pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    pickerImage.delegate = self;
+    pickerImage.allowsEditing = NO;
+    [self presentViewController:pickerImage animated:YES completion:nil];
+    
+}
+
+- (void) takePhotos:(id) sender
+{
+    UIImagePickerController *pickerImage = [[UIImagePickerController alloc] init];
+    if([UIImagePickerController isSourceTypeAvailable:
+        UIImagePickerControllerSourceTypeCamera])
+    {
+        
+        pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    
+    pickerImage.delegate = self;
+    pickerImage.allowsEditing = NO;
+    [self presentViewController:pickerImage animated:YES completion:nil];
+    
+}
+
+#pragma mark - 处理图片
+-(void)procesPic:(UIImage*)img
+{
+    //图片压缩
+    NSData *data = UIImageJPEGRepresentation(img, 0.5);
+    UIImage *image = [UIImage imageWithData:data];
+    self.userImage = image;
+    image = [image fixOrientation];
+    
+    NSMutableArray *imgArr = [[NSMutableArray alloc] init];
+    NSMutableArray *nameArr = [[NSMutableArray alloc] init];
+    NSMutableArray *strImageFileNameArray = [[NSMutableArray alloc] init];
+    NSString *strImageFileName = nil;
+    
+    
+    [imgArr addObject:img];
+    //        imgArr = [NSArray arrayWithObject:img];
+    
+    NSString *nameString = [NSString stringWithFormat:@"%@",img.description];
+    
+    NSRange range = NSMakeRange(1, nameString.length-2);
+    nameString = [nameString substringWithRange:range];
+    
+    NSRange range_1 = NSMakeRange(9, nameString.length-9);
+    nameString = [nameString substringWithRange:range_1];
+    
+    NSString *picName = [NSString stringWithFormat:@"%@.png",nameString];
+    NSLog(@"picName = %@",picName);
+    [nameArr addObject:picName];
+    
+    strImageFileName = [NSString stringWithFormat:@"pic%d",1];
+    NSLog(@"strImageFileName = %@",strImageFileName);
+    [strImageFileNameArray addObject:strImageFileName];
+    
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"setHeadPortrait",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    conn = [[DCFConnectionUtil alloc]initWithURLTag:URLUpImagePicTag delegate:self];
+    
+    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&headPic=%@",[self getMemberId],token,strImageFileName];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2CAppRequest/setHeadPortrait.html?",strRequest];
+    NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
+    
+    [conn getResultFromUrlString:urlString dicText:nil dicImage:imgDic imageFilename:strImageFileNameArray];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    
+    UIImage *img=[info objectForKey:UIImagePickerControllerOriginalImage];
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        
+        UIImageWriteToSavedPhotosAlbum(img, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    if (img) {
+        
+        [self performSelector:@selector(procesPic:) withObject:img afterDelay:0.1];
+        
+    }
+    
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo
+{
+    NSString *msg = nil;
+    
+    if(error != NULL){
+        msg = @"保存图片失败";
+        [DCFStringUtil showNotice:msg];
+        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+        //
+        //                                                        message:msg
+        //
+        //                                                       delegate:self
+        //
+        //                                              cancelButtonTitle:@"确定"
+        //
+        //                                              otherButtonTitles:nil];
+        //
+        //        [alert show];
+    }
+    
+}
 
 - (void)popShopCar_mmb:(NSNotification *)sender
 {
@@ -526,14 +712,15 @@
     {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 95)];
         
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-50)/2, 10, 50, 50)];
-        [iv setImage:[UIImage imageNamed:@"headPic.png"]];
-        [view addSubview:iv];
+#pragma mark - 暂时写死
+        [self.photoBtn setFrame:CGRectMake((self.view.frame.size.width-50)/2, 10, 50, 50)];
+        [self.photoBtn setImage:[UIImage imageNamed:@"headPic.png"]];
+        [view addSubview:self.photoBtn];
         
         UIImageView *backView = [[UIImageView alloc] init];
         backView.frame = CGRectMake(0, 0, ScreenWidth, 95);
         backView.image = [UIImage imageNamed:@"headView.png"];
-        [view insertSubview:backView belowSubview:iv];
+        [view insertSubview:backView belowSubview:self.photoBtn];
         
         NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((self.view.frame.size.width-200)/2, 70, 200, 20)];

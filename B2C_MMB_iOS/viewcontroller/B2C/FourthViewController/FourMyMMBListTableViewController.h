@@ -16,6 +16,9 @@
     DCFConnectionUtil *conn;
 }
 
+@property(nonatomic,strong) UIImageView *photoBtn;
+@property (nonatomic,strong) UIImage *userImage;
+
 @property (weak, nonatomic) IBOutlet UIButton *btn_2;
 @property (weak, nonatomic) IBOutlet UIButton *btn_3;
 

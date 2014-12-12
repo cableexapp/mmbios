@@ -672,6 +672,13 @@
     {
         B2CShopCarListData *carListData = [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
         addNum = [carListData.num intValue];
+        int productNum = [carListData.productNum intValue];
+        NSLog(@"productNum = %d",productNum);
+        if(addNum > productNum)
+        {
+            [DCFStringUtil showNotice:@"所购数量不能超过库存"];
+            return;
+        }
         addNum = addNum + 1;
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -1379,6 +1386,20 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     else
     {
+        /**陈晓修改整数后面没有后2位**/
+        for(int i=0;i<shopPrice.length;i++)
+        {
+            char c = [shopPrice characterAtIndex:i];
+            if(c == '.')
+            {
+                break;
+            }
+            if(c != '.' && i == shopPrice.length-1)
+            {
+                shopPrice = [shopPrice stringByAppendingString:@".00"];
+            }
+        }
+        
         shopPriceSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:shopPrice WithSize:CGSizeMake(MAXFLOAT, 30)];
     }
     UILabel *label = [[priceLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];

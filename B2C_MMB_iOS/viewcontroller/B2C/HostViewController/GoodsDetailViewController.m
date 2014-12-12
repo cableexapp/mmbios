@@ -82,7 +82,7 @@
     
     int statrScore;
     
-    UIButton *btn;
+    UIButton *buyOrAddBtn;
 }
 @end
 
@@ -214,29 +214,29 @@
     [buttomView addSubview:chatBtn];
     for(int i=0;i<2;i++)
     {
-        btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        buyOrAddBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
         if(i == 0)
         {
-            [btn setFrame:CGRectMake(self.view.frame.size.width-215, 5, 100, 40)];
-            [btn setTitle:@"立即购买" forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-            btn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:144.0/255.0 blue:1/255.0 alpha:1.0];
-            btn.layer.cornerRadius = 5;
+            [buyOrAddBtn setFrame:CGRectMake(self.view.frame.size.width-215, 5, 100, 40)];
+            [buyOrAddBtn setTitle:@"立即购买" forState:UIControlStateNormal];
+            [buyOrAddBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [buyOrAddBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            buyOrAddBtn.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:144.0/255.0 blue:1/255.0 alpha:1.0];
+            buyOrAddBtn.layer.cornerRadius = 5;
         }
         if(i == 1)
         {
-            [btn setFrame:CGRectMake(210*i + 5, 5, 100, 40)];
-            [btn setTitle:@"加入购物车" forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            btn.backgroundColor = [UIColor colorWithRed:21.0/255.0 green:101.0/255.0 blue:186/255.0 alpha:1.0];
-            [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-            btn.layer.cornerRadius = 5;
+            [buyOrAddBtn setFrame:CGRectMake(210*i + 5, 5, 100, 40)];
+            [buyOrAddBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
+            [buyOrAddBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            buyOrAddBtn.backgroundColor = [UIColor colorWithRed:21.0/255.0 green:101.0/255.0 blue:186/255.0 alpha:1.0];
+            [buyOrAddBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+            buyOrAddBtn.layer.cornerRadius = 5;
         }
-        [btn setTag:i+100];
-        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [buttomView addSubview:btn];
+        [buyOrAddBtn setTag:i+100];
+        [buyOrAddBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [buttomView addSubview:buyOrAddBtn];
     }
     
     [self loadRequest];

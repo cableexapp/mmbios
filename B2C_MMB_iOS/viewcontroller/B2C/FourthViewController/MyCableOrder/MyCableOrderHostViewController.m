@@ -150,7 +150,6 @@
 
 -(void)searchOrderBtnClick
 {
-    NSLog(@"搜索........");
     [self setHidesBottomBarWhenPushed:YES];
     MyCableOrderB2BViewController *searchVC = [[MyCableOrderB2BViewController alloc] init];
     searchVC.fromFlag = @"我的电缆订单";

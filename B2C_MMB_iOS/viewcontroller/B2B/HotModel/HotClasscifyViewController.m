@@ -46,6 +46,8 @@
     UIPageControl *pageControl;
     
     NSTimer *timer;
+    
+    NSTimer *timer2;
 }
 @end
 
@@ -437,9 +439,11 @@
     {
         self.nextBtn.hidden = NO;
     }
+    
+    timer2 = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hidenPageControl) userInfo:nil repeats:NO];
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+-(void)hidenPageControl
 {
     pageControl.hidden = YES;
 }
@@ -521,8 +525,6 @@
 
 - (IBAction)searchBtnClick:(id)sender
 {
-
-    
     NSLog(@"搜索");
 }
 
@@ -538,6 +540,7 @@
         page++;
         [self.sv setContentOffset:CGPointMake(ScreenWidth*page, 0) animated:YES];
     }
+     timer2 = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hidenPageControl) userInfo:nil repeats:NO];
 }
 
 - (IBAction)upBtnClick:(id)sender
@@ -552,6 +555,7 @@
         page--;
         [self.sv setContentOffset:CGPointMake(ScreenWidth*page, 0) animated:YES];
     }
+     timer2 = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hidenPageControl) userInfo:nil repeats:NO];
 }
 
 - (IBAction)hotLineBtnClick:(id)sender

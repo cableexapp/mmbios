@@ -23,7 +23,6 @@
 #import "SecondNaviViewController.h"
 #import "ThirdNaviViewController.h"
 #import "FourthNaviViewController.h"
-#import "ShopCarTabBar.h"
 
 @interface DCFTabBarCtrl ()
 
@@ -51,8 +50,8 @@
     //    [hostNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
 //    UIStoryboard *secondSB = [UIStoryboard storyboardWithName:@"SecondSB" bundle:nil];
-    ShopCarTabBar *secondSB = [[ShopCarTabBar alloc] init];
-    SecondNaviViewController *secondNavi = [[SecondNaviViewController alloc] initWithRootViewController:secondSB];
+    
+    SecondNaviViewController *secondNavi = [[SecondNaviViewController alloc] initWithRootViewController:nil];
     UIImage *selectClassifySelectImg = [UIImage imageNamed:@"classifySelect.png"];
     UIImage *unClassifyUnSelectImImg = [UIImage imageNamed:@"classifyUnSelect.png"];
     selectClassifySelectImg = [UIImage imageWithCGImage:selectClassifySelectImg.CGImage scale:1.5 orientation:selectClassifySelectImg.imageOrientation];

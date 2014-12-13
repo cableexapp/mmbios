@@ -27,6 +27,12 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+     [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -93,6 +99,7 @@
 {
      NSLog(@"场合选择提交成功—在线咨询");
 #pragma mark - 在线客服
+    [self setHidesBottomBarWhenPushed:YES];
     ChatListViewController *chatVC = [[ChatListViewController alloc] init];
     chatVC.fromString = @"场合选择提交成功客服";
     CATransition *transition = [CATransition animation];

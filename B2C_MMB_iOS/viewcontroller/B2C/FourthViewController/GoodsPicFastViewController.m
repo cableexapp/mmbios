@@ -52,6 +52,8 @@
     [tv setShowsVerticalScrollIndicator:NO];
     [self.tableBackView addSubview:tv];
     
+    self.buttomLabel.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线快照"];
     self.navigationItem.titleView = top;
@@ -347,19 +349,19 @@
                 
                 customCell.contentView.backgroundColor = [UIColor whiteColor];
                 
+                UIView *lineView = [[UIView alloc] init];
+                lineView.frame = CGRectMake(0, customCell.frame.size.height, ScreenWidth, 10);
+                lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+                [customCell.contentView addSubview:lineView];
+                
                 return customCell;
             }
             else
             {
                 
             }
-            
-            
         }
-        
     }
-    
-    
     return cell;
 }
 

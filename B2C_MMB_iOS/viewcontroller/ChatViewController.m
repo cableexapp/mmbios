@@ -79,7 +79,7 @@
     [self.view insertSubview:naviTitle atIndex:2];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, 15, 22);
+    btn.frame = CGRectMake(10, 31.5, 15, 22);
     [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview:btn];
@@ -280,17 +280,21 @@
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
     }
-    else if ([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
-    {
-        
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
-    }
     else if ([self.fromStringFlag isEqualToString:@"热门型号在线咨询"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
-         [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+    }
+    else if ([self.fromStringFlag isEqualToString:@"场合选择客服"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+    }
+    else if([self.fromStringFlag isEqualToString:@"场合选择提交成功客服"])
+    {
+       [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+    }
+    else if([self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
     }
     else if ([self.fromStringFlag isEqualToString:@"热门分类在线客服"])
     {
@@ -301,6 +305,15 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"disMissSelfPage" object:nil];
         [self.navigationController.tabBarController.tabBar setHidden:NO];
+    }
+    if ([self.fromStringFlag rangeOfString:@"@"].location != NSNotFound)
+    {
+        if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+        {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+        }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCount" object:nil];
 }

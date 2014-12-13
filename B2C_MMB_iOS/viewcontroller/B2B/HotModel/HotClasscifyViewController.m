@@ -90,15 +90,11 @@
     [av show];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [self.navigationController.tabBarController.tabBar setHidden:YES];
-}
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101)
@@ -525,14 +521,13 @@
 
 - (IBAction)searchBtnClick:(id)sender
 {
-    NSLog(@"搜索");
+//    NSLog(@"搜索");
 }
 
 - (IBAction)nextBtnClick:(id)sender
 {
     if(page >= 6)
     {
-        NSLog(@"到底了");
         return;
     }
     else
@@ -547,7 +542,6 @@
 {
     if(page <= 0)
     {
-        NSLog(@"到头了");
         return;
     }
     else
@@ -591,7 +585,7 @@
             }
             else
             {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
             }
             break;
         default:

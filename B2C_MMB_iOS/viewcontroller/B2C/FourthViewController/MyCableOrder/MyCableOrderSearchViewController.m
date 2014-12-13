@@ -196,6 +196,7 @@
                 {
                     if(intTotal == 0)
                     {
+                        noResultView.hidden = YES;
                         [moreCell noDataAnimation];
                     }
                     else
@@ -208,6 +209,7 @@
                 }
                 else
                 {
+                    noResultView.hidden = YES;
                     [moreCell failAcimation];
                 }
             }
@@ -437,7 +439,6 @@
     {
         moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
         [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-        [moreCell noDataAnimation];
     }
     return moreCell;
 }
@@ -530,7 +531,7 @@
     }
     if(!dataArray || dataArray.count == 0)
     {
-//        return [self returnMoreCell:tableView];
+        return [self returnMoreCell:self.myTableView];
     }
     else if(dataArray.count > 0)
     {

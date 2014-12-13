@@ -28,6 +28,12 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -78,11 +84,10 @@
      [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+#pragma mark - 在线客服
 - (IBAction)imBtn:(id)sender
 {
-    NSLog(@"热门型号提交成功—在线咨询");
-    
-#pragma mark - 在线客服
+    [self setHidesBottomBarWhenPushed:YES];
     ChatListViewController *chatVC = [[ChatListViewController alloc] init];
     chatVC.fromString = @"热门型号提交成功在线客服";
     CATransition *transition = [CATransition animation];

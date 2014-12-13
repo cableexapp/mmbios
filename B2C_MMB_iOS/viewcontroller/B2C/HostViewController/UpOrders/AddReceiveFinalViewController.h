@@ -14,6 +14,13 @@
 #import "DCFConnectionUtil.h"
 #import "B2CAddressData.h"
 
+@protocol PushDelegate <NSObject>
+
+- (void) pushDelegate;
+
+@end
+
+
 @interface AddReceiveFinalViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate>
 {
     NSString *chooseProvince;   //省
@@ -37,6 +44,8 @@
 
 @property (strong,nonatomic) NSDictionary *msgDic;
 
+@property (assign,nonatomic) id<PushDelegate> delegate;
+
 //用于新增地址
 - (id) initWithAddress:(NSString *) address WithCode:(NSString *) code WithSwithStatus:(BOOL) status;
 
@@ -48,3 +57,5 @@
 - (void) validateAddress:(int) status;
 
 @end
+
+

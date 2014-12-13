@@ -204,6 +204,14 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
+    if([self.numTF isFirstResponder])
+    {
+        [self.numTF resignFirstResponder];
+    }
+    if([self.timeTF isFirstResponder])
+    {
+        [self.timeTF resignFirstResponder];
+    }
     //    [self.delegate removeSubView];
     //    if(pickerView)
     //    {

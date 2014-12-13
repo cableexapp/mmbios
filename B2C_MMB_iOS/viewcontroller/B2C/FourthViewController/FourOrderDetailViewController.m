@@ -260,7 +260,7 @@
         [label setText:add];
         [label setNumberOfLines:0];
         [label setFont:[UIFont systemFontOfSize:13]];
-        return label.frame.size.height+45;
+        return label.frame.size.height+70;
     }
     else
     {

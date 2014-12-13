@@ -52,6 +52,8 @@
     [tv setShowsVerticalScrollIndicator:NO];
     [self.tableBackView addSubview:tv];
     
+    self.buttomLabel.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线快照"];
     self.navigationItem.titleView = top;

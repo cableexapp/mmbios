@@ -222,6 +222,7 @@
         [tv setDataSource:self];
 //        tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
         [tv setDelegate:self];
+        tv.separatorStyle = UITableViewCellSeparatorStyleNone;
         [tv setShowsHorizontalScrollIndicator:NO];
         [tv setShowsVerticalScrollIndicator:NO];
         [self.view addSubview:tv];
@@ -344,7 +345,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLInquiryCartListTag)
@@ -443,21 +443,13 @@
                     [modelLabel setFont:[UIFont systemFontOfSize:12]];
                     [sectionHeadBtn addSubview:modelLabel];
                     
-                    NSString *kindString = [NSString stringWithFormat:@"分类:  %@ %@ %@",[[dataArray objectAtIndex:i] firstType],[[dataArray objectAtIndex:i] secondType],[[dataArray objectAtIndex:i] thridType]];
+                    NSString *kindString = [NSString stringWithFormat:@"分类:  %@>%@>%@",[[dataArray objectAtIndex:i] firstType],[[dataArray objectAtIndex:i] secondType],[[dataArray objectAtIndex:i] thridType]];
                     CGSize size_head = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:11] WithText:kindString WithSize:CGSizeMake(modelLabel.frame.size.width, MAXFLOAT)];
                     UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(modelLabel.frame.origin.x,modelLabel.frame.origin.y+modelLabel.frame.size.height, modelLabel.frame.size.width, size_head.height)];
                     [kindLabel setText:kindString];
                     [kindLabel setFont:[UIFont systemFontOfSize:11]];
                     [kindLabel setNumberOfLines:0];
                     [sectionHeadBtn addSubview:kindLabel];
-                    
-                    UIView *firstLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 1)];
-                    [firstLine setBackgroundColor:[UIColor lightGrayColor]];
-                    [sectionHeadBtn addSubview:firstLine];
-                    
-                    UIView *secondLine = [[UIView alloc] initWithFrame:CGRectMake(0, height-1, ScreenWidth, 1)];
-                    [secondLine setBackgroundColor:[UIColor lightGrayColor]];
-                    //                    [sectionHeadBtn addSubview:secondLine];
                     
                     [sectionHeadBtn setFrame:CGRectMake(0, 0, ScreenWidth, size_head.height+30)];
                     [sectionHeadBtnArray addObject:sectionHeadBtn];

@@ -50,7 +50,6 @@
             [view setHidden:YES];
         }
     }
-    
 }
 
 - (void)viewDidLoad
@@ -180,6 +179,7 @@
 {
     NSLog(@"场合选择最后一页-在线咨询");
 #pragma mark - 在线客服
+    [self setHidesBottomBarWhenPushed:YES];
     ChatListViewController *chatVC = [[ChatListViewController alloc] init];
     chatVC.fromString = @"场合选择客服";
     CATransition *transition = [CATransition animation];

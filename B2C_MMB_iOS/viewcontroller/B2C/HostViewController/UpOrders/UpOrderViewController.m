@@ -1103,7 +1103,7 @@
                     DCFMyTextField *tf = [cellTextFieldArray objectAtIndex:indexPath.section-3];
                     [tf setFrame:CGRectMake(15, -0.5, ScreenWidth-30, cell.contentView.frame.size.height+0.5)];
 //                    [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-                    [tf setPlaceholder:@"商品备注"];
+                    [tf setPlaceholder:@"   商品备注"];
                     [cell addSubview:tf];
                 }
                 else

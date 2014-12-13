@@ -37,6 +37,8 @@
     NSMutableArray *tempDataArray;
     
     UIView *noResultView;
+    
+    int readDataError;
 }
 
 @end
@@ -193,15 +195,17 @@
                 
                 if(intTotal == 0)
                 {
+                    noResultView.hidden = YES;
                     [moreCell noDataAnimation];
                 }
-                else
-                {
-                    [moreCell noSearchResult];
-                }
+//                else
+//                {
+//                    [moreCell noSearchResult];
+//                }
             }
             else
             {
+                noResultView.hidden = YES;
                 [moreCell failAcimation];
             }
         }
@@ -214,7 +218,7 @@
     int tempSection;
     if(!dataArray || dataArray.count == 0)
     {
-        tempSection = 0;
+        tempSection = 1;
     }
     else if (dataArray.count > 0)
     {
@@ -227,7 +231,7 @@
 {
     if(!dataArray || dataArray.count == 0)
     {
-        return 0;
+        return 1;
     }
     else
     {
@@ -419,6 +423,18 @@
     return view;
 }
 
+- (UITableViewCell *) returnMoreCell:(UITableView *)tableView
+{
+    static NSString *moreCellId = @"moreCell";
+    moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
+    if(moreCell == nil)
+    {
+        moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+        [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+    }
+    return moreCell;
+}
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
@@ -429,7 +445,7 @@
     }
     if(dataArray.count == 0)
     {
-        
+        return [self returnMoreCell:self.myTableView];                                                                                                                                                                                                                                                                                                              
     }
     else
     {

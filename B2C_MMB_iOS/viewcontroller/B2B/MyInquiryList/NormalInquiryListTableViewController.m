@@ -164,14 +164,20 @@
         }
         for(int i=0;i<dataArray.count;i++)
         {
-            UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [lookBtn setTitle:@"查看" forState:UIControlStateNormal];
-            [lookBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-            [lookBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-            [lookBtn setFrame:CGRectMake(ScreenWidth-50, 5, 40, 30)];
-            [lookBtn setTag:i];
-            [lookBtn addTarget:self action:@selector(lookBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [lookBtnArray addObject:lookBtn];
+//            UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//            [lookBtn setTitle:@"查看" forState:UIControlStateNormal];
+//            [lookBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
+//            [lookBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+//            [lookBtn setFrame:CGRectMake(ScreenWidth-50, 5, 40, 30)];
+//            [lookBtn setTag:i];
+//            [lookBtn addTarget:self action:@selector(lookBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            
+            UILabel *lookLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-50, 5, 40, 30)];
+            [lookLabel setText:@"查看"];
+            [lookLabel setFont:[UIFont systemFontOfSize:13]];
+            [lookLabel setTextColor:MYCOLOR];
+            [lookLabel setTextAlignment:NSTextAlignmentRight];
+            [lookBtnArray addObject:lookLabel];
             
             NSString *upTime = [[dataArray objectAtIndex:i] time];
             
@@ -188,7 +194,7 @@
 
 - (void) lookBtnClick:(UIButton *) sender
 {
-    
+
 }
 
 - (void)didReceiveMemoryWarning

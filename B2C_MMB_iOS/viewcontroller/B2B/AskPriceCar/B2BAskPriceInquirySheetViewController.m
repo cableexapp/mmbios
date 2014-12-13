@@ -154,7 +154,6 @@
         buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-60-64, ScreenWidth, 60)];
         [self.view addSubview:buttomView];
         
-        
         upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [upBtn setTitle:@"提交" forState:UIControlStateNormal];
         [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

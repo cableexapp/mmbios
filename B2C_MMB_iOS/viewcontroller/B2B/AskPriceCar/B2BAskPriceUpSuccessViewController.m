@@ -11,6 +11,7 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MyInquiryListFirstViewController.h"
 #import "MCDefine.h"
+#import "ChatListViewController.h"
 
 @interface B2BAskPriceUpSuccessViewController ()
 
@@ -52,11 +53,6 @@
     [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
 }
 
-//- (IBAction)telBtnClick:(id)sender
-//{
-//    
-//}
-
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex)
@@ -85,6 +81,18 @@
 - (IBAction)imBtn:(id)sender
 {
     NSLog(@"热门型号提交成功—在线咨询");
+    
+#pragma mark - 在线客服
+    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+    chatVC.fromString = @"热门型号提交成功在线客服";
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type =  kCATransitionMoveIn;
+    transition.subtype =  kCATransitionFromTop;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:chatVC animated:NO];
 }
 
 - (IBAction)telBtnClick:(id)sender

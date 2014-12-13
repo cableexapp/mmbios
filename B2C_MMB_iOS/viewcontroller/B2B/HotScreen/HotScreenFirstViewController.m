@@ -13,6 +13,7 @@
 #import "DCFCustomExtra.h"
 #import "HotScreenSecondViewController.h"
 #import "SpeedAskPriceFirstViewController.h"
+#import "ChatListViewController.h"
 
 @interface HotScreenFirstViewController ()
 {
@@ -178,6 +179,17 @@
 - (IBAction)imBtnClick:(id)sender
 {
     NSLog(@"场合选择最后一页-在线咨询");
+#pragma mark - 在线客服
+    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+    chatVC.fromString = @"场合选择客服";
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type =  kCATransitionMoveIn;
+    transition.subtype =  kCATransitionFromTop;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:chatVC animated:NO];
 }
 
 - (IBAction)chooseBtnClick:(id)sender

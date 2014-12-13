@@ -416,7 +416,7 @@
                     CGFloat height = 0;
                     
                     NSString *require = [NSString stringWithFormat:@"特殊要求 %@",[[dataArray objectAtIndex:i] require]];
-                    
+                    NSLog(@"require=%@",require);
                     
                     CGSize size;
                     if(require.length == 0 || [require isKindOfClass:[NSNull class]])
@@ -427,13 +427,13 @@
                     {
                         size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                     }
-                    if(size.height < 20)
+                    if(size.height <= 20)
                     {
-                        height = 90+60;
+                        height = 90;
                     }
                     else
                     {
-                        height = size.height+70+60;
+                        height = size.height+70;
                     }
                     [cellHeightArray addObject:[NSNumber numberWithFloat:height]];
                     
@@ -623,7 +623,6 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@",dataArray);
     if(indexPath.section == dataArray.count)
     {
         if(!dataArray || dataArray.count == 0)
@@ -640,7 +639,7 @@
     if(indexPath.row == 0)
     {
         CGFloat height = [[cellHeightArray objectAtIndex:indexPath.section] floatValue];
-        
+        NSLog(@"heightForRowAtIndexPath = %f",height);
         UIButton *btn = [sectionHeadBtnArray objectAtIndex:indexPath.section];
         
         if(btn.selected == NO)
@@ -762,7 +761,7 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        //        [cell.contentView setBackgroundColor:[UIColor whiteColor]];
+       [cell.contentView setBackgroundColor:[UIColor orangeColor]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -964,6 +963,7 @@
             if(i == 6)
             {
                 [cellLabel setFrame:CGRectMake(10, 65, cell.contentView.frame.size.width-20, size_7.height)];
+                [cellLabel setBackgroundColor:[UIColor redColor]];
                 if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] require]] == NO)
                 {
                     [cellLabel setText:@"特殊需求"];

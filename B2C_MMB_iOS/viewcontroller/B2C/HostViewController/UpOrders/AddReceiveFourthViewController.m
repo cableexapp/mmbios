@@ -1,4 +1,4 @@
-//
+	//
 //  AddReceiveFourthViewController.m
 //  B2C_MMB_iOS
 //
@@ -79,6 +79,38 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 44;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50;
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    [view setBackgroundColor:[UIColor colorWithRed:253.0/255.0 green:231.0/255.0 blue:180.0/255.0 alpha:1.0]];
+    
+    NSString *s = [NSString stringWithFormat:@"已选: %@",[_town stringByReplacingOccurrencesOfString:@"," withString:@""]];
+    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:s WithSize:CGSizeMake(MAXFLOAT, 50)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, 40)];
+    [label setText:s];
+    [label setFont:[UIFont systemFontOfSize:13]];
+    [label setTextAlignment:NSTextAlignmentLeft];
+    [view addSubview:label];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 10, 15, 20, 20)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"delete_1.png"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:btn];
+    
+    return view;
+}
+
+- (void) delete:(UIButton *) sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

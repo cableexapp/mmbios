@@ -233,12 +233,16 @@
     {
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
         NSString *address = addressData.addressName;
-        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
+        if([DCFCustomExtra validateString:address]  == NO)
+        {
+            return 70;
+        }
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
         //    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 270, size_3.height)];
         //    [addressLabel setText:address];
         //    [addressLabel setFont:[UIFont systemFontOfSize:13]];
         //    [addressLabel setNumberOfLines:0];
-        return size_3.height + 80;
+        return size_3.height + 70;
         
     }
     return 44;
@@ -246,6 +250,8 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView setSeparatorStyle:0];
+    
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if(cell == nil)
@@ -269,17 +275,16 @@
         
         NSString *name = addressData.receiver;
 //        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5,ScreenWidth-25, 40)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5,ScreenWidth-25, 30)];
         [nameLabel setText:name];
         [nameLabel setTextAlignment:NSTextAlignmentLeft];
-        nameLabel.numberOfLines = 2;
         [nameLabel setFont:[UIFont systemFontOfSize:13]];
         
         [cell.contentView addSubview:nameLabel];
         
         NSString *tel = addressData.tel;
         CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-50-size_2.width, 5, size_2.width, 30)];
+        UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_2.width, 5, size_2.width, 30)];
         [telLabel setTextAlignment:NSTextAlignmentRight];
         [telLabel setText:tel];
         [telLabel setFont:[UIFont systemFontOfSize:13]];
@@ -297,15 +302,17 @@
         
         
         NSString *address = addressData.addressName;
-        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
-        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 295, size_3.height)];
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, ScreenWidth-20, size_3.height)];
         [addressLabel setText:address];
         [addressLabel setFont:[UIFont systemFontOfSize:13]];
         [addressLabel setNumberOfLines:0];
         [cell.contentView addSubview:addressLabel];
         
 
-        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, addressLabel.frame.origin.y+addressLabel.frame.size.height+4, ScreenWidth, 0.3)];
+        [lineView setBackgroundColor:[UIColor lightGrayColor]];
+        [cell.contentView addSubview:lineView];
         
         return cell;
         

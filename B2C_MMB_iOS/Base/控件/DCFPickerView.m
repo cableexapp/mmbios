@@ -16,7 +16,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-   
+        
     }
     return self;
 }
@@ -49,7 +49,7 @@
 //    {
 //        self.frame = frame;
 //
-//        
+//
 //        dataArray = [[NSMutableArray alloc] initWithArray:array];
 //
 //        [self loadView];
@@ -62,44 +62,48 @@
 - (void) loadView
 {
     
-//    [[NSNotificationCenter defaultCenter] removeObserver:<#(id)#> name:<#(NSString *)#> object:<#(id)#>];
+    //    [[NSNotificationCenter defaultCenter] removeObserver:<#(id)#> name:<#(NSString *)#> object:<#(id)#>];
     [self setAlpha:1];
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 216 - 44, 320, 216+44)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height - 216 - 44, self.frame.size.width, 216+44)];
     [view setBackgroundColor:[UIColor whiteColor]];
     [self addSubview:view];
     
-    toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 44)];
     toolBar.barStyle = 0;
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelBtn setFrame:CGRectMake(20, 7, 60, 30)];
+    NSLog(@"%f",self.frame.size.width);
+    cancelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [cancelBtn setFrame:CGRectMake(20, 0,( self.frame.size.width-40)/2, 44)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelBtn setBackgroundColor:MYCOLOR];
+    [cancelBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [cancelBtn addTarget:self action:@selector(cancel) forControlEvents:UIControlEventTouchUpInside];
     [toolBar addSubview:cancelBtn];
     
     
     UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [doneBtn setFrame:CGRectMake(toolBar.frame.size.width-70, 7, 60, 30)];
+    [doneBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, doneBtn.frame.size.width/2, 0, 0)];
+    [doneBtn setFrame:CGRectMake(cancelBtn.frame.origin.x+cancelBtn.frame.size.width, 0, ( self.frame.size.width-40)/2, 44)];
+    doneBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [doneBtn setTitle:@"完成" forState:UIControlStateNormal];
-    [doneBtn setBackgroundColor:MYCOLOR];
+    [doneBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [doneBtn addTarget:self action:@selector(done) forControlEvents:UIControlEventTouchUpInside];
     [toolBar addSubview:doneBtn];
     
-//    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target: nil action: nil];
-//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target: self action: @selector(done)];
-//    [rightButton setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal style:0 barMetrics:UIBarMetricsDefault];
-
-//    UIBarButtonItem *leftButton  = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target: self action: @selector(cancel)];
-//    [[UIBarButtonItem appearance] setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal style:0 barMetrics:UIBarMetricsDefault];
+    //    UIBarButtonItem *titleButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target: nil action: nil];
+    //    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target: self action: @selector(done)];
+    //    [rightButton setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal style:0 barMetrics:UIBarMetricsDefault];
     
-//    UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
-//    NSArray *array = [[NSArray alloc] initWithObjects: leftButton, rightButton, nil];
-//    [toolBar setItems:array];
+    //    UIBarButtonItem *leftButton  = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target: self action: @selector(cancel)];
+    //    [[UIBarButtonItem appearance] setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor blueColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal style:0 barMetrics:UIBarMetricsDefault];
+    
+    //    UIBarButtonItem *fixedButton  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
+    //    NSArray *array = [[NSArray alloc] initWithObjects: leftButton, rightButton, nil];
+    //    [toolBar setItems:array];
     [view addSubview:toolBar];
     
-    pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, toolBar.frame.origin.y + toolBar.frame.size.height, 320, 216)];
+    pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, toolBar.frame.origin.y + toolBar.frame.size.height, self.frame.size.width, 216)];
     pickerView.delegate = self;
     [view addSubview:pickerView];
 }
@@ -133,7 +137,7 @@
             title = [dataArray objectAtIndex:row];
         }
     }
-
+    
 }
 
 - (NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -178,13 +182,13 @@
                 }
             }
         }
-   
-
+        
+        
         
         [self.delegate pickerView:title WithTag:pickTag];
         [self inAndOut];
     }
-
+    
 }
 
 - (void) cancel

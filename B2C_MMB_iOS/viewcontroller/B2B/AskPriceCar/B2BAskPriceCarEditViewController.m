@@ -204,11 +204,11 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-//    [self.delegate removeSubView];
-//    if(pickerView)
-//    {
-//        [pickerView inAndOut];
-//    }
+    //    [self.delegate removeSubView];
+    //    if(pickerView)
+    //    {
+    //        [pickerView inAndOut];
+    //    }
 }
 
 - (void) textViewDidChange:(UITextView *)textView
@@ -368,8 +368,15 @@
 {
     [self.numTF resignFirstResponder];
     [self.timeTF resignFirstResponder];
+    [self.requestTF resignFirstResponder];
     
-    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, self.view.window.frame.size.height) WithArray:array WithTag:tag];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDelegate:self];
+    [self.view setFrame:CGRectMake(20, 20, ScreenWidth, ScreenHeight)];
+    [UIView commitAnimations];
+    
+    pickerView = [[DCFPickerView alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, self.view.window.frame.size.height) WithArray:array WithTag:tag];
     pickerView.delegate = self;
     [self.view.window setBackgroundColor:[UIColor blackColor]];
     [self.view.window addSubview:pickerView];

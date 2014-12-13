@@ -253,9 +253,9 @@
 
 - (BOOL) checkUseAndSec:(UITextField *) sender
 {
-
-
-
+    
+    
+    
     if(sender == self.userTf)
     {
         int userTfLength = [self convertToInt:self.userTf.text];
@@ -279,27 +279,18 @@
         }
         
 #pragma mark - 只含有汉字、数字、字母、下划线，下划线位置不限：
-//        NSString * regex_1 = @"^[a-zA-Z0-9_\u4e00-\u9fa5]{4,30}$";
-//        NSPredicate *pred_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex_1];
-//        BOOL isMatch_1 = [pred_1 evaluateWithObject:self.userTf.text];
-//        if(isMatch_1 == NO)
-//        {
-//            [DCFStringUtil showNotice:@"用户名只支持数字、字母、下划线、中文"];
-//            return NO;
-//        }
+        //        NSString * regex_1 = @"^[a-zA-Z0-9_\u4e00-\u9fa5]{4,30}$";
+        //        NSPredicate *pred_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex_1];
+        //        BOOL isMatch_1 = [pred_1 evaluateWithObject:self.userTf.text];
+        //        if(isMatch_1 == NO)
+        //        {
+        //            [DCFStringUtil showNotice:@"用户名只支持数字、字母、下划线、中文"];
+        //            return NO;
+        //        }
         
-
-//        NSString *allChinese_1 = @"^[\u4E00-\u9FA5]*$";
-//        NSPredicate *predallChinese_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", allChinese_1];
-//        BOOL isMatchAllChinese_1 = [predallChinese_1 evaluateWithObject:self.userTf.text];
-//        if(isMatchAllChinese_1 == YES)
-//        {
-//            [DCFStringUtil showNotice:@"用户名不能是纯中文"];
-//            return NO;
-//        }
-//        else
-//        {
-//        }
+        
+        
+        
         
         if([self.userTf.text hasSuffix:@"_"] || [self.userTf.text hasPrefix:@"_"])
         {
@@ -307,28 +298,46 @@
             return NO;
         }
         
-        if([self isAllNum:self.userTf.text] == YES && phoneOrUserName == NO)
+        
+        BOOL isAllNum = [self isAllNum:self.userTf.text];
+        if(isAllNum == YES && phoneOrUserName == NO)
         {
             [DCFStringUtil showNotice:@"用户名不能是纯数字"];
             return NO;
         }
         
-        if([self PureLetters:self.userTf.text] == YES)
-        {
-            [DCFStringUtil showNotice:@"用户名不能是纯字母"];
-            return NO;
-        }
+        //        BOOL pureLetters = [self PureLetters:self.userTf.text];
+        //        if(pureLetters == YES)
+        //        {
+        //            [DCFStringUtil showNotice:@"用户名不能是纯字母"];
+        //            return NO;
+        //        }
+        
+        
+        NSString *allChinese_1 = @"^[\u4E00-\u9FA5]*$";
+        NSPredicate *predallChinese_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", allChinese_1];
+        
         
         int n=0;
-        for(int i=0;i<userTfLength;i++)
+        NSString *tempUser = nil;
+        for(int i=0;i<self.userTf.text.length;i++)
         {
-            char c = [self.userTf.text characterAtIndex:i];
-            if(c == '_')
+            tempUser = [self.userTf.text substringWithRange:NSMakeRange(i, 1)];
+            NSLog(@"第%d个字是:%@",i,tempUser);
+            if([tempUser isEqualToString:@"_"])
             {
                 n++;
             }
+            //检测字符串是否是中文，字母，数字，下划线
+            BOOL isMatchAllChinese_1 = [predallChinese_1 evaluateWithObject:tempUser];
+            if(![tempUser isEqualToString:@"_"] && [self PureLetters:tempUser] == NO && [self isAllNum:tempUser] == NO && phoneOrUserName == NO && isMatchAllChinese_1 == NO)
+            {
+                [DCFStringUtil showNotice:@"用户名只支持数字、字母、下划线、中文"];
+                return NO;
+            }
+            
         }
-        if(n == userTfLength && userTfLength != 0)
+        if(n == self.userTf.text.length && self.userTf.text.length != 0)
         {
             [DCFStringUtil showNotice:@"用户名不能是纯字符"];
             return NO;
@@ -438,7 +447,7 @@
         }
         [self checkStatus];
     }
-
+    
 }
 
 #pragma mark - 纯字母
@@ -614,14 +623,14 @@
     
     if(URLTag == URLSendMsgTag)
     {
-//        [self.getValidateBtn setUserInteractionEnabled:YES];
-//        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-//        if(timer_tel)
-//        {
-//            [timer_tel invalidate];
-//            timer_tel = nil;
-//            timeCount_tel = 60;
-//        }
+        //        [self.getValidateBtn setUserInteractionEnabled:YES];
+        //        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        //        if(timer_tel)
+        //        {
+        //            [timer_tel invalidate];
+        //            timer_tel = nil;
+        //            timeCount_tel = 60;
+        //        }
         
         
         
@@ -695,7 +704,7 @@
         {
             if([DCFCustomExtra validateString:msg] == YES)
             {
-//                [DCFStringUtil showNotice:msg];
+                //                [DCFStringUtil showNotice:msg];
                 
                 remindMessage = msg;
                 

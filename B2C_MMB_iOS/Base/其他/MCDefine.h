@@ -14,6 +14,7 @@
 
 #define IS_IOS_7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
 #define MainScreenHeight [UIScreen mainScreen].bounds.size.height
+#define MainScreenWidth [UIScreen mainScreen].bounds.size.width
 
 #define CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT [cell.contentView.subviews lastObject]
 

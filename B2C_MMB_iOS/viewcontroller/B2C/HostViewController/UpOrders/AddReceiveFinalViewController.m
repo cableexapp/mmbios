@@ -11,6 +11,9 @@
 #import "DCFStringUtil.h"
 #import "LoginNaviViewController.h"
 #import "UpOrderViewController.h"
+#import "ChooseReceiveAddressViewController.h"
+#import "ManagReceiveAddressViewController.h"
+#import "AddReceiveAddressViewController.h"
 
 @implementation AddReceiveFinalViewController
 {
@@ -127,17 +130,6 @@
     }
     else
     {
-        NSString *memberid = [self getMemberId];
-        
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,fixedLineTelephone.text];
-        
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
 }
 
@@ -194,11 +186,23 @@
     //新增
     if(isEditOrAdd == YES)
     {
-        NSString *s1 = [topTf text];
-        NSString *s2 = [(DCFMyTextField *)[textFieldArray objectAtIndex:1] text];
-        NSString *s = [NSString stringWithFormat:@"%@%@",s1,s2];
-        NSArray *arr = [NSArray arrayWithObjects:s,self, nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"addressListDataArray" object:arr];
+        //        NSString *s1 = [topTf text];
+        //        NSString *s2 = [(DCFMyTextField *)[textFieldArray objectAtIndex:1] text];
+        //        NSString *s = [NSString stringWithFormat:@"%@%@",s1,s2];
+        //        NSArray *arr = [NSArray arrayWithObjects:s,self, nil];
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"addressListDataArray" object:arr];
+        
+        NSString *memberid = [self getMemberId];
+        
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,fixedLineTelephone.text];
+        
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         
     }
     //编辑
@@ -312,7 +316,13 @@
         {
             [DCFStringUtil showNotice:msg];
             
-            
+            for(UIViewController *vc in self.navigationController.viewControllers)
+            {
+                if([vc isKindOfClass:[ChooseReceiveAddressViewController class]])
+                {
+                    [self.navigationController popToViewController:vc animated:YES];
+                }
+            }
             //            [self setDefaultAddress];
             
         }
@@ -590,7 +600,25 @@
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-    
+    if(textField == topTf)
+    {
+        if(isEditOrAdd == NO)
+        {
+            [topTf resignFirstResponder];
+            AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
+            [self.navigationController pushViewController:add animated:YES];
+            //            NSLog(@"%@",self.navigationController.viewControllers);
+            //
+            //            for(UIViewController *vc in self.navigationController.viewControllers)
+            //            {
+            //                if([vc isKindOfClass:[ManagReceiveAddressViewController class]])
+            //                {
+            //                    [self.navigationController popToViewController:vc animated:YES];
+            //                }
+            //            }
+            
+        }
+    }
     
     if(textField.tag == 2 || textField.tag == 3 || textField.tag == 4)
     {

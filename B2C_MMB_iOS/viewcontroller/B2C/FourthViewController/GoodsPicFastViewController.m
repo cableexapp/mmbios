@@ -17,6 +17,7 @@
 #import "DCFTopLabel.h"
 #import "GoodsFastPicTableViewCell.h"
 #import "ShopHostTableViewController.h"
+#import "ChatListViewController.h"
 
 @interface GoodsPicFastViewController ()
 {
@@ -50,10 +51,9 @@
     [tv setDelegate:self];
     [tv setShowsHorizontalScrollIndicator:NO];
     [tv setShowsVerticalScrollIndicator:NO];
-    [self.tableBackView addSubview:tv];
-    
-    self.buttomLabel.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
-    
+    [self.view addSubview:tv];
+
+    self.buttomBtn.layer.cornerRadius = 5;
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线快照"];
     self.navigationItem.titleView = top;
@@ -397,4 +397,25 @@
     [super didReceiveMemoryWarning];
 }
 
+- (IBAction)buttomBtn:(id)sender
+{
+    
+}
+
+
+#pragma mark - 在线客服
+- (IBAction)chatBtn:(id)sender
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+    chatVC.fromString = @"商品快照在线客服";
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type =  kCATransitionMoveIn;
+    transition.subtype =  kCATransitionFromTop;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:chatVC animated:NO];
+}
 @end

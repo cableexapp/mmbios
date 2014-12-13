@@ -20,6 +20,13 @@
 @property (strong,nonatomic) NSString *myShopId;
 
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
-@property (weak, nonatomic) IBOutlet UILabel *buttomLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *buttomBtn;
+- (IBAction)buttomBtn:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *chatBtn;
+
+- (IBAction)chatBtn:(id)sender;
+
 
 @end

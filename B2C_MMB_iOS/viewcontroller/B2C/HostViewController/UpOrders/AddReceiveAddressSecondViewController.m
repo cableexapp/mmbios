@@ -110,7 +110,7 @@
     [view addSubview:label];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 20, 10, 30, 30)];
+    [btn setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 10, 15, 20, 20)];
     [btn setBackgroundImage:[UIImage imageNamed:@"delete_1.png"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:btn];

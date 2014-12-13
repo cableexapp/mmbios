@@ -45,9 +45,10 @@
 
 - (void)buttomBtnClick:(id)sender
 {
-    ManagReceiveAddressViewController *managReceiveAddressViewController = [[ManagReceiveAddressViewController alloc
-                                                                             ] init];
+    [self setHidesBottomBarWhenPushed:YES];
+    ManagReceiveAddressViewController *managReceiveAddressViewController = [[ManagReceiveAddressViewController alloc] init];
     [self.navigationController pushViewController:managReceiveAddressViewController animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) rightItemClick:(UIButton *) sender
@@ -340,7 +341,7 @@
         NSString *address = addressData.addressName;
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
 
-        return size_3.height + 70;
+        return size_3.height + 80;
         
     }
     return 44;
@@ -370,9 +371,10 @@
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
         
         NSString *name = addressData.receiver;
-        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, size_1.width, 30)];
+//        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, ScreenWidth-60, 40)];
         [nameLabel setText:name];
+        nameLabel.numberOfLines = 2;
         [nameLabel setTextAlignment:NSTextAlignmentLeft];
         [nameLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:nameLabel];

@@ -136,8 +136,7 @@
         receiveaddress = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveaddress"]];
         receiveAddressId = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveAddressId"]];
         
-        
-        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"收货人: %@   %@",receiver,receiveTel]];
+        [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"收货人: %@             %@",receiver,receiveTel]];
         
         NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
         if([DCFCustomExtra validateString:fullAddress] == NO)
@@ -958,7 +957,7 @@
         [label setText:@"  商品信息"];
     }
     [label setTextColor:[UIColor blackColor]];
-    [label setFont:[UIFont boldSystemFontOfSize:14]];
+    [label setFont:[UIFont systemFontOfSize:15]];
     return label;
     
     if(section > 2 )
@@ -1017,6 +1016,7 @@
     {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
         [cell.contentView addSubview:view];
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
         [cell.textLabel setText:billMsg];
     }
     if(indexPath.section == 2)

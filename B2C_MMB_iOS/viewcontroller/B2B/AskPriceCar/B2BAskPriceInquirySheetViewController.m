@@ -19,6 +19,8 @@
 #import "B2BAskPriceDetailData.h"
 #import "ChooseReceiveAddressViewController.h"
 #import "B2BAskPriceUpSuccessViewController.h"
+#import "DCFColorUtil.h"
+
 
 @interface B2BAskPriceInquirySheetViewController ()
 {
@@ -254,14 +256,14 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
+    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, ScreenWidth-15, 40)];
     [headLabel setTextColor:[UIColor blackColor]];
-    [headLabel setBackgroundColor:[UIColor whiteColor]];
-    headLabel.layer.borderWidth = 1.0f;
-    headLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    headLabel.font = [UIFont systemFontOfSize:15];
+    [headLabel setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
+ 
     if(section == 0)
     {
-        [headLabel setText:@" 收货人信息"];
+//        [headLabel setText:@" 收货人信息"];
     }
     if(section == 1)
     {
@@ -272,7 +274,16 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40;
+    CGFloat height;
+    if (section == 0)
+    {
+        height = 0.01;
+    }
+    else
+    {
+        height = 40;
+    }
+    return height;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -291,7 +302,7 @@
         }
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
         
-        return 30+size.height + 10;
+        return size.height + 70;
     }
     if(!self.heightArray || self.heightArray.count == 0)
     {
@@ -302,7 +313,7 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView setSeparatorColor:MYCOLOR];
+    [tableView setSeparatorColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
     
     NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -331,35 +342,37 @@
                 flag = YES;
                 
                 NSString *name = [[addressArray lastObject] receiver];
-                CGSize size_name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+                CGSize size_name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
                 
                 UILabel *nameLabel = nil;
                 if(name.length == 0 || [name isKindOfClass:[NSNull class]])
                 {
-                    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, 50, 30)];
+                    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 50, 30)];
                 }
                 else
                 {
-                    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 5, size_name.width, 30)];
+                    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, size_name.width, 30)];
                 }
                 [nameLabel setText:name];
+                nameLabel.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
                 [nameLabel setTextAlignment:NSTextAlignmentLeft];
-                [nameLabel setFont:[UIFont systemFontOfSize:13]];
+                [nameLabel setFont:[UIFont systemFontOfSize:14]];
                 
                 NSString *tel = [[addressArray lastObject] mobile];
-                CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
+                CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
                 
                 UILabel *telLabel = nil;
                 if(tel.length == 0 || [tel isKindOfClass:[NSNull class]])
                 {
-                    telLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 10, 5, 100, 30)];
+                    telLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 20, 5, 100, 30)];
                 }
                 else
                 {
-                    telLabel = [[UILabel alloc] initWithFrame:CGRectMake(320-20-size_tel.width, 5, size_tel.width, 30)];
+                    telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-70-size_tel.width, 10, size_tel.width, 30)];
                 }
                 [telLabel setText:tel];
-                [telLabel setFont:[UIFont systemFontOfSize:13]];
+                telLabel.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
+                [telLabel setFont:[UIFont systemFontOfSize:14]];
                 [telLabel setTextAlignment:NSTextAlignmentRight];
                 
                 
@@ -369,23 +382,31 @@
                 UILabel *addressLabel = nil;
                 if(address.length == 0 || [address isKindOfClass:[NSNull class]])
                 {
-                    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, nameLabel.frame.origin.y + nameLabel.frame.size.height, 260, 30)];
+                    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, nameLabel.frame.origin.y + nameLabel.frame.size.height+5, ScreenWidth-90, 30)];
                 }
                 else
                 {
-                    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, nameLabel.frame.origin.y + nameLabel.frame.size.height, 260, size.height)];
+                    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, nameLabel.frame.origin.y + nameLabel.frame.size.height+5, ScreenWidth-90, size.height)];
                 }
                 [addressLabel setText:address];
                 [addressLabel setFont:[UIFont systemFontOfSize:12]];
-                [addressLabel setNumberOfLines:0];
+                addressLabel.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
+                [addressLabel setNumberOfLines:2];
                 
                 UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 35+size.height+5)];
-                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                [view setBackgroundColor:[UIColor clearColor]];
                 
-                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, (view.frame.size.height-30)/2, 20, 30)];
-                [iv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
+                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, cell.frame.size.height/2, 40, 40)];
+                [iv setImage:[UIImage imageNamed:@"location"]];
                 
-                [cell.contentView addSubview:view];
+                UIImageView *arrowImageView = [[UIImageView alloc] init];
+                arrowImageView.frame = CGRectMake(ScreenWidth-30, (cell.frame.size.height-20)/2+20, 20, 20);
+                arrowImageView.image = [UIImage imageNamed:@"location_arrow"];
+                [cell addSubview:arrowImageView];
+                
+                cell.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f8e9cb"];
+                
+//                [cell.contentView addSubview:view];
                 [cell.contentView addSubview:iv];
                 [cell.contentView addSubview:nameLabel];
                 [cell.contentView addSubview:telLabel];
@@ -597,6 +618,7 @@
 {
     if(indexPath.section == 0)
     {
+        [self setHidesBottomBarWhenPushed:YES];
         if(flag == NO)
         {
             AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
@@ -607,6 +629,7 @@
             ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
             [self.navigationController pushViewController:chooseAddress animated:YES];
         }
+        [self setHidesBottomBarWhenPushed:NO];
     }
 }
 

@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:152.0/255.0 blue:155.0/255.0 alpha:1.0].CGColor;
-        self.layer.borderWidth = 1.0f;
+        self.layer.borderWidth = 0.6f;
         [self setBackgroundColor:[UIColor whiteColor]];
         self.layer.masksToBounds = YES;
 //        

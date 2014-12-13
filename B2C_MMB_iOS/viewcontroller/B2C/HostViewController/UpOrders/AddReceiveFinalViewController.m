@@ -152,17 +152,17 @@
     //    fullAddressTf = [textFieldArray objectAtIndex:<#(NSUInteger)#>];
     if(receiverTf.text.length == 0)
     {
-        [DCFStringUtil showNotice:@"请输入收货人信息"];
+        [DCFStringUtil showNotice:@"请您填写收货人姓名"];
         return;
     }
     if(addressNameTf.text.length == 0)
     {
-        [DCFStringUtil showNotice:@"请输入详细地址"];
+        [DCFStringUtil showNotice:@"请填写详细地址信息"];
         return;
     }
     if(mobileTf.text.length == 0)
     {
-        [DCFStringUtil showNotice:@"请输入手机号码"];
+        [DCFStringUtil showNotice:@"手机号码必填"];
         return;
     }
     

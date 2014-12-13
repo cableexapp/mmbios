@@ -2,7 +2,7 @@
 #import "MessageCell.h"
 #import "Message.h"
 #import "MessageFrame.h"
-
+#import "UIImageView+WebCache.h"
 
 @interface MessageCell ()
 {
@@ -32,6 +32,8 @@
         
         // 2、创建头像
         _iconView = [[UIImageView alloc] init];
+        _iconView.layer.cornerRadius = 20;
+        _iconView.layer.masksToBounds = YES;
         [self.contentView addSubview:_iconView];
         
         // 3、创建内容
@@ -85,8 +87,21 @@
     _timeBtn.frame = _messageFrame.timeF;
     
     // 2、设置头像
-    _iconView.image = [UIImage imageNamed:message.icon];
+
     _iconView.frame = _messageFrame.iconF;
+    
+    if ([message.icon isEqualToString:@"icon01.png"])
+    {
+        NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
+        [_iconView setImageWithURL:[NSURL URLWithString:headPortraitUrl] placeholderImage:[UIImage imageNamed:@"icon01.png"]];
+       NSLog(@"headPortraitUrl = %@",headPortraitUrl);
+    }
+    else
+    {
+        _iconView.image = [UIImage imageNamed:message.icon];
+    }
+    NSLog(@"message.icon = %@",message.icon);
+    
     
     
     // 3、设置内容

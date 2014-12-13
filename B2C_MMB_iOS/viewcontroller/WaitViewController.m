@@ -175,49 +175,40 @@ double secondsCountDown =0;
     [self sendJoinRequest];
 }
 
-
--(void)goBack
+-(void)pageFromWhere_wait
 {
-    [timeCountTimer invalidate];
-    [self exitQueue];
-    [self.appDelegate goOffline];
-    [self.appDelegate disconnect];
-    [self.appDelegate reConnect];
     if ([self.tempFrom isEqualToString:@"首页在线客服"])
     {
+        [self.tabBarController setSelectedIndex:0];
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-        [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
     else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
     {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
     }
-    else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
+    
+    else if([self.tempFrom isEqualToString:@"场合选择客服"] || [self.tempFrom isEqualToString:@"热门型号在线咨询"])
     {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-    }
-    else if([self.tempFrom isEqualToString:@"场合选择客服"])
-    {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-    }
-    else if([self.tempFrom isEqualToString:@"场合选择提交成功客服"])
-    {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-    }
-    else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
-    {
         
+    }
+    else if([self.tempFrom isEqualToString:@"场合选择提交成功客服"] || [self.tempFrom isEqualToString:@"商品快照在线客服"])
+    {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
     }
     else if([self.tempFrom isEqualToString:@"热门型号提交成功在线客服"])
     {
+        NSLog(@"self.navigationController.viewControllers.count = %d",self.navigationController.viewControllers.count);
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
+    }
+    else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
+    {
+        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
     }
     else
     {
         [self.tabBarController setSelectedIndex:0];
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-        [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
     if ([self.tempFrom rangeOfString:@"@"].location != NSNotFound)
     {
@@ -238,6 +229,16 @@ double secondsCountDown =0;
         }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
+}
+
+-(void)goBack
+{
+    [timeCountTimer invalidate];
+    [self exitQueue];
+    [self.appDelegate goOffline];
+    [self.appDelegate disconnect];
+    [self.appDelegate reConnect];
+    [self pageFromWhere_wait];
 }
 
 //退出队列
@@ -478,112 +479,15 @@ double secondsCountDown =0;
     }
     else if (buttonIndex == 0)
     {
-        if ([self.tempFrom isEqualToString:@"首页在线客服"])
-        {
-            [self.tabBarController setSelectedIndex:0];
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-        }
-        else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
-        {
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-        }
-       
-        else if([self.tempFrom isEqualToString:@"场合选择客服"])
-        {
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-            
-        }
-        else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
-        {
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-           
-        }
-        else if([self.tempFrom isEqualToString:@"场合选择提交成功客服"])
-        {
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
-        }
-        else if([self.tempFrom isEqualToString:@"热门型号提交成功在线客服"])
-        {
-             NSLog(@"self.navigationController.viewControllers.count = %d",self.navigationController.viewControllers.count);
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
-        }
-        else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
-        {
-            [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
-            
-        }
-        else
-        {
-            [self.tabBarController setSelectedIndex:0];
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-        }
-        if ([self.tempFrom rangeOfString:@"@"].location != NSNotFound)
-        {
-            if([[[self.tempFrom componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
-            {
-                if (self.navigationController.viewControllers.count == 6)
-                {
-                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
-                }
-                if (self.navigationController.viewControllers.count == 5)
-                {
-                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-                }
-                if (self.navigationController.viewControllers.count == 4)
-                {
-                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-                }
-            }
-        }
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
+         [self pageFromWhere_wait];
     }
 }
 
 -(void)goToAskPrice:(NSNotification *)newMessage
 {
-    if([self.tempFrom isEqualToString:@"来自快速询价客服"])
-    {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-    }
-    else if([self.tempFrom isEqualToString:@"热门型号在线咨询"])
-    {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-    }
-    else if([self.tempFrom isEqualToString:@"场合选择客服"])
-    {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-    }
-    else if([self.tempFrom isEqualToString:@"场合选择提交成功客服"])
-    {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
-    }
-    else if([self.tempFrom isEqualToString:@"热门型号提交成功在线客服"])
-    {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
-    }
-    else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
-    {
-        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
-    }
-    if ([self.tempFrom rangeOfString:@"@"].location != NSNotFound)
-    {
-        if([[[self.tempFrom componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
-        {
-            if (self.navigationController.viewControllers.count == 6)
-            {
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
-            }
-            if (self.navigationController.viewControllers.count == 5)
-            {
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-            }
-            if (self.navigationController.viewControllers.count == 4)
-            {
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-            }
-        }
-    }
+    [self pageFromWhere_wait];
 }
+
 - (AppDelegate *)appDelegate
 {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];

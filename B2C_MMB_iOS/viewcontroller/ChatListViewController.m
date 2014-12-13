@@ -285,7 +285,7 @@
       [self.navigationController popViewControllerAnimated:YES];
       [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
-    else if([self.fromString isEqualToString:@"来自快速询价客服"] || [self.fromString isEqualToString:@"场合选择客服"] || [self.fromString isEqualToString:@"热门型号在线咨询"] || [self.fromString isEqualToString:@"场合选择提交成功客服"])
+    else if([self.fromString isEqualToString:@"来自快速询价客服"] || [self.fromString isEqualToString:@"场合选择客服"] || [self.fromString isEqualToString:@"热门型号在线咨询"] || [self.fromString isEqualToString:@"场合选择提交成功客服"] || [self.fromString isEqualToString:@"商品快照在线客服"])
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -305,7 +305,7 @@
 
 -(void)goBackAction
 {
-    if ([self.fromString isEqualToString:@"首页在线客服"] || [self.fromString isEqualToString:@"来自快速询价客服"] || [self.fromString isEqualToString:@"热门型号在线咨询"] || [self.fromString isEqualToString:@"热门分类在线客服"] || [self.fromString isEqualToString:@"场合选择客服"] || [self.fromString isEqualToString:@"场合选择提交成功客服"] || [self.fromString isEqualToString:@"热门型号提交成功在线客服"])
+    if ([self.fromString isEqualToString:@"首页在线客服"] || [self.fromString isEqualToString:@"来自快速询价客服"] || [self.fromString isEqualToString:@"热门型号在线咨询"] || [self.fromString isEqualToString:@"热门分类在线客服"] || [self.fromString isEqualToString:@"场合选择客服"] || [self.fromString isEqualToString:@"场合选择提交成功客服"] || [self.fromString isEqualToString:@"热门型号提交成功在线客服"] || [self.fromString isEqualToString:@"商品快照在线客服"])
     {
         [self.navigationController popViewControllerAnimated:YES];
     }

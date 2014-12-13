@@ -275,31 +275,9 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"disMissSelfPage" object:nil];
         [self.navigationController.tabBarController.tabBar setHidden:NO];
     }
-    else if([self.fromStringFlag isEqualToString:@"来自快速询价客服"])
-    {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
-    }
-    else if ([self.fromStringFlag isEqualToString:@"热门型号在线咨询"])
+    else if([self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"商品快照在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
-    }
-    else if ([self.fromStringFlag isEqualToString:@"场合选择客服"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
-    }
-    else if([self.fromStringFlag isEqualToString:@"场合选择提交成功客服"])
-    {
-       [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
-    }
-    else if([self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
-    }
-    else if ([self.fromStringFlag isEqualToString:@"热门分类在线客服"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
-        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -1)] animated:YES];
     }
     else
     {
@@ -426,17 +404,14 @@
      CGRect frame = self.tableView.frame;
      
      frame.size.height += keyboardHeight;
-    //frame.size.height -= keyboardRect.size.height-49;
      frame.size.height -= keyboardRect.size.height;
      self.tableView.frame = frame;
      
      frame = toolBar.frame;
-    //frame.origin.y += keyboardHeight+49;
      frame.origin.y += keyboardHeight;
      frame.origin.y -= keyboardRect.size.height;
      toolBar.frame = frame;
      
-    //keyboardHeight = keyboardRect.size.height-49;
     keyboardHeight = keyboardRect.size.height;
     }];
     if ( isFirstShowKeyboard )
@@ -632,6 +607,22 @@
             else if ([self.fromStringFlag isEqualToString:@"热门分类在线客服"])
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 热门分类]：%@",message];
+            }
+            else if ([self.fromStringFlag isEqualToString:@"场合选择客服"])
+            {
+                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 场合选择]：%@",message];
+            }
+            else if ([self.fromStringFlag isEqualToString:@"场合选择提交成功客服"])
+            {
+                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 场合提交]：%@",message];
+            }
+            else if ([self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"])
+            {
+                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 热门型号提交]：%@",message];
+            }
+            else if ([self.fromStringFlag isEqualToString:@"商品快照在线客服"])
+            {
+                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品快照]：%@",message];
             }
             else if ([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
             {

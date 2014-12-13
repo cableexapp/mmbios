@@ -643,7 +643,7 @@
         
         UIButton *btn = [sectionHeadBtnArray objectAtIndex:indexPath.section];
         
-        if(btn.selected == YES)
+        if(btn.selected == NO)
         {
             return height;
         }
@@ -987,14 +987,14 @@
         {
             if(btn.selected == YES)
             {
-                
-            }
-            else
-            {
                 for(UIView *view in cell.contentView.subviews)
                 {
                     [view setFrame:CGRectZero];
                 }
+            }
+            else
+            {
+          
             }
         }
         else

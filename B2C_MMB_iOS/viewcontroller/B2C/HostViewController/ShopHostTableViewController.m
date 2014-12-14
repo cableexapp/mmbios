@@ -18,6 +18,8 @@
 #import "DCFCustomExtra.h"
 #import "GoodsDetailViewController.h"
 #import "DCFStringUtil.h"
+#import "AppDelegate.h"
+#import "MyShoppingListViewController.h"
 
 @interface ShopHostTableViewController ()
 {
@@ -37,6 +39,12 @@
     NSArray *typeArray;
     
     ShopHostPreTableViewController *preVC;
+    
+    UIButton *rightBtn;
+    UIBarButtonItem *right;
+    UILabel *countLabel;
+    AppDelegate *app;
+    MyShoppingListViewController *shop;
 }
 @end
 
@@ -67,7 +75,7 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-
+    
     if(conn)
     {
         [conn stopConnection];
@@ -96,26 +104,97 @@
     
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self loadShopCarCount];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self pushAndPopStyle];
-
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
     self.navigationItem.titleView = top;
     intPage = 1;
     dataArray = [[NSMutableArray alloc] init];
-        //ADD REFRESH VIEW
+    //ADD REFRESH VIEW
     _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, 320, 300)];
     [self.refreshView setDelegate:self];
     [self.tableView addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
     [self loadRequest:_shopId WithUse:shopUse];
     
-
+    if(!rightBtn)
+    {
+        rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightBtn setBackgroundImage:[UIImage imageNamed:@"购物车"] forState:UIControlStateNormal];
+        [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
+        [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if(!right)
+    {
+        right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    }
+    
+    if(!countLabel)
+    {
+        countLabel = [[UILabel alloc] init];
+        countLabel.frame = CGRectMake(22, 0, 18, 18);
+        countLabel.layer.borderWidth = 1;
+        countLabel.layer.cornerRadius = 10;
+        countLabel.textColor = [UIColor whiteColor];
+        countLabel.font = [UIFont systemFontOfSize:11];
+        countLabel.textAlignment = 1;
+        countLabel.hidden = YES;
+        countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+        countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+        [rightBtn addSubview:countLabel];
+    }
+    
+    self.navigationItem.rightBarButtonItem = right;
+    
 }
 
+- (void)rightItemClick:(id) sender
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    shop = [[MyShoppingListViewController alloc] initWithDataArray:nil];
+    [self.navigationController pushViewController:shop animated:YES];
+}
+
+//获取购物车商品数量
+-(void)loadShopCarCount
+{
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
@@ -131,10 +210,10 @@
         [self.navigationController popViewControllerAnimated:YES];
         return NO;
     }
-//    if([NSStringFromClass([touch.view class]) isEqualToString:@"UITabBarButton"])
-//    {
-//        return NO;
-//    }
+    //    if([NSStringFromClass([touch.view class]) isEqualToString:@"UITabBarButton"])
+    //    {
+    //        return NO;
+    //    }
     return  YES;
 }
 
@@ -159,12 +238,12 @@
 
 - (void) loadRequest:(NSString *) shopId WithUse:(NSString *) use
 {
-//    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    [HUD setDelegate:self];
-//    [HUD setLabelText:@"正在登陆....."];
+    //    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //    [HUD setDelegate:self];
+    //    [HUD setLabelText:@"正在登陆....."];
     
     pageSize = 10;
-//    intPage = 1;
+    //    intPage = 1;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     
@@ -189,7 +268,7 @@
         return 43;
     }
     int row = dataArray.count%2 + dataArray.count/2;
-
+    
     
     if(indexPath.row <= row - 1)
     {
@@ -215,7 +294,7 @@
             }
         }
     }
-        return 43;
+    return 43;
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -224,8 +303,7 @@
     
     if(URLTag == URLB2CGoodsListTag)
     {
-
-        NSLog(@"%@",dicRespon);
+        
         
         if(_reloading == YES)
         {
@@ -252,8 +330,7 @@
                 
                 scoreArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"score"]];
                 
-                NSLog(@"scoreArray======%@",scoreArray);
-
+                
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 if(intTotal == 0)
@@ -275,7 +352,7 @@
                 NSString *pushString = [NSString stringWithFormat:@"token=%@&shopid=%@",token,_shopId];
                 
                 NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShopProductType.html?"];
-
+                
                 conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGetShopProductTypeTag delegate:self];
                 [conn getResultFromUrlString:urlString postBody:pushString method:POST];
             }
@@ -290,8 +367,7 @@
     }
     if(URLTag == URLB2CGetShopProductTypeTag)
     {
-        NSLog(@"%@",dicRespon);
-
+        
         if(result == 1)
         {
             typeArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"types"]];
@@ -299,6 +375,25 @@
         else
         {
             
+        }
+    }
+    if (URLTag == URLShopCarCountTag)
+    {
+        if ([[dicRespon objectForKey:@"total"] intValue] == 0)
+        {
+            countLabel.hidden = YES;
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
+        {
+            countLabel.hidden = NO;
+            
+            countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
+        }
+        else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
+        {
+            countLabel.frame = CGRectMake(46, 2, 21, 19);
+            countLabel.hidden = NO;
+            countLabel.text = @"99+";
         }
     }
 }
@@ -341,7 +436,7 @@
     [headView addSubview:sepView_5];
     
     
-
+    
     
     UILabel *scoreLabel =[[UILabel alloc] initWithFrame:CGRectMake(245, 0, 80, 30)];
     [scoreLabel setFont:[UIFont boldSystemFontOfSize:15]];
@@ -350,7 +445,7 @@
     [headView addSubview:scoreLabel];
     UILabel *scoreLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(247, 22, 50, 30)];
     [scoreLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-//    取scoreArray里的前4位元素
+    //    取scoreArray里的前4位元素
     discussArray = [[NSMutableArray alloc] init];
     if(scoreArray.count != 0)
     {
@@ -379,7 +474,7 @@
     [headView addSubview:describeLabel];
     UILabel *describeLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(15, 82, 30, 30)];
     [describeLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-//    [describeLabel_1 setText:@"5.0"];
+    //    [describeLabel_1 setText:@"5.0"];
     [describeLabel_1 setText:[scoreArray objectAtIndex:0]];//取出数组里面第0个元素
     [describeLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:describeLabel_1];
@@ -399,7 +494,7 @@
     [headView addSubview:serviceLabel];
     UILabel *serviceLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(95, 82, 30, 30)];
     [serviceLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-//   [serviceLabel_1 setText:@"5.0"];
+    //   [serviceLabel_1 setText:@"5.0"];
     [serviceLabel_1 setText:[scoreArray objectAtIndex:1]];//取出数组里面第1个元素
     [serviceLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:serviceLabel_1];
@@ -419,7 +514,7 @@
     [headView addSubview:deliveryLabel];
     UILabel *deliveryLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(175, 82, 30, 30)];
     [deliveryLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-//    [deliveryLabel_1 setText:@"5.0"];
+    //    [deliveryLabel_1 setText:@"5.0"];
     [deliveryLabel_1 setText:[scoreArray objectAtIndex:2]];//取出数组里面第2个元素
     [deliveryLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:deliveryLabel_1];
@@ -439,7 +534,7 @@
     [headView addSubview:qualityLabel];
     UILabel *qualityLabel_1 =[[UILabel alloc] initWithFrame:CGRectMake(255, 82, 30, 30)];
     [qualityLabel_1 setFont:[UIFont boldSystemFontOfSize:15]];
-//    [qualityLabel_1 setText:@"5.0"];
+    //    [qualityLabel_1 setText:@"5.0"];
     [qualityLabel_1 setText:[scoreArray objectAtIndex:3]];//取出数组里面第3个元素
     [qualityLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:qualityLabel_1];
@@ -470,7 +565,7 @@
     [preBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [preBtn.layer setCornerRadius:5.0]; //设置矩圆角半径
     [preBtn.layer setBorderWidth:1.0];   //边框宽度
-     preBtn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
+    preBtn.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
     [preBtn addTarget:self action:@selector(preBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [preBtn setBackgroundColor:[UIColor clearColor]];
     [headView addSubview:preBtn];
@@ -489,7 +584,7 @@
     {
         intPage = 1;
         
-
+        
         preView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
         [preView setBackgroundColor:[UIColor colorWithRed:203.0/255.0 green:203.0/255.0 blue:203.0/255.0 alpha:0.6]];
         [self.view.window addSubview:preView];
@@ -509,7 +604,7 @@
         label.text = [NSString stringWithFormat:@"   %@",_myTitle];
         label.frame = CGRectMake(preView.frame.size.width-200, 0, 200, 50);
         [preView insertSubview:label aboveSubview:preVC.view];
- 
+        
         // 点击阴影部分时关闭视图
         shadowView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, 120, 416)];
         [shadowView setBackgroundColor:[UIColor clearColor]];
@@ -625,7 +720,7 @@
                 [cellView addSubview:priceLabel];
             }
         }
-
+        
         
         return cell;
     }
@@ -655,7 +750,7 @@
 - (void) tap:(UITapGestureRecognizer *) sender
 {
     int tag = [[sender view] tag];
-
+    
     NSString *productId = [[dataArray objectAtIndex:tag] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     [self.navigationController pushViewController:detail animated:YES];

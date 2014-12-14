@@ -68,6 +68,7 @@
 @property (nonatomic,strong) NSString *pushChatView;
 @property (nonatomic,strong) NSString *isOnLine;
 
+@property (assign,nonatomic) BOOL aliPayHasFinished;
 
 //@property (strong,nonatomic) NSString *udid;
 

@@ -35,6 +35,10 @@
     B2BAddressData *addressData;
     
     BOOL flag; //判断收货地址
+    
+    CGFloat labelOrigin;  //label显示起点
+    CGFloat labelOrigin_1;  //label显示起点
+    CGFloat labelOrigin_2;  //label显示起点
 }
 @end
 
@@ -260,10 +264,10 @@
     [headLabel setTextColor:[UIColor blackColor]];
     headLabel.font = [UIFont systemFontOfSize:15];
     [headLabel setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
- 
+    
     if(section == 0)
     {
-//        [headLabel setText:@" 收货人信息"];
+        //        [headLabel setText:@" 收货人信息"];
     }
     if(section == 1)
     {
@@ -304,11 +308,41 @@
         
         return size.height + 70;
     }
-    if(!self.heightArray || self.heightArray.count == 0)
+    
+    
+    
+    if(!self.dataArray || self.dataArray.count == 0)
     {
         return 0;
     }
-    return [[self.heightArray objectAtIndex:indexPath.row] floatValue];
+    B2BAskPriceDetailData *data = [self.dataArray objectAtIndex:indexPath.row];
+    
+    NSString *require = [NSString stringWithFormat:@"特殊要求: %@",data.require];
+    
+    CGSize   size_7 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+    CGFloat height_1 = 0.0;
+    if([DCFCustomExtra validateString:data.cartSpec] == NO && [DCFCustomExtra validateString:data.cartVoltage] == NO)
+    {
+        height_1 = 0;
+    }
+    else
+    {
+        height_1 = 20;
+    }
+    CGFloat height_2 = 0.0;
+    if([DCFCustomExtra validateString:data.cartColor] == NO && [DCFCustomExtra validateString:data.featureone] == NO)
+    {
+        height_2 = 0;
+    }
+    else
+    {
+        height_2 = 20;
+    }
+    if(size_7.height <= 20)
+    {
+        return 90+height_1+height_2;
+    }
+    return size_7.height+70+height_1+height_2;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -406,7 +440,7 @@
                 
                 cell.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f8e9cb"];
                 
-//                [cell.contentView addSubview:view];
+                //                [cell.contentView addSubview:view];
                 [cell.contentView addSubview:iv];
                 [cell.contentView addSubview:nameLabel];
                 [cell.contentView addSubview:telLabel];
@@ -439,25 +473,26 @@
             B2BAskPriceDetailData *data = [self.dataArray objectAtIndex:indexPath.row];
             
             
-            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
+            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 20)];
             [modelLabel setText:[NSString stringWithFormat:@"型号:%@",data.cartModel]];
             [modelLabel setFont:[UIFont systemFontOfSize:13]];
             [cell.contentView addSubview:modelLabel];
             
-            UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, modelLabel.frame.origin.y+modelLabel.frame.size.height, ScreenWidth-20, 30)];
+            UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, modelLabel.frame.origin.y+modelLabel.frame.size.height, ScreenWidth-20, 20)];
             [kindLabel setFont:[UIFont systemFontOfSize:13]];
             [kindLabel setText:[NSString stringWithFormat:@"分类:%@",data.chooseKind]];
             [cell.contentView addSubview:kindLabel];
             
             CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
             
-            NSString *num = [NSString stringWithFormat:@"数量 %@",data.num];
-            NSString *deliver = [NSString stringWithFormat:@"交货期 %@",data.deliver];
-            NSString *cartSpec = [NSString stringWithFormat:@"规格 %@",data.cartSpec];  //规格
-            NSString *cartVoltage = [NSString stringWithFormat:@"电压 %@",data.cartVoltage];
-            NSString *color = [NSString stringWithFormat:@"颜色 %@", data.cartColor];
-            NSString *featureone = [NSString stringWithFormat:@"阻燃特性 %@",data.featureone];  //阻燃特性
-            NSString *require = [NSString stringWithFormat:@"特殊要求 %@",data.require];
+            
+            NSString *num = [NSString stringWithFormat:@"数量: %@",data.num];
+            NSString *deliver = [NSString stringWithFormat:@"交货期: %@",data.deliver];
+            NSString *cartSpec = [NSString stringWithFormat:@"规格: %@",data.cartSpec];  //规格
+            NSString *cartVoltage = [NSString stringWithFormat:@"电压: %@",data.cartVoltage];
+            NSString *color = [NSString stringWithFormat:@"颜色: %@", data.cartColor];
+            NSString *featureone = [NSString stringWithFormat:@"阻燃特性: %@",data.featureone];  //阻燃特性
+            NSString *require = [NSString stringWithFormat:@"特殊要求: %@",data.require];
             
             NSMutableAttributedString *myNum = [[NSMutableAttributedString alloc] initWithString:num];
             [myNum addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 1)];
@@ -488,7 +523,7 @@
             [myRequire addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, require.length-5)];
             
             CGSize size_1;
-            if(num.length == 0 || [num isKindOfClass:[NSNull class]])
+            if([DCFCustomExtra validateString:num] == NO ||[num intValue] == 0)
             {
                 size_1 = CGSizeMake(100, 20);
             }
@@ -499,7 +534,7 @@
             }
             
             CGSize size_2;
-            if(deliver.length == 0 || [deliver isKindOfClass:[NSNull class]])
+            if([DCFCustomExtra validateString:deliver] == NO || [deliver intValue] == 0)
             {
                 size_2 = CGSizeMake(100, 20);
             }
@@ -510,7 +545,7 @@
             }
             
             CGSize size_3;
-            if(cartSpec.length == 0 || [cartSpec isKindOfClass:[NSNull class]])
+            if([DCFCustomExtra validateString:cartSpec] == NO)
             {
                 size_3 = CGSizeMake(100, 20);
             }
@@ -521,7 +556,7 @@
             }
             
             CGSize size_4;
-            if(cartVoltage.length == 0 || [cartVoltage isKindOfClass:[NSNull class]])
+            if([DCFCustomExtra validateString:cartVoltage] == NO)
             {
                 size_4 = CGSizeMake(100, 20);
             }
@@ -532,7 +567,7 @@
             }
             
             CGSize size_5;
-            if(color.length == 0 || [color isKindOfClass:[NSNull class]])
+            if([DCFCustomExtra validateString:color] == NO)
             {
                 size_5 = CGSizeMake(100, 20);
             }
@@ -542,7 +577,7 @@
             }
             
             CGSize size_6;
-            if(featureone.length == 0 || [featureone isKindOfClass:[NSNull class]])
+            if([DCFCustomExtra validateString:featureone] == NO)
             {
                 size_6 = CGSizeMake(100, 20);
             }
@@ -552,7 +587,7 @@
             }
             
             CGSize size_7;
-            if(require.length == 0 || [require isKindOfClass:[NSNull class]])
+            if([DCFCustomExtra validateString:data.require] == NO)
             {
                 size_7 = CGSizeMake(cell.contentView.frame.size.width-20, 20);
             }
@@ -562,53 +597,144 @@
             }
             
             
+            
             for(int i=0;i<7;i++)
             {
                 UILabel *cellLabel = [[UILabel alloc] init];
+                [cellLabel setFont:[UIFont systemFontOfSize:13]];
                 if(i == 0)
                 {
-                    [cellLabel setFrame:CGRectMake(10, 65, size_1.width, 20)];
-                    [cellLabel setAttributedText:myNum];
+                    [cellLabel setFrame:CGRectMake(10, kindLabel.frame.origin.y+kindLabel.frame.size.height, size_1.width, 20)];
+                    if([DCFCustomExtra validateString:data.num] == NO || [data.num intValue] == 0)
+                    {
+                        [cellLabel setText:@"数量:"];
+                    }
+                    else
+                    {
+                        [cellLabel setAttributedText:myNum];
+                    }
                 }
                 if(i == 1)
                 {
-                    [cellLabel setFrame:CGRectMake(halfWidth, 65, size_2.width, 20)];
-                    [cellLabel setAttributedText:myDeliver];
+                    [cellLabel setFrame:CGRectMake(halfWidth, kindLabel.frame.origin.y+kindLabel.frame.size.height, size_2.width, 20)];
+                    if([DCFCustomExtra validateString:data.deliver] == NO || [data.deliver intValue] == 0)
+                    {
+                        [cellLabel setText:@"交货期:"];
+                    }
+                    else
+                    {
+                        [cellLabel setAttributedText:myDeliver];
+                    }
                 }
                 if(i == 2)
                 {
-                    [cellLabel setFrame:CGRectMake(10, 85, size_3.width, 20)];
-                    [cellLabel setAttributedText:myCartSpec];
+                    if([DCFCustomExtra validateString:data.cartSpec] == NO)
+                    {
+                        [cellLabel setFrame:CGRectMake(10, 65, size_3.width, 0)];
+                    }
+                    else
+                    {
+                        [cellLabel setFrame:CGRectMake(10, 65, size_3.width, 20)];
+                        [cellLabel setAttributedText:myCartSpec];
+                    }
                     
                 }
                 if(i == 3)
                 {
-                    [cellLabel setFrame:CGRectMake(halfWidth, 85, size_4.width, 20)];
-                    [cellLabel setAttributedText:myCartVoltage];
+                    if([DCFCustomExtra validateString:data.cartVoltage] == NO)
+                    {
+                        [cellLabel setFrame:CGRectMake(10, 65, size_4.width, 0)];
+                    }
+                    else
+                    {
+                        [cellLabel setFrame:CGRectMake(halfWidth, 65, size_4.width, 20)];
+                        [cellLabel setAttributedText:myCartVoltage];
+                    }
                 }
                 if(i == 4)
                 {
-                    [cellLabel setFrame:CGRectMake(10, 105, size_5.width, 20)];
+                    if([DCFCustomExtra validateString:data.cartSpec] == NO && [DCFCustomExtra validateString:data.cartVoltage] == NO)
+                    {
+                        if([DCFCustomExtra validateString:data.cartColor] == NO)
+                        {
+                            [cellLabel setFrame:CGRectMake(10, 65, size_5.width, 0)];
+                        }
+                        else
+                        {
+                            [cellLabel setFrame:CGRectMake(10, 65, size_5.width, 20)];
+                        }
+                    }
+                    else
+                    {
+                        if([DCFCustomExtra validateString:data.cartColor] == NO)
+                        {
+                            [cellLabel setFrame:CGRectMake(10, 85, size_5.width, 0)];
+                        }
+                        else
+                        {
+                            [cellLabel setFrame:CGRectMake(10, 85, size_5.width, 20)];
+                        }
+                    }
                     [cellLabel setAttributedText:myColor];
+                    labelOrigin_1 = cellLabel.frame.origin.y+cellLabel.frame.size.height;
                 }
                 if(i == 5)
                 {
-                    [cellLabel setFrame:CGRectMake(halfWidth, 105, size_6.width, 20)];
+                    if([DCFCustomExtra validateString:data.cartSpec] == NO && [DCFCustomExtra validateString:data.cartVoltage] == NO)
+                    {
+                        if([DCFCustomExtra validateString:data.featureone] == NO)
+                        {
+                            [cellLabel setFrame:CGRectMake(10, 65, size_6.width, 0)];
+                        }
+                        else
+                        {
+                            [cellLabel setFrame:CGRectMake(halfWidth, 65, size_6.width, 20)];
+                        }
+                    }
+                    else
+                    {
+                        if([DCFCustomExtra validateString:data.featureone] == NO)
+                        {
+                            [cellLabel setFrame:CGRectMake(10, 85, size_6.width, 0)];
+                        }
+                        else
+                        {
+                            [cellLabel setFrame:CGRectMake(halfWidth, 85, size_6.width, 20)];
+                        }
+                    }
                     [cellLabel setAttributedText:myFeatureone];
+                    labelOrigin_2 = cellLabel.frame.origin.y+cellLabel.frame.size.height;
                 }
                 if(i == 6)
                 {
-                    [cellLabel setFrame:CGRectMake(10, 125, cell.contentView.frame.size.width-20, size_7.height)];
-                    [cellLabel setAttributedText:myRequire];
+                    labelOrigin = labelOrigin_1>=labelOrigin_2 ? labelOrigin_1 : labelOrigin_2;
+                    [cellLabel setFrame:CGRectMake(10, labelOrigin, cell.contentView.frame.size.width-20, size_7.height)];
+                    if([DCFCustomExtra validateString:data.require] == NO)
+                    {
+                        [cellLabel setText:@"特殊需求:"];
+                    }
+                    else
+                    {
+                        [cellLabel setAttributedText:myRequire];
+                    }
+                    
+                    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, cellLabel.frame.origin.y+cellLabel.frame.size.height+4.5, ScreenWidth, 0.5)];
+                    [lineView setBackgroundColor:[UIColor lightGrayColor]];
+                    [cell.contentView addSubview:lineView];
                 }
                 
                 [cellLabel setFont:[UIFont systemFontOfSize:12]];
                 [cellLabel setNumberOfLines:0];
                 
                 [cell.contentView addSubview:cellLabel];
+                
+                
             }
             
+            
         }
+        
+        
     }
     //    [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row]];
     return cell;

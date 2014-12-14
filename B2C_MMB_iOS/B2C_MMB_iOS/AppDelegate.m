@@ -23,6 +23,13 @@
 #import "BPush.h"
 #import "MobClick.h"
 
+
+#import "AlixPayResult.h"
+#import "PartnerConfig.h"
+#import "DataSigner.h"
+#import "DataVerifier.h"
+
+
 #define SUPPORT_IOS8 0
 
 //XMPP
@@ -46,7 +53,6 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 NSString *strUserId = @"";
 @implementation AppDelegate
 {
-    //李深望修改
     UIStoryboard *sb;
 }
 @synthesize mainQueue;
@@ -395,6 +401,77 @@ NSString *strUserId = @"";
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+//独立客户端回调函数
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+	
+	[self parse:url application:application];
+	return YES;
+}
+
+- (void)parse:(NSURL *)url application:(UIApplication *)application {
+    
+    //结果处理
+    AlixPayResult* result = [self handleOpenURL:url];
+
+    
+	if (result)
+    {
+
+        
+		if (result.statusCode == 9000)
+        {
+			/*
+			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
+			 */
+            
+            //交易成功
+            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
+			id<DataVerifier> verifier;
+            verifier = CreateRSADataVerifier(key);
+            
+			if ([verifier verifyString:result.resultString withSign:result.signString])
+            {
+                //验证签名成功，交易结果无篡改
+			}
+
+            DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
+            self.window.rootViewController = tabbar;
+            [tabbar setSelectedIndex:3];
+
+            _aliPayHasFinished = YES;
+        }
+        else
+        {
+            //交易失败
+            _aliPayHasFinished = NO;
+        }
+    }
+    else
+    {
+        //失败
+        _aliPayHasFinished = NO;
+    }
+}
+
+- (AlixPayResult *)resultFromURL:(NSURL *)url {
+	NSString * query = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+#if ! __has_feature(objc_arc)
+    return [[[AlixPayResult alloc] initWithString:query] autorelease];
+#else
+	return [[AlixPayResult alloc] initWithString:query];
+#endif
+}
+
+- (AlixPayResult *)handleOpenURL:(NSURL *)url {
+	AlixPayResult * result = nil;
+	
+	if (url != nil && [[url host] compare:@"safepay"] == 0) {
+		result = [self resultFromURL:url];
+	}
+    
+	return result;
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

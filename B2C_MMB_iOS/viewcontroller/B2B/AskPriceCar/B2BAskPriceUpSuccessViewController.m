@@ -12,9 +12,13 @@
 #import "MyInquiryListFirstViewController.h"
 #import "MCDefine.h"
 #import "ChatListViewController.h"
+#import "B2BAskPriceCarViewController.h"
 
 @interface B2BAskPriceUpSuccessViewController ()
-
+{
+    UIButton *backBtn;
+    UIBarButtonItem *leftItem;
+}
 @end
 
 @implementation B2BAskPriceUpSuccessViewController
@@ -34,11 +38,29 @@
     [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
+- (void) back:(UIButton *) SENDER
+{
+    NSLog(@"%@",self.navigationController.viewControllers);
+    for(UIViewController *vc in self.navigationController.viewControllers)
+    {
+        if([vc isKindOfClass:[B2BAskPriceCarViewController class]])
+        {
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    [self pushAndPopStyle];
+//    [self pushAndPopStyle];
+    
+    backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(0, 0, 15, 22)];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交成功"];
     self.navigationItem.titleView = top;

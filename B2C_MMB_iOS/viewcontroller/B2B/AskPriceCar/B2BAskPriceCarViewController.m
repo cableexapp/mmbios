@@ -83,7 +83,6 @@
 {
     
     B2BAskPriceInquirySheetViewController *b2bAskPriceInquirySheetViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceInquirySheetViewController"];
-    NSLog(@"chooseArray = %@",chooseArray);
     b2bAskPriceInquirySheetViewController.dataArray = [[NSMutableArray alloc] initWithArray:chooseArray];
     b2bAskPriceInquirySheetViewController.heightArray = [[NSMutableArray alloc] initWithArray:cellHeightArray];
     [self.navigationController pushViewController:b2bAskPriceInquirySheetViewController animated:YES];
@@ -761,7 +760,6 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-       [cell.contentView setBackgroundColor:[UIColor orangeColor]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -963,7 +961,6 @@
             if(i == 6)
             {
                 [cellLabel setFrame:CGRectMake(10, 65, cell.contentView.frame.size.width-20, size_7.height)];
-                [cellLabel setBackgroundColor:[UIColor redColor]];
                 if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] require]] == NO)
                 {
                     [cellLabel setText:@"特殊需求"];

@@ -24,6 +24,7 @@
 #import "UIImage (fixOrientation).h"
 #import "DCFStringUtil.h"
 #import "UIImageView+WebCache.h"
+#import "FourthNaviViewController.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -46,6 +47,10 @@
     
     UIActionSheet *changePhotoSheet;
     UIActionSheet *albumSheet;
+    
+    FourthHostViewController *fourthHostViewController;
+    
+    AppDelegate *app;
 }
 @end
 
@@ -119,10 +124,19 @@
     return memberid;
 }
 
-- (AppDelegate *)appDelegate
+
+
+- (void) pushToVC
 {
-    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
+    [self setHidesBottomBarWhenPushed:YES];
+    fourthHostViewController.myStatus = @"";
+    [self.navigationController pushViewController:fourthHostViewController animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
 }
+
+
+
 
 //请求询价车商品数量
 -(void)loadbadgeCount
@@ -133,7 +147,7 @@
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
-    NSString *visitorid = [self.appDelegate getUdid];
+    NSString *visitorid = [app getUdid];
     
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
@@ -160,7 +174,7 @@
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
-    NSString *visitorid = [self.appDelegate getUdid];
+    NSString *visitorid = [app getUdid];
     
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
@@ -351,6 +365,8 @@
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
+    
+
 }
 
 - (void)viewDidLoad
@@ -358,10 +374,20 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    
     [self pushAndPopStyle];
 //    isPopShow = NO;
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
+	    if(app.aliPayHasFinished == YES)
+    {
+        [self pushToVC];
+    }
+    
     
     self.view1.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     self.view2.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
@@ -475,6 +501,7 @@
     [self.photoBtn setUserInteractionEnabled:YES];
     [self.photoBtn addGestureRecognizer:tapGesture];
     
+
 }
 
 - (void)photoBtnAction:(id)sender
@@ -894,8 +921,8 @@
     {
         text = @"4";
     }
+
     [self setHidesBottomBarWhenPushed:YES];
-    FourthHostViewController *fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     fourthHostViewController.myStatus = text;
     [self.navigationController pushViewController:fourthHostViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];

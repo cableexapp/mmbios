@@ -25,6 +25,7 @@
 #import "logisticsTrackingViewController.h"
 #import "AliViewController.h"
 #import "MyCableOrderSearchViewController.h"
+#import "AppDelegate.h"
 
 @interface FourthHostViewController ()
 {
@@ -45,6 +46,8 @@
     UIView *rightButtonView;
     
     NSString *sureReceiveNumber; //确认收货
+    
+    AppDelegate *app;
 }
 @end
 
@@ -140,6 +143,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    app.aliPayHasFinished = NO;
     
     self.view.backgroundColor = [UIColor whiteColor];
     

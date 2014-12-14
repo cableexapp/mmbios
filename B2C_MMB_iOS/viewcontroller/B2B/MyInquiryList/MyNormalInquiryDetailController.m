@@ -42,14 +42,16 @@
     tv.view.frame = self.tableBackView.bounds;
     [self addChildViewController:tv];
     [self.tableBackView addSubview:tv.view];
+    
+    CGFloat height = (self.topView.frame.size.height-10)/2;
     CGSize size_order;
     if(self.myOrderNum.length == 0 || [self.myOrderNum isKindOfClass:[NSNull class]])
     {
-        size_order = CGSizeMake(20, 20);
+        size_order = CGSizeMake(20, height);
     }
     else
     {
-        size_order = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:self.myOrderNum WithSize:CGSizeMake(MAXFLOAT, 20)];
+        size_order = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:self.myOrderNum WithSize:CGSizeMake(MAXFLOAT, height)];
     }
     UILabel *orderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_order.width+40, 20)];
     [orderLabel setFont:[UIFont systemFontOfSize:12]];
@@ -57,24 +59,26 @@
     [self.topView addSubview:orderLabel];
     
     CGSize size_time;
-    if(self.myTime.length == 0 || [self.myTime isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:self.myTime] == NO)
     {
-        size_time = CGSizeMake(20, 20);
+        size_time = CGSizeMake(20, height);
     }
     else
     {
-        size_time = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:self.myTime WithSize:CGSizeMake(MAXFLOAT, 20)];
+        size_time = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:self.myTime WithSize:CGSizeMake(MAXFLOAT, height)];
     }
-    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_time.width-40, 5, size_time.width+40, 20)];
-    [timeLabel setText:self.myTime];
+    UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, orderLabel.frame.origin.y+orderLabel.frame.size.height, ScreenWidth-20, 20)];
+    [timeLabel setText:[NSString stringWithFormat:@"提交时间:%@",self.myTime]];
     [timeLabel setFont:[UIFont systemFontOfSize:12]];
-    [timeLabel setTextAlignment:NSTextAlignmentRight];
+    [timeLabel setTextAlignment:NSTextAlignmentLeft];
     [timeLabel setTextColor:[UIColor lightGrayColor]];
+    [self.topView setBackgroundColor:[UIColor whiteColor]];
     [self.topView addSubview:timeLabel];
     
     NSString *s = [NSString stringWithFormat:@"状态: %@",self.myStatus];
-    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, ScreenWidth-20, 20)];
+    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(orderLabel.frame.origin.x+orderLabel.frame.size.width, orderLabel.frame.origin.y, ScreenWidth-20-orderLabel.frame.size.width, height)];
     [statusLabel setFont:[UIFont systemFontOfSize:12]];
+    [statusLabel setTextAlignment:NSTextAlignmentRight];
     if(s.length > 4)
     {
         NSMutableAttributedString *status = [[NSMutableAttributedString alloc] initWithString:s];

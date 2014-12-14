@@ -10,4 +10,6 @@
 
 @interface DCFTabBarCtrl : UITabBarController
 
+- (void) changeSelectItem;
+
 @end

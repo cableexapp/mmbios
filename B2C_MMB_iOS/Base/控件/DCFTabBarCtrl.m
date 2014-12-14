@@ -25,7 +25,9 @@
 #import "FourthNaviViewController.h"
 
 @interface DCFTabBarCtrl ()
-
+{
+    FourthNaviViewController *fourthNavi;
+}
 @end
 
 @implementation DCFTabBarCtrl
@@ -71,7 +73,7 @@
     //    [thirdNavi.tabBarItem setImageInsets:UIEdgeInsetsMake(10, 0, 0, 10)];
     
     UIStoryboard *fourthSB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
-    FourthNaviViewController *fourthNavi = [fourthSB instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
+    fourthNavi = [fourthSB instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
     UIImage *selectp_centerSelectImg = [UIImage imageNamed:@"p_centerSelect.png"];
     UIImage *unSelectp_centerUnSelectImg = [UIImage imageNamed:@"p_centerUnSelect.png"];
     selectp_centerSelectImg = [UIImage imageWithCGImage:selectp_centerSelectImg.CGImage scale:1.5 orientation:selectp_centerSelectImg.imageOrientation];
@@ -93,8 +95,18 @@
     //set the tab bar items
     NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi,fifthNavi, nil];
     self.viewControllers = tabbarItems;
-    
+
 }
+
+- (void) changeSelectItem
+{
+//    UIStoryboard *fourthSB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
+//    fourthNavi = [fourthSB instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
+//    NSLog(@"%@",fourthNavi.viewControllers);
+//    [self setSelectedIndex:3];
+////    [self setSelectedViewController:[fourthNavi.viewControllers objectAtIndex:0]];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

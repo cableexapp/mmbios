@@ -36,6 +36,7 @@
     NSString *myAddressId;
     
     UILabel *totalMoneyLabel;
+    UILabel *moneyLabel;
     
     int totalSection;
     
@@ -709,7 +710,7 @@
     [buttomView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [self.view addSubview:buttomView];
 
-    UILabel *moneyLabel = [[UILabel alloc] init];
+    moneyLabel = [[UILabel alloc] init];
     CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:goodsMoney afterPoint:2] WithSize:CGSizeMake(MAXFLOAT, 20)];
     [moneyLabel setText:[DCFCustomExtra notRounding:goodsMoney afterPoint:2]];
     [moneyLabel setFont:[UIFont systemFontOfSize:12]];
@@ -732,30 +733,7 @@
     [buttomView addSubview:l];
    
     
-    /*
-    totalMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-270, 5, 40, 25)];
-    [totalMoneyLabel setText:@"合计:"];
-    [totalMoneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
-//    totalMoneyLabel.backgroundColor = [UIColor redColor];
-    [totalMoneyLabel setTextAlignment:NSTextAlignmentRight];
-    [totalMoneyLabel setTextColor:[UIColor blackColor]];
-    [buttomView addSubview:totalMoneyLabel];
-    
-    
-    UILabel *MoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-230, 5, 100, 25)];
-    [MoneyLabel setText:[NSString stringWithFormat:@" ¥%@",[DCFCustomExtra notRounding:goodsMoney afterPoint:2]]];
-    [MoneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
-    MoneyLabel.backgroundColor = [UIColor greenColor];
-    [MoneyLabel setTextAlignment:NSTextAlignmentLeft];
-    [MoneyLabel setTextColor:[UIColor redColor]];
-    [buttomView addSubview:MoneyLabel];
-    
-    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-230,25,40,25)];
-    [l setTextAlignment:NSTextAlignmentRight];
-    [l setFont:[UIFont systemFontOfSize:12]];
-    [l setText:@"含运费"];
-    [buttomView addSubview:l];
-    */
+
     UIButton *upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [upBtn setTitle:@"提交" forState:UIControlStateNormal];
     [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -848,7 +826,6 @@
             receivedistrict = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receivedistrict"]];
             receiveaddress = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveaddress"]];
             NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
-            NSLog(@"full = %@",fullAddress);
             if([DCFCustomExtra validateString:fullAddress] == NO)
             {
                 return 40;
@@ -1474,7 +1451,14 @@
         myTotalMoney = myTotalMoney + [[priceArray objectAtIndex:i] doubleValue];
         
     }
-    [totalMoneyLabel setText:[NSString stringWithFormat:@"总计(连运费):¥%@",[DCFCustomExtra notRounding:myTotalMoney afterPoint:2]]];
+    NSString *totalString = [NSString stringWithFormat:@"%@",[DCFCustomExtra notRounding:myTotalMoney afterPoint:2]];
+    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:totalString WithSize:CGSizeMake(MAXFLOAT, 20)];
+    NSLog(@"%@",totalString);
+    [moneyLabel setFrame:CGRectMake(ScreenWidth-110-size.width, 10, size.width, 20)];
+    [moneyLabel setText:totalString];
+    
+    [totalMoneyLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
+
 }
 
 #pragma mark - 从字符串中取出数字

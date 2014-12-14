@@ -450,12 +450,12 @@
         }
         else
         {
-            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:detailData.goodsName WithSize:CGSizeMake(300, MAXFLOAT)];
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, size.height)];
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:detailData.goodsName WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, size.height)];
             [label setText:detailData.goodsName];
             [label setNumberOfLines:0];
-            [label setFont:[UIFont systemFontOfSize:13]];
-            return label.frame.size.height + 30;
+            [label setFont:[UIFont systemFontOfSize:15]];
+            return label.frame.size.height + 10;
         }
     }
     if(indexPath.row == 2 || indexPath.row == 3)
@@ -489,7 +489,7 @@
                     }
                 }
                 CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:string WithSize:CGSizeMake(ScreenWidth-20-size_1.width, MAXFLOAT)];
-                if(size_3.height < 30)
+                if(size_3.height <= 30)
                 {
                     return 50;
                 }
@@ -695,8 +695,9 @@
         {
             if(detailData.goodsName.length != 0)
             {
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:detailData.goodsName WithSize:CGSizeMake(300, MAXFLOAT)];
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, size.height+15)];
+                
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:detailData.goodsName WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, size.height)];
                 [label setText:detailData.goodsName];
                 [label setNumberOfLines:0];
                 [label setFont:[UIFont systemFontOfSize:15]];
@@ -705,7 +706,7 @@
                 [cell.contentView addSubview:label];
                 [cell.contentView setBackgroundColor:[UIColor whiteColor]];
                 UIView *lineView = [[UIView alloc] init];
-                lineView.frame = CGRectMake(10, size.height+30, cell.frame.size.width-20, 0.5);
+                lineView.frame = CGRectMake(10, label.frame.origin.y+label.frame.size.height+4.5, cell.frame.size.width-20, 0.5);
                 lineView.backgroundColor = [UIColor lightGrayColor];
                 [cell addSubview:lineView];
             }
@@ -758,7 +759,7 @@
                 }
                 else
                 {
-                    [label setFrame:CGRectMake(10, (size_3.height-30)/2, size_1.width, 30)];
+                    [label setFrame:CGRectMake(10, (size_3.height+20-30)/2, size_1.width, 30)];
                     
                     tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width, 10, ScreenWidth-20-label.frame.size.width, size_3.height)];
                 }

@@ -5284,7 +5284,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AliPay/alipay",
-					"$(PROJECT_DIR)/Tools/BPush",
 					"$(PROJECT_DIR)/Tools/Vendor/libidn",
 					"$(PROJECT_DIR)/Tools/lib/sunflower",
 					"$(PROJECT_DIR)/Tools/LibBPush",
@@ -5323,7 +5322,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AliPay/alipay",
-					"$(PROJECT_DIR)/Tools/BPush",
 					"$(PROJECT_DIR)/Tools/Vendor/libidn",
 					"$(PROJECT_DIR)/Tools/lib/sunflower",
 					"$(PROJECT_DIR)/Tools/LibBPush",

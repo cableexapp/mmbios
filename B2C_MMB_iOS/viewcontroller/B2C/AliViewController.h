@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AlixLibService.h"
 
 @interface Product : NSObject{
 @private
@@ -18,9 +17,9 @@
 }
 
 @property (nonatomic, assign) float price;
-@property (nonatomic, retain) NSString *subject;
-@property (nonatomic, retain) NSString *body;
-@property (nonatomic, retain) NSString *orderId;
+@property (nonatomic, copy) NSString *subject;
+@property (nonatomic, copy) NSString *body;
+@property (nonatomic, copy) NSString *orderId;
 
 @end
 
@@ -36,7 +35,7 @@
 @property (strong,nonatomic) NSString *productPrice;
 @property (strong,nonatomic) NSString *productOrderNum;;
 
--(void)paymentResult:(NSString *)result;
+//-(void)paymentResult:(NSString *)result;
 
 - (void) testPay;
 @end

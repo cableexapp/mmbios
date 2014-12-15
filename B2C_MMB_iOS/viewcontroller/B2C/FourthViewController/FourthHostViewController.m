@@ -427,7 +427,7 @@
     {
         if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
-            return 90;
+            return 122;
         }
         if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
@@ -543,7 +543,7 @@
     [cell.cellIv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
     [cell.contentLabel setText:[itemDic objectForKey:@"productName"]];
     
-    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:path.section] orderTotal]]];
+    [cell.priceLabel setText:[NSString stringWithFormat:@"¥%@",[itemDic objectForKey:@"price"]]];
     
     [cell.numberLabel setText:[NSString stringWithFormat:@"*%@",[itemDic objectForKey:@"productNum"]]];
     
@@ -961,26 +961,21 @@
 - (void) onLinePayBtnClick:(UIButton *) sender
 {
     
-    NSString *shopName = [[dataArray objectAtIndex:sender.tag/10] shopName];
     
     NSString *productTitle = @"";
-    NSString *total = nil;
-    float shopPrice = 0.00;
+
     
     NSArray *itemsArray = [[dataArray objectAtIndex:sender.tag/10] myItems];
+    NSLog(@"%@",itemsArray);
     if(itemsArray.count != 0)
     {
         for(NSDictionary *dic in itemsArray)
         {
             NSString *productItmeTitle = [dic objectForKey:@"productItmeTitle"];
             productTitle = [productTitle stringByAppendingString:productItmeTitle];
-            
-            shopPrice = shopPrice + [[dic objectForKey:@"price"] floatValue];
         }
-        total = [NSString stringWithFormat:@"%.2f",shopPrice];
     }
 
-    total = [NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:sender.tag/10] orderTotal]];
     //
     [self setHidesBottomBarWhenPushed:YES];
     
@@ -989,9 +984,14 @@
 //    ali.shopName = shopName;
     ali.shopName = @"家装馆产品";
     ali.productName = productTitle;
-    ali.productPrice = total;
+    NSLog(@"%@",productTitle);
+    ali.productPrice = [[dataArray objectAtIndex:sender.tag/10] orderTotal];
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    [self.navigationController pushViewController:ali animated:YES];
+
+    
+    [ali testPay];
+    
+//    [self.navigationController pushViewController:ali animated:YES];
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

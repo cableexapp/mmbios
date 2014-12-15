@@ -614,10 +614,10 @@
         B2CShopCarListData *carListData = [[dataArray objectAtIndex:subtractBtnSection] objectAtIndex:subtractBtnRow];
         
         subtractNum = [carListData.num intValue];
-        if(subtractNum <= 0)
+        if(subtractNum == 1)
         {
-            [DCFStringUtil showNotice:@"不能小于0"];
-            subtractNum = 0;
+            [DCFStringUtil showNotice:@"商品数量不能为0"];
+            subtractNum = 1;
             return;
         }
         else

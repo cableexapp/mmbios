@@ -279,17 +279,20 @@
         NSLog(@"myTimeLabel = %@",self.myTime);
         
         label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 98)];
-
+        [label setBackgroundColor:[UIColor whiteColor]];
         UILabel *orderNumLabel = [[UILabel alloc] init];
         orderNumLabel.frame = CGRectMake(0, 0, 75, 25);
         orderNumLabel.font = [UIFont systemFontOfSize:15];
         orderNumLabel.text = @"  订单编号:";
         [label addSubview:orderNumLabel];
         
+        
         UILabel *tempOrderNumLabel = [[UILabel alloc] init];
+        [tempOrderNumLabel setBackgroundColor:[UIColor clearColor]];
         tempOrderNumLabel.frame = CGRectMake(75, 0, ScreenWidth-75, 25);
         tempOrderNumLabel.font = [UIFont systemFontOfSize:13];
         tempOrderNumLabel.text = [NSString stringWithFormat:@" %@",self.myOrderNum];
+        [tempOrderNumLabel setTextColor:[UIColor blackColor]];
         [label addSubview:tempOrderNumLabel];
         
         UILabel *upTimeLabel = [[UILabel alloc] init];
@@ -312,25 +315,25 @@
     }
     else
     {
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
-        [label setTextAlignment:NSTextAlignmentLeft];
-        [label setTextColor:[UIColor blackColor]];
-        label.font = [UIFont systemFontOfSize:15];
-        [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
+//        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
+//        [label setTextAlignment:NSTextAlignmentLeft];
+//        [label setTextColor:[UIColor blackColor]];
+//        label.font = [UIFont systemFontOfSize:15];
+//        [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
     }
     
-    if(section == 0)
-    {
-        [titleLabel setText:@"  商品信息"];
-    }
-    if(section == 1)
-    {
-        [label setText:@"  收货地址"];
-    }
-    if(section == 2)
-    {
-        [label setText:@"  发票信息"];
-    }
+//    if(section == 0)
+//    {
+//        [titleLabel setText:@"  商品信息"];
+//    }
+//    if(section == 1)
+//    {
+//        [label setText:@"  收货地址"];
+//    }
+//    if(section == 2)
+//    {
+//        [label setText:@"  发票信息"];
+//    }
     return label;
 }
 

@@ -7,13 +7,27 @@
 //
 
 #import "AliViewController.h"
-#import "PartnerConfig.h"
+#import "Order.h"
 #import "DataSigner.h"
-#import "AlixPayResult.h"
-#import "DataVerifier.h"
-#import "AlixPayOrder.h"
+#import <AlipaySDK/AlipaySDK.h>
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MCDefine.h"
+#import "AppDelegate.h"
+
+//合作身份者id，以2088开头的16位纯数字
+#define PartnerID @"2088111057436819"
+//收款支付宝账号
+#define SellerID  @"cableex@cableex.com"
+
+//安全校验码（MD5）密钥，以数字和字母组成的32位字符
+#define MD5_KEY @"ayfetbfdmhhrobkemfo8im1y2rk4jf7f"
+
+//商户私钥，自助生成
+#define PartnerPrivKey @"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOl5rueC9UMZaNmlZyMDRttPEucFyuFid5MxvFt2HKyoFj/b9eS6U8pUgoWzHYly9akKWPchwS75JlkIPUQvuE1WJtOfWjPw40l5X2n6PN05McI8mKWZff0Tv2GDgpYYjdcQMXrhvx6FMHXbVf3+2G2d+OcuPL6rqVqZPVZQJyPdAgMBAAECgYB2BLSNAn3H9Ugy/JEt+bIPmeEMNrlfRM788N8tvH6yKCVXEnExtZ41YJK50tjTafEUCc7+3WkxvW/NAYU2uoiGV+jT6SlQxTWbZDfBjqr+m67ndvO0ZlpLimIVQJKsdB9IrUnMDF98lnxR06tdPwlzIiX8IV0yk5uCvbFB45mcAQJBAP9MF/4dI6Jj9FEt6hkNvDKoDPS4c8AsXthdw5RBTL3gBxHvnWaAGpvrLTjBWb3DzgkBZlmmoUtKsTojJTkYOaECQQDqHjY0hGPWhAbBDUorZU4aZtEd3/u9YsomgRYn0ldVxCeO1klfdhcXYcfcxpX0fqEZgILv9naEDh8xUvJN7Zi9AkBRB5Th6dvCkhkcnwcbVpmyNlaOYfETQMIFyJTn/GXgKjf0QGpj+yr27AkZZ30VVw2RHCmhMNsm65key8LnwUGhAkEAz8lcpqPR0HSBYhofeACDn18dvnwq+92QOThcp59CMDbWPSnnGTjAKdp4/nOqZ8NzzCSJEd0XNwEpoidSMuPrqQJBAOkhsSMydV69KpYXWk8cRO7Yk1HyVxE3oNaigFMn42ny3KekLhxylak8Z05eXxbe0FIOMLaWK32aaoQWKoPcCqY="
+
+
+//支付宝公钥
+#define AlipayPubKey   @"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB"
 
 @implementation Product
 @synthesize price = _price;
@@ -24,6 +38,9 @@
 @end
 
 @interface AliViewController ()
+{
+    UIStoryboard *sb;
+}
 @end
 
 
@@ -50,45 +67,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
-//wap回调函数
--(void)paymentResult:(NSString *)resultd
-{
-    //结果处理
-#if ! __has_feature(objc_arc)
-    AlixPayResult* result = [[[AlixPayResult alloc] initWithString:resultd] autorelease];
-#else
-    AlixPayResult* result = [[AlixPayResult alloc] initWithString:resultd];
-#endif
-	if (result)
-    {
-		
-		if (result.statusCode == 9000)
-        {
-			/*
-			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
-			 */
-            
-            //交易成功
-            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
-			id<DataVerifier> verifier;
-            verifier = CreateRSADataVerifier(key);
-            
-			if ([verifier verifyString:result.resultString withSign:result.signString])
-            {
-                //验证签名成功，交易结果无篡改
-			}
-        }
-        else
-        {
-            //交易失败
-        }
-    }
-    else
-    {
-        //失败
-    }
-    
-}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -102,30 +81,6 @@
 - (void)generateData
 {
 
-//    NSArray *subjects = [[NSArray alloc] initWithObjects:_shopName, nil];
-//
-//    NSArray *body = [[NSArray alloc] initWithObjects:_productName, nil];
-//    
-//	_products = [[NSMutableArray alloc] init];
-//    
-//	for (int i = 0; i < [subjects count]; ++i)
-//    {
-//		Product *product = [[Product alloc] init];
-//		product.subject = [subjects objectAtIndex:i];
-//		product.body = [body objectAtIndex:i];
-//        NSLog(@"_productPrice = %@",_productPrice);
-//        product.price = [[self getNumFromString:_productPrice] floatValue];
-//
-//		[_products addObject:product];
-//#if ! __has_feature(objc_arc)
-//		[product release];
-//#endif
-//	}
-//	
-//#if ! __has_feature(objc_arc)
-//	[subjects release], subjects = nil;
-//	[body release], body = nil;
-//#endif
 }
 
 - (NSString *) getNumFromString:(NSString *) string
@@ -144,20 +99,113 @@
 
 - (void) testPay
 {
+    AppDelegate *app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    NSArray *subjects = [[NSArray alloc] initWithObjects:_shopName, nil];
+    
+    NSArray *body = [[NSArray alloc] initWithObjects:_productName, nil];
+    
+    _products = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < [subjects count]; ++i)
+    {
+        Product *product = [[Product alloc] init];
+        product.subject = [subjects objectAtIndex:i];
+        product.body = [body objectAtIndex:i];
+        product.price = [[self getNumFromString:_productPrice] floatValue];
+        
+        [_products addObject:product];
+#if ! __has_feature(objc_arc)
+        [product release];
+#endif
+    }
+    
+#if ! __has_feature(objc_arc)
+    [subjects release], subjects = nil;
+    [body release], body = nil;
+#endif
+    
+    //_________
     /*
-	 *生成订单信息及签名
-	 *由于demo的局限性，采用了将私钥放在本地签名的方法，商户可以根据自身情况选择签名方法(为安全起见，在条件允许的前提下，我们推荐从商户服务器获取完整的订单信息)
-	 */
-#pragma mark - 这里修改appScheme,跳回自己app,同时info里面的URL Type里面也要修改
+     *点击获取prodcut实例并初始化订单信息
+     */
+    Product *product = [_products objectAtIndex:0];
+    
+    /*
+     *商户的唯一的parnter和seller。
+     *签约后，支付宝会为每个商户分配一个唯一的 parnter 和 seller。
+     */
+    
+    /*============================================================================*/
+    /*=======================需要填写商户app申请的===================================*/
+    /*============================================================================*/
+    NSString *partner = PartnerID;
+    NSString *seller = SellerID;
+    NSString *privateKey = PartnerPrivKey;
+    /*============================================================================*/
+    /*============================================================================*/
+    /*============================================================================*/
+    
+    //partner和seller获取失败,提示
+    if ([partner length] == 0 || [seller length] == 0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                        message:@"缺少partner或者seller。"
+                                                       delegate:self
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    /*
+     *生成订单信息及签名
+     */
+    //将商品信息赋予AlixPayOrder的成员变量
+    Order *order = [[Order alloc] init];
+    order.partner = partner;
+    order.seller = seller;
+    order.tradeNO = [self generateTradeNO]; //订单ID（由商家自行制定）
+    order.productName = product.subject; //商品标题
+    order.productDescription = product.body; //商品描述
+    order.amount = [NSString stringWithFormat:@"%.2f",product.price]; //商品价格
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/payment/alipay/alipay_notify_url.html"];
+    order.notifyURL =  urlString; //回调URL
+    
+    order.service = @"mobile.securitypay.pay";
+    order.paymentType = @"1";
+    order.inputCharset = @"utf-8";
+    order.itBPay = @"30m";
+    order.showUrl = @"m.alipay.com";
+    
+    //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
     NSString *appScheme = @"far.east.Far-East-MMB-iOS";
-    NSString* orderInfo = [self getOrderInfo:0];
-    NSString* signedStr = [self doRsa:orderInfo];
     
+    //将商品信息拼接成字符串
+    NSString *orderSpec = [order description];
     
-    NSString *orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
-                             orderInfo, signedStr, @"RSA"];
-	
-    [AlixLibService payOrder:orderString AndScheme:appScheme seletor:_result target:self];
+    //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
+    id<DataSigner> signer = CreateRSADataSigner(privateKey);
+    NSString *signedString = [signer signString:orderSpec];
+    
+    //将签名成功字符串格式化为订单字符串,请严格按照该格式
+    NSString *orderString = nil;
+    if (signedString != nil) {
+        orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                       orderSpec, signedString, @"RSA"];
+        
+        [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            NSLog(@"res = %@",resultDic);
+            NSString *resultStatus = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"resultStatus"]];
+            NSLog(@"resultStatus = %@",resultStatus);
+            if([resultStatus isEqualToString:@"9000"])
+            {
+                [app aliPayChange];
+            }
+     
+        }];
+    }
+
 }
 
 #pragma mark -
@@ -223,54 +271,6 @@
     
 }
 
--(NSString*)getOrderInfo:(NSInteger)index
-{
-    
-    NSArray *subjects = [[NSArray alloc] initWithObjects:_shopName, nil];
-    
-    NSArray *body = [[NSArray alloc] initWithObjects:_productName, nil];
-    
-	_products = [[NSMutableArray alloc] init];
-    
-	for (int i = 0; i < [subjects count]; ++i)
-    {
-		Product *product = [[Product alloc] init];
-		product.subject = [subjects objectAtIndex:i];
-		product.body = [body objectAtIndex:i];
-        NSLog(@"_productPrice = %@",_productPrice);
-        product.price = [[self getNumFromString:_productPrice] floatValue];
-        
-		[_products addObject:product];
-#if ! __has_feature(objc_arc)
-		[product release];
-#endif
-	}
-	
-#if ! __has_feature(objc_arc)
-	[subjects release], subjects = nil;
-	[body release], body = nil;
-#endif
-    
-    
-    /*
-	 *点击获取prodcut实例并初始化订单信息
-	 */
-	Product *product = [_products objectAtIndex:index];
-    AlixPayOrder *order = [[AlixPayOrder alloc] init];
-    order.partner = PartnerID;
-    order.seller = SellerID;
-    
-    order.tradeNO = [self generateTradeNO]; //订单ID（由商家自行制定）
-	order.productName = product.subject; //商品标题
-	order.productDescription = product.body; //商品描述
-    
-	order.amount = [NSString stringWithFormat:@"%.2f",product.price]; //商品价格
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/payment/alipay/alipay_notify_url.html"];
-
-	order.notifyURL =  urlString; //回调URL
-	
-	return [order description];
-}
 
 - (NSString *)generateTradeNO
 {

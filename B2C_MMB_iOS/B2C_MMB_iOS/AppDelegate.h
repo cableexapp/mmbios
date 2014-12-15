@@ -104,4 +104,6 @@
 
 -(void)registerInSide;
 
+- (void) aliPayChange;
+
 @end

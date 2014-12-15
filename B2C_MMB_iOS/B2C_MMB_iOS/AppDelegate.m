@@ -24,10 +24,8 @@
 #import "MobClick.h"
 
 
-#import "AlixPayResult.h"
-#import "PartnerConfig.h"
-#import "DataSigner.h"
-#import "DataVerifier.h"
+#import <AlipaySDK/AlipaySDK.h>
+
 
 
 #define SUPPORT_IOS8 0
@@ -238,7 +236,7 @@ NSString *strUserId = @"";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-
+    
     //创建讯飞语音配置,appid必须要传入，仅执行一次则可
     NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@,timeout=%@",APPID_VALUE,TIMEOUT_VALUE];
     
@@ -403,76 +401,117 @@ NSString *strUserId = @"";
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
+- (void) aliPayChange
+{
+    _aliPayHasFinished = YES;
+
+    DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
+    self.window.rootViewController = tabbar;
+    [tabbar setSelectedIndex:3];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    
+    //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK
+    if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService]
+         processOrderWithPaymentResult:url
+         standbyCallback:^(NSDictionary *resultDic) {
+             NSLog(@"result = %@", resultDic);
+             if([[resultDic allKeys] count] == 0 || [resultDic isKindOfClass:[NSNull class]])
+             {
+                 
+             }
+             else
+             {
+                 NSString *resultStatus = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"resultStatus"]];
+                 NSLog(@"resultStatus = %@",resultStatus);
+                 
+                 DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
+                 self.window.rootViewController = tabbar;
+                 [tabbar setSelectedIndex:3];
+                 
+                 _aliPayHasFinished = YES;
+             }
+         }];
+    }
+    
+    return YES;
+}
+
 //独立客户端回调函数
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-	
-	[self parse:url application:application];
+
+//	[self parse:url application:application];
 	return YES;
 }
-
-- (void)parse:(NSURL *)url application:(UIApplication *)application {
-    
-    //结果处理
-    AlixPayResult* result = [self handleOpenURL:url];
-
-    
-	if (result)
-    {
-
-        
-		if (result.statusCode == 9000)
-        {
-			/*
-			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
-			 */
-            
-            //交易成功
-            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
-			id<DataVerifier> verifier;
-            verifier = CreateRSADataVerifier(key);
-            
-			if ([verifier verifyString:result.resultString withSign:result.signString])
-            {
-                //验证签名成功，交易结果无篡改
-			}
-
-            DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
-            self.window.rootViewController = tabbar;
-            [tabbar setSelectedIndex:3];
-
-            _aliPayHasFinished = YES;
-        }
-        else
-        {
-            //交易失败
-            _aliPayHasFinished = NO;
-        }
-    }
-    else
-    {
-        //失败
-        _aliPayHasFinished = NO;
-    }
-}
-
-- (AlixPayResult *)resultFromURL:(NSURL *)url {
-	NSString * query = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-#if ! __has_feature(objc_arc)
-    return [[[AlixPayResult alloc] initWithString:query] autorelease];
-#else
-	return [[AlixPayResult alloc] initWithString:query];
-#endif
-}
-
-- (AlixPayResult *)handleOpenURL:(NSURL *)url {
-	AlixPayResult * result = nil;
-	
-	if (url != nil && [[url host] compare:@"safepay"] == 0) {
-		result = [self resultFromURL:url];
-	}
-    
-	return result;
-}
+//
+//- (void)parse:(NSURL *)url application:(UIApplication *)application {
+//
+//    //结果处理
+//    AlixPayResult* result = [self handleOpenURL:url];
+//
+//
+//	if (result)
+//    {
+//
+//
+//		if (result.statusCode == 9000)
+//        {
+//			/*
+//			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
+//			 */
+//
+//            //交易成功
+//            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
+//			id<DataVerifier> verifier;
+//            verifier = CreateRSADataVerifier(key);
+//
+//			if ([verifier verifyString:result.resultString withSign:result.signString])
+//            {
+//                //验证签名成功，交易结果无篡改
+//			}
+//
+//            DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
+//            self.window.rootViewController = tabbar;
+//            [tabbar setSelectedIndex:3];
+//
+//            _aliPayHasFinished = YES;
+//        }
+//        else
+//        {
+//            //交易失败
+//            _aliPayHasFinished = NO;
+//        }
+//    }
+//    else
+//    {
+//        //失败
+//        _aliPayHasFinished = NO;
+//    }
+//}
+//
+//- (AlixPayResult *)resultFromURL:(NSURL *)url {
+//	NSString * query = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//#if ! __has_feature(objc_arc)
+//    return [[[AlixPayResult alloc] initWithString:query] autorelease];
+//#else
+//	return [[AlixPayResult alloc] initWithString:query];
+//#endif
+//}
+//
+//- (AlixPayResult *)handleOpenURL:(NSURL *)url {
+//	AlixPayResult * result = nil;
+//
+//	if (url != nil && [[url host] compare:@"safepay"] == 0) {
+//		result = [self resultFromURL:url];
+//	}
+//
+//	return result;
+//}
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
@@ -556,7 +595,7 @@ NSString *strUserId = @"";
 
 - (AppDelegate *)appDelegate
 {
-	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 //注册
@@ -610,15 +649,15 @@ NSString *strUserId = @"";
 //连接服务器
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
-	isXmppConnected = YES;
-	NSError *error = nil;
-	if (![[self xmppStream] authenticateWithPassword:@"123456" error:&error])
-	{
+    isXmppConnected = YES;
+    NSError *error = nil;
+    if (![[self xmppStream] authenticateWithPassword:@"123456" error:&error])
+    {
         if (error != nil)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"errorMessage" object:nil];
         }
-	}
+    }
 }
 
 //验证通过 上线、
@@ -639,25 +678,25 @@ NSString *strUserId = @"";
 
 - (BOOL)connect
 {
-	NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
-	NSString *myPassword = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
+    NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
+    NSString *myPassword = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
     
-	myJID = [NSString stringWithFormat:@"%@@%@",[PhoneHelper getDeviceId],@"fgame.com"];
+    myJID = [NSString stringWithFormat:@"%@@%@",[PhoneHelper getDeviceId],@"fgame.com"];
     myPassword = @"123456";
-	if (myJID == nil || myPassword == nil)
+    if (myJID == nil || myPassword == nil)
     {
-		return NO;
-	}
+        return NO;
+    }
     XMPPJID *jid = [XMPPJID jidWithString:myJID resource:@"XMPP"];
-	[xmppStream setMyJID:jid];
-	password = myPassword;
+    [xmppStream setMyJID:jid];
+    password = myPassword;
     
-	NSError *error = nil;
+    NSError *error = nil;
     if (![xmppStream connect:&error])
     {
         return NO;
     }
-	return YES;
+    return YES;
 }
 
 //重新连接
@@ -704,7 +743,7 @@ NSString *strUserId = @"";
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-//        NSLog(@"[IQ description] = %@\n\n",[iq description]);
+    //        NSLog(@"[IQ description] = %@\n\n",[iq description]);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])

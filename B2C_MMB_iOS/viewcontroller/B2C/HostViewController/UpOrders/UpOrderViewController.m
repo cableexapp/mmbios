@@ -178,7 +178,6 @@
         [chooseAddress loadRequest];
         
         goodsMoney = money;
-        NSLog(@"goodsMoney = %f",goodsMoney);
         goodsListArray = [[NSMutableArray alloc] init];
         
         myTag = tag;
@@ -484,11 +483,21 @@
     
     for(int i=0;i<goodsListArray.count;i++)
     {
-        NSString *logo = [self getNumFromString:[chooseSendTitleArray objectAtIndex:i]];
-        if(logo.length == 0 || [logo isKindOfClass:[NSNull class]])
+        NSLog(@"chooseSendTitleArray = %@",chooseSendTitleArray);
+        NSString *logo = nil;
+        if(chooseSendTitleArray.count == 0 || [chooseSendTitleArray isKindOfClass:[NSNull class]])
         {
             logo = @"0";
         }
+        else
+        {
+            logo = [self getNumFromString:[chooseSendTitleArray objectAtIndex:i]];
+            if(logo.length == 0 || [logo isKindOfClass:[NSNull class]])
+            {
+                logo = @"0";
+            }
+        }
+     
         NSString *shopId = nil;
         NSString *shopName = nil;
         
@@ -1113,7 +1122,7 @@
                 [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
                 
                 
-                NSString *str = [data productName];
+                NSString *str = [data productItmeTitle];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
                 UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-5, 160, 50)];
                 [titleLabel setText:str];

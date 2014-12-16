@@ -13,6 +13,7 @@
 #import "AliViewController.h"
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
+#import "MyShoppingListViewController.h"
 
 @interface ChoosePayTableViewController ()
 {
@@ -50,11 +51,39 @@
     return self;
 }
 
+- (void) back:(id) sender
+{
+    //  跳转到首页
+    NSLog(@"%@",self.navigationController.viewControllers);
+    for(UIViewController *vc in self.navigationController.viewControllers)
+    {
+        if([vc isKindOfClass:[MyShoppingListViewController class]])
+        {
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+        else
+        {
+
+        }
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self pushAndPopStyle];
+//    [self pushAndPopStyle];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
+    [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"选择支付方式"];
     self.navigationItem.titleView = top;

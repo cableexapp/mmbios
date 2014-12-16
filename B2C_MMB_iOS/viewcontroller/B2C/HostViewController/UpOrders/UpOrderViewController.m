@@ -1112,6 +1112,7 @@
                 NSURL *url = [NSURL URLWithString:data.productItemPic];
                 [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
                 
+                
                 NSString *str = [data productName];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
                 UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-5, 160, 50)];

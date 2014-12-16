@@ -18,6 +18,7 @@
 #import "GoodsFastPicTableViewCell.h"
 #import "ShopHostTableViewController.h"
 #import "ChatListViewController.h"
+#import "GoodsDetailViewController.h"
 
 @interface GoodsPicFastViewController ()
 {
@@ -25,6 +26,7 @@
     B2CGoodsFastPicData *data;
     
     DCFChenMoreCell *moreCell;
+    
 }
 @end
 
@@ -52,9 +54,9 @@
     [tv setShowsHorizontalScrollIndicator:NO];
     [tv setShowsVerticalScrollIndicator:NO];
     [self.view addSubview:tv];
-
-    self.buttomBtn.layer.cornerRadius = 5;
     
+    self.buttomBtn.layer.cornerRadius = 5;
+
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线快照"];
     self.navigationItem.titleView = top;
     
@@ -69,14 +71,16 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     // Do any additional setup after loading the view.
     
+
+    
     [moreCell startAnimation];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetProductSnapTag)
     {
-        int result = [[dicRespon objectForKey:@"result"] intValue];
         if(result == 1)
         {
             if([[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]] || [[dicRespon objectForKey:@"items"] count] == 0)
@@ -88,10 +92,7 @@
                 [moreCell stopAnimation];
                 dataArray = [[NSMutableArray alloc] initWithArray:[B2CGoodsFastPicData getListArray:[dicRespon objectForKey:@"items"]]];
                 data = [dataArray lastObject];
-                
-                NSLog(@"商品快照 = %@",dicRespon);
-                
-                NSLog(@"商品快照data = %@",data);
+        
             }
             [tv reloadData];
         }
@@ -99,9 +100,84 @@
         {
             [moreCell failAcimation];
         }
+        
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductDetail",time];
+        
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_myProductId,token];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
+    else if(URLTag == URLB2CProductDetailTag)
+    {
+        int totalProductNumber = 0;
+        int isSale = 0;
+
+        if(result == 1)
+        {
+            NSArray *coloritems = [NSArray arrayWithArray:[dicRespon objectForKey:@"coloritems"]];
+            if(coloritems.count == 0 || [coloritems isKindOfClass:[NSNull class]])
+            {
+                totalProductNumber = 0;
+            }
+            else
+            {
+                for(NSDictionary *dic in coloritems)
+                {
+                    int productNum = [[dic objectForKey:@"productNum"] intValue];
+                    totalProductNumber = totalProductNumber + productNum;
+                }
+            }
+            
+            NSArray *itemsArray = [NSArray arrayWithArray:[dicRespon objectForKey:@"items"]];
+            if(itemsArray.count == 0 || [itemsArray isKindOfClass:[NSNull class]])
+            {
+                isSale = 0;
+            }
+            else
+            {
+                NSDictionary *itemsDic = [itemsArray objectAtIndex:0];
+                //1表示上架，其余表示下架
+                if([[itemsDic objectForKey:@"isSale"] intValue] == 1)
+                {
+                    isSale = 1;
+                }
+                else
+                {
+                    isSale = 0;
+                }
+            }
+        }
+        else
+        {
+            
+        }
+        [self changeButtomBtnWithNumber:totalProductNumber WithSale:isSale];
     }
 }
 
+- (void) changeButtomBtnWithNumber:(int) number WithSale:(int) sale
+{
+    if(sale != 1)
+    {
+        [self.buttomBtn setTitle:@"该商品已下架" forState:UIControlStateNormal];
+        [self.buttomBtn setEnabled:NO];
+        return;
+    }
+    if(number == 0)
+    {
+        [self.buttomBtn setTitle:@"该商品已售罄" forState:UIControlStateNormal];
+        [self.buttomBtn setEnabled:NO];
+        return;
+    }
+    [self.buttomBtn setTitle:@"查看最新商品详情" forState:UIControlStateNormal];
+    [self.buttomBtn setEnabled:YES];
+}
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -138,7 +214,7 @@
             }
             else
             {
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:data.productName WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:data.productName WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                 return size.height + 10;
             }
             
@@ -162,7 +238,7 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    
     NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(cell == nil)
@@ -194,7 +270,7 @@
             {
                 if(data.productName.length != 0)
                 {
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:data.productName WithSize:CGSizeMake(300, MAXFLOAT)];
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:data.productName WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 5, ScreenWidth-20, size.height)];
                     [label setText:data.productName];
                     [label setNumberOfLines:0];
@@ -205,7 +281,7 @@
                     [cell.contentView setBackgroundColor:[UIColor whiteColor]];
                     
                     UIView *lineView = [[UIView alloc] init];
-                    lineView.frame = CGRectMake(10, size.height+13, ScreenWidth-20, 0.5);
+                    lineView.frame = CGRectMake(10, size.height+4.5, ScreenWidth-20, 0.5);
                     lineView.backgroundColor = [UIColor lightGrayColor];
                     [cell.contentView addSubview:lineView];
                 }
@@ -249,7 +325,7 @@
             {
                 if(data.color.length != 0)
                 {
-            
+                    
                     CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:data.color WithSize:CGSizeMake(MAXFLOAT, 30)];
                     
                     UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 13.5,ScreenWidth-25, 30)];
@@ -286,22 +362,22 @@
                     UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(12, (cell.frame.size.height-20)/2, 30, 30)];
                     [firstIv setImage:[UIImage imageNamed:@"shopPic"]];
                     
-                   
+                    
                     [firstView addSubview:firstIv];
                     [firstView addSubview:label];
-                   
+                    
                     
                     UITapGestureRecognizer *tap_1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(firstTap:)];
                     [firstView addGestureRecognizer:tap_1];
                     
                     
-//                    UIImageView *chatIv = [[UIImageView alloc] initWithFrame:CGRectMake(320-40, 7, 30, 30)];
-//                    [chatIv setUserInteractionEnabled:YES];
-//                    [chatIv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
-//                    
-//                    UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatTap:)];
-//                    [chatIv addGestureRecognizer:chatTap];
-//                    [cell.contentView addSubview:chatIv];
+                    //                    UIImageView *chatIv = [[UIImageView alloc] initWithFrame:CGRectMake(320-40, 7, 30, 30)];
+                    //                    [chatIv setUserInteractionEnabled:YES];
+                    //                    [chatIv setImage:[UIImage imageNamed:@"magnifying glass.png"]];
+                    //
+                    //                    UITapGestureRecognizer *chatTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(chatTap:)];
+                    //                    [chatIv addGestureRecognizer:chatTap];
+                    //                    [cell.contentView addSubview:chatIv];
                     
                     UIView *lineView = [[UIView alloc] init];
                     lineView.frame = CGRectMake(0, size.height+30, ScreenWidth, 10);
@@ -370,7 +446,7 @@
 {
     //    UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
     //
-//   [self setHidesBottomBarWhenPushed:YES];
+    //   [self setHidesBottomBarWhenPushed:YES];
     ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:self.myShopName WithShopId:self.myShopId WithUse:@""];
     [self.navigationController pushViewController:shopHost animated:YES];
 }
@@ -378,7 +454,7 @@
 
 - (void) chatTap:(UITapGestureRecognizer *) sender
 {
-    
+
 }
 
 
@@ -399,7 +475,8 @@
 
 - (IBAction)buttomBtn:(id)sender
 {
-    
+    GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:self.myProductId];
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 

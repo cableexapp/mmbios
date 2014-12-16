@@ -60,7 +60,7 @@
     
     
     deleteOrNot = NO;
-
+    
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"快速询价"];
     self.navigationItem.titleView = top;
@@ -70,7 +70,7 @@
     [self pushAndPopStyle];
     self.view.backgroundColor = [UIColor whiteColor];
     self.tel_Tf.placeholder = @"手机号码/固定号码";
-    self.tel_Tf.layer.borderWidth = 0.5; 
+    self.tel_Tf.layer.borderWidth = 0.5;
     self.tel_Tf.layer.borderColor = [[UIColor clearColor] CGColor];
     self.tel_Tf.tintColor = [UIColor redColor];
     
@@ -83,7 +83,7 @@
     UIView *content_lineViewUp = [[UIView alloc] init];
     content_lineViewUp.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
     content_lineViewUp.frame = CGRectMake(0, self.content_Tv.frame.origin.y, ScreenWidth, 1);
-//    [self.view addSubview:content_lineViewUp];
+    //    [self.view addSubview:content_lineViewUp];
     
     UIView *content_lineView = [[UIView alloc] init];
     content_lineView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
@@ -91,11 +91,11 @@
     [self.mySv addSubview:content_lineView];
     
     self.content_Tv.tintColor = [UIColor redColor];
-
+    
     self.upBtn.layer.cornerRadius = 6;
     self.upBtn.layer.backgroundColor = [[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] CGColor];
     [self.upBtn setTitle:@"提交" forState:UIControlStateNormal];
-//    self.upBtn.frame = CGRectMake(20, self.view.frame.size.height-55, self.view.frame.size.width-16, 40);
+    //    self.upBtn.frame = CGRectMake(20, self.view.frame.size.height-55, self.view.frame.size.width-16, 40);
     [self.upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     [self.lastUpPicBtn setTag:100];
@@ -110,10 +110,10 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
-   if([self.tel_Tf isFirstResponder])
-   {
-       [self.tel_Tf resignFirstResponder];
-   }
+    if([self.tel_Tf isFirstResponder])
+    {
+        [self.tel_Tf resignFirstResponder];
+    }
     if([self.content_Tv isFirstResponder])
     {
         [self.content_Tv resignFirstResponder];
@@ -321,23 +321,23 @@
     {
         
         [self.lastUpPicBtn setHidden:NO];
-   
+        
     }
-
+    
     
 #pragma mark - 这里修改提交按钮frame
-//    if(cameraOrPhoto == 0)
-//    {
-        [self.upBtn setFrame:CGRectMake(10, self.lastUpPicBtn.frame.origin.y + self.lastUpPicBtn.frame.size.height + 25, ScreenWidth-20, 40)];
+    //    if(cameraOrPhoto == 0)
+    //    {
+    [self.upBtn setFrame:CGRectMake(10, self.lastUpPicBtn.frame.origin.y + self.lastUpPicBtn.frame.size.height + 25, ScreenWidth-20, 40)];
     
     [self.mySv setContentSize:CGSizeMake(ScreenWidth, self.upBtn.frame.origin.y+self.upBtn.frame.size.height+20)];
-
-//    }
-//    else
-//    {
-//        [self.upBtn setFrame:CGRectMake(20, lastbtn.frame.origin.y + lastbtn.frame.size.height + 10, ScreenWidth-40, 40)];
-//        
-//    }
+    
+    //    }
+    //    else
+    //    {
+    //        [self.upBtn setFrame:CGRectMake(20, lastbtn.frame.origin.y + lastbtn.frame.size.height + 10, ScreenWidth-40, 40)];
+    //
+    //    }
 }
 
 - (IBAction)lastUpPicBtnClick:(id)sender
@@ -434,8 +434,8 @@
     
     if(memberid.length == 0)
     {
-//        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-//        [self presentViewController:loginNavi animated:YES completion:nil];
+        //        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        //        [self presentViewController:loginNavi animated:YES completion:nil];
         memberid = @"";
         
     }
@@ -449,8 +449,8 @@
     if(userName.length == 0)
     {
         userName = @"";
-//        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-//        [self presentViewController:loginNavi animated:YES completion:nil];
+        //        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        //        [self presentViewController:loginNavi animated:YES completion:nil];
     }
     return userName;
     
@@ -463,11 +463,15 @@
 
 -(void)procesPic:(NSMutableArray*)imgarray
 {
+    if(imgarray.count == 0 || [imgarray isKindOfClass:[NSNull class]])
+    {
+        
+    }
     NSMutableArray *imgArr = [[NSMutableArray alloc] init];
     NSMutableArray *nameArr = [[NSMutableArray alloc] init];
     NSMutableArray *strImageFileNameArray = [[NSMutableArray alloc] init];
     NSString *strImageFileName = nil;
-
+    
     for(int i=0;i<chooseImageArray.count;i++)
     {
         UIImage *img = [chooseImageArray objectAtIndex:i];
@@ -481,12 +485,12 @@
         
         UIImage *image = [UIImage imageWithData:data];
         image = [image fixOrientation];
-
+        
         [imgArr addObject:image];
-//        imgArr = [NSArray arrayWithObject:img];
+        //        imgArr = [NSArray arrayWithObject:img];
         
         NSString *nameString = [NSString stringWithFormat:@"%@",img.description];
-
+        
         NSRange range = NSMakeRange(1, nameString.length-2);
         nameString = [nameString substringWithRange:range];
         
@@ -500,7 +504,7 @@
         strImageFileName = [NSString stringWithFormat:@"pic%d",i+1];
         [strImageFileNameArray addObject:strImageFileName];
     }
-
+    
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"SubOem",time];
@@ -664,7 +668,7 @@
     BOOL validateTel = [DCFCustomExtra validateTel:self.tel_Tf.text];
     if(validateTel == YES || validatePhone == YES)
     {
-
+        
     }
     
     if(validatePhone == NO && validateTel == NO)
@@ -690,7 +694,7 @@
     if(!HUD)
     {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [HUD setLabelText:@"上传中....."];
+        [HUD setLabelText:@"等待中....."];
         [HUD setDelegate:self];
     }
     [self procesPic:chooseImageArray];
@@ -708,7 +712,7 @@
         int result = [[dicRespon objectForKey:@"result"] intValue];
         if(result == 1)
         {
-            [DCFStringUtil showNotice:@"上传成功"];
+            //            [DCFStringUtil showNotice:@"上传成功"];
             [self setHidesBottomBarWhenPushed:YES];
             SpeedAskPriceSecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceSecondViewController"];
             [self.navigationController pushViewController:second animated:YES];

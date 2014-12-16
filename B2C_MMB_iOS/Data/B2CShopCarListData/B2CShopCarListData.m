@@ -85,6 +85,9 @@
         }
         
         _productNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productNum"]];
+        
+        _productName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productName"]];
+
     }
     return self;
 }

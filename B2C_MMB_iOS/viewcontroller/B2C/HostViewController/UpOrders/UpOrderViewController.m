@@ -1,4 +1,4 @@
-    //
+//
 //  UpOrderViewController.m
 //  B2C_MMB_iOS
 //
@@ -172,12 +172,13 @@
 {
     if(self = [super init])
     {
- 
+        
         chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
         chooseAddress.delegate = self;
         [chooseAddress loadRequest];
         
         goodsMoney = money;
+        NSLog(@"goodsMoney = %f",goodsMoney);
         goodsListArray = [[NSMutableArray alloc] init];
         
         myTag = tag;
@@ -206,7 +207,8 @@
             //            }
         }
         
-        
+        chooseSendMethodArray = [[NSMutableArray alloc] init];
+        chooseSendTitleArray = [[NSMutableArray alloc] init];
         //运费
         if(b2cOrderData.summariesArray.count == 0)
         {
@@ -214,8 +216,6 @@
         }
         else
         {
-            chooseSendMethodArray = [[NSMutableArray alloc] init];
-            chooseSendTitleArray = [[NSMutableArray alloc] init];
             
             for(int i=0;i<b2cOrderData.summariesArray.count;i++)
             {
@@ -240,13 +240,53 @@
                     sendMethodArray = [[NSMutableArray alloc] initWithArray:[dic objectForKey:@"mixFreight"]];
                 }
                 [chooseSendMethodArray addObject:sendMethodArray];
-                [chooseSendTitleArray addObject:@""];
             }
         }
         
-        
+        if(chooseSendMethodArray.count == 0)
+        {
+            
+        }
+        else
+        {
+            NSLog(@"chooseSendMethodArray = %@",chooseSendMethodArray);
+            for(int i=0;i<chooseSendMethodArray.count;i++)
+            {
+                NSArray *tempArr = [NSArray arrayWithArray:[chooseSendMethodArray objectAtIndex:i]];
+                if(tempArr.count == 0)
+                {
+                    
+                }
+                else
+                {
+                    NSDictionary *d = [NSDictionary dictionaryWithDictionary:[tempArr lastObject]];
+                    NSArray *childrenArray = [NSArray arrayWithArray:[d objectForKey:@"children"]];
+                    NSMutableArray *array = [[NSMutableArray alloc] init];
+                    for(int j=0;j<childrenArray.count;j++)
+                    {
+                        NSDictionary *childrenDic = [NSDictionary dictionaryWithDictionary:[childrenArray objectAtIndex:j]];
+                        NSString *childrenName = [NSString stringWithFormat:@"%@",[childrenDic objectForKey:@"value"]];
+                        [array addObject:childrenName];
+                    }
+                    
+                    int min = [self getMin:array WithSize:array.count];
+                    for(int k=0;k<childrenArray.count;k++)
+                    {
+                        NSDictionary *childrenDic = [NSDictionary dictionaryWithDictionary:[childrenArray objectAtIndex:k]];
+                        if([[childrenDic objectForKey:@"value"] intValue] == min)
+                        {
+                            [chooseSendTitleArray addObject:[NSString stringWithFormat:@"%@",[childrenDic objectForKey:@"name"]]];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         NSMutableArray *tempArray = [[NSMutableArray alloc] init];
         
+        priceArray = [[NSMutableArray alloc] init];
+        
+        NSString *totalString = nil;
         //购物车进来
         if(myTag == 1)
         {
@@ -257,6 +297,7 @@
                 [tempArray addObject:listData.shopId];
             }
             
+            //去处重复元素
             NSSet *set = [NSSet setWithArray:tempArray];
             
             
@@ -276,7 +317,6 @@
             
             cellTextFieldArray = [[NSMutableArray alloc] init];
             sendMethodBtnArray = [[NSMutableArray alloc] init];
-            priceArray = [[NSMutableArray alloc] init];
             
             for(int i=0;i<goodsListArray.count;i++)
             {
@@ -292,9 +332,35 @@
                 [btn setTag:i];
                 [sendMethodBtnArray addObject:btn];
                 
-                double doublePrice = 0.00;
-                [priceArray addObject:[NSNumber numberWithDouble:doublePrice]];
+                //                double doublePrice = 0.00;
             }
+            
+            double mon = 0.0;
+            for(int i=0;i<goodsListArray.count;i++)
+            {
+                NSMutableArray *a = (NSMutableArray *)[goodsListArray objectAtIndex:i];
+                for(int j=0;j<a.count;j++)
+                {
+                    B2CShopCarListData *data = [a objectAtIndex:j];
+                    NSString *numberr = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",data.num]];
+                    double money = [numberr intValue] * [data.price doubleValue];
+                    mon = mon + money;
+                }
+            }
+            for(int i=0;i<chooseSendTitleArray.count;i++)
+            {
+                NSString *title = [chooseSendTitleArray objectAtIndex:i];
+                [priceArray addObject:[NSNumber numberWithDouble:[[self getNumFromString:title] doubleValue]]];
+                
+                mon = mon + [[self getNumFromString:title] doubleValue];
+            }
+            totalString = [NSString stringWithFormat:@"¥%@",[DCFCustomExtra notRounding:mon afterPoint:2]];
+//            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:totalString WithSize:CGSizeMake(MAXFLOAT, 20)];
+//            [moneyLabel setFrame:CGRectMake(ScreenWidth-110-size.width, 10, size.width, 20)];
+//            [moneyLabel setText:totalString];
+//            
+//            [totalMoneyLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
+            
         }
         //立即购买进来
         else if (myTag == 0)
@@ -305,6 +371,20 @@
             cellTextFieldArray = [[NSMutableArray alloc] init];
             sendMethodBtnArray = [[NSMutableArray alloc] init];
             
+            NSString *title = nil;
+            if(!chooseSendTitleArray || chooseSendTitleArray.count == 0)
+            {
+                title = @"";
+            }
+            else
+            {
+                title = [chooseSendTitleArray objectAtIndex:0];
+            }
+            [priceArray addObject:[NSNumber numberWithDouble:[[self getNumFromString:title] doubleValue]]];
+            double doubleMoney = goodsMoney + [[self getNumFromString:title] doubleValue];
+            totalString = [NSString stringWithFormat:@"%@",[DCFCustomExtra notRounding:doubleMoney afterPoint:2]];
+            
+            
             for(int i=0;i<goodsListArray.count;i++)
             {
                 DCFMyTextField *tf = [[DCFMyTextField alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
@@ -322,14 +402,36 @@
             }
         }
         
+        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:totalString WithSize:CGSizeMake(MAXFLOAT, 20)];
+        [moneyLabel setFrame:CGRectMake(ScreenWidth-110-size.width, 10, size.width, 20)];
+        [moneyLabel setText:totalString];
         
-        
-        
+        [totalMoneyLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
         [tv reloadData];
     }
     return self;
 }
 
+#pragma mark - 取数组中最小值/最大值
+- (int) getMin:(NSMutableArray *) arr WithSize:(int) size
+{
+    int i;
+    int min = [arr[0] intValue];
+    for (i = 1; i < size; i++)
+    {
+        if (min > [arr[i] intValue]) min = [arr[i] intValue];
+    }
+    return min;
+    
+    //    int i;
+    //    int max = arr[0];
+    //    for (i = 1; i < size; i++)
+    //    {
+    //        if (max < arr[i]) max = arr[i];
+    //    }
+    //    return max;
+    
+}
 
 - (void) cellBtnClick:(UIButton *) sender
 {
@@ -526,10 +628,7 @@
 {
     [super viewWillAppear:YES];
     
-
     
-//    NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
-//    NSLog(@"receiveDic = %@",receiveDic);
     
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
     {
@@ -686,7 +785,7 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
-
+    
     
     [self pushAndPopStyle];
     
@@ -709,7 +808,7 @@
     buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-50-64, ScreenWidth, 50)];
     [buttomView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [self.view addSubview:buttomView];
-
+    
     moneyLabel = [[UILabel alloc] init];
     CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:goodsMoney afterPoint:2] WithSize:CGSizeMake(MAXFLOAT, 20)];
     [moneyLabel setText:[DCFCustomExtra notRounding:goodsMoney afterPoint:2]];
@@ -731,9 +830,9 @@
     [l setFont:[UIFont systemFontOfSize:12]];
     [l setText:@"含运费"];
     [buttomView addSubview:l];
-   
     
-
+    
+    
     UIButton *upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [upBtn setTitle:@"提交" forState:UIControlStateNormal];
     [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -809,9 +908,6 @@
 {
     if(indexPath.section == 0)
     {
-        
-        //        NSDictionary *receiveDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"]];
-        NSLog(@"%@",addressDic);
         
         if(!addressDic || [[addressDic allKeys] count] == 0 || [addressDic isKindOfClass:[NSNull class]])
         {
@@ -923,7 +1019,7 @@
     }
     if(section == 0)
     {
-//        [label setText:@"  收货地址"];
+        //        [label setText:@"  收货地址"];
     }
     if(section == 1)
     {
@@ -1016,7 +1112,7 @@
                 NSURL *url = [NSURL URLWithString:data.productItemPic];
                 [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
                 
-                NSString *str = [data productItmeTitle];
+                NSString *str = [data productName];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
                 UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-5, 160, 50)];
                 [titleLabel setText:str];
@@ -1049,11 +1145,11 @@
                 [countlabel setText:[NSString stringWithFormat:@"×%@",number]];
                 [countlabel setFont:[UIFont systemFontOfSize:12]];
                 
-               
+                
                 
                 
                 UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-//                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                //                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                 CGFloat height = size.height+size_1.height;
                 if(height <= 40)
                 {
@@ -1079,14 +1175,14 @@
                     //                    [cell.textLabel setText:@"商品备注"];
                     DCFMyTextField *tf = [cellTextFieldArray objectAtIndex:indexPath.section-3];
                     [tf setFrame:CGRectMake(15, -0.5, ScreenWidth-30, cell.contentView.frame.size.height+0.5)];
-//                    [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    //                    [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                     [tf setPlaceholder:@"   商品备注"];
                     [cell addSubview:tf];
                 }
                 else
                 {
                     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
-//                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    //                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                     [cell.contentView addSubview:view];
                     
                     NSString *str = nil;
@@ -1440,7 +1536,6 @@
     [chooseSendTitleArray replaceObjectAtIndex:tag withObject:title];
     [tv reloadData];
     
-    
     double titleMoney = [[self getNumFromString:title] doubleValue];
     [priceArray replaceObjectAtIndex:tag withObject:[NSNumber numberWithDouble:titleMoney]];
     
@@ -1453,12 +1548,11 @@
     }
     NSString *totalString = [NSString stringWithFormat:@"%@",[DCFCustomExtra notRounding:myTotalMoney afterPoint:2]];
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:totalString WithSize:CGSizeMake(MAXFLOAT, 20)];
-    NSLog(@"%@",totalString);
     [moneyLabel setFrame:CGRectMake(ScreenWidth-110-size.width, 10, size.width, 20)];
     [moneyLabel setText:totalString];
     
     [totalMoneyLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
-
+    
 }
 
 #pragma mark - 从字符串中取出数字

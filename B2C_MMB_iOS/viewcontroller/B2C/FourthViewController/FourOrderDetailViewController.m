@@ -315,25 +315,25 @@
     }
     else
     {
-//        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
-//        [label setTextAlignment:NSTextAlignmentLeft];
-//        [label setTextColor:[UIColor blackColor]];
-//        label.font = [UIFont systemFontOfSize:15];
-//        [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
+        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
+        [label setTextAlignment:NSTextAlignmentLeft];
+        [label setTextColor:[UIColor blackColor]];
+        label.font = [UIFont systemFontOfSize:15];
+        [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
     }
     
-//    if(section == 0)
-//    {
-//        [titleLabel setText:@"  商品信息"];
-//    }
-//    if(section == 1)
-//    {
-//        [label setText:@"  收货地址"];
-//    }
-//    if(section == 2)
-//    {
-//        [label setText:@"  发票信息"];
-//    }
+    if(section == 0)
+    {
+        [titleLabel setText:@"  商品信息"];
+    }
+    if(section == 1)
+    {
+        [label setText:@"  收货地址"];
+    }
+    if(section == 2)
+    {
+        [label setText:@"  发票信息"];
+    }
     return label;
 }
 
@@ -552,7 +552,9 @@
             GoodsPicFastViewController *goodsPicFastViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"goodsPicFastViewController"];
             
             NSString *snapId = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"snapId"];
+            NSString *productId = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productId"];
             goodsPicFastViewController.mySnapId = snapId;
+            goodsPicFastViewController.myProductId = productId;
             goodsPicFastViewController.myShopName = [[dataArray lastObject] shopName];
             goodsPicFastViewController.myShopId = [[dataArray lastObject] shopId];
             [self.navigationController pushViewController:goodsPicFastViewController animated:YES];

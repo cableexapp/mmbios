@@ -18,6 +18,7 @@
 @property (strong,nonatomic) NSString *mySnapId;
 @property (strong,nonatomic) NSString *myShopName;
 @property (strong,nonatomic) NSString *myShopId;
+@property (strong,nonatomic) NSString *myProductId;
 
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
 

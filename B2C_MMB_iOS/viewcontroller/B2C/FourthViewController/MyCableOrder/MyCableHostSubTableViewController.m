@@ -742,7 +742,7 @@
     NSString *title = [NSString stringWithFormat:@"%@",btn.titleLabel.text];
     if([title isEqualToString:@"确认收货"])
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您确认要收货嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定收货", nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您确认要收货嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认收货", nil];
         [av show];
         
         index = tag;
@@ -750,9 +750,9 @@
     }
     else
     {
-        if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:)])
+        if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:WithFlag:)])
         {
-            [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:tag]];
+            [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:tag] WithFlag:1];
         }
     }
 }
@@ -776,9 +776,9 @@
         }
         else
         {
-            if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:)])
+            if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:WithFlag:)])
             {
-                [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:indexPath.section]];
+                [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:indexPath.section] WithFlag:0];
             }
         }
 

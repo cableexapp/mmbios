@@ -18,6 +18,9 @@
 @property (strong,nonatomic) NSString *myOrderNum;
 @property (strong,nonatomic) NSString *myTime;
 
+@property (weak, nonatomic) IBOutlet UIView *topView;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *myOederLabel;
 @property (weak, nonatomic) IBOutlet UILabel *myTimeLabel;
 

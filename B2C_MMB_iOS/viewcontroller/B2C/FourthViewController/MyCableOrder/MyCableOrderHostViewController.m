@@ -14,6 +14,7 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MyCableOrderDetailViewController.h"
 #import "MyCableOrderB2BViewController.h"
+#import "MyCableSureOrderViewController.h"
 
 @interface MyCableOrderHostViewController ()
 {
@@ -49,12 +50,23 @@
     rightButtonView.hidden = YES;
 }
 
-- (void) pushToDetailVCWithData:(B2BMyCableOrderListData *)data
+- (void) pushToDetailVCWithData:(B2BMyCableOrderListData *)data WithFlag:(int)flag
 {
     [self setHidesBottomBarWhenPushed:YES];
-    MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
-    myCableOrderDetailViewController.b2bMyCableOrderListData = data;
-    [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
+    if(flag == 1)
+    {
+        MyCableSureOrderViewController *myCableSureOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderViewController"];
+        myCableSureOrderViewController.b2bMyCableOrderListData = data;
+        [self.navigationController pushViewController:myCableSureOrderViewController animated:YES];
+    }
+    else
+    {
+        MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
+        myCableOrderDetailViewController.b2bMyCableOrderListData = data;
+        [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
+    }
+
+    
 }
 
 - (void)viewDidLoad

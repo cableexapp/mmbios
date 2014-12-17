@@ -14,7 +14,7 @@
 
 @protocol PushToDetailVC <NSObject>
 
-- (void) pushToDetailVCWithData:(B2BMyCableOrderListData *) data;
+- (void) pushToDetailVCWithData:(B2BMyCableOrderListData *) data WithFlag:(int) flag;
 
 @end
 

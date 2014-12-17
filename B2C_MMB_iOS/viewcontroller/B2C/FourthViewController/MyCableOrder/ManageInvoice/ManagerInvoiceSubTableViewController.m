@@ -304,39 +304,44 @@
 {
     if(_status == YES)
     {
-        NSLog(@"能编辑");
-
-        B2BManagBillData *data = [dataArray objectAtIndex:indexPath.row];
-        
-        if(cellImageArray)
+        if(!dataArray || dataArray.count == 0)
         {
-            UIImageView *iv = (UIImageView *)[cellImageArray objectAtIndex:indexPath.row];
-            if([selectedArray containsObject:indexPath])
-            {
-                [selectedArray removeObject:indexPath];
-                [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
-                
-                [chooseArray removeObject:data];
-            }
-            else
-            {
-                [selectedArray addObject:indexPath];
-                [iv setImage:[UIImage imageNamed:@"choose.png"]];
-                
-                [chooseArray addObject:data];
-            }
+            
         }
-        
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:data.headType,@"type",data.headName,@"name",data.invoiceId,@"invoiceId", nil];
-        NSLog(@"dic = %@",dic);
-        [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
+        else
+        {
+            B2BManagBillData *data = [dataArray objectAtIndex:indexPath.row];
+            
+            if(cellImageArray)
+            {
+                UIImageView *iv = (UIImageView *)[cellImageArray objectAtIndex:indexPath.row];
+                if([selectedArray containsObject:indexPath])
+                {
+                    [selectedArray removeObject:indexPath];
+                    [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
+                    
+                    [chooseArray removeObject:data];
+                }
+                else
+                {
+                    [selectedArray addObject:indexPath];
+                    [iv setImage:[UIImage imageNamed:@"choose.png"]];
+                    
+                    [chooseArray addObject:data];
+                }
+            }
+            
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:data.headType,@"type",data.headName,@"name",data.invoiceId,@"invoiceId", nil];
+            NSLog(@"dic = %@",dic);
+            [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
+        }
+  
 
 //        NSLog(@"arr = %@",chooseArray);
 //        [self changeChooseArray];
     }
     else
     {
-        NSLog(@"不能编辑");
     }
 }
 

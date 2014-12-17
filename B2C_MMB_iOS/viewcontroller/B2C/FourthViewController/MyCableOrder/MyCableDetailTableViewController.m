@@ -180,17 +180,64 @@
     
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[dataArray objectAtIndex:indexPath.row]];
     
+
+    
+    NSString *theNumber = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];  //数量
+    NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];   //单位
+    NSString *thDeliver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];   //交货期
+    NSString *theInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]]; //规格
+    NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
+    NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
+    
+    NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]]; //价格
     NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
+    
+    CGFloat height_1 = 0.0;
+    CGFloat height_2 = 0.0;
+    CGFloat height_3 = 0.0;
+    CGFloat height_4 = 0.0;
+
+    if([DCFCustomExtra validateString:theInquiryVoltage] == NO || [DCFCustomExtra validateString:theInquirySpec] == NO)
+    {
+        height_1 = 0;
+    }
+    else
+    {
+        height_1 = 30;
+    }
+
+    if([DCFCustomExtra validateString:theInquiryFeature] == NO)
+    {
+        height_2 = 0;
+    }
+    else
+    {
+        height_2 = 30;
+    }
+
+    if([DCFCustomExtra validateString:thePrice] == NO || [thePrice intValue] == 0)
+    {
+        height_3 = 0;
+    }
+    else
+    {
+        height_3 = 30;
+    }
+
+
+    
     CGSize requestSize;
     if(theRequire.length == 0 || [theRequire isKindOfClass:[NSNull class]])
     {
         requestSize = CGSizeMake(ScreenWidth-20, 0);
+        height_4 = 0;
     }
     else
     {
         requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+        height_4 = 30;
     }
-    return requestSize.height+160+71;
+    return 95.5+height_1+height_2+height_3+height_4+10;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -292,10 +339,12 @@
             NSString *theInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]]; //规格
             NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
             NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
-//            NSString *thecolor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]]; //颜色
             
             NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]]; //价格
             NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
+            
+            CGFloat height_1 = 0.0;
+            CGFloat height_2 = 0.0;
             
             for(int i=0;i<5;i++)
             {
@@ -313,34 +362,84 @@
                     case 0:
                     {
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5, width, 30)];
-                        [label setText:[NSString stringWithFormat:@"采购数量:%@%@",theNumber,theUnit]];
+                        if([DCFCustomExtra validateString:theNumber] == NO || [theNumber intValue] == 0)
+                        {
+                            [label setText:@"采购数量:"];
+                        }
+                        else
+                        {
+                            [label setText:[NSString stringWithFormat:@"采购数量:%@%@",theNumber,theUnit]];
+                        }
                         break;
                     }
                     case 1:
                     {
-                        [label setText:[NSString stringWithFormat:@"交货期:%@",thDeliver]];
+                        if([DCFCustomExtra validateString:thDeliver] == NO || [thDeliver intValue] == 0)
+                        {
+                            [label setText:@"交货期:"];
+                        }
+                        else
+                        {
+                            [label setText:[NSString stringWithFormat:@"交货期:%@",thDeliver]];
+                        }
                         [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5, width, 30)];
                         break;
                     }
                         
                     case 2:
                     {
-                        [label setText:[NSString stringWithFormat:@"规格:%@",theInquirySpec]];
-                        [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30, width, 30)];
+                        if([DCFCustomExtra validateString:theInquirySpec] == NO || [theInquirySpec intValue] == 0)
+                        {
+                            [label setText:@"规格:"];
+                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30, width, 0)];
+                        }
+                        else
+                        {
+                            [label setText:[NSString stringWithFormat:@"规格:%@",theInquirySpec]];
+                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30, width, 30)];
+                        }
                         break;
                     }
                         
                     case 3:
                     {
-                        [label setText:[NSString stringWithFormat:@"电压:%@",theInquiryVoltage]];
-                        [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5+30, width, 30)];
+                        if([DCFCustomExtra validateString:theInquiryVoltage] == NO || [theInquiryVoltage intValue] == 0)
+                        {
+                            [label setText:[NSString stringWithFormat:@"电压:"]];
+                            [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5+30, width, 0)];
+                        }
+                        else
+                        {
+                            [label setText:[NSString stringWithFormat:@"电压:%@",theInquiryVoltage]];
+                            [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5+30, width, 30)];
+                        }
+                  
+                        if([DCFCustomExtra validateString:theInquiryVoltage] == NO || [DCFCustomExtra validateString:theInquirySpec] == NO)
+                        {
+                            height_1 = 0;
+                        }
+                        else
+                        {
+                            height_1 = 30;
+                        }
                         break;
                     }
                         
                     case 4:
                     {
-                        [label setText:[NSString stringWithFormat:@"阻燃耐火:%@",theInquiryFeature]];
-                        [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+60, width*2, 30)];
+                        if([DCFCustomExtra validateString:theInquiryFeature] == NO)
+                        {
+                            [label setText:[NSString stringWithFormat:@"阻燃耐火:%@",@""]];
+                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30+height_1, width*2, 0)];
+                            height_2 = 0;
+                        }
+                        else
+                        {
+                            [label setText:[NSString stringWithFormat:@"阻燃耐火:%@",theInquiryFeature]];
+                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30+height_1, width*2, 30)];
+                            height_2 = 30;
+                        }
+             
                         break;
                     }
 
@@ -353,36 +452,51 @@
             }
             
             CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"询价结果:" WithSize:CGSizeMake(MAXFLOAT, 30)];
-            UILabel *label_1 = [[UILabel alloc] initWithFrame:CGRectMake(10, lineView.frame.origin.y+95, size_1.width, 30)];
+            UILabel *label_1 = [[UILabel alloc] init];
             [label_1 setText:@"询价结果:"];
             [label_1 setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:label_1];
             
             CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:thePrice WithSize:CGSizeMake(MAXFLOAT, 30)];
-            UILabel *pricelabel = [[UILabel alloc] initWithFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+10, label_1.frame.origin.y, size_2.width, 30)];
+            UILabel *pricelabel = [[UILabel alloc] init];
             [pricelabel setFont:[UIFont systemFontOfSize:12]];
             [pricelabel setText:thePrice];
             [pricelabel setTextColor:[UIColor redColor]];
             [cell.contentView addSubview:pricelabel];
             
             
-            UILabel *label_2 = [[UILabel alloc] initWithFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width + 10, pricelabel.frame.origin.y, 150, 30)];
+            UILabel *label_2 = [[UILabel alloc] init];
             [label_2 setFont:[UIFont systemFontOfSize:12]];
             [label_2 setText:[NSString stringWithFormat:@"元/%@",theUnit]];
             [cell.contentView addSubview:label_2];
             
-            UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-20, 30)];
+            if([DCFCustomExtra validateString:thePrice] == NO || [thePrice intValue] == 0)
+            {
+                [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+35+height_1+height_2, size_1.width, 0)];
+                [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+10, lineView.frame.origin.y+35+height_1+height_2, size_2.width, 0)];
+                [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width + 10, lineView.frame.origin.y+35+height_1+height_2, 150, 0)];
+            }
+            else
+            {
+                [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+35+height_1+height_2, size_1.width, 30)];
+                [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+10,lineView.frame.origin.y+35+height_1+height_2, size_2.width, 30)];
+                [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width + 10,lineView.frame.origin.y+35+height_1+height_2, 150, 30)];
+            }
+            
+            UILabel *label_3 = [[UILabel alloc] init];
             [label_3 setText:@"特殊要求"];
             [cell.contentView addSubview:label_3];
             
             CGSize requestSize;
             if(theRequire.length == 0 || [theRequire isKindOfClass:[NSNull class]])
             {
-                requestSize = CGSizeMake(ScreenWidth-20, 30);
+                requestSize = CGSizeMake(ScreenWidth-20, 0);
+                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-20,0)];
             }
             else
             {
                 requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-20, 30)];
             }
             UILabel *requestLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, label_3.frame.origin.y+label_3.frame.size.height, ScreenWidth-20,requestSize.height)];
             [requestLabel setFont:[UIFont systemFontOfSize:12]];

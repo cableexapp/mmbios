@@ -702,7 +702,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     if(URLTag == URLUpImagePicTag)
     {
         if(HUD)
@@ -719,7 +718,7 @@
         }
         else
         {
-            [DCFStringUtil showNotice:@"上传失败"];
+            [DCFStringUtil showNotice:@"请求失败"];
         }
     }
 }

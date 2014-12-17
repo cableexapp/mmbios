@@ -34,6 +34,7 @@
 {
     NSLog(@"sure");
     
+    
     MyCableSureOrderViewController *myCableSureOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderViewController"];
     myCableSureOrderViewController.b2bMyCableOrderListData = _b2bMyCableOrderListData;
     [self.navigationController pushViewController:myCableSureOrderViewController animated:YES];
@@ -89,18 +90,24 @@
     [self.tableSubView addSubview:myCableDetailTableViewController.view];
     
 
-    if(_b2bMyCableOrderListData.cableOrderTime.length == 0 || [_b2bMyCableOrderListData.cableOrderTime isKindOfClass:[NSNull class]])
-    {
-        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-85, 2, 80, 20)];
-    }
-    else
-    {
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime] WithSize:CGSizeMake(MAXFLOAT, 20)];
-        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-5-size.width, 2, size.width, 20)];
-    }
-    [self.myOrderNumberLabel setFrame:CGRectMake(5, 2, ScreenWidth-5-self.myOrderTimeLabel.frame.size.width, 20)];
-    [self.myOrderNumberLabel setText:[NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial]];
-    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"提交时间%@",_b2bMyCableOrderListData.cableOrderTime]];
+//    if(_b2bMyCableOrderListData.cableOrderTime.length == 0 || [_b2bMyCableOrderListData.cableOrderTime isKindOfClass:[NSNull class]])
+//    {
+//        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-85, 2, 80, 20)];
+//    }
+//    else
+//    {
+//        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime] WithSize:CGSizeMake(MAXFLOAT, 20)];
+//        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-5-size.width, 2, size.width, 20)];
+//    }
+    
+    NSString *orderNum = [NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial];
+    [self.myOrderNumberLabel setFrame:CGRectMake(5, 0, 150, 20)];
+    [self.myOrderNumberLabel setText:orderNum];
+    [self.myOrderNumberLabel setFont:[UIFont systemFontOfSize:11]];
+    
+    [self.myOrderTimeLabel setFrame:CGRectMake(self.myOrderNumberLabel.frame.origin.x+self.myOrderNumberLabel.frame.size.width, 0, ScreenWidth-10-self.myOrderNumberLabel.frame.size.width, 20)];
+    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime]];
+    
     [self.myOrderStatusLabel setText:[NSString stringWithFormat:@"状态: %@",_b2bMyCableOrderListData.myStatus]];
     [self.myOrderTotalLabel setText:[NSString stringWithFormat:@"订单总额: %@",_b2bMyCableOrderListData.ordertotal]];
 }

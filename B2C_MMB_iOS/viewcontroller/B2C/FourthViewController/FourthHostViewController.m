@@ -230,7 +230,7 @@
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,[self getMemberId],pageSize,intPage,_myStatus];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getOrderList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:ULRGetOrderListTag delegate:self];
-    
+     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     [moreCell startAnimation];
@@ -238,7 +238,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    //    NSLog(@"我的家装馆订单 = %@",dicRespon);
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
@@ -502,18 +501,18 @@
                 [label setFrame:CGRectMake(195, 5, 119, 21)];
                 [label setFont:[UIFont systemFontOfSize:11]];
                 [label setTextAlignment:NSTextAlignmentRight];
-                NSString *s1 = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"month"];
-                NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
+//                NSString *s1 = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"month"];
+//                NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
+//                
+//                NSString *date = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"date"];
+//                
+//                NSString *hours = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"hours"];
+//                
+//                NSString *minutes = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"minutes"];
+//                
+//                NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
                 
-                NSString *date = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"date"];
-                
-                NSString *hours = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"hours"];
-                
-                NSString *minutes = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"minutes"];
-                
-                NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
-                
-                [label setText:time];
+                [label setText:[[dataArray objectAtIndex:section] myOderDataTime]];
             }
             if(i == 3)
             {
@@ -802,16 +801,16 @@
     
     
     
-    NSString *s1 = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"month"];
-    NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
-    
-    NSString *date = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"date"];
-    
-    NSString *hours = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"hours"];
-    
-    NSString *minutes = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"minutes"];
-    
-    NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
+//    NSString *s1 = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"month"];
+//    NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
+//    
+//    NSString *date = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"date"];
+//    
+//    NSString *hours = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"hours"];
+//    
+//    NSString *minutes = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"minutes"];
+//    
+//    NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
     
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
@@ -876,7 +875,7 @@
         }
     }
     fourOrderDetailViewController.myOrderNum = [[dataArray objectAtIndex:indexPath.section] orderNum];
-    fourOrderDetailViewController.myTime = time;
+    fourOrderDetailViewController.myTime = [[dataArray objectAtIndex:indexPath.section] myOderDataTime];
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
 }
 
@@ -998,7 +997,6 @@
     //    ali.shopName = shopName;
     ali.shopName = @"家装馆产品";
     ali.productName = productTitle;
-    NSLog(@"%@",productTitle);
     ali.productPrice = [[dataArray objectAtIndex:sender.tag/10] orderTotal];
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
     

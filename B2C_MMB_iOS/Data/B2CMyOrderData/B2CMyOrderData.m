@@ -7,6 +7,7 @@
 //
 
 #import "B2CMyOrderData.h"
+#import "DCFCustomExtra.h"
 
 @implementation B2CMyOrderData
 
@@ -17,6 +18,18 @@
         _myItems = [[NSArray alloc] initWithArray:[dic objectForKey:@"items"]];
         
         _subDate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"subDate"]];
+        
+        if([[_subDate allKeys] count] == 0 || [_subDate isKindOfClass:[NSNull class]])
+        {
+            _myOderDataTime = @"";
+        }
+        else
+        {
+            //时间戳
+            NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[_subDate objectForKey:@"time"] doubleValue]/1000];
+            
+            _myOderDataTime = [DCFCustomExtra nsdateToString:confromTimesp];
+        }
         
         _orderId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderId"]];
         

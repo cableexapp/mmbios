@@ -45,9 +45,7 @@
     
     [self.myOederLabel setText:self.myOrderNum];
     [self.myTimeLabel setText:self.myTime];
-    
-    self.myOederLabel.backgroundColor = [UIColor redColor];
-    self.myTimeLabel.backgroundColor = [UIColor greenColor];
+
     
     
 }
@@ -77,6 +75,9 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单详情"];
     self.navigationItem.titleView= top;
     
+    [self.myTimeLabel setText:self.myTime];
+    [self.myOederLabel setText:self.myOrderNum];
+    
     self.discussBtn.layer.borderColor = MYCOLOR.CGColor;
     self.discussBtn.layer.borderWidth = 1.0f;
     self.discussBtn.layer.cornerRadius = 5;
@@ -98,6 +99,7 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     tv = [[UITableView alloc] init];
+
     if(self.showOrHideDisCussBtn == YES || self.showOrHideTradeBtn == YES)
     {
         [self.buttomView setHidden:NO];
@@ -105,13 +107,8 @@
         [self.discussBtn setHidden:!self.showOrHideDisCussBtn];
         
         [self.tradeBtn setHidden:!self.showOrHideTradeBtn];
-        
-        //        for(UIButton *btn in self.buttomView.subviews)
-        //        {
-        //            [btn setHidden: NO];
-        //        }
-        [self.tableBackView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-self.buttomView.frame.size.height-64)];
-        [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
+  
+        [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, ScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
     }
     else
     {
@@ -122,9 +119,9 @@
             [btn setHidden:YES];
             [btn setFrame:CGRectMake(btn.frame.origin.x, ScreenHeight, btn.frame.size.width, 0)];
         }
-        [self.tableBackView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-64)];
-        [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
+        [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, ScreenHeight-self.topView.frame.size.height-64)];
     }
+    [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     tv.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
@@ -216,16 +213,17 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    CGFloat height;
-    if (section == 0)
-    {
-        height = 98;
-    }
-    else
-    {
-        height = 45;
-    }
-    return height;
+    return 30;
+//    CGFloat height;
+//    if (section == 0)
+//    {
+//        height = 98;
+//    }
+//    else
+//    {
+//        height = 45;
+//    }
+//    return height;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -271,60 +269,60 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *label;
-    UILabel *titleLabel;
-    if (section == 0)
-    {
-        NSLog(@"myOederLabel = %@",self.myOrderNum);
-        NSLog(@"myTimeLabel = %@",self.myTime);
-        
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 98)];
-        [label setBackgroundColor:[UIColor whiteColor]];
-        UILabel *orderNumLabel = [[UILabel alloc] init];
-        orderNumLabel.frame = CGRectMake(0, 0, 75, 25);
-        orderNumLabel.font = [UIFont systemFontOfSize:15];
-        orderNumLabel.text = @"  订单编号:";
-        [label addSubview:orderNumLabel];
-        
-        
-        UILabel *tempOrderNumLabel = [[UILabel alloc] init];
-        [tempOrderNumLabel setBackgroundColor:[UIColor clearColor]];
-        tempOrderNumLabel.frame = CGRectMake(75, 0, ScreenWidth-75, 25);
-        tempOrderNumLabel.font = [UIFont systemFontOfSize:13];
-        tempOrderNumLabel.text = [NSString stringWithFormat:@" %@",self.myOrderNum];
-        [tempOrderNumLabel setTextColor:[UIColor blackColor]];
-        [label addSubview:tempOrderNumLabel];
-        
-        UILabel *upTimeLabel = [[UILabel alloc] init];
-        upTimeLabel.frame = CGRectMake(0, 25,75, 25);
-        upTimeLabel.font = [UIFont systemFontOfSize:15];
-        upTimeLabel.text = @"  提交时间:";
-        [label addSubview:upTimeLabel];
-        
-        UILabel *tempUpTimeLabel = [[UILabel alloc] init];
-        tempUpTimeLabel.frame = CGRectMake(75, 25, ScreenWidth-75, 25);
-        tempUpTimeLabel.font = [UIFont systemFontOfSize:13];
-        tempUpTimeLabel.text = [NSString stringWithFormat:@" %@",self.myTime];
-        [label addSubview:tempUpTimeLabel];
-        
-        titleLabel = [[UILabel alloc] init];
-        titleLabel.frame = CGRectMake(0, 53, ScreenHeight, 45);
-        titleLabel.font = [UIFont systemFontOfSize:15];
-        titleLabel.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-        [label addSubview:titleLabel];
-    }
-    else
-    {
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
-        [label setTextAlignment:NSTextAlignmentLeft];
-        [label setTextColor:[UIColor blackColor]];
-        label.font = [UIFont systemFontOfSize:15];
-        [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
-    }
+//    UILabel *titleLabel;
+//    if (section == 0)
+//    {
+//        NSLog(@"myOederLabel = %@",self.myOrderNum);
+//        NSLog(@"myTimeLabel = %@",self.myTime);
+//        
+//        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 98)];
+//        [label setBackgroundColor:[UIColor whiteColor]];
+//        UILabel *orderNumLabel = [[UILabel alloc] init];
+//        orderNumLabel.frame = CGRectMake(0, 0, 75, 25);
+//        orderNumLabel.font = [UIFont systemFontOfSize:15];
+//        orderNumLabel.text = @"  订单编号:";
+//        [label addSubview:orderNumLabel];
+//        
+//        
+//        UILabel *tempOrderNumLabel = [[UILabel alloc] init];
+//        [tempOrderNumLabel setBackgroundColor:[UIColor clearColor]];
+//        tempOrderNumLabel.frame = CGRectMake(75, 0, ScreenWidth-75, 25);
+//        tempOrderNumLabel.font = [UIFont systemFontOfSize:13];
+//        tempOrderNumLabel.text = [NSString stringWithFormat:@" %@",self.myOrderNum];
+//        [tempOrderNumLabel setTextColor:[UIColor blackColor]];
+//        [label addSubview:tempOrderNumLabel];
+//        
+//        UILabel *upTimeLabel = [[UILabel alloc] init];
+//        upTimeLabel.frame = CGRectMake(0, 25,75, 25);
+//        upTimeLabel.font = [UIFont systemFontOfSize:15];
+//        upTimeLabel.text = @"  提交时间:";
+//        [label addSubview:upTimeLabel];
+//        
+//        UILabel *tempUpTimeLabel = [[UILabel alloc] init];
+//        tempUpTimeLabel.frame = CGRectMake(75, 25, ScreenWidth-75, 25);
+//        tempUpTimeLabel.font = [UIFont systemFontOfSize:13];
+//        tempUpTimeLabel.text = [NSString stringWithFormat:@" %@",self.myTime];
+//        [label addSubview:tempUpTimeLabel];
+//        
+//        titleLabel = [[UILabel alloc] init];
+//        titleLabel.frame = CGRectMake(0, 53, ScreenHeight, 45);
+//        titleLabel.font = [UIFont systemFontOfSize:15];
+//        titleLabel.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//        [label addSubview:titleLabel];
+//    }
+//    else
+//    {
+//  
+//    }
     
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
+    [label setTextAlignment:NSTextAlignmentLeft];
+    [label setTextColor:[UIColor blackColor]];
+    label.font = [UIFont systemFontOfSize:15];
+    [label setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
     if(section == 0)
     {
-        [titleLabel setText:@"  商品信息"];
+        [label setText:@"  商品信息"];
     }
     if(section == 1)
     {

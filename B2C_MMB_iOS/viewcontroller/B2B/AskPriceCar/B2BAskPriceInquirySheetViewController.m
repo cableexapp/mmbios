@@ -260,20 +260,23 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, ScreenWidth-15, 40)];
-    [headLabel setTextColor:[UIColor blackColor]];
-    headLabel.font = [UIFont systemFontOfSize:15];
-    [headLabel setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
+    
     
     if(section == 0)
     {
         //        [headLabel setText:@" 收货人信息"];
+        return nil;
     }
     if(section == 1)
     {
+        UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, ScreenWidth-15, 40)];
+        [headLabel setTextColor:[UIColor blackColor]];
+        headLabel.font = [UIFont systemFontOfSize:15];
+        [headLabel setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
         [headLabel setText:@" 待询价型号信息"];
+        return headLabel;
     }
-    return headLabel;
+    return nil;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -281,7 +284,7 @@
     CGFloat height;
     if (section == 0)
     {
-        height = 0.01;
+        height = 0;
     }
     else
     {
@@ -300,13 +303,13 @@
         }
         
         NSString *str = [NSString stringWithFormat:@"%@",addressData.fullAddress];
-        if(str.length == 0 || [str isKindOfClass:[NSNull class]])
+        if([DCFCustomExtra validateString:str] == NO)
         {
             return 44;
         }
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(260, MAXFLOAT)];
+        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(ScreenWidth-80, MAXFLOAT)];
         
-        return size.height + 70;
+        return size.height + 55;
     }
     
     
@@ -396,9 +399,9 @@
                 CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
                 
                 UILabel *telLabel = nil;
-                if(tel.length == 0 || [tel isKindOfClass:[NSNull class]])
+                if([DCFCustomExtra validateString:tel] == NO)
                 {
-                    telLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 20, 5, 100, 30)];
+                    telLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 20, 10, 100, 30)];
                 }
                 else
                 {
@@ -411,32 +414,35 @@
                 
                 
                 NSString *address = [[addressArray lastObject] fullAddress];
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(260, MAXFLOAT)];
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-80, MAXFLOAT)];
                 
                 UILabel *addressLabel = nil;
-                if(address.length == 0 || [address isKindOfClass:[NSNull class]])
+                if([DCFCustomExtra validateString:address] == NO)
                 {
-                    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, nameLabel.frame.origin.y + nameLabel.frame.size.height+5, ScreenWidth-90, 30)];
+                    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, nameLabel.frame.origin.y + nameLabel.frame.size.height+5, ScreenWidth-80, 30)];
                 }
                 else
                 {
-                    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, nameLabel.frame.origin.y + nameLabel.frame.size.height+5, ScreenWidth-90, size.height)];
+                    addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, nameLabel.frame.origin.y + nameLabel.frame.size.height+5, ScreenWidth-80, size.height)];
                 }
                 [addressLabel setText:address];
                 [addressLabel setFont:[UIFont systemFontOfSize:12]];
                 addressLabel.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
-                [addressLabel setNumberOfLines:2];
+                [addressLabel setNumberOfLines:0];
                 
                 UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 35+size.height+5)];
                 [view setBackgroundColor:[UIColor clearColor]];
                 
-                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, cell.frame.size.height/2, 40, 40)];
+                CGFloat cellHeight = 0.0;
+                cellHeight = size.height + 55;
+                
+                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, (cellHeight-40)/2, 40, 40)];
                 [iv setImage:[UIImage imageNamed:@"location"]];
                 
                 UIImageView *arrowImageView = [[UIImageView alloc] init];
-                arrowImageView.frame = CGRectMake(ScreenWidth-30, (cell.frame.size.height-20)/2+20, 20, 20);
+                arrowImageView.frame = CGRectMake(ScreenWidth-30, (cellHeight-20)/2, 20, 20);
                 arrowImageView.image = [UIImage imageNamed:@"location_arrow"];
-                [cell addSubview:arrowImageView];
+                [cell.contentView addSubview:arrowImageView];
                 
                 cell.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f8e9cb"];
                 

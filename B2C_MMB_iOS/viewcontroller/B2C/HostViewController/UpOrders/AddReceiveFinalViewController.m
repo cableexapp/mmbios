@@ -183,6 +183,18 @@
         }
     }
     
+    if([DCFCustomExtra validateString:zipTf.text] == NO)
+    {
+        
+    }
+    else
+    {
+        if([DCFCustomExtra validateZip:zipTf.text] == NO)
+        {
+            [DCFStringUtil showNotice:@"请输入正确的邮编"];
+            return;
+        }
+    }
     //新增
     if(isEditOrAdd == YES)
     {
@@ -225,7 +237,15 @@
     
 }
 
-
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+}
 
 - (void)viewDidLoad
 {

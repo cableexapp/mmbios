@@ -83,34 +83,48 @@
     rightButtonView.hidden = NO;
     if(!btnArray)
     {
+        [self.allBtn setTag:0];
+        [self.waitForPayBtn setTag:1];
+        [self.waitForSend setTag:2];
+        [self.waitForSureBtn setTag:3];
+        [self.waitForDiscussBtn setTag:4];
+        
         btnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.waitForPayBtn,self.waitForSend,self.waitForSureBtn,self.waitForDiscussBtn, nil];
     }
     
-    if([self.myStatus isEqualToString:@"0"])
+    int tag = [self.myStatus intValue];
+    for(UIButton *btn in btnArray)
     {
-        [self.allBtn setSelected:YES];
+        if(btn.tag == tag)
+        {
+            [btn setSelected:YES];
+        }
+        else
+        {
+            [btn setSelected:NO];
+        }
     }
-    if([self.myStatus isEqualToString:@"1"])
-    {
-        [self.waitForPayBtn setSelected:YES];
-    }
-    if([self.myStatus isEqualToString:@"2"])
-    {
-        [self.waitForSend setSelected:YES];
-    }
-    if([self.myStatus isEqualToString:@"3"])
-    {
-        [self.waitForSureBtn setSelected:YES];
-    }
-    if([self.myStatus isEqualToString:@"4"])
-    {
-        [self.waitForDiscussBtn setSelected:YES];
-    }
-//    [self.allBtn setSelected:YES];
-//    [self.waitForPayBtn setSelected:NO];
-//    [self.waitForSend setSelected:NO];
-//    [self.waitForSureBtn setSelected:NO];
-//    [self.waitForDiscussBtn setSelected:NO];
+    
+    //    if([self.myStatus isEqualToString:@"0"])
+    //    {
+    //        [self.allBtn setSelected:YES];
+    //    }
+    //    if([self.myStatus isEqualToString:@"1"])
+    //    {
+    //        [self.waitForPayBtn setSelected:YES];
+    //    }
+    //    if([self.myStatus isEqualToString:@"2"])
+    //    {
+    //        [self.waitForSend setSelected:YES];
+    //    }
+    //    if([self.myStatus isEqualToString:@"3"])
+    //    {
+    //        [self.waitForSureBtn setSelected:YES];
+    //    }
+    //    if([self.myStatus isEqualToString:@"4"])
+    //    {
+    //        [self.waitForDiscussBtn setSelected:YES];
+    //    }
     
     for(int i=0;i<btnArray.count;i++)
     {
@@ -535,7 +549,7 @@
         cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     NSArray *itemsArray = [[dataArray objectAtIndex:path.section] myItems];
-//    NSLog(@"itemsArray=%@",itemsArray);
+    //    NSLog(@"itemsArray=%@",itemsArray);
     NSDictionary *itemDic = [itemsArray objectAtIndex:path.row];
     
     NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
@@ -963,7 +977,7 @@
     
     
     NSString *productTitle = @"";
-
+    
     
     NSArray *itemsArray = [[dataArray objectAtIndex:sender.tag/10] myItems];
     NSLog(@"%@",itemsArray);
@@ -975,23 +989,23 @@
             productTitle = [productTitle stringByAppendingString:productItmeTitle];
         }
     }
-
+    
     //
     [self setHidesBottomBarWhenPushed:YES];
     
     AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
     //
-//    ali.shopName = shopName;
+    //    ali.shopName = shopName;
     ali.shopName = @"家装馆产品";
     ali.productName = productTitle;
     NSLog(@"%@",productTitle);
     ali.productPrice = [[dataArray objectAtIndex:sender.tag/10] orderTotal];
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag/10] orderNum];
-
+    
     
     [ali testPay];
     
-//    [self.navigationController pushViewController:ali animated:YES];
+    //    [self.navigationController pushViewController:ali animated:YES];
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

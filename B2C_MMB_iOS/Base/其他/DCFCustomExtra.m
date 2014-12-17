@@ -476,6 +476,25 @@
 //    return finalTime;
 //}
 
+#pragma mark - 校验邮编
++ (BOOL) validateZip:(NSString *) zip
+{
+    const char *cvalue = [zip UTF8String];
+    int len = strlen(cvalue);
+    if (len != 6) {
+        return NO;
+    }
+    for (int i = 0; i < len; i++)
+    {
+        if (!(cvalue[i] >= '0' && cvalue[i] <= '9'))
+        {
+            return NO;
+        }
+    }
+    return YES;
+    
+}
+
 #pragma mark - 验证固化小灵通
 + (BOOL) validateTel:(NSString *) tel
 {

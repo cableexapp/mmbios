@@ -248,7 +248,6 @@
         }
         else
         {
-            NSLog(@"chooseSendMethodArray = %@",chooseSendMethodArray);
             for(int i=0;i<chooseSendMethodArray.count;i++)
             {
                 NSArray *tempArr = [NSArray arrayWithArray:[chooseSendMethodArray objectAtIndex:i]];
@@ -284,6 +283,7 @@
         NSMutableArray *tempArray = [[NSMutableArray alloc] init];
         
         priceArray = [[NSMutableArray alloc] init];
+        cellTextFieldArray = [[NSMutableArray alloc] init];
         
         NSString *totalString = nil;
         //购物车进来
@@ -314,7 +314,6 @@
             }
             totalSection = goodsListArray.count+3;
             
-            cellTextFieldArray = [[NSMutableArray alloc] init];
             sendMethodBtnArray = [[NSMutableArray alloc] init];
             
             for(int i=0;i<goodsListArray.count;i++)
@@ -354,12 +353,6 @@
                 mon = mon + [[self getNumFromString:title] doubleValue];
             }
             totalString = [NSString stringWithFormat:@"¥%@",[DCFCustomExtra notRounding:mon afterPoint:2]];
-//            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:totalString WithSize:CGSizeMake(MAXFLOAT, 20)];
-//            [moneyLabel setFrame:CGRectMake(ScreenWidth-110-size.width, 10, size.width, 20)];
-//            [moneyLabel setText:totalString];
-//            
-//            [totalMoneyLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
-            
         }
         //立即购买进来
         else if (myTag == 0)
@@ -367,7 +360,6 @@
             [goodsListArray addObject:dataArray];
             totalSection = 4;
             
-            cellTextFieldArray = [[NSMutableArray alloc] init];
             sendMethodBtnArray = [[NSMutableArray alloc] init];
             
             NSString *title = nil;
@@ -497,7 +489,7 @@
                 logo = @"0";
             }
         }
-     
+        
         NSString *shopId = nil;
         NSString *shopName = nil;
         
@@ -1119,7 +1111,7 @@
                 
                 UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(20, label.frame.origin.y + label.frame.size.height + 10, 40, 40)];
                 NSURL *url = [NSURL URLWithString:data.productItemPic];
-                [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
+                [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                 
                 
                 NSString *str = [data productItmeTitle];
@@ -1237,11 +1229,13 @@
                 }
             }
         }
-        else
+        else if(myTag == 0)
+            
         {
             if(indexPath.row == 0)
             {
                 NSArray *itemArray = [[[[[goodsListArray lastObject] lastObject] summariesArray] lastObject] objectForKey:@"items"];
+                NSLog(@"%@",itemArray);
                 NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemArray lastObject]];
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 200, 20)];
@@ -1249,8 +1243,8 @@
                 [label setFont:[UIFont systemFontOfSize:12]];
                 
                 UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(20, label.frame.origin.y + label.frame.size.height + 10, 40, 40)];
-                NSURL *url = [NSURL URLWithString:[itemDic objectForKey:@"productItemPic"]];
-                [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
+                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",URL_PIC_DEV,[itemDic objectForKey:@"productItemPic"]]];
+                [iv setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                 
                 UILabel *titleLabel = nil;
                 NSString *str = [itemDic objectForKey:@"productItmeTitle"];
@@ -1324,7 +1318,7 @@
                 
                 
                 UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                //                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                 CGFloat height = size.height+size_1.height;
                 if(height <= 40)
                 {
@@ -1348,15 +1342,15 @@
                 {
                     //                    [cell.textLabel setText:@"商品备注"];
                     DCFMyTextField *tf = [cellTextFieldArray lastObject];
-                    [tf setFrame:CGRectMake(15, -0.5, ScreenWidth-15, cell.contentView.frame.size.height+0.5)];
-                    [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    [tf setFrame:CGRectMake(15, -0.5, ScreenWidth-30, cell.contentView.frame.size.height+0.5)];
+                    //                    [tf setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                     [tf setPlaceholder:@"商品备注"];
                     [cell addSubview:tf];
                 }
                 else
                 {
                     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
-                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    //                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                     [cell.contentView addSubview:view];
                     
                     NSString *str = nil;

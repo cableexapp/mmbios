@@ -50,5 +50,6 @@
 
 + (BOOL) validateTel:(NSString *) tel;
 
++ (BOOL) validateZip:(NSString *) email;
 
 @end

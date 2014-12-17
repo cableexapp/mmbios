@@ -145,7 +145,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     
     [self loadRequest];
-
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -219,7 +219,7 @@
     {
         tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-buttomView.frame.size.height-64)];
         [tv setDataSource:self];
-//        tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
+        //        tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
         [tv setDelegate:self];
         tv.separatorStyle = UITableViewCellSeparatorStyleNone;
         [tv setShowsHorizontalScrollIndicator:NO];
@@ -380,7 +380,14 @@
                     [headBtnIv setImage:[UIImage imageNamed:@"unchoose.png"]];
                     
                     UIButton *sectionHeadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    
+                    if(i == 0)
+                    {
+                        [sectionHeadBtn setSelected:NO];
+                    }
+                    else
+                    {
+                        [sectionHeadBtn setSelected:YES];
+                    }
                     [sectionHeadBtn setTag:i];
                     [sectionHeadBtn addTarget:self action:@selector(sectionHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                     //                    [sectionHeadBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
@@ -542,30 +549,30 @@
     //        [chooseArray removeAllObjects];
     //    }
     
-//    UIImageView *currentIV= (UIImageView *)[self.view viewWithTag:3000];
-//    [UIView animateWithDuration:0.3 animations:^{
-//        currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
-//    }];
+    //    UIImageView *currentIV= (UIImageView *)[self.view viewWithTag:3000];
+    //    [UIView animateWithDuration:0.3 animations:^{
+    //        currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
+    //    }];
     
     UIButton *btn = (UIButton *) sender;
+    NSLog(@"tag = %d",btn.tag);
     btn.selected = !btn.selected;
-    for(UIButton *b in sectionHeadBtnArray)
-    {
-        if([b isEqual:btn])
-        {
-            [b setSelected:btn.selected];
-            if(b.selected == YES)
-            {
-                //                int tag = b.tag;
-                //                data = [dataArray objectAtIndex:tag];
-                //                [chooseArray addObject:data];
-            }
-        }
-        else
-        {
-            [b setSelected:NO];
-        }
-    }
+    //    for(UIButton *b in sectionHeadBtnArray)
+    //    {
+    //        if([b isEqual:btn])
+    //        {
+    //            [b setSelected:btn.selected];
+    //            //收起
+    //            if(b.selected == YES)
+    //            {
+    //
+    //            }
+    //        }
+    //        else
+    //        {
+    //            [b setSelected:NO];
+    //        }
+    //    }
     [tv reloadData];
 }
 
@@ -578,14 +585,14 @@
     
     UIButton *btn = (UIButton *)[sectionHeadBtnArray objectAtIndex:section];
     
-//    if (!askView)
-//    {
-//        askView = [[UIImageView alloc] init];
-//        askView.frame = CGRectMake(ScreenWidth-35, (btn.frame.size.height-25)/2, 25, 25);
-//        askView.image = [UIImage imageNamed:@"askPriceCar_arrow"];
-//        askView.tag = 3000;
-//        [btn addSubview:askView];
-//    }
+    //    if (!askView)
+    //    {
+    //        askView = [[UIImageView alloc] init];
+    //        askView.frame = CGRectMake(ScreenWidth-35, (btn.frame.size.height-25)/2, 25, 25);
+    //        askView.image = [UIImage imageNamed:@"askPriceCar_arrow"];
+    //        askView.tag = 3000;
+    //        [btn addSubview:askView];
+    //    }
     
     return btn;
 }
@@ -633,12 +640,11 @@
             return 0;
         }
     }
-
+    
     
     if(indexPath.row == 0)
     {
         CGFloat height = [[cellHeightArray objectAtIndex:indexPath.section] floatValue];
-        NSLog(@"heightForRowAtIndexPath = %f",height);
         UIButton *btn = [sectionHeadBtnArray objectAtIndex:indexPath.section];
         
         if(btn.selected == NO)
@@ -660,35 +666,35 @@
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
 {
-//    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil)
-//    {
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-//        cell.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    //    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
+    //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    //    if (cell == nil)
+    //    {
+    //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    //        cell.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     
     [noCell setSelectionStyle:0];
-        
-        NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
-        if([DCFCustomExtra validateString:myMemberid] == NO)
+    NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if([DCFCustomExtra validateString:myMemberid] == NO)
+    {
+        [noCell.contentView addSubview:backView];
+        [backView addSubview:logBtn];
+        [backView addSubview:label_1];
+    }
+    else
+    {
+        if(backView)
         {
-            [noCell.contentView addSubview:backView];
-            [backView addSubview:logBtn];
-            [backView addSubview:label_1];
+            [logBtn removeFromSuperview];
+            logBtn = nil;
+            [label_1 removeFromSuperview];
+            label_1 = nil;
+            [backView removeFromSuperview];
+            backView = nil;
         }
-        else
-        {
-            if(backView)
-            {
-                [logBtn removeFromSuperview];
-                logBtn = nil;
-                [label_1 removeFromSuperview];
-                label_1 = nil;
-                [backView removeFromSuperview];
-                backView = nil;
-            }
-        }
+    }
     
     if (!shopcar)
     {
@@ -721,16 +727,16 @@
         [buyBtn addTarget:self action:@selector(buyBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [noCell addSubview:buyBtn];
     }
-        
     
-        
     
-//        [self.view insertSubview:buyBtn aboveSubview:tv];
     
-        buttomView.hidden = YES;
-        tv.scrollEnabled = NO;
-        tv.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    }
+    
+    //        [self.view insertSubview:buyBtn aboveSubview:tv];
+    
+    buttomView.hidden = YES;
+    tv.scrollEnabled = NO;
+    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //    }
     return noCell;
 }
 
@@ -888,7 +894,7 @@
             if(i == 0)
             {
                 [cellLabel setFrame:CGRectMake(10, 5, size_1.width, 20)];
-                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] num]] == NO)
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] num]] == NO || [[[dataArray objectAtIndex:indexPath.section] num] intValue] == 0)
                 {
                     [cellLabel setText:@"数量"];
                 }
@@ -900,7 +906,7 @@
             if(i == 1)
             {
                 [cellLabel setFrame:CGRectMake(halfWidth, 5, size_2.width, 20)];
-                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] deliver]] == NO)
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] deliver]] == NO || [[[dataArray objectAtIndex:indexPath.section] deliver] intValue] == 0)
                 {
                     [cellLabel setText:@"交货期"];
                 }
@@ -991,7 +997,7 @@
             }
             else
             {
-          
+                
             }
         }
         else

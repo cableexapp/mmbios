@@ -49,7 +49,7 @@
     self.myOederLabel.backgroundColor = [UIColor redColor];
     self.myTimeLabel.backgroundColor = [UIColor greenColor];
     
-   
+    
 }
 
 - (NSString *) getMemberId
@@ -122,7 +122,7 @@
             [btn setHidden:YES];
             [btn setFrame:CGRectMake(btn.frame.origin.x, ScreenHeight, btn.frame.size.width, 0)];
         }
-        [self.tableBackView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+        [self.tableBackView setFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-64)];
         [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
     }
     [tv setDataSource:self];
@@ -141,7 +141,7 @@
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CGetOrderDetailData getListArray:[dicRespon objectForKey:@"items"]]];
             
             NSString *shopName = [[dataArray lastObject] shopName];
-   
+            
             nameBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             [nameBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [nameBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
@@ -157,14 +157,14 @@
             [nameBtn setTitle:[[dataArray lastObject] shopName] forState:UIControlStateNormal];
             [nameBtn addTarget:self action:@selector(nameBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             
-//            nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
-//            [nameLabel setTextColor:[UIColor blackColor]];
-//            [nameLabel setFont:[UIFont systemFontOfSize:13]];
-//            [nameLabel setText:[[dataArray lastObject] shopName]];
-//            [nameLabel setTextAlignment:NSTextAlignmentLeft];
-//            
-//            UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)];
-//            [nameLabel addGestureRecognizer:labelTap];
+            //            nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
+            //            [nameLabel setTextColor:[UIColor blackColor]];
+            //            [nameLabel setFont:[UIFont systemFontOfSize:13]];
+            //            [nameLabel setText:[[dataArray lastObject] shopName]];
+            //            [nameLabel setTextAlignment:NSTextAlignmentLeft];
+            //
+            //            UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)];
+            //            [nameLabel addGestureRecognizer:labelTap];
             
             [tv reloadData];
         }
@@ -379,7 +379,7 @@
 }
 
 - (void) nameBtnClick:(UIButton *) sender
-{    
+{
     ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:[[dataArray lastObject] shopName] WithShopId:[[dataArray lastObject] shopId] WithUse:@""];
     [self.navigationController pushViewController:shopHost animated:YES];
 }
@@ -458,7 +458,7 @@
             else if(indexPath.row > 0 && indexPath.row <= [[[dataArray lastObject] myItems] count])
             {
                 NSString *s = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItmeTitle"];
-//                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:s WithSize:CGSizeMake(ScreenWidth-70-5, MAXFLOAT)];
+                //                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:s WithSize:CGSizeMake(ScreenWidth-70-5, MAXFLOAT)];
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(80, 8, ScreenWidth-190, 60)];
                 [label setText:s];
                 [label setFont:[UIFont systemFontOfSize:13]];
@@ -494,8 +494,8 @@
                 UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(10,8, 60, 60)];
                 NSString *picStr = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItemPic"];
                 picStr = [self dealPic:picStr];
-//                cellIv.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-//                cellIv.layer.borderWidth = 0.5;
+                //                cellIv.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                //                cellIv.layer.borderWidth = 0.5;
                 NSURL *picUrl = [NSURL URLWithString:picStr];
                 [cellIv setImageWithURL:picUrl placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                 [cell.contentView addSubview:cellIv];
@@ -518,6 +518,17 @@
             [cell.contentView addSubview:tel];
             
             NSString *add = [NSString stringWithFormat:@"收货地址: %@",[[dataArray lastObject] receiveAddr]];
+            NSLog(@"add = %@",add);
+            if([add rangeOfString:@"null"].location != NSNotFound)
+            {
+                add = [add stringByReplacingOccurrencesOfString:@"null" withString:@""];
+            }
+            else
+            {
+                
+            }
+            NSLog(@"add---- = %@",add);
+            
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:add WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, ScreenWidth-20, size.height)];
             [label setText:add];

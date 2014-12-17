@@ -14,6 +14,8 @@
 #import "DCFCustomExtra.h"
 #import "DCFStringUtil.h"
 #import "MyShoppingListViewController.h"
+#import "B2CShoppingListViewController.h"
+#import "ShoppingHostViewController.h"
 
 @interface ChoosePayTableViewController ()
 {
@@ -62,20 +64,27 @@
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
-        else
+        else if([vc isKindOfClass:[B2CShoppingListViewController class]])
         {
-
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+        else if ([vc isKindOfClass:[ShoppingHostViewController class]])
+        {
+            [self.navigationController popToViewController:vc
+                                                  animated:YES];
+            return;
         }
     }
     [self.navigationController popViewControllerAnimated:YES];
-//    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+    //    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-//    [self pushAndPopStyle];
+    //    [self pushAndPopStyle];
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
     [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
@@ -89,7 +98,7 @@
     self.navigationItem.titleView = top;
     
     [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-
+    
     
     cellBackView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 110)];
     cellBackView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -179,7 +188,7 @@
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 110)];
     [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-
+    
     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(20, 40, 30, 30)];
     [iv setImage:[UIImage imageNamed:@"complete.png"]];
     [view addSubview:iv];
@@ -197,7 +206,7 @@
     [label_1 setFont:[UIFont systemFontOfSize:13]];
     [view addSubview:label_1];
     
- 
+    
     
     UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_1.frame.origin.y + label_1.frame.size.height, 250, 30)];
     NSString *s = [NSString stringWithFormat:@"订单金额:¥  %@",myTotal];
@@ -248,9 +257,9 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-
-
+    
+    
+    
 }
 
 
@@ -274,8 +283,8 @@
             ali.productOrderNum = myValue;
             
             [ali testPay];
-
-//            [self.navigationController pushViewController:ali animated:YES];
+            
+            //            [self.navigationController pushViewController:ali animated:YES];
         }
         else
         {
@@ -286,7 +295,7 @@
             if(result == 3)
             {
                 [self setHidesBottomBarWhenPushed:YES];
-
+                
                 AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
                 
                 ali.shopName = myShopName;
@@ -295,8 +304,8 @@
                 ali.productOrderNum = myValue;
                 
                 [ali testPay];
-
-//                [self.navigationController pushViewController:ali animated:YES];
+                
+                //                [self.navigationController pushViewController:ali animated:YES];
             }
             
         }
@@ -313,52 +322,52 @@
     return [UIView new];
 }
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

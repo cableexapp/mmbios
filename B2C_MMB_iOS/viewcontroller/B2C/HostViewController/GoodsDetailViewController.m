@@ -83,6 +83,8 @@
     int statrScore;
     
     UIButton *buyOrAddBtn;
+    
+    UIButton *sureBtn;
 }
 @end
 
@@ -273,7 +275,7 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
-//    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"1156",token];
+    //    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"1156",token];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
@@ -317,7 +319,7 @@
         if ([[dicRespon objectForKey:@"score"] count] > 0)
         {
             statrScore = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
- 
+            
             NSLog(@"星星评分 = %d",statrScore);
         }
         int result = [[dicRespon objectForKey:@"result"] intValue];
@@ -345,17 +347,17 @@
     {
         if(result == 1)
         {
-           
-//            if (btn.tag == 100)
-//            {
-//                [btn becomeFirstResponder];
-//                
-//            }
-//            if (btn.tag == 101)
-//            {
-//                [btn becomeFirstResponder];
-//            }
-             [DCFStringUtil showNotice:msg];
+            
+            //            if (btn.tag == 100)
+            //            {
+            //                [btn becomeFirstResponder];
+            //
+            //            }
+            //            if (btn.tag == 101)
+            //            {
+            //                [btn becomeFirstResponder];
+            //            }
+            [DCFStringUtil showNotice:msg];
             num = @"0";
             itemid = @"";
             [self loadShopCarCount];
@@ -923,7 +925,7 @@
             if(indexPath.row == 7)
             {
                 return   [self loadShopName:indexPath WithTableView:tableView];
-
+                
             }
             if(indexPath.row == 8)
             {
@@ -1148,7 +1150,7 @@
             {
                 if (starImageView.tag == i)
                 {
-                   starImageView.image = [UIImage imageNamed:@"star_selected"];
+                    starImageView.image = [UIImage imageNamed:@"star_selected"];
                 }
             }
             if (statrScore == 4)
@@ -1353,7 +1355,7 @@
         
         for(int i = 0;i < detailData.coloritems.count;i++)
         {
-            NSString *colorName = [[detailData.coloritems objectAtIndex:i] objectForKey:@"colorName"];
+            NSString *theColorName = [[detailData.coloritems objectAtIndex:i] objectForKey:@"colorName"];
             productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:i] objectForKey:@"productNum"]];
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -1371,7 +1373,7 @@
             {
                 //                [btn setSelected:YES];
             }
-            [btn setTitle:colorName forState:UIControlStateNormal];
+            [btn setTitle:theColorName forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [btn.titleLabel setFont:[UIFont systemFontOfSize:14]];
             
@@ -1460,20 +1462,24 @@
             btn.layer.borderWidth = 0.5f;
             btn.layer.borderColor = [UIColor lightGrayColor].CGColor;
             [btn setTag:10+i];
+            [btn setEnabled:NO];
             [btn addTarget:self action:@selector(chooseCountClick:) forControlEvents:UIControlEventTouchUpInside];
             [chooseColorAndCountView addSubview:btn];
             [chooseCountBtnArray addObject:btn];
         }
         
         
-        UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [sureBtn setFrame:CGRectMake((self.view.frame.size.width-140)/2, 240, 140, 40)];
         [sureBtn setTitle:@"确 认" forState:UIControlStateNormal];
         [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [sureBtn.titleLabel setFont:[UIFont systemFontOfSize:17]];
         [sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         sureBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1];
+        [sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1] size:CGSizeMake(sureBtn.frame.size.width, sureBtn.frame.size.height)] forState:UIControlStateNormal];
+        [sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor lightGrayColor] size:CGSizeMake(sureBtn.frame.size.width, sureBtn.frame.size.height)] forState:UIControlStateDisabled];
         sureBtn.layer.cornerRadius = 5;
+        sureBtn.enabled = NO;
         [chooseColorAndCountView addSubview:sureBtn];
         
         NSString *colorPrice = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:0] objectForKey:@"colorPrice"]];
@@ -1550,7 +1556,11 @@
             
         }
         chooseColorPrice = [colorPrice doubleValue];
-        
+        for(UIButton *b in chooseCountBtnArray)
+        {
+            [b setEnabled:YES];
+        }
+        [sureBtn setEnabled:YES];
     }
     else
     {
@@ -1596,6 +1606,12 @@
             
         }
         chooseColorPrice = 0.00;
+        for(UIButton *b in chooseCountBtnArray)
+        {
+            [b setEnabled:NO];
+        }
+        
+        [sureBtn setEnabled:NO];
     }
     
     

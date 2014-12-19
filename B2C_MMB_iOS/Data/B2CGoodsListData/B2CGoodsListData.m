@@ -52,7 +52,7 @@
 
             NSString *s3 = [_p1Path substringToIndex:docIndex];
             
-            NSString *s4 = [s3 stringByAppendingString:@"_100"];
+            NSString *s4 = [s3 stringByAppendingString:@"_300"];
             
             NSString *pre = [_p1Path substringFromIndex:docIndex];
             

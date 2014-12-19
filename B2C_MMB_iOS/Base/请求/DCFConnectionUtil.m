@@ -9,6 +9,8 @@
 #import "DCFConnectionUtil.h"
 #import "DCFStringUtil.h"
 #import "AppDelegate.h"
+#import "DCFCustomExtra.h"
+
 //#import "ParentsSendMsgDetailViewController.h"
 
 @implementation DCFConnectionUtil
@@ -18,7 +20,6 @@
     self = [super init];
     self.delegate = theDelegate;
     
-    NSLog(@"%d",theUrlTag);
     if(theUrlTag == 13 || theUrlTag == 19)
     {
         _isSpecialCharacter = YES;
@@ -40,6 +41,22 @@
 - (void)getResultFromUrlString:(NSString *)strUrl postBody:(NSString *)strPostBody method:(URLMethod)theMethod
 {
     strUrl = [strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //登录
+    if(self.LogIn == YES)
+    {
+        
+    }
+    //其余情况
+    else
+    {
+        NSString *loginid = [[NSUserDefaults standardUserDefaults] objectForKey:@"loginid"];
+        if([DCFCustomExtra validateString:loginid] == NO)
+        {
+            loginid = @"";
+        }
+        strPostBody = [strPostBody stringByAppendingString:[NSString stringWithFormat:@"&loginid=%@",loginid]];
+    }
+
 //    if(_isSpecialCharacter == YES)
 //    {
 //        strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -259,11 +276,13 @@
         theResultCode = RS_Success;
     }
     int result = [[dicRespon objectForKey:@"result"] intValue];
+    
+//    if(self.LogOut == YES)
+//    {
+//        
+//    }
     if(result == 1)
     {
-//        NSString *sessionKey = [dicRespon objectForKey:@"sessionKey"];
-//        [[NSUserDefaults standardUserDefaults] setObject:sessionKey forKey:@"sessionKey"];
-//        [[NSUserDefaults standardUserDefaults] synchronize];
         [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
     }
     else if (result == 0)
@@ -274,8 +293,17 @@
     else if(result == 2 || result == 3)
     {
         [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-//        AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//        [appDel logOutMethod];
+   
+    }
+    else if (result == 99)
+    {
+        if(self.LogOut == YES)
+        {
+            [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
+            return;
+        }
+        AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDel logOutMethod];
     }
 }
 

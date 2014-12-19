@@ -34,6 +34,8 @@
 + (NSString *) compareSessionKey:(NSString *) sessionKey;
 + (NSString *)notRounding:(double)price afterPoint:(int)position;
 
++ (NSString *)notRounding:(double)price afterPoint:(int)position WithBackIndex:(int) index;
+
 + (CGSize) adjustWithFont:(UIFont*) font WithText:(NSString *) text WithSize:(CGSize) size;
 
 + (NSString *)md5:(NSString *)str;

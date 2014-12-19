@@ -50,6 +50,10 @@ typedef NSUInteger URLTag;
 @property (nonatomic,assign) BOOL isShowErrorView;
 @property (assign,nonatomic) BOOL isSpecialCharacter;   //是否是特殊字符
 @property (strong,nonatomic) NSString *specialString;    //特殊字符
+
+@property (assign,nonatomic) BOOL LogOut;
+@property (assign,nonatomic) BOOL LogIn;
+
 - (id)initWithURLTag:(URLTag)theUrlTag delegate:(id<ConnectionDelegate>)theDelegate;
 - (void)getResultFromUrlString:(NSString *)strUrl postBody:(NSString *)strPostBody method:(URLMethod)theMethod;
 - (void)getResultFromUrlString:(NSString *)strUrl dicText:(NSDictionary *)dicText dicImage:(NSDictionary *)dicImage imageFilename:(NSMutableArray *)strImageFileName;

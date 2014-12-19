@@ -35,6 +35,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *unitBtn;
+@property (weak, nonatomic) IBOutlet UITextField *specTf;
+
 @property (weak, nonatomic) IBOutlet UIButton *specBtn;
 @property (weak, nonatomic) IBOutlet UIButton *volBtn;
 @property (weak, nonatomic) IBOutlet UIButton *colorBtn;

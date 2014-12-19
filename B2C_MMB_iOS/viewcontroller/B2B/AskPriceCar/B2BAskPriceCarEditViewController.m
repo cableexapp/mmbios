@@ -17,6 +17,7 @@
     
     
     NSMutableArray *specArray;
+    NSMutableArray *specPreArray;
     
     NSMutableArray *voltageArray;
     
@@ -26,6 +27,7 @@
     
     
     NSMutableArray *arr;
+    
     
 }
 @end
@@ -51,8 +53,16 @@
     
     self.numTF.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.numTF.layer.borderWidth = 0.5f;
+    [self.numTF setTextAlignment:NSTextAlignmentCenter];
+    
     self.timeTF.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.timeTF.layer.borderWidth = 0.5f;
+    [self.timeTF setTextAlignment:NSTextAlignmentCenter];
+    
+    self.specTf.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.specTf.layer.borderWidth = 0.5f;
+    [self.specTf setTextAlignment:NSTextAlignmentCenter];
+    //    [self.specTf setKeyboardType:UIKeyboardTypeNumberPad];
     
     self.sureBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
     self.sureBtn.layer.cornerRadius = 5.0f;
@@ -98,6 +108,8 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    [self.sureBtn setEnabled:YES];
+    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     //    NSString *msg = [dicRespon objectForKey:@"msg"];
     
@@ -107,6 +119,7 @@
         specArray = [[NSMutableArray alloc] init];
         voltageArray = [[NSMutableArray alloc] init];
         featureArray = [[NSMutableArray alloc] init];
+        //        specPreArray = [[NSMutableArray alloc] init];
         
         if(result == 1)
         {
@@ -139,6 +152,7 @@
                     [specArray addObject:spec];
                 }
             }
+            NSLog(@"specArray = %@",specArray);
             
             //阻燃特性
             NSArray *mtems = (NSArray *)[dicRespon objectForKey:@"mtems"];
@@ -211,6 +225,10 @@
     if([self.timeTF isFirstResponder])
     {
         [self.timeTF resignFirstResponder];
+    }
+    if([self.specTf isFirstResponder])
+    {
+        [self.specTf resignFirstResponder];
     }
     //    [self.delegate removeSubView];
     //    if(pickerView)
@@ -303,7 +321,14 @@
     //    {
     //        [self.timeTF resignFirstResponder];
     //    }
-    return [textField resignFirstResponder];
+    [textField resignFirstResponder];
+    if(textField == self.specTf)
+    {
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF CONTAINS %@",textField.text];
+        specPreArray = [NSMutableArray arrayWithArray:[specArray filteredArrayUsingPredicate:pred]];
+        [self loadPickerViewWithArray:specPreArray WithTag:10005];
+    }
+    return YES;
 }
 
 - (BOOL) textFieldShouldEndEditing:(UITextField *)textField
@@ -362,12 +387,31 @@
         {
             [self.timeTF resignFirstResponder];
         }
+        if([self.specTf isFirstResponder])
+        {
+            [self.specTf resignFirstResponder];
+        }
     }
     if(textField == self.timeTF)
     {
         if([self.numTF isFirstResponder])
         {
             [self.numTF resignFirstResponder];
+        }
+        if([self.specTf isFirstResponder])
+        {
+            [self.specTf resignFirstResponder];
+        }
+    }
+    if(textField == self.specTf)
+    {
+        if([self.numTF isFirstResponder])
+        {
+            [self.numTF resignFirstResponder];
+        }
+        if([self.timeTF isFirstResponder])
+        {
+            [self.timeTF resignFirstResponder];
         }
     }
 }
@@ -376,6 +420,7 @@
 {
     [self.numTF resignFirstResponder];
     [self.timeTF resignFirstResponder];
+    [self.specTf resignFirstResponder];
     [self.requestTF resignFirstResponder];
     
     [UIView beginAnimations:nil context:nil];
@@ -415,10 +460,19 @@
     {
         [self.featherBtn setTitle:title forState:UIControlStateNormal];
     }
-    
+    if(tag == 10005)
+    {
+        [self.specTf setText:title];
+    }
 }
 
-
+- (void) pickerViewWithCancel:(NSString *)title WithTag:(int)tag
+{
+    if(tag == 10005)
+    {
+        [self.specTf setText:title];
+    }
+}
 - (IBAction)sureBtnClick:(id)sender
 {
     
@@ -438,7 +492,58 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"EditInquiryItem",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&cartid=%@&spec=%@&voltage=%@&unit=%@&num=%@&color=%@&featureone=%@&require=%@&deliver=%@",token,self.myCartId,self.specBtn.titleLabel.text,self.volBtn.titleLabel.text,self.unitBtn.titleLabel.text,self.numTF.text,self.colorBtn.titleLabel.text,self.featherBtn.titleLabel.text,self.requestTF.text,self.timeTF.text];
+    NSString *specTfText = self.specTf.text;
+    NSString *specTfString = nil;
+    if([specArray containsObject:specTfText] == YES)
+    {
+        specTfString = specTfText;
+    }
+    else
+    {
+        specTfString = @"";
+    }
+    
+    NSString *volString = nil;
+    if([DCFCustomExtra validateString:self.volBtn.titleLabel.text] == NO)
+    {
+        volString = @"";
+    }
+    else
+    {
+        volString = self.volBtn.titleLabel.text;
+    }
+    
+    NSString *colorString = nil;
+    if([DCFCustomExtra validateString:self.colorBtn.titleLabel.text] == NO)
+    {
+        colorString = @"";
+    }
+    else
+    {
+        colorString = self.colorBtn.titleLabel.text;
+    }
+    
+    NSString *feathString = nil;
+    if([DCFCustomExtra validateString:self.featherBtn.titleLabel.text] == NO)
+    {
+        feathString = @"";
+    }
+    else
+    {
+        feathString = self.featherBtn.titleLabel.text;
+    }
+    
+    NSString *requireString = nil;
+    if([DCFCustomExtra validateString:self.requestTF.text] == NO)
+    {
+        requireString = @"";
+    }
+    else
+    {
+        requireString = self.requestTF.text;
+    }
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&cartid=%@&spec=%@&voltage=%@&unit=%@&num=%@&color=%@&featureone=%@&require=%@&deliver=%@",token,self.myCartId,specTfString,volString,self.unitBtn.titleLabel.text,self.numTF.text,colorString,feathString,requireString,self.timeTF.text];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditInquiryItemTag delegate:self];
     
@@ -446,6 +551,8 @@
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+    [self.sureBtn setEnabled:NO];
 }
 
 

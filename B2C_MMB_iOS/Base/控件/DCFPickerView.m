@@ -184,8 +184,10 @@
         }
         
         
-        
-        [self.delegate pickerView:title WithTag:pickTag];
+        if([self.delegate respondsToSelector:@selector(pickerView:WithTag:)])
+        {
+            [self.delegate pickerView:title WithTag:pickTag];
+        }
         [self inAndOut];
     }
     
@@ -193,6 +195,10 @@
 
 - (void) cancel
 {
+    if([self.delegate respondsToSelector:@selector(pickerViewWithCancel:WithTag:)])
+    {
+        [self.delegate pickerViewWithCancel:@"" WithTag:pickTag];
+    }
     [self inAndOut];
 }
 

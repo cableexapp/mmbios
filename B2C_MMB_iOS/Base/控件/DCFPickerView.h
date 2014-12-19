@@ -10,7 +10,8 @@
 @protocol PickerView <NSObject>
 @required
 - (void) pickerView:(NSString *) title WithTag:(int) tag;
-
+@optional
+- (void) pickerViewWithCancel:(NSString *) title WithTag:(int) tag;
 @end
 
 @interface DCFPickerView : UIView<UIPickerViewDataSource,UIPickerViewDelegate>

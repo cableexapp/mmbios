@@ -50,6 +50,27 @@
             [view setHidden:YES];
         }
     }
+    
+    
+    
+    NSString *userPhone = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"];
+    NSString *tel = [[NSUserDefaults standardUserDefaults] objectForKey:@"SppedAskPriceTelNum"];
+    
+    if([DCFCustomExtra validateString:userPhone] == YES)
+    {
+        [self.tel_Tf setText:userPhone];
+    }
+    else
+    {
+        if([DCFCustomExtra validateString:tel] == NO)
+        {
+            [self.tel_Tf setPlaceholder:@"手机号码/固定号码"];
+        }
+        else
+        {
+            [self.tel_Tf setText:tel];
+        }
+    }
 }
 
 
@@ -510,9 +531,16 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"SubOem",time];
     NSString *token = [DCFCustomExtra md5:string];
     
+    NSString *loginid = [[NSUserDefaults standardUserDefaults] objectForKey:@"loginid"];
+    
+    if([DCFCustomExtra validateString:loginid] == NO)
+    {
+        loginid = @"";
+    }
+    
     conn = [[DCFConnectionUtil alloc]initWithURLTag:URLUpImagePicTag delegate:self];
     
-    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@",[self getMemberId],token,[self getUserName],self.tel_Tf.text,[self getUserName],[self.content_Tv.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"3"];
+    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@&loginid=%@",[self getMemberId],token,[self getUserName],self.tel_Tf.text,[self getUserName],[self.content_Tv.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"3",loginid];
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?",strRequest];
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
     
@@ -711,6 +739,8 @@
         int result = [[dicRespon objectForKey:@"result"] intValue];
         if(result == 1)
         {
+            [[NSUserDefaults standardUserDefaults] setObject:self.tel_Tf.text forKey:@"SppedAskPriceTelNum"];
+            
             //            [DCFStringUtil showNotice:@"上传成功"];
             [self setHidesBottomBarWhenPushed:YES];
             SpeedAskPriceSecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceSecondViewController"];

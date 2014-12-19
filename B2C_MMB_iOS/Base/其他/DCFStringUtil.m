@@ -29,7 +29,7 @@
     HUD.margin = 10.f;
     HUD.yOffset = 150.f;
     HUD.removeFromSuperViewOnHide = YES;
-    [HUD hide:YES afterDelay:1.0];
+    [HUD hide:YES afterDelay:2.0];
     HUD = nil;
 }
 

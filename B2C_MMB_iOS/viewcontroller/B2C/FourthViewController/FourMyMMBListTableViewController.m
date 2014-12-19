@@ -631,7 +631,13 @@
     
     conn = [[DCFConnectionUtil alloc]initWithURLTag:URLUpImagePicTag delegate:self];
     
-    NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@",[self getMemberId],token];
+    NSString *loginid = [[NSUserDefaults standardUserDefaults] objectForKey:@"loginid"];
+    if([DCFCustomExtra validateString:loginid] == NO)
+    {
+        loginid = @"";
+    }
+    
+    NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@&loginid=%@",[self getMemberId],token,loginid];
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2CAppRequest/setHeadPortrait.html?",strRequest];
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
     

@@ -57,15 +57,15 @@
         [HUD hide:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];
-//    if (isPopShow == YES)
-//    {
-//        isPopShow = NO;
-//    }
-//    else
-//    {
-//        isPopShow = YES;
-//        
-//    }
+    //    if (isPopShow == YES)
+    //    {
+    //        isPopShow = NO;
+    //    }
+    //    else
+    //    {
+    //        isPopShow = YES;
+    //
+    //    }
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 }
@@ -91,7 +91,7 @@
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
-//
+    //
 }
 
 - (void)viewDidLoad
@@ -113,7 +113,7 @@
     self.logOutBtn.layer.cornerRadius = 5;
     [self.logOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 60);
-
+    
     self.tableView.separatorColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     self.view1.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     self.view2.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
@@ -281,7 +281,7 @@
         
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteAppCartItemsTag delegate:self];
-        
+        //        conn.LogOut = YES;
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/deleteAppCartItems.html?"];
         
         
@@ -313,7 +313,7 @@
         else if(result == 1)
         {
             [self.logOutBtn setHidden:YES];
-
+            
             if([[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"])
             {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberId"];
@@ -353,6 +353,17 @@
             {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"defaultReceiveAddress"];
             }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"SppedAskPriceTelNum"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SppedAskPriceTelNum"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"loginid"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginid"];
+            }
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [DCFStringUtil showNotice:@"退出成功"];

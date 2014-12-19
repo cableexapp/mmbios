@@ -24,6 +24,8 @@
     NSDictionary *regiserDic;
     
     BOOL logInSuccess;
+    
+    NSString *loginid;
 }
 @end
 
@@ -227,16 +229,16 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
     NSString *des = [MCdes encryptUseDES:sec key:@"cableex_app*#!Key"];
     
+
     NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",acc,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
     NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
-    
+    conn.LogIn = YES;
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    
     if(URLTag == URLLoginTag)
     {
 
@@ -277,7 +279,6 @@
             [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"memberId"];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
             
             
             NSString *phone = [NSString stringWithFormat:@"%@",[iems objectForKey:@"phone"]];
@@ -297,6 +298,12 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:headPortraitUrl forKey:@"headPortraitUrl"];
             
+            loginid = [NSString stringWithFormat:@"%@",[iems objectForKey:@"ext3"]];
+            [[NSUserDefaults standardUserDefaults] setObject:loginid forKey:@"loginid"];
+            NSLog(@"loginid = %@",loginid);
+            
+            [[NSUserDefaults standardUserDefaults] synchronize];
+
             [self dismissCurrentView];
         }
     }

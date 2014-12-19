@@ -73,6 +73,11 @@
     return [NSString stringWithFormat:@"%.2f",round(price*100)/100];
 }
 
++ (NSString *)notRounding:(double)price afterPoint:(int)position WithBackIndex:(int) index
+{
+    return [NSString stringWithFormat:@"%.1f",round(price*100)/100];
+}
+
 #pragma mark - 缩放图片
 + (UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize
 {

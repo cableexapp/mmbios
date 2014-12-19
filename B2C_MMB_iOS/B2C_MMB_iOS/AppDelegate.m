@@ -22,7 +22,7 @@
 #import "UIImage (fixOrientation).h"
 #import "BPush.h"
 #import "MobClick.h"
-
+#import "LoginNaviViewController.h"
 
 #import <AlipaySDK/AlipaySDK.h>
 
@@ -132,14 +132,7 @@ NSString *strUserId = @"";
     return udid;
 }
 
-- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
-{
-    if(URLTag == URLShopListTag)
-    {
-        
-        
-    }
-}
+
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -399,6 +392,119 @@ NSString *strUserId = @"";
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+- (void) logOutMethod
+{
+    [DCFStringUtil showNotice:@"您的账号在其他地方登录,请重新登录"];
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteAppCartItems",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [self getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteAppCartItemsTag delegate:self];
+    conn.LogOut = YES;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/deleteAppCartItems.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if(URLTag == URLDeleteAppCartItemsTag)
+    {
+        int result = [[dicRespon objectForKey:@"result"] intValue];
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+
+        }
+        if(result == 0)
+        {
+
+        }
+        else if(result == 1 || result == 99)
+        {
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberId"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"hasLogin"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"userName"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userName"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserPhone"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserEmail"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"headPortraitUrl"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"defaultReceiveAddress"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"SppedAskPriceTelNum"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SppedAskPriceTelNum"];
+            }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"loginid"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginid"];
+            }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
+          
+            [self performSelector:@selector(EnterToLogin) withObject:nil afterDelay:2.5];
+        
+        }
+    }
+}
+
+- (void) EnterToLogin
+{
+    DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
+    self.window.rootViewController = tabbar;
+    [tabbar setSelectedIndex:3];
 }
 
 - (void) aliPayChange

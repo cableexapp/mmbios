@@ -106,4 +106,5 @@
 
 - (void) aliPayChange;
 
+- (void) logOutMethod;
 @end

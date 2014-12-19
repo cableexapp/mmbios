@@ -1479,6 +1479,9 @@
         [sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1] size:CGSizeMake(sureBtn.frame.size.width, sureBtn.frame.size.height)] forState:UIControlStateNormal];
         [sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor lightGrayColor] size:CGSizeMake(sureBtn.frame.size.width, sureBtn.frame.size.height)] forState:UIControlStateDisabled];
         sureBtn.layer.cornerRadius = 5;
+//        sureBtn.layer.borderColor = [UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1].CGColor;
+//        sureBtn.layer.borderWidth = 1.0f;
+        sureBtn.layer.masksToBounds = YES;
         sureBtn.enabled = NO;
         [chooseColorAndCountView addSubview:sureBtn];
         

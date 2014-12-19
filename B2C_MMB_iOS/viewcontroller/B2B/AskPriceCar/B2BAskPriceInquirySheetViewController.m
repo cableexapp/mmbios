@@ -36,9 +36,13 @@
     
     BOOL flag; //判断收货地址
     
-    CGFloat labelOrigin;  //label显示起点
-    CGFloat labelOrigin_1;  //label显示起点
-    CGFloat labelOrigin_2;  //label显示起点
+//    CGFloat labelOrigin;  //label显示起点
+//    CGFloat labelOrigin_1;  //label显示起点
+//    CGFloat labelOrigin_2;  //label显示起点
+    
+    CGFloat height_1;
+    CGFloat height_2;
+    CGFloat height_3;
 }
 @end
 
@@ -320,32 +324,39 @@
     }
     B2BAskPriceDetailData *data = [self.dataArray objectAtIndex:indexPath.row];
     
-    NSString *require = [NSString stringWithFormat:@"特殊要求: %@",data.require];
-    
-    CGSize   size_7 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-    CGFloat height_1 = 0.0;
+    CGFloat h1 = 0.0;
+    CGFloat h2 = 0.0;
+    CGFloat h3 = 0.0;
+
     if([DCFCustomExtra validateString:data.cartSpec] == NO && [DCFCustomExtra validateString:data.cartVoltage] == NO)
     {
-        height_1 = 0;
+        h1 = 0;
     }
     else
     {
-        height_1 = 20;
+        h1 = 20;
     }
-    CGFloat height_2 = 0.0;
+    
     if([DCFCustomExtra validateString:data.cartColor] == NO && [DCFCustomExtra validateString:data.featureone] == NO)
     {
-        height_2 = 0;
+        h2 = 0;
     }
     else
     {
-        height_2 = 20;
+        h2 = 20;
     }
-    if(size_7.height <= 20)
+   
+    NSString *require = [NSString stringWithFormat:@"特殊要求: %@",data.require];
+    CGSize size_Requie = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+    if([DCFCustomExtra validateString:data.require] == NO)
     {
-        return 90+height_1+height_2;
+        h3 = 0;
     }
-    return size_7.height+70+height_1+height_2;
+    else
+    {
+        h3 = size_Requie.height;
+    }
+    return 65+h1+h2+h3+5.5;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -489,7 +500,7 @@
             [kindLabel setText:[NSString stringWithFormat:@"分类:%@",data.chooseKind]];
             [cell.contentView addSubview:kindLabel];
             
-            CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
+            CGFloat halfWidth = (ScreenWidth-20)/2;
             
             
             NSString *num = [NSString stringWithFormat:@"数量: %@",data.num];
@@ -527,90 +538,15 @@
             NSMutableAttributedString *myRequire = [[NSMutableAttributedString alloc] initWithString:require];
             [myRequire addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
             [myRequire addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, require.length-5)];
-            
-            CGSize size_1;
-            if([DCFCustomExtra validateString:num] == NO ||[num intValue] == 0)
-            {
-                size_1 = CGSizeMake(100, 20);
-            }
-            else
-            {
-                size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:num WithSize:CGSizeMake(MAXFLOAT, 20)];
-                
-            }
-            
-            CGSize size_2;
-            if([DCFCustomExtra validateString:deliver] == NO || [deliver intValue] == 0)
-            {
-                size_2 = CGSizeMake(100, 20);
-            }
-            else
-            {
-                size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:deliver WithSize:CGSizeMake(MAXFLOAT, 20)];
-                
-            }
-            
-            CGSize size_3;
-            if([DCFCustomExtra validateString:cartSpec] == NO)
-            {
-                size_3 = CGSizeMake(100, 20);
-            }
-            else
-            {
-                size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:cartSpec WithSize:CGSizeMake(MAXFLOAT, 20)];
-                
-            }
-            
-            CGSize size_4;
-            if([DCFCustomExtra validateString:cartVoltage] == NO)
-            {
-                size_4 = CGSizeMake(100, 20);
-            }
-            else
-            {
-                size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:cartVoltage WithSize:CGSizeMake(MAXFLOAT, 20)];
-                
-            }
-            
-            CGSize size_5;
-            if([DCFCustomExtra validateString:color] == NO)
-            {
-                size_5 = CGSizeMake(100, 20);
-            }
-            else
-            {
-                size_5 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:color WithSize:CGSizeMake(MAXFLOAT, 20)];
-            }
-            
-            CGSize size_6;
-            if([DCFCustomExtra validateString:featureone] == NO)
-            {
-                size_6 = CGSizeMake(100, 20);
-            }
-            else
-            {
-                size_6 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:featureone WithSize:CGSizeMake(MAXFLOAT, 20)];
-            }
-            
-            CGSize size_7;
-            if([DCFCustomExtra validateString:data.require] == NO)
-            {
-                size_7 = CGSizeMake(cell.contentView.frame.size.width-20, 20);
-            }
-            else
-            {
-                size_7 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
-            }
-            
-            
-            
+   
             for(int i=0;i<7;i++)
             {
                 UILabel *cellLabel = [[UILabel alloc] init];
-                [cellLabel setFont:[UIFont systemFontOfSize:13]];
+                [cellLabel setFont:[UIFont systemFontOfSize:12]];
+                [cellLabel setNumberOfLines:0];
                 if(i == 0)
                 {
-                    [cellLabel setFrame:CGRectMake(10, kindLabel.frame.origin.y+kindLabel.frame.size.height, size_1.width, 20)];
+                    [cellLabel setFrame:CGRectMake(10, kindLabel.frame.origin.y+kindLabel.frame.size.height, halfWidth, 20)];
                     if([DCFCustomExtra validateString:data.num] == NO || [data.num intValue] == 0)
                     {
                         [cellLabel setText:@"数量:"];
@@ -622,7 +558,7 @@
                 }
                 if(i == 1)
                 {
-                    [cellLabel setFrame:CGRectMake(halfWidth, kindLabel.frame.origin.y+kindLabel.frame.size.height, size_2.width, 20)];
+                    [cellLabel setFrame:CGRectMake(10+halfWidth, kindLabel.frame.origin.y+kindLabel.frame.size.height, halfWidth, 20)];
                     if([DCFCustomExtra validateString:data.deliver] == NO || [data.deliver intValue] == 0)
                     {
                         [cellLabel setText:@"交货期:"];
@@ -636,11 +572,11 @@
                 {
                     if([DCFCustomExtra validateString:data.cartSpec] == NO)
                     {
-                        [cellLabel setFrame:CGRectMake(10, 65, size_3.width, 0)];
+                        [cellLabel setFrame:CGRectMake(10, 65, halfWidth, 0)];
                     }
                     else
                     {
-                        [cellLabel setFrame:CGRectMake(10, 65, size_3.width, 20)];
+                        [cellLabel setFrame:CGRectMake(10, 65, halfWidth, 20)];
                         [cellLabel setAttributedText:myCartSpec];
                     }
                     
@@ -649,95 +585,82 @@
                 {
                     if([DCFCustomExtra validateString:data.cartVoltage] == NO)
                     {
-                        [cellLabel setFrame:CGRectMake(10, 65, size_4.width, 0)];
+                        [cellLabel setFrame:CGRectMake(10+halfWidth, 65, halfWidth, 0)];
                     }
                     else
                     {
-                        [cellLabel setFrame:CGRectMake(halfWidth, 65, size_4.width, 20)];
+                        [cellLabel setFrame:CGRectMake(10+halfWidth, 65, halfWidth, 20)];
                         [cellLabel setAttributedText:myCartVoltage];
+                    }
+                    
+                    if([DCFCustomExtra validateString:data.cartSpec] == NO && [DCFCustomExtra validateString:data.cartVoltage] == NO)
+                    {
+                        height_1 = 0;
+                    }
+                    else
+                    {
+                        height_1 = 20;
                     }
                 }
                 if(i == 4)
                 {
-                    if([DCFCustomExtra validateString:data.cartSpec] == NO && [DCFCustomExtra validateString:data.cartVoltage] == NO)
+                    if([DCFCustomExtra validateString:data.cartColor] == NO)
                     {
-                        if([DCFCustomExtra validateString:data.cartColor] == NO)
-                        {
-                            [cellLabel setFrame:CGRectMake(10, 65, size_5.width, 0)];
-                        }
-                        else
-                        {
-                            [cellLabel setFrame:CGRectMake(10, 65, size_5.width, 20)];
-                        }
+                        [cellLabel setFrame:CGRectMake(10, 65+height_1, halfWidth, 0)];
                     }
                     else
                     {
-                        if([DCFCustomExtra validateString:data.cartColor] == NO)
-                        {
-                            [cellLabel setFrame:CGRectMake(10, 85, size_5.width, 0)];
-                        }
-                        else
-                        {
-                            [cellLabel setFrame:CGRectMake(10, 85, size_5.width, 20)];
-                        }
+                        [cellLabel setFrame:CGRectMake(10, 65+height_1, halfWidth, 20)];
+                        [cellLabel setAttributedText:myColor];
                     }
-                    [cellLabel setAttributedText:myColor];
-                    labelOrigin_1 = cellLabel.frame.origin.y+cellLabel.frame.size.height;
                 }
                 if(i == 5)
                 {
-                    if([DCFCustomExtra validateString:data.cartSpec] == NO && [DCFCustomExtra validateString:data.cartVoltage] == NO)
+                    if([DCFCustomExtra validateString:data.featureone] == NO)
                     {
-                        if([DCFCustomExtra validateString:data.featureone] == NO)
-                        {
-                            [cellLabel setFrame:CGRectMake(10, 65, size_6.width, 0)];
-                        }
-                        else
-                        {
-                            [cellLabel setFrame:CGRectMake(halfWidth, 65, size_6.width, 20)];
-                        }
+                        [cellLabel setFrame:CGRectMake(10+halfWidth, 65+height_1, halfWidth, 0)];
                     }
                     else
                     {
-                        if([DCFCustomExtra validateString:data.featureone] == NO)
-                        {
-                            [cellLabel setFrame:CGRectMake(10, 85, size_6.width, 0)];
-                        }
-                        else
-                        {
-                            [cellLabel setFrame:CGRectMake(halfWidth, 85, size_6.width, 20)];
-                        }
-                    }
-                    [cellLabel setAttributedText:myFeatureone];
-                    labelOrigin_2 = cellLabel.frame.origin.y+cellLabel.frame.size.height;
-                }
-                if(i == 6)
-                {
-                    labelOrigin = labelOrigin_1>=labelOrigin_2 ? labelOrigin_1 : labelOrigin_2;
-                    [cellLabel setFrame:CGRectMake(10, labelOrigin, cell.contentView.frame.size.width-20, size_7.height)];
-                    if([DCFCustomExtra validateString:data.require] == NO)
-                    {
-                        [cellLabel setText:@"特殊需求:"];
-                    }
-                    else
-                    {
-                        [cellLabel setAttributedText:myRequire];
+                        [cellLabel setFrame:CGRectMake(10+halfWidth, 65+height_1, halfWidth, 20)];
+                        [cellLabel setAttributedText:myFeatureone];
                     }
                     
-                    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, cellLabel.frame.origin.y+cellLabel.frame.size.height+4.5, ScreenWidth, 0.5)];
-                    [lineView setBackgroundColor:[UIColor lightGrayColor]];
-                    [cell.contentView addSubview:lineView];
+                    if([DCFCustomExtra validateString:data.cartColor] == NO && [DCFCustomExtra validateString:data.featureone] == NO)
+                    {
+                        height_2 = 0;
+                    }
+                    else
+                    {
+                        height_2 = 20;
+                    }
                 }
-                
-                [cellLabel setFont:[UIFont systemFontOfSize:12]];
-                [cellLabel setNumberOfLines:0];
-                
+  
+
+                CGSize size_Requie;
+                size_Requie = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
+                if(i == 6)
+                {
+                    if([DCFCustomExtra validateString:data.require] == NO)
+                    {
+                        height_3 = 0;
+                        [cellLabel setFrame:CGRectMake(10, 65+height_1+height_2, size_Requie.width, 0)];
+//                        [cellLabel setText:@"特殊需求:"];
+                    }
+                    else
+                    {
+                        height_3 = size_Requie.height;
+                        [cellLabel setFrame:CGRectMake(10, 65+height_1+height_2, size_Requie.width, size_Requie.height)];
+                        [cellLabel setAttributedText:myRequire];
+                    }
+                }
+
                 [cell.contentView addSubview:cellLabel];
-                
-                
             }
             
-            
+            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 65+height_1+height_2+height_3+4.5, ScreenWidth, 0.5)];
+            [lineView setBackgroundColor:[UIColor lightGrayColor]];
+            [cell.contentView addSubview:lineView];
         }
         
         

@@ -341,7 +341,7 @@
                 for(int j=0;j<[[dataArray objectAtIndex:i] count];j++)
                 {
                     UIButton *cellBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    
+                    [cellBtn setTag:1000*i+j];
                     [cellBtn setFrame:CGRectMake(5, 40, 30, 30)];
                     
                     [cellBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
@@ -486,18 +486,20 @@
             for(int i=cellBtnArray.count-1;i>=0;i--)
             {
                 NSMutableArray *arr = [cellBtnArray objectAtIndex:i];
-                
-                
+
                 for(int j=arr.count-1;j>=0;j--)
                 {
                     UIButton *btn = [arr objectAtIndex:j];
+
                     int row = btn.tag%1000;
                     int section = btn.tag/1000;
                     if(btn.selected == YES)
                     {
-                        B2CShopCarListData *car = [[dataArray objectAtIndex:section] objectAtIndex:row];
                         
                         NSMutableArray *data = [dataArray objectAtIndex:section];
+
+                        B2CShopCarListData *car = [data objectAtIndex:row];
+                        
                         [data removeObject:car];
                         
                         
@@ -556,6 +558,7 @@
                     [[headBtnArray objectAtIndex:i] removeAllObjects];
                 }
             }
+
             [moneyLabel setText:[DCFCustomExtra notRounding:0.00 afterPoint:2]];
             [buttomBtn setSelected:NO];
             [tv reloadData];
@@ -654,7 +657,6 @@
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     [self.navigationController pushViewController:detail animated:YES];
     
-    //    NSLog(@"tag = %d",[[sender view] subviews].tag);
 }
 
 - (void) addBtnClick:(UIButton *) sender
@@ -673,7 +675,6 @@
         B2CShopCarListData *carListData = [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
         addNum = [carListData.num intValue];
         int productNum = [carListData.productNum intValue];
-        NSLog(@"productNum = %d",productNum);
         if(addNum > productNum)
         {
             [DCFStringUtil showNotice:@"所购数量不能超过库存"];
@@ -1151,25 +1152,12 @@ NSComparator cmptr = ^(id obj1, id obj2){
     if(dataArray && [[dataArray objectAtIndex:indexPath.section] count] != 0)
     {
         return 120;
-//        NSString *content = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItmeTitle];
-//        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:content WithSize:CGSizeMake(160, MAXFLOAT)];
-//        if(size.height + 95 <= 100)
-//        {
-//            return 110;
-//        }
-//        else
-//        {
-//            return size.height + 95;
-//        }
-//        NSLog(@"size.height)=%f",size.height);
-        
     }
     return 0;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"numberOfSectionsInTableView = %@",dataArray);
     if(!dataArray || dataArray.count == 0)
     {
         return 1;
@@ -1187,7 +1175,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         return 1;
     }
-    
     return [[dataArray objectAtIndex:section] count];
 }
 
@@ -1232,10 +1219,30 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (void) buyBtnClick:(UIButton *) sender
 {
+
+    
     [self setHidesBottomBarWhenPushed:YES];
     ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
-    [self.navigationController pushViewController:shoppingHost animated:YES];
+    int n = 0;
+    for(UIViewController *vc in self.navigationController.viewControllers)
+    {
+        if([vc isKindOfClass:[ShoppingHostViewController class]])
+        {
+            [self.navigationController popToViewController:vc animated:YES];
+            break;
+        }
+        else
+        {
+            if(n == self.navigationController.viewControllers.count-1)
+            {
+                [self.navigationController pushViewController:shoppingHost animated:YES];
+                break;
+            }
+        }
+        n++;
+    }
     [self setHidesBottomBarWhenPushed:NO];
+
 }
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
@@ -1363,11 +1370,9 @@ NSComparator cmptr = ^(id obj1, id obj2){
     {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-    
     UIButton *cellBtn = [[cellBtnArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    [cellBtn setTag:indexPath.row + indexPath.section*1000];
+//    [cellBtn setTag:indexPath.row + indexPath.section*1000];
     [cell.contentView addSubview:cellBtn];
-    
     UIImageView *cellIv = [[cellImageViewArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     cellIv.userInteractionEnabled = YES;
     NSURL *url = [NSURL URLWithString:[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItemPic]];

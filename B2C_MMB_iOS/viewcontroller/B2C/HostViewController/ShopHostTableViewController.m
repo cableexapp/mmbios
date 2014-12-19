@@ -726,7 +726,7 @@
                     
                     NSString *picUrl = [[dataArray objectAtIndex:n] p1Path];
                     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 125, 125)];
-                    [iv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"magnifying glass.png"]];
+                    [iv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                     [cellView addSubview:iv];
                     
                     NSString *str_1 = [[dataArray objectAtIndex:n] productName];

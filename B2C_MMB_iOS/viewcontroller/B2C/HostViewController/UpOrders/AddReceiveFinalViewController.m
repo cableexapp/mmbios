@@ -335,7 +335,6 @@
         else
         {
             [DCFStringUtil showNotice:msg];
-            
             for(UIViewController *vc in self.navigationController.viewControllers)
             {
                 if([vc isKindOfClass:[ChooseReceiveAddressViewController class]])

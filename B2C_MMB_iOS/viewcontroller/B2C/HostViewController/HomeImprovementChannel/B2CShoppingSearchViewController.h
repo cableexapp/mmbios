@@ -36,6 +36,7 @@
 - (id) initWithFrame:(CGRect) rect;
 - (void)brandBtnClick:(UIButton *)button;
 
+@property (strong,nonatomic) NSMutableArray *ScreeningCondition;
 
 - (void) addHeadView;
 

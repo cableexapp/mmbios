@@ -85,6 +85,8 @@
     UIButton *buyOrAddBtn;
     
     UIButton *sureBtn;
+    
+    UIWebView *cellWebView;
 }
 @end
 
@@ -202,7 +204,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线商品详情"];
     self.navigationItem.titleView = top;
     
-    UIView *buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-50-64, 320, 50)];
+    UIView *buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-50-64, ScreenWidth, 50)];
     [buttomView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:buttomView];
     
@@ -317,7 +319,6 @@
         {
             statrScore = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
             
-            NSLog(@"星星评分 = %d",statrScore);
         }
         int result = [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
@@ -326,7 +327,8 @@
         {
             detailData = [[B2CGoodsDetailData alloc] init];
             [detailData dealData:dicRespon];
-            [tv reloadData];
+            [self loadWebView];
+//            [tv reloadData];
         }
         else
         {
@@ -567,8 +569,14 @@
                 }
                 else
                 {
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-                    return size.height+15;
+                    if(!cellWebView)
+                    {
+                        return 0;
+                    }
+                    NSLog(@"cellWebView.frame.size.height = %f",cellWebView.frame.size.height);
+                    return cellWebView.frame.size.height+15;
+//                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+//                    return size.height+15;
                 }
             }
         }
@@ -645,9 +653,24 @@
                 }
                 else
                 {
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-                    return size.height+15;
+                    if(!cellWebView)
+                    {
+                        return 0;
+                    }
+                    return cellWebView.frame.size.height+15;
+                    //                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                    //                    return size.height+15;
                 }
+                
+//                if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
+//                {
+//                    return 0;
+//                }
+//                else
+//                {
+//                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+//                    return size.height+15;
+//                }
             }
         }
     }
@@ -1074,6 +1097,52 @@
     return html;
 }
 
+- (void) loadWebView
+{
+    if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
+    {
+        [tv reloadData];
+    }
+    else
+    {
+        cellWebView = [[UIWebView alloc] init];
+        cellWebView.delegate = self;
+        cellWebView.opaque = NO;
+        [cellWebView setScalesPageToFit:NO];
+//        cellWebView.scrollView.bounces = NO;
+        [(UIScrollView *)[[cellWebView subviews] objectAtIndex:0] setBounces:NO];
+        [cellWebView setBackgroundColor:[UIColor clearColor]];
+        NSString *jsString = [NSString stringWithFormat:@"<html> "
+                              "<head> "
+                              "<style type=\"text/css\"> "
+                              "body {font-size: %d;color:%@}"
+                              "</style> "
+                              "</head> "
+                              "<body>%@</body> "
+                              "</html>", 13, @"#000000",detailData.phoneDescribe];
+        [cellWebView loadHTMLString:jsString baseURL:nil];
+    }
+}
+
+- (void) webViewDidFinishLoad:(UIWebView *)webView
+{
+    const CGFloat defaultWebViewHeight = 22.0;
+    //reset webview size
+    CGRect originalFrame = webView.frame;
+    webView.frame = CGRectMake(originalFrame.origin.x, originalFrame.origin.y, ScreenWidth, defaultWebViewHeight);
+    
+    CGSize actualSize = [webView sizeThatFits:CGSizeZero];
+    
+    if (actualSize.height <= defaultWebViewHeight)
+    {
+        actualSize.height = defaultWebViewHeight;
+    }
+    CGRect webViewFrame = webView.frame;
+    webViewFrame.size.height = actualSize.height;
+    webView.frame = webViewFrame;
+    [tv reloadData];
+}
+
 #pragma mark - 商家自定义内容
 - (UITableViewCell *) loadCustomCell:(NSIndexPath *) path WithTableView:(UITableView *) tableview
 {
@@ -1087,15 +1156,17 @@
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[self filterHTML:detailData.phoneDescribe] WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, size.height)];
-    [label setFont:[UIFont systemFontOfSize:14]];
-    [label setNumberOfLines:0];
-    [label setText:[self filterHTML:detailData.phoneDescribe]];
-    [cell.contentView addSubview:label];
+//    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[self filterHTML:detailData.phoneDescribe] WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, size.height)];
+//    [label setFont:[UIFont systemFontOfSize:14]];
+//    [label setNumberOfLines:0];
+//    [label setText:[self filterHTML:detailData.phoneDescribe]];
+//    [cell.contentView addSubview:label];
+    
+    [cell.contentView addSubview:cellWebView];
     
     UIView *lineView = [[UIView alloc] init];
-    lineView.frame = CGRectMake(0, label.frame.origin.y + label.frame.size.height, cell.frame.size.width, 10);
+    lineView.frame = CGRectMake(0, cellWebView.frame.origin.y + cellWebView.frame.size.height, cell.frame.size.width, 10);
     lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     [cell.contentView addSubview:lineView];
     return cell;

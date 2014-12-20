@@ -68,7 +68,6 @@
     
     if(URLTag == URLInquiryDetailTag)
     {
-        
         if([[dicRespon allKeys] count] == 0 || [[dicRespon objectForKey:@"ctems"] count] == 0 || [[dicRespon objectForKey:@"ctems"] isKindOfClass:[NSNull class]])
         {
             [moreCell noDataAnimation];
@@ -358,7 +357,8 @@
             [lineView setBackgroundColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
             [cell.contentView addSubview:lineView];
             
-            NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",[dic objectForKey:@"num"],[dic objectForKey:@"unit"]];  //数量
+            NSString *unit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
+            NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",[dic objectForKey:@"num"],unit];  //数量
             NSMutableAttributedString *myNumber = [[NSMutableAttributedString alloc] initWithString:theNumber];
             [myNumber addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myNumber addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theNumber.length-3)];
@@ -395,7 +395,7 @@
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, thecolor.length-3)];
             
-            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@/%@",[dic objectForKey:@"price"],[dic objectForKey:@"unit"]]; //价格
+            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@/%@",[dic objectForKey:@"price"],unit]; //价格
             NSMutableAttributedString *myPrice = [[NSMutableAttributedString alloc] initWithString:thePrice];
             [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
             [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, thePrice.length-5)];
@@ -425,7 +425,7 @@
                         
                         
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5.5, halfWidth, 20)];
-                        if([DCFCustomExtra validateString:[dic objectForKey:@"num"]] == NO || [[dic objectForKey:@"num"] intValue] == 0)
+                        if([[dic objectForKey:@"num"] intValue] == 0)
                         {
                             [label setText:@"采购数量:"];
                         }
@@ -438,7 +438,7 @@
                     case 1:
                     {
                         [label setFrame:CGRectMake(10+halfWidth, lineView.frame.origin.y+5.5, halfWidth, 20)];
-                        if([DCFCustomExtra validateString:[dic objectForKey:@"deliver"]] == NO || [[dic objectForKey:@"deliver"] intValue] == 0)
+                        if([[dic objectForKey:@"deliver"] intValue] == 0)
                         {
                             [label setText:[NSString stringWithFormat:@"交货期:%@",@""]];
                         }
@@ -535,7 +535,7 @@
             
             UILabel *pricelabel = [[UILabel alloc] init];
             [pricelabel setFont:[UIFont systemFontOfSize:12]];
-            if([DCFCustomExtra validateString:[dic objectForKey:@"price"]] == NO || [[dic objectForKey:@"price"] intValue] == 0)
+            if([[dic objectForKey:@"price"] intValue] == 0)
             {
                 [pricelabel setFrame:CGRectMake(10, 65.5+height_1+height_2,ScreenWidth-20,0)];
                 height_3 = 0;

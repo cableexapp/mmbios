@@ -104,11 +104,8 @@
 - (NSString *) getMemberId
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     if(memberid.length == 0)
     {
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
         
     }
     return memberid;
@@ -1479,8 +1476,8 @@
         [sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1] size:CGSizeMake(sureBtn.frame.size.width, sureBtn.frame.size.height)] forState:UIControlStateNormal];
         [sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor lightGrayColor] size:CGSizeMake(sureBtn.frame.size.width, sureBtn.frame.size.height)] forState:UIControlStateDisabled];
         sureBtn.layer.cornerRadius = 5;
-//        sureBtn.layer.borderColor = [UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1].CGColor;
-//        sureBtn.layer.borderWidth = 1.0f;
+        //        sureBtn.layer.borderColor = [UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1].CGColor;
+        //        sureBtn.layer.borderWidth = 1.0f;
         sureBtn.layer.masksToBounds = YES;
         sureBtn.enabled = NO;
         [chooseColorAndCountView addSubview:sureBtn];
@@ -1671,6 +1668,22 @@
     }
 }
 
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    int index = buttonIndex;
+    if(index == 0)
+    {
+        
+    }
+    else
+    {
+        sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+}
+
 - (void) sureBtnClick:(UIButton *) sender
 {
     
@@ -1692,18 +1705,29 @@
         {
 #pragma mark - 立即购买
             
-            NSString *time = [DCFCustomExtra getFirstRunTime];
+            NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+            if([DCFCustomExtra validateString:memberid] == NO)
+            {
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚未登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
+                [av show];
+            }
+            else
+            {
+                NSString *time = [DCFCustomExtra getFirstRunTime];
+                
+                NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
+                
+                NSString *token = [DCFCustomExtra md5:string];
+                
+                
+                NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
+                
+                NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
+                conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
+                [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+                
+            }
             
-            NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
-            
-            NSString *token = [DCFCustomExtra md5:string];
-            
-            //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",@"144",token,[self getMemberId],itemid,num];
-            NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
-            
-            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
-            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
-            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         }
         else
         {

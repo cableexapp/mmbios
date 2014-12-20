@@ -126,10 +126,12 @@
     [registerBtn setTitle:@"用户注册" forState:UIControlStateNormal];
     [registerBtn addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:registerBtn];
- 
+    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, 15, 23);
-    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    btn.frame = CGRectMake(0, 0, 50, 23);
+    //    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [btn setTitle:@"取消" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(cancelBtnClick:) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem = left;
@@ -229,7 +231,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
     NSString *des = [MCdes encryptUseDES:sec key:@"cableex_app*#!Key"];
     
-
+    
     NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",acc,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
     NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
@@ -241,7 +243,7 @@
 {
     if(URLTag == URLLoginTag)
     {
-
+        
         if(HUD)
         {
             [HUD hide:YES];
@@ -292,7 +294,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
             
             //        NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
-
+            
             NSString *headPortraitUrl = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/",[iems objectForKey:@"ext2"]];
             NSLog(@"headPortraitUrl = %@",headPortraitUrl);
             
@@ -303,7 +305,7 @@
             NSLog(@"loginid = %@",loginid);
             
             [[NSUserDefaults standardUserDefaults] synchronize];
-
+            
             [self dismissCurrentView];
         }
     }
@@ -358,7 +360,7 @@
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
     
-     [_tf_Secrect becomeFirstResponder];
+    [_tf_Secrect becomeFirstResponder];
     
     if(textField == _tf_Secrect)
     {

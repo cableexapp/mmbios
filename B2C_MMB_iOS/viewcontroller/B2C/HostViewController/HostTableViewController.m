@@ -29,6 +29,7 @@
 #import "MyShoppingListViewController.h"
 #import "B2BAskPriceCarViewController.h"
 #import "AppDelegate.h"
+#import "ChatViewController.h"
 
 int isgo = 1;
 BOOL isPopShow = NO;
@@ -323,10 +324,10 @@ BOOL isPopShow = NO;
     searchImageView.layer.borderWidth = 1;
     [self.navigationController.navigationBar addSubview:searchImageView];
     
-    UIImageView *speakView = [[UIImageView alloc] init];
-    speakView.frame = CGRectMake(searchImageView.frame.size.width-28, 3.5, 23, 23);
-    speakView.image = [UIImage imageNamed:@"speak"];
-    [searchImageView addSubview:speakView];
+//    UIImageView *speakView = [[UIImageView alloc] init];
+//    speakView.frame = CGRectMake(searchImageView.frame.size.width-28, 3.5, 23, 23);
+//    speakView.image = [UIImage imageNamed:@"speak"];
+//    [searchImageView addSubview:speakView];
 
     UIImageView *search = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 22, 22)];
     search.image = [UIImage imageNamed:@"search"];
@@ -720,19 +721,38 @@ BOOL isPopShow = NO;
         HotScreenFirstViewController *hotScreenFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotScreenFirstViewController"];
         [self.navigationController pushViewController:hotScreenFirstViewController animated:YES];
     }
+    
     if (btn.tag == 6)
     {
         #pragma mark - 在线客服
-        ChatListViewController *chatVC = [[ChatListViewController alloc] init];
-        chatVC.fromString = @"首页在线客服";
-        CATransition *transition = [CATransition animation];
-        transition.duration = 0.5f;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        transition.type =  kCATransitionMoveIn;
-        transition.subtype =  kCATransitionFromTop;
-        transition.delegate = self;
-        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-        [self.navigationController pushViewController:chatVC animated:NO];
+        if ([self.appDelegate.isConnect isEqualToString:@"连接"])
+        {
+            ChatViewController *chatVC = [[ChatViewController alloc] init];
+            chatVC.fromStringFlag = @"首页在线客服";
+//            CATransition *transition = [CATransition animation];
+//            transition.duration = 0.5f;
+//            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//            transition.type =  kCATransitionMoveIn;
+//            transition.subtype =  kCATransitionFromTop;
+//            transition.delegate = self;
+//            [self.navigationController.view.layer addAnimation:transition forKey:nil];
+//            [self.navigationController pushViewController:chatVC animated:NO];
+//            [self setHidesBottomBarWhenPushed:NO];
+            [self presentViewController:chatVC animated:YES completion:nil];
+        }
+        else
+        {
+            ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+            chatVC.fromString = @"首页在线客服";
+            CATransition *transition = [CATransition animation];
+            transition.duration = 0.5f;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            transition.type =  kCATransitionMoveIn;
+            transition.subtype =  kCATransitionFromTop;
+            transition.delegate = self;
+            [self.navigationController.view.layer addAnimation:transition forKey:nil];
+            [self.navigationController pushViewController:chatVC animated:NO];
+        }
     }
     if (btn.tag == 7)
     {

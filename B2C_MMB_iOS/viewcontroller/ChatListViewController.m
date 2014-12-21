@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "WaitViewController.h"
 #import "Reachability.h"
+#import "ChatViewController.h"
 
 @interface ChatListViewController ()
 {
@@ -160,6 +161,25 @@
         {
             [view setHidden:YES];
         }
+    }
+    
+    NSLog(@"self.tabbar.index = %d",self.navigationController.tabBarController.selectedIndex);
+    if ((self.navigationController.tabBarController.selectedIndex == 0 || self.navigationController.tabBarController.selectedIndex == 2) && [self.appDelegate.isConnect isEqualToString:@"连接"])
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        ChatViewController *chatVC = [[ChatViewController alloc] init];
+        chatVC.fromStringFlag = @"工具栏客服";
+        
+//        CATransition *transition = [CATransition animation];
+//        transition.duration = 0.5f;
+//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//        transition.type =  kCATransitionMoveIn;
+//        transition.subtype =  kCATransitionFromTop;
+//        transition.delegate = self;
+//        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+//        [self.navigationController pushViewController:chatVC animated:NO];
+//        [self setHidesBottomBarWhenPushed:NO];
+        [self presentViewController:chatVC animated:YES completion:nil];
     }
 //    if (isOneArray.count == 0)
 //    {

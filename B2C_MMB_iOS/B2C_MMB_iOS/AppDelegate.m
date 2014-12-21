@@ -71,6 +71,7 @@ NSString *strUserId = @"";
 @synthesize isOnLine;
 @synthesize tempID;
 @synthesize errorMessage;
+@synthesize isConnect;
 
 - (void) reachabilityChanged: (NSNotification* )note
 {

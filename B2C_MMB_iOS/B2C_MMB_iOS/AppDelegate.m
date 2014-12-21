@@ -851,7 +851,7 @@ NSString *strUserId = @"";
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-//  NSLog(@"[IQ description] = %@\n\n",[iq description]);
+  NSLog(@"[IQ description] = %@\n\n",iq);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])
@@ -963,7 +963,7 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
-//        NSLog(@"presence = %@",presence);
+        NSLog(@"presence = %@",presence);
     //    //取得好友状态
     NSString *presenceType = [presence type]; //online/offline
     //        //当前用户

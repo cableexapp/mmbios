@@ -364,6 +364,7 @@
     if(indexPath.row == addressListDataArray.count)
     {
         [moreCell noDataAnimation];
+        [moreCell.lblContent setText:@"暂无收货地址"];
         return moreCell;
     }
     else

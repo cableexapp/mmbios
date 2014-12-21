@@ -105,10 +105,11 @@
 
 - (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    [self contentSizeToFit:textView];
     
     if([text isEqualToString:@"\n"])
     {
+        [self contentSizeToFit:textView];
+
         [textView resignFirstResponder];
     }
     

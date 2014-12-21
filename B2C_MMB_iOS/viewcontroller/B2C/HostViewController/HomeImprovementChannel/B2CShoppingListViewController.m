@@ -22,6 +22,8 @@
 #import "MyShoppingListViewController.h"
 #import "DCFStringUtil.h"
 
+#define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
+
 #pragma mark - 少一个total字段,筛选部分
 @interface B2CShoppingListViewController ()
 {
@@ -58,6 +60,7 @@
     
     NSMutableArray *ScreeningCondition;
 
+    NSMutableArray *flagArray;
 }
 @end
 
@@ -203,6 +206,20 @@
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     int tag = btn.tag;
+    NSLog(@"tag = %d",tag);
+    
+    NSLog(@"%@",btn.subviews);
+    for(UIView *view in btn.subviews)
+    {
+        if([view isKindOfClass:[UIImageView class]])
+        {
+#pragma mark - 图片旋转
+            UIImageView *currentIV= (UIImageView *)[self.view viewWithTag:300];
+            [UIView animateWithDuration:0.3 animations:^{
+                currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
+            }];
+        }
+    }
     
 //    遍历数组比较tag
     for(UIView *view in buttonLineViewArray)
@@ -344,31 +361,42 @@
     
     btnArray = [[NSMutableArray alloc] init];
     buttonLineViewArray = [[NSMutableArray alloc] init];
+    flagArray = [[NSMutableArray alloc] init];
+    
     for(int i=0;i<3;i++)
     {
         UIButton *selctBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [selctBtn setFrame:CGRectMake(10 + 100*i, 13, 100, 30)];
+        
+        UIImageView *sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(selctBtn.frame.size.width-20, 10, 15, 15)];
+        [sectionBtnIv setImage:[UIImage imageNamed:@"down_dark.png"]];
+        [sectionBtnIv setContentMode:UIViewContentModeScaleToFill];
+        
         switch (i)
         {
             case 0:
                 [selctBtn setTitle:@"相关度" forState:UIControlStateNormal];
                 [selctBtn setSelected:YES];
-        
+                [sectionBtnIv setHidden:YES];
                 break;
             case 1:
                 [selctBtn setTitle:@"价格" forState:UIControlStateNormal];
+                [selctBtn addSubview:sectionBtnIv];
                 break;
             case 2:
                 [selctBtn setTitle:@"销量" forState:UIControlStateNormal];
+                [selctBtn addSubview:sectionBtnIv];
                 break;
             default:
                 break;
         }
-//        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-//        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+        BOOL btnFlag = selctBtn.selected;
+        [flagArray addObject:[NSNumber numberWithBool:btnFlag]];
+        NSLog(@"flagArray = %@",flagArray);
+        
+
         
         [selctBtn setTitleColor:[UIColor colorWithRed:133.0/255.0 green:133.0/255.0 blue:133.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-//        [selctBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         
         if(i == 0)
         {

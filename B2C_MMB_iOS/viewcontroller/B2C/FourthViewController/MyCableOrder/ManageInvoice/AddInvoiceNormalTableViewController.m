@@ -10,6 +10,7 @@
 #import "DCFCustomExtra.h"
 #import "MCDefine.h"
 #import "DCFStringUtil.h"
+#import "LoginNaviViewController.h"
 
 @interface AddInvoiceNormalTableViewController ()
 {
@@ -17,7 +18,7 @@
     NSMutableArray *labelArray;
     
     UITextView *headTV;
-
+    
     
 }
 @end
@@ -84,7 +85,7 @@
                 str = @"发票抬头:";
                 headTV = tv;
                 break;
-
+                
                 
             default:
                 break;
@@ -116,7 +117,7 @@
 
 - (void) textViewDidEndEditing:(UITextView *)textView
 {
-
+    
     if(textView == headTV)
     {
         if(headTV.text.length > 50)
@@ -157,7 +158,7 @@
 - (void) keyBoardHide
 {
     [headTV resignFirstResponder];
-
+    
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -221,6 +222,19 @@
     return cell;
 }
 
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
 
 - (void) loadRequest
 {
@@ -229,7 +243,7 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     //    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&type=%@&name=%@&company=%@&taxcode=%@&regaddress=%@&tel=%@&bank=%@&bankaccount=%@",token,@"668",@"1",[(UITextView *)[textViewArray objectAtIndex:0] text],@"",@"",@"",@"",@"",@""];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&type=%@&name=%@&company=%@&taxcode=%@&regaddress=%@&tel=%@&bank=%@&bankaccount=%@",token,[self getMemberId],@"1",[(UITextView *)[textViewArray objectAtIndex:0] text],@"",@"",@"",@"",@"",@""];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2BAddInvoiceNormalTag delegate:self];
     
@@ -245,17 +259,29 @@
     
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
-    if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
-    {
-        [DCFStringUtil showNotice:@"新增失败"];
-    }
-    [DCFStringUtil showNotice:msg];
     
     if(URLTag == URLB2BAddInvoiceNormalTag)
     {
         if(result == 1)
         {
-//            [self.navigationController popViewControllerAnimated:YES];
+            [DCFStringUtil showNotice:msg];
+            
+            if([self.delegate respondsToSelector:@selector(popDelegate)])
+            {
+                [self.delegate popDelegate];
+            }
+            //            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else
+        {
+            if([DCFCustomExtra validateString:msg] == NO)
+            {
+                [DCFStringUtil showNotice:@"新增失败"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
         }
     }
 }

@@ -7,8 +7,6 @@
 //
 
 #import "AddInvoiceViewController.h"
-#import "AddInvoiceAddedTableViewController.h"
-#import "AddInvoiceNormalTableViewController.h"
 #import "MCDefine.h"
 #import "DCFStringUtil.h"
 #import "DCFCustomExtra.h"
@@ -70,7 +68,10 @@
     }
 }
 
-
+- (void) popDelegate
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (void) btnClick:(UIButton *) sender
 {
@@ -123,9 +124,10 @@
         [btn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
-
+    
     
     addInvoiceNormalTableViewController = [[AddInvoiceNormalTableViewController alloc] init];
+    addInvoiceNormalTableViewController.delegate = self;
     [self addChildViewController:addInvoiceNormalTableViewController];
     addInvoiceNormalTableViewController.view.frame = self.firstView.bounds;
     [self.firstView addSubview:addInvoiceNormalTableViewController.view];
@@ -140,7 +142,7 @@
     self.sureBtn.layer.cornerRadius =5.0f;
     self.sureBtn.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0];
     [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
+    
 }
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView

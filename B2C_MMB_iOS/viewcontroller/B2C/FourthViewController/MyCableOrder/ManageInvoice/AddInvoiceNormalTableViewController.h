@@ -9,10 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 
+@protocol PopDelegate <NSObject>
+
+- (void) popDelegate;
+
+@end
+
 @interface AddInvoiceNormalTableViewController : UITableViewController<UITextViewDelegate,ConnectionDelegate>
 {
     DCFConnectionUtil *conn;
 }
+
+@property (assign,nonatomic) id<PopDelegate> delegate;
 
 - (void) keyBoardHide;
 
@@ -21,3 +29,4 @@
 - (void) loadRequest;
 
 @end
+

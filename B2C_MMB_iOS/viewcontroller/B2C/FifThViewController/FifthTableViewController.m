@@ -364,6 +364,12 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginid"];
             }
             
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"B2BManageBillSwitchStatus"];
+            }
+            
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [DCFStringUtil showNotice:@"退出成功"];

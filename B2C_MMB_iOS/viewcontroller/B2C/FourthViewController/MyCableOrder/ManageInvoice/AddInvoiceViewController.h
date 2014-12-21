@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddInvoiceAddedTableViewController.h"
+#import "AddInvoiceNormalTableViewController.h"
 
-@interface AddInvoiceViewController : UIViewController<UIScrollViewDelegate>
+@interface AddInvoiceViewController : UIViewController<UIScrollViewDelegate,PopDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIButton *normalBtn;

@@ -14,7 +14,7 @@
 #import "B2CUpOrderData.h"
 #import "ChooseReceiveAddressViewController.h"
 
-@interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickerView,ConnectionDelegate,UITextFieldDelegate,ReceveAddress>
+@interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickerView,ConnectionDelegate,UITextFieldDelegate,ReceveAddress,UIAlertViewDelegate>
 {
     DCFConnectionUtil *conn;
     UITableView *tv;

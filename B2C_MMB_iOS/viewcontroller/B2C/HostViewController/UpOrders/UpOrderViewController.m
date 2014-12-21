@@ -678,6 +678,19 @@
     }
 }
 
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+//    switch (buttonIndex) {
+//        case 0:
+//            
+//            break;
+//        case 1:
+            [self.navigationController popViewControllerAnimated:YES];
+//            break;
+//        default:
+//            break;
+//    }
+}
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
@@ -701,6 +714,11 @@
             ChoosePayTableViewController *pay = [[ChoosePayTableViewController alloc] initWithTotal:totalPrice WithValue:orderNum WithShopName:sShopName WithProductTitle:productItemSku];
             [self.navigationController pushViewController:pay animated:YES];
             
+        }
+        else if (result == 2)
+        {
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [av show];
         }
         else
         {

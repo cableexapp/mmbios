@@ -803,12 +803,14 @@
         speakButton.hidden = NO;
         speakButtonView.hidden = NO;
         noResultView.hidden = YES;
+        dataArray = tempArray;
     }
     else
     {
         speakButton.hidden = YES;
         speakButtonView.hidden = YES;
     }
+     [self.serchResultView reloadData];
 }
 
 - (void)leftBtnClick:(UITapGestureRecognizer *) sender
@@ -1192,9 +1194,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
-    
-    NSLog(@"点击单元格");
+
     if (dataArray.count > 0)
     {
         [self setHidesBottomBarWhenPushed:YES];
@@ -1277,9 +1277,17 @@
              [self setHidesBottomBarWhenPushed:NO];
         }
     }
-   
 }
 
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+//{
+//    if ([searchBar.text isEqualToString:@""])
+//    {
+//        noResultView.hidden = YES;
+//        dataArray = tempArray;
+//    }
+//    [self.serchResultView reloadData];
+//}
 
 //删除数据
 -(void)deleteData

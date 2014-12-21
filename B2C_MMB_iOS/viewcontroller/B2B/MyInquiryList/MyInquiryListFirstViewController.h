@@ -18,4 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIView *firstView;
 @property (weak, nonatomic) IBOutlet UIView *secondView;
 
+@property (nonatomic,strong) NSString *orderBtnClick;
+
 @end

@@ -13,7 +13,7 @@
 #import "FBShimmeringView.h"
 #import "SpeedAskPriceFirstViewController.h"
 #import "SpeedAskPriceSecondViewController.h"
-
+#import "XMPPIQ+JabberRPC.h"
 
 double secondsCountDown =0;
 
@@ -171,8 +171,7 @@ double secondsCountDown =0;
     //接收返回在线咨询入口页
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToAskPrice:) name:@"goToAskPricePage" object:nil];
     
-    //发起请求加入咨询队列
-    [self sendJoinRequest];
+   
 }
 
 -(void)pageFromWhere_wait
@@ -198,7 +197,6 @@ double secondsCountDown =0;
     }
     else if([self.tempFrom isEqualToString:@"热门型号提交成功在线客服"])
     {
-        NSLog(@"self.navigationController.viewControllers.count = %d",self.navigationController.viewControllers.count);
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
     }
     else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
@@ -295,6 +293,8 @@ double secondsCountDown =0;
 -(void)viewWillAppear:(BOOL)animated
 {
     [self checkNet];
+    //发起请求加入咨询队列
+    [self sendJoinRequest];
 }
 
 //检查网络是否连接
@@ -341,64 +341,69 @@ double secondsCountDown =0;
 
 -(void)sendJoinRequest
 {
-    NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-    [body setStringValue:@"join"];
-    NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
-    [mes addAttributeWithName:@"to" stringValue:self.tempGroup];
-    [mes addAttributeWithName:@"type" stringValue:@"groupchat"];
-    [mes addChild:body];
-    [[self xmppStream] sendElement:mes];
+    NSLog(@"请求self.appDelegate.chatRequestJID = %@",self.appDelegate.chatRequestJID);
+
+    NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
+//    [iq addAttributeWithName:@"id" stringValue:@"mE4pa-10"];
+    [iq addAttributeWithName:@"to"stringValue:self.tempGroup];
+    [iq addAttributeWithName:@"type"stringValue:@"set"];
+
+    NSXMLElement *query = [NSXMLElement elementWithName:@"join-queue"];
+    [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/workgroup"];
+    [iq addChild:query];
+
+    NSXMLElement *x = [NSXMLElement elementWithName:@"x"];
+    [x addAttributeWithName:@"xmlns" stringValue:@"jabber:x:data"];
+    [x addAttributeWithName:@"type"stringValue:@"submit"];
+    [query addChild:x];
+
+    NSXMLElement *field1 = [NSXMLElement elementWithName:@"field"];
+    [field1 addAttributeWithName:@"var" stringValue:@"username"];
+    [field1 addAttributeWithName:@"type"stringValue:@"text-single"];
+    [x addChild:field1];
+
+    NSXMLElement *value1 = [NSXMLElement elementWithName:@"value"];
+    [value1 setStringValue:[self.appDelegate getUdid]];
+    [field1 addChild:value1];
+    
+    NSXMLElement *field2 = [NSXMLElement elementWithName:@"field"];
+    [field2 addAttributeWithName:@"var" stringValue:@"question"];
+    [field2 addAttributeWithName:@"type"stringValue:@"text-single"];
+    [x addChild:field2];
+    
+    NSXMLElement *value2 = [NSXMLElement elementWithName:@"value"];
+    [value2 setStringValue:@"在线咨询"];
+    [field2 addChild:value2];
+    
+    NSXMLElement *field3 = [NSXMLElement elementWithName:@"field"];
+    [field3 addAttributeWithName:@"var" stringValue:@"email"];
+    [field3 addAttributeWithName:@"type"stringValue:@"text-single"];
+    [x addChild:field3];
+    
+    NSXMLElement *value3 = [NSXMLElement elementWithName:@"value"];
+    [value3 setStringValue:@"iOS_app_user@cableex.com"];
+    [field3 addChild:value3];
+  
+    [[self xmppStream] sendElement:iq];
+
+     NSLog(@"请求IQ = %@",iq);
+
 }
 
 //请求连接客服
 -(void)autoMessageToServer:(NSNotification *)newMessage
 {
-    if ([newMessage.object isEqualToString:@"Would you like to join the chat, yes or no?"])
+//    if([newMessage.object rangeOfString:@"Your current position in the queue is"].location !=NSNotFound)
+//    {
+    if(self.appDelegate.tempID.length > 0)
     {
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:@"yes"];
-        NSXMLElement *mess = [NSXMLElement elementWithName:@"message"];
-        [mess addAttributeWithName:@"to" stringValue:self.tempGroup];
-        [mess addAttributeWithName:@"type" stringValue:@"groupchat"];
-        [mess addChild:body];
-        [[self xmppStream] sendElement:mess];
+//        memberCount = [[[[newMessage.object componentsSeparatedByString:@"is"] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:1];
+//        tempCount = [[[[[newMessage.object componentsSeparatedByString:@"is"] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:1] intValue];
+        
+        memberCount = self.appDelegate.tempID;
+        tempCount = [self.appDelegate.tempID intValue];
     }
-    else if ([newMessage.object isEqualToString:@"Email Address:"])
-    {
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:@"iOS_app_user@cableex.com"];
-        NSXMLElement *mess = [NSXMLElement elementWithName:@"message"];
-        [mess addAttributeWithName:@"to" stringValue:self.tempGroup];
-        [mess addAttributeWithName:@"type" stringValue:@"groupchat"];
-        [mess addChild:body];
-        [[self xmppStream] sendElement:mess];
-    }
-    else if ([newMessage.object isEqualToString:@"Name:"])
-    {
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:self.appDelegate.chatRequestJID];
-        NSXMLElement *mess = [NSXMLElement elementWithName:@"message"];
-        [mess addAttributeWithName:@"to" stringValue:self.tempGroup];
-        [mess addAttributeWithName:@"type" stringValue:@"groupchat"];
-        [mess addChild:body];
-        [[self xmppStream] sendElement:mess];
-    }
-    else if ([newMessage.object isEqualToString:@"Question:"])
-    {
-        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:@"在线咨询"];
-        NSXMLElement *mess = [NSXMLElement elementWithName:@"message"];
-        [mess addAttributeWithName:@"to" stringValue:self.tempGroup];
-        [mess addAttributeWithName:@"type" stringValue:@"groupchat"];
-        [mess addChild:body];
-        [[self xmppStream] sendElement:mess];
-    }
-    if([newMessage.object rangeOfString:@"Your current position in the queue is"].location !=NSNotFound)
-    {
-        memberCount = [[[[newMessage.object componentsSeparatedByString:@"is"] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:1];
-        tempCount = [[[[[newMessage.object componentsSeparatedByString:@"is"] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:1] intValue];
-    }
-    if ([newMessage.object isEqualToString:@"This workgroup is currently closed"])
+    if ([newMessage.object isEqualToString:@"cancel"])
     {
         [timeCountTimer invalidate];
         [self isBetweenFromHour:9 toHour:21];

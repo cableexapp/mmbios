@@ -69,6 +69,8 @@ NSString *strUserId = @"";
 
 @synthesize pushChatView;
 @synthesize isOnLine;
+@synthesize tempID;
+@synthesize errorMessage;
 
 - (void) reachabilityChanged: (NSNotification* )note
 {
@@ -842,14 +844,14 @@ NSString *strUserId = @"";
     [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
     [iq addChild:query];
     [[self xmppStream] sendElement:iq];
-    //NSLog(@"iq = %@",iq);
+//    NSLog(@"iq = %@",iq);
     //NSLog(@"查询列表");
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-    //        NSLog(@"[IQ description] = %@\n\n",[iq description]);
+//  NSLog(@"[IQ description] = %@\n\n",[iq description]);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])
@@ -872,21 +874,33 @@ NSString *strUserId = @"";
             [self queryRoster];
         }
     }
+  
+    if ([iq.type isEqualToString:@"error"])
+    {
+        self.errorMessage = [[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue];
+        NSLog(@"123 = %@",[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue]);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue]];
+    }
     return NO;
 }
 
 //收到消息
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    //      NSLog(@"接收++++message = %@\n\n",message);
+          NSLog(@"接收++++message = %@\n\n",message);
     //消息内容
     NSString *msg = [[message elementForName:@"body"] stringValue];
     NSString *from = [[message attributeForName:@"from"] stringValue];
-    //    NSString *type= [[message attributeForName:@"type"] stringValue];
+    NSString *type= [[message attributeForName:@"type"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
     
-    //    NSLog(@"接收++++from = %@\n\n",from);
-    //    NSLog(@"接收++++to = %@\n\n",to);
+   
+    if([DCFCustomExtra validateString:[[message.children objectAtIndex:0] elementForName:@"position"].stringValue] == YES)
+    {
+        self.tempID = [[message.children objectAtIndex:0] elementForName:@"position"].stringValue;
+    }
+    NSLog(@"接收++++queue_position = %@\n\n",[[message.children objectAtIndex:0] elementForName:@"position"].stringValue);
+    
     if([from rangeOfString:@"workgroup"].location !=NSNotFound)
     {
         self.personName = to;
@@ -909,8 +923,8 @@ NSString *strUserId = @"";
     {
         return;
     }
-    //    NSString *fromSimple=[from substringToIndex:range.location];
-    //    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
+        NSString *fromSimple=[from substringToIndex:range.location];
+        NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
 }
 
 // 发送消息回调方法
@@ -928,8 +942,8 @@ NSString *strUserId = @"";
 - (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
 {
     //取得好友状态
-    //    NSString *presenceType = [NSString stringWithFormat:@"%@", [presence type]];
-    //    NSLog(@"好友状态 = %@",presenceType);
+//        NSString *presenceType = [NSString stringWithFormat:@"%@", [presence type]];
+//        NSLog(@"好友状态 = %@",presenceType);
     //请求的用户
     NSString *presenceFromUser =[NSString stringWithFormat:@"%@", [[presence from] user]];
     //    NSLog(@"请求的用户 = %@",presenceFromUser);
@@ -949,7 +963,7 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
-    //    NSLog(@"presence = %@",presence);
+//        NSLog(@"presence = %@",presence);
     //    //取得好友状态
     NSString *presenceType = [presence type]; //online/offline
     //        //当前用户

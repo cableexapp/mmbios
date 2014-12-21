@@ -812,20 +812,22 @@
     return btn;
 }
 
-
+//询价单
 - (IBAction)btn2Click:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
     MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
+    myInquiryListFirstViewController.orderBtnClick = @"询价单";
     [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
 
-
+//快速询价单
 - (IBAction)btn3Click:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
     MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
+    myInquiryListFirstViewController.orderBtnClick = @"快速询价单";
     [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -839,21 +841,25 @@
     [self setHidesBottomBarWhenPushed:NO];
 }
 
+//我的电缆采购订单_待确认
 - (IBAction)btn5Click:(id)sender
 {
     [self pushToMyCableWithTag:1];
 }
 
+//我的电缆采购订单_待付款
 - (IBAction)btn6Click:(id)sender
 {
     [self pushToMyCableWithTag:2];
 }
 
+//我的电缆采购订单_待收货
 - (IBAction)btn7Click:(id)sender
 {
     [self pushToMyCableWithTag:3];
 }
 
+//我的家装馆订单_待付款
 - (IBAction)btn8Click:(id)sender
 {
     UIButton *btn = (UIButton *) sender;
@@ -867,6 +873,7 @@
     [self pushToOrderListViewControllerWithBtn:(UIButton *)sender];
 }
 
+//我的家装馆订单_待收货
 - (IBAction)btn9Click:(id)sender
 {
     UIButton *btn = (UIButton *) sender;
@@ -880,6 +887,7 @@
     [self pushToOrderListViewControllerWithBtn:(UIButton *)sender];
 }
 
+//我的家装馆订单_待评价
 - (IBAction)btn10Click:(id)sender
 {
     UIButton *btn = (UIButton *) sender;
@@ -893,6 +901,7 @@
     [self pushToOrderListViewControllerWithBtn:(UIButton *)sender];
 }
 
+//我的家装馆订单_待发货
 - (IBAction)btn11Click:(id)sender
 {
     UIButton *btn = (UIButton *) sender;

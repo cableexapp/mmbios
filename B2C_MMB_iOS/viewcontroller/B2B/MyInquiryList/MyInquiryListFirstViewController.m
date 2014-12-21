@@ -24,6 +24,8 @@
 
 @implementation MyInquiryListFirstViewController
 
+@synthesize orderBtnClick;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -37,6 +39,16 @@
 {
     [super viewWillAppear:YES];
 //    rightButtonView.hidden = NO;
+    if ([self.orderBtnClick isEqualToString:@"询价单"])
+    {
+        self.segment.selectedSegmentIndex = 0;
+        [self.sv setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
+    else if ([self.orderBtnClick isEqualToString:@"快速询价单"])
+    {
+        self.segment.selectedSegmentIndex = 1;
+        [self.sv setContentOffset:CGPointMake(ScreenWidth, 0) animated:YES];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated

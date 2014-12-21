@@ -20,6 +20,7 @@
 #import "GoodsDetailViewController.h"
 #import "SearchViewController.h"
 #import "MyShoppingListViewController.h"
+#import "DCFStringUtil.h"
 
 #pragma mark - 少一个total字段,筛选部分
 @interface B2CShoppingListViewController ()
@@ -54,6 +55,9 @@
     NSArray *arr;
     
     AppDelegate *app;
+    
+    NSMutableArray *ScreeningCondition;
+
 }
 @end
 
@@ -138,29 +142,20 @@
     [moreCell startAnimation];
 }
 
+#pragma mark- 筛选
 - (void) searchBtnClick:(UIButton *) sender
 {
-    
-    for(int i=0;i<btnArray.count;i++)
+    if(!ScreeningCondition || ScreeningCondition.count == 0)
     {
-        UIButton *selectBtn = [btnArray objectAtIndex:i];
-        if(i == 0)
-        {
-            [selectBtn setSelected:YES];
-        }
-        else
-        {
-//            [selectBtn setSelected:NO];
-        }
+        [DCFStringUtil showNotice:@"数据正在加载中..."];
+        return;
     }
+
     
-//    UIButton *btn = (UIButton *) sender;
-//    btn.selected = !btn.selected;
-//    [btn setUserInteractionEnabled:YES];
+    
     
     _seq = @"";
     intPage = 1;
-//    [self loadRequest:_seq WithUse:_use];
 
     
    
@@ -182,6 +177,8 @@
     [UIView setAnimationDuration:0.3];
     search = [[B2CShoppingSearchViewController alloc] initWithFrame:searchView.bounds];
     search.delegate = self;
+    search.ScreeningCondition = [[NSMutableArray alloc] initWithArray:ScreeningCondition];
+    
     [self addChildViewController:search];
     [searchView addSubview:search.view];
    
@@ -291,6 +288,20 @@
     [super viewDidLoad];
     
     [self pushAndPopStyle];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"ScreeningCondition",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&spec=%@&brand=%@",token,@"",@"",@"",@""];
+    
+ 
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLScreeningConditionTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ScreeningCondition.html?"];
+
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -581,6 +592,37 @@
             countLabel.text = @"99+";
         }
     }
+    if(URLTag == URLScreeningConditionTag)
+    {
+        int result = [[dicRespon objectForKey:@"result"] intValue];
+        if(result == 0)
+        {
+            ScreeningCondition = [[NSMutableArray alloc] init];
+        }
+        else
+        {
+            NSMutableArray *brandsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"brands"]]];
+            NSMutableArray *modelsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"models"]]];
+            NSMutableArray *specsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"specs"]]];
+            NSMutableArray *usesArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"uses"]]];
+            
+            ScreeningCondition = [[NSMutableArray alloc] initWithObjects:brandsArray,modelsArray,specsArray,usesArray, nil];
+        }
+    }
+}
+
+#pragma mark - 去除重复元素
+- (NSMutableArray *) dealArray:(NSMutableArray *) dealArray
+{
+    NSSet *set = [NSSet setWithArray:dealArray];
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    for(int i=0;i<[[set allObjects] count];i++)
+    {
+        [array addObject:[[set allObjects] objectAtIndex:i]];
+    }
+    return array;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView

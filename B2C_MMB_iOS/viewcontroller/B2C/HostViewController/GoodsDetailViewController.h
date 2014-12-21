@@ -11,7 +11,7 @@
 #import "MBProgressHUD.h"
 #import "EScrollerView.h"
 
-@interface GoodsDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ConnectionDelegate,EScrollerViewDelegate>
+@interface GoodsDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ConnectionDelegate,EScrollerViewDelegate,UIWebViewDelegate>
 {
     DCFConnectionUtil *conn;
     MBProgressHUD *HUD;

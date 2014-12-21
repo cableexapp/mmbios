@@ -68,7 +68,6 @@
     
     if(URLTag == URLInquiryDetailTag)
     {
-        
         if([[dicRespon allKeys] count] == 0 || [[dicRespon objectForKey:@"ctems"] count] == 0 || [[dicRespon objectForKey:@"ctems"] isKindOfClass:[NSNull class]])
         {
             [moreCell noDataAnimation];
@@ -357,7 +356,8 @@
             [lineView setBackgroundColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
             [cell.contentView addSubview:lineView];
             
-            NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",[dic objectForKey:@"num"],[dic objectForKey:@"unit"]];  //数量
+            NSString *unit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
+            NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",[dic objectForKey:@"num"],unit];  //数量
             NSMutableAttributedString *myNumber = [[NSMutableAttributedString alloc] initWithString:theNumber];
             [myNumber addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myNumber addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theNumber.length-3)];
@@ -394,7 +394,7 @@
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, thecolor.length-3)];
             
-            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@/%@",[dic objectForKey:@"price"],[dic objectForKey:@"unit"]]; //价格
+            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@/%@",[dic objectForKey:@"price"],unit]; //价格
             NSMutableAttributedString *myPrice = [[NSMutableAttributedString alloc] initWithString:thePrice];
             [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
             [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, thePrice.length-5)];

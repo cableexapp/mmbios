@@ -19,7 +19,7 @@
 
 - (void) keyBoardHide;
 
-- (NSArray *) validate;
+//- (NSArray *) validate;
 
 - (void) loadRequest;
 @end

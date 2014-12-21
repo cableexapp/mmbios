@@ -131,7 +131,7 @@
     self.navigationItem.titleView = top;
     
     self.sureBtn.layer.borderWidth = 1.0f;
-    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
+//    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
     self.sureBtn.layer.cornerRadius = 5.0f;
     [self.sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
     

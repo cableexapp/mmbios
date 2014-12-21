@@ -206,7 +206,9 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"ConfirmOrder",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@receiver=%@&tel=%@&invoiceid=%@",token,self.myOrderid,usefp,receiveprovince,receivecity,receivedistrict,receiveaddress,receiver,receiveTel,invoiceId];
+//    loginid,token,ordernum(订单编号),usefp(是否使用发票,1-使用，2-不使用),receiveprovince(收货省),receivecity(收货市),receivedistrict(收货区),receiveaddress(详细地址),receiver(收货人),tel(电话),invoiceid(发票id),invoiceprovince(发票邮寄省）, invoicecity（发票邮寄市）, invoicedistrict（发票邮寄区）, invoiceaddress（发票邮寄具体地址）, invoicetel（发票收获人电话）, invoicereceiver（发票收获人）
+    
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,receiveprovince,receivecity,receivedistrict,receiveaddress,receiver,receiveTel,invoiceId,@"invoiceprovince",@"invoicecity",@"invoicedistrict",@"invoiceaddress",@"invoicetel",@"invoicereceiver"];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmOrderTag delegate:self];
     

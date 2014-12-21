@@ -44,6 +44,7 @@
             CGFloat fontSize = 18;
             while (contentSize.height > sender.frame.size.height)
             {
+                NSLog(@"----%f   %f-----",contentSize.height,sender.frame.size.height);
                 [sender setFont:[UIFont fontWithName:@"Helvetica Neue" size:fontSize--]];
                 contentSize = sender.contentSize;
             }
@@ -53,6 +54,21 @@
         [sender setContentInset:offset];
     }
 }
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    UITextView *tv = object;
+    //Center vertical alignment
+    //CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
+    //topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    //tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+    
+    //Bottom vertical alignment
+    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height);
+    topCorrect = (topCorrect <0.0 ? 0.0 : topCorrect);
+    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -65,16 +81,18 @@
         UILabel *label = [[UILabel alloc] init];
         [labelArray addObject:label];
         
-        UITextView *tv = [[UITextView alloc] init];
-        [tv setBackgroundColor:[UIColor whiteColor]];
-        [tv setTag:i];
-        [tv setReturnKeyType:UIReturnKeyDone];
-        //        [tv setScrollEnabled:NO];
-        [tv setShowsVerticalScrollIndicator:NO];
-        [tv setFont:[UIFont systemFontOfSize:14]];
-        [tv setDelegate:self];
+        headTV = [[UITextView alloc] init];
+        [headTV setBackgroundColor:[UIColor whiteColor]];
+        [headTV setTag:i];
+        [headTV setReturnKeyType:UIReturnKeyDone];
+//        [headTV setScrollEnabled:NO];
+        [headTV setShowsVerticalScrollIndicator:NO];
+        [headTV setFont:[UIFont systemFontOfSize:14]];
+        [headTV setDelegate:self];
+        [headTV addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+
         //        [self contentSizeToFit:tv];
-        [textViewArray addObject:tv];
+        [textViewArray addObject:headTV];
         
         NSString *str = nil;
         
@@ -83,7 +101,7 @@
         {
             case 0:
                 str = @"发票抬头:";
-                headTV = tv;
+//                headTV = tv;
                 break;
                 
                 
@@ -96,7 +114,7 @@
         [label setFont:[UIFont boldSystemFontOfSize:14]];
         [label setText:str];
         
-        [tv setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 5, 5, ScreenWidth-25-label.frame.size.width, 50)];
+        [headTV setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 5, 5, ScreenWidth-25-label.frame.size.width, 50)];
         
     }
     
@@ -108,8 +126,6 @@
     
     if([text isEqualToString:@"\n"])
     {
-        [self contentSizeToFit:textView];
-
         [textView resignFirstResponder];
     }
     
@@ -118,13 +134,16 @@
 
 - (void) textViewDidEndEditing:(UITextView *)textView
 {
-    
+//    [self contentSizeToFit:textView];
+
     if(textView == headTV)
     {
         if(headTV.text.length > 50)
         {
             [DCFStringUtil showNotice:@"发票抬头必须在50字以内"];
+            return;
         }
+
     }
 }
 

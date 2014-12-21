@@ -19,7 +19,6 @@
 {
     DCFConnectionUtil *conn;
 }
-
 @property (assign,nonatomic) id<PopDelegate> delegate;
 
 - (void) keyBoardHide;

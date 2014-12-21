@@ -564,18 +564,18 @@
 
 -(void)messageMusic
 {
-    //消息音提示
-    NSString *strPath = [[NSBundle mainBundle]pathForResource:@"sms01" ofType:@"mp3"];
-    NSData * voiceData = [[NSData alloc]initWithContentsOfFile:strPath];
-    messageSound = [[AVAudioPlayer alloc]initWithData:voiceData error:nil];
-    if ([messageSound isPlaying])
-    {
-        [messageSound stop];
-    }
-    else
-    {
-        [messageSound play];
-    }
+//    //消息音提示
+//    NSString *strPath = [[NSBundle mainBundle]pathForResource:@"sms01" ofType:@"mp3"];
+//    NSData * voiceData = [[NSData alloc]initWithContentsOfFile:strPath];
+//    messageSound = [[AVAudioPlayer alloc]initWithData:voiceData error:nil];
+//    if ([messageSound isPlaying])
+//    {
+//        [messageSound stop];
+//    }
+//    else
+//    {
+//        [messageSound play];
+//    }
 }
 
 //发送消息

@@ -40,6 +40,9 @@
     NSString *chatRequestJID;
     NSString *roomJID;
     
+    NSString *tempID;
+    NSString *errorMessage;
+    
     BOOL isXmppConnected;
     BOOL isRegister;
     
@@ -87,6 +90,8 @@
 @property (nonatomic,strong) NSString *personName;
 @property (nonatomic,strong) NSString *uesrID;
 @property (nonatomic,strong) NSMutableArray *roster;
+@property (nonatomic,strong) NSString *tempID;
+@property (nonatomic,strong) NSString *errorMessage;
 
 
 #pragma mark - XMPP方法

@@ -32,20 +32,22 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"询价单详情"];
     self.navigationItem.titleView = top;
     [self pushAndPopStyle];
     MyInquiryDetailTableViewController *tv = [self.storyboard instantiateViewControllerWithIdentifier:@"myInquiryDetailTableViewController"];
-    tv.myInquiryid = self.myInquiryid;
+    tv.myInquiryid = [NSString stringWithFormat:@"%@",self.myInquiryid];
     tv.addressDic = [[NSDictionary alloc] initWithDictionary:self.myDic];
     tv.view.frame = self.tableBackView.bounds;
     [self addChildViewController:tv];
+    self.tableBackView.backgroundColor = [UIColor whiteColor];
     [self.tableBackView addSubview:tv.view];
     
     CGFloat height = (self.topView.frame.size.height-10)/2;
     CGSize size_order;
-    if(self.myOrderNum.length == 0 || [self.myOrderNum isKindOfClass:[NSNull class]])
+    NSString *tempMyOrderNum = [NSString stringWithFormat:@"%@",self.myOrderNum];
+    if(tempMyOrderNum.length == 0 || [tempMyOrderNum isKindOfClass:[NSNull class]])
     {
         size_order = CGSizeMake(20, height);
     }
@@ -59,7 +61,8 @@
     [self.topView addSubview:orderLabel];
     
     CGSize size_time;
-    if([DCFCustomExtra validateString:self.myTime] == NO)
+    NSString *tempMyTime = [NSString stringWithFormat:@"%@",self.myTime];
+    if([DCFCustomExtra validateString:tempMyTime] == NO)
     {
         size_time = CGSizeMake(20, height);
     }
@@ -97,18 +100,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

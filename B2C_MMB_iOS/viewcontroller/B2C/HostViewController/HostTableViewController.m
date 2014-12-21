@@ -1105,20 +1105,22 @@ BOOL isPopShow = NO;
                     pic.layer.borderColor = [[UIColor lightGrayColor] CGColor];
                     [cabelShowView addSubview:pic];
                     
-                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width, 40)];
+                    UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x+5, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width-10, 40)];
                     [contentLabel setBackgroundColor:[UIColor clearColor]];
                     [contentLabel setNumberOfLines:0];
-                    [contentLabel setText:[NSString stringWithFormat:@" %@",content]];
+//                    contentLabel.textAlignment = 1;
+                    [contentLabel setText:[NSString stringWithFormat:@"%@",content]];
                     [contentLabel setFont:[UIFont systemFontOfSize:11]];
                     [cabelShowView addSubview:contentLabel];
                     
                     UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height + 5, pic.frame.size.width, 20)];
-                    NSString *money = [NSString stringWithFormat:@" %@ %@",@"¥",price];
+                    NSString *money = [NSString stringWithFormat:@" %@%@",@"¥",price];
                     [moneyLabel setText:money];
+                    moneyLabel.font = [UIFont systemFontOfSize:14];
                     [moneyLabel setTextColor:[UIColor redColor]];
                     [cabelShowView addSubview:moneyLabel];
                     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-                    cell.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:237.0/255.0 blue:237.0/255.0 alpha:1.0];
+                    cell.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
                 }
             }
         }

@@ -150,15 +150,8 @@
         [DCFStringUtil showNotice:@"数据正在加载中..."];
         return;
     }
-
-    
-    
-    
     _seq = @"";
     intPage = 1;
-
-    
-   
 
     searchView = [[UIView alloc] init];
     [searchView setFrame:CGRectMake(70, 50, ScreenWidth-40, ScreenHeight)];
@@ -329,7 +322,7 @@
     [leftView setImage:[UIImage imageNamed:@"magnifying glass.png"]];
     [searchTextField setLeftView:leftView];
     [searchTextField setFont:[UIFont systemFontOfSize:12]];
-    searchTextField.layer.borderWidth = 0.3;
+//    searchTextField.layer.borderWidth = 0.3;
     searchTextField.layer.cornerRadius = 5;
     [searchTextField setReturnKeyType:UIReturnKeyDone];
     [searchTextField setLeftViewMode:UITextFieldViewModeAlways];
@@ -381,21 +374,21 @@
         {
             //蓝色下划线
             lineView_2 = [[UIView alloc] initWithFrame:CGRectMake(8, selctBtn.frame.origin.y+40, 100, 3)];
-            [lineView_2 setBackgroundColor:[UIColor colorWithRed:30.0/255.0 green:91.0/255.0 blue:253.0/255.0 alpha:1.0]];
+            [lineView_2 setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
             [selectBtnView addSubview:lineView_2];
             [lineView_2 setTag:0];
             lineView_2.hidden = NO;
             [buttonLineViewArray addObject:lineView_2];
 
             lineView_3 = [[UIView alloc] initWithFrame:CGRectMake(110, selctBtn.frame.origin.y+40, 100, 3)];
-            [lineView_3 setBackgroundColor:[UIColor colorWithRed:30.0/255.0 green:91.0/255.0 blue:253.0/255.0 alpha:1.0]];
+            [lineView_3 setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
             [selectBtnView addSubview:lineView_3];
             [lineView_3 setTag:1];
             lineView_3.hidden = YES;
             [buttonLineViewArray addObject:lineView_3];
 
             lineView_4 = [[UIView alloc] initWithFrame:CGRectMake(215, selctBtn.frame.origin.y+40, 100, 3)];
-            [lineView_4 setBackgroundColor:[UIColor colorWithRed:30.0/255.0 green:91.0/255.0 blue:253.0/255.0 alpha:1.0]];
+            [lineView_4 setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
             [selectBtnView addSubview:lineView_4];
             [lineView_4 setTag:2];
             lineView_4.hidden = YES;

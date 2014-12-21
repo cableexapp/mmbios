@@ -1189,7 +1189,7 @@
     NSString *discuss = detailData.score;
     if(discuss.length != 0)
     {
-        UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
+        UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7.5, 30, 30)];
         [firstIv setImage:[UIImage imageNamed:@"shopPic"]];
         
         CGSize size;
@@ -1199,11 +1199,13 @@
         }
         else
         {
-            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,30)];
+            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,40)];
         }
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(45,5, size.width, 30)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(45,0,ScreenWidth-150, 45)];
         [label setFont:[UIFont systemFontOfSize:15]];
         [label setText:[detailData shopName]];
+        label.numberOfLines = 2;
+//        label.backgroundColor = [UIColor redColor];
         [label setTextAlignment:NSTextAlignmentLeft];
         [label setTextColor:[UIColor blackColor]];
         

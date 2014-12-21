@@ -257,6 +257,7 @@
     [self.appDelegate reConnect];
      [self dismissViewControllerAnimated:NO completion:nil];
     [self pageFromWhere];
+    self.appDelegate.isConnect = @"断开";
 }
 
 -(void)goBackActionToHome
@@ -264,6 +265,15 @@
     [self dismissViewControllerAnimated:NO completion:nil];
     [self pageFromWhere];
     messagePush = 1;
+    if ([self.appDelegate.isOnLine isEqualToString:@"available"])
+    {
+        self.appDelegate.isConnect = @"连接";
+    }
+    else
+    {
+         self.appDelegate.isConnect = @"断开";
+    }
+    
 }
 
 -(void)pageFromWhere
@@ -382,6 +392,9 @@
     }
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     messagePush = 0;
+    
+    NSLog(@"咨询入口 = %@",self.fromStringFlag);
+    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
 
 
@@ -624,21 +637,28 @@
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品快照]：%@",message];
             }
-            else if ([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+            else if([self.fromStringFlag isEqualToString:@"工具栏客服"])
             {
-                if (MessageFlag.length == 0)
-                {
-                    stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：\n%@\n%@",[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:0],message];
-                   MessageFlag = stringLabel;
-                }
-                else
-                {
-                    stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：%@",message];
-                }
+                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 首页客服]：%@",message];
             }
             else
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 首页客服]：%@",message];
+            }
+            if ([self.fromStringFlag rangeOfString:@"@"].location != NSNotFound)
+            {
+               if ([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+                {
+                    if (MessageFlag.length == 0)
+                    {
+                        stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：\n%@\n%@",[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:0],message];
+                        MessageFlag = stringLabel;
+                    }
+                    else
+                    {
+                        stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：%@",message];
+                    }
+                }
             }
             [body setStringValue:stringLabel];
             NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
@@ -714,13 +734,13 @@
     [xmppRoom configureRoomUsingOptions:nil];
     [xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [xmppRoom joinRoomUsingNickname:self.appDelegate.chatRequestJID history:nil];
+//    [xmppRoom joinRoomUsingNickname:@"测试" history:nil];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
 //    NSLog(@"didFetchConfigurationForm");
 }
-
 
 -(void)xmppMUC:(XMPPMUC *)sender roomJID:(XMPPJID *)roomJID didReceiveInvitation:(XMPPMessage *)message
 {
@@ -784,6 +804,12 @@
 {
     NSLog(@"有人在群里发言 = %@\n\n",message);
     tempJID =[NSString stringWithFormat:@"%@",occupantJID];
+    
+//    NSLog(@"tempJID = %@\n\n",tempJID);
+//    
+//    NSLog(@"self.appDelegate.chatRequestJID = %@\n\n",self.appDelegate.chatRequestJID);
+//    
+//    NSLog(@"111 = %@",[[tempJID componentsSeparatedByString:@"/"] objectAtIndex:1]);
    
     if (![[[tempJID componentsSeparatedByString:@"/"] objectAtIndex:1] isEqualToString:self.appDelegate.chatRequestJID])
     {

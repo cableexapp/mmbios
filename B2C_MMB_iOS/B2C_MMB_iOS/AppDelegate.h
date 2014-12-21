@@ -42,6 +42,7 @@
     
     NSString *tempID;
     NSString *errorMessage;
+    NSString *isConnect;
     
     BOOL isXmppConnected;
     BOOL isRegister;
@@ -92,6 +93,7 @@
 @property (nonatomic,strong) NSMutableArray *roster;
 @property (nonatomic,strong) NSString *tempID;
 @property (nonatomic,strong) NSString *errorMessage;
+@property (nonatomic,strong) NSString *isConnect;
 
 
 #pragma mark - XMPP方法

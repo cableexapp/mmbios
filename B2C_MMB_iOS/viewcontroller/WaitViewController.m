@@ -276,9 +276,20 @@ double secondsCountDown =0;
     if (self.appDelegate.uesrID != nil)
     {
         [timeCountTimer invalidate];
+//        [self setHidesBottomBarWhenPushed:YES];
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = self.tempFrom;
         [self presentViewController:chatVC animated:YES completion:nil];
+        
+//        CATransition *transition = [CATransition animation];
+//        transition.duration = 0.5f;
+//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//        transition.type =  kCATransitionMoveIn;
+//        transition.subtype =  kCATransitionFromTop;
+//        transition.delegate = self;
+//        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+//        [self.navigationController pushViewController:chatVC animated:NO];
+//        [self setHidesBottomBarWhenPushed:NO];
     }
     else if(tempCount >= 1)
     {

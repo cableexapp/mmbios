@@ -26,4 +26,8 @@
 
 @property (nonatomic,strong) NSString *tempFrom;
 
+@property (nonatomic, retain) NSArray *changeArray;
+
+@property (nonatomic, retain) NSMutableString *changeString;
+
 @end

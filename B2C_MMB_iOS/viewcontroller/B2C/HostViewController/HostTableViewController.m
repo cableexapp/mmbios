@@ -729,16 +729,14 @@ BOOL isPopShow = NO;
         {
             ChatViewController *chatVC = [[ChatViewController alloc] init];
             chatVC.fromStringFlag = @"首页在线客服";
-//            CATransition *transition = [CATransition animation];
-//            transition.duration = 0.5f;
-//            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//            transition.type =  kCATransitionMoveIn;
-//            transition.subtype =  kCATransitionFromTop;
-//            transition.delegate = self;
-//            [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//            [self.navigationController pushViewController:chatVC animated:NO];
-//            [self setHidesBottomBarWhenPushed:NO];
-            [self presentViewController:chatVC animated:YES completion:nil];
+            CATransition *transition = [CATransition animation];
+            transition.duration = 0.4f;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+            transition.type =  kCATransitionMoveIn;
+            transition.subtype =  kCATransitionFromTop;
+            transition.delegate = self;
+            [self.navigationController.view.layer addAnimation:transition forKey:nil];
+            [self.navigationController pushViewController:chatVC animated:NO];
         }
         else
         {

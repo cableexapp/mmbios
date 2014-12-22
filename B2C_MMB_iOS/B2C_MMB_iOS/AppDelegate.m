@@ -870,10 +870,10 @@ NSString *strUserId = @"";
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"memberGroupName" object:self.roster];
             }
         }
-        if (self.roster.count == 0)
-        {
-            [self queryRoster];
-        }
+//        if (self.roster.count == 0)
+//        {
+//            [self queryRoster];
+//        }
     }
   
     if ([iq.type isEqualToString:@"error"])

@@ -153,9 +153,6 @@ double secondsCountDown =0;
     //接收服务端自动回复
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (autoMessageToServer:) name:@"joinRoomMessage" object:nil];
     
-    //关闭当前模态视图
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (backToFront:) name:@"disMissSelfPage" object:nil];
-    
     //重置等待排队环形计时初值
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (resetSecondsCountDown:) name:@"resetCount" object:nil];
     
@@ -167,11 +164,7 @@ double secondsCountDown =0;
     
     //接收网络连接消息通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (NetisConnection:) name:@"NetisConnect" object:nil];
-    
-    //接收返回在线咨询入口页
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToAskPrice:) name:@"goToAskPricePage" object:nil];
-    
-   
+
 }
 
 -(void)pageFromWhere_wait
@@ -203,6 +196,7 @@ double secondsCountDown =0;
     {
         [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
     }
+
     else
     {
         [self.tabBarController setSelectedIndex:0];
@@ -226,7 +220,6 @@ double secondsCountDown =0;
             }
         }
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
 }
 
 -(void)goBack
@@ -257,13 +250,6 @@ double secondsCountDown =0;
     secondsCountDown = 0;
 }
 
--(void)backToFront:(NSNotification *)newMessage
-{
-    [self.navigationController popToRootViewControllerAnimated:NO];
-    [super.navigationController.tabBarController.tabBar setHidden:NO];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
-}
-
 -(void)timeFireMethod
 {
     secondsCountDown += 5;
@@ -276,20 +262,19 @@ double secondsCountDown =0;
     if (self.appDelegate.uesrID != nil)
     {
         [timeCountTimer invalidate];
-//        [self setHidesBottomBarWhenPushed:YES];
+
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = self.tempFrom;
-        [self presentViewController:chatVC animated:YES completion:nil];
-        
-//        CATransition *transition = [CATransition animation];
-//        transition.duration = 0.5f;
-//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//        transition.type =  kCATransitionMoveIn;
-//        transition.subtype =  kCATransitionFromTop;
-//        transition.delegate = self;
-//        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//        [self.navigationController pushViewController:chatVC animated:NO];
-//        [self setHidesBottomBarWhenPushed:NO];
+//
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.4f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:chatVC animated:NO];
     }
     else if(tempCount >= 1)
     {
@@ -304,6 +289,7 @@ double secondsCountDown =0;
 -(void)viewWillAppear:(BOOL)animated
 {
     [self checkNet];
+
     //发起请求加入咨询队列
     [self sendJoinRequest];
 }
@@ -350,12 +336,30 @@ double secondsCountDown =0;
     [timeCountTimer invalidate];
 }
 
+//生成随机聊天ID
+-(void)chatID
+{
+    self.changeArray = [[NSArray alloc] initWithObjects:@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"a",@"b",@"c",@"d",@"e",@"f",@"g",@"h",@"i",@"j",@"k",@"l",@"m",@"n",@"o",@"p",@"q",@"r",@"s",@"t",@"u",@"v",@"w",@"x",@"y",@"z",nil];
+    
+    NSMutableString *getStr = [[NSMutableString alloc] initWithCapacity:5];
+    
+    self.changeString = [[NSMutableString alloc] initWithCapacity:6];
+    for(NSInteger i = 0; i < 5; i++)
+    {
+        NSInteger index = arc4random() % ([self.changeArray count] - 1);
+        getStr = [self.changeArray objectAtIndex:index];
+        
+        self.changeString = (NSMutableString *)[self.changeString stringByAppendingString:getStr];
+    }
+}
+    
+
 -(void)sendJoinRequest
 {
-    NSLog(@"请求self.appDelegate.chatRequestJID = %@",self.appDelegate.chatRequestJID);
+    [self chatID];
 
     NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
-//    [iq addAttributeWithName:@"id" stringValue:@"mE4pa-10"];
+    [iq addAttributeWithName:@"id" stringValue:[NSString stringWithFormat:@"%@-10",self.changeString]];
     [iq addAttributeWithName:@"to"stringValue:self.tempGroup];
     [iq addAttributeWithName:@"type"stringValue:@"set"];
 
@@ -404,13 +408,8 @@ double secondsCountDown =0;
 //请求连接客服
 -(void)autoMessageToServer:(NSNotification *)newMessage
 {
-//    if([newMessage.object rangeOfString:@"Your current position in the queue is"].location !=NSNotFound)
-//    {
     if(self.appDelegate.tempID.length > 0)
     {
-//        memberCount = [[[[newMessage.object componentsSeparatedByString:@"is"] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:1];
-//        tempCount = [[[[[newMessage.object componentsSeparatedByString:@"is"] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:1] intValue];
-        
         memberCount = self.appDelegate.tempID;
         tempCount = [self.appDelegate.tempID intValue];
     }
@@ -482,7 +481,7 @@ double secondsCountDown =0;
 {
     if (buttonIndex == 1)
     {
-        [self setHidesBottomBarWhenPushed:YES];
+        
         SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [sb instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
         CATransition *transition = [CATransition animation];
         transition.duration = 0.5f;
@@ -491,17 +490,14 @@ double secondsCountDown =0;
         transition.subtype =  kCATransitionFromTop;
         transition.delegate = self;
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:speedAskPriceFirstViewController animated:NO];
+        [self setHidesBottomBarWhenPushed:NO];
     }
     else if (buttonIndex == 0)
     {
          [self pageFromWhere_wait];
     }
-}
-
--(void)goToAskPrice:(NSNotification *)newMessage
-{
-    [self pageFromWhere_wait];
 }
 
 - (AppDelegate *)appDelegate

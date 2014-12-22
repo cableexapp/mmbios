@@ -34,6 +34,8 @@
 
 @implementation FifthTableViewController
 
+@synthesize xmppRoom;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -373,6 +375,13 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [DCFStringUtil showNotice:@"退出成功"];
+
+            //切换登录账号，结束之前对话
+            [self.appDelegate goOffline];
+            [self.appDelegate disconnect];
+            [self.appDelegate reConnect];
+            self.appDelegate.isConnect = @"断开";
+
         }
     }
     if (URLTag == URLInquiryCartCountTag)
@@ -394,6 +403,10 @@
     
 }
 
+- (AppDelegate *)appDelegate
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

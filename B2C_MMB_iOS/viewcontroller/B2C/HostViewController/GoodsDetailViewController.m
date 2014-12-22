@@ -23,6 +23,7 @@
 #import "UpOrderViewController.h"
 #import "B2CUpOrderData.h"
 #import "ChatListViewController.h"
+#import "ChatViewController.h"
 #define GoodsDetail_URL @"http://mmb.fgame.com:8083/"
 
 @interface GoodsDetailViewController ()
@@ -152,7 +153,7 @@
         chooseColorAndCountView = nil;
     }
     backView.hidden = YES;
-    //    [self setHidesBottomBarWhenPushed:NO];
+//  [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -1307,12 +1308,43 @@
     
 }
 
+- (AppDelegate *)appDelegate
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
 -(void)IMChatClick
 {
-    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@@%@",GoodsDetail_URL,producturl,@"家装线商品详情"];
-    chatVC.fromString = urlString;
-    [self.navigationController pushViewController:chatVC animated:YES];
+    
+#pragma mark - 在线客服
+    if ([self.appDelegate.isConnect isEqualToString:@"连接"])
+    {
+        ChatViewController *chatVC = [[ChatViewController alloc] init];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@@%@",GoodsDetail_URL,producturl,@"家装线商品详情"];
+        chatVC.fromStringFlag = urlString;
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.4f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatVC animated:NO];
+    }
+    else
+    {
+        ChatListViewController *chatListVC = [[ChatListViewController alloc] init];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@@%@",GoodsDetail_URL,producturl,@"家装线商品详情"];
+        chatListVC.fromString = urlString;
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.4f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatListVC animated:NO];
+    }
 }
 
 - (void) cellBtnClick:(UIButton *) sender

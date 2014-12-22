@@ -42,6 +42,7 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@",token,self.myOrderid];
+    NSLog(@"%@",pushString);
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLOrderDetailTag delegate:self];
     

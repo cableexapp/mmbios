@@ -147,7 +147,6 @@
         {
             if(result == 1)
             {
-                
                 if(_intPage == 1)
                 {
                     [dataArray removeAllObjects];

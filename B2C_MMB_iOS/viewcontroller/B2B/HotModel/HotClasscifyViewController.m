@@ -16,6 +16,7 @@
 #import "B2BAskPriceCarViewController.h"
 #import "ChatListViewController.h"
 #import "SpeedAskPriceFirstViewController.h"
+#import "ChatViewController.h"
 
 #define pi 3.14159265359
 #define   DEGREES_TO_RADIANS(degrees)  ((pi * degrees)/ 180)
@@ -593,19 +594,40 @@
     }
 }
 
+- (AppDelegate *)appDelegate
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
 - (IBAction)imbtnClick:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
-    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
-    chatVC.fromString = @"热门型号在线咨询";
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.5f;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type =  kCATransitionMoveIn;
-    transition.subtype =  kCATransitionFromTop;
-    transition.delegate = self;
-    [self.navigationController.view.layer addAnimation:transition forKey:nil];
-    [self.navigationController pushViewController:chatVC animated:NO];
+    if ([self.appDelegate.isConnect isEqualToString:@"连接"])
+    {
+        ChatViewController *chatVC = [[ChatViewController alloc] init];
+        chatVC.fromStringFlag = @"热门型号在线咨询";
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.4f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatVC animated:NO];
+    }
+    else
+    {
+        ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+        chatVC.fromString = @"热门型号在线咨询";
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.5f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatVC animated:NO];
+    }
 }
 
 - (IBAction)moreModelBtnClick:(id)sender

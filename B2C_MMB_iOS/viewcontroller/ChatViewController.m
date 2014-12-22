@@ -40,6 +40,9 @@
     int messagePush;
     NSString *isOn;
     NSString *MessageFlag;
+    
+    UIButton *btn;
+    UIButton *rightBtn;
 }
 
 @end
@@ -54,6 +57,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+//         self.hidesBottomBarWhenPushed = YES;
     }
     return self;
 }
@@ -79,21 +83,20 @@
 //    [self.view insertSubview:naviTitle atIndex:2];
     self.navigationItem.titleView = naviTitle;
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(10, 31.5, 15, 22);
-    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn.frame = CGRectMake(10, 31.5, 15, 22);
+//    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
 //    [self.view addSubview:btn];
-    
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.navigationItem.leftBarButtonItem = leftItem;
+
+
     
 //    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-//    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
-    self.tableView.backgroundColor = [UIColor lightGrayColor];
+    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+//    self.tableView.backgroundColor = [UIColor lightGrayColor];
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
@@ -108,39 +111,39 @@
     }
     [_refreshHeaderView refreshLastUpdatedDate];
     
-    //聊天输入工具条
-    toolBar = [[UIView alloc] init];
-    toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
-    toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
-    [self.view addSubview:toolBar];
-    
-    //键盘按钮
-    keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    keyboardButton.frame = CGRectMake(6, 4.5, 35, 35);
-    [keyboardButton addTarget:self action:@selector(faceBoardClick) forControlEvents:UIControlEventTouchUpInside];
-    [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
-    [toolBar addSubview:keyboardButton];
-    
-    //发送按钮
-    sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    sendButton.frame = CGRectMake(260, 6, 54, 32);
-    [sendButton addTarget:self action:@selector(sendNewChatMessage) forControlEvents:UIControlEventTouchUpInside];
-    sendButton.layer.cornerRadius = 3;
-    sendButton.layer.backgroundColor = [[UIColor colorWithRed:10.0/255.0 green:88.0/255.0 blue:173.0/255.0 alpha:1] CGColor];
-    [sendButton setTitle:@"发送" forState:UIControlStateNormal];
-    [sendButton setTintColor:[UIColor whiteColor]];
-    [toolBar addSubview:sendButton];
-    
-    //消息输入框
-    messageField = [[UITextView alloc] init];
-    messageField.frame = CGRectMake(46, 6, 206, 32);
-    messageField.delegate = self;
-    messageField.layer.backgroundColor = [[DCFColorUtil colorFromHexRGB:@"#ffffff"] CGColor];
-    messageField.layer.borderWidth = 1;
-    messageField.layer.borderColor = [[DCFColorUtil colorFromHexRGB:@"#dddddd"] CGColor];
-    [messageField setReturnKeyType:UIReturnKeyNext];
-    messageField.layer.cornerRadius =3;
-    [toolBar addSubview:messageField];
+//    //聊天输入工具条
+//    toolBar = [[UIView alloc] init];
+//    toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
+//    toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
+//    [self.view addSubview:toolBar];
+//    
+//    //键盘按钮
+//    keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    keyboardButton.frame = CGRectMake(6, 4.5, 35, 35);
+//    [keyboardButton addTarget:self action:@selector(faceBoardClick) forControlEvents:UIControlEventTouchUpInside];
+//    [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
+//    [toolBar addSubview:keyboardButton];
+//    
+//    //发送按钮
+//    sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    sendButton.frame = CGRectMake(260, 6, 54, 32);
+//    [sendButton addTarget:self action:@selector(sendNewChatMessage) forControlEvents:UIControlEventTouchUpInside];
+//    sendButton.layer.cornerRadius = 3;
+//    sendButton.layer.backgroundColor = [[UIColor colorWithRed:10.0/255.0 green:88.0/255.0 blue:173.0/255.0 alpha:1] CGColor];
+//    [sendButton setTitle:@"发送" forState:UIControlStateNormal];
+//    [sendButton setTintColor:[UIColor whiteColor]];
+//    [toolBar addSubview:sendButton];
+//    
+//    //消息输入框
+//    messageField = [[UITextView alloc] init];
+//    messageField.frame = CGRectMake(46, 6, 206, 32);
+//    messageField.delegate = self;
+//    messageField.layer.backgroundColor = [[DCFColorUtil colorFromHexRGB:@"#ffffff"] CGColor];
+//    messageField.layer.borderWidth = 1;
+//    messageField.layer.borderColor = [[DCFColorUtil colorFromHexRGB:@"#dddddd"] CGColor];
+//    [messageField setReturnKeyType:UIReturnKeyNext];
+//    messageField.layer.cornerRadius =3;
+//    [toolBar addSubview:messageField];
     
     //在线状态
     image = [UIImage imageNamed:@"online.png"];
@@ -148,39 +151,38 @@
 //    imageView.frame = CGRectMake(115, 38, 10, 10);
     imageView.frame = CGRectMake(105, 17, 10, 10);
 //    [self.view insertSubview:imageView atIndex:2];
-    [self.navigationController.navigationBar addSubview:imageView];
+//    [self.navigationController.navigationBar addSubview:imageView];
     
     //自定义网络状态通知视图
     noNet = [[UILabel alloc] init];
-    noNet.frame = CGRectMake(0, 64, self.view.frame.size.width,32);
+    noNet.frame = CGRectMake(0, 0, self.view.frame.size.width,32);
     noNet.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#fff3bb"];
     noNet.hidden = YES;
     [self.view insertSubview:noNet aboveSubview:self.tableView];
     
     noNetView = [[UIImageView alloc] init];
-    noNetView.frame = CGRectMake(20, 70, 20, 20);
+    noNetView.frame = CGRectMake(20, 6, 20, 20);
     noNetView.image = [UIImage imageNamed:@"ico_error"];
     [self.view insertSubview:noNetView aboveSubview:noNet];
     
     noNetMessage = [[UILabel alloc] init];
-    noNetMessage.frame = CGRectMake(55, 64, self.view.frame.size.width-55, 32);
+    noNetMessage.frame = CGRectMake(55, 0, self.view.frame.size.width-55, 32);
     noNetMessage.textColor = [DCFColorUtil colorFromHexRGB:@"#333333"];
     noNetMessage.font = [UIFont systemFontOfSize:15];
     noNetMessage.textAlignment = NSTextAlignmentLeft;
     noNetMessage.text = @"当前网络不可用，请检查网络设置!";
     [self.view insertSubview:noNetMessage aboveSubview:noNet];
     
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [rightBtn setBackgroundColor:[UIColor clearColor]];
-    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightBtn setTitle:@"结束会话" forState:UIControlStateNormal];
-    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-    [rightBtn setFrame:CGRectMake(self.view.frame.size.width-65, 20, 60, 44)];
-    [rightBtn addTarget:self action:@selector(endChatConfrence) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view insertSubview:rightBtn aboveSubview:nameLabel];
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.leftBarButtonItem = rightItem;
+//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [rightBtn setBackgroundColor:[UIColor clearColor]];
+//    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [rightBtn setTitle:@"结束会话" forState:UIControlStateNormal];
+//    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+//    [rightBtn setFrame:CGRectMake(self.view.frame.size.width-65, 20, 60, 44)];
+//    [rightBtn addTarget:self action:@selector(endChatConfrence) forControlEvents:UIControlEventTouchUpInside];
+////    [self.view insertSubview:rightBtn aboveSubview:nameLabel];
+//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+//    self.navigationItem.rightBarButtonItem = rightItem;
     
     if ( !faceBoard)
     {
@@ -231,7 +233,7 @@
         noNetView.hidden = NO;
         noNetMessage.hidden = NO;
         [messageField resignFirstResponder];
-        self.tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
         toolBar.hidden = YES;
     }
     else
@@ -267,14 +269,12 @@
     [self.appDelegate goOffline];
     [self.appDelegate disconnect];
     [self.appDelegate reConnect];
-    [self dismissViewControllerAnimated:NO completion:nil];
     [self pageFromWhere];
     self.appDelegate.isConnect = @"断开";
 }
 
 -(void)goBackActionToHome
 {
-    [self dismissViewControllerAnimated:NO completion:nil];
     [self pageFromWhere];
     messagePush = 1;
     if ([self.appDelegate.isOnLine isEqualToString:@"available"])
@@ -287,31 +287,126 @@
     }
 }
 
+//-(void)pageFromWhere_wait
+//{
+//    if ([self.tempFrom isEqualToString:@"首页在线客服"])
+//    {
+//        [self.tabBarController setSelectedIndex:0];
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+//    }
+//    else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
+//    {
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+//    }
+//    
+//    else if([self.tempFrom isEqualToString:@"场合选择客服"] || [self.tempFrom isEqualToString:@"热门型号在线咨询"])
+//    {
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+//        
+//    }
+//    else if([self.tempFrom isEqualToString:@"场合选择提交成功客服"] || [self.tempFrom isEqualToString:@"商品快照在线客服"])
+//    {
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+//    }
+//    else if([self.tempFrom isEqualToString:@"热门型号提交成功在线客服"])
+//    {
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
+//    }
+//    else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
+//    {
+//        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
+//    }
+//    
+//    else
+//    {
+//        [self.tabBarController setSelectedIndex:0];
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+//    }
+//    if ([self.tempFrom rangeOfString:@"@"].location != NSNotFound)
+//    {
+//        if([[[self.tempFrom componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+//        {
+//            if (self.navigationController.viewControllers.count == 6)
+//            {
+//                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+//            }
+//            if (self.navigationController.viewControllers.count == 5)
+//            {
+//                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+//            }
+//            if (self.navigationController.viewControllers.count == 4)
+//            {
+//                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+//            }
+//        }
+//    }
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
+//    
+//    isNeedSendRequest = 2;
+//}
+
+
 -(void)pageFromWhere
 {
-    self.appDelegate.uesrID = nil;
-    self.appDelegate.personName = nil;
-    if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
+    
+    NSLog(@"pageFromWhere");
+    if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"disMissSelfPage" object:nil];
-        [self.navigationController.tabBarController.tabBar setHidden:NO];
-    }
-    else if([self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"商品快照在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+        [self .navigationController popViewControllerAnimated:YES];
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"disMissSelfPage" object:nil];
-        [self.navigationController.tabBarController.tabBar setHidden:NO];
-    }
-    if ([self.fromStringFlag rangeOfString:@"@"].location != NSNotFound)
-    {
-        if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+        self.appDelegate.uesrID = nil;
+        self.appDelegate.personName = nil;
+        if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
         {
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"goToAskPricePage" object:nil];
+            NSLog(@"页面数组_首页在线客服 = %d",self.navigationController.viewControllers.count);
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+
+        }
+        else if([self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"商品快照在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
+        {
+            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
+            if (self.navigationController.viewControllers.count == 8)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:NO];
+            }
+            if (self.navigationController.viewControllers.count == 7)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+            }
+            if (self.navigationController.viewControllers.count == 6)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+            }
+            if (self.navigationController.viewControllers.count == 5)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+            }
+        }
+        else
+        {
+
+//            [self.navigationController.tabBarController.tabBar setHidden:NO];
+        }
+        if ([self.fromStringFlag rangeOfString:@"@"].location != NSNotFound)
+        {
+            if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+            {
+                NSLog(@"页面数组_家装线商品详情 = %d",self.navigationController.viewControllers.count);
+                if (self.navigationController.viewControllers.count == 7)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+                }
+                if (self.navigationController.viewControllers.count == 6)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+                }
+                if (self.navigationController.viewControllers.count == 5)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+                }
+            }
         }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCount" object:nil];
@@ -387,8 +482,19 @@
     noNetMessage.hidden = NO;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
+      [super viewWillAppear:YES];
     [self checkNet];
     if ([[self appDelegate].xmppStream isDisconnected])
     {
@@ -402,6 +508,7 @@
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    self.hidesBottomBarWhenPushed = YES;
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view isKindOfClass:[UIButton class]] || [view tag] == 101)
@@ -411,6 +518,60 @@
     }
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     messagePush = 0;
+    
+    //聊天输入工具条
+    if (!btn || !toolBar || !rightBtn || !keyboardButton || !sendButton || !messageField)
+    {
+        btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(0,0, 15, 22);
+        [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        self.navigationItem.leftBarButtonItem = leftItem;
+        
+        rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [rightBtn setBackgroundColor:[UIColor clearColor]];
+        [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [rightBtn setTitle:@"结束会话" forState:UIControlStateNormal];
+        [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [rightBtn setFrame:CGRectMake(self.view.frame.size.width-65, 20, 60, 44)];
+        [rightBtn addTarget:self action:@selector(endChatConfrence) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        
+        toolBar = [[UIView alloc] init];
+        toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
+        toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
+        [self.view addSubview:toolBar];
+        
+        //键盘按钮
+        keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        keyboardButton.frame = CGRectMake(6, 4.5, 35, 35);
+        [keyboardButton addTarget:self action:@selector(faceBoardClick) forControlEvents:UIControlEventTouchUpInside];
+        [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
+        [toolBar addSubview:keyboardButton];
+        
+        //发送按钮
+        sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        sendButton.frame = CGRectMake(260, 6, 54, 32);
+        [sendButton addTarget:self action:@selector(sendNewChatMessage) forControlEvents:UIControlEventTouchUpInside];
+        sendButton.layer.cornerRadius = 3;
+        sendButton.layer.backgroundColor = [[UIColor colorWithRed:10.0/255.0 green:88.0/255.0 blue:173.0/255.0 alpha:1] CGColor];
+        [sendButton setTitle:@"发送" forState:UIControlStateNormal];
+        [sendButton setTintColor:[UIColor whiteColor]];
+        [toolBar addSubview:sendButton];
+        
+        //消息输入框
+        messageField = [[UITextView alloc] init];
+        messageField.frame = CGRectMake(46, 6, 206, 32);
+        messageField.delegate = self;
+        messageField.layer.backgroundColor = [[DCFColorUtil colorFromHexRGB:@"#ffffff"] CGColor];
+        messageField.layer.borderWidth = 1;
+        messageField.layer.borderColor = [[DCFColorUtil colorFromHexRGB:@"#dddddd"] CGColor];
+        [messageField setReturnKeyType:UIReturnKeyNext];
+        messageField.layer.cornerRadius =3;
+        [toolBar addSubview:messageField];
+    }
     
     NSLog(@"咨询入口 = %@",self.fromStringFlag);
     NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
@@ -823,10 +984,10 @@
 }
 
 //离开聊天室
-//- (void)xmppRoomDidLeave:(XMPPRoom *)sender
-//{
-//    NSLog(@"离开聊天室");
-//}
+- (void)xmppRoomDidLeave:(XMPPRoom *)sender
+{
+    NSLog(@"离开聊天室");
+}
 
 //新人加入群聊
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidJoin:(XMPPJID *)occupantJID

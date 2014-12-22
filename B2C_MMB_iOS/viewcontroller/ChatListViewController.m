@@ -163,24 +163,24 @@
         }
     }
     
-    NSLog(@"self.tabbar.index = %d",self.navigationController.tabBarController.selectedIndex);
-    if ((self.navigationController.tabBarController.selectedIndex == 0 || self.navigationController.tabBarController.selectedIndex == 2) && [self.appDelegate.isConnect isEqualToString:@"连接"])
-    {
-        [self setHidesBottomBarWhenPushed:YES];
-        ChatViewController *chatVC = [[ChatViewController alloc] init];
-        chatVC.fromStringFlag = @"工具栏客服";
-        
-//        CATransition *transition = [CATransition animation];
-//        transition.duration = 0.5f;
-//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//        transition.type =  kCATransitionMoveIn;
-//        transition.subtype =  kCATransitionFromTop;
-//        transition.delegate = self;
-//        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//        [self.navigationController pushViewController:chatVC animated:NO];
-//        [self setHidesBottomBarWhenPushed:NO];
-        [self presentViewController:chatVC animated:YES completion:nil];
-    }
+//    NSLog(@"self.tabbar.index = %d",self.navigationController.tabBarController.selectedIndex);
+//    if ((self.navigationController.tabBarController.selectedIndex == 0 || self.navigationController.tabBarController.selectedIndex == 2) && [self.appDelegate.isConnect isEqualToString:@"连接"])
+//    {
+//        [self setHidesBottomBarWhenPushed:YES];
+//        ChatViewController *chatVC = [[ChatViewController alloc] init];
+//        chatVC.fromStringFlag = @"工具栏客服";
+//        
+////        CATransition *transition = [CATransition animation];
+////        transition.duration = 0.5f;
+////        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+////        transition.type =  kCATransitionMoveIn;
+////        transition.subtype =  kCATransitionFromTop;
+////        transition.delegate = self;
+////        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+////        [self.navigationController pushViewController:chatVC animated:NO];
+////        [self setHidesBottomBarWhenPushed:NO];
+//        [self presentViewController:chatVC animated:YES completion:nil];
+//    }
 //    if (isOneArray.count == 0)
 //    {
 //        [isOneArray addObject:[self.appDelegate.roster objectAtIndex:0]];
@@ -298,29 +298,29 @@
     [self.view addSubview:self.memberTableView];
 }
 
--(void)goToFirstPage:(NSNotification *)newMessage
-{
-    if ([self.fromString isEqualToString:@"首页在线客服"])
-    {
-      [self.navigationController popViewControllerAnimated:YES];
-      [self.navigationController.tabBarController.tabBar setHidden:NO];
-    }
-    else if([self.fromString isEqualToString:@"来自快速询价客服"] || [self.fromString isEqualToString:@"场合选择客服"] || [self.fromString isEqualToString:@"热门型号在线咨询"] || [self.fromString isEqualToString:@"场合选择提交成功客服"] || [self.fromString isEqualToString:@"商品快照在线客服"])
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    else
-    {
-        [self.tabBarController setSelectedIndex:0];
-    }
-    if ([self.fromString rangeOfString:@"@"].location != NSNotFound)
-    {
-        if([[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
-        {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }
-}
+//-(void)goToFirstPage:(NSNotification *)newMessage
+//{
+//    if ([self.fromString isEqualToString:@"首页在线客服"])
+//    {
+//      [self.navigationController popViewControllerAnimated:YES];
+//      [self.navigationController.tabBarController.tabBar setHidden:NO];
+//    }
+//    else if([self.fromString isEqualToString:@"来自快速询价客服"] || [self.fromString isEqualToString:@"场合选择客服"] || [self.fromString isEqualToString:@"热门型号在线咨询"] || [self.fromString isEqualToString:@"场合选择提交成功客服"] || [self.fromString isEqualToString:@"商品快照在线客服"])
+//    {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
+//    else
+//    {
+//        [self.tabBarController setSelectedIndex:0];
+//    }
+//    if ([self.fromString rangeOfString:@"@"].location != NSNotFound)
+//    {
+//        if([[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+//        {
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }
+//    }
+//}
 
 
 -(void)goBackAction
@@ -345,7 +345,6 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
    [self.navigationController.tabBarController.tabBar setHidden:NO];
-    self.navigationController.tabBarItem.badgeValue = nil;
 }
 
 - (AppDelegate *)appDelegate

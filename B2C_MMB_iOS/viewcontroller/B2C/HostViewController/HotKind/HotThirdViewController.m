@@ -11,7 +11,8 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "HotKindFirstViewController.h"
 #import "ChatListViewController.h"
-
+#import "AppDelegate.h"
+#import "ChatViewController.h"
 
 @interface HotThirdViewController ()
 
@@ -101,24 +102,43 @@
 {
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
     [av show];
-
-    
 }
 
+- (AppDelegate *)appDelegate
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+#pragma mark - 在线客服
 - (IBAction)clickAsk:(id)sender
 {
-    NSLog(@"热门分类");
-#pragma mark - 在线客服
-    ChatListViewController *chatVC = [[ChatListViewController alloc] init];
-    chatVC.fromString = @"热门分类在线客服";
-    CATransition *transition = [CATransition animation];
-    transition.duration = 0.5f;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type =  kCATransitionMoveIn;
-    transition.subtype =  kCATransitionFromTop;
-    transition.delegate = self;
-    [self.navigationController.view.layer addAnimation:transition forKey:nil];
-    [self.navigationController pushViewController:chatVC animated:NO];
+    if ([self.appDelegate.isConnect isEqualToString:@"连接"])
+    {
+        ChatViewController *chatVC = [[ChatViewController alloc] init];
+        chatVC.fromStringFlag = @"热门分类在线客服";
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.4f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatVC animated:NO];
+    }
+    else
+    {
+        ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+        chatVC.fromString = @"热门分类在线客服";
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.5f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatVC animated:NO];
+    }
+
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

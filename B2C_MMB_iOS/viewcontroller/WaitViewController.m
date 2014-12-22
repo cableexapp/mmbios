@@ -30,9 +30,6 @@ double secondsCountDown =0;
     UILabel *noNetMessage;
     FBShimmeringView *shimmeringView;
     UIStoryboard *sb;
-    
-    //防止返回过程重复请求标记
-    int isNeedSendRequest;
 }
 
 
@@ -156,9 +153,6 @@ double secondsCountDown =0;
     //接收服务端自动回复
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (autoMessageToServer:) name:@"joinRoomMessage" object:nil];
     
-    //关闭当前模态视图
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (backToFront:) name:@"disMissSelfPage" object:nil];
-    
     //重置等待排队环形计时初值
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (resetSecondsCountDown:) name:@"resetCount" object:nil];
     
@@ -170,11 +164,7 @@ double secondsCountDown =0;
     
     //接收网络连接消息通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (NetisConnection:) name:@"NetisConnect" object:nil];
-    
-    //接收返回在线咨询入口页
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToAskPrice:) name:@"goToAskPricePage" object:nil];
-    
-   
+
 }
 
 -(void)pageFromWhere_wait
@@ -230,9 +220,6 @@ double secondsCountDown =0;
             }
         }
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
-    
-     isNeedSendRequest = 2;
 }
 
 -(void)goBack
@@ -263,13 +250,6 @@ double secondsCountDown =0;
     secondsCountDown = 0;
 }
 
--(void)backToFront:(NSNotification *)newMessage
-{
-    [self.navigationController popToRootViewControllerAnimated:NO];
-    [super.navigationController.tabBarController.tabBar setHidden:NO];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
-}
-
 -(void)timeFireMethod
 {
     secondsCountDown += 5;
@@ -282,20 +262,19 @@ double secondsCountDown =0;
     if (self.appDelegate.uesrID != nil)
     {
         [timeCountTimer invalidate];
-//        [self setHidesBottomBarWhenPushed:YES];
+
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = self.tempFrom;
-//        [self presentViewController:chatVC animated:YES completion:nil];
-        
+//
         CATransition *transition = [CATransition animation];
-        transition.duration = 0.5f;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.duration = 0.4f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
         transition.type =  kCATransitionMoveIn;
         transition.subtype =  kCATransitionFromTop;
         transition.delegate = self;
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:chatVC animated:NO];
-//        [self setHidesBottomBarWhenPushed:NO];
     }
     else if(tempCount >= 1)
     {
@@ -310,19 +289,9 @@ double secondsCountDown =0;
 -(void)viewWillAppear:(BOOL)animated
 {
     [self checkNet];
-    NSLog(@"isNeedSendRequest = %d",isNeedSendRequest);
-    
-    //防止页面返回重复请求
-//    if ([self.appDelegate.isConnect isEqualToString:@"连接"] || [self.appDelegate.isConnect isEqualToString:@"断开"])
-//    {
-//        
-//    }
-//    else
-//    {
-        //发起请求加入咨询队列
-        [self sendJoinRequest];
-//    }
-    
+
+    //发起请求加入咨询队列
+    [self sendJoinRequest];
 }
 
 //检查网络是否连接
@@ -439,13 +408,8 @@ double secondsCountDown =0;
 //请求连接客服
 -(void)autoMessageToServer:(NSNotification *)newMessage
 {
-//    if([newMessage.object rangeOfString:@"Your current position in the queue is"].location !=NSNotFound)
-//    {
     if(self.appDelegate.tempID.length > 0)
     {
-//        memberCount = [[[[newMessage.object componentsSeparatedByString:@"is"] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:1];
-//        tempCount = [[[[[newMessage.object componentsSeparatedByString:@"is"] objectAtIndex:1] componentsSeparatedByString:@" "] objectAtIndex:1] intValue];
-        
         memberCount = self.appDelegate.tempID;
         tempCount = [self.appDelegate.tempID intValue];
     }
@@ -534,11 +498,6 @@ double secondsCountDown =0;
     {
          [self pageFromWhere_wait];
     }
-}
-
--(void)goToAskPrice:(NSNotification *)newMessage
-{
-    [self pageFromWhere_wait];
 }
 
 - (AppDelegate *)appDelegate

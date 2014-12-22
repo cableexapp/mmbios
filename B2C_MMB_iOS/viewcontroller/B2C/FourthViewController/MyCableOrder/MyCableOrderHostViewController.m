@@ -56,12 +56,14 @@
     if(flag == 1)
     {
         MyCableSureOrderViewController *myCableSureOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderViewController"];
+        myCableSureOrderViewController.btnIndex = self.btnIndex;
         myCableSureOrderViewController.b2bMyCableOrderListData = data;
         [self.navigationController pushViewController:myCableSureOrderViewController animated:YES];
     }
     else
     {
         MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
+        myCableOrderDetailViewController.btnIndex = self.btnIndex;
         myCableOrderDetailViewController.b2bMyCableOrderListData = data;
         [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
     }
@@ -69,9 +71,40 @@
     
 }
 
+- (void) loadRequest:(int) sender
+{
+    if(sender == 1)
+    {
+        subTV_2.statusIndex = @"0";
+        [subTV_2 loadRequestWithStatus:@"0"];
+    }
+    if(sender == 2)
+    {
+        subTV_3.statusIndex = @"2";
+        [subTV_3 loadRequestWithStatus:@"2"];
+    }
+    if(sender == 3)
+    {
+        subTV_4.statusIndex = @"5";
+        [subTV_4 loadRequestWithStatus:@"5"];
+    }
+}
+
+- (void) refreshRequest:(NSNotification *) noti
+{
+    int index = [[noti object] intValue];
+    subTV_1.intPage = 1;
+    subTV_2.intPage = 1;
+    subTV_3.intPage = 1;
+    subTV_4.intPage = 1;
+    [self loadRequest:index];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshRequest:) name:@"MyCableOrderHostViewControllerRefreshRequest" object:nil];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的电缆订单"];
     self.navigationItem.titleView = top;
@@ -132,7 +165,6 @@
         [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
         btn.layer.borderColor = MYCOLOR.CGColor;
         btn.layer.borderWidth = 0.5f;
-//        btn.layer.cornerRadius = 5.0f;
         [btn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         if(btn.tag == self.btnIndex)
         {
@@ -143,21 +175,8 @@
             [btn setSelected:NO];
         }
     }
-    if(_btnIndex == 1)
-    {
-        subTV_2.statusIndex = @"0";
-        [subTV_2 loadRequestWithStatus:@"0"];
-    }
-    if(_btnIndex == 2)
-    {
-        subTV_3.statusIndex = @"2";
-        [subTV_3 loadRequestWithStatus:@"2"];
-    }
-    if(_btnIndex == 3)
-    {
-        subTV_4.statusIndex = @"5";
-        [subTV_4 loadRequestWithStatus:@"5"];
-    }
+
+    [self loadRequest:_btnIndex];
 }
 
 -(void)searchOrderBtnClick

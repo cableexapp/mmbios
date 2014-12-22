@@ -12,6 +12,12 @@
 #import "ManageInvoiceViewController.h"
 #import "ChooseReceiveAddressViewController.h"
 
+@protocol PopDelegate <NSObject>
+
+- (void) popDelegate;
+
+@end
+
 @interface MyCableSureOrderTableViewController : UITableViewController<ConnectionDelegate,B2BReceveAddress>
 {
     DCFConnectionUtil *conn;
@@ -22,7 +28,8 @@
 
 @property (strong,nonatomic) NSString *myOrderid;
 @property (strong,nonatomic) NSDictionary *addressDic;
-
+@property (assign,nonatomic) id<PopDelegate> delegate;
 - (void) loadRequest;
 
 @end
+

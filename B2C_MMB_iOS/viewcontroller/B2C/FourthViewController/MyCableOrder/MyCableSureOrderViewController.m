@@ -12,7 +12,7 @@
 #import "DCFCustomExtra.h"
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
-#import "MyCableSureOrderTableViewController.h"
+#import "MyCableOrderHostViewController.h"
 
 @interface MyCableSureOrderViewController ()
 {
@@ -32,10 +32,32 @@
 }
 
 - (void) sureBtnClick:(UIButton *) sender
-{
-    NSLog(@"sure");
-    
+{    
     [myCableSureOrderTableViewController loadRequest];
+}
+
+- (void) popDelegate
+{
+//    MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
+//    myCableOrder.btnIndex = self.btnIndex;
+    int n = self.navigationController.viewControllers.count;
+    for(UIViewController *vc in self.navigationController.viewControllers)
+    {
+        if([vc isKindOfClass:[MyCableOrderHostViewController class]])
+        {
+//            [myCableOrder loadRequest:self.btnIndex];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"MyCableOrderHostViewControllerRefreshRequest" object:[NSNumber numberWithInt:self.btnIndex]];
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+        
+        if(n == self.navigationController.viewControllers.count-1)
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+            return;
+        }
+        n++;
+    }
 }
 
 - (void)viewDidLoad
@@ -51,11 +73,13 @@
     
     
     NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",_b2bMyCableOrderListData.receiveprovince,_b2bMyCableOrderListData.receivecity,_b2bMyCableOrderListData.receivedistrict,_b2bMyCableOrderListData.receiveaddress];
+    fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
     NSString *tel = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系电话:%@",_b2bMyCableOrderListData.tel]];
     NSString *name = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系人:%@",_b2bMyCableOrderListData.receivename]];
-    NSDictionary *myDic = [NSDictionary dictionaryWithObjectsAndKeys:name,@"name",tel,@"tel",fullAddress,@"fullAddress", nil];
+    NSDictionary *myDic = [NSDictionary dictionaryWithObjectsAndKeys:name,@"name",tel,@"tel",fullAddress,@"fullAddress",_b2bMyCableOrderListData.receiveprovince,@"receiveprovince",_b2bMyCableOrderListData.receivecity,@"receivecity",_b2bMyCableOrderListData.receivedistrict,@"receivedistrict",_b2bMyCableOrderListData.receiveaddress,@"receiveaddress", nil];
     
     myCableSureOrderTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderTableViewController"];
+    myCableSureOrderTableViewController.delegate = self;
     [self addChildViewController:myCableSureOrderTableViewController];
     myCableSureOrderTableViewController.addressDic = [[NSDictionary alloc] initWithDictionary:myDic];
     myCableSureOrderTableViewController.b2bMyCableOrderListData = _b2bMyCableOrderListData;

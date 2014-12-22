@@ -36,7 +36,7 @@
 @property (strong,nonatomic) B2BMyCableOrderListData *b2bMyCableOrderListData;
 
 
-
+@property (assign,nonatomic) int btnIndex;
 
 
 

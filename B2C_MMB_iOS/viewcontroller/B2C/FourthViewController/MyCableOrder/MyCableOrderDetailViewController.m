@@ -36,6 +36,7 @@
     
     
     MyCableSureOrderViewController *myCableSureOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderViewController"];
+    myCableSureOrderViewController.btnIndex = self.btnIndex;
     myCableSureOrderViewController.b2bMyCableOrderListData = _b2bMyCableOrderListData;
     [self.navigationController pushViewController:myCableSureOrderViewController animated:YES];
 }

@@ -108,6 +108,10 @@
         else
         {
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:headType WithSize:CGSizeMake(MAXFLOAT, 30)];
+            if(size.width <= 100)
+            {
+                size = CGSizeMake(100, 30);
+            }
             [billMsgTypeLabel setFrame:CGRectMake(10, 5, size.width, 30)];
         }
         [billMsgTypeLabel setText:headType];
@@ -132,7 +136,16 @@
         [billMsgNameLabel setText:headName];
         
         //重设frame
-        [billMsgTypeLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x, (billMsgNameLabel.frame.size.height+10-30)/2, billMsgTypeLabel.frame.size.width, 30)];
+        if([DCFCustomExtra validateString:headName] == NO)
+        {
+            [billMsgTypeLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x, (billMsgNameLabel.frame.size.height+10-30)/2, 200, 30)];
+
+        }
+        else
+        {
+            [billMsgTypeLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x, (billMsgNameLabel.frame.size.height+10-30)/2, billMsgTypeLabel.frame.size.width, 30)];
+
+        }
         
     }
 
@@ -158,6 +171,20 @@
     [self.tableView reloadData];
 }
 
+- (NSString *) getNumFromString:(NSString *) string
+{
+    NSString *price = @"";
+    for(int i=0;i<string.length;i++)
+    {
+        char c = [string characterAtIndex:i];
+        if(c == '.' || c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9')
+        {
+            price = [price stringByAppendingFormat:@"%c",c];
+        }
+    }
+    return price;
+}
+
 - (void) loadRequest
 {
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -166,8 +193,76 @@
     
 //    loginid,token,ordernum(订单编号),usefp(是否使用发票,1-使用，2-不使用),receiveprovince(收货省),receivecity(收货市),receivedistrict(收货区),receiveaddress(详细地址),receiver(收货人),tel(电话),invoiceid(发票id),invoiceprovince(发票邮寄省）, invoicecity（发票邮寄市）, invoicedistrict（发票邮寄区）, invoiceaddress（发票邮寄具体地址）, invoicetel（发票收获人电话）, invoicereceiver（发票收获人）
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,receiveprovince,receivecity,receivedistrict,receiveaddress,receiver,receiveTel,invoiceId,@"invoiceprovince",@"invoicecity",@"invoicedistrict",@"invoiceaddress",@"invoicetel",@"invoicereceiver"];
+//    if([DCFCustomExtra validateString:<#(NSString *)#>])
+    NSString *pushString = nil;
     
+    NSString *name = [self.addressDic objectForKey:@"name"];
+    int index_1 = 0;
+    for(int i=0;i<name.length;i++)
+    {
+        char c = [name characterAtIndex:i];
+        if(c == ':')
+        {
+            index_1 = i;
+        }
+    }
+    NSRange range_1 = NSMakeRange(index_1+1, name.length-index_1-1);
+    name = [name substringWithRange:range_1];
+    if([DCFCustomExtra validateString:name] == NO)
+    {
+        name = @"";
+    }
+    
+    NSString *province = [self.addressDic objectForKey:@"receiveprovince"];
+    if([DCFCustomExtra validateString:province] == NO)
+    {
+        province = @"";
+    }
+    
+    NSString *city = [self.addressDic objectForKey:@"receivecity"];
+    if([DCFCustomExtra validateString:city] == NO)
+    {
+        city = @"";
+    }
+    
+    NSString *district = [self.addressDic objectForKey:@"receivedistrict"];
+    if([DCFCustomExtra validateString:district] == NO)
+    {
+        district = @"";
+    }
+    
+    NSString *address = [self.addressDic objectForKey:@"receiveaddress"];
+    if([DCFCustomExtra validateString:address] == NO)
+    {
+        address = @"";
+    }
+    
+    NSString *tel = [self.addressDic objectForKey:@"tel"];
+    int index_2 = 0;
+    for(int i=0;i<tel.length;i++)
+    {
+        char c = [tel characterAtIndex:i];
+        if(c == ':')
+        {
+            index_2 = i;
+        }
+    }
+    NSRange range_2 = NSMakeRange(index_2+1, tel.length-index_2-1);
+    tel = [tel substringWithRange:range_2];
+    if([DCFCustomExtra validateString:tel] == NO)
+    {
+        tel = @"";
+    }
+
+    
+    if([usefp intValue] == 1)
+    {
+        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,name,tel,invoiceId,receiveprovince,receivecity,receivedistrict,receiveaddress,receiveTel,receiver];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,name,tel,invoiceId,@"",@"",@"",@"",@"",@""];
+    }
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmOrderTag delegate:self];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ConfirmOrder.html?"];
@@ -185,6 +280,10 @@
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
+            if([self.delegate respondsToSelector:@selector(popDelegate)])
+            {
+                [self.delegate popDelegate];
+            }
         }
         else
         {
@@ -208,7 +307,6 @@
 
 - (void) changeReceiveAddress:(NSDictionary *) dic
 {
-    NSLog(@"%@",dic);
     if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
     {
         receiveAddressId = @"";
@@ -551,6 +649,7 @@
                 [cell.contentView addSubview:nameAndTelLabel];
                 
                 NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
+                address = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
                 CGSize size;
                 if([DCFCustomExtra validateString:address] == NO)
                 {

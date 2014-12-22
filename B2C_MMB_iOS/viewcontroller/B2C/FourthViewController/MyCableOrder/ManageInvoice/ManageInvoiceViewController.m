@@ -40,8 +40,6 @@
 
 - (void) sure:(UIButton *) sender
 {
-    NSLog(@"可以点击");
-    
     if(managerInvoiceSubTableViewController)
     {
         NSLog(@"***  %@",[managerInvoiceSubTableViewController changeChooseArray]);
@@ -91,27 +89,26 @@
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = barItem;
     
-    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.sureBtn.layer.borderWidth = 1.0f;
+    self.sureBtn.layer.cornerRadius = 5.0f;
+    [self.sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
     [self.sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
     [self.sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:173.0/255.0 green:173.0/255.0 blue:173.0/255.0  alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateDisabled];
     [self.sureBtn setEnabled:swithStatus];
-
+    
     if(swithStatus == YES)
     {
-//        [self.sureBtn setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0]];
+        //        [self.sureBtn setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0]];
         [rightBtn setHidden:NO];
     }
     else
     {
-//        [self.sureBtn setBackgroundColor:[UIColor colorWithRed:173.0/255.0 green:173.0/255.0 blue:173.0/255.0 alpha:1.0]];
-
+        //        [self.sureBtn setBackgroundColor:[UIColor colorWithRed:173.0/255.0 green:173.0/255.0 blue:173.0/255.0 alpha:1.0]];
+        
         [rightBtn setHidden:YES];
     }
     
     managerInvoiceSubTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"managerInvoiceSubTableViewController"];
     managerInvoiceSubTableViewController.status = swithStatus;
-    NSLog(@"%d",managerInvoiceSubTableViewController.status);
     [self addChildViewController:managerInvoiceSubTableViewController];
     managerInvoiceSubTableViewController.view.frame = self.tableSubView.bounds;
     [self.tableSubView addSubview:managerInvoiceSubTableViewController.view];
@@ -130,15 +127,15 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"发票信息管理"];
     self.navigationItem.titleView = top;
     
-    self.sureBtn.layer.borderWidth = 1.0f;
-//    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.sureBtn.layer.cornerRadius = 5.0f;
-    [self.sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
+    //    self.sureBtn.layer.borderWidth = 1.0f;
+    //    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
+    //    self.sureBtn.layer.cornerRadius = 5.0f;
+    //    [self.sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.mySwitch addTarget:self action:@selector(swithChange:) forControlEvents:UIControlEventValueChanged];
     
-
-
+    
+    
 }
 
 
@@ -153,13 +150,13 @@
     if(isChange == YES)
     {
         [self.sureBtn setEnabled:YES];
-//        [self.sureBtn setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0]];
+        //        [self.sureBtn setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0]];
         [rightBtn setHidden:NO];
     }
     else
     {
         [self.sureBtn setEnabled:NO];
-//        [self.sureBtn setBackgroundColor:[UIColor colorWithRed:173.0/255.0 green:173.0/255.0 blue:173.0/255.0 alpha:1.0]];
+        //        [self.sureBtn setBackgroundColor:[UIColor colorWithRed:173.0/255.0 green:173.0/255.0 blue:173.0/255.0 alpha:1.0]];
         [rightBtn setHidden:YES];
     }
     
@@ -168,7 +165,7 @@
     
     [[NSUserDefaults standardUserDefaults] setBool:isChange forKey:@"B2BManageBillSwitchStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -178,14 +175,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

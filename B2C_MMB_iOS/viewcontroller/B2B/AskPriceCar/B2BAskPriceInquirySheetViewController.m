@@ -17,7 +17,6 @@
 #import "AddReceiveAddressViewController.h"
 #import "B2BAddressData.h"
 #import "B2BAskPriceDetailData.h"
-#import "ChooseReceiveAddressViewController.h"
 #import "B2BAskPriceUpSuccessViewController.h"
 #import "DCFColorUtil.h"
 
@@ -30,9 +29,6 @@
     
     DCFChenMoreCell *moreCell;
     
-    NSMutableArray *addressArray;
-    
-    B2BAddressData *addressData;
     
     BOOL flag; //判断收货地址
     
@@ -43,6 +39,19 @@
     CGFloat height_1;
     CGFloat height_2;
     CGFloat height_3;
+    
+    ChooseReceiveAddressViewController *chooseAddress;
+    
+    NSString *receiveAddressId;
+    NSString *receiveTel;
+    NSString *receiveaddress;
+    NSString *receivecity;
+    NSString *receivedistrict;
+    NSString *receiveprovince;
+    NSString *receiver;
+    NSString *fullAddress;
+
+    NSDictionary *receiverDic;
 }
 @end
 
@@ -74,18 +83,34 @@
 {
     [super viewWillAppear:YES];
     
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"AddressList",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddressListTag delegate:self];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/AddressList.html?"];
-    
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//    NSString *time = [DCFCustomExtra getFirstRunTime];
+//    NSString *string = [NSString stringWithFormat:@"%@%@",@"AddressList",time];
+//    NSString *token = [DCFCustomExtra md5:string];
+//    
+//    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+//    
+//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddressListTag delegate:self];
+//    
+//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/AddressList.html?"];
+//    
+//    
+//    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) B2BReceveAddress:(NSDictionary *)dic
+{
+    receiverDic = [[NSDictionary alloc] initWithDictionary:dic];
+    receiveAddressId = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiveAddressId"]];
+    receiveTel = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiveTel"]];
+    receiveaddress = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiveaddress"]];
+    receivecity = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receivecity"]];
+    receivedistrict = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receivedistrict"]];
+    receiveprovince = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiveprovince"]];
+    receiver = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiver"]];
+    fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+    fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+    NSLog(@"receiver = %@",receiverDic);
+    [tv reloadData];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -100,25 +125,25 @@
     
     if(URLTag == URLAddressListTag)
     {
-        if(result == 1)
-        {
-            addressArray = [[NSMutableArray alloc] initWithArray:[B2BAddressData getListArray:[dicRespon objectForKey:@"items"]]];
-            
-            if(addressArray.count != 0)
-            {
-                for(B2BAddressData *data in addressArray)
-                {
-                    if([data.isDefault intValue] == 1)
-                    {
-                        addressData = data;
-                    }
-                }
-            }
-        }
-        if(result == 0)
-        {
-            addressArray = [[NSMutableArray alloc] init];
-        }
+//        if(result == 1)
+//        {
+//            addressArray = [[NSMutableArray alloc] initWithArray:[B2BAddressData getListArray:[dicRespon objectForKey:@"items"]]];
+//            
+//            if(addressArray.count != 0)
+//            {
+//                for(B2BAddressData *data in addressArray)
+//                {
+//                    if([data.isDefault intValue] == 1)
+//                    {
+//                        addressData = data;
+//                    }
+//                }
+//            }
+//        }
+//        if(result == 0)
+//        {
+//            addressArray = [[NSMutableArray alloc] init];
+//        }
     }
     
     [tv reloadData];
@@ -150,6 +175,34 @@
     HUD = nil;
 }
 
+- (void) doBCReceiveAddressHasChange:(NSNotification *) noti
+{
+    NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[noti object]];
+    [self changeReceiveAddress:dic];
+}
+
+- (void) changeReceiveAddress:(NSDictionary *) dic
+{
+    if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
+    {
+        
+    }
+    else
+    {
+        receiveAddressId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveAddressId"]];
+        receiveTel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveTel"]];
+        receiveaddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveaddress"]];
+        receivecity = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivecity"]];
+        receivedistrict = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivedistrict"]];
+        receiveprovince = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveprovince"]];
+        receiver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiver"]];
+        fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+        NSLog(@"receiver = %@",dic);
+    }
+    [tv reloadData];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -158,6 +211,16 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交询价单"];
     self.navigationItem.titleView = top;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doBCReceiveAddressHasChange:) name:@"B2CReceiveAddressHasChange" object:nil];
+
+    
+    
+    chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
+    chooseAddress.delegate_1 = self;
+    chooseAddress.B2COrB2B = NO;
+    [chooseAddress loadRequest];
+    
     
     if(!buttomView || !upBtn)
     {
@@ -206,7 +269,7 @@
         [DCFStringUtil showNotice:@"暂无商品信息"];
         return;
     }
-    if(addressData.addressId.length == 0 || [addressData.addressId isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:fullAddress] == NO)
     {
         [DCFStringUtil showNotice:@"收货地址不能为空"];
         return;
@@ -224,7 +287,7 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"SubInquiry",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&addressid=%@&type=%@",token,[self getMemberId],addressData.addressId,@"7"];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&addressid=%@&type=%@",token,[self getMemberId],receiveAddressId,@"7"];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubInquiryTag delegate:self];
     
@@ -301,17 +364,12 @@
 {
     if(indexPath.section == 0)
     {
-        if(!addressArray || addressArray.count == 0)
+        if([DCFCustomExtra validateString:fullAddress] == NO)
         {
             return 44;
         }
         
-        NSString *str = [NSString stringWithFormat:@"%@",addressData.fullAddress];
-        if([DCFCustomExtra validateString:str] == NO)
-        {
-            return 44;
-        }
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(ScreenWidth-80, MAXFLOAT)];
+        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-80, MAXFLOAT)];
         
         return size.height + 55;
     }
@@ -378,7 +436,7 @@
     {
         if(indexPath.row == 0)
         {
-            if(!addressArray || addressArray.count == 0)
+            if([[receiverDic allKeys] count] == 0 || [receiverDic isKindOfClass:[NSNull class]])
             {
                 [cell.textLabel setText:@"暂无收货地址"];
                 flag = NO;
@@ -389,54 +447,53 @@
                 
                 flag = YES;
                 
-                NSString *name = [[addressArray lastObject] receiver];
-                CGSize size_name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+          
                 
                 UILabel *nameLabel = nil;
-                if(name.length == 0 || [name isKindOfClass:[NSNull class]])
+                if([DCFCustomExtra validateString:receiver] == NO)
                 {
                     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, 50, 30)];
                 }
                 else
                 {
+                    CGSize size_name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:receiver WithSize:CGSizeMake(MAXFLOAT, 30)];
                     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10, size_name.width, 30)];
                 }
-                [nameLabel setText:name];
+                [nameLabel setText:receiver];
                 nameLabel.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
                 [nameLabel setTextAlignment:NSTextAlignmentLeft];
                 [nameLabel setFont:[UIFont systemFontOfSize:14]];
                 
-                NSString *tel = [[addressArray lastObject] mobile];
-                CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
+
                 
                 UILabel *telLabel = nil;
-                if([DCFCustomExtra validateString:tel] == NO)
+                if([DCFCustomExtra validateString:receiveTel] == NO)
                 {
                     telLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x + nameLabel.frame.size.width + 20, 10, 100, 30)];
                 }
                 else
                 {
+                    CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:receiveTel WithSize:CGSizeMake(MAXFLOAT, 30)];
                     telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-70-size_tel.width, 10, size_tel.width, 30)];
                 }
-                [telLabel setText:tel];
+                [telLabel setText:receiveTel];
                 telLabel.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
                 [telLabel setFont:[UIFont systemFontOfSize:14]];
                 [telLabel setTextAlignment:NSTextAlignmentRight];
                 
                 
-                NSString *address = [[addressArray lastObject] fullAddress];
-                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-80, MAXFLOAT)];
-                
+                CGSize size;
                 UILabel *addressLabel = nil;
-                if([DCFCustomExtra validateString:address] == NO)
+                if([DCFCustomExtra validateString:fullAddress] == NO)
                 {
                     addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, nameLabel.frame.origin.y + nameLabel.frame.size.height+5, ScreenWidth-80, 30)];
                 }
                 else
                 {
+                    size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:fullAddress WithSize:CGSizeMake(ScreenWidth-80, MAXFLOAT)];
                     addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, nameLabel.frame.origin.y + nameLabel.frame.size.height+5, ScreenWidth-80, size.height)];
                 }
-                [addressLabel setText:address];
+                [addressLabel setText:fullAddress];
                 [addressLabel setFont:[UIFont systemFontOfSize:12]];
                 addressLabel.textColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
                 [addressLabel setNumberOfLines:0];
@@ -681,7 +738,7 @@
         }
         else
         {
-            ChooseReceiveAddressViewController *chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
+            
             [self.navigationController pushViewController:chooseAddress animated:YES];
         }
         [self setHidesBottomBarWhenPushed:NO];

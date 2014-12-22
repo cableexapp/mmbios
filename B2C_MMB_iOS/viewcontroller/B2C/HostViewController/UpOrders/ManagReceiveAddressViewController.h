@@ -19,6 +19,8 @@
     NSMutableArray *dataArray;
 }
 
+@property (assign,nonatomic) BOOL B2COrB2B;
+
 @property (strong,nonatomic) UIView *tvBackView;
 @property (strong,nonatomic) UIView *buttomView;
 @property (strong,nonatomic) UIButton *buttomBtn;

@@ -70,16 +70,30 @@
 {
 #pragma mark - 收货地址
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
+    //YES为B2C进来，NO表示B2B进来
+    
+    NSString *urlString = nil;
+    NSString *string = nil;
+    
+    if(self.B2COrB2B == YES)
+    {
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
+        string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
+    }
+    else
+    {
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/AddressList.html?"];
+        string = [NSString stringWithFormat:@"%@%@",@"AddressList",time];
+    }
+    
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
+    
+    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
-    
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -368,8 +382,17 @@
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&addressid=%@",token,[self getMemberId],sender];
     
+    NSString *urlString = nil;
+    if(self.B2COrB2B == YES)
+    {
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/deleteMemberAddress.html?"];
+    }
+    else
+    {
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/deleteMemberAddress.html?"];
+    }
+    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteMemberAddressTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/deleteMemberAddress.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 

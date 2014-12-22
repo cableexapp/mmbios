@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 #import "MBProgressHUD.h"
+#import "ChooseReceiveAddressViewController.h"
 
-@interface B2BAskPriceInquirySheetViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,MBProgressHUDDelegate>
+@interface B2BAskPriceInquirySheetViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,MBProgressHUDDelegate,B2BReceveAddress>
 {
     UITableView *tv;
     DCFConnectionUtil *conn;

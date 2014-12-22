@@ -68,6 +68,11 @@
     }
 }
 
+- (void) popDelegate_2
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void) popDelegate
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -133,6 +138,7 @@
     [self.firstView addSubview:addInvoiceNormalTableViewController.view];
     
     addInvoiceAddedTableViewController = [[AddInvoiceAddedTableViewController alloc] init];
+    addInvoiceAddedTableViewController.delegate = self;
     [self addChildViewController:addInvoiceAddedTableViewController];
     addInvoiceAddedTableViewController.view.frame = self.secondView.bounds;
     [self.secondView addSubview:addInvoiceAddedTableViewController.view];

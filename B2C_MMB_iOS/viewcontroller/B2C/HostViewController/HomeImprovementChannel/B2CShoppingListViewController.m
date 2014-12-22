@@ -22,6 +22,8 @@
 #import "MyShoppingListViewController.h"
 #import "DCFStringUtil.h"
 
+#define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
+
 #pragma mark - 少一个total字段,筛选部分
 @interface B2CShoppingListViewController ()
 {
@@ -40,7 +42,7 @@
     UIView * lineView_4;
     
     UIWindow * window;
-
+    
     NSMutableArray *buttonLineViewArray;  //底部3条下滑线数组
     
     NSMutableArray *btnArray;
@@ -57,7 +59,12 @@
     AppDelegate *app;
     
     NSMutableArray *ScreeningCondition;
-
+    
+    NSMutableArray *btnRotationNumArray;
+    
+    NSString *seqmethod;
+    
+    NSMutableArray *sectionBtnIvArray;
 }
 @end
 
@@ -128,9 +135,9 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductListByCondition",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-//    intPage = 1;
+    //    intPage = 1;
     pageSize = 10;
-
+    
     NSString *pushString = [NSString stringWithFormat:@"pagesize=%d&pageindex=%d&token=%@&use=%@&model=%@&spec=%@&brand=%@&seq=%@",pageSize,intPage,token,delegateMyUse,delegateMyModel,delegateMySpec,delegateMyBrand,_seq];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
@@ -152,7 +159,7 @@
     }
     _seq = @"";
     intPage = 1;
-
+    
     searchView = [[UIView alloc] init];
     [searchView setFrame:CGRectMake(70, 50, ScreenWidth-40, ScreenHeight)];
     [searchView setBackgroundColor:[UIColor redColor]];
@@ -174,7 +181,7 @@
     
     [self addChildViewController:search];
     [searchView addSubview:search.view];
-   
+    
     [UIView commitAnimations];
     [search addHeadView];
 }
@@ -203,8 +210,17 @@
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     int tag = btn.tag;
+    NSLog(@"tag = %d",tag);
     
-//    遍历数组比较tag
+    //    NSLog(@"%@",btn.subviews);
+    //    for(UIView *view in btn.subviews)
+    //    {
+    //        if([view isKindOfClass:[UIImageView class]])
+    //        {
+    //        }
+    //    }
+    
+    //    遍历数组比较tag
     for(UIView *view in buttonLineViewArray)
     {
         if(view.tag == tag)
@@ -217,14 +233,45 @@
         }
     }
     
+    int number = [[btnRotationNumArray objectAtIndex:tag] intValue];
+    
+#pragma mark - 图片旋转
+    if(number == 0)
+    {
+        seqmethod=@"desc";
+    }
+    else
+    {
+        UIImageView *currentIV= (UIImageView *)[sectionBtnIvArray objectAtIndex:tag];
+        if(number % 2 == 0)
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(180));
+            }];
+            seqmethod=@"desc";
+        }
+        else
+        {
+            [UIView animateWithDuration:0.3 animations:^{
+                currentIV.transform = CGAffineTransformRotate(currentIV.transform, DEGREES_TO_RADIANS(-180));
+            }];
+            seqmethod=@"asc";
+        }
+        
+    }
+    
+    number++;
+    [btnRotationNumArray replaceObjectAtIndex:tag withObject:[NSNumber numberWithInt:number]];
+    
     
     for(int i = 0;i < btnArray.count; i++)
     {
-
         UIButton *b = (UIButton *)[btnArray objectAtIndex:i];
+        UIImageView *arrowIv = (UIImageView *)[sectionBtnIvArray objectAtIndex:i];
+        int num = [[btnRotationNumArray objectAtIndex:i] intValue];
         if(i == tag)
         {
-
+            [arrowIv setHidden:NO];
             _seq = b.titleLabel.text;
             if(dataArray.count != 0)
             {
@@ -233,26 +280,19 @@
             intPage = 1;
             
             //价格product_price  销量:sale_num
-        
+            
             if(i == 0)
             {
-             _seq = @"";
-
-                
+                _seq = @"";
+                seqmethod = @"";
             }
             if(i == 1)
             {
                 _seq = @"product_price";
-
-                
-
-              
             }
             if(i == 2)
             {
                 _seq = @"sale_num";
-
-              
             }
             if(flag == YES)
             {
@@ -265,9 +305,13 @@
         }
         else
         {
+            num = 0;
+            [btnRotationNumArray replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:num]];
+            [arrowIv setHidden:YES];
             [b setSelected:NO];
         }
     }
+    NSLog(@"%@",btnRotationNumArray);
 }
 
 - (void) hudWasHidden:(MBProgressHUD *)hud
@@ -288,11 +332,11 @@
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&spec=%@&brand=%@",token,@"",@"",@"",@""];
     
- 
+    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLScreeningConditionTag delegate:self];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ScreeningCondition.html?"];
-
+    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     
@@ -301,7 +345,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
     self.navigationItem.titleView = top;
     
-    
+    seqmethod = @"";
     
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
     [topView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
@@ -322,7 +366,7 @@
     [leftView setImage:[UIImage imageNamed:@"magnifying glass.png"]];
     [searchTextField setLeftView:leftView];
     [searchTextField setFont:[UIFont systemFontOfSize:12]];
-//    searchTextField.layer.borderWidth = 0.3;
+    //    searchTextField.layer.borderWidth = 0.3;
     searchTextField.layer.cornerRadius = 5;
     [searchTextField setReturnKeyType:UIReturnKeyDone];
     [searchTextField setLeftViewMode:UITextFieldViewModeAlways];
@@ -331,44 +375,58 @@
     
     searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [searchBtn setFrame:CGRectMake(searchTextField.frame.origin.x + searchTextField.frame.size.width+1, 9, 43, 39)];
-//    [searchBtn setTitle:@"筛选" forState:UIControlStateNormal];
+    //    [searchBtn setTitle:@"筛选" forState:UIControlStateNormal];
     [searchBtn setBackgroundImage:[UIImage imageNamed:@"choose_btn"] forState:UIControlStateNormal];
     [searchBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     searchBtn.layer.masksToBounds = YES;
     [searchBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:searchBtn];    
+    [topView addSubview:searchBtn];
     selectBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height+13, ScreenWidth, 60)];
     [selectBtnView setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:selectBtnView];
     
     btnArray = [[NSMutableArray alloc] init];
     buttonLineViewArray = [[NSMutableArray alloc] init];
+    btnRotationNumArray = [[NSMutableArray alloc] init];
+    sectionBtnIvArray = [[NSMutableArray alloc] init];
+    
     for(int i=0;i<3;i++)
     {
         UIButton *selctBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [selctBtn setFrame:CGRectMake(10 + 100*i, 13, 100, 30)];
+        
+        UIImageView *sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(selctBtn.frame.size.width-20, 10, 15, 15)];
+        [sectionBtnIv setImage:[UIImage imageNamed:@"down_dark.png"]];
+        [sectionBtnIv setContentMode:UIViewContentModeScaleAspectFit];
+        [sectionBtnIv setHidden:YES];
+        
+        [sectionBtnIvArray addObject:sectionBtnIv];
+        
         switch (i)
         {
             case 0:
                 [selctBtn setTitle:@"相关度" forState:UIControlStateNormal];
                 [selctBtn setSelected:YES];
-        
                 break;
             case 1:
                 [selctBtn setTitle:@"价格" forState:UIControlStateNormal];
+                [selctBtn addSubview:sectionBtnIv];
                 break;
             case 2:
                 [selctBtn setTitle:@"销量" forState:UIControlStateNormal];
+                [selctBtn addSubview:sectionBtnIv];
                 break;
             default:
                 break;
         }
-//        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-//        [selctBtn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+        
+        int num = 0;
+        [btnRotationNumArray addObject:[NSNumber numberWithInt:num]];
+        
+        
         
         [selctBtn setTitleColor:[UIColor colorWithRed:133.0/255.0 green:133.0/255.0 blue:133.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-//        [selctBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         
         if(i == 0)
         {
@@ -379,14 +437,14 @@
             [lineView_2 setTag:0];
             lineView_2.hidden = NO;
             [buttonLineViewArray addObject:lineView_2];
-
+            
             lineView_3 = [[UIView alloc] initWithFrame:CGRectMake(110, selctBtn.frame.origin.y+40, 100, 3)];
             [lineView_3 setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
             [selectBtnView addSubview:lineView_3];
             [lineView_3 setTag:1];
             lineView_3.hidden = YES;
             [buttonLineViewArray addObject:lineView_3];
-
+            
             lineView_4 = [[UIView alloc] initWithFrame:CGRectMake(215, selctBtn.frame.origin.y+40, 100, 3)];
             [lineView_4 setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
             [selectBtnView addSubview:lineView_4];
@@ -398,7 +456,7 @@
         [selctBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [selctBtn setTag:i];
         
-         _lineView = [[UIView alloc] initWithFrame:CGRectMake(110, selctBtn.frame.origin.y+5, 1, 20)];
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(110, selctBtn.frame.origin.y+5, 1, 20)];
         [_lineView setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0]];
         [selectBtnView addSubview:_lineView];
         
@@ -406,9 +464,9 @@
         [_lineView_1 setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0]];
         [selectBtnView addSubview:_lineView_1];
         
-//        selctBtn.layer.borderColor = MYCOLOR.CGColor;
-//        selctBtn.layer.borderWidth = 1.0f;
-//        selctBtn.layer.masksToBounds = YES;
+        //        selctBtn.layer.borderColor = MYCOLOR.CGColor;
+        //        selctBtn.layer.borderWidth = 1.0f;
+        //        selctBtn.layer.masksToBounds = YES;
         
         [selectBtnView addSubview:selctBtn];
         [btnArray addObject:selctBtn];
@@ -436,7 +494,7 @@
     _seq = @"";
     [self loadRequest:_seq WithUse:_use];
     
-//    设置隐藏背景VIEW的通知事件
+    //    设置隐藏背景VIEW的通知事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeBackView" object:nil];
     
 }
@@ -478,7 +536,7 @@
     
     NSString *s = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d",use,_seq,@"",@"",@"",s,pageSize,intPage];
+    NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d&seqmethod=%@",use,_seq,@"",@"",@"",s,pageSize,intPage,seqmethod];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
@@ -635,16 +693,16 @@
         CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
         
         
-//        CGFloat h = size_1.height + 30;
+        //        CGFloat h = size_1.height + 30;
         
-//        if(h <= 60)
-//        {
-//            return 80;
-//        }
-//        else
-//        {
-            return size_1.height + 60 + 20;
-//        }
+        //        if(h <= 60)
+        //        {
+        //            return 80;
+        //        }
+        //        else
+        //        {
+        return size_1.height + 60 + 20;
+        //        }
     }
     else
     {
@@ -772,16 +830,16 @@
         [cell.contentView addSubview:shopNameLabel];
         
         UIImageView *cellIv = [[UIImageView alloc] init];
-//        if(size_1.height + 30 <= 60)
-//        {
-//            [cellIv setFrame:CGRectMake(10, 10, 60, 60)];
-//        }
-//        else
-//        {
+        //        if(size_1.height + 30 <= 60)
+        //        {
+        //            [cellIv setFrame:CGRectMake(10, 10, 60, 60)];
+        //        }
+        //        else
+        //        {
         [cellIv setFrame:CGRectMake(10, (size_1.height+20)/2, 60, 60)];
-//        }
+        //        }
         NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
-//        NSLog(@"picUrl = %@",picUrl);
+        //        NSLog(@"picUrl = %@",picUrl);
         [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
         [cellIv.layer setCornerRadius:2.0]; //设置矩圆角半径
         [cellIv.layer setBorderWidth:1.0];   //边框宽度

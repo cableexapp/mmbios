@@ -26,7 +26,7 @@
     NSMutableArray *cellAnotherLabelArray;
     
     NSMutableArray *selectedArray;
-
+    
     NSMutableArray *chooseArray;
 }
 @end
@@ -62,14 +62,14 @@
     
     
     selectedArray = [[NSMutableArray alloc] init];
-
+    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"InvoiceList",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-//    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,@"668"];
-
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+    //    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,@"668"];
+    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInvoiceListTag delegate:self];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InvoiceList.html?"];
@@ -90,7 +90,7 @@
         cellImageArray = [[NSMutableArray alloc] init];
         cellLabelArray = [[NSMutableArray alloc] init];
         cellAnotherLabelArray = [[NSMutableArray alloc] init];
-
+        
         chooseArray = [[NSMutableArray alloc] init];
         
         if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
@@ -110,8 +110,8 @@
                 
                 for(int i=0;i<dataArray.count;i++)
                 {
-//                    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
-//                    {
+                    //                    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+                    //                    {
                     if(i == 0)
                     {
                         B2BManagBillData *data = (B2BManagBillData *)[dataArray objectAtIndex:0];
@@ -126,11 +126,11 @@
                         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:data.headType,@"type",data.headName,@"name",data.invoiceId,@"invoiceId", nil];
                         [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
                     }
-//                    }
-//                    else
-//                    {
-//                        
-//                    }
+                    //                    }
+                    //                    else
+                    //                    {
+                    //
+                    //                    }
                     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
                     [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
                     [cellImageArray addObject:iv];
@@ -181,7 +181,7 @@
                     
                     if(self.status == YES)
                     {
-//                        [cellBtn setEnabled:YES];
+                        //                        [cellBtn setEnabled:YES];
                         [firstLabel setTextColor:[UIColor blackColor]];
                         [secondLabel setTextColor:[UIColor blackColor]];
                     }
@@ -273,7 +273,7 @@
 {
     if(dataArray)
     {
-
+        
         
         for(UILabel *label in cellLabelArray)
         {
@@ -335,10 +335,10 @@
             NSLog(@"dic = %@",dic);
             [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
         }
-  
-
-//        NSLog(@"arr = %@",chooseArray);
-//        [self changeChooseArray];
+        
+        
+        //        NSLog(@"arr = %@",chooseArray);
+        //        [self changeChooseArray];
     }
     else
     {

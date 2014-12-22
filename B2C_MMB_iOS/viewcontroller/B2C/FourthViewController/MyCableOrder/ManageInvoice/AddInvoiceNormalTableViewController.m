@@ -44,7 +44,6 @@
             CGFloat fontSize = 18;
             while (contentSize.height > sender.frame.size.height)
             {
-                NSLog(@"----%f   %f-----",contentSize.height,sender.frame.size.height);
                 [sender setFont:[UIFont fontWithName:@"Helvetica Neue" size:fontSize--]];
                 contentSize = sender.contentSize;
             }
@@ -55,6 +54,7 @@
     }
 }
 
+#pragma mark - textview垂直居中
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     UITextView *tv = object;
     //Center vertical alignment
@@ -85,12 +85,12 @@
         [headTV setBackgroundColor:[UIColor whiteColor]];
         [headTV setTag:i];
         [headTV setReturnKeyType:UIReturnKeyDone];
-//        [headTV setScrollEnabled:NO];
+        //        [headTV setScrollEnabled:NO];
         [headTV setShowsVerticalScrollIndicator:NO];
         [headTV setFont:[UIFont systemFontOfSize:14]];
         [headTV setDelegate:self];
         [headTV addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-
+        
         //        [self contentSizeToFit:tv];
         [textViewArray addObject:headTV];
         
@@ -101,7 +101,7 @@
         {
             case 0:
                 str = @"发票抬头:";
-//                headTV = tv;
+                //                headTV = tv;
                 break;
                 
                 
@@ -114,7 +114,7 @@
         [label setFont:[UIFont boldSystemFontOfSize:14]];
         [label setText:str];
         
-        [headTV setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 5, 5, ScreenWidth-25-label.frame.size.width, 50)];
+        [headTV setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 5, 0, ScreenWidth-25-label.frame.size.width, 50)];
         
     }
     
@@ -134,8 +134,8 @@
 
 - (void) textViewDidEndEditing:(UITextView *)textView
 {
-//    [self contentSizeToFit:textView];
-
+    //    [self contentSizeToFit:textView];
+    
     if(textView == headTV)
     {
         if(headTV.text.length > 50)
@@ -143,7 +143,7 @@
             [DCFStringUtil showNotice:@"发票抬头必须在50字以内"];
             return;
         }
-
+        
     }
 }
 
@@ -262,7 +262,7 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"AddInvoice",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    //    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+    //token,memberid(用户id),type(类型1-普通2-增值税),name(抬头),company(公司名),tel(电话),taxcode(纳税人识别号),regaddress(注册地址),bank(开户银行),bankaccount(开户账号)
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&type=%@&name=%@&company=%@&taxcode=%@&regaddress=%@&tel=%@&bank=%@&bankaccount=%@",token,[self getMemberId],@"1",[(UITextView *)[textViewArray objectAtIndex:0] text],@"",@"",@"",@"",@"",@""];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2BAddInvoiceNormalTag delegate:self];

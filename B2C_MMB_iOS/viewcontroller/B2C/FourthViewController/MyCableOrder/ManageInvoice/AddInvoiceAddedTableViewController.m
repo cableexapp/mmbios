@@ -98,7 +98,7 @@
         [tv setTag:i];
         [tv addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
         [tv setReturnKeyType:UIReturnKeyDone];
-//        [tv setScrollEnabled:NO];
+        //        [tv setScrollEnabled:NO];
         [tv setShowsVerticalScrollIndicator:NO];
         [tv setFont:[UIFont systemFontOfSize:14]];
         [tv setDelegate:self];
@@ -148,7 +148,7 @@
         [label setFont:[UIFont boldSystemFontOfSize:14]];
         [label setText:str];
         
-        [tv setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 5, 5, ScreenWidth-25-label.frame.size.width, 50)];
+        [tv setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 5, 0, ScreenWidth-25-label.frame.size.width, 50)];
         
     }
     
@@ -157,7 +157,7 @@
 
 - (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-//    [self contentSizeToFit:textView];
+    //    [self contentSizeToFit:textView];
     
     if([text isEqualToString:@"\n"])
     {
@@ -235,68 +235,68 @@
             return;
         }
     }
-
-//    BOOL flag  = YES;
-//    if(headTV.text.length > 50)
-//    {
-//        //        [DCFStringUtil showNotice:@"发票抬头必须在50字以内"];
-//        flag = NO;
-//    }
-//    
-//    
-//    if(companyTV.text.length > 64)
-//    {
-//        //        [DCFStringUtil showNotice:@"单位名称必须在64位以内"];
-//        flag = NO;
-//        
-//    }
-//    
-//    if(tokenTV.text.length > 32)
-//    {
-//        //        [DCFStringUtil showNotice:@"纳税人识别号必须在32位以内"];
-//        flag = NO;
-//        
-//    }
-//    
-//    
-//    if(addressTV.text.length > 64)
-//    {
-//        //        [DCFStringUtil showNotice:@"注册地址名称必须在64位以内"];
-//        flag = NO;
-//        
-//    }
-//    
-//    
-//    if([DCFCustomExtra validateMobile:telTV.text] == NO)
-//    {
-//        //        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
-//        flag = NO;
-//        
-//    }
-//    
-//    
-//    if(bankTV.text.length > 64)
-//    {
-//        //        [DCFStringUtil showNotice:@"开户银行名称必须在64位以内"];
-//        flag = NO;
-//        
-//    }
-//    
-//    
-//    if(accountTV.text.length > 32)
-//    {
-//        //        [DCFStringUtil showNotice:@"开户行账号必须在32位以内"];
-//        flag = NO;
-//        
-//    }
-//    if([self isAllNum:accountTV.text] != YES)
-//    {
-//        //        [DCFStringUtil showNotice:@"开户行账号必须是纯数字"];
-//        flag = NO;
-//        
-//    }
-//    NSArray *array = [NSArray arrayWithObjects:[NSNumber numberWithBool:flag],textViewArray, nil];
-//    return array;
+    
+    //    BOOL flag  = YES;
+    //    if(headTV.text.length > 50)
+    //    {
+    //        //        [DCFStringUtil showNotice:@"发票抬头必须在50字以内"];
+    //        flag = NO;
+    //    }
+    //
+    //
+    //    if(companyTV.text.length > 64)
+    //    {
+    //        //        [DCFStringUtil showNotice:@"单位名称必须在64位以内"];
+    //        flag = NO;
+    //
+    //    }
+    //
+    //    if(tokenTV.text.length > 32)
+    //    {
+    //        //        [DCFStringUtil showNotice:@"纳税人识别号必须在32位以内"];
+    //        flag = NO;
+    //
+    //    }
+    //
+    //
+    //    if(addressTV.text.length > 64)
+    //    {
+    //        //        [DCFStringUtil showNotice:@"注册地址名称必须在64位以内"];
+    //        flag = NO;
+    //
+    //    }
+    //
+    //
+    //    if([DCFCustomExtra validateMobile:telTV.text] == NO)
+    //    {
+    //        //        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+    //        flag = NO;
+    //
+    //    }
+    //
+    //
+    //    if(bankTV.text.length > 64)
+    //    {
+    //        //        [DCFStringUtil showNotice:@"开户银行名称必须在64位以内"];
+    //        flag = NO;
+    //
+    //    }
+    //
+    //
+    //    if(accountTV.text.length > 32)
+    //    {
+    //        //        [DCFStringUtil showNotice:@"开户行账号必须在32位以内"];
+    //        flag = NO;
+    //
+    //    }
+    //    if([self isAllNum:accountTV.text] != YES)
+    //    {
+    //        //        [DCFStringUtil showNotice:@"开户行账号必须是纯数字"];
+    //        flag = NO;
+    //
+    //    }
+    //    NSArray *array = [NSArray arrayWithObjects:[NSNumber numberWithBool:flag],textViewArray, nil];
+    //    return array;
 }
 
 
@@ -369,9 +369,9 @@
                 UITextView *tv = (UITextView *)[textViewArray objectAtIndex:indexPath.row];
                 [cell.contentView addSubview:tv];
             }
-     
             
-      
+            
+            
         }
         else
         {
@@ -463,31 +463,32 @@
     //    }
     
     
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"AddInvoice",time];
-        NSString *token = [DCFCustomExtra md5:string];
-        
-        //    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
-        NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&type=%@&name=%@&company=%@&taxcode=%@&regaddress=%@&tel=%@&bank=%@&bankaccount=%@",token,[self getMemberId],@"2",[(UITextView *)[textViewArray objectAtIndex:0] text],[(UITextView *)[textViewArray objectAtIndex:1] text],[(UITextView *)[textViewArray objectAtIndex:2] text],[(UITextView *)[textViewArray objectAtIndex:3] text],[(UITextView *)[textViewArray objectAtIndex:4] text],[(UITextView *)[textViewArray objectAtIndex:5] text],[(UITextView *)[textViewArray objectAtIndex:6] text]];
-        NSLog(@"push = %@",pushString);
-        
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2BAddInvoiceAddTag delegate:self];
-        
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/AddInvoice.html?"];
-        
-        
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"AddInvoice",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    //token,memberid(用户id),type(类型1-普通2-增值税),name(抬头),company(公司名),tel(电话),taxcode(纳税人识别号),regaddress(注册地址),bank(开户银行),bankaccount(开户账号)
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&type=%@&name=%@&company=%@&taxcode=%@&regaddress=%@&tel=%@&bank=%@&bankaccount=%@",token,[self getMemberId],@"2",[(UITextView *)[textViewArray objectAtIndex:0] text],[(UITextView *)[textViewArray objectAtIndex:1] text],[(UITextView *)[textViewArray objectAtIndex:2] text],[(UITextView *)[textViewArray objectAtIndex:3] text],[(UITextView *)[textViewArray objectAtIndex:4] text],[(UITextView *)[textViewArray objectAtIndex:5] text],[(UITextView *)[textViewArray objectAtIndex:6] text]];
+    NSLog(@"push = %@",pushString);
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2BAddInvoiceAddTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/AddInvoice.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
 }
 
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
-{    
+{
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
-    if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:msg] == NO)
     {
         [DCFStringUtil showNotice:@"新增失败"];
+        return;
     }
     [DCFStringUtil showNotice:msg];
     
@@ -495,10 +496,15 @@
     {
         if(result == 1)
         {
-//            [self.navigationController popViewControllerAnimated:YES];
+            if([self.delegate respondsToSelector:@selector(popDelegate_2)])
+            {
+                [self.delegate popDelegate_2];
+            }
+            
+            //            [self.navigationController popViewControllerAnimated:YES];
         }
     }
-
+    
 }
 
 - (void)didReceiveMemoryWarning

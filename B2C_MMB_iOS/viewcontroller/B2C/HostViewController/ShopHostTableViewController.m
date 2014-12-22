@@ -339,8 +339,6 @@
     
     if(URLTag == URLB2CGoodsListTag)
     {
-        
-        
         if(_reloading == YES)
         {
             [self doneLoadingViewData];

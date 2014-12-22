@@ -34,6 +34,8 @@
 
 @implementation FifthTableViewController
 
+@synthesize xmppRoom;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -373,6 +375,12 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [DCFStringUtil showNotice:@"退出成功"];
+            
+//            [xmppRoom leaveRoom];
+            [self.appDelegate goOffline];
+            [self.appDelegate disconnect];
+            [self.appDelegate reConnect];
+
         }
     }
     if (URLTag == URLInquiryCartCountTag)
@@ -394,6 +402,20 @@
     
 }
 
+- (AppDelegate *)appDelegate
+{
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+////获取聊天室信息
+//- (void)xmppRoomDidJoin:(XMPPRoom *)sender
+//{
+//    //    NSLog(@"获取聊天室信息");
+//    [xmppRoom fetchConfigurationForm];
+//    [xmppRoom fetchBanList];
+//    [xmppRoom fetchMembersList];
+//    [xmppRoom fetchModeratorsList];
+//}
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

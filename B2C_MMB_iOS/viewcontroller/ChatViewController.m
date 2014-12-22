@@ -252,9 +252,9 @@
 -(void)endChatConfrence
 {
     [xmppRoom leaveRoom];
-    [self.appDelegate goOffline];
-    [self.appDelegate disconnect];
-    [self.appDelegate reConnect];
+//    [self.appDelegate goOffline];
+//    [self.appDelegate disconnect];
+//    [self.appDelegate reConnect];
      [self dismissViewControllerAnimated:NO completion:nil];
     [self pageFromWhere];
     self.appDelegate.isConnect = @"断开";
@@ -591,6 +591,24 @@
 //    }
 }
 
+//生成随机聊天ID
+-(void)chatID
+{
+    self.changeArray = [[NSArray alloc] initWithObjects:@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"a",@"b",@"c",@"d",@"e",@"f",@"g",@"h",@"i",@"j",@"k",@"l",@"m",@"n",@"o",@"p",@"q",@"r",@"s",@"t",@"u",@"v",@"w",@"x",@"y",@"z",nil];
+    
+    NSMutableString *getStr = [[NSMutableString alloc] initWithCapacity:5];
+    
+    self.changeString = [[NSMutableString alloc] initWithCapacity:6];
+    for(NSInteger i = 0; i < 5; i++)
+    {
+        NSInteger index = arc4random() % ([self.changeArray count] - 1);
+        getStr = [self.changeArray objectAtIndex:index];
+        
+        self.changeString = (NSMutableString *)[self.changeString stringByAppendingString:getStr];
+    }
+}
+
+
 //发送消息
 -(void)sendNewChatMessage
 {
@@ -603,6 +621,7 @@
         NSString *message = messageField.text;
         if (message.length > 0)
         {
+            [self chatID];
             //生成XML消息文档
             NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
             if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
@@ -663,6 +682,7 @@
             [body setStringValue:stringLabel];
             NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
             [mes addAttributeWithName:@"type" stringValue:@"groupchat"];
+            [mes addAttributeWithName:@"id" stringValue:[NSString stringWithFormat:@"%@-10",self.changeString]];
             [mes addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",self.appDelegate.uesrID]];
             [mes addChild:body];
             [[self xmppStream] sendElement:mes];
@@ -784,10 +804,10 @@
 }
 
 //离开聊天室
-- (void)xmppRoomDidLeave:(XMPPRoom *)sender
-{
-    NSLog(@"离开聊天室");
-}
+//- (void)xmppRoomDidLeave:(XMPPRoom *)sender
+//{
+//    NSLog(@"离开聊天室");
+//}
 
 //新人加入群聊
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidJoin:(XMPPJID *)occupantJID

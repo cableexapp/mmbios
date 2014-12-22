@@ -350,12 +350,36 @@ double secondsCountDown =0;
     [timeCountTimer invalidate];
 }
 
+//生成随机聊天ID
+-(void)chatID
+{
+    self.changeArray = [[NSArray alloc] initWithObjects:@"0",@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z",@"a",@"b",@"c",@"d",@"e",@"f",@"g",@"h",@"i",@"j",@"k",@"l",@"m",@"n",@"o",@"p",@"q",@"r",@"s",@"t",@"u",@"v",@"w",@"x",@"y",@"z",nil];
+    
+    NSMutableString *getStr = [[NSMutableString alloc] initWithCapacity:5];
+    
+    self.changeString = [[NSMutableString alloc] initWithCapacity:6];
+    for(NSInteger i = 0; i < 5; i++)
+    {
+        NSInteger index = arc4random() % ([self.changeArray count] - 1);
+        getStr = [self.changeArray objectAtIndex:index];
+        
+        self.changeString = (NSMutableString *)[self.changeString stringByAppendingString:getStr];
+    }
+}
+    
+
 -(void)sendJoinRequest
 {
     NSLog(@"请求self.appDelegate.chatRequestJID = %@",self.appDelegate.chatRequestJID);
 
+    [self chatID];
+
+    
+    NSLog(@"self.changeString = %@",self.changeString);
+    
     NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
 //    [iq addAttributeWithName:@"id" stringValue:@"mE4pa-10"];
+    [iq addAttributeWithName:@"id" stringValue:[NSString stringWithFormat:@"%@-10",self.changeString]];
     [iq addAttributeWithName:@"to"stringValue:self.tempGroup];
     [iq addAttributeWithName:@"type"stringValue:@"set"];
 

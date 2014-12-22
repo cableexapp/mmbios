@@ -64,6 +64,10 @@
 
 @property (nonatomic,strong) NSString *fromStringFlag;
 
+@property (nonatomic, retain) NSArray *changeArray;
+
+@property (nonatomic, retain) NSMutableString *changeString;
+
 //时间中间量
 @property NSDate *tempDate;
 

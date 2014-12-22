@@ -59,7 +59,7 @@
     [self addChildViewController:myCableSureOrderTableViewController];
     myCableSureOrderTableViewController.addressDic = [[NSDictionary alloc] initWithDictionary:myDic];
     myCableSureOrderTableViewController.b2bMyCableOrderListData = _b2bMyCableOrderListData;
-    myCableSureOrderTableViewController.myOrderid = [[NSString alloc] initWithFormat:@"%@",_b2bMyCableOrderListData.orderid];
+    myCableSureOrderTableViewController.myOrderid = [[NSString alloc] initWithFormat:@"%@",_b2bMyCableOrderListData.orderserial];
     myCableSureOrderTableViewController.view.frame = self.tableSubView.bounds;
     [self.tableSubView addSubview:myCableSureOrderTableViewController.view];
 

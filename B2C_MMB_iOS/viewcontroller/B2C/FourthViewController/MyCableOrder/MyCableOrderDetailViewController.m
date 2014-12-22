@@ -85,7 +85,7 @@
     myCableDetailTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableDetailTableViewController"];
     [self addChildViewController:myCableDetailTableViewController];
     myCableDetailTableViewController.addressDic = [[NSDictionary alloc] initWithDictionary:myDic];
-    myCableDetailTableViewController.myOrderid = [[NSString alloc] initWithFormat:@"%@",_b2bMyCableOrderListData.orderid];
+    myCableDetailTableViewController.myOrderid = [[NSString alloc] initWithFormat:@"%@",_b2bMyCableOrderListData.orderserial];
     myCableDetailTableViewController.view.frame = self.tableSubView.bounds;
     [self.tableSubView addSubview:myCableDetailTableViewController.view];
     

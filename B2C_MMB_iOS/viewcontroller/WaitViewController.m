@@ -30,6 +30,9 @@ double secondsCountDown =0;
     UILabel *noNetMessage;
     FBShimmeringView *shimmeringView;
     UIStoryboard *sb;
+    
+    //防止返回过程重复请求标记
+    int isNeedSendRequest;
 }
 
 
@@ -203,6 +206,7 @@ double secondsCountDown =0;
     {
         [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
     }
+
     else
     {
         [self.tabBarController setSelectedIndex:0];
@@ -227,6 +231,8 @@ double secondsCountDown =0;
         }
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
+    
+     isNeedSendRequest = 2;
 }
 
 -(void)goBack
@@ -279,16 +285,16 @@ double secondsCountDown =0;
 //        [self setHidesBottomBarWhenPushed:YES];
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = self.tempFrom;
-        [self presentViewController:chatVC animated:YES completion:nil];
+//        [self presentViewController:chatVC animated:YES completion:nil];
         
-//        CATransition *transition = [CATransition animation];
-//        transition.duration = 0.5f;
-//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-//        transition.type =  kCATransitionMoveIn;
-//        transition.subtype =  kCATransitionFromTop;
-//        transition.delegate = self;
-//        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-//        [self.navigationController pushViewController:chatVC animated:NO];
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.5f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatVC animated:NO];
 //        [self setHidesBottomBarWhenPushed:NO];
     }
     else if(tempCount >= 1)
@@ -304,8 +310,19 @@ double secondsCountDown =0;
 -(void)viewWillAppear:(BOOL)animated
 {
     [self checkNet];
-    //发起请求加入咨询队列
-    [self sendJoinRequest];
+    NSLog(@"isNeedSendRequest = %d",isNeedSendRequest);
+    
+    //防止页面返回重复请求
+//    if ([self.appDelegate.isConnect isEqualToString:@"连接"] || [self.appDelegate.isConnect isEqualToString:@"断开"])
+//    {
+//        
+//    }
+//    else
+//    {
+        //发起请求加入咨询队列
+        [self sendJoinRequest];
+//    }
+    
 }
 
 //检查网络是否连接
@@ -370,15 +387,9 @@ double secondsCountDown =0;
 
 -(void)sendJoinRequest
 {
-    NSLog(@"请求self.appDelegate.chatRequestJID = %@",self.appDelegate.chatRequestJID);
-
     [self chatID];
 
-    
-    NSLog(@"self.changeString = %@",self.changeString);
-    
     NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
-//    [iq addAttributeWithName:@"id" stringValue:@"mE4pa-10"];
     [iq addAttributeWithName:@"id" stringValue:[NSString stringWithFormat:@"%@-10",self.changeString]];
     [iq addAttributeWithName:@"to"stringValue:self.tempGroup];
     [iq addAttributeWithName:@"type"stringValue:@"set"];
@@ -506,7 +517,7 @@ double secondsCountDown =0;
 {
     if (buttonIndex == 1)
     {
-        [self setHidesBottomBarWhenPushed:YES];
+        
         SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [sb instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
         CATransition *transition = [CATransition animation];
         transition.duration = 0.5f;
@@ -515,7 +526,9 @@ double secondsCountDown =0;
         transition.subtype =  kCATransitionFromTop;
         transition.delegate = self;
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:speedAskPriceFirstViewController animated:NO];
+        [self setHidesBottomBarWhenPushed:NO];
     }
     else if (buttonIndex == 0)
     {

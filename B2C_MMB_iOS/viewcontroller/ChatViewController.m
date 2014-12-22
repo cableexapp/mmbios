@@ -68,26 +68,33 @@
     nameLabel.textColor = [UIColor whiteColor];
     nameLabel.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
     nameLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view insertSubview:nameLabel atIndex:1];
+//    [self.view insertSubview:nameLabel atIndex:1];
     
     //导航标题
     naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(130,20, 120, 44)];
     naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.font = [UIFont systemFontOfSize:20];
-    naviTitle.textAlignment = NSTextAlignmentLeft;
-    [self.view insertSubview:naviTitle atIndex:2];
+    naviTitle.textAlignment = NSTextAlignmentCenter;
+//    [self.view insertSubview:naviTitle atIndex:2];
+    self.navigationItem.titleView = naviTitle;
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(10, 31.5, 15, 22);
     [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
+//    [self.view addSubview:btn];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+//    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+//    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+    self.tableView.backgroundColor = [UIColor lightGrayColor];
+
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
@@ -138,8 +145,10 @@
     //在线状态
     image = [UIImage imageNamed:@"online.png"];
     imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(115, 38, 10, 10);
-    [self.view insertSubview:imageView atIndex:2];
+//    imageView.frame = CGRectMake(115, 38, 10, 10);
+    imageView.frame = CGRectMake(105, 17, 10, 10);
+//    [self.view insertSubview:imageView atIndex:2];
+    [self.navigationController.navigationBar addSubview:imageView];
     
     //自定义网络状态通知视图
     noNet = [[UILabel alloc] init];
@@ -168,7 +177,10 @@
     [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
     [rightBtn setFrame:CGRectMake(self.view.frame.size.width-65, 20, 60, 44)];
     [rightBtn addTarget:self action:@selector(endChatConfrence) forControlEvents:UIControlEventTouchUpInside];
-    [self.view insertSubview:rightBtn aboveSubview:nameLabel];
+//    [self.view insertSubview:rightBtn aboveSubview:nameLabel];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.leftBarButtonItem = rightItem;
     
     if ( !faceBoard)
     {
@@ -252,10 +264,10 @@
 -(void)endChatConfrence
 {
     [xmppRoom leaveRoom];
-//    [self.appDelegate goOffline];
-//    [self.appDelegate disconnect];
-//    [self.appDelegate reConnect];
-     [self dismissViewControllerAnimated:NO completion:nil];
+    [self.appDelegate goOffline];
+    [self.appDelegate disconnect];
+    [self.appDelegate reConnect];
+    [self dismissViewControllerAnimated:NO completion:nil];
     [self pageFromWhere];
     self.appDelegate.isConnect = @"断开";
 }
@@ -273,7 +285,6 @@
     {
          self.appDelegate.isConnect = @"断开";
     }
-    
 }
 
 -(void)pageFromWhere
@@ -388,6 +399,14 @@
         if (self.appDelegate.uesrID != nil)
         {
             [self creatRoom];
+        }
+    }
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    for(UIView *view in self.navigationController.navigationBar.subviews)
+    {
+        if([view tag] == 100 || [view isKindOfClass:[UIButton class]] || [view tag] == 101)
+        {
+            [view setHidden:YES];
         }
     }
     [[UIApplication sharedApplication] cancelAllLocalNotifications];

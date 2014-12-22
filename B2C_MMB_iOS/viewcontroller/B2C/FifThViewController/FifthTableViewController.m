@@ -375,11 +375,12 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [DCFStringUtil showNotice:@"退出成功"];
-            
-//            [xmppRoom leaveRoom];
+
+            //切换登录账号，结束之前对话
             [self.appDelegate goOffline];
             [self.appDelegate disconnect];
             [self.appDelegate reConnect];
+            self.appDelegate.isConnect = @"断开";
 
         }
     }
@@ -406,16 +407,6 @@
 {
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
-
-////获取聊天室信息
-//- (void)xmppRoomDidJoin:(XMPPRoom *)sender
-//{
-//    //    NSLog(@"获取聊天室信息");
-//    [xmppRoom fetchConfigurationForm];
-//    [xmppRoom fetchBanList];
-//    [xmppRoom fetchMembersList];
-//    [xmppRoom fetchModeratorsList];
-//}
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

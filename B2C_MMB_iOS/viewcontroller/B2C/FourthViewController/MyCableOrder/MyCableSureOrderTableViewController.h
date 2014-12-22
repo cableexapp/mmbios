@@ -10,8 +10,9 @@
 #import "DCFConnectionUtil.h"
 #import "B2BMyCableOrderListData.h"
 #import "ManageInvoiceViewController.h"
+#import "ChooseReceiveAddressViewController.h"
 
-@interface MyCableSureOrderTableViewController : UITableViewController<ConnectionDelegate>
+@interface MyCableSureOrderTableViewController : UITableViewController<ConnectionDelegate,B2BReceveAddress>
 {
     DCFConnectionUtil *conn;
     

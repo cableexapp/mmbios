@@ -175,6 +175,7 @@
         
         chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
         chooseAddress.delegate = self;
+        chooseAddress.B2COrB2B = YES;
         [chooseAddress loadRequest];
         
         goodsMoney = money;

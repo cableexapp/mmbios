@@ -47,6 +47,7 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     ManagReceiveAddressViewController *managReceiveAddressViewController = [[ManagReceiveAddressViewController alloc] init];
+    managReceiveAddressViewController.B2COrB2B = self.B2COrB2B;
     [self.navigationController pushViewController:managReceiveAddressViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -106,13 +107,29 @@
 {
 #pragma mark - 收货地址
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
+    //YES为B2C进来，NO表示B2B进来
+    
+    NSString *urlString = nil;
+    NSString *string = nil;
+    
+    if(self.B2COrB2B == YES)
+    {
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
+        string = [NSString stringWithFormat:@"%@%@",@"getMemberAddressList",time];
+    }
+    else
+    {
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/AddressList.html?"];
+        string = [NSString stringWithFormat:@"%@%@",@"AddressList",time];
+    }
+    
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getMemberAddressList.html?"];
+    
+
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     
@@ -127,14 +144,9 @@
         self.tvBackView.frame = tv.frame;
     }
 
+    [self cancelRequest];
     
-    if(conn)
-    {
-        [conn stopConnection];
-        conn = nil;
-    }
     [self loadRequest];
-    
 }
 
 - (NSString *) getMemberId
@@ -156,7 +168,6 @@
 {
     if (URLTag == URLReceiveAddressTag)
     {
-        NSLog(@"%@",dicRespon);
         int result= [[dicRespon objectForKey:@"result"] intValue];
         NSString *msg = [dicRespon objectForKey:@"msg"];
         
@@ -172,10 +183,6 @@
                 [DCFStringUtil showNotice:@"获取收货地址失败"];
             }
             receiveDic = [[NSDictionary alloc] init];
-            if([self.delegate respondsToSelector:@selector(receveAddress:)])
-            {
-                [self.delegate receveAddress:receiveDic];
-            }
         }
         else if (result == 1)
         {
@@ -187,10 +194,6 @@
             if(!addressListDataArray || addressListDataArray.count == 0)
             {
                 receiveDic = [[NSDictionary alloc] init];
-                if([self.delegate respondsToSelector:@selector(receveAddress:)])
-                {
-                    [self.delegate receveAddress:receiveDic];
-                }
             }
             
             for(int i=0;i<addressListDataArray.count;i++)
@@ -212,10 +215,6 @@
                         
                     }
                     receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-                    if([self.delegate respondsToSelector:@selector(receveAddress:)])
-                    {
-                        [self.delegate receveAddress:receiveDic];
-                    }
                 }
                 else
                 {
@@ -223,6 +222,14 @@
                 }
             }
             
+        }
+        if([self.delegate respondsToSelector:@selector(receveAddress:)])
+        {
+            [self.delegate receveAddress:receiveDic];
+        }
+        if([self.delegate_1 respondsToSelector:@selector(B2BReceveAddress:)])
+        {
+            [self.delegate_1 B2BReceveAddress:receiveDic];
         }
         if(tv)
         {
@@ -274,6 +281,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    [self loadRequest];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doSomething:) name:@"addressListDataArray" object:nil];
     

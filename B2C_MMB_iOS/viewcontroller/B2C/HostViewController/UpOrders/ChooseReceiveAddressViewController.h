@@ -18,6 +18,12 @@
 
 @end
 
+@protocol B2BReceveAddress <NSObject>
+
+- (void) B2BReceveAddress:(NSDictionary *) dic;
+
+@end
+
 @interface ChooseReceiveAddressViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate>
 {
     UITableView *tv;
@@ -25,12 +31,13 @@
     NSMutableArray *dataArray;
 }
 
-
+@property (assign,nonatomic) BOOL B2COrB2B;
 @property (strong,nonatomic) UIView *tvBackView;
 @property (strong,nonatomic) UIView *buttomView;
 @property (strong,nonatomic) UIButton *buttomBtn;
 
 @property (assign,nonatomic) id<ReceveAddress> delegate;
+@property (assign,nonatomic) id<B2BReceveAddress> delegate_1;
 
 - (id) initWithDataArray:(NSMutableArray *) arr;
 

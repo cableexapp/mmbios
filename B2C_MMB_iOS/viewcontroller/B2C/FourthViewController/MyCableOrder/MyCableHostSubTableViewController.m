@@ -123,9 +123,7 @@
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
-{
-    NSLog(@"全部订单 = %@",dicRespon);
-    
+{    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     NSLog(@"msg = %@",msg);

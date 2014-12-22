@@ -29,4 +29,6 @@
 
 @property (assign,nonatomic) int btnIndex;
 
+- (void) loadRequest:(int) sender;
+
 @end

@@ -453,7 +453,7 @@
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
-    if(memberid.length == 0)
+    if([DCFCustomExtra validateString:memberid] == NO)
     {
         //        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
         //        [self presentViewController:loginNavi animated:YES completion:nil];
@@ -540,7 +540,23 @@
     
     conn = [[DCFConnectionUtil alloc]initWithURLTag:URLUpImagePicTag delegate:self];
     
-    NSString *strRequest = [NSString stringWithFormat:@"memberId=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@&loginid=%@",[self getMemberId],token,[self getUserName],self.tel_Tf.text,[self getUserName],[self.content_Tv.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"3",loginid];
+    NSString *telStr = self.tel_Tf.text;
+    if([DCFCustomExtra validateString:telStr] == NO)
+    {
+        telStr = @"";
+    }
+    
+    NSString *contentStr = self.content_Tv.text;
+    if([DCFCustomExtra validateString:contentStr] == NO)
+    {
+        contentStr = @"";
+    }
+    else
+    {
+        contentStr = [contentStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@&loginid=%@",[self getMemberId],token,[self getUserName],telStr,[self getUserName],contentStr,@"3",loginid];
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?",strRequest];
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
     

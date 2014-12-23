@@ -297,19 +297,33 @@
                 [cell.contentView addSubview:nameAndTelLabel];
                 
                 NSString *address = [NSString stringWithFormat:@"收货地址: %@",[self.addressDic objectForKey:@"fullAddress"]];
+                NSString *myAdd = nil;
+                if([address rangeOfString:@"(null)"].location != NSNotFound)
+                {
+                    myAdd = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                }
+                else if([address rangeOfString:@"null"].location != NSNotFound)
+                {
+                    myAdd = [address stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                }
+                else
+                {
+                    myAdd = address;
+                }
+
                 CGSize size;
-                if(address.length == 0 || [address isKindOfClass:[NSNull class]])
+                if([DCFCustomExtra validateString:myAdd] == NO)
                 {
                     size = CGSizeMake(30, 30);
                 }
                 else
                 {
-                    size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
+                    size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:myAdd WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
                 }
                 UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameAndTelLabel.frame.origin.y + nameAndTelLabel.frame.size.height, size.width, size.height)];
-                NSMutableAttributedString *myAddress = [[NSMutableAttributedString alloc] initWithString:address];
+                NSMutableAttributedString *myAddress = [[NSMutableAttributedString alloc] initWithString:myAdd];
                 [myAddress addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
-                [myAddress addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(5, address.length-5)];
+                [myAddress addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(5, myAdd.length-5)];
                 [addressLabel setAttributedText:myAddress];
                 [addressLabel setFont:[UIFont systemFontOfSize:12]];
                 [addressLabel setNumberOfLines:0];

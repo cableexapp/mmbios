@@ -276,30 +276,33 @@
                 [cell.contentView addSubview:nameAndTelLabel];
                 
                 NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
-#pragma mark - 陈晓修改－－开始
+                NSString *myAdd = nil;
                 if([address rangeOfString:@"(null)"].location != NSNotFound)
                 {
-                    address = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                    myAdd = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
                 }
-                if([address rangeOfString:@"null"].location != NSNotFound)
+                else if([address rangeOfString:@"null"].location != NSNotFound)
                 {
-                    address = [address stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                    myAdd = [address stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                }
+                else
+                {
+                    myAdd = address;
                 }
                 CGSize size;
-                if([DCFCustomExtra validateString:address] == NO)
+                if([DCFCustomExtra validateString:myAdd] == NO)
                 {
                     size = CGSizeMake(30, 30);
                 }
                 else
                 {
-                    size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(cell.contentView.frame.size.width-40, MAXFLOAT)];
+                    size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:myAdd WithSize:CGSizeMake(cell.contentView.frame.size.width-40, MAXFLOAT)];
                 }
                 UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, nameAndTelLabel.frame.origin.y + nameAndTelLabel.frame.size.height, size.width, size.height)];
-                [addressLabel setText:address];
+                [addressLabel setText:myAdd];
                 [addressLabel setFont:[UIFont systemFontOfSize:12]];
                 [addressLabel setNumberOfLines:0];
                 [cell.contentView addSubview:addressLabel];
-#pragma mark - 陈晓修改－－结束
             }
         }
         else

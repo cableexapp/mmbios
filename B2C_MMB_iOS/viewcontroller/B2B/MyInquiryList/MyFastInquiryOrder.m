@@ -21,6 +21,9 @@
     NSString *fullAddress;
     NSString *inquiryserial;
     NSString *inquiryid;
+    UILabel *situationLabel;
+    
+    NSString *oemNo;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -57,6 +60,9 @@
     
     [self pushAndPopStyle];
     
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.sv setBackgroundColor:[UIColor whiteColor]];
+    
     self.againAskBtn.layer.cornerRadius = 5;
     self.againAskBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     
@@ -67,76 +73,122 @@
     self.navigationItem.titleView = top;
     
     [self.orderLabel setFrame:CGRectMake(self.orderLabel.frame.origin.x, self.orderLabel.frame.origin.y, ScreenWidth-100, self.orderLabel.frame.size.height)];
-    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",self.fastData.oemNo]];
+    if([DCFCustomExtra validateString:self.fastData.oemNo] == NO)
+    {
+        oemNo = @"";
+    }
+    else
+    {
+        oemNo = self.fastData.oemNo;
+    }
+    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",oemNo]];
     
     [self.statusLabel setText:[NSString stringWithFormat:@"状态:%@",self.fastData.status]];
     [self.statusLabel setTextAlignment:NSTextAlignmentRight];
     
-    [self.upTimeLabel setText:[NSString stringWithFormat:@"%@",self.fastData.myTime]];
-    [self.telLabel setText:[NSString stringWithFormat:@"%@",self.fastData.phone]];
-    [self.linkManLabel setText:[NSString stringWithFormat:@"%@",self.fastData.linkman]];
+    NSString *mytime = [NSString stringWithFormat:@"提交时间: %@",self.fastData.myTime];
+    if([DCFCustomExtra validateString:self.fastData.myTime] == NO)
+    {
+        [self.upTimeLabel setFrame:CGRectMake(10, 0, ScreenWidth-20, 0)];
+    }
+    else
+    {
+        [self.upTimeLabel setFrame:CGRectMake(10, 0, ScreenWidth-20, self.upTimeLabel.frame.size.height)];
+        NSMutableAttributedString *myTime = [[NSMutableAttributedString alloc] initWithString:mytime];
+        [myTime addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
+        [myTime addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, mytime.length-5)];
+        [self.upTimeLabel setAttributedText:myTime];
+    }
+
+    NSString *myphone = [NSString stringWithFormat:@"联系电话: %@",self.fastData.phone];
+    if([DCFCustomExtra validateString:self.fastData.phone] == NO)
+    {
+        [self.telLabel setFrame:CGRectMake(10, self.upTimeLabel.frame.origin.y+self.upTimeLabel.frame.size.height, ScreenWidth-20, 0)];
+    }
+    else
+    {
+        [self.telLabel setFrame:CGRectMake(10, self.upTimeLabel.frame.origin.y+self.upTimeLabel.frame.size.height, ScreenWidth-20, self.telLabel.frame.size.height)];
+        NSMutableAttributedString *myPhone = [[NSMutableAttributedString alloc] initWithString:myphone];
+        [myPhone addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
+        [myPhone addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, myphone.length-5)];
+        [self.telLabel setAttributedText:myPhone];
+    }
+    
+    NSString *myman = [NSString stringWithFormat:@"联系人: %@",self.fastData.linkman];
+    if([DCFCustomExtra validateString:self.fastData.linkman] == NO)
+    {
+        [self.linkManLabel setFrame:CGRectMake(10, self.telLabel.frame.origin.y+self.telLabel.frame.size.height, ScreenWidth-20, 0)];
+    }
+    else
+    {
+        [self.linkManLabel setFrame:CGRectMake(10, self.telLabel.frame.origin.y+self.telLabel.frame.size.height, ScreenWidth-20, self.linkManLabel.frame.size.height)];
+        NSMutableAttributedString *myMan = [[NSMutableAttributedString alloc] initWithString:myman];
+        [myMan addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
+        [myMan addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, myman.length-4)];
+        [self.linkManLabel setAttributedText:myMan];
+    }
+    
     
     
     UILabel *requestLabel = [[UILabel alloc] init];
     NSString *request = [NSString stringWithFormat:@"%@",self.fastData.content];
-    if(request.length == 0 || [request isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:request] == NO)
     {
-        [self.requestFirstLabel setFrame:CGRectMake(self.requestFirstLabel.frame.origin.x, self.requestFirstLabel.frame.origin.y, self.requestFirstLabel.frame.size.width, 0)];
-        [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height-20, ScreenWidth-20, 0)];
+        [self.requestFirstLabel setFrame:CGRectMake(10, self.linkManLabel.frame.origin.y, self.linkManLabel.frame.size.width, 0)];
+        [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height, ScreenWidth-20, 0)];
     }
     else
     {
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:request WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+        [self.requestFirstLabel setFrame:CGRectMake(10, self.linkManLabel.frame.origin.y, self.linkManLabel.frame.size.width, self.requestFirstLabel.frame.size.height)];
         if(size.height <= 30)
         {
-            [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height-20, ScreenWidth-20, 30)];
+            [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height, ScreenWidth-20, 30)];
         }
         else
         {
-            [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height-20, ScreenWidth-20, size.height)];
+            [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height, ScreenWidth-20, size.height)];
         }
     }
     [requestLabel setText:request];
     [requestLabel setFont:[UIFont systemFontOfSize:14]];
     [requestLabel setNumberOfLines:0];
+    [requestLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
     [self.sv addSubview:requestLabel];
     
-    UILabel *picTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height+5, ScreenWidth-20, 30)];
-    [picTitleLabel setText:@"已传照片:"];
-    [self.sv addSubview:picTitleLabel];
-    
-    UIImageView *iv = [[UIImageView alloc] init];
-    NSString *filePath = [NSString stringWithFormat:@"%@",[self.fastData filePath]];
-    if(filePath.length == 0 || [filePath isKindOfClass:[NSNull class]])
-    {
-        [picTitleLabel setFrame:CGRectMake(picTitleLabel.frame.origin.x, picTitleLabel.frame.origin.y, picTitleLabel.frame.size.width, 0)];
-        [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 0)];
-    }
-    else
-    {
-        [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 60)];
-        [iv setImageWithURL:[NSURL URLWithString:filePath]];
-        [iv setUserInteractionEnabled:YES];
-        UITapGestureRecognizer *ivTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ivTap:)];
-        [iv addGestureRecognizer:ivTap];
-    }
-    [self.sv addSubview:iv];
 
-    UILabel *situationLabel = [[UILabel alloc] init];
+    
+//    UIImageView *iv = [[UIImageView alloc] init];
+//    NSString *filePath = [NSString stringWithFormat:@"%@",[self.fastData filePath]];
+//    if(filePath.length == 0 || [filePath isKindOfClass:[NSNull class]])
+//    {
+//        [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 0)];
+//    }
+//    else
+//    {
+//        [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 60)];
+//        [iv setImageWithURL:[NSURL URLWithString:filePath]];
+//        [iv setUserInteractionEnabled:YES];
+//        UITapGestureRecognizer *ivTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ivTap:)];
+//        [iv addGestureRecognizer:ivTap];
+//    }
+//    [self.sv addSubview:iv];
+
+    situationLabel = [[UILabel alloc] init];
     NSString *string = [NSString stringWithFormat:@"%@",self.fastData.treatment];
     NSString *situation = [NSString stringWithFormat:@"处理情况: %@",string];
-    [situationLabel setText:situation];
-    if(string.length == 0 || [string isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:string] == NO)
     {
-        [situationLabel setFrame:CGRectMake(10, iv.frame.origin.y+iv.frame.size.height+10, ScreenWidth-20, 30)];
-        [situationLabel setText:@"处理情况: 暂无处理情况哦~"];
+        [situationLabel setFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height+10, ScreenWidth-20, 0)];
     }
     else
     {
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:situation WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-        [situationLabel setFrame:CGRectMake(10, iv.frame.origin.y+iv.frame.size.height+10, ScreenWidth-20, size.height)];
+        [situationLabel setFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height+10, ScreenWidth-20, size.height)];
     }
-    [situationLabel setFont:[UIFont systemFontOfSize:14]];
+    [situationLabel setText:situation];
+    [situationLabel setTextColor:[UIColor whiteColor]];
+    [situationLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [situationLabel setNumberOfLines:0];
     [self.sv addSubview:situationLabel];
     
@@ -157,14 +209,14 @@
     
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *s = [NSString stringWithFormat:@"%@%@",@"getInquiryInfo",time];
+    NSString *s = [NSString stringWithFormat:@"%@%@",@"OemDetail",time];
     NSString *token = [DCFCustomExtra md5:s];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&inquiryid=%@",token,[self.fastData inquiryId]];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&oemid=%@",token,self.fastData.oemId];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetInquiryInfoTag delegate:self];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getInquiryInfo.html?"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/OemDetail.html?"];
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -173,6 +225,7 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
 //    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSLog(@"%@",dicRespon);
     if(URLTag == URLGetInquiryInfoTag)
     {
         if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
@@ -195,18 +248,18 @@
                 }
                 else
                 {
-                    fullAddress = [NSString stringWithFormat:@"%@%@%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"],[dic objectForKey:@"district"],[dic objectForKey:@"address"]];
-                    NSLog(@"fullAddress = %@",fullAddress);
-                    
-                    NSString *tel = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系电话:%@",self.fastData.phone]];
-                    NSString *name = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系人:%@",self.fastData.linkman]];
-                    myDic = [NSDictionary dictionaryWithObjectsAndKeys:name,@"name",tel,@"tel",fullAddress,@"fullAddress", nil];
-                    
-                    inquiryserial = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryserial"]];
-                    
-                    inquiryid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryid"]];
-                    
-                    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",inquiryserial]];
+//                    fullAddress = [NSString stringWithFormat:@"%@%@%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"],[dic objectForKey:@"district"],[dic objectForKey:@"address"]];
+//                    NSLog(@"fullAddress = %@",fullAddress);
+//                    
+//                    NSString *tel = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系电话:%@",self.fastData.phone]];
+//                    NSString *name = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系人:%@",self.fastData.linkman]];
+//                    myDic = [NSDictionary dictionaryWithObjectsAndKeys:name,@"name",tel,@"tel",fullAddress,@"fullAddress", nil];
+//                    
+//                    inquiryserial = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryserial"]];
+//                    
+//                    inquiryid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryid"]];
+//                    
+//                    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",inquiryserial]];
 
                 }
             }

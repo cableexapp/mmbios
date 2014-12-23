@@ -1205,13 +1205,12 @@
         }
         else
         {
-            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,40)];
+            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,40)];
         }
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(45,0,ScreenWidth-150, 45)];
-        [label setFont:[UIFont systemFontOfSize:15]];
+        [label setFont:[UIFont systemFontOfSize:14]];
         [label setText:[detailData shopName]];
         label.numberOfLines = 2;
-//        label.backgroundColor = [UIColor redColor];
         [label setTextAlignment:NSTextAlignmentLeft];
         [label setTextColor:[UIColor blackColor]];
         

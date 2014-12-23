@@ -39,7 +39,9 @@
     NSString *roomMessage;
     int messagePush;
     NSString *isOn;
-    NSString *MessageFlag;
+    NSString *MessageFlag; //商品详情是否发送商品网址链接标记
+    
+    NSString *MessageTempFlag; //商品快照是否发送商品网址链接标记
     
     UIButton *btn;
     UIButton *rightBtn;
@@ -308,7 +310,7 @@
     {
         self.appDelegate.uesrID = nil;
         self.appDelegate.personName = nil;
-      if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"商品快照在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
+      if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
         {
             NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
             if (self.navigationController.viewControllers.count == 8)
@@ -357,6 +359,11 @@
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
                 }
+            }
+            if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"商品快照在线客服"])
+            {
+
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
             }
         }
     }
@@ -533,14 +540,24 @@
     }
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
-        NSString *string =  [[NSUserDefaults standardUserDefaults] objectForKey:@"tempFlag"];
-        if (string.length > 0)
+        NSString *GoodsDetailstring =  [[NSUserDefaults standardUserDefaults] objectForKey:@"tempFlag"];
+        NSString *GoodsFaststring =  [[NSUserDefaults standardUserDefaults] objectForKey:@"tempFlag"];
+        if (GoodsDetailstring.length > 0)
         {
             MessageFlag = @"消息";
         }
         else
         {
             MessageFlag = nil;
+        }
+        
+        if (GoodsFaststring.length > 0)
+        {
+            MessageTempFlag = @"消息";
+        }
+        else
+        {
+            MessageTempFlag = nil;
         }
     }
    
@@ -802,10 +819,6 @@
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 热门型号提交]：%@",message];
             }
-            else if ([self.fromStringFlag isEqualToString:@"商品快照在线客服"])
-            {
-                stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品快照]：%@",message];
-            }
             else if([self.fromStringFlag isEqualToString:@"工具栏客服"])
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 首页客服]：%@",message];
@@ -828,6 +841,20 @@
                     else
                     {
                         stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：%@",message];
+                    }
+                }
+                if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"商品快照在线客服"])
+                {
+                    if (MessageTempFlag.length == 0)
+                    {
+                        stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品快照]：\n%@\n%@",[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:0],message];
+                        MessageTempFlag = stringLabel;
+                        [[NSUserDefaults standardUserDefaults] setObject:MessageTempFlag forKey:@"MessageTempFlag"];
+                        
+                    }
+                    else
+                    {
+                        stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品快照]：%@",message];
                     }
                 }
             }

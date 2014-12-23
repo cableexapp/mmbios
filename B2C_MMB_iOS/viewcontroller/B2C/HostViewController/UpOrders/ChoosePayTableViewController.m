@@ -136,7 +136,8 @@
     
     payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [payBtn setTitle:@"在线支付" forState:UIControlStateNormal];
-    [payBtn setBackgroundColor:[UIColor blueColor]];
+    payBtn.layer.cornerRadius = 5;
+    [payBtn setBackgroundColor:[UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0]];
     [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [payBtn setFrame:CGRectMake(20, 10, ScreenWidth-40, 40)];
 }

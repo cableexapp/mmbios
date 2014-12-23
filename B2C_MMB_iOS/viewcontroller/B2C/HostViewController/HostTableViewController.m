@@ -95,11 +95,7 @@ BOOL isPopShow = NO;
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    countLabel = [[UIImageView alloc] init];
-    countLabel.frame = CGRectMake(self.view.frame.size.width/5-25, 2, 10, 10);
-    countLabel.hidden = YES;
-    countLabel.image = [UIImage imageNamed:@"msg_bq"];
-    [secondBarView addSubview:countLabel];
+    
     isPopShow = NO;
     self.tableView.scrollEnabled = YES;
     [self loadbadgeCount];
@@ -213,12 +209,16 @@ BOOL isPopShow = NO;
     }
     if (URLTag == URLInquiryCartCountTag)
     {
+        NSLog(@"询价车商品数量 = %@",dicRespon);
         tempCount = [[dicRespon objectForKey:@"value"] intValue];
     }
     if (URLTag == URLShopCarCountTag)
     {
+         NSLog(@"购物车商品数量 = %@",dicRespon);
         tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
     }
+    
+    NSLog(@"询价车商品数量 = %d 购物车商品数量 = %d",tempCount,tempShopCar);
     if (tempCount > 0 || tempShopCar > 0)
     {
          countLabel.hidden = NO;
@@ -226,6 +226,7 @@ BOOL isPopShow = NO;
     if (tempCount == 0 && tempShopCar == 0)
     {
         countLabel.hidden = YES;
+//        [countLabel removeFromSuperview];
     }
 }
 
@@ -354,6 +355,12 @@ BOOL isPopShow = NO;
     [secondBarView addGestureRecognizer:popShopCarTap];
   
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
+    
+    countLabel = [[UIImageView alloc] init];
+    countLabel.frame = CGRectMake(self.view.frame.size.width/5-25, 2, 10, 10);
+    countLabel.hidden = YES;
+    countLabel.image = [UIImage imageNamed:@"msg_bq"];
+    [secondBarView addSubview:countLabel];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
     

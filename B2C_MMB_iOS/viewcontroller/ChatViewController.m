@@ -572,7 +572,17 @@
         messageField.layer.cornerRadius =3;
         [toolBar addSubview:messageField];
     }
-    
+    NSLog(@"self.appDelegate.uesrID =%@",self.appDelegate.uesrID);
+    if (self.appDelegate.uesrID.length > 0)
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:self.appDelegate.uesrID forKey:@"toJID"];
+        
+    }
+    if ([self.appDelegate.isConnect isEqualToString:@"连接"])
+    {
+        MessageFlag = @"消息";
+    }
+   
     NSLog(@"咨询入口 = %@",self.fromStringFlag);
     NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
@@ -788,7 +798,6 @@
     }
 }
 
-
 //发送消息
 -(void)sendNewChatMessage
 {
@@ -863,7 +872,15 @@
             NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
             [mes addAttributeWithName:@"type" stringValue:@"groupchat"];
             [mes addAttributeWithName:@"id" stringValue:[NSString stringWithFormat:@"%@-10",self.changeString]];
-            [mes addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",self.appDelegate.uesrID]];
+            if (self.appDelegate.uesrID.length > 0)
+            {
+                [mes addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",self.appDelegate.uesrID]];
+            }
+            if (self.appDelegate.uesrID.length == 0)
+            {
+                [mes addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"toJID"]]];
+            }
+            
             [mes addChild:body];
             [[self xmppStream] sendElement:mes];
 
@@ -934,7 +951,6 @@
     [xmppRoom configureRoomUsingOptions:nil];
     [xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [xmppRoom joinRoomUsingNickname:self.appDelegate.chatRequestJID history:nil];
-//    [xmppRoom joinRoomUsingNickname:@"测试" history:nil];
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm

@@ -178,7 +178,7 @@ BOOL isPopShow = NO;
                 [typeBtn setTitle:str forState:UIControlStateNormal];
                 [typeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [typeBtn setTag:i];
-                typeBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+                typeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
                 [typeBtn addTarget:self action:@selector(typeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 [typeBtnArray addObject:typeBtn];
             }
@@ -209,16 +209,12 @@ BOOL isPopShow = NO;
     }
     if (URLTag == URLInquiryCartCountTag)
     {
-        NSLog(@"询价车商品数量 = %@",dicRespon);
         tempCount = [[dicRespon objectForKey:@"value"] intValue];
     }
     if (URLTag == URLShopCarCountTag)
     {
-         NSLog(@"购物车商品数量 = %@",dicRespon);
         tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
     }
-    
-    NSLog(@"询价车商品数量 = %d 购物车商品数量 = %d",tempCount,tempShopCar);
     if (tempCount > 0 || tempShopCar > 0)
     {
          countLabel.hidden = NO;
@@ -226,7 +222,6 @@ BOOL isPopShow = NO;
     if (tempCount == 0 && tempShopCar == 0)
     {
         countLabel.hidden = YES;
-//        [countLabel removeFromSuperview];
     }
 }
 
@@ -334,8 +329,8 @@ BOOL isPopShow = NO;
     search.image = [UIImage imageNamed:@"search"];
     [searchImageView addSubview:search];
     
-    UILabel *searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 5, 150, 20)];
-    searchLabel.text = @"输入搜索内容";
+    UILabel *searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 5, 190, 20)];
+    searchLabel.text = @"寻找电缆、品牌、型号、规格";
     searchLabel.font = [UIFont systemFontOfSize:14];
     searchLabel.textColor = [UIColor lightGrayColor];
     [searchImageView addSubview:searchLabel];
@@ -648,7 +643,7 @@ BOOL isPopShow = NO;
     [headBackView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
 
     UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0,ScreenWidth-10, 35)];
-    headLabel.font = [UIFont systemFontOfSize:17];
+    headLabel.font = [UIFont systemFontOfSize:16];
     
     if(section == 3)
     {

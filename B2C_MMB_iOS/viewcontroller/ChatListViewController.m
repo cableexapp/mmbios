@@ -51,10 +51,20 @@
     naviTitle.text = @"客服分组";
     self.navigationItem.titleView = naviTitle;
    
-    
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, 15, 22);
-    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    
+//    if ([self.fromString isEqualToString:@"工具栏客服"])
+//    {
+//        btn.frame = CGRectMake(0, 0, 40, 44);
+//        [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+//        [btn setTitle:@"取消" forState:UIControlStateNormal];
+//    }
+//    else
+//    {
+        btn.frame = CGRectMake(0, 0, 15, 22);
+        [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    }
+    
     [btn addTarget:self action:@selector(goBackAction) forControlEvents: UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -119,8 +129,6 @@
     noNetMessage.text = @"当前网络不可用，请检查网络设置!";
     [self.view insertSubview:noNetMessage atIndex:2];
 
-    //回到首页
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToFirstPage:) name:@"goToFirstfPage" object:nil];
     
     //服务器忙消息通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (ServerisBusy:) name:@"errorMessage" object:nil];
@@ -136,7 +144,6 @@
     
 //    NSLog(@"self.appDelegate.roster = %@",self.appDelegate.roster);
     
-   
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -408,6 +415,11 @@
     transition.delegate = self;
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     [self.navigationController pushViewController:waitVC animated:NO];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
 - (void)didReceiveMemoryWarning

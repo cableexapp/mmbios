@@ -178,7 +178,7 @@ BOOL isPopShow = NO;
                 [typeBtn setTitle:str forState:UIControlStateNormal];
                 [typeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [typeBtn setTag:i];
-                typeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+                typeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
                 [typeBtn addTarget:self action:@selector(typeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 [typeBtnArray addObject:typeBtn];
             }
@@ -352,7 +352,7 @@ BOOL isPopShow = NO;
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
     
     countLabel = [[UIImageView alloc] init];
-    countLabel.frame = CGRectMake(self.view.frame.size.width/5-25, 2, 10, 10);
+    countLabel.frame = CGRectMake(self.view.frame.size.width/5-24, 5, 10, 10);
     countLabel.hidden = YES;
     countLabel.image = [UIImage imageNamed:@"msg_bq"];
     [secondBarView addSubview:countLabel];

@@ -265,6 +265,7 @@
 
 -(void)endChatConfrence
 {
+    
     [xmppRoom leaveRoom];
     [self.appDelegate goOffline];
     [self.appDelegate disconnect];
@@ -275,8 +276,8 @@
 
 -(void)goBackActionToHome
 {
-    [self pageFromWhere];
     messagePush = 1;
+    [self pageFromWhere];
     if ([self.appDelegate.isOnLine isEqualToString:@"available"])
     {
         self.appDelegate.isConnect = @"连接";
@@ -285,86 +286,29 @@
     {
          self.appDelegate.isConnect = @"断开";
     }
+    
 }
-
-//-(void)pageFromWhere_wait
-//{
-//    if ([self.tempFrom isEqualToString:@"首页在线客服"])
-//    {
-//        [self.tabBarController setSelectedIndex:0];
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-//    }
-//    else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
-//    {
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-//    }
-//    
-//    else if([self.tempFrom isEqualToString:@"场合选择客服"] || [self.tempFrom isEqualToString:@"热门型号在线咨询"])
-//    {
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-//        
-//    }
-//    else if([self.tempFrom isEqualToString:@"场合选择提交成功客服"] || [self.tempFrom isEqualToString:@"商品快照在线客服"])
-//    {
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
-//    }
-//    else if([self.tempFrom isEqualToString:@"热门型号提交成功在线客服"])
-//    {
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
-//    }
-//    else if([self.tempFrom isEqualToString:@"热门分类在线客服"])
-//    {
-//        [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
-//    }
-//    
-//    else
-//    {
-//        [self.tabBarController setSelectedIndex:0];
-//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-//    }
-//    if ([self.tempFrom rangeOfString:@"@"].location != NSNotFound)
-//    {
-//        if([[[self.tempFrom componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
-//        {
-//            if (self.navigationController.viewControllers.count == 6)
-//            {
-//                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
-//            }
-//            if (self.navigationController.viewControllers.count == 5)
-//            {
-//                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
-//            }
-//            if (self.navigationController.viewControllers.count == 4)
-//            {
-//                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-//            }
-//        }
-//    }
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToFirstfPage" object:nil];
-//    
-//    isNeedSendRequest = 2;
-//}
-
 
 -(void)pageFromWhere
 {
-    
     NSLog(@"pageFromWhere");
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
-        [self .navigationController popViewControllerAnimated:YES];
+        if([self.fromStringFlag isEqualToString:@"工具栏客服"])
+        {
+            [self.tabBarController setSelectedIndex:0];
+        }
+        else
+        {
+            NSLog(@"pop_家装线商品详情 = %d",self.navigationController.viewControllers.count);
+            [self .navigationController popViewControllerAnimated:YES];
+        }
     }
     else
     {
         self.appDelegate.uesrID = nil;
         self.appDelegate.personName = nil;
-        if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
-        {
-            NSLog(@"页面数组_首页在线客服 = %d",self.navigationController.viewControllers.count);
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-
-        }
-        else if([self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"商品快照在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
+      if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"商品快照在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
         {
             NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
             if (self.navigationController.viewControllers.count == 8)
@@ -373,7 +317,7 @@
             }
             if (self.navigationController.viewControllers.count == 7)
             {
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:NO];
             }
             if (self.navigationController.viewControllers.count == 6)
             {
@@ -383,17 +327,24 @@
             {
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
             }
+            if (self.navigationController.viewControllers.count == 4)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+            }
         }
-        else
+        else if([self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
-
-//            [self.navigationController.tabBarController.tabBar setHidden:NO];
+             [self.tabBarController setSelectedIndex:0];
         }
         if ([self.fromStringFlag rangeOfString:@"@"].location != NSNotFound)
         {
             if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
             {
                 NSLog(@"页面数组_家装线商品详情 = %d",self.navigationController.viewControllers.count);
+                if (self.navigationController.viewControllers.count == 8)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
+                }
                 if (self.navigationController.viewControllers.count == 7)
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
@@ -519,25 +470,27 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     messagePush = 0;
     
+    btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0,0, 15, 22);
+    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [rightBtn setBackgroundColor:[UIColor clearColor]];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightBtn setTitle:@"结束会话" forState:UIControlStateNormal];
+    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
+    [rightBtn setFrame:CGRectMake(self.view.frame.size.width-65, 20, 60, 44)];
+    [rightBtn addTarget:self action:@selector(endChatConfrence) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     //聊天输入工具条
     if (!btn || !toolBar || !rightBtn || !keyboardButton || !sendButton || !messageField)
     {
-        btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(0,0, 15, 22);
-        [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-        self.navigationItem.leftBarButtonItem = leftItem;
         
-        rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [rightBtn setBackgroundColor:[UIColor clearColor]];
-        [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [rightBtn setTitle:@"结束会话" forState:UIControlStateNormal];
-        [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        [rightBtn setFrame:CGRectMake(self.view.frame.size.width-65, 20, 60, 44)];
-        [rightBtn addTarget:self action:@selector(endChatConfrence) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-        self.navigationItem.rightBarButtonItem = rightItem;
         
         toolBar = [[UIView alloc] init];
         toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
@@ -580,7 +533,15 @@
     }
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
-        MessageFlag = @"消息";
+        NSString *string =  [[NSUserDefaults standardUserDefaults] objectForKey:@"tempFlag"];
+        if (string.length > 0)
+        {
+            MessageFlag = @"消息";
+        }
+        else
+        {
+            MessageFlag = nil;
+        }
     }
    
     NSLog(@"咨询入口 = %@",self.fromStringFlag);
@@ -813,7 +774,7 @@
             [self chatID];
             //生成XML消息文档
             NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-            if ([self.fromStringFlag isEqualToString:@"首页在线客服"])
+            if ([self.fromStringFlag isEqualToString:@"首页在线客服"] || [self.fromStringFlag isEqualToString:@"工具栏客服"])
             {
                 stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 首页客服]：%@",message];
             }
@@ -861,6 +822,8 @@
                     {
                         stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品详情]：\n%@\n%@",[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:0],message];
                         MessageFlag = stringLabel;
+                         [[NSUserDefaults standardUserDefaults] setObject:MessageFlag forKey:@"tempFlag"];
+                       
                     }
                     else
                     {
@@ -1003,6 +966,7 @@
 - (void)xmppRoomDidLeave:(XMPPRoom *)sender
 {
     NSLog(@"离开聊天室");
+    self.appDelegate.isConnect = @"断开";
 }
 
 //新人加入群聊

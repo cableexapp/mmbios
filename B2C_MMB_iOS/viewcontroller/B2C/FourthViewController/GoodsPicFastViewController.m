@@ -57,7 +57,7 @@
     [self.view addSubview:tv];
     
     self.buttomBtn.layer.cornerRadius = 5;
-
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线快照"];
     self.navigationItem.titleView = top;
     
@@ -515,6 +515,17 @@
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:chatVC animated:NO];
     }
-
+    [self setHidesBottomBarWhenPushed:NO];
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+}
+
 @end

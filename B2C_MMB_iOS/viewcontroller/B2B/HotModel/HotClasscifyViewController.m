@@ -246,7 +246,7 @@
     self.navigationItem.titleView = top;
     
     [self.upBtn setTitle:@"上一页" forState:UIControlStateNormal];
-    [self.nextBtn setTitle:@"下一页" forState:UIControlStateNormal];
+    [self.nextBtn setTitle:@"换一页" forState:UIControlStateNormal];
     
     addToCarArray = [[NSMutableArray alloc] init];
     
@@ -514,9 +514,6 @@
 
 - (IBAction)addToAskPriceCarBtnClick:(id)sender
 {
-    
-    NSLog(@"%@",addToCarArray);
-    
     [self addToCar];
 }
 

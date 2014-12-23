@@ -157,7 +157,7 @@
         }
         else
         {
-            if(msg.length == 0)
+            if([DCFCustomExtra validateString:msg] == NO)
             {
                 [DCFStringUtil showNotice:@"提交失败"];
             }

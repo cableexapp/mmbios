@@ -130,7 +130,6 @@
     
     NSDictionary *dic = [data pushDic];
     myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:dic];
-    NSLog(@"dic = %@",dic);
     
     [self.navigationController pushViewController:myNormalInquiryDetailController animated:YES];
 }
@@ -141,9 +140,6 @@
     [self setHidesBottomBarWhenPushed:YES];
     MyFastInquiryOrder *myFastInquiryOrder = [sb instantiateViewControllerWithIdentifier:@"myFastInquiryOrder"];
     myFastInquiryOrder.fastData = data;
-    NSLog(@"createDate = %@",data.createDate);
-    NSLog(@"myTime = %@",data.myTime);
-    NSLog(@"status = %@",data.inquiryId);
     [self.navigationController pushViewController:myFastInquiryOrder animated:YES];
 }
 

@@ -68,6 +68,30 @@
     }
 }
 
+- (void) isRequestNormal:(NSString *)str
+{
+    if([str intValue] == 1)
+    {
+        [self.sureBtn setEnabled:YES];
+    }
+    else
+    {
+        [self.sureBtn setEnabled:NO];
+    }
+}
+
+- (void) isRequestAdded:(NSString *)str
+{
+    if([str intValue] == 1)
+    {
+        [self.sureBtn setEnabled:YES];
+    }
+    else
+    {
+        [self.sureBtn setEnabled:NO];
+    }
+}
+
 - (void) popDelegate_2
 {
     [self.navigationController popViewControllerAnimated:YES];

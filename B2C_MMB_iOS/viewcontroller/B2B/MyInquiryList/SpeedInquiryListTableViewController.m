@@ -297,10 +297,9 @@
     [firstLabel setTextAlignment:NSTextAlignmentRight];
     [view addSubview:firstLabel];
     
-#pragma mark - 这里的单号暂时用oemId代替
     NSString *orderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:section] oemNo]];
     UILabel *orderNumLabel = [[UILabel alloc] init];
-    if(orderNum.length == 0 || [orderNum isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:orderNum] == NO)
     {
         [orderNumLabel setFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + 5, 5, 30, 30)];
     }

@@ -334,6 +334,8 @@
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:data.headType,@"type",data.headName,@"name",data.invoiceId,@"invoiceId", nil];
             NSLog(@"dic = %@",dic);
             [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
+            
+            [self.navigationController popViewControllerAnimated:YES];
         }
         
         

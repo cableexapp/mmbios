@@ -54,7 +54,7 @@
 
 - (void) rightItemClick:(UIButton *) sender
 {
-//    [self showButtomView];
+    //    [self showButtomView];
     
     
     AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
@@ -65,24 +65,24 @@
 //- (void) showButtomView
 //{
 //    rightItemBtnHasClick = NO;
-//    
+//
 //    [self.buttomView setHidden:NO];
 //    [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height-64-49)];
 //    [tv setFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height)];
-//    
+//
 //
 //}
 
 //- (void) hideButtomView
 //{
 //    rightItemBtnHasClick = YES;
-//    
+//
 //    [self.buttomView setHidden:YES];
 //    [self.tvBackView setFrame:CGRectMake(0, 0, 320, [[UIScreen mainScreen] bounds].size.height-64)];
 //    [tv setFrame:CGRectMake(0, 0, self.tvBackView.frame.size.width, self.tvBackView.frame.size.height)];
-//    
+//
 //    [rightItemBtn setHidden:NO];
-//    
+//
 //    for(UIButton *btn in cellBtnArray)
 //    {
 //        [btn setHidden:YES];
@@ -129,7 +129,7 @@
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
     
-
+    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     
@@ -143,7 +143,7 @@
     {
         self.tvBackView.frame = tv.frame;
     }
-
+    
     [self cancelRequest];
     
     [self loadRequest];
@@ -248,7 +248,6 @@
         [notiAddReceiveFinalViewController validateAddress:0];
         return;
     }
-    NSLog(@"%@",addressListDataArray);
     
     
     NSMutableArray *testArray = [[NSMutableArray alloc] init];
@@ -264,7 +263,7 @@
         
         NSString *myStr = [NSString stringWithFormat:@"%@%@",str,address];
         [testArray addObject:myStr];
-
+        
     }
     
     if([testArray containsObject:notiStr] == YES)
@@ -275,15 +274,15 @@
     {
         [notiAddReceiveFinalViewController validateAddress:0];
     }
-
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-//    [self loadRequest];
-
+    //    [self loadRequest];
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doSomething:) name:@"addressListDataArray" object:nil];
     
@@ -309,11 +308,11 @@
     [_buttomBtn setTitle:@"管理收货地址" forState:UIControlStateNormal];
     [_buttomBtn setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0]];
     [_buttomView addSubview:_buttomBtn];
-
+    
     
     [self pushAndPopStyle];
     
-
+    
     
     moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
     [moreCell startAnimation];
@@ -350,7 +349,7 @@
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
         NSString *address = addressData.addressName;
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
-
+        
         return size_3.height + 80;
         
     }
@@ -382,7 +381,7 @@
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
         
         NSString *name = addressData.receiver;
-//        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+        //        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, ScreenWidth-60, 40)];
         [nameLabel setText:name];
         nameLabel.numberOfLines = 2;
@@ -390,13 +389,22 @@
         [nameLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:nameLabel];
         
-        NSString *tel = addressData.tel;
-        CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
+        NSString *mobile = addressData.mobile;
+        CGSize size_2;
+        if([DCFCustomExtra validateString:mobile] == NO)
+        {
+            size_2 = CGSizeMake(30, 30);
+        }
+        else
+        {
+            size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:mobile WithSize:CGSizeMake(MAXFLOAT, 30)];
+        }
         UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_2.width, 5, size_2.width, 30)];
         [telLabel setTextAlignment:NSTextAlignmentRight];
-        [telLabel setText:tel];
+        [telLabel setText:mobile];
         [telLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:telLabel];
+        
         
         NSString *province = addressData.province;
         NSString *city = addressData.city;
@@ -416,16 +424,16 @@
         [addressLabel setNumberOfLines:0];
         [cell.contentView addSubview:addressLabel];
         
-//        if(rightItemBtnHasClick == NO)
-//        {
-            UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
-            [btn setFrame:CGRectMake(10, (size_3.height + 70 - 30)/2, 30, 30)];
-            [cell.contentView addSubview:btn];
-//        }
-//        else
-//        {
-//            
-//        }
+        //        if(rightItemBtnHasClick == NO)
+        //        {
+        UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
+        [btn setFrame:CGRectMake(10, (size_3.height + 70 - 30)/2, 30, 30)];
+        [cell.contentView addSubview:btn];
+        //        }
+        //        else
+        //        {
+        //
+        //        }
         
         
         return cell;
@@ -456,7 +464,7 @@
     B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:tag];
     NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"B2CReceiveAddressHasChange" object:receiveDic userInfo:nil];
-//    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
+    //    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -464,7 +472,7 @@
     
     UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
     [self cellBtnClick:btn];
-  
+    
 }
 
 

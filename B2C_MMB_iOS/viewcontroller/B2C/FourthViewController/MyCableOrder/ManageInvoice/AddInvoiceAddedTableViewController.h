@@ -12,7 +12,7 @@
 @protocol PopDelegate_2 <NSObject>
 
 - (void) popDelegate_2;
-
+- (void) isRequestAdded:(NSString *) str;
 @end
 
 @interface AddInvoiceAddedTableViewController : UITableViewController<UITextViewDelegate,ConnectionDelegate>

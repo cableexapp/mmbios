@@ -63,10 +63,11 @@
     self.lookBtn.layer.cornerRadius = 5;
     self.lookBtn.backgroundColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
    
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的快速询价单"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"快速询价单详情"];
     self.navigationItem.titleView = top;
     
-    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",self.fastData.oemId]];
+    [self.orderLabel setFrame:CGRectMake(self.orderLabel.frame.origin.x, self.orderLabel.frame.origin.y, ScreenWidth-100, self.orderLabel.frame.size.height)];
+    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",self.fastData.oemNo]];
     
     [self.statusLabel setText:[NSString stringWithFormat:@"状态:%@",self.fastData.status]];
     [self.statusLabel setTextAlignment:NSTextAlignmentRight];
@@ -77,7 +78,7 @@
     
     
     UILabel *requestLabel = [[UILabel alloc] init];
-    NSString *request = [NSString stringWithFormat:@"%@",self.fastData.remark];
+    NSString *request = [NSString stringWithFormat:@"%@",self.fastData.content];
     if(request.length == 0 || [request isKindOfClass:[NSNull class]])
     {
         [self.requestFirstLabel setFrame:CGRectMake(self.requestFirstLabel.frame.origin.x, self.requestFirstLabel.frame.origin.y, self.requestFirstLabel.frame.size.width, 0)];
@@ -122,7 +123,7 @@
     [self.sv addSubview:iv];
 
     UILabel *situationLabel = [[UILabel alloc] init];
-    NSString *string = [NSString stringWithFormat:@"%@",self.fastData.operatior];
+    NSString *string = [NSString stringWithFormat:@"%@",self.fastData.treatment];
     NSString *situation = [NSString stringWithFormat:@"处理情况: %@",string];
     [situationLabel setText:situation];
     if(string.length == 0 || [string isKindOfClass:[NSNull class]])
@@ -196,6 +197,7 @@
                 {
                     fullAddress = [NSString stringWithFormat:@"%@%@%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"],[dic objectForKey:@"district"],[dic objectForKey:@"address"]];
                     NSLog(@"fullAddress = %@",fullAddress);
+                    
                     NSString *tel = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系电话:%@",self.fastData.phone]];
                     NSString *name = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系人:%@",self.fastData.linkman]];
                     myDic = [NSDictionary dictionaryWithObjectsAndKeys:name,@"name",tel,@"tel",fullAddress,@"fullAddress", nil];

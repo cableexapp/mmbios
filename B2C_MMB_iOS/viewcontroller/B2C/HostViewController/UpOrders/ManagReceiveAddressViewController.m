@@ -104,7 +104,7 @@
     {
         self.tvBackView.frame = tv.frame;
     }
-
+    
     
     if(conn)
     {
@@ -136,7 +136,7 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if (URLTag == URLReceiveAddressTag)
     {
-
+        
         
         if(result == 0)
         {
@@ -154,7 +154,7 @@
             addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
             
         }
-
+        
     }
     if(URLTag == URLDeleteMemberAddressTag)
     {
@@ -289,7 +289,7 @@
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
         
         NSString *name = addressData.receiver;
-//        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+        //        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5,ScreenWidth-25, 30)];
         [nameLabel setText:name];
         [nameLabel setTextAlignment:NSTextAlignmentLeft];
@@ -297,17 +297,25 @@
         
         [cell.contentView addSubview:nameLabel];
         
-        NSString *tel = addressData.tel;
-        CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
+        NSString *mobile = addressData.mobile;
+        CGSize size_2;
+        if([DCFCustomExtra validateString:mobile] == NO)
+        {
+            size_2 = CGSizeMake(30, 30);
+        }
+        else
+        {
+            size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:mobile WithSize:CGSizeMake(MAXFLOAT, 30)];
+        }
         UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_2.width, 5, size_2.width, 30)];
         [telLabel setTextAlignment:NSTextAlignmentRight];
-        [telLabel setText:tel];
+        [telLabel setText:mobile];
         [telLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:telLabel];
         
         NSString *province = addressData.province;
         NSString *city = addressData.city;
-    
+        
         NSString *area = addressData.area;
         NSString *str = [NSString stringWithFormat:@"%@%@%@",province,city,area];
         UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height, 295, 30)];
@@ -324,7 +332,7 @@
         [addressLabel setNumberOfLines:0];
         [cell.contentView addSubview:addressLabel];
         
-
+        
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, addressLabel.frame.origin.y+addressLabel.frame.size.height+4, ScreenWidth, 0.3)];
         [lineView setBackgroundColor:[UIColor lightGrayColor]];
         [cell.contentView addSubview:lineView];
@@ -341,8 +349,8 @@
 {
     B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
     
-//    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-
+    //    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
+    
     AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:data];
     [self.navigationController pushViewController:final animated:YES];
     

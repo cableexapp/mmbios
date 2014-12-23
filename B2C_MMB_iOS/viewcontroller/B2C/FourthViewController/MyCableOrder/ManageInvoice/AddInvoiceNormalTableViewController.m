@@ -272,10 +272,19 @@
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
+    if([self.delegate respondsToSelector:@selector(isRequestNormal:)])
+    {
+        [self.delegate isRequestNormal:@"0"];
+    }
+    
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    if([self.delegate respondsToSelector:@selector(isRequestNormal:)])
+    {
+        [self.delegate isRequestNormal:@"1"];
+    }
     
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];

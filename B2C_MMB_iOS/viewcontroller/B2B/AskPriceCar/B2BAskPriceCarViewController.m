@@ -79,13 +79,26 @@
 }
 
 
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    return memberid;
+}
+
 - (void) upBtnClick:(UIButton *) sender
 {
-    
-    B2BAskPriceInquirySheetViewController *b2bAskPriceInquirySheetViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceInquirySheetViewController"];
-    b2bAskPriceInquirySheetViewController.dataArray = [[NSMutableArray alloc] initWithArray:chooseArray];
-    b2bAskPriceInquirySheetViewController.heightArray = [[NSMutableArray alloc] initWithArray:cellHeightArray];
-    [self.navigationController pushViewController:b2bAskPriceInquirySheetViewController animated:YES];
+    if([DCFCustomExtra validateString:[self getMemberId]] == NO)
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+    }
+    else
+    {
+        B2BAskPriceInquirySheetViewController *b2bAskPriceInquirySheetViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceInquirySheetViewController"];
+        b2bAskPriceInquirySheetViewController.dataArray = [[NSMutableArray alloc] initWithArray:chooseArray];
+        b2bAskPriceInquirySheetViewController.heightArray = [[NSMutableArray alloc] initWithArray:cellHeightArray];
+        [self.navigationController pushViewController:b2bAskPriceInquirySheetViewController animated:YES];
+    }
 }
 
 - (void) backToHostBtnClick:(UIButton *) sender

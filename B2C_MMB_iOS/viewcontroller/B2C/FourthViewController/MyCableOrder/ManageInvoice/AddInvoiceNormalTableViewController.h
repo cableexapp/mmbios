@@ -13,6 +13,8 @@
 
 - (void) popDelegate;
 
+- (void) isRequestNormal:(NSString *) str;
+
 @end
 
 @interface AddInvoiceNormalTableViewController : UITableViewController<UITextViewDelegate,ConnectionDelegate>

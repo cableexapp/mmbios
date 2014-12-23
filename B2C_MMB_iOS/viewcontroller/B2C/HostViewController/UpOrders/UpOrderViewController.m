@@ -577,11 +577,12 @@
     
     NSString *s1 = billReceiveAddressLabel_1.text;
     NSString *s2 = billReceiveAddressLabel_2.text;
-    if([DCFCustomExtra validateString:s1] == NO || [DCFCustomExtra validateString:s2] == NO)
+    if([s1 isEqualToString:@"暂无收货地址"] || [s2 isEqualToString:@"暂无收货地址"])
     {
         [DCFStringUtil showNotice:@"收货地址不能为空"];
         return;
     }
+    
     
     for(UIButton *b in sendMethodBtnArray)
     {

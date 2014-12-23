@@ -180,7 +180,7 @@
     
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[dataArray objectAtIndex:indexPath.row]];
     
-
+    
     
     NSString *theNumber = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];  //数量
     NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];   //单位
@@ -196,7 +196,7 @@
     CGFloat height_2 = 0.0;
     CGFloat height_3 = 0.0;
     CGFloat height_4 = 0.0;
-
+    
     if([DCFCustomExtra validateString:theInquiryVoltage] == NO || [DCFCustomExtra validateString:theInquirySpec] == NO)
     {
         height_1 = 0;
@@ -205,7 +205,7 @@
     {
         height_1 = 30;
     }
-
+    
     if([DCFCustomExtra validateString:theInquiryFeature] == NO)
     {
         height_2 = 0;
@@ -214,7 +214,7 @@
     {
         height_2 = 30;
     }
-
+    
     if([DCFCustomExtra validateString:thePrice] == NO || [thePrice intValue] == 0)
     {
         height_3 = 0;
@@ -223,8 +223,8 @@
     {
         height_3 = 30;
     }
-
-
+    
+    
     
     CGSize requestSize;
     if(theRequire.length == 0 || [theRequire isKindOfClass:[NSNull class]])
@@ -276,8 +276,17 @@
                 [cell.contentView addSubview:nameAndTelLabel];
                 
                 NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
+#pragma mark - 陈晓修改－－开始
+                if([address rangeOfString:@"(null)"].location != NSNotFound)
+                {
+                    address = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                }
+                if([address rangeOfString:@"null"].location != NSNotFound)
+                {
+                    address = [address stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                }
                 CGSize size;
-                if(address.length == 0 || [address isKindOfClass:[NSNull class]])
+                if([DCFCustomExtra validateString:address] == NO)
                 {
                     size = CGSizeMake(30, 30);
                 }
@@ -290,6 +299,7 @@
                 [addressLabel setFont:[UIFont systemFontOfSize:12]];
                 [addressLabel setNumberOfLines:0];
                 [cell.contentView addSubview:addressLabel];
+#pragma mark - 陈晓修改－－结束
             }
         }
         else
@@ -413,7 +423,7 @@
                             [label setText:[NSString stringWithFormat:@"电压:%@",theInquiryVoltage]];
                             [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5+30, width, 30)];
                         }
-                  
+                        
                         if([DCFCustomExtra validateString:theInquiryVoltage] == NO || [DCFCustomExtra validateString:theInquirySpec] == NO)
                         {
                             height_1 = 0;
@@ -439,10 +449,10 @@
                             [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30+height_1, width*2, 30)];
                             height_2 = 30;
                         }
-             
+                        
                         break;
                     }
-
+                        
                         
                     default:
                         break;

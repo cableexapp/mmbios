@@ -156,6 +156,11 @@
 //  [self setHidesBottomBarWhenPushed:NO];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -784,13 +789,13 @@
                 {
                     [label setFrame:CGRectMake(10, (size_3.height+20-30)/2, size_1.width, 30)];
                     
-                    tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width, 10, ScreenWidth-20-label.frame.size.width, size_3.height)];
+                    tradeLabel = [[UILabel alloc] initWithFrame:CGRectMake(label.frame.origin.x + label.frame.size.width+10, 10, ScreenWidth-25-label.frame.size.width, size_3.height)];
                 }
                 [tradeLabel setText:string];
-                [tradeLabel setTextAlignment:NSTextAlignmentRight];
+                [tradeLabel setTextAlignment:NSTextAlignmentLeft];
                 [tradeLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
                 [tradeLabel setFont:[UIFont systemFontOfSize:13]];
-                [tradeLabel setNumberOfLines:0];
+                [tradeLabel setNumberOfLines:2];
                 [cell.contentView addSubview:tradeLabel];
                 
                 UIView *lineView = [[UIView alloc] init];
@@ -1200,13 +1205,12 @@
         }
         else
         {
-            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,40)];
+            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[detailData shopName] WithSize:CGSizeMake(MAXFLOAT,40)];
         }
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(45,0,ScreenWidth-150, 45)];
-        [label setFont:[UIFont systemFontOfSize:15]];
+        [label setFont:[UIFont systemFontOfSize:14]];
         [label setText:[detailData shopName]];
         label.numberOfLines = 2;
-//        label.backgroundColor = [UIColor redColor];
         [label setTextAlignment:NSTextAlignmentLeft];
         [label setTextColor:[UIColor blackColor]];
         
@@ -1313,10 +1317,9 @@
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+#pragma mark - 在线客服
 -(void)IMChatClick
 {
-    
-#pragma mark - 在线客服
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         ChatViewController *chatVC = [[ChatViewController alloc] init];

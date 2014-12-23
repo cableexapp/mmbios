@@ -67,7 +67,7 @@
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.font = [UIFont systemFontOfSize:19];
     naviTitle.textAlignment = NSTextAlignmentCenter;
-    naviTitle.text = @"订单搜索";
+    naviTitle.text = @"搜索电缆订单";
     self.navigationItem.titleView = naviTitle;
     
     mySB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
@@ -101,7 +101,7 @@
     search.backgroundColor = [UIColor clearColor];
     search.autocorrectionType = UITextAutocorrectionTypeNo;
     search.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    search.placeholder = @"输入搜索内容";
+    search.placeholder = @"搜索电缆订单";
     [self.view addSubview:search];
 }
 
@@ -182,7 +182,7 @@
                 NSLog(@"B2B全部订单 = %@",dicRespon);
                 if ([[dicRespon objectForKey:@"items"] count] > 0)
                 {
-                    noResultView.hidden = YES;
+                    noResultView.hidden = NO;
                     [tempDataArray removeAllObjects];
                     [tempDataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:[dicRespon objectForKey:@"items"]]];
                     
@@ -845,12 +845,10 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    if ([search.text isEqualToString:@""])
+    if (search.text.length == 0)
     {
-        
-//        [dataArray removeAllObjects];
         [self loadRequestB2BOrderListAllWithStatus:@"0"];
-        noResultView.hidden = YES;
+        noResultView.hidden = NO;
     }
 }
 

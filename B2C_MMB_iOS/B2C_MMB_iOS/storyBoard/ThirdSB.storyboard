@@ -16,20 +16,17 @@
                         <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <connections>
-                        <segue destination="KPb-Ga-6un" kind="relationship" relationship="rootViewController" id="NTP-Sm-Lua"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ife-22-sx1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-428" y="-217"/>
         </scene>
-        <!--Chat List View Controller-->
+        <!--Chat Root View Controller-->
         <scene sceneID="FrG-HS-5A5">
             <objects>
-                <viewController id="KPb-Ga-6un" customClass="ChatListViewController" sceneMemberID="viewController">
+                <viewController id="KPb-Ga-6un" customClass="ChatRootViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="y2q-el-ykS">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
                     </view>

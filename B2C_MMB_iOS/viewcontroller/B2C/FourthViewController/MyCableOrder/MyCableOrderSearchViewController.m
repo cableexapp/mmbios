@@ -89,7 +89,7 @@
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.font = [UIFont systemFontOfSize:19];
     naviTitle.textAlignment = NSTextAlignmentCenter;
-    naviTitle.text = @"订单搜索";
+    naviTitle.text = @"搜索家装线订单";
     self.navigationItem.titleView = naviTitle;
     
     mySB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
@@ -123,7 +123,7 @@
     search.backgroundColor = [UIColor clearColor];
     search.autocorrectionType = UITextAutocorrectionTypeNo;
     search.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    search.placeholder = @"输入搜索内容";
+    search.placeholder = @"搜索家装馆订单";
     [self.view addSubview:search];
 }
 
@@ -196,12 +196,12 @@
                 {
                     if(intTotal == 0)
                     {
-                        noResultView.hidden = YES;
+                        noResultView.hidden = NO;
                         [moreCell noDataAnimation];
                     }
                     else
                     {
-                        noResultView.hidden = YES;
+                        noResultView.hidden = NO;
                         dataArray = [dicRespon objectForKey:@"items"];
                         tempOrderNum = [dicRespon objectForKey:@"items"];
                         intTotal = [[dicRespon objectForKey:@"total"] intValue];
@@ -843,6 +843,7 @@
             [searchResults addObject:dataArray[i]];
         }
     }
+    
     if (searchResults.count == 0)
     {
         dataArray = searchResults;
@@ -894,13 +895,14 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    if ([searchBar.text isEqualToString:@""])
+    if (searchBar.text.length == 0)
     {
-//        [dataArray removeAllObjects];
-        noResultView.hidden = YES;
         dataArray = tempOrderNum;
+        [self.myTableView reloadData];
+        
+        noResultView.hidden = NO;
+        [self.view bringSubviewToFront:noResultView];
     }
-    [self.myTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

@@ -21,6 +21,11 @@
 #import "GoodsDetailViewController.h"
 #import "AppDelegate.h"
 #import "ChatViewController.h"
+#import "GoodsDetailTableViewCell.h"
+#import "B2CGoodsDetailData.h"
+
+#define GoodsDetail_URL @"http://mmb.fgame.com:8083/"
+
 @interface GoodsPicFastViewController ()
 {
     NSMutableArray *dataArray;
@@ -28,6 +33,11 @@
     
     DCFChenMoreCell *moreCell;
     
+    B2CGoodsDetailData *detailData;
+    
+    NSString *producturl;//商品链接地址
+    
+    int statrScore;
 }
 @end
 
@@ -57,8 +67,8 @@
     [self.view addSubview:tv];
     
     self.buttomBtn.layer.cornerRadius = 5;
-
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线快照"];
+    
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线商品快照"];
     self.navigationItem.titleView = top;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -121,6 +131,19 @@
 
         if(result == 1)
         {
+            detailData = [[B2CGoodsDetailData alloc] init];
+            [detailData dealData:dicRespon];
+            
+            if ([[dicRespon objectForKey:@"score"] count] > 0)
+            {
+                statrScore = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
+                
+            }
+            
+            producturl = [dicRespon objectForKey:@"producturl"];
+            
+            [tv reloadData];
+            
             NSArray *coloritems = [NSArray arrayWithArray:[dicRespon objectForKey:@"coloritems"]];
             if(coloritems.count == 0 || [coloritems isKindOfClass:[NSNull class]])
             {
@@ -230,7 +253,7 @@
         }
         if(indexPath.row == 5)
         {
-            return 117;
+            return 160;
         }
     }
     return 0;
@@ -282,7 +305,7 @@
                     [cell.contentView setBackgroundColor:[UIColor whiteColor]];
                     
                     UIView *lineView = [[UIView alloc] init];
-                    lineView.frame = CGRectMake(10, size.height+4.5, ScreenWidth-20, 0.5);
+                    lineView.frame = CGRectMake(10, size.height+20, ScreenWidth-20, 0.5);
                     lineView.backgroundColor = [UIColor lightGrayColor];
                     [cell.contentView addSubview:lineView];
                 }
@@ -349,18 +372,86 @@
             {
                 if(self.myShopName.length != 0)
                 {
-                    
-                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:15] WithText:self.myShopName WithSize:CGSizeMake(MAXFLOAT,34)];
-                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(47, 10, size.width,34)];
-                    [label setFont:[UIFont systemFontOfSize:15]];
+                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:self.myShopName WithSize:CGSizeMake(MAXFLOAT,40)];
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(45,5,ScreenWidth-150, 44)];
+                    [label setFont:[UIFont systemFontOfSize:14]];
                     [label setText:self.myShopName];
+                    label.numberOfLines = 2;
                     [label setTextAlignment:NSTextAlignmentLeft];
                     [label setTextColor:[UIColor blackColor]];
+                    
+                    UIImageView *starImageView;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        starImageView = [[UIImageView alloc] init];
+                        starImageView.frame =CGRectMake((ScreenWidth-103)+20*i, 18.5, 18, 18);
+                        starImageView.tag = i;
+                        [cell.contentView addSubview:starImageView];
+                        if (statrScore == 5)
+                        {
+                            if (starImageView.tag == i)
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_selected"];
+                            }
+                        }
+                        if (statrScore == 4)
+                        {
+                            if (starImageView.tag == 4)
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                            }
+                            else
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_selected"];
+                            }
+                        }
+                        if (statrScore == 3)
+                        {
+                            if (starImageView.tag == 3 || starImageView.tag == 4)
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                            }
+                            else
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_selected"];
+                            }
+                        }
+                        if (statrScore == 2)
+                        {
+                            if (starImageView.tag == 2 || starImageView.tag == 3 || starImageView.tag == 4)
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                            }
+                            else
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_selected"];
+                            }
+                        }
+                        if (statrScore == 1)
+                        {
+                            if (starImageView.tag == 1 || starImageView.tag == 2 || starImageView.tag == 3 || starImageView.tag == 4)
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                            }
+                            else
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_selected"];
+                            }
+                        }
+                        if (statrScore == 0)
+                        {
+                            if (starImageView.tag == i)
+                            {
+                                starImageView.image = [UIImage imageNamed:@"star_unselect"];
+                            }
+                        }
+                    }
+
                     
                     UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0,0,ScreenWidth,cell.frame.size.height)];
                     [cell.contentView addSubview:firstView];
                     
-                    UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(12, (cell.frame.size.height-20)/2, 30, 30)];
+                    UIImageView *firstIv = [[UIImageView alloc] initWithFrame:CGRectMake(12, (cell.frame.size.height-14)/2, 30, 30)];
                     [firstIv setImage:[UIImage imageNamed:@"shopPic"]];
                     
                     
@@ -396,7 +487,7 @@
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 7, 140, 30)];
                 [label setFont:[UIFont systemFontOfSize:15]];
-                [label setText:@"商品详情快照"];
+                [label setText:@"商品参数"];
                 [label setTextAlignment:NSTextAlignmentLeft];
                 [label setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:label];
@@ -408,21 +499,39 @@
             }
             if(indexPath.row == 5)
             {
-                GoodsFastPicTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsFastPicTableViewCell" owner:self options:nil] lastObject];
+//                GoodsFastPicTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsFastPicTableViewCell" owner:self options:nil] lastObject];
+//                
+//                [customCell.brandLabel setText:data.brand];
+//                
+//                [customCell.colorLabel setText:data.color];
+//                
+//                [customCell.freightPriceLabel setText:data.freightPrice];
+//                
+//                [customCell.modelLabel setText:data.model];
+//                
+//                [customCell.useLabel setText:data.range];
+//                
+//                [customCell.specLabel setText:data.spec];
+//                
+//                [customCell.voltageLabel setText:data.voltage];
                 
-                [customCell.brandLabel setText:data.brand];
+                GoodsDetailTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsDetailTableViewCell" owner:self options:nil] lastObject];
                 
-                [customCell.colorLabel setText:data.color];
+                [customCell.barndLabel setText:detailData.goodsBrand];
                 
-                [customCell.freightPriceLabel setText:data.freightPrice];
-                
-                [customCell.modelLabel setText:data.model];
-                
-                [customCell.useLabel setText:data.range];
-                
-                [customCell.specLabel setText:data.spec];
-                
-                [customCell.voltageLabel setText:data.voltage];
+                NSLog(@"商品快照_detailData111 = %@",detailData.goodsBrand);
+                [customCell.kindLabel setText:detailData.goodsModel];
+                [customCell.voltageLabel setText:detailData.goodsVoltage];
+                [customCell.surfaceLabel setText:[NSString stringWithFormat:@"%@平方",detailData.spec]];
+                [customCell.useLabel setText:detailData.use];
+                [customCell.threadLabel setText:detailData.coreNum];
+                [customCell.standLabel setText:detailData.standard];
+                [customCell.unitLabel setText:detailData.unit];
+                [customCell.thicknessLabel setText:[NSString stringWithFormat:@"%@mm",detailData.insulationThickness]];
+                [customCell.lengthLabel setText:[NSString stringWithFormat:@"%@米",detailData.avgLength]];
+                [customCell.topLabel setText:[NSString stringWithFormat:@"%@mm",detailData.avgDiameter]];
+                [customCell.weightLabel setText:[NSString stringWithFormat:@"%@KG",detailData.weight]];
+                [customCell.contentView setBackgroundColor:[UIColor whiteColor]];
                 
                 customCell.contentView.backgroundColor = [UIColor whiteColor];
                 
@@ -492,7 +601,8 @@
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         ChatViewController *chatVC = [[ChatViewController alloc] init];
-        chatVC.fromStringFlag = @"商品快照在线客服";
+        NSString *urlString = [NSString stringWithFormat:@"%@%@@%@",GoodsDetail_URL,producturl,@"商品快照在线客服"];
+        chatVC.fromStringFlag = urlString;
         CATransition *transition = [CATransition animation];
         transition.duration = 0.4f;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
@@ -505,7 +615,8 @@
     else
     {
         ChatListViewController *chatVC = [[ChatListViewController alloc] init];
-        chatVC.fromString = @"商品快照在线客服";
+        NSString *urlString = [NSString stringWithFormat:@"%@%@@%@",GoodsDetail_URL,producturl,@"商品快照在线客服"];
+        chatVC.fromString = urlString;
         CATransition *transition = [CATransition animation];
         transition.duration = 0.4f;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -515,6 +626,17 @@
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:chatVC animated:NO];
     }
-
+    [self setHidesBottomBarWhenPushed:NO];
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+}
+
 @end

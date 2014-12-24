@@ -48,6 +48,30 @@
 
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    NSString *userPhone = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"];
+    NSString *tel = [[NSUserDefaults standardUserDefaults] objectForKey:@"HotKindNum"];
+    
+    if([DCFCustomExtra validateString:userPhone] == YES)
+    {
+        [self.PhoneNumber setText:userPhone];
+    }
+    else
+    {
+        if([DCFCustomExtra validateString:tel] == NO)
+        {
+            [self.PhoneNumber setPlaceholder:@"手机号码/固定号码"];
+        }
+        else
+        {
+            [self.PhoneNumber setText:tel];
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -180,11 +204,13 @@
         
         if(result == 1)
         {
+            [[NSUserDefaults standardUserDefaults] setObject:self.PhoneNumber.text forKey:@"HotKindNum"];
+            
             [self performSegueWithIdentifier:@"submit2win" sender:nil];
         }
         else
         {
-            if(msg.length == 0)
+            if([DCFCustomExtra validateString:msg] == NO)
             {
                 [DCFStringUtil showNotice:msg];
             }
@@ -206,7 +232,7 @@
 - (IBAction)submitNews:(UIButton *)sender
 {
     
-        [self.PhoneNumber resignFirstResponder];
+    [self.PhoneNumber resignFirstResponder];
     if(self.PhoneNumber.text.length == 0)
     {
         [DCFStringUtil showNotice:@"手机号码不能为空"];

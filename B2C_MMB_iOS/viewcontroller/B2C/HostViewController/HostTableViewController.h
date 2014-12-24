@@ -12,11 +12,15 @@
 #import "DCFConnectionUtil.h"
 #import "DCFColorUtil.h"
 #import "ZSYPopoverListView.h"
+#import "CKRefreshControl.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface HostTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,EScrollerViewDelegate,HostSection1BtnClick,ConnectionDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate,UIAlertViewDelegate>
+@interface HostTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,EScrollerViewDelegate,HostSection1BtnClick,ConnectionDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate,UIAlertViewDelegate,EGORefreshTableHeaderDelegate>
 {
     DCFConnectionUtil *conn;
     EScrollerView *es;
+    BOOL _reloading;
 }
+@property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 
 @end

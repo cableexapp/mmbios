@@ -30,6 +30,7 @@
 #import "B2BAskPriceCarViewController.h"
 #import "AppDelegate.h"
 #import "ChatViewController.h"
+#import "DCFStringUtil.h"
 
 int isgo = 1;
 BOOL isPopShow = NO;
@@ -143,10 +144,21 @@ BOOL isPopShow = NO;
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    
+    if(_reloading == YES)
+    {
+        [self doneLoadingViewData];
+    }
+    else if(_reloading == NO)
+    {
+        
+    }
+    
     int result = [[dicRespon objectForKey:@"result"] intValue];
   
     if(URLTag == URLGetProductTypeTag)
     {
+        NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 1)
         {
             NSMutableArray *dataArrayy = [[NSMutableArray alloc] init];
@@ -187,7 +199,14 @@ BOOL isPopShow = NO;
         }
         else
         {
-            
+            if([DCFCustomExtra validateString:msg] == NO)
+            {
+                [DCFStringUtil showNotice:@"请求失败,请重试"];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
         }
     }
     
@@ -229,7 +248,6 @@ BOOL isPopShow = NO;
 {
     UIButton *btn = (UIButton *) sender;
     int tag = [btn tag];
-    NSLog(@"tag = %d",tag);
     [self setHidesBottomBarWhenPushed:YES];
     CableSecondAndThirdStepViewController *cableSecondAndThirdStepViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
     cableSecondAndThirdStepViewController.myTitle = btn.titleLabel.text;
@@ -267,6 +285,27 @@ BOOL isPopShow = NO;
     [self setHidesBottomBarWhenPushed:NO];
 }
 
+- (void) reRequest
+{
+    [self loadProductType];
+}
+
+- (void) loadProductType
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductType",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+#pragma mark - 一级分类
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&type=%@",token,@"1"];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetProductTypeTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getProductType.html?"];
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
 - (void) loadRequest
 {
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -289,22 +328,22 @@ BOOL isPopShow = NO;
     
     [self pushAndPopStyle];
 
+    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reRequest) name:@"NetisConnect" object:nil];
+    
     [self loadRequest];
+    
+    [self loadProductType];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductType",time];
-    NSString *token = [DCFCustomExtra md5:string];
+    //ADD REFRESH VIEW
+    _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, ScreenWidth, 300)];
+    [self.refreshView setDelegate:self];
+    [self.tableView addSubview:self.refreshView];
+    [self.refreshView refreshLastUpdatedDate];
     
-#pragma mark - 一级分类
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&type=%@",token,@"1"];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetProductTypeTag delegate:self];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getProductType.html?"];
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 4, 34,34)];
     naviImageView.image = [UIImage imageNamed:@"global_main_logo"];
@@ -1223,6 +1262,78 @@ BOOL isPopShow = NO;
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];
     [self.navigationController pushViewController:goodsDetail animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
+}
+
+#pragma  mark  -  滚动加载
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.refreshView egoRefreshScrollViewDidEndDragging:scrollView];
+    if (self.tableView == (UITableView *)scrollView)
+    {
+        if (scrollView.contentSize.height > 0 && (scrollView.contentSize.height-scrollView.frame.size.height)>0)
+        {
+            if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
+            {
+                [self loadRequest];
+                
+                [self loadProductType];
+                
+                [self loadbadgeCount];
+                
+                [self loadShopCarCount];
+            }
+        }
+    }
+}
+
+#pragma mark SCROLLVIEW DELEGATE METHODS
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    [self.refreshView egoRefreshScrollViewDidScroll:self.tableView];
+}
+//
+#pragma mark -
+#pragma mark DATA SOURCE LOADING / RELOADING METHODS
+- (void)reloadViewDataSource
+{
+    _reloading = YES;
+    
+    [self loadRequest];
+    
+    [self loadProductType];
+    
+    [self loadbadgeCount];
+    
+    [self loadShopCarCount];
+}
+//
+- (void)doneLoadingViewData
+{
+    
+    _reloading = NO;
+    [self.refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
+//
+//#pragma mark -
+//#pragma mark REFRESH HEADER DELEGATE METHODS
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    
+    [self reloadViewDataSource];
+}
+//
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    
+    return _reloading;
+}
+
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+    
+    return [NSDate date];
 }
 
 - (void)didReceiveMemoryWarning

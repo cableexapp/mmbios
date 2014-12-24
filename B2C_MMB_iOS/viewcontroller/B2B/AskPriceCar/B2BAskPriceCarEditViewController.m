@@ -61,6 +61,7 @@
     
     self.specTf.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.specTf.layer.borderWidth = 0.5f;
+    [self.specTf setReturnKeyType:UIReturnKeyDone];
     [self.specTf setTextAlignment:NSTextAlignmentCenter];
     //    [self.specTf setKeyboardType:UIKeyboardTypeNumberPad];
     
@@ -153,7 +154,6 @@
                     [specArray addObject:spec];
                 }
             }
-            NSLog(@"specArray = %@",specArray);
             
             //阻燃特性
             NSArray *mtems = (NSArray *)[dicRespon objectForKey:@"mtems"];
@@ -203,6 +203,11 @@
 
 - (IBAction)volBtnClick:(id)sender
 {
+    if(voltageArray.count == 0 || [voltageArray isKindOfClass:[NSNull class]])
+    {
+        [DCFStringUtil showNotice:@"暂无电压信息"];
+        return;
+    }
     [self loadPickerViewWithArray:voltageArray WithTag:10002];
 }
 
@@ -214,6 +219,11 @@
 
 - (IBAction)featherBtnClick:(id)sender
 {
+    if(featureArray.count == 0 || [featureArray isKindOfClass:[NSNull class]])
+    {
+        [DCFStringUtil showNotice:@"暂无阻燃信息"];
+        return;
+    }
     [self loadPickerViewWithArray:featureArray WithTag:10004];
 }
 
@@ -322,14 +332,26 @@
     //    {
     //        [self.timeTF resignFirstResponder];
     //    }
+
+    return YES;
+}
+
+- (void) textFieldDidEndEditing:(UITextField *)textField
+{
     [textField resignFirstResponder];
     if(textField == self.specTf)
     {
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF CONTAINS %@",textField.text];
         specPreArray = [NSMutableArray arrayWithArray:[specArray filteredArrayUsingPredicate:pred]];
-        [self loadPickerViewWithArray:specPreArray WithTag:10005];
+        if(specPreArray.count == 0)
+        {
+            [DCFStringUtil showNotice:@"暂无该规格信息"];
+        }
+        else
+        {
+            [self loadPickerViewWithArray:specPreArray WithTag:10005];
+        }
     }
-    return YES;
 }
 
 - (BOOL) textFieldShouldEndEditing:(UITextField *)textField

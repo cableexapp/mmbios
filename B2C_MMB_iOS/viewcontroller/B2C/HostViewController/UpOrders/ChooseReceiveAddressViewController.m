@@ -181,6 +181,7 @@
         if(result == 0)
         {
             receiveDic = [[NSDictionary alloc] init];
+            addressListDataArray = [[NSMutableArray alloc] init];
         }
         else if (result == 1)
         {

@@ -45,6 +45,15 @@
     UILabel *addressLabel_2;
     
     NSDictionary *addSuccessDic;
+    NSString *receiver;
+    NSString *province;
+    NSString *city;
+    NSString *area;
+    NSString *addressname;
+    NSString *zip;
+    NSString *mobile;
+    NSString *tel;
+    NSString *fulladdress;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -61,10 +70,7 @@
     if(self = [super init])
     {
         b2cAddressData = addressData;
-        
-        //        NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-        
-        
+
         chooseCity = b2cAddressData.city;
         chooseProvince = b2cAddressData.province;
         chooseAddress = b2cAddressData.area;
@@ -198,7 +204,8 @@
             return;
         }
     }
-    NSString *receiver = nil;
+    
+    
     if([DCFCustomExtra validateString:receiverTf.text] == NO)
     {
         receiver = @"";
@@ -208,7 +215,6 @@
         receiver = receiverTf.text;
     }
     
-    NSString *province = nil;
     if([DCFCustomExtra validateString:chooseProvince] == NO)
     {
         province = @"";
@@ -218,7 +224,6 @@
         province = chooseProvince;
     }
     
-    NSString *city = nil;
     if([DCFCustomExtra validateString:chooseCity] == NO)
     {
         city = @"";
@@ -228,7 +233,6 @@
         city = chooseProvince;
     }
     
-    NSString *area = nil;
     if([DCFCustomExtra validateString:chooseAddress] == NO)
     {
         area = @"";
@@ -238,7 +242,6 @@
         area = chooseAddress;
     }
     
-    NSString *addressname = nil;
     if([DCFCustomExtra validateString:chooseAddressName] == NO)
     {
         addressname = @"";
@@ -248,7 +251,6 @@
         addressname = chooseAddressName;
     }
     
-    NSString *zip = nil;
     if([DCFCustomExtra validateString:zipTf.text] == NO)
     {
         zip = @"";
@@ -258,7 +260,6 @@
         zip = zipTf.text;
     }
     
-    NSString *mobile = nil;
     if([DCFCustomExtra validateString:mobileTf.text] == NO)
     {
         mobile = @"";
@@ -268,7 +269,6 @@
         mobile = mobileTf.text;
     }
     
-    NSString *tel = nil;
     if([DCFCustomExtra validateString:fixedLineTelephone.text] == NO)
     {
         tel = @"";
@@ -278,7 +278,6 @@
         tel = fixedLineTelephone.text;
     }
     
-    NSString *fulladdress = nil;
     if([DCFCustomExtra validateString:addressNameTf.text] == NO)
     {
         fulladdress = @"";
@@ -299,8 +298,7 @@
 
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiver,province,city,area,addressname,fulladdress,zip,mobile,tel];
         
-        NSString *receiveFullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,addressname,fulladdress];
-        addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",receiver,@"receiver",mobile,@"mobile", nil];
+   
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
@@ -315,7 +313,6 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"editMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-//loginid,memberid（用户id）,token,receiver(收货人),province(省份)city(城市),area(地区),addressname(街道),fulladdress(详细地址),zip(邮编),mobile(联系电话)，tel(固定电话)，addressid(收获地址id)
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,receiver,province,city,area,addressname,fulladdress,zip,mobile,tel,b2cAddressData.addressId];
         NSLog(@"%@",pushString);
         
@@ -425,6 +422,12 @@
         {
             [DCFStringUtil showNotice:msg];
             
+            NSString *addressid_b2b = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"addressid_b2b"]];
+            NSString *addressid_b2c = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"addressid_b2c"]];
+
+            NSString *receiveFullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,addressname,fulladdress];
+            addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",receiver,@"receiver",mobile,@"mobile",addressid_b2b,@"addressid_b2b",addressid_b2c,@"addressid_b2c", nil];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAddressSuccessForB2B" object:addSuccessDic];
             
             for(UIViewController *vc in self.navigationController.viewControllers)
@@ -473,23 +476,6 @@
     }
 }
 
-//- (void) setDefaultAddress
-//{
-//    NSString *memberid = [self getMemberId];
-//
-//    NSString *time = [DCFCustomExtra getFirstRunTime];
-//    NSString *string = [NSString stringWithFormat:@"%@%@",@"setDefaultMemberAddress",time];
-//    NSString *token = [DCFCustomExtra md5:string];
-//
-//    NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&addressid=%@&status=%@",memberid,token,chooseCode,[NSString stringWithFormat:@"%d",swith.on]];
-//
-//    NSLog(@"%@",pushString);
-//
-//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSetDefaultMemberAddressTag delegate:self];
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/setDefaultMemberAddress.html?"];
-//    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-//
-//}
 
 - (void) loadSubViews
 {

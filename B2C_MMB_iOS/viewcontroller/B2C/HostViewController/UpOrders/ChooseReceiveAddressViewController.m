@@ -180,14 +180,6 @@
         NSDictionary *receiveDic = nil;
         if(result == 0)
         {
-//            if(msg.length != 0)
-//            {
-//                [DCFStringUtil showNotice:msg];
-//            }
-//            else
-//            {
-//                [DCFStringUtil showNotice:@"您还没有添加收货地址哦，去添加一个吧~"];
-//            }
             receiveDic = [[NSDictionary alloc] init];
         }
         else if (result == 1)

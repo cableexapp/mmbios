@@ -189,11 +189,14 @@
     
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
-    
+    [self.agreeBtn setSelected:YES];
 }
 
 - (IBAction)agreementBtn:(id)sender
 {
+    UIButton *btn = (UIButton *) sender;
+    btn.selected = !btn.selected;
+    [self.agreeBtn setSelected:!btn.selected];
     [self setHidesBottomBarWhenPushed:YES];
     RegisterAgreementViewController *registerVC = [[RegisterAgreementViewController alloc] init];
     [self.navigationController pushViewController:registerVC animated:YES];

@@ -111,7 +111,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     if(URLTag == URLInquiryListSpeedTag)
     {
         if(_reloading == YES)
@@ -138,7 +137,6 @@
                 }
                 [dataArray addObjectsFromArray:[B2BMyInquiryListFastData getListArray:[dicRespon objectForKey:@"items"]]];
                 
-                NSLog(@"dataArray = %@",dataArray);
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
                 if(intTotal == 0)

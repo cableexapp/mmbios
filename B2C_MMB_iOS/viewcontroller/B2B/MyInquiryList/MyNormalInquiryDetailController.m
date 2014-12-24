@@ -62,11 +62,12 @@
     }
     UILabel *orderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_order.width+40, 20)];
     [orderLabel setFont:[UIFont systemFontOfSize:12]];
-    [orderLabel setText:[NSString stringWithFormat:@"编号:%@",self.myOrderNum]];
+    [orderLabel setText:[NSString stringWithFormat:@"编号: %@",self.myOrderNum]];
     [self.topView addSubview:orderLabel];
     
     CGSize size_time;
     NSString *tempMyTime = [NSString stringWithFormat:@"%@",self.myTime];
+
     if([DCFCustomExtra validateString:tempMyTime] == NO)
     {
         size_time = CGSizeMake(20, height);
@@ -76,7 +77,7 @@
         size_time = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:self.myTime WithSize:CGSizeMake(MAXFLOAT, height)];
     }
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, orderLabel.frame.origin.y+orderLabel.frame.size.height, ScreenWidth-20, 20)];
-    [timeLabel setText:[NSString stringWithFormat:@"提交时间:%@",self.myTime]];
+    [timeLabel setText:[NSString stringWithFormat:@"提交时间: %@",tempMyTime]];
     [timeLabel setFont:[UIFont systemFontOfSize:12]];
     [timeLabel setTextAlignment:NSTextAlignmentLeft];
     [timeLabel setTextColor:[UIColor lightGrayColor]];

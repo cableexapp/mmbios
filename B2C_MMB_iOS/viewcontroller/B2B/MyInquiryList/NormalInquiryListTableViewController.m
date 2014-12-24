@@ -182,7 +182,7 @@
             NSString *upTime = [[dataArray objectAtIndex:i] time];
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 250, 30)];
-            [label setText:[NSString stringWithFormat:@" 提交时间:%@",upTime]];
+            [label setText:[NSString stringWithFormat:@"提交时间:%@",upTime]];
             [label setFont:[UIFont systemFontOfSize:13]];
             [upTimeLabelArray addObject:label];
         }
@@ -263,7 +263,7 @@
         NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
         NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
         NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
-        NSString *kind = [NSString stringWithFormat:@"%@%@%@",firtKind,secondKind,thirdKind];
+        NSString *kind = [NSString stringWithFormat:@"%@>%@>%@",firtKind,secondKind,thirdKind];
         if(kind.length == 0 || [kind isKindOfClass:[NSNull class]])
         {
             size_Kind = CGSizeMake(10, 30);
@@ -280,7 +280,7 @@
     }
     else
     {
-        return 40;
+        return 90;
     }
     return 0;
 }
@@ -372,8 +372,8 @@
         
         NSArray *myItems = [NSArray arrayWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
         
-        if(indexPath.row < myItems.count)
-        {
+//        if(indexPath.row < myItems.count)
+//        {
             //        [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section*10,indexPath.row*10]];
             NSString *model = nil;
             CGSize size_model;
@@ -442,7 +442,7 @@
                 NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
                 NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
                 NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
-                kind = [NSString stringWithFormat:@"%@%@%@",firtKind,secondKind,thirdKind];
+                kind = [NSString stringWithFormat:@"%@>%@>%@",firtKind,secondKind,thirdKind];
                 if(kind.length == 0 || [kind isKindOfClass:[NSNull class]])
                 {
                     size_Kind = CGSizeMake(10, 30);
@@ -453,7 +453,7 @@
                 }
                 
             }
-            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_model.width+40, 30)];
+            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, size_model.width+40, 30)];
             if(model.length == 0 || [model isKindOfClass:[NSNull class]])
             {
                 //                [modelLabel setText:[NSString stringWithFormat:@"%@",model]];
@@ -510,7 +510,7 @@
             [label setText:@"分类:"];
             [label setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:label];
-        }
+//        }
         if(indexPath.row == myItems.count)
         {
             UILabel *firstLabel = (UILabel *)[upTimeLabelArray objectAtIndex:indexPath.section];

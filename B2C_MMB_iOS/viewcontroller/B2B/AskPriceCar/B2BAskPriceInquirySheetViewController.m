@@ -207,9 +207,9 @@
 
 - (void) addAddressSuccessForB2B:(NSNotification *) noti
 {
-//    addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",receiver,@"receiver",mobile,@"mobile", nil];
-
+//    addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",receiver,@"receiver",mobile,@"mobile",addressid_b2b,@"addressid_b2b",addressid_b2c,@"addressid_b2c", nil];
     receiverDic = [[NSDictionary alloc] initWithDictionary:(NSDictionary *)[noti object]];
+    receiveAddressId = [receiverDic objectForKey:@"addressid_b2b"];
     receiver = [receiverDic objectForKey:@"receiver"];
     receiveTel = [receiverDic objectForKey:@"mobile"];
     fullAddress = [receiverDic objectForKey:@"receiveFullAddress"];

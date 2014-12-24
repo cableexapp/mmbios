@@ -159,7 +159,7 @@
     {
         oemNo = self.fastData.oemNo;
     }
-    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",oemNo]];
+    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号: %@",oemNo]];
     
     [self.statusLabel setText:[NSString stringWithFormat:@"状态:%@",self.fastData.status]];
     [self.statusLabel setTextAlignment:NSTextAlignmentRight];
@@ -217,6 +217,7 @@
     
     requestLabel = [[UILabel alloc] init];
     NSString *request = [NSString stringWithFormat:@"%@",self.fastData.content];
+    
     if([DCFCustomExtra validateString:request] == NO)
     {
         [requestFirstLabel setFrame:CGRectMake(10, self.linkManLabel.frame.origin.y+self.linkManLabel.frame.size.height, testSize.width, 0)];

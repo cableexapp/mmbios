@@ -15,6 +15,7 @@
 {
     if(self = [super init])
     {
+       
         _content = [NSString stringWithFormat:@"%@",[dic objectForKey:@"content"]];
         
         if([[[dic objectForKey:@"createDate"] allKeys] count] == 0 || [[dic objectForKey:@"createDate"] isKindOfClass:[NSNull class]])
@@ -53,6 +54,8 @@
         _remark = [NSString stringWithFormat:@"%@",[dic objectForKey:@"remark"]];
         
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
+    
+        
         if([_status intValue] == 0)
         {
             _speedStatus = @"";

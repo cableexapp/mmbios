@@ -137,6 +137,8 @@
                     [dataArray removeAllObjects];
                 }
                 [dataArray addObjectsFromArray:[B2BMyInquiryListFastData getListArray:[dicRespon objectForKey:@"items"]]];
+                
+                NSLog(@"dataArray = %@",dataArray);
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
                 if(intTotal == 0)
@@ -254,14 +256,15 @@
         return 44;
     }
     
-    NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] remark]];
+    NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] content]];
+  
     if(s.length == 0 || [s isKindOfClass:[NSNull class]])
     {
         return 100;
     }
     else
     {
-        NSString *remark = [NSString stringWithFormat:@"询价需求:%@",s];
+        NSString *remark = [NSString stringWithFormat:@"询价需求: %@",s];
         CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:remark WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
         if(size.height<= 30)
         {
@@ -288,7 +291,7 @@
         return nil;
     }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
-    [view setBackgroundColor:[UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0]];
+    [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     
     CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"询价单号" WithSize:CGSizeMake(MAXFLOAT, 30)];
     
@@ -379,8 +382,8 @@
         [btn setFrame:CGRectMake(cell.contentView.frame.size.width-60, timeLabel.frame.origin.y, 50, 30)];
         [cell.contentView addSubview:btn];
         
-        NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] remark]];
-        NSString *remark = [NSString stringWithFormat:@"询价需求:%@",s];
+        NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] content]];
+        NSString *remark = [NSString stringWithFormat:@"询价需求: %@",s];
         UILabel *remarkLabel = [[UILabel alloc] init];
         if(s.length == 0 || [s isKindOfClass:[NSNull class]])
         {

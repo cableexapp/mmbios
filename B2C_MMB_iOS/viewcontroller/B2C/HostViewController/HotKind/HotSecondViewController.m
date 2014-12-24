@@ -57,7 +57,8 @@
     [self pushAndPopStyle];
     
     self.markView.editable = NO;
-
+    [self.markView setReturnKeyType:UIReturnKeyDone];
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交所选分类"];
     self.navigationItem.titleView = top;
     [super viewDidLoad];
@@ -76,6 +77,7 @@
     }
     [self.markView setText:str];
     self.secondTextView.delegate = self;
+    [self.secondTextView setReturnKeyType:UIReturnKeyDone];
     self.PhoneNumber.delegate = self;
     [self.PhoneNumber addTarget:self action:@selector(textViewDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
     [self.PhoneNumber addTarget:self action:@selector(textViewDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
@@ -84,22 +86,42 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.3f];
     self.view.frame =CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
+    [UIView commitAnimations];
 }
 
 
 - (void)textViewDidBeginEditing:(UITextField *)textView
 {
-    CGRect frame = textView.frame;
-    int offset = frame.origin.y + 60 - (self.view.frame.size.height-200.0);
-    NSTimeInterval animationDuration=0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    if (offset)
+//    CGRect frame = textView.frame;
+//    int offset = frame.origin.y + 60 - (self.view.frame.size.height-200.0);
+//    NSTimeInterval animationDuration=0.30f;
+//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//    [UIView setAnimationDuration:animationDuration];
+//    if (offset)
+//    {
+//        self.view.frame=CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
+//        [UIView commitAnimations];
+//    }
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.3f];
+    if(MainScreenHeight <= 500)
     {
-        self.view.frame=CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
-        [UIView commitAnimations];
+        [self.view setFrame:CGRectMake(0, -60, ScreenWidth, ScreenHeight)];
     }
+    else if (MainScreenHeight > 500 && MainScreenHeight <= 600)
+    {
+        [self.view setFrame:CGRectMake(0, -10, ScreenWidth, ScreenHeight)];
+    }
+    else
+    {
+        
+    }
+    [UIView commitAnimations];
 }
 
 
@@ -132,9 +154,10 @@
     
     if(userName.length == 0)
     {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+        userName = @"";
+//        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+//        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+//        [self presentViewController:loginNavi animated:YES completion:nil];
     }
     return userName;
     
@@ -206,8 +229,27 @@
         NSString *time = [DCFCustomExtra getFirstRunTime];
         NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
         NSString *token = [DCFCustomExtra md5:string];
-        
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@",memberid,token,[self getUserName],self.PhoneNumber.text,[self getUserName],self.markView.text,@"4"];
+    
+    NSString *phoneNum = nil;
+    if([DCFCustomExtra validateString:self.PhoneNumber.text] == NO)
+    {
+        phoneNum = @"";
+    }
+    else
+    {
+        phoneNum = self.PhoneNumber.text;
+    }
+    NSString *markView = nil;
+    if([DCFCustomExtra validateString:self.markView.text] == NO)
+    {
+        markView = @"";
+    }
+    else
+    {
+        markView = self.markView.text;
+    }
+//    loginid,token,memberid,membername,phone(联系电话),linkman(联系人),content(内容)
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@",memberid,token,[self getUserName],phoneNum,[self getUserName],markView];
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];

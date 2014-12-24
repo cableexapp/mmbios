@@ -169,19 +169,19 @@
     if (URLTag == URLReceiveAddressTag)
     {
         int result= [[dicRespon objectForKey:@"result"] intValue];
-        NSString *msg = [dicRespon objectForKey:@"msg"];
+//        NSString *msg = [dicRespon objectForKey:@"msg"];
         
         NSDictionary *receiveDic = nil;
         if(result == 0)
         {
-            if(msg.length != 0)
-            {
-                [DCFStringUtil showNotice:msg];
-            }
-            else
-            {
-                [DCFStringUtil showNotice:@"获取收货地址失败"];
-            }
+//            if(msg.length != 0)
+//            {
+//                [DCFStringUtil showNotice:msg];
+//            }
+//            else
+//            {
+//                [DCFStringUtil showNotice:@"您还没有添加收货地址哦，去添加一个吧~"];
+//            }
             receiveDic = [[NSDictionary alloc] init];
         }
         else if (result == 1)

@@ -14,6 +14,7 @@
 #import "ChooseReceiveAddressViewController.h"
 #import "ManagReceiveAddressViewController.h"
 #import "AddReceiveAddressViewController.h"
+#import "B2BAskPriceInquirySheetViewController.h"
 
 @implementation AddReceiveFinalViewController
 {
@@ -42,6 +43,8 @@
     UIButton *backBtn;
     
     UILabel *addressLabel_2;
+    
+    NSDictionary *addSuccessDic;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -195,27 +198,113 @@
             return;
         }
     }
+    NSString *receiver = nil;
+    if([DCFCustomExtra validateString:receiverTf.text] == NO)
+    {
+        receiver = @"";
+    }
+    else
+    {
+        receiver = receiverTf.text;
+    }
+    
+    NSString *province = nil;
+    if([DCFCustomExtra validateString:chooseProvince] == NO)
+    {
+        province = @"";
+    }
+    else
+    {
+        province = chooseProvince;
+    }
+    
+    NSString *city = nil;
+    if([DCFCustomExtra validateString:chooseCity] == NO)
+    {
+        city = @"";
+    }
+    else
+    {
+        city = chooseProvince;
+    }
+    
+    NSString *area = nil;
+    if([DCFCustomExtra validateString:chooseAddress] == NO)
+    {
+        area = @"";
+    }
+    else
+    {
+        area = chooseAddress;
+    }
+    
+    NSString *addressname = nil;
+    if([DCFCustomExtra validateString:chooseAddressName] == NO)
+    {
+        addressname = @"";
+    }
+    else
+    {
+        addressname = chooseAddressName;
+    }
+    
+    NSString *zip = nil;
+    if([DCFCustomExtra validateString:zipTf.text] == NO)
+    {
+        zip = @"";
+    }
+    else
+    {
+        zip = zipTf.text;
+    }
+    
+    NSString *mobile = nil;
+    if([DCFCustomExtra validateString:mobileTf.text] == NO)
+    {
+        mobile = @"";
+    }
+    else
+    {
+        mobile = mobileTf.text;
+    }
+    
+    NSString *tel = nil;
+    if([DCFCustomExtra validateString:fixedLineTelephone.text] == NO)
+    {
+        tel = @"";
+    }
+    else
+    {
+        tel = fixedLineTelephone.text;
+    }
+    
+    NSString *fulladdress = nil;
+    if([DCFCustomExtra validateString:addressNameTf.text] == NO)
+    {
+        fulladdress = @"";
+    }
+    else
+    {
+        fulladdress = addressNameTf.text;
+    }
+    
     //新增
     if(isEditOrAdd == YES)
     {
-        //        NSString *s1 = [topTf text];
-        //        NSString *s2 = [(DCFMyTextField *)[textFieldArray objectAtIndex:1] text];
-        //        NSString *s = [NSString stringWithFormat:@"%@%@",s1,s2];
-        //        NSArray *arr = [NSArray arrayWithObjects:s,self, nil];
-        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"addressListDataArray" object:arr];
-        
         NSString *memberid = [self getMemberId];
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
         NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
+
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiver,province,city,area,addressname,fulladdress,zip,mobile,tel];
         
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,fixedLineTelephone.text];
+        NSString *receiveFullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,addressname,fulladdress];
+        addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",receiver,@"receiver",mobile,@"mobile", nil];
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        
     }
     //编辑
     else
@@ -226,10 +315,10 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"editMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&zip=%@&mobile=%@&addressid=%@&tel=%@&fulladdress=%@",memberid,token,receiverTf.text,chooseProvince,chooseCity,chooseAddress,chooseAddressName,zipTf.text,mobileTf.text,b2cAddressData.addressId,fixedLineTelephone.text,addressNameTf.text];
+//loginid,memberid（用户id）,token,receiver(收货人),province(省份)city(城市),area(地区),addressname(街道),fulladdress(详细地址),zip(邮编),mobile(联系电话)，tel(固定电话)，addressid(收获地址id)
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,receiver,province,city,area,addressname,fulladdress,zip,mobile,tel,b2cAddressData.addressId];
         NSLog(@"%@",pushString);
         
-        //        memberid（用户id）,token,receiver(收货人),province(省份)city(城市),area(地区),addressname(街道),fulladdress(详细地址),zip(邮编),mobile(联系电话)，tel(固定电话)，addressid(收获地址id)
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/editMemberAddress.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -332,14 +421,23 @@
                 [DCFStringUtil showNotice:msg];
             }
         }
-        else
+        else if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAddressSuccessForB2B" object:addSuccessDic];
+            
             for(UIViewController *vc in self.navigationController.viewControllers)
             {
                 if([vc isKindOfClass:[ChooseReceiveAddressViewController class]])
                 {
                     [self.navigationController popToViewController:vc animated:YES];
+                    return;
+                }
+                if([vc isKindOfClass:[B2BAskPriceInquirySheetViewController class]])
+                {
+                    [self.navigationController popToViewController:vc animated:YES];
+                    return;
                 }
             }
             //            [self setDefaultAddress];
@@ -362,7 +460,15 @@
         else if (result == 1)
         {
             [DCFStringUtil showNotice:msg];
-            [self.navigationController popViewControllerAnimated:YES];
+//            [self.navigationController popViewControllerAnimated:YES];
+            for(UIViewController *vc in self.navigationController.viewControllers)
+            {
+                if([vc isKindOfClass:[ChooseReceiveAddressViewController class]])
+                {
+                    [self.navigationController popToViewController:vc animated:YES];
+                    return;
+                }
+            }
         }
     }
 }

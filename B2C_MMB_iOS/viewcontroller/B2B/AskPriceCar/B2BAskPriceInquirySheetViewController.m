@@ -77,11 +77,14 @@
     {
         [HUD hide:YES];
     }
+//    [chooseAddress cancelRequest];
 }
 
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    
+
     
 //    NSString *time = [DCFCustomExtra getFirstRunTime];
 //    NSString *string = [NSString stringWithFormat:@"%@%@",@"AddressList",time];
@@ -109,7 +112,6 @@
     receiver = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiver"]];
     fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
     fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
-    NSLog(@"receiver = %@",receiverDic);
     [tv reloadData];
 }
 
@@ -203,6 +205,17 @@
     [tv reloadData];
 }
 
+- (void) addAddressSuccessForB2B:(NSNotification *) noti
+{
+//    addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",receiver,@"receiver",mobile,@"mobile", nil];
+
+    receiverDic = [[NSDictionary alloc] initWithDictionary:(NSDictionary *)[noti object]];
+    receiver = [receiverDic objectForKey:@"receiver"];
+    receiveTel = [receiverDic objectForKey:@"mobile"];
+    fullAddress = [receiverDic objectForKey:@"receiveFullAddress"];
+    [tv reloadData];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -214,12 +227,13 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doBCReceiveAddressHasChange:) name:@"B2CReceiveAddressHasChange" object:nil];
 
-    
-    
     chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
     chooseAddress.delegate_1 = self;
     chooseAddress.B2COrB2B = NO;
     [chooseAddress loadRequest];
+    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAddressSuccessForB2B" object:addSuccessDic];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addAddressSuccessForB2B:) name:@"AddAddressSuccessForB2B" object:nil];
     
     
     if(!buttomView || !upBtn)
@@ -438,7 +452,8 @@
         {
             if([[receiverDic allKeys] count] == 0 || [receiverDic isKindOfClass:[NSNull class]])
             {
-                [cell.textLabel setText:@"暂无收货地址"];
+                [cell.textLabel setFont:[UIFont systemFontOfSize:12]];
+                [cell.textLabel setText:@"您还没有添加收货地址哦，去添加一个吧~"];
                 flag = NO;
             }
             else

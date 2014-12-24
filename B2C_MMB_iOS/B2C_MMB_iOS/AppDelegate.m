@@ -260,7 +260,6 @@ NSString *strUserId = @"";
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
     
-    
     //XMPP
     if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID])
     {
@@ -631,6 +630,7 @@ NSString *strUserId = @"";
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [self reConnect];
+//    [self connect];
     [self queryRoster];
 }
 
@@ -638,6 +638,7 @@ NSString *strUserId = @"";
 {
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
     [self reConnect];
+//    [self connect];
     [self queryRoster];
     if ([pushChatView isEqualToString:@"push"])
     {
@@ -707,31 +708,7 @@ NSString *strUserId = @"";
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-//注册
-- (void)registerInSide
-{
-    isRegister = YES;
-    NSError *error;
-    NSString *UUID = [PhoneHelper getDeviceId];
-    NSString *hostName = @"58.215.50.9";
-    NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",UUID,hostName];
-    if ([xmppStream isConnected])
-    {
-        if (![xmppStream registerWithPassword:@"123456" error:&error])
-        {
-            //            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
-            //                                                                message:[error localizedDescription]
-            //                                                               delegate:nil
-            //                                                      cancelButtonTitle:@"Ok"
-            //                                                      otherButtonTitles:nil];
-            //            [alertView show];
-        }
-    }
-    else
-    {
-        [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
-    }
-}
+
 
 - (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket
 {
@@ -785,14 +762,45 @@ NSString *strUserId = @"";
     }
 }
 
+//注册
+- (void)registerInSide
+{
+    isRegister = YES;
+    NSError *error;
+    NSString *UUID = [PhoneHelper getDeviceId];
+    NSString *hostName = @"58.215.50.9";
+    NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",UUID,hostName];
+    if ([xmppStream isConnected])
+    {
+        if (![xmppStream registerWithPassword:@"123456" error:&error])
+        {
+            //            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
+            //                                                                message:[error localizedDescription]
+            //                                                               delegate:nil
+            //                                                      cancelButtonTitle:@"Ok"
+            //                                                      otherButtonTitles:nil];
+            //            [alertView show];
+        }
+    }
+    else
+    {
+        [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
+    }
+}
+
 - (BOOL)connect
 {
     NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
     NSString *myPassword = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
     
+    NSLog(@"myJID = %@",myJID);
+    
+    NSLog(@"myPassword = %@",myPassword);
+    
     myJID = [NSString stringWithFormat:@"%@@%@",[PhoneHelper getDeviceId],@"fgame.com"];
+//    myJID = [NSString stringWithFormat:@"%@@%@",@"service_lxh",@"fgame.com"];
     myPassword = @"123456";
-    if (myJID == nil || myPassword == nil)
+    if (myJID == nil)
     {
         return NO;
     }
@@ -803,8 +811,11 @@ NSString *strUserId = @"";
     NSError *error = nil;
     if (![xmppStream connect:&error])
     {
+         NSLog(@"sssss");
         return NO;
+       
     }
+//    [self noNameLogin];
     return YES;
 }
 
@@ -831,6 +842,23 @@ NSString *strUserId = @"";
         return NO;
     }
     return YES;
+}
+
+//匿名登录
+-(void)noNameLogin
+{
+    NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
+    [iq addAttributeWithName:@"id" stringValue:@"j2O0p-0"];
+    [iq addAttributeWithName:@"to"stringValue:@"fgame.com/e62dc5fd"];
+    [iq addAttributeWithName:@"type"stringValue:@"result"];
+     NSXMLElement *bind = [NSXMLElement elementWithName:@"bind"];
+    [bind addAttributeWithName:@"xmlns" stringValue:@"urn:ietf:params:xml:ns:xmpp-bind"];
+    NSXMLElement *jid = [NSXMLElement elementWithName:@"jid"];
+    [jid setStringValue:@"e62dc5fd@fgame.com/e62dc5fd"];
+    [bind addChild:jid];
+    [iq addChild:bind];
+    
+    NSLog(@"匿名登录 = %@",iq);
 }
 
 //查询群组列表
@@ -879,7 +907,7 @@ NSString *strUserId = @"";
     if ([iq.type isEqualToString:@"error"])
     {
         self.errorMessage = [[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue];
-        NSLog(@"123 = %@",[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue]);
+      
         [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue]];
     }
     return NO;
@@ -924,8 +952,8 @@ NSString *strUserId = @"";
     {
         return;
     }
-        NSString *fromSimple=[from substringToIndex:range.location];
-        NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
+    NSString *fromSimple=[from substringToIndex:range.location];
+    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
 }
 
 // 发送消息回调方法
@@ -1033,25 +1061,25 @@ NSString *strUserId = @"";
     }
 }
 
-#pragma mark - 数据库 - 收到消息存储
--(void)recUserId:(NSString *)recUserId toUserId:(NSString *)userId toTime:(NSString *)time toMessage:(NSString *)message
-{
-    sqlite3 * dataBase = NULL;
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documents = [paths objectAtIndex:0];
-    NSString *filePath = [documents stringByAppendingPathComponent:@"ChatMessageList.sqlite"];
-    //打开数据库
-    int result = sqlite3_open([filePath UTF8String],&dataBase);
-    if (SQLITE_OK == result)
-    {
-        NSString *insert = [NSString stringWithFormat:@"INSERT INTO MESSAGELIST(rec_user_id, user_id, time, message, creater) values ('%@','%@','%@','%@','%@')",recUserId,userId,time,message,strUserId];
-        char * error = NULL;
-        sqlite3_exec(dataBase, [insert UTF8String], nil, nil, &error);
-        sqlite3_close(dataBase);
-        //printf(error);
-    }
-}
+//#pragma mark - 数据库 - 收到消息存储
+//-(void)recUserId:(NSString *)recUserId toUserId:(NSString *)userId toTime:(NSString *)time toMessage:(NSString *)message
+//{
+//    sqlite3 * dataBase = NULL;
+//    
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documents = [paths objectAtIndex:0];
+//    NSString *filePath = [documents stringByAppendingPathComponent:@"ChatMessageList.sqlite"];
+//    //打开数据库
+//    int result = sqlite3_open([filePath UTF8String],&dataBase);
+//    if (SQLITE_OK == result)
+//    {
+//        NSString *insert = [NSString stringWithFormat:@"INSERT INTO MESSAGELIST(rec_user_id, user_id, time, message, creater) values ('%@','%@','%@','%@','%@')",recUserId,userId,time,message,strUserId];
+//        char * error = NULL;
+//        sqlite3_exec(dataBase, [insert UTF8String], nil, nil, &error);
+//        sqlite3_close(dataBase);
+//        //printf(error);
+//    }
+//}
 
 
 @end

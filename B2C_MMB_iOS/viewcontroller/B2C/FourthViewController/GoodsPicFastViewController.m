@@ -322,7 +322,7 @@
                     
                     UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 13.5,ScreenWidth-25, 30)];
                     [priceLabel setTextAlignment:NSTextAlignmentLeft];
-                    [priceLabel setText:[NSString stringWithFormat:@"¥%@",data.price]];
+                    [priceLabel setText:[NSString stringWithFormat:@"¥ %@",data.price]];
                     priceLabel.textColor = [UIColor redColor];
                     [priceLabel setFont:[UIFont systemFontOfSize:15]];
                     [cell.contentView addSubview:priceLabel];
@@ -519,7 +519,6 @@
                 
                 [customCell.barndLabel setText:detailData.goodsBrand];
                 
-                NSLog(@"商品快照_detailData111 = %@",detailData.goodsBrand);
                 [customCell.kindLabel setText:detailData.goodsModel];
                 [customCell.voltageLabel setText:detailData.goodsVoltage];
                 [customCell.surfaceLabel setText:[NSString stringWithFormat:@"%@平方",detailData.spec]];

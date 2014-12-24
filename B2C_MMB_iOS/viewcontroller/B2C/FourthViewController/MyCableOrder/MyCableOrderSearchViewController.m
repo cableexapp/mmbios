@@ -542,7 +542,7 @@
         [GoodsPic setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
 
         GoodsName.text = [[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productName"];
-        GoodsPrice.text = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"price"] stringValue];
+        GoodsPrice.text = [NSString stringWithFormat:@"¥ %@",[[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"price"] stringValue]];
         NSString *stringNum = [NSString stringWithFormat:@"×%@",[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productNum"]];
         GoodsNum.text = stringNum;
   

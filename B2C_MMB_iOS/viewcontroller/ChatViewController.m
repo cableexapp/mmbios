@@ -362,8 +362,16 @@
             }
             if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"商品快照在线客服"])
             {
+                NSLog(@"页面数组_商品快照在线客服 = %d",self.navigationController.viewControllers.count);
 
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+                if (self.navigationController.viewControllers.count == 8)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
+                }
+                if (self.navigationController.viewControllers.count == 7)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+                }
             }
         }
     }
@@ -1072,38 +1080,96 @@
                 NSString *time =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 3) encoding:NSUTF8StringEncoding];
                 
                 NSString *msg =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 4) encoding:NSUTF8StringEncoding];
-                
+                NSMutableArray *messageArray_time = [[NSMutableArray alloc] init];
                 NSDictionary * dic;
                 //收发判断
                 if ([sen_userId isEqualToString:@"0"])
                 {
                    dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"0",@"type",@"icon01.png" ,@"icon",nil];
+                     [messageArray_time addObject:dic];
                 }
                 else
                 {
                    dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"1",@"type" ,@"icon02.png",@"icon",nil];
+                     [messageArray_time addObject:dic];
                 }
                 MessageFrame *messageFrame = [[MessageFrame alloc] init];
                 Message *message = [[Message alloc] init];
-                messageFrame.showTime = YES;
                 message.dict = dic;
-               
-                NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-                [inputFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] ];
-                [inputFormatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+
+                messageFrame.message = message;
+//                NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+//                [inputFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] ];
+//                [inputFormatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+ 
+                //获得本地时间
+                NSDate *dates = [NSDate date];
+                NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+                NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
+                [formatter setTimeZone:timeZone];
+                NSString *loctime = [formatter stringFromDate:dates];
+                NSLog(@"locttime = %@",loctime);
                 
-//                if ([self CheckTimeIsShow:[inputFormatter dateFromString:message.time]])
+#pragma mark - 数据检查
+                NSString *timestring;
+                if (StrTimeCheck)
+                {
+                    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+                    [inputFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] ];
+                    [inputFormatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+//                    
+//                    for (int i = 0; i < [self arrayWithMemberIsOnly:messageArray_time].count; i++)
+//                    {
+
+                       timestring = [[[self arrayWithMemberIsOnly:messageArray_time] objectAtIndex:0] objectForKey:@"time"];
+                        NSDate * beginTime = [inputFormatter dateFromString:StrTimeCheck];
+                        NSDate * endTime = [inputFormatter dateFromString:timestring];
+                        //增加一个范围时间。
+                        NSTimeInterval time=[endTime timeIntervalSinceDate:beginTime];
+                        
+                        if (abs(time)/60 < 3)
+                        {
+                            messageFrame.showTime = NO;
+                        }
+                        else if(abs(time)/60 >= 3)
+                        {
+                            StrTimeCheck = timestring;
+                            messageFrame.showTime = YES;
+                        }
+//                    }
+                }
+                else
+                {
+                    messageFrame.showTime = YES;
+                    StrTimeCheck = timestring;
+                }
+           
+//                for (int i = 0; i < [self arrayWithMemberIsOnly:messageArray_time].count; i++)
 //                {
-//                    messageFrame.showTime = YES;
+//                    NSString *timestring1 = [[[self arrayWithMemberIsOnly:messageArray_time] objectAtIndex:0] objectForKey:@"time"];
+//                    NSString *timestring2 = [[[self arrayWithMemberIsOnly:messageArray_time] objectAtIndex:i] objectForKey:@"time"];
+//                 
+//                    
+//                    NSDate * beginTime = [inputFormatter dateFromString:timestring1];
+//                    NSDate * endTime = [inputFormatter dateFromString:timestring2];
+//                    //增加一个范围时间。
+//                    NSTimeInterval timee=[endTime timeIntervalSinceDate:beginTime];
+//                    
+//                    if (abs(timee)/60 < 3)
+//                    {
+//                         messageFrame.showTime = NO;
+//                    }
+//                    else if(abs(timee)/60 >= 3)
+//                    {
+//                        messageFrame.showTime = YES;
+//                    }
+//
 //                }
-//                else
-//                {
-//                   messageFrame.showTime = NO;
-//                   self.tempDate = nil;
-//                }
-                    messageFrame.showTime = NO;
-                    messageFrame.message = message;
+
+                
                    [_allMessagesFrame insertObject:messageFrame atIndex:0];
+                
             }
         }
         sqlite3_finalize(statement);
@@ -1119,6 +1185,22 @@
     }
 }
 
+//去除数组重复元素
+-(NSMutableArray *)arrayWithMemberIsOnly:(NSMutableArray *)clearArray
+{
+    NSMutableArray *categoryArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [clearArray count]; i++)
+    {
+        {
+            if ([categoryArray containsObject:[clearArray objectAtIndex:i]] == NO)
+            {
+                [categoryArray addObject:[clearArray objectAtIndex:i]];
+            }
+        }
+    }
+    return categoryArray;
+}
+
 //时间检测
 -(BOOL)CheckTimeIsShow:(NSDate *)date
 {
@@ -1127,11 +1209,12 @@
         NSTimeInterval time = [date timeIntervalSinceDate:self.tempDate];
         return  abs(time)/60 >= 3?YES:NO;
     }
-    else
-    {
-        self.tempDate = date;
-        return YES;
-    }
+//    else
+//    {
+//        self.tempDate = date;
+//        return YES;
+//    }
+    return YES;
 }
 
 #pragma mark - 数据库存入消息

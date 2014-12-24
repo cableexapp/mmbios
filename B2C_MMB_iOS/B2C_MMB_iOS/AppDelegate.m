@@ -494,6 +494,11 @@ NSString *strUserId = @"";
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginid"];
             }
             
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"HotKindNum"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HotKindNum"];
+            }
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
           
             [self performSelector:@selector(EnterToLogin) withObject:nil afterDelay:2.5];

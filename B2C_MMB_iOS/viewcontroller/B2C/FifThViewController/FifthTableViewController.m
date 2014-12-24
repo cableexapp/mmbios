@@ -366,11 +366,10 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginid"];
             }
             
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"])
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"HotKindNum"])
             {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"B2BManageBillSwitchStatus"];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HotKindNum"];
             }
-            
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             

@@ -140,9 +140,10 @@
         
         if(result == 0)
         {
+            addressListDataArray = [[NSMutableArray alloc] init];
             if(msg.length != 0)
             {
-                [DCFStringUtil showNotice:msg];
+//                [DCFStringUtil showNotice:msg];
             }
             else
             {
@@ -377,8 +378,6 @@
         B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
         NSString *addressId = [NSString stringWithFormat:@"%@",data.addressId];
         [self deleteRow:addressId];
-        //        [addressListDataArray removeObjectAtIndex:indexPath.row];
-        //        [tableView deleteRowsAtIndexPaths:[NSMutableArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];  //删除对应数据的cell
     }
 }
 

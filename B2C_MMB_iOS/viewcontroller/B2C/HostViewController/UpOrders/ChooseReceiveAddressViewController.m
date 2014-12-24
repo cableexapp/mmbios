@@ -175,6 +175,7 @@
         if(result == 0)
         {
             receiveDic = [[NSDictionary alloc] init];
+            addressListDataArray = [[NSMutableArray alloc] init];
         }
         else if (result == 1)
         {
@@ -275,6 +276,7 @@
     
     //    [self loadRequest];
     
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doSomething:) name:@"addressListDataArray" object:nil];
     

@@ -88,6 +88,8 @@
     UIButton *sureBtn;
     
     UIWebView *cellWebView;
+    
+    NSString *memberid;
 }
 @end
 
@@ -106,7 +108,7 @@
 
 - (NSString *) getMemberId
 {
-    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     if(memberid.length == 0)
     {
         
@@ -116,11 +118,21 @@
 
 - (void) btnClick:(UIButton *) sender
 {
-    [self.view.window addSubview:[self loadChooseColorAndCount]];
-    backView.hidden = NO;
-    [self setHidesBottomBarWhenPushed:YES];
-    int tag = [sender tag];
-    btnTag = tag;
+    memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    if([DCFCustomExtra validateString:memberid] == NO)
+    {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚未登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
+        [av show];
+    }
+    else
+    {
+        [self.view.window addSubview:[self loadChooseColorAndCount]];
+        backView.hidden = NO;
+        [self setHidesBottomBarWhenPushed:YES];
+        int tag = [sender tag];
+        btnTag = tag;
+    }
+
 }
 
 - (void)rightItemClick:(id) sender
@@ -298,7 +310,7 @@
     
     NSString *visitorid = [app getUdid];
     
-    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
     NSString *pushString = nil;
     if(hasLogin == YES)
@@ -1813,14 +1825,14 @@
         {
 #pragma mark - 立即购买
             
-            NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-            if([DCFCustomExtra validateString:memberid] == NO)
-            {
-                UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚未登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
-                [av show];
-            }
-            else
-            {
+            memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+//            if([DCFCustomExtra validateString:memberid] == NO)
+//            {
+//                UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚未登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
+//                [av show];
+//            }
+//            else
+//            {
                 NSString *time = [DCFCustomExtra getFirstRunTime];
                 
                 NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
@@ -1834,7 +1846,7 @@
                 conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
                 [conn getResultFromUrlString:urlString postBody:pushString method:POST];
                 
-            }
+//            }
             
         }
         else
@@ -1852,7 +1864,7 @@
             
             NSString *visitorid = [app getUdid];
             
-            NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+            memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
             
             BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
             

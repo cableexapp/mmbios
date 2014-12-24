@@ -499,10 +499,27 @@
         
         //图片压缩
         CGSize imagesize = img.size;
-        imagesize.height = ScreenHeight;
-        imagesize.width = ScreenWidth;
-        img = [DCFCustomExtra reSizeImage:img toSize:imagesize];
-        NSData *data = UIImageJPEGRepresentation(img, 0.125);
+        CGFloat scale = 0.0;
+        CGFloat Height = 0.0;
+        CGFloat Width = 0.0;
+        CGSize size;
+        if(imagesize.height >= imagesize.width)
+        {
+            scale = imagesize.height/ScreenHeight;
+            Height = ScreenHeight;
+            Width = imagesize.width/scale;
+        }
+        else
+        {
+            scale = imagesize.width/ScreenWidth;
+            Height = imagesize.height/scale;
+            Width = ScreenWidth;
+        }
+        size = CGSizeMake(Width, Height);
+//        imagesize.height = ScreenHeight;
+//        imagesize.width = ScreenWidth;
+        img = [DCFCustomExtra reSizeImage:img toSize:size];
+        NSData *data = UIImageJPEGRepresentation(img, 0.5);
         
         UIImage *image = [UIImage imageWithData:data];
         image = [image fixOrientation];

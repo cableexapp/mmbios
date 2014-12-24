@@ -82,6 +82,12 @@
 		61760A801A15F22300F3BA0B /* B2BManagBillData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A7F1A15F22300F3BA0B /* B2BManagBillData.m */; };
 		6178BDD61A398158001D270B /* ManagReceiveAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6178BDD41A398158001D270B /* ManagReceiveAddressViewController.m */; };
 		617E52CC1A2AC0F600121C49 /* B2CHotSaleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E52CB1A2AC0F600121C49 /* B2CHotSaleData.m */; };
+		617E980E1A4A5AF4004D8371 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 617E98041A4A5AF4004D8371 /* ioapi.c */; };
+		617E980F1A4A5AF4004D8371 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 617E98061A4A5AF4004D8371 /* mztools.c */; };
+		617E98101A4A5AF4004D8371 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 617E98081A4A5AF4004D8371 /* unzip.c */; };
+		617E98111A4A5AF4004D8371 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 617E980A1A4A5AF4004D8371 /* zip.c */; };
+		617E98121A4A5AF4004D8371 /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 617E980D1A4A5AF4004D8371 /* ZipArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		618057571A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 618057561A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.m */; };
 		6181A34A19CFC3F8000E2D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34919CFC3F8000E2D14 /* Foundation.framework */; };
 		6181A34C19CFC3F8000E2D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */; };
 		6181A34E19CFC3F8000E2D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6181A34D19CFC3F8000E2D14 /* UIKit.framework */; };
@@ -976,6 +982,19 @@
 		6178BDD41A398158001D270B /* ManagReceiveAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagReceiveAddressViewController.m; sourceTree = "<group>"; };
 		617E52CA1A2AC0F600121C49 /* B2CHotSaleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CHotSaleData.h; sourceTree = "<group>"; };
 		617E52CB1A2AC0F600121C49 /* B2CHotSaleData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CHotSaleData.m; sourceTree = "<group>"; };
+		617E98031A4A5AF4004D8371 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		617E98041A4A5AF4004D8371 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		617E98051A4A5AF4004D8371 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		617E98061A4A5AF4004D8371 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		617E98071A4A5AF4004D8371 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		617E98081A4A5AF4004D8371 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		617E98091A4A5AF4004D8371 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		617E980A1A4A5AF4004D8371 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		617E980B1A4A5AF4004D8371 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		617E980C1A4A5AF4004D8371 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		617E980D1A4A5AF4004D8371 /* ZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipArchive.m; sourceTree = "<group>"; };
+		618057551A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFastInquiryOrderLookPicViewController.h; sourceTree = "<group>"; };
+		618057561A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyFastInquiryOrderLookPicViewController.m; sourceTree = "<group>"; };
 		6181A34619CFC3F8000E2D14 /* B2C_MMB_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = B2C_MMB_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6181A34919CFC3F8000E2D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6181A34B19CFC3F8000E2D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -2273,6 +2292,8 @@
 				61551EA11A0BA1A2004F50FF /* SpeedInquiryListTableViewController.m */,
 				614A83F91A11ABCD00D4FE1F /* MyFastInquiryOrder.h */,
 				614A83FA1A11ABCD00D4FE1F /* MyFastInquiryOrder.m */,
+				618057551A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.h */,
+				618057561A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.m */,
 				6195F5F71A0CCE6B0036D168 /* MyNormalInquiryDetailController.h */,
 				6195F5F81A0CCE6B0036D168 /* MyNormalInquiryDetailController.m */,
 				6195F5F41A0CC5AA0036D168 /* MyInquiryDetailTableViewController.h */,
@@ -2376,9 +2397,28 @@
 			path = B2CHotSaleData;
 			sourceTree = "<group>";
 		};
+		617E98021A4A5AF4004D8371 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				617E98031A4A5AF4004D8371 /* crypt.h */,
+				617E98041A4A5AF4004D8371 /* ioapi.c */,
+				617E98051A4A5AF4004D8371 /* ioapi.h */,
+				617E98061A4A5AF4004D8371 /* mztools.c */,
+				617E98071A4A5AF4004D8371 /* mztools.h */,
+				617E98081A4A5AF4004D8371 /* unzip.c */,
+				617E98091A4A5AF4004D8371 /* unzip.h */,
+				617E980A1A4A5AF4004D8371 /* zip.c */,
+				617E980B1A4A5AF4004D8371 /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
 		6181A33D19CFC3F8000E2D14 = {
 			isa = PBXGroup;
 			children = (
+				617E98021A4A5AF4004D8371 /* minizip */,
+				617E980C1A4A5AF4004D8371 /* ZipArchive.h */,
+				617E980D1A4A5AF4004D8371 /* ZipArchive.m */,
 				6122711319CFC81500FE4DFF /* AliPay */,
 				6181A3B519CFC4C2000E2D14 /* Base */,
 				6181A3DF19CFC4C2000E2D14 /* Data */,
@@ -4928,6 +4968,7 @@
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
 				8BB7D49D1A29A70F00C716E4 /* MyCableOrderB2BViewController.m in Sources */,
 				8BFCF9FF1A3599F6005774D1 /* RegisterAgreementViewController.m in Sources */,
+				617E980E1A4A5AF4004D8371 /* ioapi.c in Sources */,
 				8BA7C17D1A10A8CC00758B0F /* FBShimmeringLayer.m in Sources */,
 				61551E911A0B4D6D004F50FF /* B2BAskPriceInquirySheetViewController.m in Sources */,
 				8BC2ADA11A19F0E100E44BC2 /* BPushClass.m in Sources */,
@@ -5029,6 +5070,7 @@
 				8BA7C2B91A10A8DD00758B0F /* XMPPPubSub.m in Sources */,
 				61B710E019FF3B53001CC3BD /* ShoppingHostViewController.m in Sources */,
 				61E65DDC1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m in Sources */,
+				617E98101A4A5AF4004D8371 /* unzip.c in Sources */,
 				6130AA071A3ED619000B4FB2 /* RSADataSigner.m in Sources */,
 				8BA7C2C41A10A8DD00758B0F /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				6181A50619CFC4C2000E2D14 /* FMDatabase.m in Sources */,
@@ -5090,6 +5132,7 @@
 				61A197C219F7509400909C6F /* QBAssetCollectionViewController.m in Sources */,
 				61760A721A15981500F3BA0B /* MyCableSureOrderViewController.m in Sources */,
 				61828B5E1A241B200028AB4C /* HasNotLoginViewController.m in Sources */,
+				617E980F1A4A5AF4004D8371 /* mztools.c in Sources */,
 				61B710B719FF3B53001CC3BD /* AboutViewController.m in Sources */,
 				61B710E519FF3B53001CC3BD /* AddReceiveAddressViewController.m in Sources */,
 				61B710C319FF3B53001CC3BD /* CancelOrderViewController.m in Sources */,
@@ -5103,6 +5146,7 @@
 				61B710F319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m in Sources */,
 				61ADE7E11A108D0200D773B9 /* HotScreenSecondViewController.m in Sources */,
 				6181A51B19CFC4C2000E2D14 /* UIImageView+WebCache.m in Sources */,
+				617E98111A4A5AF4004D8371 /* zip.c in Sources */,
 				8BA7C2BC1A10A8DD00758B0F /* XMPPDateTimeProfiles.m in Sources */,
 				61B710E819FF3B53001CC3BD /* AddReceiveThirdViewController.m in Sources */,
 				8BA7C2BF1A10A8DD00758B0F /* XMPPCapabilities.xcdatamodel in Sources */,
@@ -5134,6 +5178,7 @@
 				61B710EE19FF3B53001CC3BD /* LoginNaviViewController.m in Sources */,
 				6181A51919CFC4C2000E2D14 /* UIImage+WebP.m in Sources */,
 				8BA7C2E41A10A8DD00758B0F /* RFImageToDataTransformer.m in Sources */,
+				617E98121A4A5AF4004D8371 /* ZipArchive.m in Sources */,
 				8BA7C2D71A10A8DD00758B0F /* DDTTYLogger.m in Sources */,
 				8BA7C2B21A10A8DD00758B0F /* XMPPvCardTempAdr.m in Sources */,
 				6114F7A41A187DFE007DAC39 /* AddBangDingMobileViewController.m in Sources */,
@@ -5217,6 +5262,7 @@
 				61A197C719F7509400909C6F /* QBImagePickerFooterView.m in Sources */,
 				6181A50F19CFC4C2000E2D14 /* SDImageCache.m in Sources */,
 				61B710C819FF3B53001CC3BD /* FourthNaviViewController.m in Sources */,
+				618057571A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.m in Sources */,
 				6181A4D019CFC4C2000E2D14 /* DCFMyArrangeHomeWorkList.m in Sources */,
 				61B710C919FF3B53001CC3BD /* GoodsPicFastViewController.m in Sources */,
 				61B710BD19FF3B53001CC3BD /* ThirdTableViewController.m in Sources */,

@@ -38,6 +38,8 @@
 
 @property (strong,nonatomic) NSString *status;
 
+@property (strong,nonatomic) NSString *speedStatus;
+
 @property (strong,nonatomic) NSString *treatment;
 
 @property (strong,nonatomic) NSString *myTime;

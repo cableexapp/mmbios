@@ -111,6 +111,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
     if(URLTag == URLInquiryListSpeedTag)
     {
         if(_reloading == YES)
@@ -313,7 +314,7 @@
     [orderNumLabel setText:orderNum];
     [view addSubview:orderNumLabel];
     
-    NSString *status = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:section] status]];
+    NSString *status = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:section] speedStatus]];
     UILabel *statusLabel = [[UILabel alloc] init];
     if(status.length == 0 || [status isKindOfClass:[NSNull class]])
     {

@@ -25,6 +25,10 @@
     CGFloat height_2;
     CGFloat height_3;
     CGFloat height_4;
+    
+    NSDictionary *ctemsDic;
+    
+    
 }
 @end
 
@@ -76,14 +80,15 @@
         {
             if(result == 1)
             {
-                int status = [[[[dicRespon objectForKey:@"ctems"] lastObject] objectForKey:@"status"] intValue];
+                ctemsDic = [[NSDictionary alloc] initWithDictionary:[[dicRespon objectForKey:@"ctems"] lastObject]];
+                int status = [[ctemsDic objectForKey:@"status"] intValue];
                 if(status == 1)
                 {
-                    dataArray = [[NSMutableArray alloc] initWithArray:[[[dicRespon objectForKey:@"ctems"] lastObject] objectForKey:@"items"]];
+                    dataArray = [[NSMutableArray alloc] initWithArray:[ctemsDic objectForKey:@"items"]];
                 }
                 else
                 {
-                    dataArray = [[NSMutableArray alloc] initWithArray:[[[dicRespon objectForKey:@"ctems"] lastObject] objectForKey:@"ctems"]];
+                    dataArray = [[NSMutableArray alloc] initWithArray:[ctemsDic objectForKey:@"ctems"]];
                 }
                 if(dataArray.count == 0)
                 {
@@ -187,9 +192,9 @@
     }
     if(indexPath.section == 0)
     {
-        NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
+        NSString *address = [NSString stringWithFormat:@"%@%@%@%@",[ctemsDic objectForKey:@"province"],[ctemsDic objectForKey:@"city"],[ctemsDic objectForKey:@"district"],[ctemsDic objectForKey:@"address"]];
         CGSize size;
-        if(address.length == 0 || [address isKindOfClass:[NSNull class]])
+        if([DCFCustomExtra validateString:address] == NO)
         {
             size = CGSizeMake(30, 0);
         }
@@ -282,53 +287,88 @@
         
         if(indexPath.section == 0)
         {
-            if(indexPath.row == 0)
+            if([[ctemsDic allKeys] count] == 0 || [ctemsDic isKindOfClass:[NSNull class]])
             {
-                NSString *name = [self.addressDic objectForKey:@"name"];
-                NSString *tel = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"tel"]];
-                NSString *str = [NSString stringWithFormat:@"收货人: %@      %@",name,tel];
-                UILabel *nameAndTelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-20, 30)];
                 
-                NSMutableAttributedString *myName = [[NSMutableAttributedString alloc] initWithString:str];
-                [myName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
-                [myName addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(4, str.length-4)];
-                [nameAndTelLabel setAttributedText:myName];
-                [nameAndTelLabel setFont:[UIFont systemFontOfSize:12]];
-                [cell.contentView addSubview:nameAndTelLabel];
-                
-                NSString *address = [NSString stringWithFormat:@"收货地址: %@",[self.addressDic objectForKey:@"fullAddress"]];
-                NSString *myAdd = nil;
-                if([address rangeOfString:@"(null)"].location != NSNotFound)
-                {
-                    myAdd = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
-                }
-                else if([address rangeOfString:@"null"].location != NSNotFound)
-                {
-                    myAdd = [address stringByReplacingOccurrencesOfString:@"null" withString:@""];
-                }
-                else
-                {
-                    myAdd = address;
-                }
-
-                CGSize size;
-                if([DCFCustomExtra validateString:myAdd] == NO)
-                {
-                    size = CGSizeMake(30, 30);
-                }
-                else
-                {
-                    size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:myAdd WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
-                }
-                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameAndTelLabel.frame.origin.y + nameAndTelLabel.frame.size.height, size.width, size.height)];
-                NSMutableAttributedString *myAddress = [[NSMutableAttributedString alloc] initWithString:myAdd];
-                [myAddress addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
-                [myAddress addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(5, myAdd.length-5)];
-                [addressLabel setAttributedText:myAddress];
-                [addressLabel setFont:[UIFont systemFontOfSize:12]];
-                [addressLabel setNumberOfLines:0];
-                [cell.contentView addSubview:addressLabel];
             }
+            else
+            {
+                if(indexPath.row == 0)
+                {
+                    NSString *name_1 = [ctemsDic objectForKey:@"recipint"];
+                    NSString *name_2 = nil;
+                    if([name_1 rangeOfString:@"(null)"].location != NSNotFound)
+                    {
+                        name_2 = [name_1 stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                    }
+                    else if([name_1 rangeOfString:@"null"].location != NSNotFound)
+                    {
+                        name_2 = [name_1 stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                    }
+                    else
+                    {
+                        name_2 = name_1;
+                    }
+                    
+                    NSString *tel = [NSString stringWithFormat:@"%@",[ctemsDic objectForKey:@"tel"]];
+                    NSString *tel_2 = nil;
+                    if([tel rangeOfString:@"(null)"].location != NSNotFound)
+                    {
+                        tel_2 = [tel stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                    }
+                    else if([tel rangeOfString:@"null"].location != NSNotFound)
+                    {
+                        tel_2 = [tel stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                    }
+                    else
+                    {
+                        tel_2 = tel;
+                    }
+                    NSString *str = [NSString stringWithFormat:@"收货人: %@      %@",name_2,tel_2];
+                    UILabel *nameAndTelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-20, 30)];
+                    
+                    NSMutableAttributedString *myName = [[NSMutableAttributedString alloc] initWithString:str];
+                    [myName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
+                    [myName addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(4, str.length-4)];
+                    [nameAndTelLabel setAttributedText:myName];
+                    [nameAndTelLabel setFont:[UIFont systemFontOfSize:12]];
+                    [cell.contentView addSubview:nameAndTelLabel];
+                    
+                    NSString *address = [NSString stringWithFormat:@"收货地址: %@%@%@%@",[ctemsDic objectForKey:@"province"],[ctemsDic objectForKey:@"city"],[ctemsDic objectForKey:@"district"],[ctemsDic objectForKey:@"address"]];
+                    NSString *myAdd = nil;
+                    if([address rangeOfString:@"(null)"].location != NSNotFound)
+                    {
+                        myAdd = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                    }
+                    else if([address rangeOfString:@"null"].location != NSNotFound)
+                    {
+                        myAdd = [address stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                    }
+                    else
+                    {
+                        myAdd = address;
+                    }
+                    
+                    CGSize size;
+                    if([DCFCustomExtra validateString:myAdd] == NO)
+                    {
+                        size = CGSizeMake(30, 30);
+                    }
+                    else
+                    {
+                        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:myAdd WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
+                    }
+                    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameAndTelLabel.frame.origin.y + nameAndTelLabel.frame.size.height, size.width, size.height)];
+                    NSMutableAttributedString *myAddress = [[NSMutableAttributedString alloc] initWithString:myAdd];
+                    [myAddress addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
+                    [myAddress addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(5, myAdd.length-5)];
+                    [addressLabel setAttributedText:myAddress];
+                    [addressLabel setFont:[UIFont systemFontOfSize:12]];
+                    [addressLabel setNumberOfLines:0];
+                    [cell.contentView addSubview:addressLabel];
+                }
+            }
+       
         }
         else
         {
@@ -350,7 +390,21 @@
             NSString *firstType = (NSString *)[dic objectForKey:@"firstType"];
             NSString *secondType = (NSString *)[dic objectForKey:@"secondType"];
             NSString *thridType = (NSString *)[dic objectForKey:@"thridType"];
-            NSString *type = [NSString stringWithFormat:@"分类: %@%@%@",firstType,secondType,thridType];
+            NSString *type_1 = [NSString stringWithFormat:@"分类: %@%@%@",firstType,secondType,thridType];
+            NSString *type = nil;
+            if([type_1 rangeOfString:@"(null)"].location != NSNotFound)
+            {
+                type = [type_1 stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+            }
+            else if([type_1 rangeOfString:@"null"].location != NSNotFound)
+            {
+                type = [type_1 stringByReplacingOccurrencesOfString:@"null" withString:@""];
+            }
+            else
+            {
+                type = type_1;
+            }
+            
             NSMutableAttributedString *myType = [[NSMutableAttributedString alloc] initWithString:type];
             [myType addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myType addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, type.length-3)];

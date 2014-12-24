@@ -53,17 +53,24 @@
         _remark = [NSString stringWithFormat:@"%@",[dic objectForKey:@"remark"]];
         
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
+        if([_status intValue] == 0)
+        {
+            _speedStatus = @"";
+        }
         if([_status isEqualToString:@"1"])
         {
             _status = @"待审核";
+            _speedStatus = @"待审核";
         }
         if([_status isEqualToString:@"2"])
         {
             _status = @"询价中";
+            _speedStatus = @"已审核";
         }
         if([_status isEqualToString:@"3"])
         {
             _status = @"待接受";
+            _speedStatus = @"已关闭";
         }
         if([_status isEqualToString:@"4"])
         {

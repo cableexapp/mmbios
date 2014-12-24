@@ -14,6 +14,9 @@
 #import "SpeedAskPriceFirstViewController.h"
 #import "UIImageView+WebCache.h"
 #import "MyNormalInquiryDetailController.h"
+#import "ZipArchive.h"
+#import "DCFStringUtil.h"
+#import "MyFastInquiryOrderLookPicViewController.h"
 
 @implementation MyFastInquiryOrder
 {
@@ -24,6 +27,14 @@
     UILabel *situationLabel;
     
     NSString *oemNo;
+    
+    NSMutableArray *picArray;
+    
+    UILabel *requestLabel;
+    
+    NSMutableArray *finalPicArray;
+    
+    UIView *situationView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,21 +55,88 @@
         [conn stopConnection];
         conn = nil;
     }
+    
+    // 1. 获取Documents目录,删除pic文件夹
+    [self deletePic];
+    
+    //删除zip文件
+//    [self deleteZip];
+    
+    //删除txt文件
+//    [self deleteTxt];
+    
+}
+
+- (void) deleteTxt
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    NSString *MapLayerDataPath = [documentsDirectory stringByAppendingPathComponent:@"text.txt"];
+    BOOL bRet = [fileMgr fileExistsAtPath:MapLayerDataPath];
+    if (bRet) {
+        //
+        NSError *err;
+        [fileMgr removeItemAtPath:MapLayerDataPath error:&err];
+    }
+    
+}
+
+- (void) deletePic
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    NSString *MapLayerDataPath = [documentsDirectory stringByAppendingPathComponent:@"pic"];
+    BOOL bRet = [fileMgr fileExistsAtPath:MapLayerDataPath];
+    if (bRet) {
+        //
+        NSError *err;
+        [fileMgr removeItemAtPath:MapLayerDataPath error:&err];
+    }
+    //    [_imageView setImage:nil];
+    
+}
+
+- (void) deleteZip
+{
+    // 1. 获取Documents目录
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    NSString *MapLayerDataPath = [documentsDirectory stringByAppendingPathComponent:@"zipfile.zip"];
+    BOOL bRet = [fileMgr fileExistsAtPath:MapLayerDataPath];
+    if (bRet) {
+        //
+        NSError *err;
+        [fileMgr removeItemAtPath:MapLayerDataPath error:&err];
+    }
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    
+    [self deletePic];
+//    [self deleteTxt];
+//    [self deleteZip];
 }
 
 - (void) viewDidLoad
 {
     [super viewDidLoad];
     
-//    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    //    [self.navigationController.tabBarController.tabBar setHidden:YES];
     
     [self pushAndPopStyle];
+    
+    picArray = [[NSMutableArray alloc] init];
+
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.sv setBackgroundColor:[UIColor whiteColor]];
@@ -68,7 +146,7 @@
     
     self.lookBtn.layer.cornerRadius = 5;
     self.lookBtn.backgroundColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
-   
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"快速询价单详情"];
     self.navigationItem.titleView = top;
     
@@ -99,7 +177,7 @@
         [myTime addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, mytime.length-5)];
         [self.upTimeLabel setAttributedText:myTime];
     }
-
+    
     NSString *myphone = [NSString stringWithFormat:@"联系电话: %@",self.fastData.phone];
     if([DCFCustomExtra validateString:self.fastData.phone] == NO)
     {
@@ -128,71 +206,83 @@
         [self.linkManLabel setAttributedText:myMan];
     }
     
+    [self.requestFirstLabel setHidden:YES];
+    [self.requestFirstLabel setFrame:CGRectMake(0, 0, ScreenWidth, 0)];
     
+    CGSize testSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:@"询价需求:" WithSize:CGSizeMake(MAXFLOAT, 30)];
+    UILabel *requestFirstLabel = [[UILabel alloc] init];
+    [requestFirstLabel setText:@"询价需求:"];
+    [requestFirstLabel setFont:[UIFont systemFontOfSize:14]];
+    [self.sv addSubview:requestFirstLabel];
     
-    UILabel *requestLabel = [[UILabel alloc] init];
+    requestLabel = [[UILabel alloc] init];
     NSString *request = [NSString stringWithFormat:@"%@",self.fastData.content];
     if([DCFCustomExtra validateString:request] == NO)
     {
-        [self.requestFirstLabel setFrame:CGRectMake(10, self.linkManLabel.frame.origin.y, self.linkManLabel.frame.size.width, 0)];
-        [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height, ScreenWidth-20, 0)];
+        [requestFirstLabel setFrame:CGRectMake(10, self.linkManLabel.frame.origin.y+self.linkManLabel.frame.size.height, testSize.width, 0)];
+        [requestLabel setFrame:CGRectMake(requestFirstLabel.frame.origin.x+requestFirstLabel.frame.size.width+5, requestFirstLabel.frame.origin.y, ScreenWidth-25-requestFirstLabel.frame.size.width, 0)];
     }
     else
     {
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:request WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-        [self.requestFirstLabel setFrame:CGRectMake(10, self.linkManLabel.frame.origin.y, self.linkManLabel.frame.size.width, self.requestFirstLabel.frame.size.height)];
+        [requestFirstLabel setFrame:CGRectMake(10, self.linkManLabel.frame.origin.y+self.linkManLabel.frame.size.height, testSize.width, 30)];
+        
+        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:request WithSize:CGSizeMake(ScreenWidth-25-requestFirstLabel.frame.size.width, MAXFLOAT)];
         if(size.height <= 30)
         {
-            [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height, ScreenWidth-20, 30)];
+            [requestLabel setFrame:CGRectMake(requestFirstLabel.frame.origin.x+requestFirstLabel.frame.size.width+5, requestFirstLabel.frame.origin.y, ScreenWidth-25-requestFirstLabel.frame.size.width, 30)];
         }
         else
         {
-            [requestLabel setFrame:CGRectMake(10, self.requestFirstLabel.frame.origin.y+self.requestFirstLabel.frame.size.height, ScreenWidth-20, size.height)];
+            [requestLabel setFrame:CGRectMake(requestFirstLabel.frame.origin.x+requestFirstLabel.frame.size.width+5, requestFirstLabel.frame.origin.y, ScreenWidth-25-requestFirstLabel.frame.size.width, size.height)];
         }
+        [requestLabel setText:request];
     }
-    [requestLabel setText:request];
     [requestLabel setFont:[UIFont systemFontOfSize:14]];
     [requestLabel setNumberOfLines:0];
     [requestLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
     [self.sv addSubview:requestLabel];
     
-
-    
-//    UIImageView *iv = [[UIImageView alloc] init];
-//    NSString *filePath = [NSString stringWithFormat:@"%@",[self.fastData filePath]];
-//    if(filePath.length == 0 || [filePath isKindOfClass:[NSNull class]])
-//    {
-//        [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 0)];
-//    }
-//    else
-//    {
-//        [iv setFrame:CGRectMake(10, picTitleLabel.frame.origin.y+picTitleLabel.frame.size.height+10, 60, 60)];
-//        [iv setImageWithURL:[NSURL URLWithString:filePath]];
-//        [iv setUserInteractionEnabled:YES];
-//        UITapGestureRecognizer *ivTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ivTap:)];
-//        [iv addGestureRecognizer:ivTap];
-//    }
-//    [self.sv addSubview:iv];
-
-    situationLabel = [[UILabel alloc] init];
-    NSString *string = [NSString stringWithFormat:@"%@",self.fastData.treatment];
-    NSString *situation = [NSString stringWithFormat:@"处理情况: %@",string];
-    if([DCFCustomExtra validateString:string] == NO)
+    UIImageView *iv = [[UIImageView alloc] init];
+    if(!picArray || picArray.count == 0)
     {
-        [situationLabel setFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height+10, ScreenWidth-20, 0)];
+        [iv setFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height, (ScreenWidth-30)/3, 0)];
     }
     else
     {
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:situation WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-        [situationLabel setFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height+10, ScreenWidth-20, size.height)];
+        [iv setFrame:CGRectMake(10, requestLabel.frame.origin.y+requestLabel.frame.size.height, (ScreenWidth-30)/3, (ScreenWidth-30)/3)];
+    }
+
+    
+#pragma mark - 暂时写死，测试用
+//    self.fastData.treatment = @"处理情况处理情况处理情况处理情况处理情况处理情况处理情况处理情况处理情况处理情况";
+    situationLabel = [[UILabel alloc] init];
+    NSString *string = [NSString stringWithFormat:@"%@",self.fastData.treatment];
+    NSString *situation = [NSString stringWithFormat:@"处理情况: %@",string];
+    
+    situationView = [[UIView alloc] initWithFrame:CGRectMake(0, iv.frame.origin.y+iv.frame.size.height+10, ScreenWidth, 40)];
+    [situationView setBackgroundColor:[UIColor colorWithRed:86.0/255.0 green:70.0/255.0 blue:86.0/255.0 alpha:1.0]];
+    [self.sv addSubview:situationView];
+    
+    if([DCFCustomExtra validateString:string] == NO)
+    {
+        [situationView setFrame:CGRectMake(0, iv.frame.origin.y+iv.frame.size.height+10, ScreenWidth, 0)];
+        [situationLabel setFrame:CGRectMake(10, iv.frame.origin.y+iv.frame.size.height+10, ScreenWidth-20, 0)];
+    }
+    else
+    {
+        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:situation WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+        [situationView setFrame:CGRectMake(0, iv.frame.origin.y+iv.frame.size.height+10, ScreenWidth, size.height+20)];
+        [situationLabel setFrame:CGRectMake(10, 10, ScreenWidth-20, size.height)];
     }
     [situationLabel setText:situation];
     [situationLabel setTextColor:[UIColor whiteColor]];
-    [situationLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [situationLabel setFont:[UIFont boldSystemFontOfSize:15]];
     [situationLabel setNumberOfLines:0];
-    [self.sv addSubview:situationLabel];
+    [situationView addSubview:situationLabel];
     
-    [self.sv setContentSize:CGSizeMake(ScreenWidth, situationLabel.frame.origin.y+situationLabel.frame.size.height+20)];
+    
+    
+    [self.sv setContentSize:CGSizeMake(ScreenWidth, situationView.frame.origin.y+situationView.frame.size.height+20)];
     [self.sv setUserInteractionEnabled:YES];
     
     int inquiryId = [[self.fastData inquiryId] intValue];
@@ -224,8 +314,7 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-//    int result = [[dicRespon objectForKey:@"result"] intValue];
-    NSLog(@"%@",dicRespon);
+    //    int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetInquiryInfoTag)
     {
         if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
@@ -234,7 +323,7 @@
         }
         else
         {
-            NSArray *ctems = [NSArray arrayWithArray:[dicRespon objectForKey:@"ctems"]];
+            NSArray *ctems = [NSArray arrayWithArray:[dicRespon objectForKey:@"items"]];
             if(ctems.count == 0 || [ctems isKindOfClass:[NSNull class]])
             {
                 myDic = [[NSDictionary alloc] init];
@@ -248,28 +337,152 @@
                 }
                 else
                 {
-//                    fullAddress = [NSString stringWithFormat:@"%@%@%@%@",[dic objectForKey:@"province"],[dic objectForKey:@"city"],[dic objectForKey:@"district"],[dic objectForKey:@"address"]];
-//                    NSLog(@"fullAddress = %@",fullAddress);
-//                    
-//                    NSString *tel = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系电话:%@",self.fastData.phone]];
-//                    NSString *name = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系人:%@",self.fastData.linkman]];
-//                    myDic = [NSDictionary dictionaryWithObjectsAndKeys:name,@"name",tel,@"tel",fullAddress,@"fullAddress", nil];
-//                    
-//                    inquiryserial = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryserial"]];
-//                    
-//                    inquiryid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryid"]];
-//                    
-//                    [self.orderLabel setText:[NSString stringWithFormat:@"询价单号:%@",inquiryserial]];
-
+                    NSString *filePath = [NSString stringWithFormat:@"%@%@",@"http://58.215.20.140:8085/",[[[dicRespon objectForKey:@"items"] lastObject] objectForKey:@"filePath"]];
+                    if([DCFCustomExtra validateString:filePath] == NO)
+                    {
+                        
+                    }
+                    else
+                    {
+                        [self loadPicView:filePath];
+                    }
                 }
             }
         }
     }
 }
 
+- (void) loadPicView:(NSString *) sender
+{
+
+//    sender = @"http://www.icodeblog.com/wp-content/uploads/2012/08/zipfile.zip";
+
+    dispatch_queue_t queue = dispatch_get_global_queue(
+                                                       DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",sender]];
+        NSError *error = nil;
+        NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&error];
+        
+        if(!error)
+        {
+            NSFileManager *myFileManager=[NSFileManager defaultManager];
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *path = [paths objectAtIndex:0];
+            
+            //在路径下创建一个pic文件夹
+            NSString *pathString = [path stringByAppendingPathComponent:@"pic"];
+            [myFileManager createDirectoryAtPath:pathString withIntermediateDirectories:YES attributes:nil error:&error];
+            
+            //在pic文件夹下面创建一个zip文件
+            NSString *zipPath = [pathString stringByAppendingPathComponent:@"zipfile.zip"];
+            
+            //把请求下来的数据写入zip文件
+            [data writeToFile:zipPath options:0 error:&error];
+            
+            if(!error)
+            {
+                ZipArchive *za = [[ZipArchive alloc] init];
+                if ([za UnzipOpenFile: zipPath]) {
+                    BOOL ret = [za UnzipFileTo: pathString overWrite: YES];
+                    if (NO == ret){} [za UnzipCloseFile];
+                    
+                    NSDirectoryEnumerator *myDirectoryEnumerator;
+                    
+                    //指定路径下的遍历
+                    myDirectoryEnumerator=[myFileManager enumeratorAtPath:pathString];
+                    //全部遍历
+                    //                    myDirectoryEnumerator=[myFileManager enumeratorAtPath:[[NSBundle mainBundle] bundlePath]];
+                    
+                    NSString *file;
+                    
+                    while((file=[myDirectoryEnumerator nextObject]))     //遍历当前目录
+                    {
+                        if([[file pathExtension] isEqualToString:@"png"])   //取得后缀名这.png的文件名
+                        {
+                            [picArray addObject:[pathString stringByAppendingPathComponent:file]]; //存到数组
+                        }
+                        
+                    }
+                    
+                    finalPicArray = [[NSMutableArray alloc] init];
+                    for(int i=0;i<picArray.count;i++)
+                    {
+                        NSString *picPath = [picArray objectAtIndex:i];
+                        if([picPath rangeOfString:@"MAC"].location != NSNotFound)
+                        {
+                            
+                        }
+                        else
+                        {
+                            NSData *imageData = [NSData dataWithContentsOfFile:[picArray objectAtIndex:i] options:0 error:nil];
+                            UIImage *img = [UIImage imageWithData:imageData];
+                            [finalPicArray addObject:img];
+                        }
+                    }
+    
+                    dispatch_async(dispatch_get_main_queue(), ^{[self refreshView:finalPicArray];});
+ 
+                }
+            }
+            else
+            {
+//                NSLog(@"Error saving file %@",error);
+            }
+        }
+        else
+        {
+//            NSLog(@"Error downloading zip file: %@", error);
+            [self performSelectorOnMainThread:@selector(fail) withObject:nil waitUntilDone:YES];
+        }
+        
+    });
+    
+}
+
+- (void) picBtnClick:(UIButton *) sender
+{
+    
+    MyFastInquiryOrderLookPicViewController *myFastInquiryOrderLookPicViewController = [[MyFastInquiryOrderLookPicViewController alloc] initWithArray:finalPicArray WithTag:sender.tag];
+    [self.navigationController pushViewController:myFastInquiryOrderLookPicViewController animated:YES];
+}
+
+- (void) refreshView:(NSMutableArray *) sender
+{
+    NSMutableArray *array = (NSMutableArray *) sender;
+    CGFloat width = (ScreenWidth-30)/3;
+    for(int i = 0;i<array.count;i++)
+    {
+        UIButton *picBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [picBtn setFrame:CGRectMake(10+(width+5)*i, requestLabel.frame.origin.y+requestLabel.frame.size.height+10, width, width)];
+        [picBtn addTarget:self action:@selector(picBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [picBtn setTag:i];
+        
+        UIImageView *iv = [[UIImageView alloc] initWithImage:[array objectAtIndex:i]];
+        [iv setFrame:CGRectMake(0,0, width, width)];
+        [iv setContentMode:UIViewContentModeScaleAspectFit];
+        [picBtn setBackgroundImage:[array objectAtIndex:i] forState:UIControlStateNormal];
+        
+//        [iv setContentMode:UIViewContentModeScaleAspectFill];
+        
+        [self.sv addSubview:picBtn];
+        if(i == 0)
+        {
+            [situationView setFrame:CGRectMake(0, picBtn.frame.origin.y+picBtn.frame.size.height+10, ScreenWidth, situationView.frame.size.height)];
+            [self.sv setContentSize:CGSizeMake(ScreenWidth, situationView.frame.origin.y+situationView.frame.size.height+20)];
+        }
+    }
+
+}
+
+- (void) fail
+{
+    [DCFStringUtil showNotice:@"图片下载失败"];
+}
+
 - (void) ivTap:(UITapGestureRecognizer *) sender
 {
-    NSLog(@"ivTap");
 }
 
 - (IBAction)againAskBtnClick:(id)sender
@@ -285,10 +498,10 @@
     MyNormalInquiryDetailController *myNormalInquiryDetailController = [self.storyboard instantiateViewControllerWithIdentifier:@"myNormalInquiryDetailController"];
     
 #pragma mark - 这里暂时用oemid替换inquirId
-    myNormalInquiryDetailController.myOrderNum = inquiryserial;
+    myNormalInquiryDetailController.myOrderNum = @"";
     
     
-    NSString *status = [NSString stringWithFormat:@"%@",[self.fastData status]];
+    NSString *status = [NSString stringWithFormat:@"%@",[self.fastData speedStatus]];
     myNormalInquiryDetailController.myStatus = status;
     
     
@@ -296,8 +509,7 @@
     myNormalInquiryDetailController.myTime = upTime;
     
     
-    myNormalInquiryDetailController.myInquiryid = inquiryid;
-    
+    myNormalInquiryDetailController.myInquiryid = self.fastData.inquiryId;
     myNormalInquiryDetailController.myDic = [NSDictionary dictionaryWithDictionary:myDic];
     
     [self.navigationController pushViewController:myNormalInquiryDetailController animated:YES];

@@ -135,9 +135,15 @@
     
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+     [self.navigationController.tabBarController.tabBar setHidden:YES];
     
     if(tv)
     {
@@ -283,6 +289,7 @@
     
     //    [self loadRequest];
     
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doSomething:) name:@"addressListDataArray" object:nil];
     
@@ -302,11 +309,9 @@
     [_buttomBtn setFrame:CGRectMake(10, 5, ScreenWidth-20, 40)];
     [_buttomBtn addTarget:self action:@selector(buttomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     _buttomBtn.layer.cornerRadius = 5.0f;
-    _buttomBtn.layer.borderWidth = 1.0f;
-    _buttomBtn.layer.borderColor = [UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0].CGColor;
     [_buttomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttomBtn setTitle:@"管理收货地址" forState:UIControlStateNormal];
-    [_buttomBtn setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0]];
+    [_buttomBtn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
     [_buttomView addSubview:_buttomBtn];
     
     

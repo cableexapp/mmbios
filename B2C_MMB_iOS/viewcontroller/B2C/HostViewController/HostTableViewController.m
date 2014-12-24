@@ -479,6 +479,7 @@ BOOL isPopShow = NO;
     else
     {
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+        b2bAskPriceCar.fromString = @"首页";
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];

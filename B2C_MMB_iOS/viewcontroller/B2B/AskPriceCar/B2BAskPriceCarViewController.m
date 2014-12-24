@@ -69,6 +69,8 @@
 
 @implementation B2BAskPriceCarViewController
 
+@synthesize fromString;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -762,7 +764,15 @@
 
 -(void)buyBtnClick
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    NSLog(@"首页 = %d",self.navigationController.viewControllers.count);
+    if ([self.fromString isEqualToString:@"首页"])
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else
+    {
+         [self.navigationController.tabBarController setSelectedIndex:0];
+    }
 }
 
 

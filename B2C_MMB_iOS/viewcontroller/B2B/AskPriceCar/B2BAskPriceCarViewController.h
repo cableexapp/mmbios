@@ -15,5 +15,10 @@
     UITableView *tv;
     DCFConnectionUtil *conn;
     UITableViewCell *noCell;
+    
+    NSString *fromString;
 }
+
+@property (nonatomic,strong) NSString *fromString;
+
 @end

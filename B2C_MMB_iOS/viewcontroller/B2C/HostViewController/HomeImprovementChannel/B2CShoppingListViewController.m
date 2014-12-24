@@ -124,29 +124,31 @@
 #pragma mark - delegate
 - (void) requestStringWithUse:(NSString *)myUse WithBrand:(NSString *)myBrand WithSpec:(NSString *)mySpec WithModel:(NSString *)myModel WithSeq:(NSString *)mySeq
 {
-    flag = NO;
     
+    flag = NO;
     delegateMyUse = myUse;
     delegateMyBrand = myBrand;
     delegateMySpec = mySpec;
     delegateMyModel = myModel;
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductListByCondition",time];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductList",time];
     NSString *token = [DCFCustomExtra md5:string];
     
     //    intPage = 1;
     pageSize = 10;
     
-    NSString *pushString = [NSString stringWithFormat:@"pagesize=%d&pageindex=%d&token=%@&use=%@&model=%@&spec=%@&brand=%@&seq=%@",pageSize,intPage,token,delegateMyUse,delegateMyModel,delegateMySpec,delegateMyBrand,_seq];
+//    NSString *pushString = [NSString stringWithFormat:@"pagesize=%d&pageindex=%d&token=%@&use=%@&model=%@&spec=%@&brand=%@&seq=%@",pageSize,intPage,token,delegateMyUse,delegateMyModel,delegateMySpec,delegateMyBrand,_seq];
+    NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d&seqmethod=%@",delegateMyUse,_seq,delegateMyModel,delegateMyBrand,@"",token,pageSize,intPage,seqmethod]; 
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductListByCondition.html?"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductList.html?"];
     
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     [moreCell startAnimation];
+    
 }
 
 #pragma mark- 筛选
@@ -296,11 +298,16 @@
             }
             if(flag == YES)
             {
+                NSLog(@"排序1111 = %@ %@",_seq,_use);
                 [self loadRequest:_seq WithUse:_use];
             }
             else
             {
+                 NSLog(@"排序2222 = %@ %@ %@ %@ %@",_seq,delegateMyUse,delegateMyBrand,delegateMyModel,delegateMySpec);
                 [self requestStringWithUse:delegateMyUse WithBrand:delegateMyBrand WithSpec:delegateMySpec WithModel:delegateMyModel WithSeq:_seq];
+//                 [self requestStringWithUse:_use WithBrand:delegateMyBrand WithSpec:delegateMySpec WithModel:delegateMyModel WithSeq:_seq];
+                
+//                [self loadRequest:_seq WithUse:delegateMyUse];
             }
         }
         else
@@ -311,7 +318,7 @@
             [b setSelected:NO];
         }
     }
-    NSLog(@"%@",btnRotationNumArray);
+    NSLog(@"btnRotationNumArray = %@",btnRotationNumArray);
 }
 
 - (void) hudWasHidden:(MBProgressHUD *)hud
@@ -603,7 +610,7 @@
                 }
                 [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
                 
-                
+//                NSLog(@"dicRespon = %@",[dicRespon objectForKey:@"items"]);
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
@@ -658,6 +665,8 @@
             NSMutableArray *usesArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"uses"]]];
             
             ScreeningCondition = [[NSMutableArray alloc] initWithObjects:brandsArray,modelsArray,specsArray,usesArray, nil];
+            
+//            NSLog(@"ScreeningCondition = %@",ScreeningCondition);
         }
     }
 }

@@ -77,9 +77,15 @@
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     rightButtonView.hidden = NO;
     if(!btnArray)
     {

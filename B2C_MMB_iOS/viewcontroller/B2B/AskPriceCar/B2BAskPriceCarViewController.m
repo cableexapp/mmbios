@@ -299,7 +299,7 @@
     b2bAskPriceCarEditViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarEditViewController"];
     b2bAskPriceCarEditViewController.myModel = data.cartModel;
     b2bAskPriceCarEditViewController.myCartId = data.cartId;
-    b2bAskPriceCarEditViewController.view.layer.cornerRadius = 6;
+    b2bAskPriceCarEditViewController.view.layer.cornerRadius = 5;
     b2bAskPriceCarEditViewController.view.frame = CGRectMake(20, 20, subViewBtn.frame.size.width-40, subViewBtn.frame.size.height-70);
     //    UILabel *tempLabel = [[UILabel alloc] init];
     //    tempLabel.frame = CGRectMake(0, 25, b2bAskPriceCarEditViewController.view.frame.size.width, 8);

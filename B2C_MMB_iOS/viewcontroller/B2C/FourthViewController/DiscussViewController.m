@@ -191,9 +191,13 @@
     
     [self.numberLabel setText:self.orderNum];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+
+//    self.numberLabel.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    self.timeLabel.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     
-
-
+    self.textView.layer.borderWidth = 0.5;
+    self.textView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     //时间戳
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[self.subDateDic objectForKey:@"time"] doubleValue]/1000];
     
@@ -227,15 +231,6 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
     
-
-    
-
-
-    
-
-
-    
-
     btnPicUnSelectArray = [[NSMutableArray alloc] init];
     btnPicLowArray = [[NSMutableArray alloc] init];
     btnPicHightArray = [[NSMutableArray alloc] init];

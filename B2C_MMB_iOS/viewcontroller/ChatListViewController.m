@@ -336,13 +336,13 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
-    else
+    if ([self.fromString isEqualToString:@"工具栏客服"])
     {
         [self.tabBarController setSelectedIndex:0];
     }
     if ([self.fromString rangeOfString:@"@"].location != NSNotFound)
     {
-        if([[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
+        if([[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"] || [[[self.fromString componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"商品快照在线客服"])
         {
             [self.navigationController popViewControllerAnimated:YES];
         }

@@ -78,13 +78,14 @@
     [self.myTimeLabel setText:self.myTime];
     [self.myOederLabel setText:self.myOrderNum];
     
-    self.discussBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.discussBtn.layer.borderWidth = 1.0f;
-    self.discussBtn.layer.cornerRadius = 5;
     
-    self.tradeBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.tradeBtn.layer.borderWidth = 1.0f;
+    self.discussBtn.layer.cornerRadius = 5;
+    [self.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    
     self.tradeBtn.layer.cornerRadius = 5;
+    [self.tradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.tradeBtn.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
     NSString *memberid = [self getMemberId];
     

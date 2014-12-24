@@ -86,6 +86,7 @@
     
 #pragma mark - v1.1.2 陈晓修改询价车编辑界面BUG
     [self.modelLabel setText:self.myModel];
+    self.modelLabel.textColor = [UIColor whiteColor];
     self.modelLabel.layer.cornerRadius = 5;
     
     self.requestTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -414,6 +415,42 @@
             [self.timeTF resignFirstResponder];
         }
     }
+}
+
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string;
+{   //string就是此时输入的那个字符
+    //textField就是此时正在输入的那个输入框
+    //返回YES可以改变输入框的值  NO相反
+    
+    if ([string isEqualToString:@"\n"])  //按会车可以改变
+    {
+        return YES;
+    }
+    
+    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string]; //得到输入框的内容
+    
+    if (self.timeTF == textField || self.numTF == textField)  //判断是否是我们想要限定的那个输入框
+    {
+        if ([toBeString length] >5)
+        {
+            //如果输入框内容大于5则弹出警告
+//            textField.text = [toBeString substringToIndex:5];
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+//                                                             message:@"超过最大字数不能输入了"
+//                                                            delegate:nil
+//                                                   cancelButtonTitle:@"Ok"
+//                                                   otherButtonTitles:nil, nil];
+//            [alert show];
+            
+            //如果输入框内容大于5则禁止输入
+            [textField resignFirstResponder];
+            
+            return NO;
+        }
+    }
+    return YES;
 }
 
 - (void) loadPickerViewWithArray:(NSMutableArray *) array WithTag:(int) tag

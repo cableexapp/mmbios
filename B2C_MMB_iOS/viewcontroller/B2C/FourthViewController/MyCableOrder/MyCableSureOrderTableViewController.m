@@ -390,6 +390,9 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doBCReceiveAddressHasChange:) name:@"B2CReceiveAddressHasChange" object:nil];
     
     chooseAddress = [[ChooseReceiveAddressViewController alloc] init];
@@ -469,7 +472,7 @@
 {
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
-    //    [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:248.0/255.0 alpha:1.0]];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, ScreenWidth-20, 30)];
     //    [label setTextColor:MYCOLOR];
@@ -478,28 +481,28 @@
     [label setFont:[UIFont boldSystemFontOfSize:13]];
     if(section == 0)
     {
-        [label setText:@"发票信息"];
+        [label setText:@"  发票信息"];
     }
     if(section == 1)
     {
-        [label setText:@"发票邮寄地址"];
+        [label setText:@"  发票邮寄地址"];
     }
     if(section == 2)
     {
-        [label setText:@"收货地址"];
+        [label setText:@"  收货地址"];
     }
     if(section == 3)
     {
-        [label setText:@"型号信息"];
+        [label setText:@"  型号信息"];
     }
-    [label setBackgroundColor:[UIColor whiteColor]];
-    [view setBackgroundColor:[UIColor whiteColor]];
+//    [label setBackgroundColor:[UIColor whiteColor]];
+//    [view setBackgroundColor:[UIColor whiteColor]];
     [view addSubview:label];
     
     for(int i=0;i<2;i++)
     {
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5*i, ScreenWidth, 0.5)];
-        [lineView setBackgroundColor:MYCOLOR];
+        [lineView setBackgroundColor:[UIColor lightGrayColor]];
         [view addSubview:lineView];
     }
     return view;
@@ -562,12 +565,12 @@
     
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[_b2bMyCableOrderListData.myItems objectAtIndex:indexPath.row]];
     
-    NSString *theInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]]; //规格
+    NSString *theInquirySpec = [NSString stringWithFormat:@"%@平方",[dic objectForKey:@"spec"]]; //规格
     NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
     NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
     NSString *thecolor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]]; //颜色
     
-    NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]]; //价格
+    NSString *thePrice = [NSString stringWithFormat:@"¥ %@",[dic objectForKey:@"price"]]; //价格
     NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
     
     CGFloat h1 = 0.0;
@@ -703,7 +706,7 @@
             [view addSubview:fenleiLabel];
             
             UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, view.frame.origin.y+view.frame.size.height, cell.contentView.frame.size.width, 0.5)];
-            [lineView setBackgroundColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
+            [lineView setBackgroundColor:[UIColor lightGrayColor]];
             [cell.contentView addSubview:lineView];
             
             NSString *unit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
@@ -720,7 +723,7 @@
             
             
             
-            NSString *theInquirySpec = [NSString stringWithFormat:@"规格: %@",[dic objectForKey:@"spec"]]; //规格
+            NSString *theInquirySpec = [NSString stringWithFormat:@"规格: %@平方",[dic objectForKey:@"spec"]]; //规格
             NSMutableAttributedString *myInquirySpec = [[NSMutableAttributedString alloc] initWithString:theInquirySpec];
             [myInquirySpec addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myInquirySpec addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theInquirySpec.length-3)];

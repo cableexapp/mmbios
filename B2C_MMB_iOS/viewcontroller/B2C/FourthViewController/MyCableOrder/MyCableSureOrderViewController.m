@@ -71,7 +71,9 @@
     
     [self pushAndPopStyle];
     
-    
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.tableSubView.backgroundColor = [UIColor whiteColor];
+    myCableSureOrderTableViewController.view.backgroundColor = [UIColor whiteColor];
     NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",_b2bMyCableOrderListData.receiveprovince,_b2bMyCableOrderListData.receivecity,_b2bMyCableOrderListData.receivedistrict,_b2bMyCableOrderListData.receiveaddress];
     fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
     NSString *tel = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系电话:%@",_b2bMyCableOrderListData.tel]];
@@ -87,11 +89,10 @@
     myCableSureOrderTableViewController.view.frame = self.tableSubView.bounds;
     [self.tableSubView addSubview:myCableSureOrderTableViewController.view];
 
-    
-    self.sureBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.sureBtn.layer.borderWidth = 1.0f;
+
     self.sureBtn.layer.cornerRadius = 5.0f;
-    [self.sureBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    self.sureBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     if(_b2bMyCableOrderListData.cableOrderTime.length == 0 || [_b2bMyCableOrderListData.cableOrderTime isKindOfClass:[NSNull class]])
@@ -107,7 +108,8 @@
     [self.myOrderNumberLabel setText:[NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial]];
     [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime]];
     [self.myOrderStatusLabel setText:[NSString stringWithFormat:@"状态: %@",_b2bMyCableOrderListData.myStatus]];
-    [self.myOrderTotalLabel setText:[NSString stringWithFormat:@"订单总额: %@",_b2bMyCableOrderListData.ordertotal]];
+    [self.myOrderTotalLabel setText:[NSString stringWithFormat:@"订单总额:¥ %@",_b2bMyCableOrderListData.ordertotal]];
+    self.myOrderTotalLabel.textColor = [UIColor redColor];
 }
 
 - (void)didReceiveMemoryWarning

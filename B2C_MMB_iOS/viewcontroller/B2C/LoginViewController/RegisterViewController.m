@@ -380,7 +380,7 @@
         
         if(secTfLength == 0)
         {
-            [DCFStringUtil showNotice:@"密码长度不能为空"];
+            [DCFStringUtil showNotice:@"密码不能为空"];
             return NO;
         }
         

@@ -370,7 +370,7 @@
         return nil;
     }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
-    [view setBackgroundColor:[UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0]];
+    [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     
     CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"询价单号" WithSize:CGSizeMake(MAXFLOAT, 30)];
     
@@ -396,7 +396,7 @@
     [orderNumLabel setText:orderNum];
     [view addSubview:orderNumLabel];
     
-    NSString *totalPrice = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:section] ordertotal]];
+    NSString *totalPrice = [NSString stringWithFormat:@"¥ %@",[[dataArray objectAtIndex:section] ordertotal]];
     UILabel *totalPriceLabel = [[UILabel alloc] init];
     if(totalPrice.length == 0 || [totalPrice isKindOfClass:[NSNull class]])
     {
@@ -619,7 +619,7 @@
                     else
                     {
                         [specLabel setFrame:CGRectMake(10, numLabel.frame.origin.y + numLabel.frame.size.height, (cellWidth-20)/2, 30)];
-                        [specLabel setText:[NSString stringWithFormat:@"规格: %@",theSpec]];
+                        [specLabel setText:[NSString stringWithFormat:@"规格: %@平方",theSpec]];
                     }
                     
                     if(theVol.length == 0 || [theVol isKindOfClass:[NSNull class]])
@@ -677,9 +677,9 @@
         }
         if (indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count] + 1)
         {
-            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"状态" WithSize:CGSizeMake(MAXFLOAT, 30)];
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"状态:" WithSize:CGSizeMake(MAXFLOAT, 30)];
             UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, 30)];
-            [firstLabel setText:@"状态"];
+            [firstLabel setText:@"状态:"];
             [firstLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:firstLabel];
             
@@ -687,7 +687,7 @@
             NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
             
             UILabel *secondLabel = [[UILabel alloc] initWithFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + 10, 5, 100, 30)];
-            [secondLabel setTextColor:[UIColor colorWithRed:132.0/255.0 green:0 blue:0 alpha:1.0]];
+            [secondLabel setTextColor:[UIColor redColor]];
             [secondLabel setText:theStatus];
             [secondLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:secondLabel];

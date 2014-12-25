@@ -1565,7 +1565,8 @@
             if(i == 1)
             {
                 [btn setFrame:CGRectMake(self.view.frame.size.width-120, chooseCountLabel.frame.origin.y, 60, 30)];
-                [btn setTitle:@"0" forState:UIControlStateNormal];
+                [btn setTitle:@"1" forState:UIControlStateNormal];
+                num = @"1";
                 btn.backgroundColor = [UIColor whiteColor];
                 [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
                 [btn setUserInteractionEnabled:NO];

@@ -391,7 +391,7 @@
     [orderNumLabel setText:orderNum];
     [view addSubview:orderNumLabel];
     
-    NSString *totalPrice = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:section] ordertotal]];
+    NSString *totalPrice = [NSString stringWithFormat:@"¥ %@",[[dataArray objectAtIndex:section] ordertotal]];
     UILabel *totalPriceLabel = [[UILabel alloc] init];
     if(totalPrice.length == 0 || [totalPrice isKindOfClass:[NSNull class]])
     {
@@ -619,7 +619,7 @@
                     else
                     {
                         [specLabel setFrame:CGRectMake(10, numLabel.frame.origin.y + numLabel.frame.size.height, (cellWidth-20)/2, 30)];
-                        [specLabel setText:[NSString stringWithFormat:@"规格: %@",theSpec]];
+                        [specLabel setText:[NSString stringWithFormat:@"规格: %@平方",theSpec]];
                     }
                     
                     if(theVol.length == 0 || [theVol isKindOfClass:[NSNull class]])
@@ -687,7 +687,7 @@
             NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
 
             UILabel *secondLabel = [[UILabel alloc] initWithFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + 10, 5, 100, 30)];
-            [secondLabel setTextColor:[UIColor colorWithRed:132.0/255.0 green:0 blue:0 alpha:1.0]];
+            [secondLabel setTextColor:[UIColor redColor]];
             [secondLabel setText:theStatus];
             [secondLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:secondLabel];

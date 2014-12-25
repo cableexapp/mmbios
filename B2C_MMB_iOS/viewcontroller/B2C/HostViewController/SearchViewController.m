@@ -208,14 +208,13 @@
     mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(81, 0,self.view.frame.size.width-81, 45)];
     [mySearchBar setDelegate:self];
     [mySearchBar setBarStyle:0];
-    mySearchBar.placeholder = @"输入搜索内容";
+    mySearchBar.backgroundColor = [UIColor whiteColor];
+    mySearchBar.placeholder = @"输入您想搜索的关键词";
     [self.view addSubview:mySearchBar];
-    
-  
     
     leftBtn = [[UILabel alloc] init];
     leftBtn.frame = CGRectMake(0, 0, 82, 45);
-    leftBtn.backgroundColor = [UIColor colorWithRed:198.0/255 green:198.0/255 blue:203.0/255 alpha:1.0];
+    leftBtn.backgroundColor = [UIColor colorWithRed:201.0/255 green:201.0/255 blue:206.0/255 alpha:1.0];
     leftBtn.font = [UIFont systemFontOfSize:12];
     leftBtn.textAlignment = NSTextAlignmentCenter;
     leftBtn.text = @"电缆采购";

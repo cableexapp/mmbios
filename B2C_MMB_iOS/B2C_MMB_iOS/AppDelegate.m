@@ -231,6 +231,10 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //检测是否第一次安装，还是第一次启动
+    [self isFirstOpen];
+    
+    //信号栏字体为白色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     //创建讯飞语音配置,appid必须要传入，仅执行一次则可
@@ -322,10 +326,12 @@ NSString *strUserId = @"";
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-    //    DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
-    //    self.window.rootViewController = tabbar;
-    WelComeViewController *welcome = [sb instantiateViewControllerWithIdentifier:@"welComeViewController"];
-    self.window.rootViewController = welcome;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"] )
+    {
+        WelComeViewController *welcome = [sb instantiateViewControllerWithIdentifier:@"welComeViewController"];
+        self.window.rootViewController = welcome;
+    }
+    
     
     [PhoneHelper sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
@@ -338,8 +344,23 @@ NSString *strUserId = @"";
     
     //注册
     [self registerInSide];
-    // Override point for customization after application launch.
+    
+   
+    
     return YES;
+}
+
+-(void)isFirstOpen
+{
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"everLaunched"])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"everLaunched"];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
+    }
 }
 
 - (void) loadFMDB

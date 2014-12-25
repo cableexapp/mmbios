@@ -778,12 +778,12 @@
                     NSString *str_2 = [[dataArray objectAtIndex:n] productPrice];
                     //                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str_2 WithSize:CGSizeMake(125, MAXFLOAT)];
                     UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, nameLabel.frame.origin.y+nameLabel.frame.size.height, 125, 20)];
-                    [priceLabel setText:str_2];
+                    [priceLabel setText:[NSString stringWithFormat:@"¥ %@",str_2]];
                     [priceLabel setFont:[UIFont systemFontOfSize:11]];
                     [priceLabel setTextColor:[UIColor redColor]];
                     [cellView addSubview:priceLabel];
                 }
-            }
+            } 
             
         }
         

@@ -654,9 +654,10 @@
     int row = [[sender view] tag] % 10000;
     B2CShopCarListData *carListData = [[dataArray objectAtIndex:section] objectAtIndex:row];
     NSString *productId = [carListData productId];
+    [self setHidesBottomBarWhenPushed:YES];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     [self.navigationController pushViewController:detail animated:YES];
-    
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) addBtnClick:(UIButton *) sender

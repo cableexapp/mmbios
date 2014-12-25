@@ -315,9 +315,7 @@
         {
             NSString *headUrl = [dicRespon objectForKey:@"headPortraitUrl"];
             NSString *headPortraitUrl = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/",headUrl];
-            NSLog(@"headPortraitUrl = %@",headPortraitUrl);
             [[NSUserDefaults standardUserDefaults] setObject:headPortraitUrl forKey:@"headPortraitUrl"];
-            
             [self.tableView reloadData];
 //            NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
 //            NSArray *reload = [NSArray arrayWithObject:path];
@@ -753,7 +751,7 @@
     CGFloat height;
     if(section == 0)
     {
-        height = 96;
+        height = 90;
     }
     else
     {
@@ -766,9 +764,10 @@
 {
     if(section == 0)
     {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 96)];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 90)];
         
-        [self.photoBtn setFrame:CGRectMake(20, 18, 60, 60)];
+        [self.photoBtn setFrame:CGRectMake(20, 15, 60, 60)];
         [self.photoBtn.layer setCornerRadius:CGRectGetHeight([self.photoBtn bounds]) / 2];  //修改半径，实现头像的圆形化
         self.photoBtn.layer.masksToBounds = YES;
         NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
@@ -776,12 +775,12 @@
         [view addSubview:self.photoBtn];
         
         UIImageView *backView = [[UIImageView alloc] init];
-        backView.frame = CGRectMake(0, 0, ScreenWidth, 96);
+        backView.frame = CGRectMake(0, 0, ScreenWidth, 90);
         backView.image = [UIImage imageNamed:@"headView.png"];
         [view insertSubview:backView belowSubview:self.photoBtn];
         
         NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.photoBtn.frame.origin.x +self.photoBtn.frame.size.width + 10, 33, 200, 30)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.photoBtn.frame.origin.x +self.photoBtn.frame.size.width + 10, 30, 200, 30)];
         [label setTextAlignment:NSTextAlignmentLeft];
         if([DCFCustomExtra validateString:userName] == NO)
         {

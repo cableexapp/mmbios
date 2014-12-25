@@ -79,6 +79,8 @@
     
     
     ChooseReceiveAddressViewController *chooseAddress;
+    
+    UIButton *upBtn;
 }
 @end
 
@@ -609,7 +611,7 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/SubOrder.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-    
+    [upBtn setEnabled:NO];
 }
 
 
@@ -695,6 +697,8 @@
 }
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    [upBtn setEnabled:YES];
+    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLSubOrderTag)
@@ -854,7 +858,7 @@
     
     
     
-    UIButton *upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    upBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [upBtn setTitle:@"提交" forState:UIControlStateNormal];
     [upBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [upBtn setFrame:CGRectMake(ScreenWidth-100, 5, 90, 40)];

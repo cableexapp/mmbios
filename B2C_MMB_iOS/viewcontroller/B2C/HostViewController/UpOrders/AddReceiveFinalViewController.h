@@ -46,6 +46,8 @@
 
 @property (assign,nonatomic) id<PushDelegate> delegate;
 
+@property (assign,nonatomic) BOOL B2COrB2B;
+
 //用于新增地址
 - (id) initWithAddress:(NSString *) address WithCode:(NSString *) code WithSwithStatus:(BOOL) status;
 

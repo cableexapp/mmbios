@@ -353,6 +353,7 @@
     //    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
     
     AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:data];
+    final.B2COrB2B = self.B2COrB2B;
     [self.navigationController pushViewController:final animated:YES];
     
 }

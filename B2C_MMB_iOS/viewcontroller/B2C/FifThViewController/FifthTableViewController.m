@@ -371,6 +371,11 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HotKindNum"];
             }
             
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"BillMsg"];
+            }
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [DCFStringUtil showNotice:@"退出成功"];

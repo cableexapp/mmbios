@@ -280,7 +280,10 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"memberId"];
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];
-            [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName"];
+           
+#pragma mark - UTF8编码
+            NSString *userName = [self.tf_Account.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"userName"];
             
             
             NSString *phone = [NSString stringWithFormat:@"%@",[iems objectForKey:@"phone"]];

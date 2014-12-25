@@ -14,6 +14,7 @@
 #import "BangDingWithOutMobileOrEmailViewController.h"
 #import "BangDingWithMobileOrEmailViewController.h"
 #import "AddBangDingMobileViewController.h"
+#import "DCFCustomExtra.h"
 
 @interface AccountManagerTableViewController ()
 {
@@ -142,7 +143,7 @@
     
     if(indexPath.row == 0)
     {
-        if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email ==NULL || email == nil))
+        if([DCFCustomExtra validateString:phone] == NO && [DCFCustomExtra validateString:email] == NO)
         {
             BangDingWithOutMobileOrEmailViewController *bangDingWithOutMobileOrEmailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"bangDingWithOutMobileOrEmailViewController"];
             [self.navigationController pushViewController:bangDingWithOutMobileOrEmailViewController animated:YES];

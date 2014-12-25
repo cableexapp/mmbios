@@ -513,12 +513,12 @@
     int tag = [[sender view] tag];
 
     UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
-    NSString *str = nil;
-    if(tag == 0)
+    NSString *str = label.text;
+    if([str isEqualToString:@"照明用线"])
     {
         str = @"照明";
     }
-    if(tag == 3)
+    else if([str isEqualToString:@"插座用线"])
     {
         str = @"插座";
     }

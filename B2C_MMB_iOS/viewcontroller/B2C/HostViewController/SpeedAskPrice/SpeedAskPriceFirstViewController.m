@@ -467,7 +467,7 @@
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     
-    if(userName.length == 0)
+    if([DCFCustomExtra validateString:userName] == NO)
     {
         userName = @"";
         //        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
@@ -572,7 +572,7 @@
     {
         contentStr = [contentStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
-    
+//    loginid,token,memberid,membername,phone(联系电话),linkman(联系人),content(内容)
     NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@&loginid=%@",[self getMemberId],token,[self getUserName],telStr,[self getUserName],contentStr,@"3",loginid];
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?",strRequest];
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];

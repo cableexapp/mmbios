@@ -135,7 +135,6 @@
                     [dataArray removeAllObjects];
                 }
                 [dataArray addObjectsFromArray:[B2BMyInquiryListNormalData getListArray:[dicRespon objectForKey:@"ctems"]]];
-                
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
                 if(intTotal == 0)
@@ -228,7 +227,7 @@
         }
         return 0;
     }
-    return [[[dataArray objectAtIndex:section] myItems] count] + 1;
+    return [[[dataArray objectAtIndex:section] myItems] count]+1;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -257,30 +256,11 @@
     NSArray *myItems = [NSArray arrayWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
     if(indexPath.row < myItems.count)
     {
-        CGSize size_Kind;
-        NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[myItems objectAtIndex:indexPath.row]];
-        
-        NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
-        NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
-        NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
-        NSString *kind = [NSString stringWithFormat:@"%@>%@>%@",firtKind,secondKind,thirdKind];
-        if(kind.length == 0 || [kind isKindOfClass:[NSNull class]])
-        {
-            size_Kind = CGSizeMake(10, 30);
-        }
-        else
-        {
-            size_Kind = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:kind WithSize:CGSizeMake(ScreenWidth-65, MAXFLOAT)];
-        }
-        //        if(size_Kind.height <= 30)
-        //        {
-        //            return 70;
-        //        }
-        return size_Kind.height+40;
+        return 70;
     }
     else
     {
-        return 90;
+        return 40;
     }
     return 0;
 }
@@ -371,146 +351,49 @@
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         
         NSArray *myItems = [NSArray arrayWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
-        
-//        if(indexPath.row < myItems.count)
-//        {
+        NSLog(@"myItems = %@",myItems);
+        if(indexPath.row < myItems.count)
+        {
             //        [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section*10,indexPath.row*10]];
-            NSString *model = nil;
-            CGSize size_model;
+
+            NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[myItems objectAtIndex:indexPath.row]];
             
-            NSString *unitString = nil;
-            CGSize size_unitString;
-            
-            NSString *priceString = nil;
-            CGSize size_priceString;
-            
-            
-            NSString *kind = nil;
-            CGSize size_Kind;
-            
-            if(myItems.count == 0 || [myItems isKindOfClass:[NSNull class]])
-            {
-                model = @"";
-                size_model = CGSizeMake(10, 30);
-                
-                unitString = @"";
-                size_unitString = CGSizeMake(cell.contentView.frame.size.width-40, 30);
-                
-                priceString = @"";
-                size_priceString = CGSizeMake(cell.contentView.frame.size.width-70, 30);
-                
-                kind = @"";
-                size_Kind = CGSizeMake(cell.contentView.frame.size.width-20, 30);
-            }
-            else
-            {
-                NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[myItems objectAtIndex:indexPath.row]];
-                
-                model = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryModel"]];
-                
-                if(model.length == 0 || [model isKindOfClass:[NSNull class]])
-                {
-                    size_model = CGSizeMake(40, 30);
-                }
-                else
-                {
-                    size_model = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:model WithSize:CGSizeMake(MAXFLOAT, 30)];
-                }
-                
-                unitString = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
-                
-                if(unitString.length == 0 || [unitString isKindOfClass:[NSNull class]])
-                {
-                    size_unitString = CGSizeMake(30, 30);
-                }
-                else
-                {
-                    size_unitString = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:unitString WithSize:CGSizeMake(MAXFLOAT, 30)];
-                }
-                
-                priceString = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
-                
-                if(priceString.length == 0 || [priceString isKindOfClass:[NSNull class]])
-                {
-                    size_priceString = CGSizeMake(30, 30);
-                }
-                else
-                {
-                    size_priceString = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:priceString WithSize:CGSizeMake(MAXFLOAT, 30)];
-                }
-                
-                NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
-                NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
-                NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
-                kind = [NSString stringWithFormat:@"%@>%@>%@",firtKind,secondKind,thirdKind];
-                if(kind.length == 0 || [kind isKindOfClass:[NSNull class]])
-                {
-                    size_Kind = CGSizeMake(10, 30);
-                }
-                else
-                {
-                    size_Kind = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:kind WithSize:CGSizeMake(cell.contentView.frame.size.width-65, MAXFLOAT)];
-                }
-                
-            }
-            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, size_model.width+40, 30)];
-            if(model.length == 0 || [model isKindOfClass:[NSNull class]])
-            {
-                //                [modelLabel setText:[NSString stringWithFormat:@"%@",model]];
-            }
-            else
-            {
-                //                [modelLabel setText:[NSString stringWithFormat:@"型号:%@",model]];
-            }
-            [modelLabel setText:[NSString stringWithFormat:@"型号:%@",model]];
+            NSString *model = [NSString stringWithFormat:@"型号: %@",[dic objectForKey:@"inquiryModel"]];
+            NSMutableAttributedString *myModel = [[NSMutableAttributedString alloc] initWithString:model];
+            [myModel addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
+            [myModel addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, model.length-3)];
+            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
+            [modelLabel setAttributedText:myModel];
             [modelLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:modelLabel];
             
-            UILabel *unitLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-10-size_unitString.width-20, 5, size_unitString.width+20, 30)];
-            if(unitString.length == 0 || [unitString isKindOfClass:[NSNull class]])
+            
+            NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
+            NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
+            NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
+            NSString *kind = [NSString stringWithFormat:@"型号: %@%@%@",firtKind,secondKind,thirdKind];
+            NSString *finalKind = nil;
+            if([kind rangeOfString:@"(null)"].location != NSNotFound)
             {
-                [unitLabel setText:unitString];
+                finalKind = [kind stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+            }
+            else if([kind rangeOfString:@"null"].location != NSNotFound)
+            {
+                finalKind = [kind stringByReplacingOccurrencesOfString:@"null" withString:@""];
             }
             else
             {
-                [unitLabel setText:[NSString stringWithFormat:@"元/%@",unitString]];
+                finalKind = kind;
             }
-            [unitLabel setFont:[UIFont systemFontOfSize:12]];
+            NSMutableAttributedString *finalKind_1 = [[NSMutableAttributedString alloc] initWithString:finalKind];
+            [finalKind_1 addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
+            [finalKind_1 addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, finalKind.length-3)];
+            UILabel *kindlabel = [[UILabel alloc] initWithFrame:CGRectMake(10, modelLabel.frame.origin.y+modelLabel.frame.size.height, ScreenWidth-20, 30)];
+            [kindlabel setFont:[UIFont systemFontOfSize:12]];
+            [kindlabel setAttributedText:finalKind_1];
+            [cell.contentView addSubview:kindlabel];
             
-            UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-10-unitLabel.frame.size.width-size_priceString.width-20, 5, size_priceString.width+20, 30)];
-            if(priceString.length == 0 || [priceString isKindOfClass:[NSNull class]])
-            {
-                [priceLabel setText:priceString];
-            }
-            else
-            {
-                [priceLabel setText:[NSString stringWithFormat:@"¥%@",priceString]];
-            }
-            [priceLabel setTextColor:[UIColor redColor]];
-            [priceLabel setFont:[UIFont systemFontOfSize:12]];
-            
-            if([[[dataArray objectAtIndex:indexPath.section] status] isEqualToString:@"4"] || [[[dataArray objectAtIndex:indexPath.section] status] isEqualToString:@"6"])
-            {
-                //                [priceLabel setHidden:YES];
-                //                [unitLabel setHidden:YES];
-            }
-            else
-            {
-                [cell.contentView addSubview:priceLabel];
-                [cell.contentView addSubview:unitLabel];
-            }
-            
-            UILabel *kindLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, modelLabel.frame.origin.y+modelLabel.frame.size.height, cell.contentView.frame.size.width-65, size_Kind.height)];
-            [kindLabel setFont:[UIFont systemFontOfSize:12]];
-            [kindLabel setText:kind];
-            [kindLabel setNumberOfLines:0];
-            [cell.contentView addSubview:kindLabel];
-            
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, kindLabel.frame.origin.y, 40, kindLabel.frame.size.height)];
-            [label setText:@"分类:"];
-            [label setFont:[UIFont systemFontOfSize:12]];
-            [cell.contentView addSubview:label];
-//        }
+        }
         if(indexPath.row == myItems.count)
         {
             UILabel *firstLabel = (UILabel *)[upTimeLabelArray objectAtIndex:indexPath.section];

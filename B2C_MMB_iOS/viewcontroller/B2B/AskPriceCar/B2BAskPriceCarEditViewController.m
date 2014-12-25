@@ -332,7 +332,7 @@
     //    {
     //        [self.timeTF resignFirstResponder];
     //    }
-
+    [textField resignFirstResponder];
     return YES;
 }
 

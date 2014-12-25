@@ -38,6 +38,7 @@
 
 @property (strong,nonatomic) NSString *tel;
 
+
 @property (strong,nonatomic) NSDictionary *pushDic;
 
 - (id) initWithDic:(NSDictionary *) dic;

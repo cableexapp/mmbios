@@ -58,6 +58,10 @@
     NSString *isOnLine;
     NSString *pushChatView;
 }
+
+//修改登录密码之后不需要显示弹出框
+@property (assign,nonatomic) BOOL hideNotice;
+
 @property (strong, nonatomic) UIWindow *window;
 
 @property (nonatomic, retain) NSOperationQueue *mainQueue;

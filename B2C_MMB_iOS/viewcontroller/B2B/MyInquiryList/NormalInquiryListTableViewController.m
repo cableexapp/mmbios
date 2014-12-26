@@ -163,14 +163,6 @@
         }
         for(int i=0;i<dataArray.count;i++)
         {
-//            UIButton *lookBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            [lookBtn setTitle:@"查看" forState:UIControlStateNormal];
-//            [lookBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
-//            [lookBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-//            [lookBtn setFrame:CGRectMake(ScreenWidth-50, 5, 40, 30)];
-//            [lookBtn setTag:i];
-//            [lookBtn addTarget:self action:@selector(lookBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            
             UILabel *lookLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-50, 5, 40, 30)];
             [lookLabel setText:@"查看"];
             [lookLabel setFont:[UIFont systemFontOfSize:13]];
@@ -256,7 +248,24 @@
     NSArray *myItems = [NSArray arrayWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
     if(indexPath.row < myItems.count)
     {
-        return 70;
+        NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[myItems objectAtIndex:indexPath.row]];
+        NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
+        NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
+        NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
+        NSString *kind = [NSString stringWithFormat:@"分类: %@%@%@",firtKind,secondKind,thirdKind];
+        
+        CGSize kindSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:kind WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+        CGFloat kindSizeHeight = 0.0;
+        if(kindSize.height <= 30)
+        {
+            kindSizeHeight = 30;
+        }
+        else
+        {
+            kindSizeHeight = kindSize.height;
+        }
+        
+        return kindSizeHeight+40;
     }
     else
     {
@@ -351,7 +360,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         
         NSArray *myItems = [NSArray arrayWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
-        NSLog(@"myItems = %@",myItems);
         if(indexPath.row < myItems.count)
         {
             //        [cell.textLabel setText:[NSString stringWithFormat:@"cell%d%d",indexPath.section*10,indexPath.row*10]];
@@ -371,7 +379,7 @@
             NSString *firtKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"firstType"]];
             NSString *secondKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"secondType"]];
             NSString *thirdKind = [NSString stringWithFormat:@"%@",[dic objectForKey:@"thridType"]];
-            NSString *kind = [NSString stringWithFormat:@"型号: %@%@%@",firtKind,secondKind,thirdKind];
+            NSString *kind = [NSString stringWithFormat:@"分类: %@%@%@",firtKind,secondKind,thirdKind];
             NSString *finalKind = nil;
             if([kind rangeOfString:@"(null)"].location != NSNotFound)
             {
@@ -388,8 +396,20 @@
             NSMutableAttributedString *finalKind_1 = [[NSMutableAttributedString alloc] initWithString:finalKind];
             [finalKind_1 addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
             [finalKind_1 addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, finalKind.length-3)];
-            UILabel *kindlabel = [[UILabel alloc] initWithFrame:CGRectMake(10, modelLabel.frame.origin.y+modelLabel.frame.size.height, ScreenWidth-20, 30)];
+            
+            CGSize kindSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:kind WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            CGFloat kindSizeHeight = 0.0;
+            if(kindSize.height <= 30)
+            {
+                kindSizeHeight = 30;
+            }
+            else
+            {
+                kindSizeHeight = kindSize.height;
+            }
+            UILabel *kindlabel = [[UILabel alloc] initWithFrame:CGRectMake(10, modelLabel.frame.origin.y+modelLabel.frame.size.height, ScreenWidth-20, kindSizeHeight)];
             [kindlabel setFont:[UIFont systemFontOfSize:12]];
+            [kindlabel setNumberOfLines:0];
             [kindlabel setAttributedText:finalKind_1];
             [cell.contentView addSubview:kindlabel];
             

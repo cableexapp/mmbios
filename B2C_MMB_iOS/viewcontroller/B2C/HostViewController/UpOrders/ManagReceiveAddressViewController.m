@@ -136,8 +136,6 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if (URLTag == URLReceiveAddressTag)
     {
-        
-        
         if(result == 0)
         {
             addressListDataArray = [[NSMutableArray alloc] init];

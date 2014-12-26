@@ -256,7 +256,7 @@
             requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
             h4 = requestSize.height;
         }
-        return 65.5+h1+h2+h3+h4+5;
+        return 90.5+h1+h2+h3+h4+5;
     }
     
     return 0;
@@ -372,7 +372,7 @@
         }
         else
         {
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 45)];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.contentView.frame.size.width, 65)];
             [view setBackgroundColor:[UIColor whiteColor]];
             [cell.contentView addSubview:view];
             
@@ -405,18 +405,19 @@
                 type = type_1;
             }
             
+            
             NSMutableAttributedString *myType = [[NSMutableAttributedString alloc] initWithString:type];
-            [myType addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
+            [myType addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
             [myType addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, type.length-3)];
             
-            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 20)];
+            UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
             [modelLabel setAttributedText:myModel];
             [modelLabel setFont:[UIFont systemFontOfSize:12]];
             [view addSubview:modelLabel];
             
-            
-            UILabel *fenleiLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, modelLabel.frame.origin.y + modelLabel.frame.size.height, modelLabel.frame.size.width, 20)];
+            UILabel *fenleiLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, modelLabel.frame.origin.y + modelLabel.frame.size.height, modelLabel.frame.size.width, 30)];
             [fenleiLabel setAttributedText:myType];
+            [fenleiLabel setNumberOfLines:0];
             [fenleiLabel setFont:[UIFont systemFontOfSize:12]];
             [view addSubview:fenleiLabel];
             
@@ -438,7 +439,7 @@
             
             
             
-            NSString *theInquirySpec = [NSString stringWithFormat:@"规格: %@",[dic objectForKey:@"inquirySpec"]]; //规格
+            NSString *theInquirySpec = [NSString stringWithFormat:@"规格: %@平方",[dic objectForKey:@"inquirySpec"]]; //规格
             NSMutableAttributedString *myInquirySpec = [[NSMutableAttributedString alloc] initWithString:theInquirySpec];
             [myInquirySpec addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myInquirySpec addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theInquirySpec.length-3)];
@@ -522,11 +523,11 @@
                         NSString *tempInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquirySpec"]];
                         if([DCFCustomExtra validateString:tempInquirySpec] == NO)
                         {
-                            [label setFrame:CGRectMake(10, 65.5, halfWidth, 0)];
+                            [label setFrame:CGRectMake(10, 90.5, halfWidth, 0)];
                         }
                         else
                         {
-                            [label setFrame:CGRectMake(10, 65.5, halfWidth, 20)];
+                            [label setFrame:CGRectMake(10, 90.5, halfWidth, 20)];
                             [label setAttributedText:myInquirySpec];
                         }
                         break;
@@ -537,15 +538,15 @@
                         NSString *tempInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryVoltage"]];
                         if([DCFCustomExtra validateString:tempInquiryVoltage] == NO)
                         {
-                            [label setFrame:CGRectMake(10+halfWidth, 65.5, halfWidth, 0)];
+                            [label setFrame:CGRectMake(10+halfWidth, 90.5, halfWidth, 0)];
                         }
                         else
                         {
                             [label setAttributedText:myInquiryVoltage];
-                            [label setFrame:CGRectMake(10+halfWidth,65.5, halfWidth, 20)];
+                            [label setFrame:CGRectMake(10+halfWidth,90.5, halfWidth, 20)];
                         }
                          NSString *tempInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquirySpec"]];
-                        if([DCFCustomExtra validateString:tempInquirySpec] == NO && [DCFCustomExtra validateString:tempInquirySpec] == NO)
+                        if([DCFCustomExtra validateString:tempInquirySpec] == NO && [DCFCustomExtra validateString:tempInquiryVoltage] == NO)
                         {
                             height_1 = 0;
                         }
@@ -562,12 +563,12 @@
                         NSString *tempInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryFeature"]];
                         if([DCFCustomExtra validateString:tempInquiryFeature] == NO)
                         {
-                            [label setFrame:CGRectMake(10, 65.5+height_1, halfWidth, 0)];
+                            [label setFrame:CGRectMake(10, 90.5+height_1, halfWidth, 0)];
                         }
                         else
                         {
                             [label setAttributedText:myInquiryFeature];
-                            [label setFrame:CGRectMake(10, 65.5+height_1, halfWidth, 20)];
+                            [label setFrame:CGRectMake(10, 90.5+height_1, halfWidth, 20)];
                         }
                         break;
                     }
@@ -577,12 +578,12 @@
                          NSString *tempColor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]];
                         if([DCFCustomExtra validateString:tempColor] == NO)
                         {
-                            [label setFrame:CGRectMake(10+halfWidth, 65.5+height_1, halfWidth, 0)];
+                            [label setFrame:CGRectMake(10+halfWidth, 90.5+height_1, halfWidth, 0)];
                         }
                         else
                         {
                             [label setAttributedText:myColor];
-                            [label setFrame:CGRectMake(10+halfWidth, 65.5+height_1, halfWidth, 20)];
+                            [label setFrame:CGRectMake(10+halfWidth, 90.5+height_1, halfWidth, 20)];
                         }
                         NSString *tempInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryFeature"]];
                         if([DCFCustomExtra validateString:tempInquiryFeature] == NO && [DCFCustomExtra validateString:tempColor] == NO)
@@ -610,12 +611,12 @@
             NSString *tempPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
             if([DCFCustomExtra validateString:tempPrice] == NO || [tempPrice intValue] == 0)
             {
-                [pricelabel setFrame:CGRectMake(10, 65.5+height_1+height_2,ScreenWidth-20,0)];
+                [pricelabel setFrame:CGRectMake(10, 90.5+height_1+height_2,ScreenWidth-20,0)];
                 height_3 = 0;
             }
             else
             {
-                [pricelabel setFrame:CGRectMake(10, 65.5+height_1+height_2,ScreenWidth-20,20)];
+                [pricelabel setFrame:CGRectMake(10, 90.5+height_1+height_2,ScreenWidth-20,20)];
                 height_3 = 20;
                 [pricelabel setAttributedText:myPrice];
             }
@@ -630,14 +631,14 @@
              NSString *tempRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]];
             if([DCFCustomExtra validateString:tempRequire] == NO)
             {
-                [requestLabel setFrame:CGRectMake(10, 65.5+height_1+height_2+height_3, ScreenWidth-20, 0)];
+                [requestLabel setFrame:CGRectMake(10, 90.5+height_1+height_2+height_3, ScreenWidth-20, 0)];
                 requestSize = CGSizeMake(ScreenWidth-20, 0);
                 height_4 = 0;
             }
             else
             {
                 requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-                [requestLabel setFrame:CGRectMake(10, 65.5+height_1+height_2+height_3, ScreenWidth-20, requestSize.height)];
+                [requestLabel setFrame:CGRectMake(10, 90.5+height_1+height_2+height_3, ScreenWidth-20, requestSize.height)];
                 [requestLabel setAttributedText:myRequire];
                 height_4 = requestSize.height;
             }

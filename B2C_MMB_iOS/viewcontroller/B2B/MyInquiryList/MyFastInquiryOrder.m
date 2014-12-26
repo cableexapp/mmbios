@@ -254,7 +254,6 @@
     }
 
     
-#pragma mark - 暂时写死，测试用
 //    self.fastData.treatment = @"处理情况处理情况处理情况处理情况处理情况处理情况处理情况处理情况处理情况处理情况";
     situationLabel = [[UILabel alloc] init];
     NSString *string = [NSString stringWithFormat:@"%@",self.fastData.treatment];

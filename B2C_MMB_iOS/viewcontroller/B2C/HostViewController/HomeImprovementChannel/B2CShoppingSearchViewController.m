@@ -125,6 +125,8 @@
     {
         if(result == 1)
         {
+            NSLog(@"筛选dicRespon = %@",dicRespon);
+            
             brandsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"brands"]]];
             modelsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"models"]]];
             specsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"specs"]]];
@@ -524,7 +526,7 @@
     array4 = [[NSMutableArray alloc] init];
     for(int i=0;i<[[_ScreeningCondition objectAtIndex:2] count];i++)
     {
-        NSString *specStr = [NSString stringWithFormat:@"%@",[[_ScreeningCondition objectAtIndex:2] objectAtIndex:i]];
+        NSString *specStr = [NSString stringWithFormat:@"%@平方",[[_ScreeningCondition objectAtIndex:2] objectAtIndex:i]];
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn.titleLabel setNumberOfLines:0];

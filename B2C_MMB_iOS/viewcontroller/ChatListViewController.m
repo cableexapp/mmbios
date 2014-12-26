@@ -386,7 +386,7 @@
         [cell.contentView addSubview:view];
         
         UIImageView *groupView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 14.5, 36, 36)];
-        groupView.image = [UIImage imageNamed:@"icon02"];
+        groupView.image = [UIImage imageNamed:@"Icon-40"];
         groupView.backgroundColor = [UIColor clearColor];
         [cell addSubview:groupView];
         

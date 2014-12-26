@@ -685,7 +685,6 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     preView.hidden = YES;
-    
 }
 
 

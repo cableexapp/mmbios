@@ -784,10 +784,23 @@
 
 -(void)closeView:(NSNotification *)sender
 {
-    [self.view.superview removeFromSuperview];
-    [self.view removeFromSuperview];
-    self.view = nil;
-    [self removeFromParentViewController];
+    [self closeViewAnimations];
+}
+
+//接收点击灰色背景，关闭筛选界面_动画效果
+-(void)closeViewAnimations
+{
+    CGRect frameRect = [[UIScreen mainScreen] bounds];
+    
+    int aWidth = frameRect.size.width;
+    frameRect.origin.x = aWidth;
+    frameRect.origin.y = 0;
+    
+    [UIView animateWithDuration:0.5f animations:^(void) {
+        [self.view setFrame:frameRect];
+    } completion:^(BOOL finished) {
+        [self.view.superview removeFromSuperview];
+    }];
 }
 
 - (void) clear:(UIButton *) sender
@@ -837,11 +850,8 @@
         [self.delegate requestStringWithUse:useString WithBrand:brandString WithSpec:specString WithModel:modelString WithSeq:@""];
     }
     
-    
-    [self.view.superview removeFromSuperview];
-    [self.view removeFromSuperview];
-    self.view = nil;
-    [self removeFromParentViewController];
+    //关闭筛选界面_动画效果
+     [self closeViewAnimations];
     
     // 背影view的通知事件
     [[NSNotificationCenter defaultCenter] postNotificationName:@"closeBackView" object:nil];

@@ -65,6 +65,8 @@
     NSString *seqmethod;
     
     NSMutableArray *sectionBtnIvArray;
+    
+    UIButton *selctBtn;
 }
 @end
 
@@ -119,6 +121,7 @@
     [rightBtn addSubview:countLabel];
     self.navigationItem.rightBarButtonItem = right;
     [self loadShopCarCount];
+
 }
 
 #pragma mark - delegate
@@ -160,8 +163,7 @@
     intPage = 1;
     
     searchView = [[UIView alloc] init];
-    [searchView setFrame:CGRectMake(70, 50, ScreenWidth-40, ScreenHeight)];
-    [searchView setBackgroundColor:[UIColor redColor]];
+    [searchView setFrame:CGRectMake(70, 0, ScreenWidth-40, ScreenHeight+50)];
     [self.view addSubview:searchView];
     
     backView = [[UIView alloc] init];
@@ -171,17 +173,21 @@
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:tv];
     
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDuration:0.3];
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type =  kCATransitionMoveIn;
+    transition.subtype =  kCATransitionFromRight;
+    transition.delegate = self;
+    [searchView.layer addAnimation:transition forKey:@"animation"];
+
     search = [[B2CShoppingSearchViewController alloc] initWithFrame:searchView.bounds];
     search.delegate = self;
     search.ScreeningCondition = [[NSMutableArray alloc] initWithArray:ScreeningCondition];
     
     [self addChildViewController:search];
     [searchView addSubview:search.view];
-    
-    [UIView commitAnimations];
+
     [search addHeadView];
 }
 
@@ -300,9 +306,8 @@
             }
             else
             {
-                 NSLog(@"排序2222 = %@ %@ %@ %@ %@",_seq,delegateMyUse,delegateMyBrand,delegateMyModel,delegateMySpec);
-//                [self requestStringWithUse:delegateMyUse WithBrand:delegateMyBrand WithSpec:delegateMySpec WithModel:delegateMyModel WithSeq:_seq];
-
+                 NSLog(@"排序2222 = %@ %@ %@ %@ %@ %@",_seq,delegateMyUse,delegateMyBrand,delegateMyModel,delegateMySpec,seqmethod);
+                if(selctBtn)
                 //选择筛选条件后，数据排序
                 [self seqencingData];
             }
@@ -324,10 +329,11 @@
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductList",time];
     NSString *token = [DCFCustomExtra md5:string];
-    
     pageSize = 10;
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&brand=%@&spec=%@&pagesize=%d&pageindex=%d&memberid=%@&loginid=%@",token,delegateMyUse,delegateMyModel,delegateMyBrand,delegateMySpec,pageSize,intPage,@"",@""];
+    /*use,token,seq,seqmethod,model,brand,spec,shopid,pagesize,pageindex,memberid,loginid*/
+
+     NSString *pushString = [NSString stringWithFormat:@"token=%@&seq=%@&seqmethod=%@&model=%@&brand=%@&spec=%@&shopid=%@&pagesize=%d&pageindex=%d&memberid=%@&loginid=%@",token,_seq,seqmethod,delegateMyModel,delegateMyBrand,delegateMySpec,@"",pageSize,intPage,@"",@""];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
     
@@ -416,7 +422,7 @@
     
     for(int i=0;i<3;i++)
     {
-        UIButton *selctBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        selctBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [selctBtn setFrame:CGRectMake(10 + 100*i, 13, 100, 30)];
         
         UIImageView *sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(selctBtn.frame.size.width-20, 10, 15, 15)];
@@ -430,6 +436,7 @@
         {
             case 0:
                 [selctBtn setTitle:@"相关度" forState:UIControlStateNormal];
+                selctBtn.tag = 111;
                 [selctBtn setSelected:YES];
                 break;
             case 1:
@@ -532,6 +539,10 @@
 -(void)closeView:(NSNotification *)close
 {
     backView.hidden = YES;
+    if (selctBtn.tag == 111)
+    {
+        selctBtn.selected = YES;
+    }
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
@@ -629,6 +640,8 @@
 //                NSLog(@"dicRespon = %@",[dicRespon objectForKey:@"items"]);
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
+                
+                
                 
                 if(intTotal == 0)
                 {

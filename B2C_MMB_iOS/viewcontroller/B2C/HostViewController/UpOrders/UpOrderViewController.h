@@ -13,6 +13,7 @@
 #import "DCFConnectionUtil.h"
 #import "B2CUpOrderData.h"
 #import "ChooseReceiveAddressViewController.h"
+#import "BillMsgManagerViewController.h"
 
 @interface UpOrderViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickerView,ConnectionDelegate,UITextFieldDelegate,ReceveAddress,UIAlertViewDelegate>
 {

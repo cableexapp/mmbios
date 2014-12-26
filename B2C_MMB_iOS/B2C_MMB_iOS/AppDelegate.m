@@ -419,7 +419,14 @@ NSString *strUserId = @"";
 
 - (void) logOutMethod
 {
-    [DCFStringUtil showNotice:@"您的账号在其他地方登录,请重新登录"];
+    if(_hideNotice == YES)
+    {
+        
+    }
+    else
+    {
+        [DCFStringUtil showNotice:@"您的账号在其他地方登录,请重新登录"];
+    }
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteAppCartItems",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -520,6 +527,10 @@ NSString *strUserId = @"";
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HotKindNum"];
             }
             
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"BillMsg"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
           
             [self performSelector:@selector(EnterToLogin) withObject:nil afterDelay:2.5];

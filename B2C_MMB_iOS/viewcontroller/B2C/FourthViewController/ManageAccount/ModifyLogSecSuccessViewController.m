@@ -9,9 +9,12 @@
 #import "ModifyLogSecSuccessViewController.h"
 #import "MCDefine.h"
 #import "DCFTopLabel.h"
+#import "AppDelegate.h"
 
 @interface ModifyLogSecSuccessViewController ()
-
+{
+    AppDelegate *app;
+}
 @end
 
 @implementation ModifyLogSecSuccessViewController
@@ -36,11 +39,14 @@
     self.backBtn.layer.borderColor = MYCOLOR.CGColor;
     self.backBtn.layer.borderWidth = 1.0f;
     self.backBtn.layer.cornerRadius = 5.0f;
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    app.hideNotice = YES;
 }
 
 - (IBAction)backBtnClick:(id)sender
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [app logOutMethod];
 }
 
 

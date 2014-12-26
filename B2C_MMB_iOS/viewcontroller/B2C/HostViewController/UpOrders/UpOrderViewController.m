@@ -9,7 +9,6 @@
 #import "UpOrderViewController.h"
 #import "DCFCustomExtra.h"
 #import "DCFTopLabel.h"
-#import "BillMsgManagerViewController.h"
 #import "ChoosePayTableViewController.h"
 #import "LoginNaviViewController.h"
 #import "DCFStringUtil.h"
@@ -632,9 +631,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-    
-    
+
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
     {
         billMsg = @"不需要发票";
@@ -642,24 +639,20 @@
     }
     else
     {
-        NSMutableArray *billMsgArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
-        billMsg = [billMsgArray objectAtIndex:0];
-        billId = [billMsgArray objectAtIndex:1];
-        
+        NSString *status = [NSString stringWithFormat:@"%@",[[[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"] lastObject]];
+        if([status intValue] == 1)
+        {
+            NSMutableArray *billMsgArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"];
+            billMsg = [billMsgArray objectAtIndex:0];
+            billId = [billMsgArray objectAtIndex:1];
+        }
+        else if ([status intValue] == 2)
+        {
+            billMsg = @"不需要发票";
+            billId = 0;
+        }
     }
-    
-    
-    
-    
-    //    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
-    //    {
-    //    }
-    //    else
-    //    {
-    //
-    //    }
-    
-    
+
     if(tv)
     {
         [tv reloadData];

@@ -779,7 +779,9 @@
         backView.image = [UIImage imageNamed:@"headView.png"];
         [view insertSubview:backView belowSubview:self.photoBtn];
         
-        NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
+        
+#pragma mark - UTF8转中文
+        NSString *userName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.photoBtn.frame.origin.x +self.photoBtn.frame.size.width + 10, 30, 200, 30)];
         [label setTextAlignment:NSTextAlignmentLeft];
         if([DCFCustomExtra validateString:userName] == NO)

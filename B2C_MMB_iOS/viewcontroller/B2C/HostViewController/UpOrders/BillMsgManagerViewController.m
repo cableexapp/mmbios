@@ -13,7 +13,7 @@
 #import "DCFStringUtil.h"
 #import "DCFCustomExtra.h"
 #import "LoginNaviViewController.h"
-
+#import "DCFCustomExtra.h"
 @interface BillMsgManagerViewController ()
 {
     NSMutableArray *billBtnArray;   //需不需要发票的选择按钮
@@ -33,6 +33,8 @@
     
     UIStoryboard *sb;
     
+    UIButton *noNeedBtn;
+    UIButton *needBtn;
 }
 @end
 
@@ -76,21 +78,26 @@
         {
             [DCFStringUtil showNotice:msg];
             
+            NSString *status = nil;
+            if(noNeedBtn.selected == YES)
+            {
+                status = @"2";
+            }
+            if(needBtn.selected == YES)
+            {
+                status = @"1";
+            }
             
             if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
             {
                 NSString *myInvoiceid = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
-//                NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
-//                [dataArray addObject:arr];
+                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],status,nil];
                 [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
             }
             else
             {
-                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,_invoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
-//                    [a addObject:arr];
+                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,_invoiceid,[NSNumber numberWithInt:_billHeadTag],status,nil];
                 [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
-//                }
             }
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self.navigationController popViewControllerAnimated:YES];
@@ -111,23 +118,28 @@
         }
         else if (result == 1)
         {
+            NSString *status = nil;
+            if(noNeedBtn.selected == YES)
+            {
+                status = @"2";
+            }
+            if(needBtn.selected == YES)
+            {
+                status = @"1";
+            }
+            
             NSString *myInvoiceid = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"value"]];
             
             if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
             {
-//                NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
-//                [dataArray addObject:arr];
+                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],status,nil];
                 [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
 
             }
             else
             {
-                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,_invoiceid,[NSNumber numberWithInt:_billHeadTag],nil];
+                NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,_invoiceid,[NSNumber numberWithInt:_billHeadTag],status,nil];
                 [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
-
-//                    [a addObject:arr];
-//                }
             }
             
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -143,6 +155,7 @@
 {
     UIButton *btn = (UIButton *) sender;
     int tag = btn.tag;
+    NSLog(@"TAG = %d",tag);
     btn.selected = !btn.selected;
     for(UIButton *btn in billBtnArray)
     {
@@ -158,13 +171,34 @@
     if(tag == 0)
     {
         [self hideSubViews];
+        if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
+        {
+            
+        }
+        else
+        {
+            [self changeBillMsgStatus:@"2"];
+        }
     }
     else if (tag == 1)
     {
         [self showSubViews];
-        
-        
+        if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
+        {
+            
+        }
+        else
+        {
+            [self changeBillMsgStatus:@"1"];
+        }
     }
+}
+
+- (void) changeBillMsgStatus:(NSString *) str
+{
+    NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"]];
+    [arr replaceObjectAtIndex:arr.count-1 withObject:str];
+    [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
 }
 
 - (void) billHeadBtnClick:(UIButton *) sender
@@ -198,7 +232,7 @@
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
-    if(memberid.length == 0)
+    if([DCFCustomExtra validateString:memberid] == NO)
     {
         LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
         [self presentViewController:loginNavi animated:YES completion:nil];
@@ -300,6 +334,10 @@
     billHeadBtnArray = [[NSMutableArray alloc] init];
     myArray = [[NSMutableArray alloc] init];
     
+    NSString *status = [NSString stringWithFormat:@"%@",[[[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"] lastObject]];
+    
+    noNeedBtn = nil;
+    needBtn = nil;
     for(int i=0;i<9;i++)
     {
         if(i <= 1)
@@ -309,26 +347,42 @@
             [billBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
             [billBtn setSelected:NO];
             [billBtn setTag:i];
-            if(_editOrAddBill == NO &&billBtn.tag == 0 )
-            {
-                [billBtn setSelected:YES];
-            }
-            if(_editOrAddBill == YES && billBtn.tag == 1)
-            {
-                [billBtn setSelected:YES];
-            }
             [billBtn setFrame:CGRectMake(10, 10+40*i, 30, 30)];
             [billBtn addTarget:self action:@selector(billBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [billBtnArray addObject:billBtn];
-            //            if(i == 0)
-            //            {
-            //                [billBtn setSelected:YES];
-            //            }
-            //            else
-            //            {
-            //                [billBtn setSelected:NO];
-            //            }
+            
             [self.view addSubview:billBtn];
+            if(i == 0)
+            {
+                noNeedBtn = billBtn;
+            }
+            if(i == 1)
+            {
+                needBtn = billBtn;
+            }
+#pragma mark - 当editOrAddBill为0的时候表示新增发票，为1的时候表示编辑发票   当status为1的时候表示需要发票，为2的时候表示不需要发票
+            if(_editOrAddBill == NO)
+            {
+                [noNeedBtn setSelected:NO];
+                [needBtn setSelected:YES];
+                [self showSubViews];
+            }
+            if(_editOrAddBill == YES)
+            {
+                if([status intValue] == 1)
+                {
+                    [noNeedBtn setSelected:NO];
+                    [needBtn setSelected:YES];
+                    [self showSubViews];
+                }
+                else if ([status intValue] == 2)
+                {
+                    [noNeedBtn setSelected:YES];
+                    [needBtn setSelected:NO];
+                    [self hideSubViews];
+                }
+            }
+
             
             UILabel *billLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10+40*i, 200, 30)];
             if(i == 0)
@@ -403,14 +457,8 @@
             tf = [[DCFMyTextField alloc] initWithFrame:CGRectMake(10, 250, 300, 30)];
             [tf setDelegate:self];
             [tf setReturnKeyType:UIReturnKeyDone];
-            //            if(_editOrAddBill == NO)
-            //            {
-            //                [tf setPlaceholder:@"请输入个人名称"];
-            //            }
-            //            else
-            //            {
-            //
-            //            }
+
+//            [tf setText:_tfContent];
             [tf setPlaceholder:_tfContent];
             
             [self.view addSubview:tf];
@@ -443,11 +491,9 @@
     
     if(_editOrAddBill == NO)
     {
-        [self hideSubViews];
     }
     else
     {
-        [self showSubViews];
     }
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];

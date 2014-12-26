@@ -230,7 +230,7 @@
     }
     else
     {
-        city = chooseProvince;
+        city = chooseCity;
     }
     
     if([DCFCustomExtra validateString:chooseAddress] == NO)
@@ -297,7 +297,6 @@
         NSString *token = [DCFCustomExtra md5:string];
 
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiver,province,city,area,addressname,fulladdress,zip,mobile,tel];
-        
    
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
@@ -317,7 +316,16 @@
         NSLog(@"%@",pushString);
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
-        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/editMemberAddress.html?"];
+        
+        NSString *urlString = nil;
+        if(self.B2COrB2B == YES)
+        {
+            urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/editMemberAddress.html?"];
+        }
+        else
+        {
+            urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/editMemberAddress.html?"];
+        }
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
     

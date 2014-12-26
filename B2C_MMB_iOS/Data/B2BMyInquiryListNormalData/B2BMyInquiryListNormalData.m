@@ -36,19 +36,19 @@
         _inquirytotal = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquirytotal"]];
 
         NSArray *ctems = [[NSArray alloc] initWithArray:[dic objectForKey:@"ctems"]];
-        NSArray *items = [[NSArray alloc] initWithArray:[dic objectForKey:@"items"]];
-        if(ctems.count == 0 || [ctems isKindOfClass:[NSNull class]])
-        {
-            _myItems = [[NSArray alloc] initWithArray:items];
-        }
-        else if(items.count == 0 || [items isKindOfClass:[NSNull class]])
-        {
+//        NSArray *items = [[NSArray alloc] initWithArray:[dic objectForKey:@"items"]];
+//        if(ctems.count == 0 || [ctems isKindOfClass:[NSNull class]])
+//        {
+//            _myItems = [[NSArray alloc] initWithArray:items];
+//        }
+//        else if(items.count == 0 || [items isKindOfClass:[NSNull class]])
+//        {
             _myItems = [[NSArray alloc] initWithArray:ctems];
-        }
-        else
-        {
-            _myItems = [[NSArray alloc] init];
-        }
+//        }
+//        else
+//        {
+//            _myItems = [[NSArray alloc] init];
+//        }
         
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
         if([_status isEqualToString:@"1"])

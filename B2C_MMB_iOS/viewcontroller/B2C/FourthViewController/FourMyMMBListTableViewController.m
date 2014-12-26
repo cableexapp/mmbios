@@ -294,19 +294,27 @@
     }
     if (URLTag == URLInquiryCartCountTag)
     {
-        tempCount = [[dicRespon objectForKey:@"value"] intValue];
+        NSLog(@"URLInquiryCartCountTag = %@",dicRespon);
+        if(result == 1)
+        {
+            tempCount = [[dicRespon objectForKey:@"value"] intValue];
+        }
     }
     if (URLTag == URLShopCarCountTag)
     {
-        tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        NSLog(@"URLShopCarCountTag = %@",dicRespon);
+        if(result == 1)
+        {
+           tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        }
     }
     if (tempCount > 0 || tempShopCar > 0)
     {
-        
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:@"1"];
     }
     if (tempCount == 0 && tempShopCar == 0)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:@"2"];
     }
     if(URLTag == URLUpImagePicTag)
     {

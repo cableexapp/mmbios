@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
 
-@interface HasNotLoginViewController : UIViewController
+@interface HasNotLoginViewController : UIViewController<ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
 
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UILabel *showLabel;

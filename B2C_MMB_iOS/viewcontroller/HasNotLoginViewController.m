@@ -9,8 +9,22 @@
 #import "HasNotLoginViewController.h"
 #import "DCFTopLabel.h"
 #import "LoginNaviViewController.h"
+#import "DCFCustomExtra.h"
+#import "KxMenu.h"
+#import "AppDelegate.h"
+#import "MCDefine.h"
+#import "MyShoppingListViewController.h"
+#import "B2BAskPriceCarViewController.h"
 
 @interface HasNotLoginViewController ()
+{
+    BOOL isPopShow;
+    AppDelegate *app;
+    int tempCount;
+    int tempShopCar;
+    NSMutableArray *arr;
+    UIStoryboard *sb;
+}
 
 @end
 
@@ -34,32 +48,184 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@""];
     self.navigationItem.titleView = top;
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
 }
 
 - (IBAction)loginBtnClick:(id)sender
-{    
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+{
     LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
     [self presentViewController:loginNavi animated:YES completion:nil];
 
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+
+    [self setHidesBottomBarWhenPushed:NO];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self loadbadgeCount];
+    [self loadShopCarCount];
+    isPopShow = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_notLogin:) name:@"popShopCar" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
+}
+
+//请求询价车商品数量
+-(void)loadbadgeCount
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+//获取购物车商品数量
+-(void)loadShopCarCount
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *visitorid = [app getUdid];
+    
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    NSString *pushString = nil;
+    if(hasLogin == YES)
+    {
+        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    }
+    else
+    {
+        pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+     int result = [[dicRespon objectForKey:@"result"] intValue];
+    if (URLTag == URLInquiryCartCountTag)
+    {
+        if(result == 1)
+        {
+            tempCount = [[dicRespon objectForKey:@"value"] intValue];
+        }
+    }
+    if (URLTag == URLShopCarCountTag)
+    {
+        if(result == 1)
+        {
+            tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        }
+    }
+    if (tempCount > 0 || tempShopCar > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:@"1"];
+    }
+    if (tempCount == 0 && tempShopCar == 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:@"2"];
+    }
+}
+
+- (void)popShopCar_notLogin:(NSNotification *)sender
+{
+    if (isPopShow == YES)
+    {
+        [KxMenu dismissMenu];
+        isPopShow = NO;
+    }
+    else
+    {
+        NSArray *menuItems =
+        @[[KxMenuItem menuItem:[NSString stringWithFormat:@"购物车(%d)",tempShopCar]
+                         image:nil
+                        target:self
+                        action:@selector(pushMenuItem_mmb:)],
+          
+          [KxMenuItem menuItem:[NSString stringWithFormat:@"询价车(%d)",tempCount]
+                         image:nil
+                        target:self
+                        action:@selector(pushMenuItem_mmb:)],
+          ];
+        
+        [KxMenu showMenuInView:self.view
+                      fromRect:CGRectMake(self.view.frame.size.width/5-15, self.view.frame.size.height, self.view.frame.size.height/5, 49)
+                     menuItems:menuItems];
+        isPopShow = YES;
+    }
+}
+
+- (void)pushMenuItem_mmb:(id)sender
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    if ([[[[[[NSString stringWithFormat:@"%@",sender] componentsSeparatedByString:@" "] objectAtIndex:2] componentsSeparatedByString:@"("] objectAtIndex:0] isEqualToString:@"购物车"])
+    {
+        MyShoppingListViewController *shop = [[MyShoppingListViewController alloc] initWithDataArray:arr];
+        [self.navigationController pushViewController:shop animated:YES];
+    }
+    else
+    {
+        B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+        [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
+    }
+    [self setHidesBottomBarWhenPushed:NO];
+}
+
+-(void)changeClick:(NSNotification *)viewChanged
+{
+    if (isPopShow == YES)
+    {
+        isPopShow = NO;
+    }
+    else
+    {
+        isPopShow = YES;
+    }
 }
 
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

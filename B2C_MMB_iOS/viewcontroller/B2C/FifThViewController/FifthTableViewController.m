@@ -297,9 +297,9 @@
     {
         [HUD hide:YES];
     }
+     int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLDeleteAppCartItemsTag)
     {
-        int result = [[dicRespon objectForKey:@"result"] intValue];
         if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
         {
             [self.logOutBtn setHidden:NO];
@@ -380,6 +380,9 @@
             
             [DCFStringUtil showNotice:@"退出成功"];
 
+            [self loadbadgeCount];
+            [self loadShopCarCount];
+
             //切换登录账号，结束之前对话
             [self.appDelegate goOffline];
             [self.appDelegate disconnect];
@@ -390,19 +393,25 @@
     }
     if (URLTag == URLInquiryCartCountTag)
     {
-        tempCount = [[dicRespon objectForKey:@"value"] intValue];
+        if (result == 1)
+        {
+           tempCount = [[dicRespon objectForKey:@"value"] intValue];
+        }
     }
     if (URLTag == URLShopCarCountTag)
     {
-        tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        if (result == 1)
+        {
+            tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        }
     }
     if (tempCount > 0 || tempShopCar > 0)
     {
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:@"1"];
     }
     if (tempCount == 0 && tempShopCar == 0)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:@"2"];
     }
     
 }

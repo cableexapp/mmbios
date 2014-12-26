@@ -144,7 +144,6 @@ BOOL isPopShow = NO;
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    
     if(_reloading == YES)
     {
         [self doneLoadingViewData];
@@ -228,11 +227,17 @@ BOOL isPopShow = NO;
     }
     if (URLTag == URLInquiryCartCountTag)
     {
-        tempCount = [[dicRespon objectForKey:@"value"] intValue];
+        if(result == 1)
+        {
+           tempCount = [[dicRespon objectForKey:@"value"] intValue];
+        }
     }
     if (URLTag == URLShopCarCountTag)
     {
-        tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        if(result == 1)
+        {
+           tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+        }
     }
     if (tempCount > 0 || tempShopCar > 0)
     {
@@ -328,8 +333,6 @@ BOOL isPopShow = NO;
     
     [self pushAndPopStyle];
 
-    
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reRequest) name:@"NetisConnect" object:nil];
     
     [self loadRequest];
@@ -405,7 +408,14 @@ BOOL isPopShow = NO;
 
 -(void)hidenShopCarRedPoint:(NSNotification *)sender
 {
-    countLabel.hidden = YES;
+    if ([sender.object isEqualToString:@"1"])
+    {
+        countLabel.hidden = NO;
+    }
+    if ([sender.object isEqualToString:@"2"])
+    {
+        countLabel.hidden = YES;
+    }
 }
 
 //请求询价车商品数量

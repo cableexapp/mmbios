@@ -163,7 +163,7 @@
 {
 //    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    if([DCFCustomExtra validateMobile:memberid] == NO)
+    if([DCFCustomExtra validateString:memberid] == NO)
     {
         memberid = @"";
 //        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
@@ -176,7 +176,7 @@
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     
-    if(userName.length == 0)
+    if([DCFCustomExtra validateString:userName] == NO)
     {
         userName = @"";
 //        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -233,17 +233,20 @@
 {
     
     [self.PhoneNumber resignFirstResponder];
-    if(self.PhoneNumber.text.length == 0)
+    if(self.PhoneNumber.text.length == 0 )
     {
         [DCFStringUtil showNotice:@"手机号码不能为空"];
         return;
     }
     
-    if([DCFCustomExtra validateMobile:self.PhoneNumber.text] == NO)
-    {
-        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
-        return;
-    }
+
+        if([DCFCustomExtra validateMobile:self.PhoneNumber.text] == NO)
+        {
+            [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+            return;
+        }
+
+    
     if(self.secondTextView.text.length > 1000)
     {
         [DCFStringUtil showNotice:@"备注内容已超出1000字"];
@@ -280,9 +283,6 @@
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSubHotTypeTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
- 
-
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

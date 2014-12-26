@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 
+@protocol ChangeStatusDelegate <NSObject>
+
+- (void) ChangeStatusDelegate:(NSArray *) array;
+
+@end
+
 @interface MyInquiryDetailTableViewController : UITableViewController<ConnectionDelegate>
 {
     DCFConnectionUtil *conn;
@@ -18,4 +24,7 @@
 @property (strong,nonatomic) NSString *myInquiryid;
 @property (strong,nonatomic) NSDictionary *addressDic;
 
+@property (assign,nonatomic) id<ChangeStatusDelegate> delegate;
+
 @end
+

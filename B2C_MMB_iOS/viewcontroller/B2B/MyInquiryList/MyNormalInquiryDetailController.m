@@ -7,14 +7,16 @@
 //
 
 #import "MyNormalInquiryDetailController.h"
-#import "MyInquiryDetailTableViewController.h"
 #import "DCFTopLabel.h"
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFCustomExtra.h"
 
 @interface MyNormalInquiryDetailController ()
-
+{
+    UILabel *orderLabel;
+    UILabel *statusLabel;
+}
 @end
 
 @implementation MyNormalInquiryDetailController
@@ -33,6 +35,27 @@
     
 }
 
+- (void) ChangeStatusDelegate:(NSArray *)array
+{
+    NSString *orderNum = [array objectAtIndex:0];
+    NSString *status = [array lastObject];
+    
+    [orderLabel setText:[NSString stringWithFormat:@"编号: %@",orderNum]];
+
+    NSString *s = [NSString stringWithFormat:@"状态: %@",status];
+    if(s.length > 4)
+    {
+        NSMutableAttributedString *status = [[NSMutableAttributedString alloc] initWithString:s];
+        [status addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
+        [status addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:134.0/255.0 green:0 blue:0 alpha:1.0] range:NSMakeRange(4, s.length-4)];
+        [statusLabel setAttributedText:status];
+    }
+    else
+    {
+        [statusLabel setText:s];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,6 +65,7 @@
     self.navigationItem.titleView = top;
     [self pushAndPopStyle];
     MyInquiryDetailTableViewController *tv = [self.storyboard instantiateViewControllerWithIdentifier:@"myInquiryDetailTableViewController"];
+    tv.delegate = self;
     tv.myInquiryid = [NSString stringWithFormat:@"%@",self.myInquiryid];
     tv.addressDic = [[NSDictionary alloc] initWithDictionary:self.myDic];
     tv.view.frame = self.tableBackView.bounds;
@@ -60,9 +84,8 @@
     {
         size_order = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:self.myOrderNum WithSize:CGSizeMake(MAXFLOAT, height)];
     }
-    UILabel *orderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_order.width+40, 20)];
+    orderLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_order.width+40, 20)];
     [orderLabel setFont:[UIFont systemFontOfSize:12]];
-    [orderLabel setText:[NSString stringWithFormat:@"编号: %@",self.myOrderNum]];
     [self.topView addSubview:orderLabel];
     
     CGSize size_time;
@@ -84,21 +107,10 @@
     [self.topView setBackgroundColor:[UIColor whiteColor]];
     [self.topView addSubview:timeLabel];
     
-    NSString *s = [NSString stringWithFormat:@"状态: %@",self.myStatus];
-    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(orderLabel.frame.origin.x+orderLabel.frame.size.width, orderLabel.frame.origin.y, ScreenWidth-20-orderLabel.frame.size.width, height)];
+    statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(orderLabel.frame.origin.x+orderLabel.frame.size.width, orderLabel.frame.origin.y, ScreenWidth-20-orderLabel.frame.size.width, height)];
     [statusLabel setFont:[UIFont systemFontOfSize:12]];
     [statusLabel setTextAlignment:NSTextAlignmentRight];
-    if(s.length > 4)
-    {
-        NSMutableAttributedString *status = [[NSMutableAttributedString alloc] initWithString:s];
-        [status addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
-        [status addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:134.0/255.0 green:0 blue:0 alpha:1.0] range:NSMakeRange(4, s.length-4)];
-        [statusLabel setAttributedText:status];
-    }
-    else
-    {
-        [statusLabel setText:s];
-    }
+
     [self.topView addSubview:statusLabel];
 
 }

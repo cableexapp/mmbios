@@ -51,6 +51,10 @@
 //        }
         
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
+        if([_status isEqualToString:@"0"])
+        {
+            _status = @"";
+        }
         if([_status isEqualToString:@"1"])
         {
             _status = @"待审核";

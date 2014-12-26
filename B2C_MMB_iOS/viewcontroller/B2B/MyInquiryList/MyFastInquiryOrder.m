@@ -161,7 +161,7 @@
     }
     [self.orderLabel setText:[NSString stringWithFormat:@"询价单号: %@",oemNo]];
     
-    [self.statusLabel setText:[NSString stringWithFormat:@"状态:%@",self.fastData.status]];
+    [self.statusLabel setText:[NSString stringWithFormat:@"状态:%@",self.fastData.speedStatus]];
     [self.statusLabel setTextAlignment:NSTextAlignmentRight];
     
     NSString *mytime = [NSString stringWithFormat:@"提交时间: %@",self.fastData.myTime];
@@ -478,7 +478,7 @@
 
 - (void) fail
 {
-    [DCFStringUtil showNotice:@"图片下载失败"];
+//    [DCFStringUtil showNotice:@"图片下载失败"];
 }
 
 - (void) ivTap:(UITapGestureRecognizer *) sender
@@ -498,7 +498,7 @@
     MyNormalInquiryDetailController *myNormalInquiryDetailController = [self.storyboard instantiateViewControllerWithIdentifier:@"myNormalInquiryDetailController"];
     
 #pragma mark - 这里暂时用oemid替换inquirId
-    myNormalInquiryDetailController.myOrderNum = @"";
+    myNormalInquiryDetailController.myOrderNum = oemNo;
     
     
     NSString *status = [NSString stringWithFormat:@"%@",[self.fastData speedStatus]];

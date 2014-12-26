@@ -69,7 +69,6 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
-    
     if(URLTag == URLInquiryDetailTag)
     {
         if([[dicRespon allKeys] count] == 0 || [[dicRespon objectForKey:@"ctems"] count] == 0 || [[dicRespon objectForKey:@"ctems"] isKindOfClass:[NSNull class]])
@@ -81,7 +80,45 @@
             if(result == 1)
             {
                 ctemsDic = [[NSDictionary alloc] initWithDictionary:[[dicRespon objectForKey:@"ctems"] lastObject]];
+                NSString *inquiryserial = [NSString stringWithFormat:@"%@",[ctemsDic objectForKey:@"inquiryserial"]];
+                
                 int status = [[ctemsDic objectForKey:@"status"] intValue];
+                NSString *myStatus = nil;
+                if(status == 0)
+                {
+                    myStatus = @"";
+                }
+                if(status == 1)
+                {
+                    myStatus = @"待审核";
+                }
+                if(status == 2)
+                {
+                    myStatus = @"询价中";
+                }
+                if(status == 3)
+                {
+                    myStatus = @"待接受";
+                }
+                if(status == 4)
+                {
+                    myStatus = @"完成询价";
+                }
+                if(status == 5)
+                {
+                    myStatus = @"已关闭";
+                }
+                if(status == 6)
+                {
+                    myStatus = @"部分完成";
+                }
+
+                NSArray *arr = [[NSArray alloc] initWithObjects:inquiryserial,myStatus, nil];
+                if([self.delegate respondsToSelector:@selector(ChangeStatusDelegate:)])
+                {
+                    [self.delegate ChangeStatusDelegate:arr];
+                }
+                
                 if(status == 1)
                 {
                     dataArray = [[NSMutableArray alloc] initWithArray:[ctemsDic objectForKey:@"items"]];

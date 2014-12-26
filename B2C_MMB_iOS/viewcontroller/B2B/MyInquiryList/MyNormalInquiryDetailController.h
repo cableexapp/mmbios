@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyInquiryDetailTableViewController.h"
 
-@interface MyNormalInquiryDetailController : UIViewController
+@interface MyNormalInquiryDetailController : UIViewController<ChangeStatusDelegate>
 
 @property (strong,nonatomic) NSString *myOrderNum;
 @property (strong,nonatomic) NSString *myTime;

@@ -307,7 +307,7 @@
             else
             {
                  NSLog(@"排序2222 = %@ %@ %@ %@ %@ %@",_seq,delegateMyUse,delegateMyBrand,delegateMyModel,delegateMySpec,seqmethod);
-                if(selctBtn)
+//                if(selctBtn)
                 //选择筛选条件后，数据排序
                 [self seqencingData];
             }

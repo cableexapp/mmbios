@@ -147,29 +147,48 @@
 {
     [self dismissKeyBoard];
     
-    receiverTf = [textFieldArray objectAtIndex:0];
+    if(isEditOrAdd == NO)
+    {
+        
+    }
     
-    addressNameTf = [textFieldArray objectAtIndex:1];
-    chooseAddressName = addressNameTf.text;
-    
-    zipTf = [textFieldArray objectAtIndex:2];
-    
-    mobileTf = [textFieldArray objectAtIndex:3];
-    
-    fixedLineTelephone = [textFieldArray lastObject];
+//    if(textField == receiverTf)
+//    {
+        if(receiverTf.text.length > 20)
+        {
+            [DCFStringUtil showNotice:@"收货人不能超过20字"];
+            return;
+        }
+//    }
+//    if(textField == addressNameTf)
+//    {
+        if(addressNameTf.text.length > 100)
+        {
+            [DCFStringUtil showNotice:@"详细地址不能超过100字"];
+            return;
+        }
+//    }
+//    if(textField == zipTf)
+//    {
+        if(zipTf.text.length > 6)
+        {
+            [DCFStringUtil showNotice:@"邮编不能超过6位"];
+            return;
+        }
+//    }
     
     //    fullAddressTf = [textFieldArray objectAtIndex:<#(NSUInteger)#>];
-    if(receiverTf.text.length == 0)
+    if([DCFCustomExtra validateString:receiverTf.text] == NO)
     {
         [DCFStringUtil showNotice:@"请您填写收货人姓名"];
         return;
     }
-    if(addressNameTf.text.length == 0)
+    if([DCFCustomExtra validateString:addressNameTf.text] == NO)
     {
         [DCFStringUtil showNotice:@"请填写详细地址信息"];
         return;
     }
-    if(mobileTf.text.length == 0)
+    if([DCFCustomExtra validateString:mobileTf.text] == NO)
     {
         [DCFStringUtil showNotice:@"手机号码必填"];
         return;
@@ -370,6 +389,7 @@
     
     textFieldArray = [[NSMutableArray alloc] init];
     
+
     
     [self loadSubViews];
     
@@ -634,7 +654,6 @@
             //            }
         }
         
-        //陈晓修改
         if(isEditOrAdd == NO)
         {
             for(int i=0;i<textFieldArray.count;i++)
@@ -664,6 +683,17 @@
             }
         }
     }
+    
+    receiverTf = [textFieldArray objectAtIndex:0];
+    
+    addressNameTf = [textFieldArray objectAtIndex:1];
+    chooseAddressName = addressNameTf.text;
+    
+    zipTf = [textFieldArray objectAtIndex:2];
+    
+    mobileTf = [textFieldArray objectAtIndex:3];
+    
+    fixedLineTelephone = [textFieldArray lastObject];
 }
 
 - (void) dismissKeyBoard
@@ -758,9 +788,56 @@
     //    }
 }
 
+
+- (void) textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField == receiverTf)
+    {
+        if(receiverTf.text.length > 20)
+        {
+            [DCFStringUtil showNotice:@"收货人不能超过20字"];
+            return;
+        }
+    }
+    if(textField == addressNameTf)
+    {
+        if(addressNameTf.text.length > 100)
+        {
+            [DCFStringUtil showNotice:@"详细地址不能超过100字"];
+            return;
+        }
+    }
+    if(textField == zipTf)
+    {
+        if(zipTf.text.length > 6)
+        {
+            [DCFStringUtil showNotice:@"邮编不能超过6位"];
+            return;
+        }
+    }
+    if(textField == mobileTf)
+    {
+        BOOL validateMobile = [DCFCustomExtra validateMobile:mobileTf.text];
+        if(validateMobile == NO)
+        {
+            [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+            return;
+        }
+    }
+    if(textField == fixedLineTelephone)
+    {
+        BOOL validateTel = [DCFCustomExtra validateTel:fixedLineTelephone.text];
+        if(validateTel == NO)
+        {
+            [DCFStringUtil showNotice:@"请输入正确的固定电话号码"];
+            return;
+        }
+    }
+}
+
 - (void) swithChange:(UISwitch *) sender
 {
-    BOOL flag = sender.on;
+//    BOOL flag = sender.on;
 }
 
 - (void)didReceiveMemoryWarning

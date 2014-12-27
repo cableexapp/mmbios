@@ -73,17 +73,17 @@
     NSString *string = [_tf_confirm.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     
-    if(string.length == 0)
+    if([DCFCustomExtra validateString:string] == NO)
     {
         [DCFStringUtil showNotice:@"请输入账号信息"];
         return;
     }
     
-    if([DCFCustomExtra validateMobile:self.tf_confirm.text] == NO)
-    {
-        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
-        return;
-    }
+//    if([DCFCustomExtra validateMobile:self.tf_confirm.text] == NO)
+//    {
+//        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
+//        return;
+//    }
     [self push];
 }
 
@@ -95,10 +95,29 @@
 
 - (void) push
 {
+    //    NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
+    //    NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
+    //
+    //
+    //    if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil || [phone isEqualToString:@"(null)"]) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email == NULL || email == nil || [email isEqualToString:@"(null)"]))
+    //    {
+    //        [DCFStringUtil showNotice:@"您尚未绑定任何设备,请联系客服"];
+    //        return;
+    //    }
+    //    else
+    //    {
+    
+    //    }
+
     NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
     NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
     NSLog(@"%@  %@",phone,email);
     
+    if([DCFCustomExtra validateString:phone] == NO && [DCFCustomExtra validateString:email] == NO)
+    {
+        [DCFStringUtil showNotice:@"您尚未绑定任何设备,请联系客服"];
+        return;
+    }
 
     //只绑定邮箱没有绑定手机进入邮箱验证界面
      if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length != 0 || ![email isKindOfClass:[NSNull class]] || email != NULL || email != nil))

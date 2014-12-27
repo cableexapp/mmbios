@@ -76,13 +76,15 @@
 {
     if(phoneOrUserName == YES)
     {
-        [self.sureSecLabel setText:@"验证码"];
+//        [self.sureSecLabel setText:@"验证码"];
+        [self.sureSecTf setPlaceholder:@"验证码"];
         [self.getValidateBtn setHidden:NO];
         [self.sureSecTf setFrame:CGRectMake(self.sureSecTf.frame.origin.x, self.sureSecTf.frame.origin.y, self.subView.frame.size.width-20-self.sureSecLabel.frame.size.width, self.sureSecTf.frame.size.height)];
     }
     else
     {
-        [self.sureSecLabel setText:@"确认密码"];
+//        [self.sureSecLabel setText:@"确认密码"];
+        [self.sureSecTf setPlaceholder:@"确认密码"];
         [self.getValidateBtn setHidden:YES];
         [self.sureSecTf setFrame:CGRectMake(self.sureSecTf.frame.origin.x, self.sureSecTf.frame.origin.y, self.subView.frame.size.width-20, self.sureSecTf.frame.size.height)];
     }
@@ -326,7 +328,6 @@
         for(int i=0;i<self.userTf.text.length;i++)
         {
             tempUser = [self.userTf.text substringWithRange:NSMakeRange(i, 1)];
-            NSLog(@"第%d个字是:%@",i,tempUser);
             if([tempUser isEqualToString:@"_"])
             {
                 n++;
@@ -351,7 +352,6 @@
     if(sender == self.secTf)
     {
         int secTfLength = [self convertToInt:self.secTf.text];
-        NSLog(@"secTfLength = %d",secTfLength);
         int m=0;
         for(int i=0;i<secTfLength;i++)
         {

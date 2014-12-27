@@ -187,7 +187,6 @@
     
     [self addChildViewController:search];
     [searchView addSubview:search.view];
-
     [search addHeadView];
 }
 
@@ -361,7 +360,6 @@
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&spec=%@&brand=%@",token,@"",@"",@"",@""];
     
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLScreeningConditionTag delegate:self];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ScreeningCondition.html?"];
@@ -527,6 +525,20 @@
     //    设置隐藏背景VIEW的通知事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeBackView" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNomalData:) name:@"reloadNomalData" object:nil];
+    
+}
+
+-(void)reloadNomalData:(NSNotification *)sender
+{
+    flag = YES;
+    if (selctBtn.tag == 111)
+    {
+        selctBtn.selected = YES;
+    }
+    _seq = @"";
+    seqmethod = @"";
+    [self loadRequest:_seq WithUse:_use];
 }
 
 -(void)rightItemClick

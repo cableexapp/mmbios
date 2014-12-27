@@ -122,17 +122,14 @@
         urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/AddressList.html?"];
         string = [NSString stringWithFormat:@"%@%@",@"AddressList",time];
     }
-
+    
     NSString *token = [DCFCustomExtra md5:string];
     
-     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
     
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -143,7 +140,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     
     if(tv)
     {

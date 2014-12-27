@@ -255,7 +255,47 @@
     return array;
 }
 
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    NSString *tempBtand = [[NSUserDefaults standardUserDefaults] objectForKey:@"brand_save"];
+    NSString *tempModel = [[NSUserDefaults standardUserDefaults] objectForKey:@"model_save"];
+    NSString *tempUse = [[NSUserDefaults standardUserDefaults] objectForKey:@"use_save"];
+    NSString *tempSpec = [[NSUserDefaults standardUserDefaults] objectForKey:@"spec_save"];
+ 
+    if (tempBtand.length > 0)
+    {
+        brandString = tempBtand;
+        [brandBtn setHidden:NO];
+        [brandBtn_0 setHidden:NO];
+        [triangle setHidden:YES];
+        [brandBtn setTitle:brandString forState:UIControlStateNormal];
+    }
+    if (tempModel.length > 0)
+    {
+        modelString = tempModel;
+        [modelBtn setHidden:NO];
+        [modelBtn_1 setHidden:NO];
+        [triangle_1 setHidden:YES];
+        [modelBtn setTitle:modelString forState:UIControlStateNormal];
+    }
+    if (tempUse.length > 0)
+    {
+        useString = tempUse;
+        [useBtn setHidden:NO];
+        [useBtn_2 setHidden:NO];
+        [triangle_2 setHidden:YES];
+        [useBtn setTitle:useString forState:UIControlStateNormal];
+    }
+    if (tempSpec.length > 0)
+    {
+        specString = tempSpec;
+        [specBtn setHidden:NO];
+        [specBtn_3 setHidden:NO];
+        [triangle_3 setHidden:YES];
+        [specBtn setTitle:specString forState:UIControlStateNormal];
+    }
+}
 
 #pragma mark - 品牌按钮点击
 - (void) brandBtnClick:(UIButton *) sender
@@ -269,6 +309,9 @@
     [triangle setHidden:YES];
     [brandBtn setTitle:brandString forState:UIControlStateNormal];
     
+    [[NSUserDefaults standardUserDefaults] setObject:brandString forKey:@"brand_save"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",sectionIndex] forKey:@"brandBtn_save"];
     
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
@@ -276,7 +319,6 @@
 #pragma mark - 型号按钮点击
 - (void) modelBtnClick:(UIButton *) sender
 {
-
     int sectionIndex = ((UIButton*)sender).tag;
     flag[sectionIndex] = !flag[sectionIndex];
     modelString = sender.titleLabel.text;
@@ -284,6 +326,8 @@
     [modelBtn_1 setHidden:NO];
     [triangle_1 setHidden:YES];
 
+    [[NSUserDefaults standardUserDefaults] setObject:modelString forKey:@"model_save"];
+    
     [modelBtn setTitle:modelString forState:UIControlStateNormal];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
@@ -298,6 +342,9 @@
     [useBtn_2 setHidden:NO];
     [triangle_2 setHidden:YES];
     [useBtn setTitle:useString forState:UIControlStateNormal];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:useString forKey:@"use_save"];
+    
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
     
 }
@@ -312,6 +359,8 @@
     [specBtn_3 setHidden:NO];
     [triangle_3 setHidden:YES];
     [specBtn setTitle:specString forState:UIControlStateNormal];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:specString forKey:@"spec_save"];
     
 //    specString = [self getNumFromString:specString];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
@@ -799,13 +848,13 @@
     [UIView animateWithDuration:0.5f animations:^(void) {
         [self.view setFrame:frameRect];
     } completion:^(BOOL finished) {
-        [self.view.superview removeFromSuperview];
+//        [self.view.superview removeFromSuperview];
+        self.view.superview.hidden = YES;
     }];
 }
 
 - (void) clear:(UIButton *) sender
 {
-
 //    if(headBtnArray && headBtnArray.count != 0)
 //    {
         [headBtnArray removeAllObjects];
@@ -833,13 +882,18 @@
         modelString = @"";
         specString = @"";
         brandString = @"";
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
         
         [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 //    }
 
 //    
 //    // 背影view的通知事件
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeBackView" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadNomalData" object:nil];
 }
 
 - (void) sure:(UIButton *) sender

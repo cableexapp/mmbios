@@ -10,7 +10,7 @@
 #import "DCFConnectionUtil.h"
 #import "HasNotLoginViewController.h"
 
-@interface FourMyMMBListTableViewController : UITableViewController<ConnectionDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface FourMyMMBListTableViewController : UITableViewController<ConnectionDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITabBarControllerDelegate>
 {
     HasNotLoginViewController *hasNotLoginViewController;
     DCFConnectionUtil *conn;

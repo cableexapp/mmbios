@@ -201,23 +201,23 @@
     {
         if (![xmppStream registerWithPassword:@"123456" error:&error])
         {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
-                                                                message:[error localizedDescription]
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"Ok"
-                                                      otherButtonTitles:nil];
-            [alertView show];
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
+//                                                                message:[error localizedDescription]
+//                                                               delegate:nil
+//                                                      cancelButtonTitle:@"Ok"
+//                                                      otherButtonTitles:nil];
+//            [alertView show];
         }
     }
     else
     {
         [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"创建帐号成功"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Ok"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+//                                                            message:@"创建帐号成功"
+//                                                           delegate:nil
+//                                                  cancelButtonTitle:@"Ok"
+//                                                  otherButtonTitles:nil];
+//        [alertView show];
     }
 }
 
@@ -251,16 +251,6 @@
 //登录
 - (IBAction)loginBtnClick:(id)sender
 {
-    //切换登录账号，结束之前对话
-    [app goOffline];
-    app.isConnect = @"断开";
-    
-    [self registerInSide:self.tf_Account.text];
-    
-    [self connect:self.tf_Account.text];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"app_username"];
-    
     [self logWithAccount:self.tf_Account.text WithSec:self.tf_Secrect.text];
 }
 
@@ -301,7 +291,7 @@
     
     
     NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",acc,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
-    NSLog(@"push = %@",pushString);
+   
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     conn.LogIn = YES;
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -342,6 +332,16 @@
             
             logInSuccess = YES;
             
+            //切换登录账号，结束之前对话
+            [app goOffline];
+            app.isConnect = @"断开";
+            
+            [self registerInSide:self.tf_Account.text];
+            
+            [self connect:self.tf_Account.text];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"app_username"];
+            
             NSDictionary *iems = [NSDictionary dictionaryWithDictionary:[dicRespon objectForKey:@"items"]];
             
             NSString *memberId = [NSString stringWithFormat:@"%@",[iems objectForKey:@"memberId"]];
@@ -364,10 +364,7 @@
             NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.tf_Account.text,@"registerAccount",self.tf_Secrect.text,@"registerSecrect", nil];
             [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
             
-            //        NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
-            
             NSString *headPortraitUrl = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/",[iems objectForKey:@"ext2"]];
-            NSLog(@"headPortraitUrl = %@",headPortraitUrl);
             
             [[NSUserDefaults standardUserDefaults] setObject:headPortraitUrl forKey:@"headPortraitUrl"];
             

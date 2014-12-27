@@ -96,8 +96,7 @@ BOOL isPopShow = NO;
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-//     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
-//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC:) name:@"goToHomeView" object:nil];
+
     isPopShow = NO;
     self.tableView.scrollEnabled = YES;
     [self loadbadgeCount];

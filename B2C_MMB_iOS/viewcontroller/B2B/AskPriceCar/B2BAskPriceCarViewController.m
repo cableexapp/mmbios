@@ -148,6 +148,11 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+//    NSString *flagString = [[NSUserDefaults standardUserDefaults] objectForKey:@"pop_AskPriceCar"];
+//    if (flagString.length > 0)
+//    {
+//        [self.navigationController popViewControllerAnimated:YES];
+//    }
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     [self setHidesBottomBarWhenPushed:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
@@ -173,6 +178,7 @@
         [conn stopConnection];
         conn = nil;
     }
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pop_AskPriceCar"];
 }
 
 - (void)viewDidLoad
@@ -764,6 +770,8 @@
 -(void)buyBtnClick
 {
     NSLog(@"首页 = %d",self.navigationController.viewControllers.count);
+    NSLog(@"首页 = %@",self.navigationController.viewControllers);
+
     if ([self.fromString isEqualToString:@"首页"])
     {
         [self.navigationController popViewControllerAnimated:YES];
@@ -771,9 +779,10 @@
     else if ([self.fromString isEqualToString:@"我的买卖宝"] || [self.fromString isEqualToString:@"更多"])
     {
         NSLog(@"self.tabBarController.viewControllers = %@",self.tabBarController.viewControllers);
-        [self.navigationController popViewControllerAnimated:NO];
-//        [self.tabBarController setSelectedIndex:0];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHomeView" object:nil];
+//         [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.tabBarController setSelectedIndex:0];
+        [[NSUserDefaults standardUserDefaults] setObject:@"pop_car" forKey:@"pop_AskPriceCar"];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHomeView" object:nil];
     }
     else
     {

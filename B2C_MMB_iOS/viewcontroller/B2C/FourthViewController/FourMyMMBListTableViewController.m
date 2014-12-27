@@ -370,7 +370,7 @@
     }
     [self setHidesBottomBarWhenPushed:NO];
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 //     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
 }
 
@@ -510,12 +510,14 @@
 
 -(void)goToHomeVC:(NSNotification *)sender
 {
-    [self.navigationController.tabBarController setSelectedIndex:0];
-//    [self.navigationController popToRootViewControllerAnimated:YES];
-    
+
+//    self.tabBarController.selectedIndex = 0;
+//    [self setHidesBottomBarWhenPushed:NO];
     NSLog(@"我的买卖宝");
+
 //     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
 }
+
 
 - (void)photoBtnAction:(id)sender
 {
@@ -932,7 +934,6 @@
     }
     [self pushToOrderListViewControllerWithBtn:(UIButton *)sender];
 }
-
 
 - (void) pushToOrderListViewControllerWithBtn:(UIButton *) sender
 {

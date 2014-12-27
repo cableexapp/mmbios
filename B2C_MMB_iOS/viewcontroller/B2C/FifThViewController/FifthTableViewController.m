@@ -61,7 +61,6 @@
     [self setHidesBottomBarWhenPushed:NO];
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
-//     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -92,7 +91,7 @@
 
 -(void)goToHomeVC_more:(NSNotification *)sender
 {
-    [self.navigationController.tabBarController setSelectedIndex:0];
+    [self.tabBarController setSelectedIndex:0];
     //    [self.navigationController popToRootViewControllerAnimated:YES];
     
     NSLog(@"更多");

@@ -408,6 +408,9 @@
             [self creatRoom];
         }
     }
+
+    self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     self.hidesBottomBarWhenPushed = YES;
     for(UIView *view in self.navigationController.navigationBar.subviews)

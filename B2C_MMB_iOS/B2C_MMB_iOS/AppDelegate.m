@@ -670,6 +670,7 @@ NSString *strUserId = @"";
     }
 }
 
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     if([self.db open] == YES)
@@ -737,22 +738,22 @@ NSString *strUserId = @"";
 
 - (void)xmppStreamDidRegister:(XMPPStream *)sender
 {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册帐号成功"
-                                                            message:@""
-                                                           delegate:self
-                                                  cancelButtonTitle:@"Ok"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册帐号成功"
+//                                                            message:@""
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"Ok"
+//                                                  otherButtonTitles:nil];
+//        [alertView show];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册帐号失败"
-                                                        message:@""
-                                                       delegate:self
-                                              cancelButtonTitle:@"Ok"
-                                              otherButtonTitles:nil];
-    [alertView show];
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册帐号失败"
+//                                                        message:@""
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"Ok"
+//                                              otherButtonTitles:nil];
+//    [alertView show];
     [self disconnect];
     [self reConnect];
 }
@@ -790,39 +791,40 @@ NSString *strUserId = @"";
 //注册
 - (void)registerInSide
 {
-
     NSError *error;
+ 
     NSString *UUID = [PhoneHelper getDeviceId];
+
     NSString *hostName = @"58.215.50.9";
     NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",UUID,hostName];
     if ([xmppStream isConnected])
     {
         if (![xmppStream registerWithPassword:@"123456" error:&error])
         {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
-                                                                            message:[error localizedDescription]
-                                                                           delegate:nil
-                                                                  cancelButtonTitle:@"Ok"
-                                                                  otherButtonTitles:nil];
-                        [alertView show];
+//                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
+//                                                                            message:[error localizedDescription]
+//                                                                           delegate:nil
+//                                                                  cancelButtonTitle:@"Ok"
+//                                                                  otherButtonTitles:nil];
+//                        [alertView show];
         }
     }
     else
     {
         [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"创建帐号成功"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Ok"
-                                                  otherButtonTitles:nil];
-        [alertView show];
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+//                                                            message:@"创建帐号成功"
+//                                                           delegate:nil
+//                                                  cancelButtonTitle:@"Ok"
+//                                                  otherButtonTitles:nil];
+//        [alertView show];
     }
 }
 
 - (BOOL)connect
 {
     NSString *myJID = [NSString stringWithFormat:@"%@@%@",[PhoneHelper getDeviceId],@"fgame.com"];
-//    myJID = [NSString stringWithFormat:@"%@@%@",@"service_lxh",@"fgame.com"];
+
     NSString *myPassword = @"123456";
     if (myJID == nil || myPassword == nil)
     {
@@ -843,13 +845,14 @@ NSString *strUserId = @"";
 //重新连接
 - (BOOL)reConnect
 {
-    //    NSLog(@"reConnect");
+    NSString *myJID =[NSString stringWithFormat:@"%@@fgame.com",[PhoneHelper getDeviceId]];
+
     if (![xmppStream isDisconnected])
     {
         [self goonline];
         return YES;
     }
-    NSString *myJID =[NSString stringWithFormat:@"%@@fgame.com",[PhoneHelper getDeviceId]];
+   
     NSString *myPassword = @"123456";
     if (myJID == nil || myPassword == nil)
     {
@@ -878,7 +881,7 @@ NSString *strUserId = @"";
     [iq addChild:query];
     [[self xmppStream] sendElement:iq];
 //    NSLog(@"iq = %@",iq);
-    //NSLog(@"查询列表");
+//    NSLog(@"查询列表");
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
@@ -902,10 +905,6 @@ NSString *strUserId = @"";
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"memberGroupName" object:self.roster];
             }
         }
-//        if (self.roster.count == 0)
-//        {
-//            [self queryRoster];
-//        }
     }
   
     if ([iq.type isEqualToString:@"error"])
@@ -937,7 +936,19 @@ NSString *strUserId = @"";
     if([from rangeOfString:@"workgroup"].location !=NSNotFound)
     {
         self.personName = to;
-        self.chatRequestJID = [PhoneHelper getDeviceId];
+        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+        
+        NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+     
+        if(hasLogin == YES)
+        {
+            self.chatRequestJID = tempUserName;
+        }
+        else
+        {
+           self.chatRequestJID = [PhoneHelper getDeviceId];
+        }
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:msg];
     }
     else if([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound)
@@ -997,8 +1008,9 @@ NSString *strUserId = @"";
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
         NSLog(@"presence = %@",presence);
+
     //    //取得好友状态
-    NSString *presenceType = [presence type]; //online/offline
+    NSString *presenceType = [presence type];
     //        //当前用户
     //        NSString *userId = [[sender myJID] user];
     //        NSLog(@"请求的用户userId = %@",userId);
@@ -1019,7 +1031,6 @@ NSString *strUserId = @"";
 
 - (void)disconnect
 {
-    //    NSLog(@"disconnect");
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
     [self.xmppStream sendElement:presence];
     [self.xmppStream disconnect];

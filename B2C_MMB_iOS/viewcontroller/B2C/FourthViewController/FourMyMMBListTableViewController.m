@@ -351,6 +351,8 @@
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC:) name:@"goToHomeView" object:nil];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -369,6 +371,7 @@
     [self setHidesBottomBarWhenPushed:NO];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
+//     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
 }
 
 - (void)viewDidLoad
@@ -502,8 +505,7 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoBtnAction:)];
     [self.photoBtn setUserInteractionEnabled:YES];
     [self.photoBtn addGestureRecognizer:tapGesture];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC:) name:@"goToHomeView" object:nil];
+
 }
 
 -(void)goToHomeVC:(NSNotification *)sender
@@ -511,8 +513,8 @@
     [self.navigationController.tabBarController setSelectedIndex:0];
 //    [self.navigationController popToRootViewControllerAnimated:YES];
     
-    NSLog(@"quququququq");
-     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
+    NSLog(@"我的买卖宝");
+//     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
 }
 
 - (void)photoBtnAction:(id)sender

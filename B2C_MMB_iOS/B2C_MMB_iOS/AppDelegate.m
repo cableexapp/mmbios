@@ -263,18 +263,7 @@ NSString *strUserId = @"";
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
-    
-    //XMPP
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID])
-    {
-        NSString *tempUUID = [PhoneHelper getDeviceId];
-        tempUUID = [[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyJID];
-    }
-    if ([[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyPassword])
-    {
-        NSString *tempPassWord = @"123456";
-        tempPassWord = [[NSUserDefaults standardUserDefaults]objectForKey:kXMPPmyPassword];
-    }
+
     self.roster  = [[NSMutableArray alloc] init];
     
     //xmpp初始化
@@ -667,7 +656,6 @@ NSString *strUserId = @"";
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     [self reConnect];
-//    [self connect];
     [self queryRoster];
 }
 
@@ -675,7 +663,6 @@ NSString *strUserId = @"";
 {
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
     [self reConnect];
-//    [self connect];
     [self queryRoster];
     if ([pushChatView isEqualToString:@"push"])
     {
@@ -689,8 +676,6 @@ NSString *strUserId = @"";
     {
         [self.db close];
     }
-    
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 #pragma mark - Xmpp初始化
@@ -745,8 +730,6 @@ NSString *strUserId = @"";
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-
-
 - (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket
 {
     DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
@@ -754,17 +737,22 @@ NSString *strUserId = @"";
 
 - (void)xmppStreamDidRegister:(XMPPStream *)sender
 {
-    //    registerSuccess = YES;
-    //    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号成功"
-    //                                                        message:@""
-    //                                                       delegate:self
-    //                                              cancelButtonTitle:@"Ok"
-    //                                              otherButtonTitles:nil];
-    //    [alertView show];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册帐号成功"
+                                                            message:@""
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [alertView show];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error
 {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册帐号失败"
+                                                        message:@""
+                                                       delegate:self
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+    [alertView show];
     [self disconnect];
     [self reConnect];
 }
@@ -802,7 +790,7 @@ NSString *strUserId = @"";
 //注册
 - (void)registerInSide
 {
-    isRegister = YES;
+
     NSError *error;
     NSString *UUID = [PhoneHelper getDeviceId];
     NSString *hostName = @"58.215.50.9";
@@ -811,33 +799,32 @@ NSString *strUserId = @"";
     {
         if (![xmppStream registerWithPassword:@"123456" error:&error])
         {
-            //            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
-            //                                                                message:[error localizedDescription]
-            //                                                               delegate:nil
-            //                                                      cancelButtonTitle:@"Ok"
-            //                                                      otherButtonTitles:nil];
-            //            [alertView show];
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
+                                                                            message:[error localizedDescription]
+                                                                           delegate:nil
+                                                                  cancelButtonTitle:@"Ok"
+                                                                  otherButtonTitles:nil];
+                        [alertView show];
         }
     }
     else
     {
         [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"创建帐号成功"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [alertView show];
     }
 }
 
 - (BOOL)connect
 {
-    NSString *myJID = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyJID];
-    NSString *myPassword = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPmyPassword];
-    
-    NSLog(@"myJID = %@",myJID);
-    
-    NSLog(@"myPassword = %@",myPassword);
-    
-    myJID = [NSString stringWithFormat:@"%@@%@",[PhoneHelper getDeviceId],@"fgame.com"];
+    NSString *myJID = [NSString stringWithFormat:@"%@@%@",[PhoneHelper getDeviceId],@"fgame.com"];
 //    myJID = [NSString stringWithFormat:@"%@@%@",@"service_lxh",@"fgame.com"];
-    myPassword = @"123456";
-    if (myJID == nil)
+    NSString *myPassword = @"123456";
+    if (myJID == nil || myPassword == nil)
     {
         return NO;
     }
@@ -848,11 +835,8 @@ NSString *strUserId = @"";
     NSError *error = nil;
     if (![xmppStream connect:&error])
     {
-         NSLog(@"sssss");
         return NO;
-       
     }
-//    [self noNameLogin];
     return YES;
 }
 
@@ -872,7 +856,6 @@ NSString *strUserId = @"";
         return NO;
     }
     [xmppStream setMyJID:[XMPPJID jidWithString:myJID]];
-    strPassword = @"123456";
     NSError *error = nil;
     if (![xmppStream connect:&error])
     {

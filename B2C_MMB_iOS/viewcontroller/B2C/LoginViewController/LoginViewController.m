@@ -31,6 +31,8 @@
 
 @implementation LoginViewController
 
+@synthesize xmppStream;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -188,10 +190,76 @@
     
 }
 
+//IM注册
+- (void)registerInSide:(NSString *)userName;
+{
+    NSLog(@"App登录_IM注册");
+    NSError *error;
+    NSString *hostName = @"58.215.50.9";
+    NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",userName,hostName];
+    if ([xmppStream isConnected])
+    {
+        if (![xmppStream registerWithPassword:@"123456" error:&error])
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
+                                                                message:[error localizedDescription]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Ok"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+    }
+    else
+    {
+        [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"创建帐号成功"
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+////IM登录
+- (BOOL)connect:(NSString *)userName;
+{
+    NSLog(@"App登录_IM登录");
+    if (![xmppStream isDisconnected])
+    {
+        [app goonline];
+        return YES;
+    }
+    NSString *myJID =[NSString stringWithFormat:@"%@@fgame.com",userName];
+    NSString *myPassword = @"123456";
+    if (myJID == nil || myPassword == nil)
+    {
+        return NO;
+    }
+    [xmppStream setMyJID:[XMPPJID jidWithString:myJID]];
+   
+    NSError *error = nil;
+    if (![xmppStream connect:&error])
+    {
+        return NO;
+    }
+    return YES;
+}
+
+
+
+//登录
 - (IBAction)loginBtnClick:(id)sender
 {
+    //切换登录账号，结束之前对话
+    [app goOffline];
+    app.isConnect = @"断开";
     
-    //    cableex
+    [self registerInSide:self.tf_Account.text];
+    
+    [self connect:self.tf_Account.text];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"app_username"];
     
     [self logWithAccount:self.tf_Account.text WithSec:self.tf_Secrect.text];
 }
@@ -381,18 +449,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

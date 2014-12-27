@@ -59,17 +59,9 @@
         [HUD hide:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];
-    //    if (isPopShow == YES)
-    //    {
-    //        isPopShow = NO;
-    //    }
-    //    else
-    //    {
-    //        isPopShow = YES;
-    //
-    //    }
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
+//     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -93,7 +85,18 @@
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
-    //
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC_more:) name:@"goToHomeView" object:nil];
+
+}
+
+-(void)goToHomeVC_more:(NSNotification *)sender
+{
+    [self.navigationController.tabBarController setSelectedIndex:0];
+    //    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    NSLog(@"更多");
+   
 }
 
 - (void)viewDidLoad
@@ -386,10 +389,9 @@
 
             //切换登录账号，结束之前对话
             [self.appDelegate goOffline];
-            [self.appDelegate disconnect];
-            [self.appDelegate reConnect];
-            self.appDelegate.isConnect = @"断开";
 
+            self.appDelegate.isConnect = @"断开";
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
         }
     }
     if (URLTag == URLInquiryCartCountTag)
@@ -416,6 +418,7 @@
     }
     
 }
+
 
 - (AppDelegate *)appDelegate
 {

@@ -45,8 +45,7 @@
     NSString *isConnect;
     
     BOOL isXmppConnected;
-    BOOL isRegister;
-    
+
     NSString *password;
     XMPPRoster *xmppRoster;
     XMPPvCardCoreDataStorage *xmppvCardStorage;
@@ -54,7 +53,7 @@
     XMPPvCardAvatarModule *xmppvCardAvatarModule;
     XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesStorage;
     XMPPCapabilities *xmppCapabilities;
-    NSString *strPassword;
+
     NSString *isOnLine;
     NSString *pushChatView;
 }

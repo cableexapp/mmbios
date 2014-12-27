@@ -69,36 +69,18 @@
     [super viewDidLoad];
     self.view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     
-    //自定义导航条
-    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    nameLabel.textColor = [UIColor whiteColor];
-    nameLabel.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
-    nameLabel.textAlignment = NSTextAlignmentCenter;
-//    [self.view insertSubview:nameLabel atIndex:1];
-    
     //导航标题
     naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(130,20, 120, 44)];
     naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.font = [UIFont systemFontOfSize:20];
     naviTitle.textAlignment = NSTextAlignmentCenter;
-//    [self.view insertSubview:naviTitle atIndex:2];
     self.navigationItem.titleView = naviTitle;
     
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btn.frame = CGRectMake(10, 31.5, 15, 22);
-//    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-//    [btn addTarget:self action:@selector(goBackActionToHome) forControlEvents: UIControlEventTouchUpInside];
-//    [self.view addSubview:btn];
-
-
-    
-//    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
-//    self.tableView.backgroundColor = [UIColor lightGrayColor];
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
@@ -112,41 +94,6 @@
         _refreshHeaderView = EGOview;
     }
     [_refreshHeaderView refreshLastUpdatedDate];
-    
-//    //聊天输入工具条
-//    toolBar = [[UIView alloc] init];
-//    toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
-//    toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
-//    [self.view addSubview:toolBar];
-//    
-//    //键盘按钮
-//    keyboardButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    keyboardButton.frame = CGRectMake(6, 4.5, 35, 35);
-//    [keyboardButton addTarget:self action:@selector(faceBoardClick) forControlEvents:UIControlEventTouchUpInside];
-//    [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
-//    [toolBar addSubview:keyboardButton];
-//    
-//    //发送按钮
-//    sendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    sendButton.frame = CGRectMake(260, 6, 54, 32);
-//    [sendButton addTarget:self action:@selector(sendNewChatMessage) forControlEvents:UIControlEventTouchUpInside];
-//    sendButton.layer.cornerRadius = 3;
-//    sendButton.layer.backgroundColor = [[UIColor colorWithRed:10.0/255.0 green:88.0/255.0 blue:173.0/255.0 alpha:1] CGColor];
-//    [sendButton setTitle:@"发送" forState:UIControlStateNormal];
-//    [sendButton setTintColor:[UIColor whiteColor]];
-//    [toolBar addSubview:sendButton];
-//    
-//    //消息输入框
-//    messageField = [[UITextView alloc] init];
-//    messageField.frame = CGRectMake(46, 6, 206, 32);
-//    messageField.delegate = self;
-//    messageField.layer.backgroundColor = [[DCFColorUtil colorFromHexRGB:@"#ffffff"] CGColor];
-//    messageField.layer.borderWidth = 1;
-//    messageField.layer.borderColor = [[DCFColorUtil colorFromHexRGB:@"#dddddd"] CGColor];
-//    [messageField setReturnKeyType:UIReturnKeyNext];
-//    messageField.layer.cornerRadius =3;
-//    [toolBar addSubview:messageField];
-    
     //在线状态
     image = [UIImage imageNamed:@"online.png"];
     imageView = [[UIImageView alloc] init];
@@ -174,17 +121,6 @@
     noNetMessage.textAlignment = NSTextAlignmentLeft;
     noNetMessage.text = @"当前网络不可用，请检查网络设置!";
     [self.view insertSubview:noNetMessage aboveSubview:noNet];
-    
-//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [rightBtn setBackgroundColor:[UIColor clearColor]];
-//    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [rightBtn setTitle:@"结束会话" forState:UIControlStateNormal];
-//    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:14]];
-//    [rightBtn setFrame:CGRectMake(self.view.frame.size.width-65, 20, 60, 44)];
-//    [rightBtn addTarget:self action:@selector(endChatConfrence) forControlEvents:UIControlEventTouchUpInside];
-////    [self.view insertSubview:rightBtn aboveSubview:nameLabel];
-//    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-//    self.navigationItem.rightBarButtonItem = rightItem;
     
     if ( !faceBoard)
     {
@@ -267,11 +203,10 @@
 
 -(void)endChatConfrence
 {
-    
     [xmppRoom leaveRoom];
-    [self.appDelegate goOffline];
-    [self.appDelegate disconnect];
-    [self.appDelegate reConnect];
+//    [self.appDelegate goOffline];
+//    [self.appDelegate disconnect];
+//    [self.appDelegate reConnect];
     [self pageFromWhere];
     self.appDelegate.isConnect = @"断开";
 }
@@ -948,7 +883,16 @@
     [xmppRoom activate:stream];
     [xmppRoom configureRoomUsingOptions:nil];
     [xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
-    [xmppRoom joinRoomUsingNickname:self.appDelegate.chatRequestJID history:nil];
+    NSString *tempUserName = [[NSUserDefaults standardUserDefaults] objectForKey:@"app_username"];
+    if (tempUserName.length > 0)
+    {
+        [xmppRoom joinRoomUsingNickname:tempUserName history:nil];
+    }
+    else
+    {
+        [xmppRoom joinRoomUsingNickname:self.appDelegate.chatRequestJID history:nil];
+    }
+    
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm

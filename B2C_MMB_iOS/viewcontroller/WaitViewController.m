@@ -226,15 +226,16 @@ double secondsCountDown =0;
 {
     [timeCountTimer invalidate];
     [self exitQueue];
-    [self.appDelegate goOffline];
-    [self.appDelegate disconnect];
-    [self.appDelegate reConnect];
+//    [self.appDelegate goOffline];
+//    [self.appDelegate disconnect];
+//    [self.appDelegate reConnect];
     [self pageFromWhere_wait];
 }
 
 //退出队列
 -(void)exitQueue
 {
+    NSLog(@"退出队列 = %@",self.appDelegate.uesrID);
     NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
     [iq addAttributeWithName:@"id" stringValue:[[self.appDelegate.uesrID componentsSeparatedByString:@"@"] objectAtIndex:1]];
     [iq addAttributeWithName:@"to"stringValue:self.tempGroup];
@@ -379,7 +380,15 @@ double secondsCountDown =0;
     [x addChild:field1];
 
     NSXMLElement *value1 = [NSXMLElement elementWithName:@"value"];
-    [value1 setStringValue:[self.appDelegate getUdid]];
+    NSString *tempUserName = [[NSUserDefaults standardUserDefaults] objectForKey:@"app_username"];
+    if (tempUserName.length > 0)
+    {
+        [value1 setStringValue:tempUserName];
+    }
+    else
+    {
+        [value1 setStringValue:[self.appDelegate getUdid]];
+    }
     [field1 addChild:value1];
     
     NSXMLElement *field2 = [NSXMLElement elementWithName:@"field"];

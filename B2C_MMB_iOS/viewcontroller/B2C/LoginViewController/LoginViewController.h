@@ -9,16 +9,21 @@
 #import "DCFConnectionUtil.h"
 #import "MBProgressHUD.h"
 #import "RegisterViewController.h"
+#import "XMPPFramework.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate,MBProgressHUDDelegate>
 {
     DCFConnectionUtil *conn;
     
     MBProgressHUD *HUD;
+    
+    XMPPStream * xmppStream;
 }
 @property (weak, nonatomic) IBOutlet UITextField *tf_Account;
 @property (weak, nonatomic) IBOutlet UITextField *tf_Secrect;
 @property (weak, nonatomic) IBOutlet UIView *tf_BackView;
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+
+@property (nonatomic,strong) XMPPStream *xmppStream;
 
 @end

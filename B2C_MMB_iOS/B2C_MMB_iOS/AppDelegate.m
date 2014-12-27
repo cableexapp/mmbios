@@ -881,22 +881,6 @@ NSString *strUserId = @"";
     return YES;
 }
 
-//匿名登录
--(void)noNameLogin
-{
-    NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
-    [iq addAttributeWithName:@"id" stringValue:@"j2O0p-0"];
-    [iq addAttributeWithName:@"to"stringValue:@"fgame.com/e62dc5fd"];
-    [iq addAttributeWithName:@"type"stringValue:@"result"];
-     NSXMLElement *bind = [NSXMLElement elementWithName:@"bind"];
-    [bind addAttributeWithName:@"xmlns" stringValue:@"urn:ietf:params:xml:ns:xmpp-bind"];
-    NSXMLElement *jid = [NSXMLElement elementWithName:@"jid"];
-    [jid setStringValue:@"e62dc5fd@fgame.com/e62dc5fd"];
-    [bind addChild:jid];
-    [iq addChild:bind];
-    
-    NSLog(@"匿名登录 = %@",iq);
-}
 
 //查询群组列表
 - (void)queryRoster

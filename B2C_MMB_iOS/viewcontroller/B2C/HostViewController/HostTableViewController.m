@@ -123,6 +123,7 @@ BOOL isPopShow = NO;
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
 }
 
@@ -728,6 +729,7 @@ BOOL isPopShow = NO;
     if(btn.tag == 0)
     {
         SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
+        speedAskPriceFirstViewController.fromWherePush = @"首页";
         [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
     }
     if(btn.tag == 1)

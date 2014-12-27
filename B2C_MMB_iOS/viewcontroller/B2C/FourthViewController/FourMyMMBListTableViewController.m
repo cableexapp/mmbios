@@ -96,23 +96,7 @@
     }
 }
 
-- (void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:YES];
-    if(conn)
-    {
-        [conn stopConnection];
-        conn = nil;
-    }
-    if(badgeArray)
-    {
-        [badgeArray removeAllObjects];
-        badgeArray = nil;
-    }
-    [self setHidesBottomBarWhenPushed:NO];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
-}
 
 - (NSString *) getMemberId
 {
@@ -120,7 +104,6 @@
     if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
     {
     }
-    NSLog(@"memberid = %@",memberid);
     return memberid;
 }
 
@@ -368,8 +351,24 @@
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
-    
+}
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+    if(badgeArray)
+    {
+        [badgeArray removeAllObjects];
+        badgeArray = nil;
+    }
+    [self setHidesBottomBarWhenPushed:NO];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 }
 
 - (void)viewDidLoad
@@ -504,13 +503,23 @@
     [self.photoBtn setUserInteractionEnabled:YES];
     [self.photoBtn addGestureRecognizer:tapGesture];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC:) name:@"goToHomeView" object:nil];
+}
 
+-(void)goToHomeVC:(NSNotification *)sender
+{
+    [self.navigationController.tabBarController setSelectedIndex:0];
+//    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    NSLog(@"quququququq");
+     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
 }
 
 - (void)photoBtnAction:(id)sender
 {
     changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像", nil];
-    if (self.navigationController) {
+    if (self.navigationController)
+    {
         [changePhotoSheet showInView:self.navigationController.navigationBar];
     }
 }
@@ -518,11 +527,10 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if ([actionSheet isEqual:changePhotoSheet]) {
-        
+    if ([actionSheet isEqual:changePhotoSheet])
+    {
         switch (buttonIndex)
         {
-                NSLog(@"changePhotoSheet--->>%d",buttonIndex);
             case 0://更改头像
                 [self uploadPhoto];
                 break;
@@ -530,11 +538,11 @@
             default:
                 break;
         }
-    }else if ([actionSheet isEqual:albumSheet]){
-        NSLog(@"albumSheet--->>%d",buttonIndex);
-
-        
-        switch (buttonIndex) {
+    }
+    else if ([actionSheet isEqual:albumSheet])
+    {
+        switch (buttonIndex)
+        {
             case 0://手机相册
                 [self performSelector:@selector(openAlbum:) withObject:nil afterDelay:0.1];
                 break;
@@ -553,7 +561,8 @@
 - (void)uploadPhoto
 {
     albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
-    if (self.navigationController) {
+    if (self.navigationController)
+    {
         [albumSheet showInView:self.navigationController.navigationBar];
     }
 }
@@ -727,6 +736,7 @@
     else
     {
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+        b2bAskPriceCar.fromString = @"我的买卖宝";
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];

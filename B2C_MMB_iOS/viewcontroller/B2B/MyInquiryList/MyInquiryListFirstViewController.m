@@ -39,6 +39,7 @@
 {
     [super viewWillAppear:YES];
 //    rightButtonView.hidden = NO;
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     if ([self.orderBtnClick isEqualToString:@"询价单"])
     {
         self.segment.selectedSegmentIndex = 0;
@@ -55,6 +56,11 @@
 {
     [super viewWillDisappear:YES];
 //    rightButtonView.hidden = YES;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
 - (void)viewDidLoad

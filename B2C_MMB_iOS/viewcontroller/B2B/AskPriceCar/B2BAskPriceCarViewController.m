@@ -768,9 +768,16 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
     }
+    else if ([self.fromString isEqualToString:@"我的买卖宝"] || [self.fromString isEqualToString:@"更多"])
+    {
+        NSLog(@"self.tabBarController.viewControllers = %@",self.tabBarController.viewControllers);
+        [self.navigationController popViewControllerAnimated:NO];
+//        [self.tabBarController setSelectedIndex:0];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHomeView" object:nil];
+    }
     else
     {
-         [self.navigationController.tabBarController setSelectedIndex:0];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

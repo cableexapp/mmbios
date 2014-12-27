@@ -288,6 +288,7 @@ double secondsCountDown =0;
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     [self checkNet];
 
     //发起请求加入咨询队列
@@ -483,6 +484,7 @@ double secondsCountDown =0;
     {
         
         SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [sb instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
+        speedAskPriceFirstViewController.fromWherePush = self.tempFrom;
         CATransition *transition = [CATransition animation];
         transition.duration = 0.5f;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];

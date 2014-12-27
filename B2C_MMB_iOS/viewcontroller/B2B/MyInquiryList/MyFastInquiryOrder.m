@@ -127,17 +127,19 @@
 //    [self deleteZip];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-    
-    //    [self.navigationController.tabBarController.tabBar setHidden:YES];
     
     [self pushAndPopStyle];
     
     picArray = [[NSMutableArray alloc] init];
 
-    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.sv setBackgroundColor:[UIColor whiteColor]];
     

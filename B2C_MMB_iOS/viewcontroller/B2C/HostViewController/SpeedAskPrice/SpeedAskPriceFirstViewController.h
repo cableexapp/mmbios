@@ -18,6 +18,7 @@
     ELCImagePickerDemoViewController *elcImagePickerDemoViewController;
     MBProgressHUD *HUD;
     DCFConnectionUtil *conn;
+    NSString *fromWherePush;
 }
 @property (weak, nonatomic) IBOutlet UITextField *tel_Tf;
 @property (weak, nonatomic) IBOutlet UITextView *content_Tv;
@@ -28,4 +29,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *mySv;
+
+@property (nonatomic,strong)  NSString *fromWherePush;
 @end

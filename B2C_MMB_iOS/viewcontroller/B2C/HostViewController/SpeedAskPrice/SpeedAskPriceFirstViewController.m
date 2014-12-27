@@ -31,6 +31,7 @@
 @end
 
 @implementation SpeedAskPriceFirstViewController
+@synthesize fromWherePush;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,8 +42,14 @@
     return self;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view tag] == 101 )
@@ -50,9 +57,6 @@
             [view setHidden:YES];
         }
     }
-    
-    
-    
     NSString *userPhone = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"];
     NSString *tel = [[NSUserDefaults standardUserDefaults] objectForKey:@"SppedAskPriceTelNum"];
     
@@ -77,11 +81,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    
+
     deleteOrNot = NO;
-    
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"快速询价"];
     self.navigationItem.titleView = top;
@@ -100,6 +101,16 @@
     tel_lineView.frame = CGRectMake(0, self.tel_Tf.frame.origin.y+self.tel_Tf.frame.size.height-1, ScreenWidth, 1);
     [self.mySv addSubview:tel_lineView];
     
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0,0, 15,22);
+    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(goBack) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+    backButton.title = @"";
+    self.navigationItem.backBarButtonItem = backButton;
     
     UIView *content_lineViewUp = [[UIView alloc] init];
     content_lineViewUp.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
@@ -127,6 +138,39 @@
     [self.mySv setContentSize:CGSizeMake(ScreenWidth, self.upBtn.frame.origin.y+self.upBtn.frame.size.height+20)];
     [self.mySv setShowsHorizontalScrollIndicator:NO];
     [self.mySv setShowsVerticalScrollIndicator:NO];
+}
+
+-(void)goBack
+{
+    NSLog(@"快速询价 = %@  数量 = %d",self.navigationController.viewControllers,self.navigationController.viewControllers.count);
+    if ([self.fromWherePush isEqualToString:@"首页"] || [self.fromWherePush isEqualToString:@"工具栏客服"])
+    {
+       [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else
+    {
+        if (self.navigationController.viewControllers.count == 8)
+        {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
+        }
+        if (self.navigationController.viewControllers.count == 7)
+        {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+        }
+        if (self.navigationController.viewControllers.count == 6)
+        {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+        }
+        if (self.navigationController.viewControllers.count == 5)
+        {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+        }
+        if (self.navigationController.viewControllers.count == 4)
+        {
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+        }
+
+    }
 }
 
 - (void) tap:(UITapGestureRecognizer *) sender
@@ -267,12 +311,6 @@
     
     [self refreshView];
 }
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [self.navigationController.tabBarController.tabBar setHidden:YES];
-}
-
 
 - (void) refreshView
 {

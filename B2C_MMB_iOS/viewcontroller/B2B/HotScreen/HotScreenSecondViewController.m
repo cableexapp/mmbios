@@ -30,6 +30,29 @@
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    NSString *userPhone = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"];
+    NSString *tel = [[NSUserDefaults standardUserDefaults] objectForKey:@"HotScreenNum"];
+    
+    if([DCFCustomExtra validateString:userPhone] == YES)
+    {
+        [self.myTextField setText:userPhone];
+    }
+    else
+    {
+        if([DCFCustomExtra validateString:tel] == NO)
+        {
+            [self.myTextField setPlaceholder:@"手机号码"];
+        }
+        else
+        {
+            [self.myTextField setText:tel];
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -132,6 +155,8 @@
     {
         if(reslut == 1)
         {
+            [[NSUserDefaults standardUserDefaults] setObject:self.myTextField.text forKey:@"HotScreenNum"];
+            
             HotScreenSuccessViewController *hotScreenSuccessViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotScreenSuccessViewController"];
             [self.navigationController pushViewController:hotScreenSuccessViewController animated:YES];
         }

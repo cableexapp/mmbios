@@ -122,10 +122,10 @@
         urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/AddressList.html?"];
         string = [NSString stringWithFormat:@"%@%@",@"AddressList",time];
     }
-    
+
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
+     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLReceiveAddressTag delegate:self];
     
@@ -187,7 +187,7 @@
         {
             addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
             
-            
+            NSLog(@"修改地址 = %@",dicRespon);
             cellBtnArray = [[NSMutableArray alloc] init];
             
             if(!addressListDataArray || addressListDataArray.count == 0)
@@ -206,6 +206,8 @@
                 [cellBtnArray addObject:btn];
                 
                 B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:i];
+                NSLog(@"[data isDefault] = %@",[data isDefault]);
+                
                 if([[data isDefault] isEqualToString:@"1"])
                 {
                     [btn setSelected:YES];
@@ -307,10 +309,7 @@
     [_buttomBtn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0]];
     [_buttomView addSubview:_buttomBtn];
     
-    
     [self pushAndPopStyle];
-    
-    
     
     moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
     [moreCell startAnimation];

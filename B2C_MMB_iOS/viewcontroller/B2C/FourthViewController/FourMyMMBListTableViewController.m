@@ -294,7 +294,6 @@
     }
     if (URLTag == URLInquiryCartCountTag)
     {
-        NSLog(@"URLInquiryCartCountTag = %@",dicRespon);
         if(result == 1)
         {
             tempCount = [[dicRespon objectForKey:@"value"] intValue];
@@ -302,7 +301,6 @@
     }
     if (URLTag == URLShopCarCountTag)
     {
-        NSLog(@"URLShopCarCountTag = %@",dicRespon);
         if(result == 1)
         {
            tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
@@ -318,7 +316,6 @@
     }
     if(URLTag == URLUpImagePicTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             NSString *headUrl = [dicRespon objectForKey:@"headPortraitUrl"];

@@ -166,6 +166,8 @@
             else
             {
                 [DCFStringUtil showNotice:msg];
+                
+                NSLog(@"返回msg = %@",msg);
             }
         }
     }

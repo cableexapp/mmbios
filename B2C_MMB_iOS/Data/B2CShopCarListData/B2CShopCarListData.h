@@ -12,6 +12,9 @@
 
 @property (strong,nonatomic) NSString *colorId;
 @property (strong,nonatomic) NSString *colorName;
+@property (strong,nonatomic) NSString *colorPrice;
+@property (strong,nonatomic) NSString *isSale;
+@property (strong,nonatomic) NSString *isUse;
 @property (strong,nonatomic) NSDictionary *createDate;
 @property (strong,nonatomic) NSString *isAvaliable;
 @property (strong,nonatomic) NSString *isDelete;

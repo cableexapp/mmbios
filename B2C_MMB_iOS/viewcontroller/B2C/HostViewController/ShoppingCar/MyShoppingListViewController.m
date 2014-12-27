@@ -244,6 +244,58 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
+    if(URLTag == URLValidProductBeforeSubOrderTag)
+    {
+        NSLog(@"%@",dicRespon);
+        if(result == 1)
+        {
+            NSString *items = nil;
+            
+            
+            if(chooseGoodsArray && chooseGoodsArray.count != 0)
+            {
+                for(int i=0;i<chooseGoodsArray.count;i++)
+                {
+                    B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
+                    if(i == 0)
+                    {
+                        items = [NSString stringWithFormat:@"%@,",data.itemId];
+                    }
+                    else
+                    {
+                        items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
+                    }
+                }
+                items = [items substringWithRange:NSMakeRange(0, items.length-1)];
+            }
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
+            
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
+            NSString *pushString = nil;
+            
+            
+            
+            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        }
+        else
+        {
+            if([DCFCustomExtra validateString:msg] == NO)
+            {
+//                [DCFStringUtil showNotice:msg];
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+        }
+    }
     if(URLTag == URLShopCarGoodsMsgTag)
     {
         if(result == 1)
@@ -949,6 +1001,15 @@
     [self payBtnChange];
 }
 
+- (NSString *)dictoJSON:(NSDictionary *)theDic
+{
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theDic options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *strP = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    //    return [Rsa rsaEncryptString:strP];
+    return strP;
+}
+
 - (void) payBtnClick:(UIButton *) sender
 {
     if(!chooseGoodsArray || chooseGoodsArray.count == 0)
@@ -956,48 +1017,56 @@
         [DCFStringUtil showNotice:@"您尚未选择商品"];
         return;
     }
+
     
-    
-    NSString *items = nil;
-    
+    NSMutableArray *goodsArray = [[NSMutableArray alloc] init];
     
     if(chooseGoodsArray && chooseGoodsArray.count != 0)
     {
         for(int i=0;i<chooseGoodsArray.count;i++)
         {
             B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
-            if(i == 0)
-            {
-                items = [NSString stringWithFormat:@"%@,",data.itemId];
-            }
-            else
-            {
-                items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
-            }
+            
+            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 data.createDate,@"createDate",
+                                 data.colorId,@"colorId",
+                                 data.colorName,@"colorName",
+                                 data.colorPrice,@"colorPrice",
+                                 data.isAvaliable,@"isAvaliable",
+                                 data.isDelete,@"isDelete",
+                                 data.isSale,@"isSale",
+                                 data.isUse,@"isUse",
+                                 data.itemId,@"itemId",
+                                 data.memberId,@"memberId",
+                                 data.num,@"num",
+                                 data.price,@"price",
+                                 data.productId,@"productId",
+                                 data.productItemPic,@"productItemPic",
+                                 data.productItemSku,@"productItemSku",
+                                 data.productNum,@"productNum",
+                                 data.sShopName,@"sShopName",
+                                 data.shopId,@"shopId",
+                                 data.visitorId,@"visitorId",
+                                 nil];
+            
+            [goodsArray addObject:dic];
         }
-        items = [items substringWithRange:NSMakeRange(0, items.length-1)];
     }
     
+    NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             goodsArray,@"shopList",
+                             nil];
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
-    
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"validProductBeforeSubOrder.html",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
-    NSString *pushString = nil;
     
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&items=%@&memberid=%@",token,[self dictoJSON:pushDic],[self getMemberId]];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLValidProductBeforeSubOrderTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/validProductBeforeSubOrder.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-    if([[self getMemberId] length] == 0 || [[self getMemberId] isKindOfClass:[NSNull class]])
-    {
-        
-    }
-    else
-    {
-        pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    }
+
 }
 
 

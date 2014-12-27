@@ -119,20 +119,30 @@
 - (void) btnClick:(UIButton *) sender
 {
     memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    if([DCFCustomExtra validateString:memberid] == NO)
+    if(sender.tag == 101)
     {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚未登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
-        [av show];
+        [self addBuyView:sender.tag];
     }
-    else
+    else if (sender.tag == 100)
     {
-        [self.view.window addSubview:[self loadChooseColorAndCount]];
-        backView.hidden = NO;
-        [self setHidesBottomBarWhenPushed:YES];
-        int tag = [sender tag];
-        btnTag = tag;
+        if([DCFCustomExtra validateString:memberid] == NO)
+        {
+            UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚未登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
+            [av show];
+        }
+        else
+        {
+            [self addBuyView:sender.tag];
+        }
     }
+}
 
+- (void) addBuyView:(int) tag
+{
+    [self.view.window addSubview:[self loadChooseColorAndCount]];
+    backView.hidden = NO;
+    [self setHidesBottomBarWhenPushed:YES];
+    btnTag = tag;
 }
 
 - (void)rightItemClick:(id) sender
@@ -1827,13 +1837,7 @@
 #pragma mark - 立即购买
             
             memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-//            if([DCFCustomExtra validateString:memberid] == NO)
-//            {
-//                UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚未登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去登录", nil];
-//                [av show];
-//            }
-//            else
-//            {
+
                 NSString *time = [DCFCustomExtra getFirstRunTime];
                 
                 NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
@@ -1847,7 +1851,6 @@
                 conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
                 [conn getResultFromUrlString:urlString postBody:pushString method:POST];
                 
-//            }
             
         }
         else
@@ -1876,13 +1879,11 @@
             if(hasLogin == YES)
             {
                 arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
-                //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
                 pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
             }
             else
             {
                 arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
-                //            [[NSNotificationCenter defaultCenter] postNotificationName:@"shopCar" object:arr];
                 pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
             }
             NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];

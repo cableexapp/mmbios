@@ -390,22 +390,9 @@
 }
 
 - (void)forgetBtnClick:(UIButton *)sender
-{
-    NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
-    NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
-    
-    
-    if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil || [phone isEqualToString:@"(null)"]) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email == NULL || email == nil || [email isEqualToString:@"(null)"]))
-    {
-        [DCFStringUtil showNotice:@"您尚未绑定任何设备,请联系客服"];
-        return;
-    }
-    else
-    {
-        FindBackSec_FirstViewController *findBackSec_FirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_FirstViewController"];
-        [self.navigationController pushViewController:findBackSec_FirstViewController animated:YES];
-    }
-    
+{    
+    FindBackSec_FirstViewController *findBackSec_FirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"findBackSec_FirstViewController"];
+    [self.navigationController pushViewController:findBackSec_FirstViewController animated:YES];
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField

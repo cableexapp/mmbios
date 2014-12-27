@@ -63,7 +63,7 @@
     {
         if([DCFCustomExtra validateString:tel] == NO)
         {
-            [self.PhoneNumber setPlaceholder:@"手机号码/固定号码"];
+            [self.PhoneNumber setPlaceholder:@"手机号码"];
         }
         else
         {
@@ -105,7 +105,6 @@
     self.PhoneNumber.delegate = self;
     [self.PhoneNumber addTarget:self action:@selector(textViewDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
     [self.PhoneNumber addTarget:self action:@selector(textViewDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
-    
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView

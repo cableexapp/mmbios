@@ -70,6 +70,8 @@ enum {
     
     URLSubOrderTag,    //提交
     
+    URLValidProductBeforeSubOrderTag, //校验商品信息
+    
     URLOrderConfirmTag,  //支付宝校验
     
     URLDirectBuyTag,  //立即购买

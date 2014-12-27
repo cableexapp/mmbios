@@ -19,10 +19,16 @@
         
         _colorName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"colorName"]];
         
+        _colorPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"colorPrice"]];
+
         _createDate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"createDate"]];
         
         _isAvaliable = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isAvaliable"]];
         
+        _isSale = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isSale"]];
+        
+        _isUse = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isUse"]];
+
         _isDelete = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isDelete"]];
         
         _itemId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"itemId"]];

@@ -645,11 +645,24 @@
             {
                 NSString *name = [self.addressDic objectForKey:@"name"];
                 NSString *tel = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"tel"]];
-                NSString *str = [NSString stringWithFormat:@"%@      %@",name,tel];
+                NSString *str = [NSString stringWithFormat:@"%@     %@",name,tel];
                 UILabel *nameAndTelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-40, 30)];
                 [nameAndTelLabel setText:str];
                 [nameAndTelLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:nameAndTelLabel];
+                
+                CGSize size_Name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_Name.width, 30)];
+                [nameLabel setText:name];
+                [nameLabel setFont:[UIFont systemFontOfSize:12]];
+                [cell.contentView addSubview:nameLabel];
+                
+                CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
+                UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-10-size_tel.width, 5, size_tel.width, 30)];
+                [telLabel setText:tel];
+                [telLabel setTextAlignment:NSTextAlignmentRight];
+                [telLabel setFont:[UIFont systemFontOfSize:12]];
+                [cell.contentView addSubview:telLabel];
                 
                 NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
                 address = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
@@ -779,7 +792,7 @@
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5.5, halfWidth, 20)];
                         if([[dic objectForKey:@"num"] intValue] == 0)
                         {
-                            [label setText:@"采购数量:"];
+                            [label setText:@"采购数量:0"];
                         }
                         else
                         {

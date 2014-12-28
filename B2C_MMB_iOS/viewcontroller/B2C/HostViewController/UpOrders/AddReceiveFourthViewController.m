@@ -52,7 +52,15 @@
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
+    DCFTopLabel *top = nil;
+    if(_edit == YES)
+    {
+        top = [[DCFTopLabel alloc] initWithTitle:@"编辑收货地址"];
+    }
+    else
+    {
+        top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
+    }
     self.navigationItem.titleView = top;
     
     
@@ -141,11 +149,27 @@
     
     NSString *code = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"]];
     
-    //    BOOL swithStatus = [[[dataArray objectAtIndex:indexPath.row] objectForKey:@"swithStatus"] boolValue];
     
-    AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str WithCode:code WithSwithStatus:YES];
-    
-    [self.navigationController pushViewController:final animated:YES];
+    if(_edit == YES)
+    {
+        for(UIViewController *vc in self.navigationController.viewControllers)
+        {
+            if([vc isKindOfClass:[AddReceiveFinalViewController class]])
+            {
+                NSArray *arr = [NSArray arrayWithObjects:str,_pushDic, nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"FourthAddressStr" object:arr];
+                [self.navigationController popToViewController:vc animated:YES];
+                return;
+            }
+        }
+    }
+    else
+    {
+        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str WithCode:code WithSwithStatus:YES];
+        
+        [self.navigationController pushViewController:final animated:YES];
+    }
+
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

@@ -758,7 +758,6 @@
 
 -(void)logBtnClick
 {
-    NSLog(@"logBtnClick");
     LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
     [self presentViewController:loginNavi animated:YES completion:nil];
 }
@@ -810,9 +809,9 @@
     {
         CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
         
-        NSString *num = [NSString stringWithFormat:@"数量 %@",[[dataArray objectAtIndex:indexPath.section] num]];
+        NSString *num = [NSString stringWithFormat:@"数量 %@%@",[[dataArray objectAtIndex:indexPath.section] num],[[dataArray objectAtIndex:indexPath.section] unit]];
         NSString *deliver = [NSString stringWithFormat:@"交货期 %@天",[[dataArray objectAtIndex:indexPath.section] deliver]];
-        NSString *cartSpec = [NSString stringWithFormat:@"规格 %@",[[dataArray objectAtIndex:indexPath.section] cartSpec]];  //规格
+        NSString *cartSpec = [NSString stringWithFormat:@"规格 %@平方",[[dataArray objectAtIndex:indexPath.section] cartSpec]];  //规格
         NSString *cartVoltage = [NSString stringWithFormat:@"电压 %@",[[dataArray objectAtIndex:indexPath.section] cartVoltage]];
         NSString *color = [NSString stringWithFormat:@"颜色 %@",[[dataArray objectAtIndex:indexPath.section] cartColor]];
         NSString *featureone = [NSString stringWithFormat:@"阻燃特性 %@",[[dataArray objectAtIndex:indexPath.section] featureone]];  //阻燃特性

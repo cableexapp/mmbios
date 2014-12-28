@@ -140,7 +140,7 @@
         
         [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"收货人: %@             %@",receiver,receiveTel]];
         
-        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress,[addressDic objectForKey:@"fullAddress"]];
         if([DCFCustomExtra validateString:fullAddress] == NO)
         {
             [billReceiveAddressLabel_2 setFrame:CGRectMake(53, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-63, 0)];

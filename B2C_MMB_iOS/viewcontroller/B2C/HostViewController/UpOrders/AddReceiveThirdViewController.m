@@ -55,7 +55,15 @@
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
+    DCFTopLabel *top = nil;
+    if(_edit == YES)
+    {
+        top = [[DCFTopLabel alloc] initWithTitle:@"编辑收货地址"];
+    }
+    else
+    {
+        top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
+    }
     self.navigationItem.titleView = top;
 
     
@@ -197,18 +205,43 @@
     
     if(arr.count != 0)
     {
+        NSLog(@"third=str = %@",str);
         AddReceiveFourthViewController *fourth = [[AddReceiveFourthViewController alloc] initWithData:arr WithTown:str];
+        fourth.edit = _edit;
+        fourth.pushDic = [NSDictionary dictionaryWithDictionary:_pushDic];
         [self.navigationController pushViewController:fourth animated:YES];
         
     }
     else
     {
-        NSString *code = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"]];
-        //        BOOL swithStatus = [[[dataArray objectAtIndex:indexPath.row] objectForKey:@"swithStatus"] boolValue];
+        AddReceiveFinalViewController *final = nil;
+
+        if(_edit == YES)
+        {
+//            final = [[AddReceiveFinalViewController alloc] initWithPushDic:_pushDic];
+            for(UIViewController *vc in self.navigationController.viewControllers)
+            {
+                NSLog(@"vc = %@",vc);
+                if([vc isKindOfClass:[AddReceiveFinalViewController class]])
+                {
+                    NSArray *arr = [NSArray arrayWithObjects:str,_pushDic, nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"ThirdAddressStr" object:arr];
+                    [self.navigationController popToViewController:vc animated:YES];
+                    return;
+                }
+            }
+        }
+        else
+        {
+            NSString *code = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"]];
+            final = [[AddReceiveFinalViewController alloc] initWithAddress:str WithCode:code WithSwithStatus:YES];
+            
+            
+            [self.navigationController pushViewController:final animated:YES];
+        }
+  
         
-        AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddress:str WithCode:code WithSwithStatus:YES];
-        
-        [self.navigationController pushViewController:final animated:YES];
+
     }
 }
 

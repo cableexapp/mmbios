@@ -23,4 +23,8 @@
 - (id) initWithData:(NSDictionary *) dic WithProvince:(NSString *) province;
 @property (strong,nonatomic) FMDatabase *db;
 
+@property (assign,nonatomic) BOOL edit;
+
+@property (strong,nonatomic) NSDictionary *pushDic;
+
 @end

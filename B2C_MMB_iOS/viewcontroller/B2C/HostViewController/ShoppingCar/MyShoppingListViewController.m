@@ -249,40 +249,42 @@
         NSLog(@"%@",dicRespon);
         if(result == 1)
         {
-            NSString *items = nil;
+#pragma mark - 记得改回来
+
+//            NSString *items = nil;
             
             
-            if(chooseGoodsArray && chooseGoodsArray.count != 0)
-            {
-                for(int i=0;i<chooseGoodsArray.count;i++)
-                {
-                    B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
-                    if(i == 0)
-                    {
-                        items = [NSString stringWithFormat:@"%@,",data.itemId];
-                    }
-                    else
-                    {
-                        items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
-                    }
-                }
-                items = [items substringWithRange:NSMakeRange(0, items.length-1)];
-            }
-            
-            NSString *time = [DCFCustomExtra getFirstRunTime];
-            
-            NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
-            
-            NSString *token = [DCFCustomExtra md5:string];
-            
-            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
-            NSString *pushString = nil;
-            
-            
-            
-            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
-            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
-            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//            if(chooseGoodsArray && chooseGoodsArray.count != 0)
+//            {
+//                for(int i=0;i<chooseGoodsArray.count;i++)
+//                {
+//                    B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
+//                    if(i == 0)
+//                    {
+//                        items = [NSString stringWithFormat:@"%@,",data.itemId];
+//                    }
+//                    else
+//                    {
+//                        items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
+//                    }
+//                }
+//                items = [items substringWithRange:NSMakeRange(0, items.length-1)];
+//            }
+          
+//            NSString *time = [DCFCustomExtra getFirstRunTime];
+//            
+//            NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
+//            
+//            NSString *token = [DCFCustomExtra md5:string];
+//            
+//            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
+//            NSString *pushString = nil;
+//            
+//            
+//            
+//            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
+//            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
+//            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         }
         else
         {
@@ -1018,53 +1020,87 @@
         return;
     }
 
-    
-    NSMutableArray *goodsArray = [[NSMutableArray alloc] init];
-    
+    NSString *items = nil;
+
     if(chooseGoodsArray && chooseGoodsArray.count != 0)
     {
         for(int i=0;i<chooseGoodsArray.count;i++)
         {
             B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
-            
-            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 data.createDate,@"createDate",
-                                 data.colorId,@"colorId",
-                                 data.colorName,@"colorName",
-                                 data.colorPrice,@"colorPrice",
-                                 data.isAvaliable,@"isAvaliable",
-                                 data.isDelete,@"isDelete",
-                                 data.isSale,@"isSale",
-                                 data.isUse,@"isUse",
-                                 data.itemId,@"itemId",
-                                 data.memberId,@"memberId",
-                                 data.num,@"num",
-                                 data.price,@"price",
-                                 data.productId,@"productId",
-                                 data.productItemPic,@"productItemPic",
-                                 data.productItemSku,@"productItemSku",
-                                 data.productNum,@"productNum",
-                                 data.sShopName,@"sShopName",
-                                 data.shopId,@"shopId",
-                                 data.visitorId,@"visitorId",
-                                 nil];
-            
-            [goodsArray addObject:dic];
+            if(i == 0)
+            {
+                items = [NSString stringWithFormat:@"%@,",data.itemId];
+            }
+            else
+            {
+                items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
+            }
         }
+        items = [items substringWithRange:NSMakeRange(0, items.length-1)];
     }
     
-    NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
-                             goodsArray,@"shopList",
-                             nil];
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"validProductBeforeSubOrder.html",time];
+    
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
+    
     NSString *token = [DCFCustomExtra md5:string];
     
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
+    NSString *pushString = nil;
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&items=%@&memberid=%@",token,[self dictoJSON:pushDic],[self getMemberId]];
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLValidProductBeforeSubOrderTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/validProductBeforeSubOrder.html?"];
+    
+//    loginid,coloritem(itemid集合),memberid（用户id）,token
+    pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+#pragma mark - 记得改回来
+//    NSMutableArray *goodsArray = [[NSMutableArray alloc] init];
+//
+//    if(chooseGoodsArray && chooseGoodsArray.count != 0)
+//    {
+//        for(int i=0;i<chooseGoodsArray.count;i++)
+//        {
+//            B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
+//            
+//            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
+//                                 data.createDate,@"createDate",
+//                                 data.colorId,@"colorId",
+//                                 data.colorName,@"colorName",
+//                                 data.colorPrice,@"colorPrice",
+//                                 data.isAvaliable,@"isAvaliable",
+//                                 data.isDelete,@"isDelete",
+//                                 data.isSale,@"isSale",
+//                                 data.isUse,@"isUse",
+//                                 data.itemId,@"itemId",
+//                                 data.memberId,@"memberId",
+//                                 data.num,@"num",
+//                                 data.price,@"price",
+//                                 data.productId,@"productId",
+//                                 data.productItemPic,@"productItemPic",
+//                                 data.productItemSku,@"productItemSku",
+//                                 data.productNum,@"productNum",
+//                                 data.sShopName,@"sShopName",
+//                                 data.shopId,@"shopId",
+//                                 data.visitorId,@"visitorId",
+//                                 nil];
+//            
+//            [goodsArray addObject:dic];
+//        }
+//    }
+//    
+//    NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
+//                             goodsArray,@"shopList",
+//                             nil];
+//    NSString *time = [DCFCustomExtra getFirstRunTime];
+//    NSString *string = [NSString stringWithFormat:@"%@%@",@"validProductBeforeSubOrder.html",time];
+//    NSString *token = [DCFCustomExtra md5:string];
+//    
+//    
+//    NSString *pushString = [NSString stringWithFormat:@"token=%@&items=%@&memberid=%@",token,[self dictoJSON:pushDic],[self getMemberId]];
+//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLValidProductBeforeSubOrderTag delegate:self];
+//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/validProductBeforeSubOrder.html?"];
+//    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
 
 }

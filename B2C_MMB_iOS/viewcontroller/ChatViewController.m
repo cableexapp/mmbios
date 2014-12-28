@@ -45,6 +45,8 @@
     
     UIButton *btn;
     UIButton *rightBtn;
+    
+    NSMutableArray *getArray;
 }
 
 @end
@@ -84,6 +86,8 @@
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
+    
+    getArray = [[NSMutableArray alloc] init];
     
     //下拉加载
     if(_refreshHeaderView == nil)
@@ -180,7 +184,7 @@
         naviTitle.text = @"正在咨询";
         imageView.image = image;
     }
-    [messageField becomeFirstResponder];
+//    [messageField becomeFirstResponder];
 }
 
 //检查网络是否连接
@@ -511,11 +515,17 @@
     NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
 
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
+    return YES;
+}
 
 #pragma mark 键盘即将显示
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     isKeyboardShowing = YES;
+    
     
     NSDictionary *userInfo = [notification userInfo];
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
@@ -541,12 +551,13 @@
      
     keyboardHeight = keyboardRect.size.height;
     }];
-    if ( isFirstShowKeyboard )
+    if (isFirstShowKeyboard)
     {
+
         isFirstShowKeyboard = NO;
         isSystemBoardShow = !isButtonClicked;
     }
-    if ( isSystemBoardShow )
+    if (isSystemBoardShow)
     {
         [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
     }
@@ -581,6 +592,7 @@
                          toolBar.frame = frame;
                          
                          keyboardHeight = 0;
+    [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
                      }];
 }
 
@@ -629,7 +641,7 @@
 
 - (void)textViewDidChange:(UITextView *)_textview
 {
-    
+
 }
 
 //接收消息
@@ -858,10 +870,11 @@
             }
             messageField.text = @"";
             
-//           [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
+           [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
             
             //发送消息处理
             [self addMessageWithContent:message time:loctime];
+            
             //刷新UI界面
             [self refreshUI];
         }
@@ -1006,117 +1019,99 @@
     {
         //创建SQL语句查询
         //10条数据为一个区间
-        NSString *insert = [NSString stringWithFormat:@"select  o.* from (select * from messagelist where creater = %@ and (rec_user_id = %@  or user_id =%@) order by time desc) o limit %d,%d  ",@"0",@"0",@"0",(pageIndex-1)*10,pageIndex*10];
-        sqlite3_stmt *statement;
+        NSString *insert = [NSString stringWithFormat:@"select  o.* from (select * from messagelist where creater = %@ and (rec_user_id = %@  or user_id =%@) order by time desc) o limit %d,%d",@"0",@"0",@"0",(pageIndex-1)*10,pageIndex*10];
+        
+        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+        
+        NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+
+        
+         NSLog(@"查询条件insert = %@\n\n",insert);
+         sqlite3_stmt *statement;
         
         if (sqlite3_prepare_v2(dataBase,[insert UTF8String],-1, &statement, nil)==SQLITE_OK)
         {
             while (sqlite3_step(statement)==SQLITE_ROW)
             {
+                /*recUserId:(NSString *)recUserId toUserId:(NSString *)userId toUserName:(NSString *)userName toTime:(NSString *)time toMessage:(NSString *)message
+*/
                 /*
                  0: 自增id
                  1: 接受者id
                  2: 发送者id
-                 3: 时间
-                 4: 内容
+                 3: 登录用户名
+                 4: 时间
+                 5: 内容
                  */
                 
                 //查询结果处理
+                NSString *rec_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 1) encoding:NSUTF8StringEncoding];
+                
                 NSString *sen_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 2) encoding:NSUTF8StringEncoding];
                 
-                NSString *time =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 3) encoding:NSUTF8StringEncoding];
+                NSString *sen_userName =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 3) encoding:NSUTF8StringEncoding];
                 
-                NSString *msg =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 4) encoding:NSUTF8StringEncoding];
-                NSMutableArray *messageArray_time = [[NSMutableArray alloc] init];
-                NSDictionary * dic;
-                //收发判断
-                if ([sen_userId isEqualToString:@"0"])
-                {
-                   dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"0",@"type",@"icon01.png" ,@"icon",nil];
-                     [messageArray_time addObject:dic];
-                }
-                else
-                {
-                   dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"1",@"type" ,@"icon02.png",@"icon",nil];
-                     [messageArray_time addObject:dic];
-                }
-                MessageFrame *messageFrame = [[MessageFrame alloc] init];
-                Message *message = [[Message alloc] init];
-                message.dict = dic;
-
-                messageFrame.message = message;
-//                NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-//                [inputFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] ];
-//                [inputFormatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+                NSString *time =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 4) encoding:NSUTF8StringEncoding];
+                
+                NSString *msg =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 5) encoding:NSUTF8StringEncoding];
+                
+                NSLog(@"rec_userId = %@ sen_userId = %@ sen_userName = %@  time = %@ msg = %@\n\n",rec_userId,sen_userId,sen_userName,time,msg);
  
-                //获得本地时间
-                NSDate *dates = [NSDate date];
-                NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
-                NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
-                [formatter setTimeZone:timeZone];
-                NSString *loctime = [formatter stringFromDate:dates];
-                NSLog(@"locttime = %@",loctime);
                 
-#pragma mark - 数据检查
-                NSString *timestring;
-                if (StrTimeCheck)
+                NSLog(@"tempUserName = %@\n\n",tempUserName);
+                
+                NSDictionary * dic;
+                
+                if(hasLogin == YES)
                 {
-                    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
-                    [inputFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] ];
-                    [inputFormatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
-//                    
-//                    for (int i = 0; i < [self arrayWithMemberIsOnly:messageArray_time].count; i++)
-//                    {
-
-                       timestring = [[[self arrayWithMemberIsOnly:messageArray_time] objectAtIndex:0] objectForKey:@"time"];
-                        NSDate * beginTime = [inputFormatter dateFromString:StrTimeCheck];
-                        NSDate * endTime = [inputFormatter dateFromString:timestring];
-                        //增加一个范围时间。
-                        NSTimeInterval time=[endTime timeIntervalSinceDate:beginTime];
-                        
-                        if (abs(time)/60 < 3)
+                    if ([sen_userName isEqualToString:tempUserName])
+                    {
+                        if ([sen_userId isEqualToString:@"0"])
                         {
-                            messageFrame.showTime = NO;
+                            dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"0",@"type",@"icon01.png" ,@"icon",nil];
                         }
-                        else if(abs(time)/60 >= 3)
+                        else
                         {
-                            StrTimeCheck = timestring;
-                            messageFrame.showTime = YES;
+                             dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"1",@"type" ,@"icon02.png",@"icon",nil];
                         }
-//                    }
+                    }
                 }
                 else
                 {
-                    messageFrame.showTime = YES;
-                    StrTimeCheck = timestring;
+                    if ([sen_userName isEqualToString:[self.appDelegate getUdid]])
+                    {
+                        if ([sen_userId isEqualToString:@"0"])
+                        {
+                            dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"0",@"type",@"icon01.png" ,@"icon",nil];
+                        }
+                        else
+                        {
+                            dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"1",@"type" ,@"icon02.png",@"icon",nil];
+                        }
+                    }
                 }
-           
-//                for (int i = 0; i < [self arrayWithMemberIsOnly:messageArray_time].count; i++)
-//                {
-//                    NSString *timestring1 = [[[self arrayWithMemberIsOnly:messageArray_time] objectAtIndex:0] objectForKey:@"time"];
-//                    NSString *timestring2 = [[[self arrayWithMemberIsOnly:messageArray_time] objectAtIndex:i] objectForKey:@"time"];
-//                 
-//                    
-//                    NSDate * beginTime = [inputFormatter dateFromString:timestring1];
-//                    NSDate * endTime = [inputFormatter dateFromString:timestring2];
-//                    //增加一个范围时间。
-//                    NSTimeInterval timee=[endTime timeIntervalSinceDate:beginTime];
-//                    
-//                    if (abs(timee)/60 < 3)
-//                    {
-//                         messageFrame.showTime = NO;
-//                    }
-//                    else if(abs(timee)/60 >= 3)
-//                    {
-//                        messageFrame.showTime = YES;
-//                    }
-//
-//                }
-
                 
-                   [_allMessagesFrame insertObject:messageFrame atIndex:0];
+                NSString *value = [dic objectForKey:@"content"];
                 
+                if([value rangeOfString:@"null"].location !=NSNotFound || [value rangeOfString:@"(null)"].location !=NSNotFound)
+                {
+                    NSLog(@"字典为空");
+                }
+                else
+                {
+                    NSLog(@"字典不为空");
+                    MessageFrame *messageFrame = [[MessageFrame alloc] init];
+                    Message *message = [[Message alloc] init];
+                    message.dict = dic;
+                    
+                    messageFrame.message = message;
+                    
+                    messageFrame.showTime = NO;
+                    
+                    [_allMessagesFrame insertObject:messageFrame atIndex:0];
+                    
+                    NSLog(@"登录_allMessagesFrame = %@",_allMessagesFrame);
+                }
             }
         }
         sqlite3_finalize(statement);
@@ -1166,7 +1161,7 @@
 
 #pragma mark - 数据库存入消息
 //数据存入本地数据库
--(void)recUserId:(NSString *)recUserId toUserId:(NSString *)userId toTime:(NSString *)time toMessage:(NSString *)message
+-(void)recUserId:(NSString *)recUserId toUserId:(NSString *)userId toUserName:(NSString *)userName toTime:(NSString *)time toMessage:(NSString *)message
 {
     sqlite3 * dataBase = NULL;
     
@@ -1178,7 +1173,7 @@
     
     if (SQLITE_OK == result)
     {
-        NSString *insert = [NSString stringWithFormat:@"INSERT INTO MESSAGELIST(rec_user_id, user_id, time, message,creater) values ('%@','%@','%@','%@','%@')",recUserId,userId,time,message,@"0"];
+        NSString *insert = [NSString stringWithFormat:@"INSERT INTO MESSAGELIST(rec_user_id, user_id, user_name, time, message,creater) values ('%@','%@','%@','%@','%@','%@')",recUserId,userId,userName,time,message,@"0"];
         
         char * error = NULL;
         
@@ -1209,7 +1204,19 @@
     {
         messageFrame.showTime = NO;
     }
-    [self recUserId:@"1" toUserId:@"0" toTime:message.time toMessage:message.content];
+
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+    
+    if(hasLogin == YES)
+    {
+         [self recUserId:@"1" toUserId:@"0" toUserName:tempUserName toTime:message.time toMessage:message.content];
+    }
+    else
+    {
+        [self recUserId:@"1" toUserId:@"0" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
+    }
     messageFrame.message = message;
     [_allMessagesFrame addObject:messageFrame];
 }
@@ -1234,8 +1241,22 @@
     {
         messageFrame.showTime = NO;
     }
-    [self recUserId:@"0" toUserId:@"1" toTime:message.time toMessage:message.content];
+
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+    
+    if(hasLogin == YES)
+    {
+        [self recUserId:@"0" toUserId:@"1" toUserName:tempUserName toTime:message.time toMessage:message.content];
+    }
+    else
+    {
+        [self recUserId:@"0" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
+    }
+
     messageFrame.message = message;
+    
     [_allMessagesFrame addObject:messageFrame];
 }
 
@@ -1303,7 +1324,7 @@
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
 {
     [self reloadTableViewDataSource];
-    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1.5];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view

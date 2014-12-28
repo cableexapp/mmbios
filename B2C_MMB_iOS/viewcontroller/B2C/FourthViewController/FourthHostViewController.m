@@ -979,8 +979,6 @@
 #pragma mark - 在线支付
 - (void) onLinePayBtnClick:(UIButton *) sender
 {
-    
-    
     NSString *productTitle = @"";
     
     

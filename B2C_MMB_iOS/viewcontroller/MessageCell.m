@@ -94,16 +94,12 @@
     {
         NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
         [_iconView setImageWithURL:[NSURL URLWithString:headPortraitUrl] placeholderImage:[UIImage imageNamed:@"icon01.png"]];
-       NSLog(@"headPortraitUrl = %@",headPortraitUrl);
     }
     else
     {
         _iconView.image = [UIImage imageNamed:message.icon];
     }
-    NSLog(@"message.icon = %@",message.icon);
-    
-    
-    
+ 
     // 3、设置内容
 //    _contentBtn.frame = _messageFrame.contentF;
     _contentBtn.frame = CGRectMake(_messageFrame.contentF.origin.x, _messageFrame.contentF.origin.y, _messageFrame.contentF.size.width-5, _messageFrame.contentF.size.height-10);

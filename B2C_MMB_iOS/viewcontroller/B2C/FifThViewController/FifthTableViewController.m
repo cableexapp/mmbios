@@ -94,10 +94,8 @@
     
     NSLog(@"更多");
     
-    [self.tabBarController setSelectedIndex:0];
-//    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:NO];
-   [[NSUserDefaults standardUserDefaults] setObject:@"more" forKey:@"pop_AskPriceCar_more"];
-   
+//    [self.tabBarController setSelectedIndex:0];
+    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:NO];
 }
 
 - (void)viewDidLoad
@@ -225,8 +223,6 @@
     {
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
         b2bAskPriceCar.fromString = @"更多";
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pop_AskPriceCar_mmb"];
-         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pop_AskPriceCar_more"];
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];

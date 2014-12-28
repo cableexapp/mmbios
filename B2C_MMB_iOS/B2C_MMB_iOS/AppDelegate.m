@@ -1059,42 +1059,27 @@ NSString *strUserId = @"";
     if (SQLITE_OK == result)
     {
         //创建一个名称为messageList的表
-        char * sqlCreate = "CREATE TABLE MESSAGELIST(id integer primary key AutoIncrement, rec_user_id varchar(30),user_id varchar(30),time varchar(30),message varchar(2000))";
+        char * sqlCreate = "CREATE TABLE MESSAGELIST(id integer primary key AutoIncrement, rec_user_id varchar(30),user_id varchar(30),user_name varchar(2000),time varchar(30),message varchar(2000))";
         char * error = NULL;
+        
         //执行sql语句
         sqlite3_exec(dataBase, sqlCreate, nil, nil, &error);
         
-        //        NSLog(@"创建数据库 错误信息---%s",error);
-        //2014-5-16 版本更新增加新字段creater
+        NSLog(@"创建数据库 错误信息---%s",error);
+        
+        //版本更新增加新字段creater
+        
         //字段增加
-        //        NSLog(@"进入数据库增加字段方法");
+        NSLog(@"进入数据库增加字段方法");
         char * sqlAdd = "ALTER TABLE MESSAGELIST ADD creater varchar(30)";
+        
         sqlite3_exec(dataBase, sqlAdd, nil, nil, &error);
-        //        NSLog(@"增加字段错误信息----%s",error);
+        NSLog(@"增加字段错误信息----%s",error);
+        
         //数据库使用完成后关闭数据库
         sqlite3_close(dataBase);
     }
 }
-
-//#pragma mark - 数据库 - 收到消息存储
-//-(void)recUserId:(NSString *)recUserId toUserId:(NSString *)userId toTime:(NSString *)time toMessage:(NSString *)message
-//{
-//    sqlite3 * dataBase = NULL;
-//    
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documents = [paths objectAtIndex:0];
-//    NSString *filePath = [documents stringByAppendingPathComponent:@"ChatMessageList.sqlite"];
-//    //打开数据库
-//    int result = sqlite3_open([filePath UTF8String],&dataBase);
-//    if (SQLITE_OK == result)
-//    {
-//        NSString *insert = [NSString stringWithFormat:@"INSERT INTO MESSAGELIST(rec_user_id, user_id, time, message, creater) values ('%@','%@','%@','%@','%@')",recUserId,userId,time,message,strUserId];
-//        char * error = NULL;
-//        sqlite3_exec(dataBase, [insert UTF8String], nil, nil, &error);
-//        sqlite3_close(dataBase);
-//        //printf(error);
-//    }
-//}
 
 
 @end

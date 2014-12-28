@@ -61,6 +61,7 @@
     [self setHidesBottomBarWhenPushed:NO];
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView_more" object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -85,22 +86,25 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC_more:) name:@"goToHomeView" object:nil];
-
+   
 }
 
 -(void)goToHomeVC_more:(NSNotification *)sender
 {
-    [self.tabBarController setSelectedIndex:0];
-    //    [self.navigationController popToRootViewControllerAnimated:YES];
     
     NSLog(@"更多");
+    
+    [self.tabBarController setSelectedIndex:0];
+//    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:NO];
+   [[NSUserDefaults standardUserDefaults] setObject:@"more" forKey:@"pop_AskPriceCar_more"];
    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC_more:) name:@"goToHomeView_more" object:nil];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
@@ -149,6 +153,7 @@
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
 }
 
 //获取购物车商品数量
@@ -220,6 +225,8 @@
     {
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
         b2bAskPriceCar.fromString = @"更多";
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pop_AskPriceCar_mmb"];
+         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pop_AskPriceCar_more"];
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];

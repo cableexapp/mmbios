@@ -370,15 +370,24 @@
     }
     [self setHidesBottomBarWhenPushed:NO];
     
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 //     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
 }
+
+-(void)goToHomeVC:(NSNotification *)sender
+{
+    NSLog(@"我的买卖宝");
+    
+    [self.tabBarController setSelectedIndex:0];
+//    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:NO];
+     [[NSUserDefaults standardUserDefaults] setObject:@"mmb" forKey:@"pop_AskPriceCar_mmb"];
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
     
     [self pushAndPopStyle];
 //    isPopShow = NO;
@@ -392,7 +401,6 @@
     {
         [self pushToVC];
     }
-    
     
     self.view1.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     self.view2.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
@@ -505,17 +513,21 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoBtnAction:)];
     [self.photoBtn setUserInteractionEnabled:YES];
     [self.photoBtn addGestureRecognizer:tapGesture];
-
 }
 
--(void)goToHomeVC:(NSNotification *)sender
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-
-//    self.tabBarController.selectedIndex = 0;
-//    [self setHidesBottomBarWhenPushed:NO];
-    NSLog(@"我的买卖宝");
-
-//     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
+    
+    
+    if(tabBarController.selectedIndex == 3)    //"我的账号"
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 
@@ -741,6 +753,8 @@
     {
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
         b2bAskPriceCar.fromString = @"我的买卖宝";
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pop_AskPriceCar_mmb"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"pop_AskPriceCar_more"];
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];

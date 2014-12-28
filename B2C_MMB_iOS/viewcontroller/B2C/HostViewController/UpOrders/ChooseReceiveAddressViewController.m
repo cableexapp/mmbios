@@ -212,7 +212,8 @@
                     {
                         
                     }
-                    receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
+                    receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId",data.fullAddress,@"fullAddress", nil];
                 }
                 else
                 {
@@ -341,10 +342,14 @@
     else
     {
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
-        NSString *address = addressData.addressName;
-        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
+        NSString *province = addressData.province;
+        NSString *city = addressData.city;
+        NSString *area = addressData.area;
+        NSString *fullAddress = addressData.fullAddress;
         
-        return size_3.height + 80;
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,fullAddress];
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(ScreenWidth-60, MAXFLOAT)];
+        return size_3.height + 40;
         
     }
     return 44;
@@ -376,7 +381,7 @@
         
         NSString *name = addressData.receiver;
         //        CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, ScreenWidth-60, 40)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, ScreenWidth-60, 30)];
         [nameLabel setText:name];
         nameLabel.numberOfLines = 2;
         [nameLabel setTextAlignment:NSTextAlignmentLeft];
@@ -403,25 +408,28 @@
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",province,city,area];
-        UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y + nameLabel.frame.size.height, 270, 30)];
+        NSString *fullAddress = addressData.fullAddress;
+        
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,fullAddress];
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(nameLabel.frame.size.width, MAXFLOAT)];
+
+        UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y + nameLabel.frame.size.height, nameLabel.frame.size.width, size_3.height)];
+        [provinceLabel setNumberOfLines:0];
         [provinceLabel setText:str];
         [provinceLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:provinceLabel];
         
-        
-        NSString *address = addressData.addressName;
-        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(280, MAXFLOAT)];
-        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
-        [addressLabel setText:address];
-        [addressLabel setFont:[UIFont systemFontOfSize:13]];
-        [addressLabel setNumberOfLines:0];
-        [cell.contentView addSubview:addressLabel];
+//        
+//        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
+//        [addressLabel setText:address];
+//        [addressLabel setFont:[UIFont systemFontOfSize:13]];
+//        [addressLabel setNumberOfLines:0];
+//        [cell.contentView addSubview:addressLabel];
         
         //        if(rightItemBtnHasClick == NO)
         //        {
         UIButton *btn = [cellBtnArray objectAtIndex:indexPath.row];
-        [btn setFrame:CGRectMake(10, (size_3.height + 70 - 30)/2, 30, 30)];
+        [btn setFrame:CGRectMake(10, (size_3.height + 40 - 30)/2, 30, 30)];
         [cell.contentView addSubview:btn];
         //        }
         //        else
@@ -456,7 +464,7 @@
     }
     [self.navigationController popViewControllerAnimated:YES];
     B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:tag];
-    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
+    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.fullAddress,@"fullAddress",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"B2CReceiveAddressHasChange" object:receiveDic userInfo:nil];
     //    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
 }

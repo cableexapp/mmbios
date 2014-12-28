@@ -16,7 +16,9 @@
 {
     UITableView *tv;
 }
+@property (assign,nonatomic) BOOL edit;
 @property (strong,nonatomic) FMDatabase *db;
 
+@property (strong,nonatomic) NSDictionary *pushDic;
 
 @end

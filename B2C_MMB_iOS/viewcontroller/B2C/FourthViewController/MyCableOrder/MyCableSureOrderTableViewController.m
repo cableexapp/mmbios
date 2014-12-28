@@ -368,7 +368,7 @@
         receivedistrict = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receivedistrict"]];
         receiveprovince = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiveprovince"]];
         receiver = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiver"]];
-        fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        fullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress,[receiverDic objectForKey:@"fullAddress"]];
         fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
     }
     if([DCFCustomExtra validateString:fullAddress] == NO)

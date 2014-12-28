@@ -18,10 +18,11 @@
 }
 @property (strong,nonatomic) NSDictionary *myDic;
 @property (strong,nonatomic) NSString *province;
+@property (strong,nonatomic) NSDictionary *pushDic;
 
 - (id) initWithData:(NSDictionary *) dic;
 @property (strong,nonatomic) FMDatabase *db;
 
-
+@property (assign,nonatomic) BOOL edit;
 
 @end

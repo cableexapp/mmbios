@@ -19,6 +19,8 @@
 @property (strong,nonatomic) NSDictionary *myDic;
 @property (strong,nonatomic) NSString *town;
 @property (strong,nonatomic) NSString *provinceAndCityAndTown;
+@property (assign,nonatomic) BOOL edit;
+@property (strong,nonatomic) NSDictionary *pushDic;
 
 - (id) initWithData:(NSArray *) array WithTown:(NSString *) town;
 @property (strong,nonatomic) FMDatabase *db;

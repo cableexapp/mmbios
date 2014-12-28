@@ -245,17 +245,17 @@
     else
     {
         B2CAddressData *addressData = [addressListDataArray objectAtIndex:indexPath.row];
-        NSString *address = addressData.addressName;
-        if([DCFCustomExtra validateString:address]  == NO)
+        NSString *province = addressData.province;
+        NSString *city = addressData.city;
+        NSString *area = addressData.area;
+        NSString *fullAddress = addressData.fullAddress;
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,fullAddress];
+        if([DCFCustomExtra validateString:str]  == NO)
         {
-            return 70;
+            return 40;
         }
-        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-        //    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 65, 270, size_3.height)];
-        //    [addressLabel setText:address];
-        //    [addressLabel setFont:[UIFont systemFontOfSize:13]];
-        //    [addressLabel setNumberOfLines:0];
-        return size_3.height + 70;
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+        return size_3.height + 40;
         
     }
     return 44;
@@ -314,25 +314,27 @@
         
         NSString *province = addressData.province;
         NSString *city = addressData.city;
-        
         NSString *area = addressData.area;
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",province,city,area];
-        UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height, 295, 30)];
+        NSString *fullAddress = addressData.fullAddress;
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,fullAddress];
+        
+        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+
+        UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height, ScreenWidth-20, size_3.height)];
         [provinceLabel setText:str];
         [provinceLabel setFont:[UIFont systemFontOfSize:13]];
+        [provinceLabel setNumberOfLines:0];
         [cell.contentView addSubview:provinceLabel];
-        
-        
-        NSString *address = addressData.addressName;
-        CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:address WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, ScreenWidth-20, size_3.height)];
-        [addressLabel setText:address];
-        [addressLabel setFont:[UIFont systemFontOfSize:13]];
-        [addressLabel setNumberOfLines:0];
-        [cell.contentView addSubview:addressLabel];
-        
-        
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, addressLabel.frame.origin.y+addressLabel.frame.size.height+4, ScreenWidth, 0.3)];
+//        
+//        
+//        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, ScreenWidth-20, size_3.height)];
+//        [addressLabel setText:address];
+//        [addressLabel setFont:[UIFont systemFontOfSize:13]];
+//        [addressLabel setNumberOfLines:0];
+//        [cell.contentView addSubview:addressLabel];
+//        
+//        
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, provinceLabel.frame.origin.y+provinceLabel.frame.size.height+4, ScreenWidth, 0.3)];
         [lineView setBackgroundColor:[UIColor lightGrayColor]];
         [cell.contentView addSubview:lineView];
         

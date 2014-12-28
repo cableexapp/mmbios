@@ -50,7 +50,15 @@
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
+    DCFTopLabel *top = nil;
+    if(_edit == YES)
+    {
+        top = [[DCFTopLabel alloc] initWithTitle:@"编辑收货地址"];
+    }
+    else
+    {
+        top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
+    }
     self.navigationItem.titleView = top;
     
     
@@ -159,7 +167,8 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AddReceiveThirdViewController *third = [[AddReceiveThirdViewController alloc] initWithData:[dataArray objectAtIndex:indexPath.row] WithProvince:_province];
-    
+    third.edit = _edit;
+    third.pushDic = [NSDictionary dictionaryWithDictionary:_pushDic];
     [self.navigationController pushViewController:third animated:YES];
 }
 

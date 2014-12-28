@@ -49,11 +49,14 @@
     NSString *province;
     NSString *city;
     NSString *area;
-    NSString *addressname;
+//    NSString *addressname;
     NSString *zip;
     NSString *mobile;
     NSString *tel;
     NSString *fulladdress;
+    
+    NSArray *notiArray;
+//    NSString *pushLocationStr;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -65,6 +68,7 @@
     return self;
 }
 
+
 - (id) initWithAddressData:(B2CAddressData *) addressData;
 {
     if(self = [super init])
@@ -74,7 +78,8 @@
         chooseCity = b2cAddressData.city;
         chooseProvince = b2cAddressData.province;
         chooseAddress = b2cAddressData.area;
-        chooseAddressName = b2cAddressData.addressName;
+        chooseAddressName = b2cAddressData.fullAddress;
+//        chooseFullAddress = b2cAddressData.fullAddress;
         chooseReceiver = b2cAddressData.receiver;
         chooseCode = b2cAddressData.zip;
         choosePhone = b2cAddressData.mobile;
@@ -115,15 +120,11 @@
                 [docArray addObject:[NSNumber numberWithInt:i]];
             }
         }
-        
         chooseProvince = [finalAddress substringToIndex:[[docArray objectAtIndex:0] intValue]];
-        
         int cityLength = [[docArray objectAtIndex:1] intValue] - [[docArray objectAtIndex:0] intValue];
         chooseCity = [finalAddress substringWithRange:NSMakeRange([[docArray objectAtIndex:0] intValue]+1, cityLength-1)];
-        
         int addressLength = finalAddress.length - [[docArray objectAtIndex:1] intValue];
         chooseAddress = [finalAddress substringWithRange:NSMakeRange([[docArray objectAtIndex:1] intValue]+1, addressLength-1)];
-        
         finalAddress = [finalAddress stringByReplacingOccurrencesOfString:@"," withString:@""];
     }
     return self;
@@ -261,14 +262,14 @@
         area = chooseAddress;
     }
     
-    if([DCFCustomExtra validateString:chooseAddressName] == NO)
-    {
-        addressname = @"";
-    }
-    else
-    {
-        addressname = chooseAddressName;
-    }
+//    if([DCFCustomExtra validateString:chooseAddressName] == NO)
+//    {
+//        addressname = @"";
+//    }
+//    else
+//    {
+//        addressname = chooseAddressName;
+//    }
     
     if([DCFCustomExtra validateString:zipTf.text] == NO)
     {
@@ -299,11 +300,11 @@
     
     if([DCFCustomExtra validateString:addressNameTf.text] == NO)
     {
-        fulladdress = @"";
+        chooseAddressName = @"";
     }
     else
     {
-        fulladdress = addressNameTf.text;
+        chooseAddressName = addressNameTf.text;
     }
     
     //新增
@@ -315,8 +316,7 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
 
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiver,province,city,area,addressname,fulladdress,zip,mobile,tel];
-   
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiver,province,city,area,@"",chooseAddressName,zip,mobile,tel];
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
@@ -331,8 +331,7 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"editMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,receiver,province,city,area,addressname,fulladdress,zip,mobile,tel,b2cAddressData.addressId];
-        NSLog(@"%@",pushString);
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,receiver,province,city,area,chooseAddressName,zip,mobile,tel,b2cAddressData.addressId];
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
         
@@ -360,6 +359,62 @@
     }
 }
 
+- (void) doFourthAddressStr:(NSNotification *) noti
+{
+    notiArray = [[NSArray alloc] initWithArray:(NSArray *)[noti object]];
+    NSLog(@"noti = %@",notiArray);
+
+    [self dealEditData];
+}
+
+- (void) doThirdAddressStr:(NSNotification *) noti
+{
+    notiArray = [[NSArray alloc] initWithArray:(NSArray *)[noti object]];
+    NSLog(@"noti = %@",notiArray);
+    
+    [self dealEditData];
+}
+
+
+- (void) dealEditData
+{
+    NSString *string = [notiArray objectAtIndex:0];
+    chooseAddress = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
+    
+    [topTf setText:chooseAddress];
+    
+    NSDictionary *dictionary = [NSDictionary dictionaryWithDictionary:[notiArray lastObject]];
+    
+    chooseReceiver = [dictionary objectForKey:@"receiver"];
+    [receiverTf setText:chooseReceiver];
+    
+    chooseAddressName = [dictionary objectForKey:@"detailAddress"];
+    [addressNameTf setText:chooseAddressName];
+    
+    chooseCode = [dictionary objectForKey:@"zip"];
+    if([DCFCustomExtra validateString:chooseCode] == NO)
+    {
+        [zipTf setPlaceholder:@"选填"];
+    }
+    else
+    {
+        [zipTf setText:chooseCode];
+    }
+    
+    choosePhone = [dictionary objectForKey:@"mobile"];
+    [mobileTf setText:choosePhone];
+    
+    chooseTel = [dictionary objectForKey:@"tel"];
+    if([DCFCustomExtra validateString:chooseTel] == NO)
+    {
+        [fixedLineTelephone setPlaceholder:@"选填，电话的格式：区号-电话号码-分机"];
+    }
+    else
+    {
+        [fixedLineTelephone setText:chooseTel];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -369,6 +424,10 @@
     
     [self pushAndPopStyle];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doFourthAddressStr:) name:@"FourthAddressStr" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doThirdAddressStr:) name:@"ThirdAddressStr" object:nil];
+
     
     backView = [[UIView alloc] initWithFrame:CGRectMake(10, 20, ScreenWidth-20, 250)];
     [backView setBackgroundColor:[UIColor whiteColor]];
@@ -453,7 +512,7 @@
             NSString *addressid_b2b = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"addressid_b2b"]];
             NSString *addressid_b2c = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"addressid_b2c"]];
 
-            NSString *receiveFullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,addressname,fulladdress];
+            NSString *receiveFullAddress = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,fulladdress];
             addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",receiver,@"receiver",mobile,@"mobile",addressid_b2b,@"addressid_b2b",addressid_b2c,@"addressid_b2c", nil];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAddressSuccessForB2B" object:addSuccessDic];
@@ -754,18 +813,39 @@
         if(isEditOrAdd == NO)
         {
             [topTf resignFirstResponder];
-            AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
-            [self.navigationController pushViewController:add animated:YES];
-            //            NSLog(@"%@",self.navigationController.viewControllers);
-            //
-            //            for(UIViewController *vc in self.navigationController.viewControllers)
-            //            {
-            //                if([vc isKindOfClass:[ManagReceiveAddressViewController class]])
-            //                {
-            //                    [self.navigationController popToViewController:vc animated:YES];
-            //                }
-            //            }
             
+            AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
+            
+            if([DCFCustomExtra validateString:zipTf.text] == NO)
+            {
+                chooseCode = @"";
+            }
+            else
+            {
+                chooseCode = zipTf.text;
+            }
+            
+            if([DCFCustomExtra validateString:fixedLineTelephone.text] == NO)
+            {
+                chooseTel = @"";
+            }
+            else
+            {
+                chooseTel = fixedLineTelephone.text;
+            }
+            
+            NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                     chooseReceiver,@"receiver",
+                                     addressNameTf.text,@"detailAddress",
+                                     chooseCode,@"zip",
+                                     choosePhone,@"mobile",
+                                     chooseTel,@"tel",
+                                     nil];
+            add.edit = YES;
+            NSLog(@"pushDic=%@",pushDic);
+            add.pushDic = [NSDictionary dictionaryWithDictionary:pushDic];
+            
+            [self.navigationController pushViewController:add animated:YES];
         }
     }
     

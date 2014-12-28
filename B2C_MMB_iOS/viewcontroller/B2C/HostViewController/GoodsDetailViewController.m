@@ -1032,21 +1032,7 @@
                         [nameLabel setTextColor:[UIColor blackColor]];
                         [cell.contentView addSubview:nameLabel];
                         
-                        
-                        NSString *month = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"month"];
-                        NSString *finalMonth = [NSString stringWithFormat:@"%d",[month intValue] + 1];
-                        
-                        NSString *date = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"date"];
-                        
-                        NSString *dateStr = [NSString stringWithFormat:@"评价日期:%@.%@",finalMonth,date];
-                        CGSize dateSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:dateStr WithSize:CGSizeMake(MAXFLOAT, 30)];
-                        
-                        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x+nameLabel.frame.size.width+10, 5, dateSize.width, 30)];
-                        [dateLabel setTextAlignment:NSTextAlignmentRight];
-                        [dateLabel setText:dateStr];
-                        [dateLabel setFont:[UIFont systemFontOfSize:10]];
-                        [cell.contentView addSubview:dateLabel];
-                        
+
                         NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"colorName"];
                         NSString *colorStr = [NSString stringWithFormat:@"颜色分类:%@",color];
                         CGSize colorSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:colorStr WithSize:CGSizeMake(MAXFLOAT, 30)];
@@ -1056,6 +1042,27 @@
                         [colorLabel setFont:[UIFont systemFontOfSize:10]];
                         [cell.contentView addSubview:colorLabel];
                         
+                        
+                        NSString *time = [[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"createDate"] objectForKey:@"time"];
+                        NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[time doubleValue]/1000];
+                        NSString *finalTime = [DCFCustomExtra nsdateToString:confromTimesp];
+                        NSString *dateStr = [NSString stringWithFormat:@"%@",finalTime];
+                        CGSize dateSize;
+                        if([DCFCustomExtra validateString:dateStr] == NO)
+                        {
+                            dateSize = CGSizeMake(0, 30);
+                        }
+                        else
+                        {
+                            NSArray *composeArr = [dateStr componentsSeparatedByString:@" "];
+                            dateStr = [composeArr objectAtIndex:0];
+                            dateSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:dateStr WithSize:CGSizeMake(MAXFLOAT, 30)];
+                        }
+                        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-20-colorLabel.frame.size.width-dateSize.width, 5, dateSize.width, 30)];
+                        [dateLabel setTextAlignment:NSTextAlignmentRight];
+                        [dateLabel setText:dateStr];
+                        [dateLabel setFont:[UIFont systemFontOfSize:10]];
+                        [cell.contentView addSubview:dateLabel];
                     }
                     
                     UILabel *contentLabel  = nil;

@@ -25,6 +25,19 @@
     
     _ctems = [[NSArray alloc] initWithArray:[dictionary objectForKey:@"ctems"]];
     
+//    _createdate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"createdate"]];
+//    
+//    if([[_createdate allKeys] count] == 0 || [_createdate isKindOfClass:[NSNull class]])
+//    {
+//        _time = @"";
+//    }
+//    else
+//    {
+//        //时间戳
+//        NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[_createdate objectForKey:@"time"] doubleValue]/1000];
+//        
+//        _time = [DCFCustomExtra nsdateToString:confromTimesp];
+//    }
     _items = [[NSArray alloc] initWithArray:[dictionary objectForKey:@"items"]];
     
     NSDictionary *dic = nil;

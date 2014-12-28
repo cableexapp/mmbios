@@ -169,6 +169,7 @@ double secondsCountDown =0;
 
 -(void)pageFromWhere_wait
 {
+    NSLog(@"等待页面 = %@",self.tempFrom);
     if ([self.tempFrom isEqualToString:@"首页在线客服"])
     {
         [self.tabBarController setSelectedIndex:0];
@@ -184,7 +185,7 @@ double secondsCountDown =0;
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
         
     }
-    else if([self.tempFrom isEqualToString:@"场合选择提交成功客服"] || [self.tempFrom isEqualToString:@"商品快照在线客服"])
+    else if([self.tempFrom isEqualToString:@"场合选择提交成功客服"])
     {
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
     }
@@ -196,7 +197,6 @@ double secondsCountDown =0;
     {
         [self.navigationController popToViewController: [self.navigationController.viewControllers objectAtIndex: ([self.navigationController.viewControllers count] -3)] animated:YES];
     }
-
     else
     {
         [self.tabBarController setSelectedIndex:0];
@@ -219,7 +219,34 @@ double secondsCountDown =0;
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
             }
         }
+        if([[[self.tempFrom componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"商品快照在线客服"])
+        {
+            
+            if (self.navigationController.viewControllers.count == 8)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
+            }
+            if (self.navigationController.viewControllers.count == 7)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+            }
+            if (self.navigationController.viewControllers.count == 6)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+            }
+            if (self.navigationController.viewControllers.count == 5)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+            }
+            if (self.navigationController.viewControllers.count == 4)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+            }
+        }
     }
+    NSLog(@"页面数组_wait = %d",self.navigationController.viewControllers.count);
+    
+    NSLog(@"页面数组_wait = %@",self.navigationController.viewControllers);
 }
 
 -(void)goBack

@@ -57,7 +57,7 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
-    
+    NSLog(@"%@",dicRespon);
     if(URLTag == URLOrderDetailTag)
     {
         if([[dicRespon allKeys] count] == 0)

@@ -11,6 +11,7 @@
 #import "MCDefine.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "DCFCustomExtra.h"
+#import "MyCableOrderDetailViewController.h"
 
 @interface MyNormalInquiryDetailController ()
 {
@@ -19,6 +20,8 @@
     NSString *theStatus;
     MyInquiryDetailTableViewController *tv;
     NSString *notistr;
+    
+    UIStoryboard *mySB;
 }
 @end
 
@@ -141,6 +144,7 @@
         UIButton *buttomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         buttomBtn.layer.cornerRadius = 5.0f;
         buttomBtn.layer.borderWidth = 1.0f;
+        [buttomBtn setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:141.0/255.0 blue:6.0/255.0 alpha:1.0]];
         buttomBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0 green:141.0/255.0 blue:6.0/255.0 alpha:1.0].CGColor;
         [buttomBtn setTitle:@"查看对应订单" forState:UIControlStateNormal];
         [buttomBtn setFrame:CGRectMake(20, 5, self.buttomView.frame.size.width-40, self.buttomView.frame.size.height-10)];
@@ -152,7 +156,11 @@
 
 - (void) buttomBtnClick:(UIButton *) sender
 {
-    
+    mySB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
+
+    MyCableOrderDetailViewController *myCableOrderDetailViewController = [mySB instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
+//    myCableOrderDetailViewController.b2bMyCableOrderListData = [dataArray objectAtIndex:tag];
+    [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

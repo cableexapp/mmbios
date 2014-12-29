@@ -18,6 +18,7 @@
 #import "logisticsTrackingViewController.h"
 #import "DiscussViewController.h"
 #import "ShopHostTableViewController.h"
+#import "DCFColorUtil.h"
 
 @interface FourOrderDetailViewController ()
 {
@@ -25,6 +26,8 @@
     UITableView *tv;
     
     UIButton *nameBtn;
+    
+    UILabel *cancelLabel;
 }
 @end
 
@@ -79,6 +82,8 @@
     [self.myOederLabel setText:self.myOrderNum];
     
     
+
+    
     self.discussBtn.layer.cornerRadius = 5;
     [self.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
@@ -109,24 +114,59 @@
         
         [self.tradeBtn setHidden:!self.showOrHideTradeBtn];
   
-        [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, ScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
+        [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth,  MainScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
     }
     else
     {
-        [self.buttomView setHidden:YES];
-        [self.buttomView setFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 0)];
-        for(UIButton *btn in self.buttomView.subviews)
+        if([_myStatus intValue] == 5 || [_myStatus intValue] == 7)
         {
-            [btn setHidden:YES];
-            [btn setFrame:CGRectMake(btn.frame.origin.x, ScreenHeight, btn.frame.size.width, 0)];
+
+            [self.buttomView setHidden:NO];
+//            [self.buttomView setBackgroundColor:[UIColor redColor]];
+            [self.discussBtn setHidden:YES];
+            [self.tradeBtn setHidden:YES];
+            [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth,  MainScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
+
+            cancelLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.buttomView.frame.size.width-10, self.buttomView.frame.size.height)];
+            if([_myStatus intValue] == 5)
+            {
+                [cancelLabel setText:@"已申请取消,客服会第一时间进行处理,请耐心等待"];
+            }
+            else
+            {
+                [cancelLabel setText:@"订单已取消"];
+            }
+            [cancelLabel setTextAlignment:NSTextAlignmentCenter];
+            [cancelLabel setTextColor:[UIColor whiteColor]];
+            [cancelLabel setFont:[UIFont boldSystemFontOfSize:12]];
+            [cancelLabel setBackgroundColor:[DCFColorUtil colorFromHexRGB:@"#AFABAB"]];
+            [self.buttomView addSubview:cancelLabel];
+//            [self.view ins ertSubview:cancelLabel aboveSubview:self.buttomView];
         }
-        [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, ScreenHeight-self.topView.frame.size.height-64)];
+        else
+        {
+            [self.buttomView setHidden:YES];
+            [self.buttomView setFrame:CGRectMake(0, ScreenHeight, MainScreenHeight, 0)];
+            for(UIView *view in self.buttomView.subviews)
+            {
+                if([view isKindOfClass:[UIButton class]])
+                {
+                    [view setHidden:YES];
+                    [view setFrame:CGRectMake(view.frame.origin.x, MainScreenHeight, view.frame.size.width, 0)];
+                }
+     
+            }
+            [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, MainScreenHeight-self.topView.frame.size.height-64)];
+        }
+
     }
     [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     tv.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
     [self.tableBackView addSubview:tv];
+    
+
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -517,7 +557,6 @@
             [cell.contentView addSubview:tel];
             
             NSString *add = [NSString stringWithFormat:@"收货地址: %@",[[dataArray lastObject] receiveAddr]];
-            NSLog(@"add = %@",add);
             if([add rangeOfString:@"null"].location != NSNotFound)
             {
                 add = [add stringByReplacingOccurrencesOfString:@"null" withString:@""];
@@ -526,8 +565,7 @@
             {
                 
             }
-            NSLog(@"add---- = %@",add);
-            
+            add = [add stringByReplacingOccurrencesOfString:@" " withString:@""];
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:add WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, ScreenWidth-20, size.height)];
             [label setText:add];

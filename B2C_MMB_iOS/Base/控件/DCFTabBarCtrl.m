@@ -84,7 +84,7 @@
     
     UIStoryboard *fifthSB = [UIStoryboard storyboardWithName:@"FifthSB" bundle:nil];
     FifthNaviViewController *fifthNavi = [fifthSB instantiateViewControllerWithIdentifier:@"fifthNaviViewController"];
-    UIImage *selectmoreSelectImg = [UIImage imageNamed:@"moreSelectpng"];
+    UIImage *selectmoreSelectImg = [UIImage imageNamed:@"moreSelect.png"];
     UIImage *unSelectmoreUnSelectImg = [UIImage imageNamed:@"moreUnSelect.png"];
     selectmoreSelectImg = [UIImage imageWithCGImage:selectmoreSelectImg.CGImage scale:1.5 orientation:selectmoreSelectImg.imageOrientation];
     unSelectmoreUnSelectImg = [UIImage imageWithCGImage:unSelectmoreUnSelectImg.CGImage scale:1.5 orientation:unSelectmoreUnSelectImg.imageOrientation];

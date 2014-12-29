@@ -91,6 +91,8 @@
     UIButton *logBtn;
     
     UILabel *countLabel;
+    
+    NSMutableArray *tempArray;
 }
 @end
 
@@ -246,45 +248,39 @@
     
     if(URLTag == URLValidProductBeforeSubOrderTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
-#pragma mark - 记得改回来
-
-//            NSString *items = nil;
+            NSString *items = nil;
             
-            
-//            if(chooseGoodsArray && chooseGoodsArray.count != 0)
-//            {
-//                for(int i=0;i<chooseGoodsArray.count;i++)
-//                {
-//                    B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
-//                    if(i == 0)
-//                    {
-//                        items = [NSString stringWithFormat:@"%@,",data.itemId];
-//                    }
-//                    else
-//                    {
-//                        items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
-//                    }
-//                }
-//                items = [items substringWithRange:NSMakeRange(0, items.length-1)];
-//            }
+            if(chooseGoodsArray && chooseGoodsArray.count != 0)
+            {
+                for(int i=0;i<chooseGoodsArray.count;i++)
+                {
+                    B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
+                    if(i == 0)
+                    {
+                        items = [NSString stringWithFormat:@"%@,",data.itemId];
+                    }
+                    else
+                    {
+                        items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
+                    }
+                }
+                items = [items substringWithRange:NSMakeRange(0, items.length-1)];
+            }
           
-//            NSString *time = [DCFCustomExtra getFirstRunTime];
-//            
-//            NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
-//            
-//            NSString *token = [DCFCustomExtra md5:string];
-//            
-//            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
-//            NSString *pushString = nil;
-//            
-//            
-//            
-//            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
-//            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
-//            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
+
+            NSString *token = [DCFCustomExtra md5:string];
+
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
+            NSString *pushString = nil;
+
+            pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         }
         else
         {
@@ -300,163 +296,177 @@
     }
     if(URLTag == URLShopCarGoodsMsgTag)
     {
+        if(_reloading == YES)
+        {
+            [self doneLoadingViewData];
+        }
+        else if(_reloading == NO)
+        {
+            
+        }
+        
         if(result == 1)
         {
-            NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[B2CShopCarListData getListArray:[dicRespon objectForKey:@"items"]]];
-            
-            dataArray = [[NSMutableArray alloc] init];
-            
-            headLabelArray = [[NSMutableArray alloc] init];
-            
-            chooseGoodsArray = [[NSMutableArray alloc] init];
-            
-            //            shopIdArray = [[NSMutableArray alloc] init];
-            
-            for(int i=0;i<tempArray.count;i++)
+            if(!tempArray || tempArray.count == 0)
             {
-                NSString *sShopName = [[tempArray objectAtIndex:i] shopId];
-                NSMutableArray *shopNameArray = [NSMutableArray arrayWithObject:sShopName];
-                if(i == 0)
+                tempArray = [[NSMutableArray alloc] initWithArray:[B2CShopCarListData getListArray:[dicRespon objectForKey:@"items"]]];
+                
+                dataArray = [[NSMutableArray alloc] init];
+                
+                headLabelArray = [[NSMutableArray alloc] init];
+                
+                chooseGoodsArray = [[NSMutableArray alloc] init];
+                
+                for(int i=0;i<tempArray.count;i++)
                 {
-                    [headLabelArray addObject:shopNameArray];
-                }
-                if(i > 0)
-                {
-                    if([headLabelArray containsObject:shopNameArray] == YES)
-                    {
-                        
-                    }
-                    else
+                    NSString *sShopName = [[tempArray objectAtIndex:i] shopId];
+                    NSMutableArray *shopNameArray = [NSMutableArray arrayWithObject:sShopName];
+                    if(i == 0)
                     {
                         [headLabelArray addObject:shopNameArray];
                     }
-                }
-            }
-
-            headBtnArray = [[NSMutableArray alloc] init];
-            for(int i=0;i<headLabelArray.count;i++)
-            {
-                UIButton *headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                [headBtn setFrame:CGRectMake(5, 5, 30, 30)];
-                
-                [headBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
-                [headBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
-                [headBtn setSelected:NO];
-                [headBtn setTag:i];
-                [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                NSMutableArray *arr = [NSMutableArray arrayWithObject:headBtn];
-                
-                [headBtnArray addObject:arr];
-            }
-            
-            for(NSArray *str in headLabelArray)
-            {
-                NSMutableArray *array = [[NSMutableArray alloc] init];
-                
-                for(B2CShopCarListData *data in tempArray)
-                {
-                    NSString *s = data.shopId;
-                    if([s isEqualToString:(NSString *)[str lastObject]])
+                    if(i > 0)
                     {
-                        [array addObject:data];
+                        if([headLabelArray containsObject:shopNameArray] == YES)
+                        {
+                            
+                        }
+                        else
+                        {
+                            [headLabelArray addObject:shopNameArray];
+                        }
                     }
                 }
-                [dataArray addObject:array];
-            }
-
-            
-            if (dataArray.count > 0)
-            {
-                backView.hidden = YES;
-                tv.scrollEnabled = YES;
+                
+                headBtnArray = [[NSMutableArray alloc] init];
+                for(int i=0;i<headLabelArray.count;i++)
+                {
+                    UIButton *headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                    [headBtn setFrame:CGRectMake(5, 5, 30, 30)];
+                    
+                    [headBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+                    [headBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
+                    [headBtn setSelected:NO];
+                    [headBtn setTag:i];
+                    [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                    NSMutableArray *arr = [NSMutableArray arrayWithObject:headBtn];
+                    
+                    [headBtnArray addObject:arr];
+                }
+                
+                for(NSArray *str in headLabelArray)
+                {
+                    NSMutableArray *array = [[NSMutableArray alloc] init];
+                    
+                    for(B2CShopCarListData *data in tempArray)
+                    {
+                        NSString *s = data.shopId;
+                        if([s isEqualToString:(NSString *)[str lastObject]])
+                        {
+                            [array addObject:data];
+                        }
+                    }
+                    [dataArray addObject:array];
+                }
+                
+                
+                if (dataArray.count > 0)
+                {
+                    backView.hidden = YES;
+                    tv.scrollEnabled = YES;
+                }
+                else
+                {
+                    backView.hidden = NO;
+                    tv.scrollEnabled = NO;
+                }
+                
+                cellBtnArray = [[NSMutableArray alloc] init];
+                cellImageViewArray = [[NSMutableArray alloc] init];
+                subtractArray = [[NSMutableArray alloc] init];
+                addArray = [[NSMutableArray alloc] init];
+                priceLabelArray = [[NSMutableArray alloc] init];
+                colorLabelArray = [[NSMutableArray alloc] init];
+                
+                for(int i = 0;i < dataArray.count;i++)
+                {
+                    NSMutableArray *a =  [[NSMutableArray alloc] init];
+                    NSMutableArray *b = [[NSMutableArray alloc] init];
+                    NSMutableArray *c = [[NSMutableArray alloc] init];
+                    NSMutableArray *d = [[NSMutableArray alloc] init];
+                    NSMutableArray *e = [[NSMutableArray alloc] init];
+                    NSMutableArray *f = [[NSMutableArray alloc] init];
+                    
+                    for(int j=0;j<[[dataArray objectAtIndex:i] count];j++)
+                    {
+                        UIButton *cellBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                        [cellBtn setTag:1000*i+j];
+                        [cellBtn setFrame:CGRectMake(5, 40, 30, 30)];
+                        
+                        [cellBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
+                        [cellBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
+                        [cellBtn setSelected:NO];
+                        [cellBtn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                        //                    [cellBtn setTag:i];
+                        [cellBtn setSelected:NO];
+                        
+                        UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(cellBtn.frame.origin.x + cellBtn.frame.size.width + 10, 20, 70, 70)];
+                        
+                        UIButton *subtractBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                        [subtractBtn setTitle:@"-" forState:UIControlStateNormal];
+                        subtractBtn.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
+                        subtractBtn.layer.borderWidth = 1.0f;
+                        [subtractBtn addTarget:self action:@selector(subtractBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                        subtractBtn.layer.masksToBounds = YES;
+                        [subtractBtn setBackgroundColor:[UIColor whiteColor]];
+                        [subtractBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                        
+                        
+                        UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                        [addBtn setTitle:@"+" forState:UIControlStateNormal];
+                        addBtn.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
+                        [addBtn addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                        addBtn.layer.borderWidth = 1.0f;
+                        addBtn.layer.masksToBounds = YES;
+                        [addBtn setBackgroundColor:[UIColor whiteColor]];
+                        [addBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                        
+                        UILabel *subPriceLabel = [[UILabel alloc] init];
+                        [subPriceLabel setText:@"单价:"];
+                        [subPriceLabel setFont:[UIFont systemFontOfSize:12]];
+                        
+                        UILabel *subColorLabel = [[UILabel alloc] init];
+                        [subColorLabel setFont:[UIFont systemFontOfSize:12]];
+                        
+                        [a addObject:cellBtn];
+                        
+                        [b addObject:cellIv];
+                        
+                        [c addObject:subtractBtn];
+                        
+                        [d addObject:addBtn];
+                        
+                        [e addObject:subPriceLabel];
+                        
+                        [f addObject:subColorLabel];
+                    }
+                    [cellBtnArray addObject:a];
+                    [cellImageViewArray addObject:b];
+                    [subtractArray addObject:c];
+                    [addArray addObject:d];
+                    [priceLabelArray addObject:e];
+                    [colorLabelArray addObject:f];
+                }
+                total = 0;
+                for(int i=0;i<dataArray.count;i++)
+                {
+                    NSMutableArray *arr = [dataArray objectAtIndex:i];
+                    total = total + arr.count;
+                }
             }
             else
             {
-                backView.hidden = NO;
-                tv.scrollEnabled = NO;
-            }
-#pragma mark - 添加cell里面的btn,图片
-            cellBtnArray = [[NSMutableArray alloc] init];
-            cellImageViewArray = [[NSMutableArray alloc] init];
-            subtractArray = [[NSMutableArray alloc] init];
-            addArray = [[NSMutableArray alloc] init];
-            priceLabelArray = [[NSMutableArray alloc] init];
-            colorLabelArray = [[NSMutableArray alloc] init];
-            
-            for(int i = 0;i < dataArray.count;i++)
-            {
-                NSMutableArray *a =  [[NSMutableArray alloc] init];
-                NSMutableArray *b = [[NSMutableArray alloc] init];
-                NSMutableArray *c = [[NSMutableArray alloc] init];
-                NSMutableArray *d = [[NSMutableArray alloc] init];
-                NSMutableArray *e = [[NSMutableArray alloc] init];
-                NSMutableArray *f = [[NSMutableArray alloc] init];
                 
-                for(int j=0;j<[[dataArray objectAtIndex:i] count];j++)
-                {
-                    UIButton *cellBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [cellBtn setTag:1000*i+j];
-                    [cellBtn setFrame:CGRectMake(5, 40, 30, 30)];
-                    
-                    [cellBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
-                    [cellBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
-                    [cellBtn setSelected:NO];
-                    [cellBtn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                    //                    [cellBtn setTag:i];
-                    [cellBtn setSelected:NO];
-                    
-                    UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(cellBtn.frame.origin.x + cellBtn.frame.size.width + 10, 20, 70, 70)];
-                    
-                    UIButton *subtractBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [subtractBtn setTitle:@"-" forState:UIControlStateNormal];
-                    subtractBtn.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
-                    subtractBtn.layer.borderWidth = 1.0f;
-                    [subtractBtn addTarget:self action:@selector(subtractBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                    subtractBtn.layer.masksToBounds = YES;
-                    [subtractBtn setBackgroundColor:[UIColor whiteColor]];
-                    [subtractBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                    
-                    
-                    UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [addBtn setTitle:@"+" forState:UIControlStateNormal];
-                    addBtn.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
-                    [addBtn addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                    addBtn.layer.borderWidth = 1.0f;
-                    addBtn.layer.masksToBounds = YES;
-                    [addBtn setBackgroundColor:[UIColor whiteColor]];
-                    [addBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                    
-                    UILabel *subPriceLabel = [[UILabel alloc] init];
-                    [subPriceLabel setText:@"单价:"];
-                    [subPriceLabel setFont:[UIFont systemFontOfSize:12]];
-                    
-                    UILabel *subColorLabel = [[UILabel alloc] init];
-                    [subColorLabel setFont:[UIFont systemFontOfSize:12]];
-                    
-                    [a addObject:cellBtn];
-                    
-                    [b addObject:cellIv];
-                    
-                    [c addObject:subtractBtn];
-                    
-                    [d addObject:addBtn];
-                    
-                    [e addObject:subPriceLabel];
-                    
-                    [f addObject:subColorLabel];
-                }
-                [cellBtnArray addObject:a];
-                [cellImageViewArray addObject:b];
-                [subtractArray addObject:c];
-                [addArray addObject:d];
-                [priceLabelArray addObject:e];
-                [colorLabelArray addObject:f];
-            }
-            total = 0;
-            for(int i=0;i<dataArray.count;i++)
-            {
-                NSMutableArray *arr = [dataArray objectAtIndex:i];
-                total = total + arr.count;
             }
             [tv reloadData];
         }
@@ -785,6 +795,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆购物车"];
     self.navigationItem.titleView = top;
     
+
     
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -880,6 +891,12 @@
     tv.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0];
     [tv setDelegate:self];
     [self.view addSubview:tv];
+    
+    //ADD REFRESH VIEW
+    _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, ScreenWidth, 300)];
+    [self.refreshView setDelegate:self];
+    [tv addSubview:self.refreshView];
+    [self.refreshView refreshLastUpdatedDate];
     
     noCell = [[UITableViewCell alloc] init];
     [noCell.contentView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
@@ -1020,89 +1037,96 @@
         return;
     }
 
-    NSString *items = nil;
+//    NSString *items = nil;
 
-    if(chooseGoodsArray && chooseGoodsArray.count != 0)
-    {
-        for(int i=0;i<chooseGoodsArray.count;i++)
-        {
-            B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
-            if(i == 0)
-            {
-                items = [NSString stringWithFormat:@"%@,",data.itemId];
-            }
-            else
-            {
-                items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
-            }
-        }
-        items = [items substringWithRange:NSMakeRange(0, items.length-1)];
-    }
-    
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
-    
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
-    NSString *pushString = nil;
-    
-    
-//    loginid,coloritem(itemid集合),memberid（用户id）,token
-    pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
-#pragma mark - 记得改回来
-//    NSMutableArray *goodsArray = [[NSMutableArray alloc] init];
-//
 //    if(chooseGoodsArray && chooseGoodsArray.count != 0)
 //    {
 //        for(int i=0;i<chooseGoodsArray.count;i++)
 //        {
 //            B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
-//            
-//            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                                 data.createDate,@"createDate",
-//                                 data.colorId,@"colorId",
-//                                 data.colorName,@"colorName",
-//                                 data.colorPrice,@"colorPrice",
-//                                 data.isAvaliable,@"isAvaliable",
-//                                 data.isDelete,@"isDelete",
-//                                 data.isSale,@"isSale",
-//                                 data.isUse,@"isUse",
-//                                 data.itemId,@"itemId",
-//                                 data.memberId,@"memberId",
-//                                 data.num,@"num",
-//                                 data.price,@"price",
-//                                 data.productId,@"productId",
-//                                 data.productItemPic,@"productItemPic",
-//                                 data.productItemSku,@"productItemSku",
-//                                 data.productNum,@"productNum",
-//                                 data.sShopName,@"sShopName",
-//                                 data.shopId,@"shopId",
-//                                 data.visitorId,@"visitorId",
-//                                 nil];
-//            
-//            [goodsArray addObject:dic];
+//            if(i == 0)
+//            {
+//                items = [NSString stringWithFormat:@"%@,",data.itemId];
+//            }
+//            else
+//            {
+//                items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
+//            }
 //        }
+//        items = [items substringWithRange:NSMakeRange(0, items.length-1)];
 //    }
-//    
-//    NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                             goodsArray,@"shopList",
-//                             nil];
+    
 //    NSString *time = [DCFCustomExtra getFirstRunTime];
-//    NSString *string = [NSString stringWithFormat:@"%@%@",@"validProductBeforeSubOrder.html",time];
+    
+//    NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
+    
 //    NSString *token = [DCFCustomExtra md5:string];
-//    
-//    
-//    NSString *pushString = [NSString stringWithFormat:@"token=%@&items=%@&memberid=%@",token,[self dictoJSON:pushDic],[self getMemberId]];
-//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLValidProductBeforeSubOrderTag delegate:self];
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/validProductBeforeSubOrder.html?"];
+    
+//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
+//    NSString *pushString = nil;
+    
+//    pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
+//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
 //    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-
+    NSMutableArray *goodsArray = [[NSMutableArray alloc] init];
+//
+    if(chooseGoodsArray && chooseGoodsArray.count != 0)
+    {
+        for(int i=0;i<chooseGoodsArray.count;i++)
+        {
+            B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
+            
+            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 data.createDate,@"createDate",
+                                 data.colorId,@"colorId",
+                                 data.colorName,@"colorName",
+                                 data.colorPrice,@"colorPrice",
+                                 data.isAvaliable,@"isAvaliable",
+                                 data.isDelete,@"isDelete",
+                                 data.isSale,@"isSale",
+                                 data.isUse,@"isUse",
+                                 data.itemId,@"itemId",
+                                 data.memberId,@"memberId",
+                                 data.num,@"count",
+                                 data.price,@"productPrice",
+                                 data.productId,@"productId",
+                                 data.productItemPic,@"productItemPic",
+                                 data.productItemSku,@"productName",
+                                 data.productNum,@"productNum",
+                                 data.sShopName,@"sShopName",
+                                 data.shopId,@"shopId",
+                                 data.visitorId,@"visitorId",
+                                 data.productItmeTitle,@"productTitle",
+                                 data.recordId,@"recordId",
+                                 nil];
+            
+            [goodsArray addObject:dic];
+        }
+    }
+//
+    NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             goodsArray,@"goodsList",
+                             nil];
+    NSArray *dicArray = [[NSArray alloc] initWithObjects:pushDic, nil];
+    NSDictionary *myDic = [[NSDictionary alloc] initWithObjectsAndKeys:dicArray,@"shopList", nil];
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"validProductBeforeSubOrder",time];
+    NSString *token = [DCFCustomExtra md5:string];
+//
+//
+    NSString *memberId = [self getMemberId];
+    if([DCFCustomExtra validateString:memberId] == NO)
+    {
+        
+    }
+    else
+    {
+        NSString *pushString = [NSString stringWithFormat:@"token=%@&items=%@&memberid=%@",token,[self dictoJSON:myDic],memberId];
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLValidProductBeforeSubOrderTag delegate:self];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/validProductBeforeSubOrder.html?"];
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    }
 }
 
 
@@ -1674,6 +1698,66 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
     [countLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
     [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
+}
+
+#pragma  mark  -  滚动加载
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.refreshView egoRefreshScrollViewDidEndDragging:scrollView];
+    if (tv == (UITableView *)scrollView)
+    {
+        if (scrollView.contentSize.height > 0 && (scrollView.contentSize.height-scrollView.frame.size.height)>0)
+        {
+            if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
+            {
+//                [self loadRequest];
+            }
+        }
+    }
+}
+
+#pragma mark SCROLLVIEW DELEGATE METHODS
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    [self.refreshView egoRefreshScrollViewDidScroll:tv];
+}
+//
+#pragma mark -
+#pragma mark DATA SOURCE LOADING / RELOADING METHODS
+- (void)reloadViewDataSource
+{
+    _reloading = YES;
+    
+    [self loadRequest];
+}
+//
+- (void)doneLoadingViewData
+{
+    
+    _reloading = NO;
+    [self.refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:tv];
+}
+//
+//#pragma mark -
+//#pragma mark REFRESH HEADER DELEGATE METHODS
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    
+    [self reloadViewDataSource];
+}
+//
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    
+    return _reloading;
+}
+
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+    
+    return [NSDate date];
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

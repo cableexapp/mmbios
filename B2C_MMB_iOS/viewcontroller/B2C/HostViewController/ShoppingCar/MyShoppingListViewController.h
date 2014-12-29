@@ -8,17 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
+#import "CKRefreshControl.h"
+#import "EGORefreshTableHeaderView.h"
 
 #pragma mark - 购物车列表
 
-@interface MyShoppingListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,UIAlertViewDelegate>
+@interface MyShoppingListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,UIAlertViewDelegate,EGORefreshTableHeaderDelegate>
 {
     UITableView *tv;
     
     DCFConnectionUtil *conn;
     
     UITableViewCell *noCell;
+    
+    BOOL _reloading;
 }
+@property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 
 - (id) initWithDataArray:(NSArray *) arr;
 

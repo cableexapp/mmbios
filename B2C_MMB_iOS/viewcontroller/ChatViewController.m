@@ -14,6 +14,9 @@
 #import "Reachability.h"
 #import "DDLog.h"
 #define SUPPORT_IOS8 0
+
+int messageCountNum = 0;
+
 @interface ChatViewController ()
 {
     UITextView *messageField;
@@ -47,6 +50,7 @@
     UIButton *rightBtn;
     
     NSMutableArray *getArray;
+    
 }
 
 @end
@@ -160,11 +164,13 @@
     //接收客服会话通知栏推送
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
     
+    //重置聊天消息数据库查询条件
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reset:) name:@"resetMessageCheckCount" object:nil];
     ArrTimeCheck = [[NSMutableArray alloc]init];
 
     [self firstPageMessageData];
     
-    NSLog(@"viewDidLoad_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
+//    NSLog(@"viewDidLoad_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
     
     if ([self.appDelegate.isOnLine isEqualToString:@"unavailable"])
     {
@@ -184,7 +190,14 @@
         naviTitle.text = @"正在咨询";
         imageView.image = image;
     }
-//    [messageField becomeFirstResponder];
+}
+
+//重置聊天消息数据库查询条件
+-(void)reset:(NSNotification *)sender
+{
+//    NSLog(@"重置聊天消息数据库查询条件");
+    messageCountNum = 0;
+    pageIndex = 0;
 }
 
 //检查网络是否连接
@@ -208,9 +221,6 @@
 -(void)endChatConfrence
 {
     [xmppRoom leaveRoom];
-//    [self.appDelegate goOffline];
-//    [self.appDelegate disconnect];
-//    [self.appDelegate reConnect];
     [self pageFromWhere];
     self.appDelegate.isConnect = @"断开";
 }
@@ -227,12 +237,10 @@
     {
          self.appDelegate.isConnect = @"断开";
     }
-    
 }
 
 -(void)pageFromWhere
 {
-    NSLog(@"pageFromWhere");
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         if([self.fromStringFlag isEqualToString:@"工具栏客服"])
@@ -241,7 +249,7 @@
         }
         else
         {
-            NSLog(@"pop_家装线商品详情 = %d",self.navigationController.viewControllers.count);
+//            NSLog(@"pop_家装线商品详情 = %d",self.navigationController.viewControllers.count);
             [self .navigationController popViewControllerAnimated:YES];
         }
     }
@@ -251,7 +259,7 @@
         self.appDelegate.personName = nil;
       if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
         {
-            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
+//            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
             if (self.navigationController.viewControllers.count == 8)
             {
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:NO];
@@ -281,7 +289,7 @@
         {
             if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
             {
-                NSLog(@"页面数组_家装线商品详情 = %d",self.navigationController.viewControllers.count);
+//                NSLog(@"页面数组_家装线商品详情 = %d",self.navigationController.viewControllers.count);
                 if (self.navigationController.viewControllers.count == 8)
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
@@ -301,7 +309,7 @@
             }
             if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"商品快照在线客服"])
             {
-                NSLog(@"页面数组_商品快照在线客服 = %d",self.navigationController.viewControllers.count);
+//                NSLog(@"页面数组_商品快照在线客服 = %d",self.navigationController.viewControllers.count);
 
                 if (self.navigationController.viewControllers.count == 8)
                 {
@@ -336,7 +344,7 @@
 
         NSLog(@"running in the background");
         
-        _localNotification.applicationIconBadgeNumber = 1;
+//        _localNotification.applicationIconBadgeNumber = 1;
         _localNotification.timeZone = [NSTimeZone defaultTimeZone];
         _localNotification.alertBody = roomMessage;
         _localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
@@ -357,7 +365,7 @@
     isOn = @"unavailable";
     
     [messageField resignFirstResponder];
-    self.tableView.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
+    self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
     toolBar.hidden = YES;
     noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
     noNet.hidden = NO;
@@ -399,11 +407,13 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-      [super viewWillAppear:YES];
+    [super viewWillAppear:YES];
+    messageCountNum = 0;
+
     [self checkNet];
     if ([[self appDelegate].xmppStream isDisconnected])
     {
-//        noNetMessage.text = @"服务器未连接，请退出重新登录!";
+//       noNetMessage.text = @"服务器未连接，请退出重新登录!";
     }
     else
     {
@@ -447,8 +457,6 @@
     //聊天输入工具条
     if (!btn || !toolBar || !rightBtn || !keyboardButton || !sendButton || !messageField)
     {
-        
-        
         toolBar = [[UIView alloc] init];
         toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
         toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
@@ -482,7 +490,7 @@
         messageField.layer.cornerRadius =3;
         [toolBar addSubview:messageField];
     }
-    NSLog(@"self.appDelegate.uesrID =%@",self.appDelegate.uesrID);
+//    NSLog(@"self.appDelegate.uesrID =%@",self.appDelegate.uesrID);
     if (self.appDelegate.uesrID.length > 0)
     {
         [[NSUserDefaults standardUserDefaults] setObject:self.appDelegate.uesrID forKey:@"toJID"];
@@ -511,8 +519,8 @@
         }
     }
    
-    NSLog(@"咨询入口 = %@",self.fromStringFlag);
-    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
+//    NSLog(@"咨询入口 = %@",self.fromStringFlag);
+//    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
@@ -525,7 +533,6 @@
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     isKeyboardShowing = YES;
-    
     
     NSDictionary *userInfo = [notification userInfo];
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
@@ -549,11 +556,10 @@
      frame.origin.y -= keyboardRect.size.height;
      toolBar.frame = frame;
      
-    keyboardHeight = keyboardRect.size.height;
+     keyboardHeight = keyboardRect.size.height;
     }];
     if (isFirstShowKeyboard)
     {
-
         isFirstShowKeyboard = NO;
         isSystemBoardShow = !isButtonClicked;
     }
@@ -602,7 +608,7 @@
     if (isButtonClicked)
     {
         isButtonClicked = NO;
-        if ( ![messageField.inputView isEqual:faceBoard] )
+        if (![messageField.inputView isEqual:faceBoard])
         {
             isSystemBoardShow = NO;
             messageField.inputView = faceBoard;
@@ -647,6 +653,7 @@
 //接收消息
 -(void)getMessage:(NSNotification *)notification
 {
+    NSLog(@"收到消息++++++++++++++++++");
     //获得本地时间
     NSDate *dates = [NSDate date];
     NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
@@ -654,7 +661,8 @@
     NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
     [formatter setTimeZone:timeZone];
     NSString *loctime = [formatter stringFromDate:dates];
-#pragma mark - 数据检查
+
+   #pragma mark - 数据检查
     if (StrTimeCheck)
     {
         NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
@@ -682,7 +690,6 @@
     }
     //接收消息处理
     [self getMessageWithContent:notification.object time:loctime];
-    [self messageMusic];
     
     //刷新UI界面
     [self refreshUI];
@@ -699,22 +706,6 @@
 -(XMPPStream *)xmppStream
 {
     return [[self appDelegate] xmppStream];
-}
-
--(void)messageMusic
-{
-//    //消息音提示
-//    NSString *strPath = [[NSBundle mainBundle]pathForResource:@"sms01" ofType:@"mp3"];
-//    NSData * voiceData = [[NSData alloc]initWithContentsOfFile:strPath];
-//    messageSound = [[AVAudioPlayer alloc]initWithData:voiceData error:nil];
-//    if ([messageSound isPlaying])
-//    {
-//        [messageSound stop];
-//    }
-//    else
-//    {
-//        [messageSound play];
-//    }
 }
 
 //生成随机聊天ID
@@ -808,7 +799,6 @@
                         stringLabel = [NSString stringWithFormat:@"[买卖宝iOS提示:信息来自 - 商品快照]：\n%@\n%@",[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:0],message];
                         MessageTempFlag = stringLabel;
                         [[NSUserDefaults standardUserDefaults] setObject:MessageTempFlag forKey:@"MessageTempFlag"];
-                        
                     }
                     else
                     {
@@ -908,7 +898,6 @@
     {
         [xmppRoom joinRoomUsingNickname:self.appDelegate.chatRequestJID history:nil];
     }
-    
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
@@ -974,11 +963,12 @@
 {
     NSLog(@"有人退出群聊");
 }
+
 //有人在群里发言
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID
 {
-    NSLog(@"有人在群里发言 = %@\n\n",message);
-    tempJID =[NSString stringWithFormat:@"%@",occupantJID];
+    NSLog(@"有人在群里发言+++++++++++++++++++++++++++++ = %@\n\n",message);
+//    tempJID =[NSString stringWithFormat:@"%@",occupantJID];
     
 //    NSLog(@"tempJID = %@\n\n",tempJID);
 //    
@@ -989,7 +979,11 @@
     if (![[[tempJID componentsSeparatedByString:@"/"] objectAtIndex:1] isEqualToString:self.appDelegate.chatRequestJID])
     {
        roomMessage = [[message elementForName:@"body"] stringValue];
+        
       [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:roomMessage];
+        
+        NSLog(@"群里发言————————————————————————————");
+        
         if (messagePush == 1)
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
@@ -999,7 +993,7 @@
 
 -(void)firstPageMessageData
 {
-    pageIndex =1;
+    pageIndex =0;
     [self getMessageData];
 }
 
@@ -1015,21 +1009,28 @@
     //打开数据库
     int result = sqlite3_open([filePath UTF8String],&dataBase);
     
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+    
+    sqlite3_stmt *statement;
+    
     if (SQLITE_OK == result)
     {
         //创建SQL语句查询
-        //10条数据为一个区间
-        NSString *insert = [NSString stringWithFormat:@"select  o.* from (select * from messagelist where creater = %@ and (rec_user_id = %@  or user_id =%@) order by time desc) o limit %d,%d",@"0",@"0",@"0",(pageIndex-1)*10,pageIndex*10];
+        NSString *selectString;
         
-        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+        if (hasLogin == YES)
+        {
+            selectString = [NSString stringWithFormat:@"select * from messagelist where user_name = '%@' order by id  desc limit %d offset %d",tempUserName,10,pageIndex*10+messageCountNum];
+        }
+        else
+        {
+            selectString = [NSString stringWithFormat:@"select * from messagelist where user_name = '%@' order by id  desc limit %d offset %d",[self.appDelegate getUdid],10,pageIndex*10+messageCountNum];
+        }
+//        NSLog(@"查询条件selectString = %@\n\n",selectString);
         
-        NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
-
-        
-         NSLog(@"查询条件insert = %@\n\n",insert);
-         sqlite3_stmt *statement;
-        
-        if (sqlite3_prepare_v2(dataBase,[insert UTF8String],-1, &statement, nil)==SQLITE_OK)
+        if (sqlite3_prepare_v2(dataBase,[selectString UTF8String],-1, &statement, nil)==SQLITE_OK)
         {
             while (sqlite3_step(statement)==SQLITE_ROW)
             {
@@ -1045,73 +1046,41 @@
                  */
                 
                 //查询结果处理
-                NSString *rec_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 1) encoding:NSUTF8StringEncoding];
-                
                 NSString *sen_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 2) encoding:NSUTF8StringEncoding];
-                
-                NSString *sen_userName =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 3) encoding:NSUTF8StringEncoding];
                 
                 NSString *time =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 4) encoding:NSUTF8StringEncoding];
                 
                 NSString *msg =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 5) encoding:NSUTF8StringEncoding];
                 
-                NSLog(@"rec_userId = %@ sen_userId = %@ sen_userName = %@  time = %@ msg = %@\n\n",rec_userId,sen_userId,sen_userName,time,msg);
+//                NSLog(@"rec_userId = %@ sen_userId = %@ sen_userName = %@  time = %@ msg = %@\n\n",rec_userId,sen_userId,sen_userName,time,msg);
  
                 
-                NSLog(@"tempUserName = %@\n\n",tempUserName);
+//                NSLog(@"tempUserName = %@\n\n",tempUserName);
                 
                 NSDictionary * dic;
-                
-                if(hasLogin == YES)
+
+                if ([sen_userId isEqualToString:@"0"])
                 {
-                    if ([sen_userName isEqualToString:tempUserName])
-                    {
-                        if ([sen_userId isEqualToString:@"0"])
-                        {
-                            dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"0",@"type",@"icon01.png" ,@"icon",nil];
-                        }
-                        else
-                        {
-                             dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"1",@"type" ,@"icon02.png",@"icon",nil];
-                        }
-                    }
+                    dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"0",@"type",@"icon01.png" ,@"icon",nil];
                 }
                 else
                 {
-                    if ([sen_userName isEqualToString:[self.appDelegate getUdid]])
-                    {
-                        if ([sen_userId isEqualToString:@"0"])
-                        {
-                            dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"0",@"type",@"icon01.png" ,@"icon",nil];
-                        }
-                        else
-                        {
-                            dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"1",@"type" ,@"icon02.png",@"icon",nil];
-                        }
-                    }
+                     dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"1",@"type" ,@"icon02.png",@"icon",nil];
                 }
+                MessageFrame *messageFrame = [[MessageFrame alloc] init];
+                Message *message = [[Message alloc] init];
+                message.dict = dic;
                 
-                NSString *value = [dic objectForKey:@"content"];
+                messageFrame.message = message;
                 
-                if([value rangeOfString:@"null"].location !=NSNotFound || [value rangeOfString:@"(null)"].location !=NSNotFound)
-                {
-                    NSLog(@"字典为空");
-                }
-                else
-                {
-                    NSLog(@"字典不为空");
-                    MessageFrame *messageFrame = [[MessageFrame alloc] init];
-                    Message *message = [[Message alloc] init];
-                    message.dict = dic;
-                    
-                    messageFrame.message = message;
-                    
-                    messageFrame.showTime = NO;
-                    
-                    [_allMessagesFrame insertObject:messageFrame atIndex:0];
-                    
-                    NSLog(@"登录_allMessagesFrame = %@",_allMessagesFrame);
-                }
+                messageFrame.showTime = NO;
+                
+                [_allMessagesFrame insertObject:messageFrame atIndex:0];
+                
+                [getArray insertObject:messageFrame atIndex:0];
+                _allMessagesFrame = [self arrayWithMemberIsOnly:getArray];
+                
+//                NSLog(@"登录_allMessagesFrame = %@",_allMessagesFrame);
             }
         }
         sqlite3_finalize(statement);
@@ -1151,11 +1120,11 @@
         NSTimeInterval time = [date timeIntervalSinceDate:self.tempDate];
         return  abs(time)/60 >= 3?YES:NO;
     }
-//    else
-//    {
-//        self.tempDate = date;
-//        return YES;
-//    }
+    else
+    {
+        self.tempDate = date;
+        return YES;
+    }
     return YES;
 }
 
@@ -1182,7 +1151,6 @@
         sqlite3_close(dataBase);
     }
 }
-
 
 #pragma mark 给数据源增加内容
 - (void)addMessageWithContent:(NSString *)content time:(NSString *)time
@@ -1217,6 +1185,8 @@
     {
         [self recUserId:@"1" toUserId:@"0" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
     }
+    
+    messageCountNum++;
     messageFrame.message = message;
     [_allMessagesFrame addObject:messageFrame];
 }
@@ -1230,7 +1200,7 @@
     message.icon = @"icon02.png";
     message.type = MessageTypeOther;
 
-#pragma mark - 时间检测逻辑
+   #pragma mark - 时间检测逻辑
     NSString * StrIsShow = [ArrTimeCheck objectAtIndex:ArrTimeCheck.count-1];
     
     if ([StrIsShow isEqualToString:@"1"])
@@ -1241,6 +1211,9 @@
     {
         messageFrame.showTime = NO;
     }
+    messageCountNum++;
+    messageFrame.message = message;
+    [_allMessagesFrame addObject:messageFrame];
 
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
@@ -1249,15 +1222,15 @@
     if(hasLogin == YES)
     {
         [self recUserId:@"0" toUserId:@"1" toUserName:tempUserName toTime:message.time toMessage:message.content];
+        NSLog(@"登录状态_收消息——---------------------------------存储消息");
     }
     else
     {
         [self recUserId:@"0" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
+        NSLog(@"未登录状态_收消息——-------------------------------存储消息");
     }
 
-    messageFrame.message = message;
     
-    [_allMessagesFrame addObject:messageFrame];
 }
 
 #pragma mark - tableView数据源方法
@@ -1324,7 +1297,8 @@
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
 {
     [self reloadTableViewDataSource];
-    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1.5];
+    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.5];
+//    [self doneLoadingTableViewData];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view

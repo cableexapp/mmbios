@@ -415,6 +415,7 @@ NSString *strUserId = @"";
     else
     {
         [DCFStringUtil showNotice:@"您的账号在其他地方登录,请重新登录"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
     }
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteAppCartItems",time];
@@ -670,7 +671,6 @@ NSString *strUserId = @"";
     }
 }
 
-
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     if([self.db open] == YES)
@@ -887,7 +887,7 @@ NSString *strUserId = @"";
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-  NSLog(@"[IQ description] = %@\n\n",iq);
+//  NSLog(@"[IQ description] = %@\n\n",iq);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])
@@ -919,7 +919,7 @@ NSString *strUserId = @"";
 //收到消息
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-          NSLog(@"接收++++message = %@\n\n",message);
+//          NSLog(@"接收++++message = %@\n\n",message);
     //消息内容
     NSString *msg = [[message elementForName:@"body"] stringValue];
     NSString *from = [[message attributeForName:@"from"] stringValue];
@@ -931,7 +931,6 @@ NSString *strUserId = @"";
     {
         self.tempID = [[message.children objectAtIndex:0] elementForName:@"position"].stringValue;
     }
-    NSLog(@"接收++++queue_position = %@\n\n",[[message.children objectAtIndex:0] elementForName:@"position"].stringValue);
     
     if([from rangeOfString:@"workgroup"].location !=NSNotFound)
     {
@@ -1007,7 +1006,7 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
-        NSLog(@"presence = %@",presence);
+//        NSLog(@"presence = %@",presence);
 
     //    //取得好友状态
     NSString *presenceType = [presence type];

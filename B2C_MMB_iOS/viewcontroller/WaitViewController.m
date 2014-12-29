@@ -164,12 +164,11 @@ double secondsCountDown =0;
     
     //接收网络连接消息通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (NetisConnection:) name:@"NetisConnect" object:nil];
-
 }
 
 -(void)pageFromWhere_wait
 {
-    NSLog(@"等待页面 = %@",self.tempFrom);
+//    NSLog(@"等待页面 = %@",self.tempFrom);
     if ([self.tempFrom isEqualToString:@"首页在线客服"])
     {
         [self.tabBarController setSelectedIndex:0];
@@ -244,18 +243,15 @@ double secondsCountDown =0;
             }
         }
     }
-    NSLog(@"页面数组_wait = %d",self.navigationController.viewControllers.count);
+//    NSLog(@"页面数组_wait = %d",self.navigationController.viewControllers.count);
     
-    NSLog(@"页面数组_wait = %@",self.navigationController.viewControllers);
+//    NSLog(@"页面数组_wait = %@",self.navigationController.viewControllers);
 }
 
 -(void)goBack
 {
     [timeCountTimer invalidate];
     [self exitQueue];
-//    [self.appDelegate goOffline];
-//    [self.appDelegate disconnect];
-//    [self.appDelegate reConnect];
     [self pageFromWhere_wait];
 }
 
@@ -437,9 +433,6 @@ double secondsCountDown =0;
     [field3 addChild:value3];
   
     [[self xmppStream] sendElement:iq];
-
-     NSLog(@"请求IQ = %@",iq);
-
 }
 
 //请求连接客服

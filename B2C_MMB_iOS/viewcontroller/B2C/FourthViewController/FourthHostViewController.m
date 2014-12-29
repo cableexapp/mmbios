@@ -167,6 +167,10 @@
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     app.aliPayHasFinished = NO;
     
+    [self.tv setDataSource:self];
+    [self.tv setDelegate:self];
+    [self.tv setFrame:CGRectMake(0, 64, ScreenWidth, MainScreenHeight-64)];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self pushAndPopStyle];
@@ -186,8 +190,7 @@
     [self.tv addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
     
-    [self.tv setDataSource:self];
-    [self.tv setDelegate:self];
+
     
     rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
     [self.navigationController.navigationBar addSubview:rightButtonView];
@@ -265,7 +268,6 @@
         {
             if(result == 1)
             {
-                
                 if(intPage == 1)
                 {
                     [dataArray removeAllObjects];
@@ -898,6 +900,7 @@
     fourOrderDetailViewController.myOrderNum = [[dataArray objectAtIndex:indexPath.section] orderNum];
     fourOrderDetailViewController.myTime = [[dataArray objectAtIndex:indexPath.section] myOderDataTime];
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (NSString *) dealPic:(NSString *) picString
@@ -950,7 +953,7 @@
     //这部分暂时写死了
     custom.orderNum = @"201404234998770799";
     [self.navigationController pushViewController:custom animated:YES];
-    [self setHidesBottomBarWhenPushed:NO];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 #pragma mark - 评价
@@ -964,7 +967,7 @@
     disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:sender.tag/10] subDate]];
     
     [self.navigationController pushViewController:disCuss animated:YES];
-    [self setHidesBottomBarWhenPushed:NO];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 
@@ -975,8 +978,9 @@
     logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
     logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsId]];
     logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsNum]];
+    logisticsTrackingView.mylogisticsName = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsCompanay]];
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
-    [self setHidesBottomBarWhenPushed:NO];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 #pragma mark - 取消
@@ -988,7 +992,7 @@
     cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
     cancelOrderViewController.myStatus = [[dataArray objectAtIndex:sender.tag/10] status];
     [self.navigationController pushViewController:cancelOrderViewController animated:YES];
-    [self setHidesBottomBarWhenPushed:NO];
+//    [self setHidesBottomBarWhenPushed:NO];
 }
 
 #pragma mark - 在线支付

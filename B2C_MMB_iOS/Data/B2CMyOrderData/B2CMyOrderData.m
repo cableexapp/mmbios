@@ -70,6 +70,8 @@
         _logisticsId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsId"]];
 
         _logisticsNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsNum"]];
+        
+        _logisticsCompanay = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsCompanay"]];
     }
     return self;
 }

@@ -29,7 +29,8 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"物流详情"];
     self.navigationItem.titleView = top;
     
-    [self.logisticsNameLabel setText:self.mylogisticsNum];
+    NSLog(@"%@ %@ %@",self.mylogisticsNum,self.mylogisticsName,self.mylogisticsId);
+    [self.logisticsNameLabel setText:self.mylogisticsName];
     [self.logisticsNumLabel setText:self.mylogisticsId];
     
     logisticsTrackingTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingTableViewController"];
@@ -104,7 +105,38 @@
         logisticsTrackingTableViewController.isRequest = NO;
         [logisticsTrackingTableViewController.tableView reloadData];
         
-        [self.logisticsStatusLabel setText:[NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"state"]]];
+        NSString *statusString = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"state"]];
+        int statusInt = [statusString intValue];
+        if([DCFCustomExtra validateString:statusString] == NO)
+        {
+            [self.logisticsStatusLabel setText:[NSString stringWithFormat:@"%@",@"状态请求错误"]];
+            return;
+        }
+        switch (statusInt) {
+            case 0:
+                [self.logisticsStatusLabel setText:@"在途"];
+                break;
+            case 1:
+                [self.logisticsStatusLabel setText:@"已揽件"];
+                break;
+            case 2:
+                [self.logisticsStatusLabel setText:@"疑难"];
+                break;
+            case 3:
+                [self.logisticsStatusLabel setText:@"已签收"];
+                break;
+            case 4:
+                [self.logisticsStatusLabel setText:@"退签"];
+                break;
+            case 5:
+                [self.logisticsStatusLabel setText:@"派件中"];
+                break;
+            case 6:
+                [self.logisticsStatusLabel setText:@"退回中"];
+                break;
+            default:
+                break;
+        }
     }
 }
 

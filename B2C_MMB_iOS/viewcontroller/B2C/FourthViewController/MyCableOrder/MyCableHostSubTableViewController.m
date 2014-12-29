@@ -286,7 +286,7 @@
             
             NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
             
-            NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
+            NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"buyerPrice"]];
             
             NSString *theSpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]];
             
@@ -550,7 +550,7 @@
                     
                     NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
                     
-                    NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
+                    NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"buyerPrice"]];
                     
                     NSString *theSpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]];
                     

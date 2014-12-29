@@ -25,5 +25,6 @@
 
 @property (strong,nonatomic) NSString *mylogisticsId;
 @property (strong,nonatomic) NSString *mylogisticsNum;
+@property (strong,nonatomic) NSString *mylogisticsName;
 
 @end

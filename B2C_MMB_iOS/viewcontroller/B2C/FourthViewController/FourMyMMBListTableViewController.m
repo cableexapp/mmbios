@@ -111,8 +111,8 @@
 
 - (void) pushToVC
 {
-    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     [self setHidesBottomBarWhenPushed:YES];
+    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     fourthHostViewController.myStatus = @"";
     [self.navigationController pushViewController:fourthHostViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];

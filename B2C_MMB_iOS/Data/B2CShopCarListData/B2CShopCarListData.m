@@ -8,6 +8,7 @@
 
 #import "B2CShopCarListData.h"
 #import "MCDefine.h"
+#import "DCFCustomExtra.h"
 
 @implementation B2CShopCarListData
 
@@ -93,7 +94,10 @@
         _productNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productNum"]];
         
         _productName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productName"]];
-
+        if([DCFCustomExtra validateString:_productName] == NO)
+        {
+            _productName = @"";
+        }
     }
     return self;
 }

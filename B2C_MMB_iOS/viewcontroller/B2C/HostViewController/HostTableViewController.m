@@ -830,7 +830,6 @@ BOOL isPopShow = NO;
 
 - (NSInteger)popoverListView:(ZSYPopoverListView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
     return typeArray.count;
 }
 

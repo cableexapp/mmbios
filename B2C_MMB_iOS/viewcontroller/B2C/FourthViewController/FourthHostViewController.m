@@ -849,6 +849,13 @@
         fourOrderDetailViewController.showOrHideTradeBtn = YES;
     }
     
+    if(status == 5)
+    {
+        fourOrderDetailViewController.myStatus = @"5";
+        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+        fourOrderDetailViewController.showOrHideTradeBtn = NO;
+    }
+    
     if(status == 6)
     {
         int judgeStatus = [[[dataArray objectAtIndex:indexPath.section] juderstatus] intValue];
@@ -880,6 +887,14 @@
             }
         }
     }
+    
+    if(status == 7)
+    {
+        fourOrderDetailViewController.myStatus = @"7";
+        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+        fourOrderDetailViewController.showOrHideTradeBtn = NO;
+    }
+    
     fourOrderDetailViewController.myOrderNum = [[dataArray objectAtIndex:indexPath.section] orderNum];
     fourOrderDetailViewController.myTime = [[dataArray objectAtIndex:indexPath.section] myOderDataTime];
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];

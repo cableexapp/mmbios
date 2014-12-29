@@ -43,4 +43,6 @@
 @property (strong,nonatomic) NSString *theOrderNum;
 @property (strong,nonatomic) NSDictionary *theDic;
 
+@property (strong,nonatomic) NSString *myStatus;
+
 @end

@@ -10,6 +10,7 @@
 #import "MCDefine.h"
 #import "DCFCustomExtra.h"
 #import "DCFChenMoreCell.h"
+#import "LoginNaviViewController.h"
 
 @interface MyInquiryDetailTableViewController ()
 {
@@ -28,7 +29,7 @@
     
     NSDictionary *ctemsDic;
     
-    
+    NSString *ordernum;
 }
 @end
 
@@ -66,6 +67,20 @@
     [moreCell startAnimation];
 }
 
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    {
+        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+        
+    }
+    return memberid;
+}
+
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
@@ -79,6 +94,8 @@
         {
             if(result == 1)
             {
+                
+                
                 ctemsDic = [[NSDictionary alloc] initWithDictionary:[[dicRespon objectForKey:@"ctems"] lastObject]];
                 NSString *inquiryserial = [NSString stringWithFormat:@"%@",[ctemsDic objectForKey:@"inquiryserial"]];
                 
@@ -131,6 +148,21 @@
                 {
                     [moreCell noClasses];
                 }
+                
+                
+                NSString *time = [DCFCustomExtra getFirstRunTime];
+                NSString *string = [NSString stringWithFormat:@"%@%@",@"OrderDetailByNum",time];
+                NSString *token = [DCFCustomExtra md5:string];
+                
+                NSString *pushString = [NSString stringWithFormat:@"token=%@&inquiryid=%@&memberid=%@",token,self.myInquiryid,[self getMemberId]];
+                
+                conn = [[DCFConnectionUtil alloc] initWithURLTag:URLOrderDetailByNumTag delegate:self];
+                
+                NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/OrderDetailByNum.html?"];
+                
+                
+                [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+
             }
             else
             {
@@ -140,7 +172,20 @@
         }
         
     }
+    if(URLTag == URLOrderDetailByNumTag)
+    {
+        
+        ordernum = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"ordernum"]];
+        NSLog(@"ordernum = %@",ordernum);
+        
+        [self performSelectorOnMainThread:@selector(doOrdernum) withObject:nil waitUntilDone:YES];
+    }
     [self.tableView reloadData];
+}
+
+- (void) doOrdernum
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"doOrdernum" object:ordernum];
 }
 
 - (void)didReceiveMemoryWarning
@@ -320,7 +365,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell.contentView setBackgroundColor:[UIColor whiteColor]];
-        [cell setSelectionStyle:0];
+//        [cell setSelectionStyle:0];
         
         if(indexPath.section == 0)
         {

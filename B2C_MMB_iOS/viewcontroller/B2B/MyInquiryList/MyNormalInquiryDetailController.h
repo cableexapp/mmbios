@@ -19,6 +19,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
+@property (weak, nonatomic) IBOutlet UIView *buttomView;
 
 
 @end

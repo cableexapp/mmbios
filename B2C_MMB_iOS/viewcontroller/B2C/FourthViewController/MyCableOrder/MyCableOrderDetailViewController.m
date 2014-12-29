@@ -91,15 +91,6 @@
     [self.tableSubView addSubview:myCableDetailTableViewController.view];
     
 
-//    if(_b2bMyCableOrderListData.cableOrderTime.length == 0 || [_b2bMyCableOrderListData.cableOrderTime isKindOfClass:[NSNull class]])
-//    {
-//        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-85, 2, 80, 20)];
-//    }
-//    else
-//    {
-//        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime] WithSize:CGSizeMake(MAXFLOAT, 20)];
-//        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-5-size.width, 2, size.width, 20)];
-//    }
     
     NSString *orderNum = [NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial];
     [self.myOrderNumberLabel setFrame:CGRectMake(5, 0, 150, 20)];

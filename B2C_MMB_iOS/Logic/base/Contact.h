@@ -131,6 +131,7 @@ enum {
     //个人中心
     URLInquiryListTag,  //我的询价单查询（普通）
     URLInquiryDetailTag, //询价单详情(普通)
+    URLOrderDetailByNumTag,  
     URLInquiryListSpeedTag,  //我的询价单查询（快速）
     URLGetInquiryInfoTag,  //查询快速询价单对应的询价单详情
     URLB2BOrderListAllTag, //我的B2B全部电缆订单列表

@@ -16,6 +16,9 @@
 {
     UILabel *orderLabel;
     UILabel *statusLabel;
+    NSString *theStatus;
+    MyInquiryDetailTableViewController *tv;
+    NSString *notistr;
 }
 @end
 
@@ -38,22 +41,23 @@
 - (void) ChangeStatusDelegate:(NSArray *)array
 {
     NSString *orderNum = [array objectAtIndex:0];
-    NSString *status = [array lastObject];
+    theStatus = [array objectAtIndex:1];
     
     [orderLabel setText:[NSString stringWithFormat:@"编号: %@",orderNum]];
 
-    NSString *s = [NSString stringWithFormat:@"状态: %@",status];
+    NSString *s = [NSString stringWithFormat:@"状态: %@",theStatus];
     if(s.length > 4)
     {
         NSMutableAttributedString *status = [[NSMutableAttributedString alloc] initWithString:s];
-        [status addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
-        [status addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:134.0/255.0 green:0 blue:0 alpha:1.0] range:NSMakeRange(4, s.length-4)];
+        [status addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
+        [status addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:134.0/255.0 green:0 blue:0 alpha:1.0] range:NSMakeRange(3, s.length-3)];
         [statusLabel setAttributedText:status];
     }
     else
     {
         [statusLabel setText:s];
     }
+    
 }
 
 - (void)viewDidLoad
@@ -64,7 +68,9 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"询价单详情"];
     self.navigationItem.titleView = top;
     [self pushAndPopStyle];
-    MyInquiryDetailTableViewController *tv = [self.storyboard instantiateViewControllerWithIdentifier:@"myInquiryDetailTableViewController"];
+    
+    
+    tv = [self.storyboard instantiateViewControllerWithIdentifier:@"myInquiryDetailTableViewController"];
     tv.delegate = self;
     tv.myInquiryid = [NSString stringWithFormat:@"%@",self.myInquiryid];
     tv.addressDic = [[NSDictionary alloc] initWithDictionary:self.myDic];
@@ -76,7 +82,7 @@
     CGFloat height = (self.topView.frame.size.height-10)/2;
     CGSize size_order;
     NSString *tempMyOrderNum = [NSString stringWithFormat:@"%@",self.myOrderNum];
-    if(tempMyOrderNum.length == 0 || [tempMyOrderNum isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:tempMyOrderNum] == NO)
     {
         size_order = CGSizeMake(20, height);
     }
@@ -113,6 +119,40 @@
 
     [self.topView addSubview:statusLabel];
 
+
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doOrderNumber:) name:@"doOrdernum" object:nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"doOrdernum" object:ordernum];
+}
+
+- (void) doOrderNumber:(NSNotification *) noti
+{
+    notistr = (NSString *)[noti object];
+    if([DCFCustomExtra validateString:notistr] == NO)
+    {
+        [self.buttomView setFrame:CGRectMake(self.buttomView.frame.origin.x, self.buttomView.frame.origin.y, ScreenWidth, 0)];
+        [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, MainScreenHeight-64-self.topView.frame.size.height)];
+    }
+    else
+    {
+        [self.buttomView setFrame:CGRectMake(self.buttomView.frame.origin.x, self.buttomView.frame.origin.y, ScreenWidth, self.buttomView.frame.size.height)];
+        [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, MainScreenHeight-64-self.topView.frame.size.height-self.buttomView.frame.size.height)];
+        
+        UIButton *buttomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        buttomBtn.layer.cornerRadius = 5.0f;
+        buttomBtn.layer.borderWidth = 1.0f;
+        buttomBtn.layer.borderColor = [UIColor colorWithRed:235.0/255.0 green:141.0/255.0 blue:6.0/255.0 alpha:1.0].CGColor;
+        [buttomBtn setTitle:@"查看对应订单" forState:UIControlStateNormal];
+        [buttomBtn setFrame:CGRectMake(20, 5, self.buttomView.frame.size.width-40, self.buttomView.frame.size.height-10)];
+        [buttomBtn addTarget:self action:@selector(buttomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.buttomView addSubview:buttomBtn];
+    }
+    tv.view.frame = self.tableBackView.bounds;
+}
+
+- (void) buttomBtnClick:(UIButton *) sender
+{
+    
 }
 
 - (void)didReceiveMemoryWarning

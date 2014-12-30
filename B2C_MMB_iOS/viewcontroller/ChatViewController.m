@@ -89,8 +89,8 @@ int messageCountNum = 0;
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-//    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
-    self.tableView.backgroundColor = [UIColor yellowColor];
+    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+//    self.tableView.backgroundColor = [UIColor yellowColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
 //
@@ -158,7 +158,7 @@ int messageCountNum = 0;
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (noFriendOnLineMessage:) name:@"noFriendOnLine" object:nil];
     
     //接收客服会话通知栏推送
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
+//    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
 
     ArrTimeCheck = [[NSMutableArray alloc]init];
     
@@ -174,8 +174,8 @@ int messageCountNum = 0;
         noNetView.hidden = NO;
         noNetMessage.hidden = NO;
         [messageField resignFirstResponder];
-        
         toolBar.hidden = YES;
+        self.appDelegate.isConnect = @"断开";
     }
     else
     {
@@ -206,10 +206,9 @@ int messageCountNum = 0;
 {
     [xmppRoom leaveRoom];
     
-    [self pageFromWhere];
-    
     self.appDelegate.isConnect = @"断开";
-   
+    
+    [self pageFromWhere];
 }
 
 -(void)goBackActionToHome
@@ -217,7 +216,7 @@ int messageCountNum = 0;
     messagePush = @"1";
     [[NSUserDefaults standardUserDefaults] setObject:messagePush forKey:@"message_Push"];
    
-    [self pageFromWhere];
+   
     
     if ([self.appDelegate.isOnLine isEqualToString:@"available"])
     {
@@ -227,17 +226,24 @@ int messageCountNum = 0;
     {
          self.appDelegate.isConnect = @"断开";
     }
+    
+     [self pageFromWhere];
 }
 
 -(void)pageFromWhere
 {
+    NSLog(@"返回self.appDelegate.isConnect = %@",self.appDelegate.isConnect);
+    
+    NSLog(@"返回self.fromStringFlag = %@",self.fromStringFlag);
+    
+//    if ([self.appDelegate.isConnect isEqualToString:@"连接"] || [self.appDelegate.isConnect  rangeOfString:@"null"].location !=NSNotFound)
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         if([self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
             NSLog(@"111111111111");
             [self.tabBarController setSelectedIndex:0];
-        }
+        }      
         else
         {
             NSLog(@"2222222222222");
@@ -272,7 +278,7 @@ int messageCountNum = 0;
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
             }
         }
-        else if([self.fromStringFlag isEqualToString:@"工具栏客服"])
+       if([self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
              [self.tabBarController setSelectedIndex:0];
              NSLog(@"3333333333");
@@ -319,32 +325,32 @@ int messageCountNum = 0;
 
 -(void)chatRoomMessage:(NSNotification *)chatRoomMessage
 {
-    #if SUPPORT_IOS8
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-    {
-        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    }else
-  #endif
-    {
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-    }
-    UILocalNotification *_localNotification=[[UILocalNotification alloc] init];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-
-        NSLog(@"running in the background");
-        
-//        _localNotification.applicationIconBadgeNumber = 1;
-        _localNotification.timeZone = [NSTimeZone defaultTimeZone];
-        _localNotification.alertBody = roomMessage;
-        _localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
-        _localNotification.soundName= UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
-    });
-    self.appDelegate.pushChatView = @"push";
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
+//    #if SUPPORT_IOS8
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+//    {
+//        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+//    }else
+//  #endif
+//    {
+//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+//    }
+//    UILocalNotification *_localNotification=[[UILocalNotification alloc] init];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//
+//        NSLog(@"running in the background");
+//        
+////        _localNotification.applicationIconBadgeNumber = 1;
+//        _localNotification.timeZone = [NSTimeZone defaultTimeZone];
+//        _localNotification.alertBody = roomMessage;
+//        _localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+//        _localNotification.soundName= UILocalNotificationDefaultSoundName;
+//        [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
+//    });
+//    self.appDelegate.pushChatView = @"push";
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
 }
 
 - (AppDelegate *)appDelegate
@@ -363,6 +369,7 @@ int messageCountNum = 0;
     noNet.hidden = NO;
     noNetView.hidden = NO;
     noNetMessage.hidden = NO;
+    self.appDelegate.isConnect = @"断开";
 }
 
 //服务器繁忙提示
@@ -401,7 +408,7 @@ int messageCountNum = 0;
 {
     [super viewWillAppear:YES];
     messageCountNum = 0;
-
+    self.appDelegate.pushChatView = nil;
     [self checkNet];
     if ([[self appDelegate].xmppStream isDisconnected])
     {
@@ -415,14 +422,7 @@ int messageCountNum = 0;
         }
     }
 
-//    if (self.navigationController.viewControllers.count > 3)
-//    {
-//        NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
-//                    [ViewArray removeObjectAtIndex:0];
-//                    [ViewArray removeObjectAtIndex:1];
-//                   [ViewArray removeObjectAtIndex:2];
-//            [self.navigationController setViewControllers:ViewArray];
-//    }
+      [self firstPageMessageData];
      NSLog(@"聊天窗口self.navigationController.viewControllers = %@",self.navigationController.viewControllers);
     
     self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -525,7 +525,7 @@ int messageCountNum = 0;
         }
     }
    
-    [self firstPageMessageData];
+   
 //    NSLog(@"咨询入口 = %@",self.fromStringFlag);
 //    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
@@ -702,11 +702,13 @@ int messageCountNum = 0;
     [self getMessageWithContent:notification.object time:loctime timeIsShow:getTime];
     
 //    roomMessage = [[message elementForName:@"body"] stringValue];
-//      roomMessage = notification.object;
+      roomMessage = notification.object;
     
     //刷新UI界面
     [self refreshUI];
 }
+
+
 -(void)refreshUI
 {
     [self.tableView reloadData];
@@ -996,9 +998,9 @@ int messageCountNum = 0;
    
     if (![[[tempJID componentsSeparatedByString:@"/"] objectAtIndex:1] isEqualToString:self.appDelegate.chatRequestJID])
     {
-       roomMessage = [[message elementForName:@"body"] stringValue];
+//       roomMessage = [[message elementForName:@"body"] stringValue];
         
-      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:roomMessage];
+//      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:roomMessage];
         
 //        NSLog(@"群里发言————————————————————————————");
         
@@ -1013,6 +1015,15 @@ int messageCountNum = 0;
 {
     pageIndex =0;
     [self getMessageData];
+    
+    if (_allMessagesFrame.count > 0)
+    {
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_allMessagesFrame.count - 1
+                                                                  inSection:0]
+                              atScrollPosition:UITableViewScrollPositionBottom
+                                      animated:NO];
+    }
 }
 
 #pragma mark - 读取本地消息
@@ -1077,7 +1088,7 @@ int messageCountNum = 0;
                  */
                 
                 //查询结果处理
-                NSString *rec_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 1) encoding:NSUTF8StringEncoding];
+//                NSString *rec_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 1) encoding:NSUTF8StringEncoding];
                 
                 NSString *sen_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 2) encoding:NSUTF8StringEncoding];
                 
@@ -1106,17 +1117,17 @@ int messageCountNum = 0;
                 message.dict = dic;
                 messageFrame.message = message;
 
-                if ([rec_userId isEqualToString:@"1"])
-                {
-                    messageFrame.showTime = YES;
-                    NSLog(@"显示时间");
-                }
-                else
-                {
-                    messageFrame.showTime = NO;
-                    NSLog(@"不显示时间");
-                }
-
+//                if ([rec_userId isEqualToString:@"1"])
+//                {
+//                    messageFrame.showTime = YES;
+//                    NSLog(@"显示时间");
+//                }
+//                else
+//                {
+//                    messageFrame.showTime = NO;
+//                    NSLog(@"不显示时间");
+//                }
+                messageFrame.showTime = YES;
                 [_allMessagesFrame insertObject:messageFrame atIndex:0];
             }
         }
@@ -1228,6 +1239,15 @@ int messageCountNum = 0;
         [self recUserId:timeShowFlage toUserId:@"0" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
         NSLog(@"未登录状态_发送消息+++++++++++++++++++++++++存储消息");
     }
+    
+    if (_allMessagesFrame.count > 0)
+    {
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_allMessagesFrame.count - 1
+                                                                  inSection:0]
+                              atScrollPosition:UITableViewScrollPositionBottom
+                                      animated:NO];
+    }
 }
 
 -(void)getMessageWithContent:(NSString *)content time:(NSString *)time timeIsShow:(NSString *)timeShowFlage
@@ -1253,6 +1273,15 @@ int messageCountNum = 0;
     messageCountNum++;
     messageFrame.message = message;
     [_allMessagesFrame addObject:messageFrame];
+    
+    if (_allMessagesFrame.count > 0)
+    {
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_allMessagesFrame.count - 1
+                                                                  inSection:0]
+                              atScrollPosition:UITableViewScrollPositionBottom
+                                      animated:NO];
+    }
 }
 
 #pragma mark - tableView数据源方法

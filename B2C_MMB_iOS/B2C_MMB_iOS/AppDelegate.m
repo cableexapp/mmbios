@@ -52,6 +52,8 @@ NSString *strUserId = @"";
 @implementation AppDelegate
 {
     UIStoryboard *sb;
+    
+    NSString *messageg_me;
 }
 @synthesize mainQueue;
 @synthesize db;
@@ -131,18 +133,16 @@ NSString *strUserId = @"";
 -(NSString*) getUdid
 {
     NSString *udid = [PhoneHelper getDeviceId];
-    NSLog(@"%@",udid);
     return udid;
 }
 
 
-
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSLog(@"token = %@",deviceToken);
+//    NSLog(@"token = %@",deviceToken);
     NSString *token = [[deviceToken description]stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    NSLog(@"%@",token);
+//    NSLog(@"%@",token);
     [BPush registerDeviceToken:deviceToken]; // 必须
     [BPush bindChannel]; // 必须。可以在其它时机调用，只有在该方法返回（通过onMethod:response:回调）绑定成功时，app才能接收到Push消息。一个app绑定成功至少一次即可（如果access token变更请重新绑定）。
 }
@@ -157,7 +157,7 @@ NSString *strUserId = @"";
         self.appId = [res valueForKey:BPushRequestAppIdKey];
         self.baiduPushUserId = [res valueForKey:BPushRequestUserIdKey];
         self.channelId = [res valueForKey:BPushRequestChannelIdKey];
-        NSLog(@"%@  %@   %@",self.appId,self.baiduPushUserId,self.channelId);
+//        NSLog(@"%@  %@   %@",self.appId,self.baiduPushUserId,self.channelId);
         
         int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
         NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
@@ -173,7 +173,7 @@ NSString *strUserId = @"";
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     
-    NSLog(@"%@",userInfo);
+//    NSLog(@"%@",userInfo);
     
     NSString *pushTitle = [userInfo objectForKey:@"title"];
     NSString *description = [userInfo objectForKey:@"description"];
@@ -204,7 +204,7 @@ NSString *strUserId = @"";
 - (void)onlineConfigCallBack:(NSNotification *)note
 {
     
-    NSLog(@"online config has fininshed and note = %@", note.userInfo);
+//    NSLog(@"online config has fininshed and note = %@", note.userInfo);
 }
 
 - (void)umengTrack
@@ -670,23 +670,79 @@ NSString *strUserId = @"";
 //            }
 //        });
 //    });
+    //接收客服会话通知栏推送
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    [self reConnect];
+//    [self reConnect];
     [self queryRoster];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
-    [self reConnect];
+//    [self reConnect];
     [self queryRoster];
-    if ([pushChatView isEqualToString:@"push"])
+    UIApplicationState state = UIApplicationStateInactive;
+    NSLog(@"state = %zi",state);
+    
+    if ([self.pushChatView isEqualToString:@"push"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
     }
+    self.pushChatView = nil;
+    NSLog(@"程序进入前台+++++++++++++++");
+}
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+
+    NSLog(@"在线客服——收到后台推送 = %@",notification);
+    
+
+}
+
+-(void)chatRoomMessage:(NSNotification *)chatRoomMessage
+{
+#if SUPPORT_IOS8
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }else
+#endif
+    {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+    UILocalNotification *_localNotification;
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    
+        
+        if (!_localNotification)
+        {
+            _localNotification = [[UILocalNotification alloc] init];
+            //        _localNotification.applicationIconBadgeNumber = 1;
+            _localNotification.timeZone = [NSTimeZone defaultTimeZone];
+            _localNotification.alertBody = messageg_me;
+            _localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+            _localNotification.soundName= UILocalNotificationDefaultSoundName;
+            [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
+            NSLog(@"running in the background");
+        }
+        if (_localNotification)
+        {
+            [[UIApplication sharedApplication] cancelAllLocalNotifications];
+            return;
+        }
+        
+       
+//    });
+    self.appDelegate.pushChatView = @"push";
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -981,8 +1037,8 @@ NSString *strUserId = @"";
     }
     else if ([from rangeOfString:[PhoneHelper getDeviceId]].location ==NSNotFound)
     {
-        //        self.messageInfo = msg;
-//      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:msg];
+       messageg_me = [[message elementForName:@"body"] stringValue];
+      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_me];
         
         //获得本地时间
         NSDate *dates = [NSDate date];
@@ -994,13 +1050,13 @@ NSString *strUserId = @"";
         
         if(hasLogin == YES)
         {
-            [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:msg];
+            [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:messageg_me];
             NSLog(@"登录状态_收消息——---------------------------------存储消息");
             self.personName = to;
         }
         else
         {
-            [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:msg];
+            [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:messageg_me];
             NSLog(@"未登录状态_收消息——-------------------------------存储消息");
         }
         NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];

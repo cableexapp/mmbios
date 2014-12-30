@@ -59,15 +59,9 @@
         transition.delegate = self;
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:chatVC animated:NO];
-//         [self.navigationController pushViewController:[ViewArray objectAtIndex:2] animated:YES];
     }
     else
     {
-      
-//        [ViewArray removeObjectAtIndex:0];
-//        [ViewArray removeObjectAtIndex:1];
-//        [ViewArray removeObjectAtIndex:2];
-//        [self.navigationController setViewControllers:ViewArray];
         ChatListViewController *chatListVC = [[ChatListViewController alloc] init];
         chatListVC.fromString = @"工具栏客服";
 //        [self pushViewController:chatListVC animated:YES];

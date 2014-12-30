@@ -285,6 +285,8 @@ double secondsCountDown =0;
 
     if (self.appDelegate.uesrID != nil)
     {
+        NSLog(@"进入聊天 = %@",self.appDelegate.uesrID);
+        
         [timeCountTimer invalidate];
 
         ChatViewController *chatVC = [[ChatViewController alloc] init];

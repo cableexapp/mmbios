@@ -593,6 +593,7 @@ BOOL isPopShow = NO;
 
 -(void)goToChatView:(NSNotification *)goToChat
 {
+    [self setHidesBottomBarWhenPushed:YES];
     ChatViewController *chatVC = [[ChatViewController alloc] init];
     chatVC.fromStringFlag = @"首页在线客服";
     CATransition *transition = [CATransition animation];
@@ -603,6 +604,7 @@ BOOL isPopShow = NO;
     transition.delegate = self;
     [self.navigationController.view.layer addAnimation:transition forKey:nil];
     [self.navigationController pushViewController:chatVC animated:NO];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) section1BtnClick:(UIButton *) sender

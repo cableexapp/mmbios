@@ -651,7 +651,25 @@ NSString *strUserId = @"";
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     //程序进入后台时将xmpp下线
-    [self goOffline];
+//    [self goOffline];
+//    UIApplication*   app = [UIApplication sharedApplication];
+//    __block    UIBackgroundTaskIdentifier bgTask;
+//    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (bgTask != UIBackgroundTaskInvalid)
+//            {
+//                bgTask = UIBackgroundTaskInvalid;
+//            }
+//        });
+//    }];
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if (bgTask != UIBackgroundTaskInvalid)
+//            {
+//                bgTask = UIBackgroundTaskInvalid;
+//            }
+//        });
+//    });
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -926,18 +944,24 @@ NSString *strUserId = @"";
     NSString *type= [[message attributeForName:@"type"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
     
+    NSLog(@"from = %@\n\n",from);
+    
+    NSLog(@"to = %@\n\n",to);
    
+    //排队等候，队列位置
     if([DCFCustomExtra validateString:[[message.children objectAtIndex:0] elementForName:@"position"].stringValue] == YES)
     {
         self.tempID = [[message.children objectAtIndex:0] elementForName:@"position"].stringValue;
     }
     
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    
+    NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+    
     if([from rangeOfString:@"workgroup"].location !=NSNotFound)
     {
         self.personName = to;
-        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
         
-        NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
      
         if(hasLogin == YES)
         {
@@ -958,7 +982,32 @@ NSString *strUserId = @"";
     else if ([from rangeOfString:[PhoneHelper getDeviceId]].location ==NSNotFound)
     {
         //        self.messageInfo = msg;
-        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:msg];
+//      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:msg];
+        
+        //获得本地时间
+        NSDate *dates = [NSDate date];
+        NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+        NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
+        [formatter setTimeZone:timeZone];
+        NSString *loctime = [formatter stringFromDate:dates];
+        
+        if(hasLogin == YES)
+        {
+            [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:msg];
+            NSLog(@"登录状态_收消息——---------------------------------存储消息");
+            self.personName = to;
+        }
+        else
+        {
+            [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:msg];
+            NSLog(@"未登录状态_收消息——-------------------------------存储消息");
+        }
+        NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
+        if ([tempMessagePush isEqualToString:@"1"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
+        }
     }
     
     NSRange range=[from rangeOfString:@"@"];
@@ -971,9 +1020,11 @@ NSString *strUserId = @"";
 }
 
 // 发送消息回调方法
-- (void)sendMessage:(NSString *)message toUser:(NSString *)user
+- (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
 {
+    NSLog(@"发送消息回调方法sender = ++++++++++%@\n\n",sender);
     
+    NSLog(@"发送消息回调方法message = ++++++++++%@\n\n",message);
 }
 
 - (void)XMPPAddFriendSubscribe:(NSString *)name
@@ -1079,6 +1130,31 @@ NSString *strUserId = @"";
         sqlite3_close(dataBase);
     }
 }
+
+#pragma mark - 数据库存入消息
+//数据存入本地数据库
+-(void)recUserId:(NSString *)recUserId toUserId:(NSString *)userId toUserName:(NSString *)userName toTime:(NSString *)time toMessage:(NSString *)message
+{
+    sqlite3 * dataBase = NULL;
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documents = [paths objectAtIndex:0];
+    NSString *filePath = [documents stringByAppendingPathComponent:@"ChatMessageList.sqlite"];
+    //打开数据库
+    int result = sqlite3_open([filePath UTF8String],&dataBase);
+    
+    if (SQLITE_OK == result)
+    {
+        NSString *insert = [NSString stringWithFormat:@"INSERT INTO MESSAGELIST(rec_user_id, user_id, user_name, time, message,creater) values ('%@','%@','%@','%@','%@','%@')",recUserId,userId,userName,time,message,@"0"];
+        
+        char * error = NULL;
+        
+        //obj-c字符串和c字符串需要转换
+        sqlite3_exec(dataBase, [insert UTF8String], nil, nil, &error);
+        sqlite3_close(dataBase);
+    }
+}
+
 
 
 @end

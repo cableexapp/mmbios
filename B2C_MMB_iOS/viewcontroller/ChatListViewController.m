@@ -10,7 +10,7 @@
 #import "WaitViewController.h"
 #import "Reachability.h"
 #import "ChatViewController.h"
-
+#import "HostTableViewController.h"
 @interface ChatListViewController ()
 {
     UILabel *noNet;
@@ -131,9 +131,14 @@
     //接收分组列表
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (memberGroupList:) name:@"memberGroupName" object:nil];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backToTabBarIm:) name:@"tabbar_im" object:nil];
+   
 //    NSLog(@"self.appDelegate.roster = %@",self.appDelegate.roster);
     
 }
+
+
 
 -(void)viewWillAppear:(BOOL)animated
 {    
@@ -143,7 +148,7 @@
     //检查服务器是否连接
     if ([[self appDelegate].xmppStream isDisconnected])
     {
-//        [self showTopMessage:@"服务器未连接，请稍后重试！"];
+//        [self showTopMessage:@"服务器未连接，请稍后重试!"];
     }
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     
@@ -158,8 +163,6 @@
             [view setHidden:YES];
         }
     }
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetMessageCheckCount" object:nil];
 }
 
 //网络连接后刷新加载客服列表
@@ -168,6 +171,7 @@
     if (self.appDelegate.roster.count == 0)
     {
         [self.appDelegate reConnect];
+        [self.appDelegate queryRoster];
         [self.memberTableView removeFromSuperview];
         self.tempArray = self.appDelegate.roster;
         self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
@@ -256,6 +260,19 @@
     [self.view addSubview:self.memberTableView];
 }
 
+-(void)backToTabBarIm:(NSNotification *)sender
+{
+//    [self.tabBarController setSelectedIndex:0];
+//    NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
+    //            [ViewArray removeObjectAtIndex:0];
+    //            [ViewArray removeObjectAtIndex:1];
+//    [ViewArray removeAllObjects];
+//    [self.navigationController setViewControllers:ViewArray];
+//    [self.navigationController.tabBarController.tabBar setHidden:NO];
+    NSLog(@"44444444444");
+    
+}
+
 -(void)goBackAction
 {
     if ([self.fromString isEqualToString:@"首页在线客服"] || [self.fromString isEqualToString:@"来自快速询价客服"] || [self.fromString isEqualToString:@"热门型号在线咨询"] || [self.fromString isEqualToString:@"热门分类在线客服"] || [self.fromString isEqualToString:@"场合选择客服"] || [self.fromString isEqualToString:@"场合选择提交成功客服"] || [self.fromString isEqualToString:@"热门型号提交成功在线客服"] || [self.fromString isEqualToString:@"商品快照在线客服"])
@@ -265,6 +282,8 @@
     if ([self.fromString isEqualToString:@"工具栏客服"])
     {
         [self.tabBarController setSelectedIndex:0];
+
+//        [self.navigationController popViewControllerAnimated:YES];
     }
     if ([self.fromString rangeOfString:@"@"].location != NSNotFound)
     {
@@ -334,7 +353,7 @@
     waitVC.tempGroup = [NSString stringWithFormat:@"%@",self.tempArray[indexPath.row]];
     waitVC.tempFrom = self.fromString;
     CATransition *transition = [CATransition animation];
-    transition.duration = 0.5f;
+    transition.duration = 0.4f;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transition.type =  kCATransitionMoveIn;
     transition.subtype =  kCATransitionFromTop;

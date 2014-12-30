@@ -391,6 +391,13 @@ BOOL isPopShow = NO;
     
     UITapGestureRecognizer *popShopCarTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popShopCarTap:)];
     [secondBarView addGestureRecognizer:popShopCarTap];
+    
+//    UIView *thirdBarView = [[UIView alloc] init];
+//    thirdBarView.frame = CGRectMake((self.view.frame.size.width/5)*2, 0, self.view.frame.size.width/5, 49);
+//    [self.navigationController.tabBarController.tabBar addSubview:thirdBarView];
+//    
+//    UITapGestureRecognizer *IMTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(IMTap:)];
+//    [thirdBarView addGestureRecognizer:IMTap];
   
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
     
@@ -478,10 +485,45 @@ BOOL isPopShow = NO;
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+-(void)IMTap:(UITapGestureRecognizer *)sender
+{
+    NSLog(@"工具栏IM点击");
+//    [self.navigationController.tabBarController setSelectedIndex:2];
+#pragma mark - 在线客服
+    if ([self.appDelegate.isConnect isEqualToString:@"连接"])
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        ChatViewController *chatVC = [[ChatViewController alloc] init];
+        chatVC.fromStringFlag = @"工具栏客服";
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.4f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatVC animated:NO];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+    else
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        ChatListViewController *chatVC = [[ChatListViewController alloc] init];
+        chatVC.fromString = @"工具栏客服";
+        CATransition *transition = [CATransition animation];
+        transition.duration = 0.5f;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type =  kCATransitionMoveIn;
+        transition.subtype =  kCATransitionFromTop;
+        transition.delegate = self;
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:chatVC animated:NO];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+}
+
 - (void)popShopCarTap:(UITapGestureRecognizer *)sender
 {
-     NSLog(@"首页-------");
-//    [self.navigationController.tabBarController setSelectedIndex:0];
     if (isgo == 1)
     {
         if (isPopShow == YES)
@@ -552,7 +594,15 @@ BOOL isPopShow = NO;
 -(void)goToChatView:(NSNotification *)goToChat
 {
     ChatViewController *chatVC = [[ChatViewController alloc] init];
-    [self presentViewController:chatVC animated:YES completion:nil];
+    chatVC.fromStringFlag = @"首页在线客服";
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.4f;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    transition.type =  kCATransitionMoveIn;
+    transition.subtype =  kCATransitionFromTop;
+    transition.delegate = self;
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:chatVC animated:NO];
 }
 
 - (void) section1BtnClick:(UIButton *) sender

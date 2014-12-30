@@ -27,8 +27,6 @@ int messageCountNum = 0;
     UIButton *sendButton;
     NSString *friendName;
     NSString *tempFriendName;
-    UIImage *image;
-    UIImageView *imageView;
     NSMutableArray *array;
     NSMutableArray *tempMessage;
     NSTimer *timer;
@@ -40,13 +38,17 @@ int messageCountNum = 0;
     UILabel *noNetMessage;
     NSString *stringLabel;
     NSString *roomMessage;
-    int messagePush;
+    
+    NSString *messagePush;
+    
     NSString *isOn;
+    
     NSString *MessageFlag; //商品详情是否发送商品网址链接标记
     
     NSString *MessageTempFlag; //商品快照是否发送商品网址链接标记
     
     UIButton *btn;
+    
     UIButton *rightBtn;
     
     NSMutableArray *getArray;
@@ -83,14 +85,15 @@ int messageCountNum = 0;
     naviTitle.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = naviTitle;
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-108) style:UITableViewStylePlain];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-49) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
-
+//    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+    self.tableView.backgroundColor = [UIColor yellowColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
-    
+//
     getArray = [[NSMutableArray alloc] init];
     
     //下拉加载
@@ -102,14 +105,7 @@ int messageCountNum = 0;
         _refreshHeaderView = EGOview;
     }
     [_refreshHeaderView refreshLastUpdatedDate];
-    //在线状态
-    image = [UIImage imageNamed:@"online.png"];
-    imageView = [[UIImageView alloc] init];
-//    imageView.frame = CGRectMake(115, 38, 10, 10);
-    imageView.frame = CGRectMake(105, 17, 10, 10);
-//    [self.view insertSubview:imageView atIndex:2];
-//    [self.navigationController.navigationBar addSubview:imageView];
-    
+
     //自定义网络状态通知视图
     noNet = [[UILabel alloc] init];
     noNet.frame = CGRectMake(0, 0, self.view.frame.size.width,32);
@@ -163,41 +159,29 @@ int messageCountNum = 0;
     
     //接收客服会话通知栏推送
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
-    
-    //重置聊天消息数据库查询条件
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reset:) name:@"resetMessageCheckCount" object:nil];
-    ArrTimeCheck = [[NSMutableArray alloc]init];
 
-    [self firstPageMessageData];
+    ArrTimeCheck = [[NSMutableArray alloc]init];
     
 //    NSLog(@"viewDidLoad_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
     
     if ([self.appDelegate.isOnLine isEqualToString:@"unavailable"])
     {
         NSLog(@"客服已经离开!");
+        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
         naviTitle.text = @"客服已经离开";
         noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
         noNet.hidden = NO;
         noNetView.hidden = NO;
         noNetMessage.hidden = NO;
         [messageField resignFirstResponder];
-        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+        
         toolBar.hidden = YES;
     }
     else
     {
          NSLog(@"客服在线!");
         naviTitle.text = @"正在咨询";
-        imageView.image = image;
     }
-}
-
-//重置聊天消息数据库查询条件
--(void)reset:(NSNotification *)sender
-{
-//    NSLog(@"重置聊天消息数据库查询条件");
-    messageCountNum = 0;
-    pageIndex = 0;
 }
 
 //检查网络是否连接
@@ -221,14 +205,20 @@ int messageCountNum = 0;
 -(void)endChatConfrence
 {
     [xmppRoom leaveRoom];
+    
     [self pageFromWhere];
+    
     self.appDelegate.isConnect = @"断开";
+   
 }
 
 -(void)goBackActionToHome
 {
-    messagePush = 1;
+    messagePush = @"1";
+    [[NSUserDefaults standardUserDefaults] setObject:messagePush forKey:@"message_Push"];
+   
     [self pageFromWhere];
+    
     if ([self.appDelegate.isOnLine isEqualToString:@"available"])
     {
         self.appDelegate.isConnect = @"连接";
@@ -245,19 +235,31 @@ int messageCountNum = 0;
     {
         if([self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
-            [self.tabBarController setSelectedIndex:0];
+            NSLog(@"111111111111");
+          
+          [self .navigationController popToRootViewControllerAnimated:YES];
+//            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+            
+//          [self .navigationController popViewControllerAnimated:YES];
+//          [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar_im" object:nil];
+//            [self.tabBarController setSelectedIndex:0];
+//            NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
+//            [ViewArray removeObjectAtIndex:0];
+//            [ViewArray removeObjectAtIndex:1];
+//            [ViewArray removeObjectAtIndex:2];
+//            [self.navigationController setViewControllers:ViewArray];
         }
         else
         {
-//            NSLog(@"pop_家装线商品详情 = %d",self.navigationController.viewControllers.count);
-            [self .navigationController popViewControllerAnimated:YES];
+            NSLog(@"2222222222222");
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
     else
     {
         self.appDelegate.uesrID = nil;
         self.appDelegate.personName = nil;
-      if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"])
+      if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"] || [self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
 //            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
             if (self.navigationController.viewControllers.count == 8)
@@ -283,7 +285,30 @@ int messageCountNum = 0;
         }
         else if([self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
-             [self.tabBarController setSelectedIndex:0];
+            
+            
+//            NSMutableArray *navigationArray = [[NSMutableArray alloc] initWithArray: self.navigationController.viewControllers];
+//            
+//            // [navigationArray removeAllObjects]; // This is just for remove all view controller from navigation stack.
+//            [navigationArray removeObjectAtIndex: 2]; // You can pass your index here
+//            self.navigationController.viewControllers = navigationArray;
+          
+
+            
+//             [self.tabBarController setSelectedIndex:0];
+            
+            
+            
+            
+//            NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
+//            [ViewArray removeObjectAtIndex:0];
+//            [ViewArray removeObjectAtIndex:1];
+//            [ViewArray removeAllObjects];
+//            [self.navigationController setViewControllers:ViewArray];
+            [self .navigationController popToRootViewControllerAnimated:YES];
+//             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar_im" object:nil];
+             NSLog(@"3333333333");
         }
         if ([self.fromStringFlag rangeOfString:@"@"].location != NSNotFound)
         {
@@ -402,7 +427,7 @@ int messageCountNum = 0;
 
 -(void)viewDidDisappear:(BOOL)animated
 {
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
+//    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -423,7 +448,17 @@ int messageCountNum = 0;
         }
     }
 
-    self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+//    if (self.navigationController.viewControllers.count > 3)
+//    {
+//        NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
+//                    [ViewArray removeObjectAtIndex:0];
+//                    [ViewArray removeObjectAtIndex:1];
+//                   [ViewArray removeObjectAtIndex:2];
+//            [self.navigationController setViewControllers:ViewArray];
+//    }
+     NSLog(@"聊天窗口self.navigationController.viewControllers = %@",self.navigationController.viewControllers);
+    
+    self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     self.hidesBottomBarWhenPushed = YES;
@@ -435,7 +470,8 @@ int messageCountNum = 0;
         }
     }
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    messagePush = 0;
+ 
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"message_Push"];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0,0, 15, 22);
@@ -457,6 +493,9 @@ int messageCountNum = 0;
     //聊天输入工具条
     if (!btn || !toolBar || !rightBtn || !keyboardButton || !sendButton || !messageField)
     {
+        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-49);
+      
+        
         toolBar = [[UIView alloc] init];
         toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
         toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
@@ -519,6 +558,7 @@ int messageCountNum = 0;
         }
     }
    
+    [self firstPageMessageData];
 //    NSLog(@"咨询入口 = %@",self.fromStringFlag);
 //    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
@@ -653,7 +693,6 @@ int messageCountNum = 0;
 //接收消息
 -(void)getMessage:(NSNotification *)notification
 {
-    NSLog(@"收到消息++++++++++++++++++");
     //获得本地时间
     NSDate *dates = [NSDate date];
     NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
@@ -662,7 +701,8 @@ int messageCountNum = 0;
     [formatter setTimeZone:timeZone];
     NSString *loctime = [formatter stringFromDate:dates];
 
-   #pragma mark - 数据检查
+#pragma mark - 数据检查
+    NSString *getTime;
     if (StrTimeCheck)
     {
         NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
@@ -676,20 +716,26 @@ int messageCountNum = 0;
         if (abs(time/60) < 3)
         {
             [ArrTimeCheck addObject:@"0"];
+            getTime = @"0";
         }
         else if (abs(time/60) >= 3)
         {
             StrTimeCheck = loctime;
             [ArrTimeCheck addObject:@"1"];
+            getTime = @"1";
         }
     }
     else
     {
         StrTimeCheck = loctime;
         [ArrTimeCheck addObject:@"1"];
+        getTime = @"1";
     }
     //接收消息处理
-    [self getMessageWithContent:notification.object time:loctime];
+    [self getMessageWithContent:notification.object time:loctime timeIsShow:getTime];
+    
+//    roomMessage = [[message elementForName:@"body"] stringValue];
+//      roomMessage = notification.object;
     
     //刷新UI界面
     [self refreshUI];
@@ -829,9 +875,10 @@ int messageCountNum = 0;
             NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
             [formatter setTimeZone:timeZone];
             NSString *loctime = [formatter stringFromDate:dates];
-            NSLog(@"locttime = %@",loctime);
-                
-           #pragma mark - 数据检查
+//            NSLog(@"locttime = %@",loctime);
+            
+#pragma mark - 数据检查
+            NSString *sendTime;
             if (StrTimeCheck)
             {
                 NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
@@ -843,27 +890,31 @@ int messageCountNum = 0;
                 //增加一个范围时间。
                 NSTimeInterval time=[endTime timeIntervalSinceDate:beginTime];
                 
+                
                 if (abs(time)/60 < 3)
                 {
                     [ArrTimeCheck addObject:@"0"];
+                    sendTime = @"0";
                 }
                 else if(abs(time)/60 >= 3)
                 {
                     StrTimeCheck = loctime;
                     [ArrTimeCheck addObject:@"1"];
+                    sendTime = @"1";
                 }
             }
             else
             {
                 StrTimeCheck = loctime;
                 [ArrTimeCheck addObject:@"1"];
+                sendTime = @"1";
             }
             messageField.text = @"";
             
            [keyboardButton setBackgroundImage:[UIImage imageNamed:@"board_emoji"] forState:UIControlStateNormal];
             
             //发送消息处理
-            [self addMessageWithContent:message time:loctime];
+            [self addMessageWithContent:message time:loctime timeIsShow:sendTime];
             
             //刷新UI界面
             [self refreshUI];
@@ -875,7 +926,7 @@ int messageCountNum = 0;
 -(void)creatRoom
 {
     naviTitle.text = @"正在咨询";
-    imageView.image = image;
+    
     //初始化聊天室
     XMPPRoomCoreDataStorage *roomMemory = [[XMPPRoomCoreDataStorage alloc] init];
     
@@ -967,8 +1018,8 @@ int messageCountNum = 0;
 //有人在群里发言
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID
 {
-    NSLog(@"有人在群里发言+++++++++++++++++++++++++++++ = %@\n\n",message);
-//    tempJID =[NSString stringWithFormat:@"%@",occupantJID];
+//    NSLog(@"有人在群里发言+++++++++++++++++++++++++++++ = %@\n\n",message);
+    tempJID =[NSString stringWithFormat:@"%@",occupantJID];
     
 //    NSLog(@"tempJID = %@\n\n",tempJID);
 //    
@@ -982,12 +1033,12 @@ int messageCountNum = 0;
         
       [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:roomMessage];
         
-        NSLog(@"群里发言————————————————————————————");
+//        NSLog(@"群里发言————————————————————————————");
         
-        if (messagePush == 1)
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
-        }
+//        if (messagePush == 1)
+//        {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
+//        }
     }
 }
 
@@ -1015,8 +1066,21 @@ int messageCountNum = 0;
     
     sqlite3_stmt *statement;
     
+//    NSString *delateString = @"delete from messagelist where id not in (select max(id) from messagelist group by time)";
+    
     if (SQLITE_OK == result)
     {
+//        NSLog(@"删除重复数据111111\n\n");
+//        if (sqlite3_prepare_v2(dataBase,[delateString UTF8String],-1, &statement, nil)==SQLITE_OK)
+//        {
+//            NSLog(@"删除重复数据222222\n\n");
+//            
+//            while (sqlite3_step(statement)==SQLITE_ROW)
+//            {
+//                NSLog(@"删除重复数据 = %@",delateString);
+//            }
+//        }
+
         //创建SQL语句查询
         NSString *selectString;
         
@@ -1046,6 +1110,8 @@ int messageCountNum = 0;
                  */
                 
                 //查询结果处理
+                NSString *rec_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 1) encoding:NSUTF8StringEncoding];
+                
                 NSString *sen_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 2) encoding:NSUTF8StringEncoding];
                 
                 NSString *time =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 4) encoding:NSUTF8StringEncoding];
@@ -1067,20 +1133,24 @@ int messageCountNum = 0;
                 {
                      dic = [[NSDictionary alloc]initWithObjectsAndKeys:msg,@"content",time,@"time",@"1",@"type" ,@"icon02.png",@"icon",nil];
                 }
+                
                 MessageFrame *messageFrame = [[MessageFrame alloc] init];
                 Message *message = [[Message alloc] init];
                 message.dict = dic;
-                
                 messageFrame.message = message;
-                
-                messageFrame.showTime = NO;
-                
+
+                if ([rec_userId isEqualToString:@"1"])
+                {
+                    messageFrame.showTime = YES;
+                    NSLog(@"显示时间");
+                }
+                else
+                {
+                    messageFrame.showTime = NO;
+                    NSLog(@"不显示时间");
+                }
+
                 [_allMessagesFrame insertObject:messageFrame atIndex:0];
-                
-                [getArray insertObject:messageFrame atIndex:0];
-                _allMessagesFrame = [self arrayWithMemberIsOnly:getArray];
-                
-//                NSLog(@"登录_allMessagesFrame = %@",_allMessagesFrame);
             }
         }
         sqlite3_finalize(statement);
@@ -1153,7 +1223,7 @@ int messageCountNum = 0;
 }
 
 #pragma mark 给数据源增加内容
-- (void)addMessageWithContent:(NSString *)content time:(NSString *)time
+- (void)addMessageWithContent:(NSString *)content time:(NSString *)time timeIsShow:(NSString *)timeShowFlage
 {
     MessageFrame *messageFrame = [[MessageFrame alloc] init];
     Message *message = [[Message alloc] init];
@@ -1172,6 +1242,10 @@ int messageCountNum = 0;
     {
         messageFrame.showTime = NO;
     }
+    
+    messageCountNum++;
+    messageFrame.message = message;
+    [_allMessagesFrame addObject:messageFrame];
 
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
@@ -1179,19 +1253,17 @@ int messageCountNum = 0;
     
     if(hasLogin == YES)
     {
-         [self recUserId:@"1" toUserId:@"0" toUserName:tempUserName toTime:message.time toMessage:message.content];
+        [self recUserId:timeShowFlage toUserId:@"0" toUserName:tempUserName toTime:message.time toMessage:message.content];
+         NSLog(@"登录状态_发送消息+++++++++++++++++++++++++存储消息");
     }
     else
     {
-        [self recUserId:@"1" toUserId:@"0" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
+        [self recUserId:timeShowFlage toUserId:@"0" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
+        NSLog(@"未登录状态_发送消息+++++++++++++++++++++++++存储消息");
     }
-    
-    messageCountNum++;
-    messageFrame.message = message;
-    [_allMessagesFrame addObject:messageFrame];
 }
 
--(void)getMessageWithContent:(NSString *)content time:(NSString *)time
+-(void)getMessageWithContent:(NSString *)content time:(NSString *)time timeIsShow:(NSString *)timeShowFlage
 {
     MessageFrame *messageFrame = [[MessageFrame alloc] init];
     Message *message = [[Message alloc] init];
@@ -1214,23 +1286,6 @@ int messageCountNum = 0;
     messageCountNum++;
     messageFrame.message = message;
     [_allMessagesFrame addObject:messageFrame];
-
-    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
-    NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
-    
-    if(hasLogin == YES)
-    {
-        [self recUserId:@"0" toUserId:@"1" toUserName:tempUserName toTime:message.time toMessage:message.content];
-        NSLog(@"登录状态_收消息——---------------------------------存储消息");
-    }
-    else
-    {
-        [self recUserId:@"0" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
-        NSLog(@"未登录状态_收消息——-------------------------------存储消息");
-    }
-
-    
 }
 
 #pragma mark - tableView数据源方法
@@ -1297,8 +1352,7 @@ int messageCountNum = 0;
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
 {
     [self reloadTableViewDataSource];
-    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.5];
-//    [self doneLoadingTableViewData];
+    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1.0];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view

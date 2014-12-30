@@ -1046,6 +1046,10 @@ NSString *strUserId = @"";
     if(hasLogin == YES)
     {
         if ([from rangeOfString:tempUserName].location ==NSNotFound && [from rangeOfString:@"workgroup"].location ==NSNotFound &&([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound))
+        
+//            if (![[[tempJID componentsSeparatedByString:@"/"] objectAtIndex:1] isEqualToString:self.appDelegate.chatRequestJID])
+////            {
+////            }
         {
             messageg_hasLogin = [[message elementForName:@"body"] stringValue];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_hasLogin];

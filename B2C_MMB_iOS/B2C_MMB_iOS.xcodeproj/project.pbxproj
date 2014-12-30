@@ -1238,8 +1238,8 @@
 		61B7103919FF3B53001CC3BD /* HotLineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotLineViewController.m; sourceTree = "<group>"; };
 		61B7103A19FF3B53001CC3BD /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		61B7103B19FF3B53001CC3BD /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
-		61B7103C19FF3B53001CC3BD /* ThirdNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdNaviViewController.h; sourceTree = "<group>"; };
-		61B7103D19FF3B53001CC3BD /* ThirdNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdNaviViewController.m; sourceTree = "<group>"; };
+		61B7103C19FF3B53001CC3BD /* ThirdNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThirdNaviViewController.h; path = B2C/FifThViewController/ThirdNaviViewController.h; sourceTree = "<group>"; };
+		61B7103D19FF3B53001CC3BD /* ThirdNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThirdNaviViewController.m; path = B2C/FifThViewController/ThirdNaviViewController.m; sourceTree = "<group>"; };
 		61B7103E19FF3B53001CC3BD /* ThirdTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdTableViewController.h; sourceTree = "<group>"; };
 		61B7103F19FF3B53001CC3BD /* ThirdTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdTableViewController.m; sourceTree = "<group>"; };
 		61B7104119FF3B53001CC3BD /* FindBack_ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindBack_ThirdViewController.h; sourceTree = "<group>"; };
@@ -3162,8 +3162,6 @@
 				61B7103919FF3B53001CC3BD /* HotLineViewController.m */,
 				61B7103A19FF3B53001CC3BD /* SettingViewController.h */,
 				61B7103B19FF3B53001CC3BD /* SettingViewController.m */,
-				61B7103C19FF3B53001CC3BD /* ThirdNaviViewController.h */,
-				61B7103D19FF3B53001CC3BD /* ThirdNaviViewController.m */,
 				61B7103E19FF3B53001CC3BD /* ThirdTableViewController.h */,
 				61B7103F19FF3B53001CC3BD /* ThirdTableViewController.m */,
 			);
@@ -4452,6 +4450,8 @@
 				8BA7C30D1A10A93B00758B0F /* FaceButton.m */,
 				8BA7C30E1A10A93B00758B0F /* GrayPageControl.h */,
 				8BA7C30F1A10A93B00758B0F /* GrayPageControl.m */,
+				61B7103C19FF3B53001CC3BD /* ThirdNaviViewController.h */,
+				61B7103D19FF3B53001CC3BD /* ThirdNaviViewController.m */,
 				8BA7C3101A10A93B00758B0F /* ChatListViewController.h */,
 				8BA7C3111A10A93B00758B0F /* ChatListViewController.m */,
 				8BA7C3121A10A93B00758B0F /* WaitViewController.h */,

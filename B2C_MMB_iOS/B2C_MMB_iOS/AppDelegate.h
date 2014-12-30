@@ -83,6 +83,9 @@
 
 -(NSString*) getUdid;
 
+- (void)queryRoster;
+
+
 //XMPP
 @property (nonatomic,strong) NSString *sendMessageInfo;
 @property (nonatomic,strong) XMPPRosterCoreDataStorage *xmppRosterStorage;

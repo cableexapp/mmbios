@@ -171,7 +171,7 @@ double secondsCountDown =0;
 //    NSLog(@"等待页面 = %@",self.tempFrom);
     if ([self.tempFrom isEqualToString:@"首页在线客服"])
     {
-        [self.tabBarController setSelectedIndex:0];
+//        [self.tabBarController setSelectedIndex:0];
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
     }
     else if([self.tempFrom isEqualToString:@"来自快速询价客服"])
@@ -199,7 +199,7 @@ double secondsCountDown =0;
     else
     {
         [self.tabBarController setSelectedIndex:0];
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
     }
     if ([self.tempFrom rangeOfString:@"@"].location != NSNotFound)
     {
@@ -285,6 +285,8 @@ double secondsCountDown =0;
 
     if (self.appDelegate.uesrID != nil)
     {
+        NSLog(@"进入聊天 = %@",self.appDelegate.uesrID);
+        
         [timeCountTimer invalidate];
 
         ChatViewController *chatVC = [[ChatViewController alloc] init];

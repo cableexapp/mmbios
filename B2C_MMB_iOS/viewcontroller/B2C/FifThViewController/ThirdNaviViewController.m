@@ -31,6 +31,7 @@
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor whiteColor];
+
 }
 
 - (AppDelegate *)appDelegate
@@ -38,11 +39,16 @@
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+
+
 -(void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"工具栏入口状态 = %@",self.appDelegate.isConnect);
+    
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
+        NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
+        NSLog(@"工具栏入口ViewArray = %@",ViewArray);
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = @"工具栏客服";
         CATransition *transition = [CATransition animation];
@@ -58,7 +64,10 @@
     {
         ChatListViewController *chatListVC = [[ChatListViewController alloc] init];
         chatListVC.fromString = @"工具栏客服";
-        [self pushViewController:chatListVC animated:YES];
+//        [self pushViewController:chatListVC animated:YES];
+        
+        [self setViewControllers:[NSArray arrayWithObject:chatListVC]];
+       
     }
 }
 

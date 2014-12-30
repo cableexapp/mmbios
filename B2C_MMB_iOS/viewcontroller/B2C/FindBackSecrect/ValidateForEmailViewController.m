@@ -111,20 +111,6 @@
     [self.buttomLabel setFrame:CGRectMake(self.buttomLabel.frame.origin.x, self.buttomLabel.frame.origin.y, ScreenWidth-40, size.height+60)];
 }
 
-- (NSString *) getMemberId
-{
-    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
-    {
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
-        
-    }
-    return memberid;
-}
-
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     [self.validateBtn setUserInteractionEnabled:YES];
@@ -165,15 +151,24 @@
     NSLog(@"%@",dicRespon);
 }
 
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if([DCFCustomExtra validateString:memberid] == NO)
+    {
+        memberid = @"";
+    }
+    return memberid;
+}
+
 - (NSString *) getUserName
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     
-    if(userName.length == 0)
+    if([DCFCustomExtra validateString:userName] == NO)
     {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+        userName = @"";
     }
     return userName;
     

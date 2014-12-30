@@ -154,7 +154,10 @@ enum {
     URLSendEmailTag,  //发送验证码
     URLSendMsgTag,   //发送验证码
     URLChangeBindPhoneTag,  //修改绑定手机
-    URLCheckPhoneTag   //校验手机是否已经被绑定
+    URLCheckPhoneTag,   //校验手机是否已经被绑定
+    
+    URLGetMemberObjByPhoneTag,    //根据手机号获取用户对象
+    URLGetMemberObjByUsernameTag  //根据用户名获取用户对象
 };
 typedef NSUInteger URLTag;
 

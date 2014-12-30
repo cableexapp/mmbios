@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
 
-@interface FindBackSec_FirstViewController : UIViewController<UITextFieldDelegate>
+@interface FindBackSec_FirstViewController : UIViewController<UITextFieldDelegate,ConnectionDelegate>
+{
+    DCFConnectionUtil *conn;
+}
 @property (weak, nonatomic) IBOutlet UITextField *tf_confirm;
 @property (weak, nonatomic) IBOutlet UIButton *nextBtn;
 

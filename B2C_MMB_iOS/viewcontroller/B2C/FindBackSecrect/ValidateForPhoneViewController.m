@@ -243,11 +243,9 @@
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     
-    if(userName.length == 0)
+    if([DCFCustomExtra validateString:userName] == NO)
     {
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+        userName = @"";
     }
     return userName;
     
@@ -257,12 +255,9 @@
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:memberid] == NO)
     {
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
-        
+        memberid = @"";
     }
     return memberid;
 }

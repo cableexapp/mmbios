@@ -226,7 +226,7 @@
         height_2 = 30;
     }
     
-    if([DCFCustomExtra validateString:thePrice] == NO || [thePrice intValue] == 0)
+    if([DCFCustomExtra validateString:thePrice] == NO)
     {
         height_3 = 0;
     }
@@ -378,7 +378,7 @@
                     case 0:
                     {
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5, width, 30)];
-                        if([DCFCustomExtra validateString:theNumber] == NO || [theNumber intValue] == 0)
+                        if([DCFCustomExtra validateString:theNumber] == NO)
                         {
                             [label setText:@"采购数量:"];
                         }
@@ -390,7 +390,7 @@
                     }
                     case 1:
                     {
-                        if([DCFCustomExtra validateString:thDeliver] == NO || [thDeliver intValue] == 0)
+                        if([DCFCustomExtra validateString:thDeliver] == NO)
                         {
                             [label setText:@"交货期:"];
                         }
@@ -419,7 +419,7 @@
                         
                     case 3:
                     {
-                        if([DCFCustomExtra validateString:theInquiryVoltage] == NO || [theInquiryVoltage intValue] == 0)
+                        if([DCFCustomExtra validateString:theInquiryVoltage] == NO)
                         {
                             [label setText:[NSString stringWithFormat:@"电压:"]];
                             [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5+30, width, 0)];
@@ -486,7 +486,7 @@
             [label_2 setText:[NSString stringWithFormat:@"元/%@",theUnit]];
             [cell.contentView addSubview:label_2];
             
-            if([DCFCustomExtra validateString:thePrice] == NO || [thePrice intValue] == 0)
+            if([DCFCustomExtra validateString:thePrice] == NO)
             {
                 [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+35+height_1+height_2, size_1.width, 0)];
                 [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+10, lineView.frame.origin.y+35+height_1+height_2, size_2.width, 0)];

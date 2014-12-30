@@ -59,7 +59,7 @@
         [_fullAddress stringByReplacingOccurrencesOfString:@"null" withString:@""];
     }
     
-    _theTel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"tel"]];
+    _theTel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"phone"]];
 
     _zip = [NSString stringWithFormat:@"%@",[dic objectForKey:@"zip"]];
     

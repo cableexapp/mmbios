@@ -621,7 +621,7 @@
                 if(i == 0)
                 {
                     [cellLabel setFrame:CGRectMake(10, kindLabel.frame.origin.y+kindLabel.frame.size.height, halfWidth, 20)];
-                    if([DCFCustomExtra validateString:data.num] == NO || [data.num intValue] == 0)
+                    if([DCFCustomExtra validateString:data.num] == NO)
                     {
                         [cellLabel setText:@"数量:"];
                     }
@@ -633,7 +633,7 @@
                 if(i == 1)
                 {
                     [cellLabel setFrame:CGRectMake(10+halfWidth, kindLabel.frame.origin.y+kindLabel.frame.size.height, halfWidth, 20)];
-                    if([DCFCustomExtra validateString:data.deliver] == NO || [data.deliver intValue] == 0)
+                    if([DCFCustomExtra validateString:data.deliver] == NO)
                     {
                         [cellLabel setText:@"交货期:"];
                     }

@@ -57,17 +57,19 @@
     {
         MyCableSureOrderViewController *myCableSureOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderViewController"];
         myCableSureOrderViewController.btnIndex = self.btnIndex;
-        myCableSureOrderViewController.b2bMyCableOrderListData = data;
+        myCableSureOrderViewController.theOrderId = data.orderserial;
         [self.navigationController pushViewController:myCableSureOrderViewController animated:YES];
     }
     else
     {
+#pragma mark - 在家修改
         MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
+        myCableOrderDetailViewController.myOrderNumber = [NSString stringWithFormat:@"%@",data.orderserial];
         myCableOrderDetailViewController.btnIndex = self.btnIndex;
-        myCableOrderDetailViewController.b2bMyCableOrderListData = data;
+        //        myCableOrderDetailViewController.b2bMyCableOrderListData = data;
         [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
     }
-
+    
     
 }
 
@@ -110,7 +112,7 @@
     self.navigationItem.titleView = top;
     
     [self pushAndPopStyle];
-
+    
     rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
     [self.navigationController.navigationBar addSubview:rightButtonView];
     
@@ -175,7 +177,7 @@
             [btn setSelected:NO];
         }
     }
-
+    
     [self loadRequest:_btnIndex];
 }
 
@@ -201,14 +203,14 @@
         {
             [b setSelected:NO];
         }
-//        if(btn.selected == YES)
-//        {
-//            
-//        }
-//        else
-//        {
-//            [btn setSelected:NO];
-//        }
+        //        if(btn.selected == YES)
+        //        {
+        //
+        //        }
+        //        else
+        //        {
+        //            [btn setSelected:NO];
+        //        }
     }
     
     int tag = btn.tag;
@@ -260,12 +262,12 @@
         }
     }
     
-
+    
 }
 
 //- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 //{
-//    
+//
 //}
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {

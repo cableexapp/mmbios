@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "B2BMyCableOrderListData.h"
 #import "MyCableSureOrderTableViewController.h"
+#import "B2BMyCableDetailData.h"
 
 @interface MyCableSureOrderViewController : UIViewController<PopDelegate>
-
-@property (strong,nonatomic) B2BMyCableOrderListData *b2bMyCableOrderListData;
 
 @property (weak, nonatomic) IBOutlet UILabel *myOrderNumberLabel;
 
@@ -27,5 +26,8 @@
 @property (weak, nonatomic) IBOutlet UIView *tableSubView;
 
 @property (assign,nonatomic) int btnIndex;
+
+@property (strong,nonatomic) NSString *theOrderId;
+
 
 @end

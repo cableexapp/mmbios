@@ -15,6 +15,7 @@
 {
     DCFChenMoreCell *moreCell;
     NSMutableArray *dataArray;
+    B2BMyCableDetailData *b2bMyCableDetailData;
 }
 @end
 
@@ -57,7 +58,6 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
-    NSLog(@"%@",dicRespon);
     if(URLTag == URLOrderDetailTag)
     {
         if([[dicRespon allKeys] count] == 0)
@@ -68,7 +68,18 @@
         {
             if(result == 1)
             {
-                dataArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
+                
+                
+                b2bMyCableDetailData = [[B2BMyCableDetailData alloc] init];
+                [b2bMyCableDetailData dealData:dicRespon];
+                dataArray = [[NSMutableArray alloc] initWithArray:b2bMyCableDetailData.myItems];
+                
+                
+                if([self.delegate respondsToSelector:@selector(requestHasFinished:)])
+                {
+                    [self.delegate requestHasFinished:b2bMyCableDetailData];
+                }
+                
                 if(dataArray.count == 0)
                 {
                     [moreCell noClasses];
@@ -165,16 +176,16 @@
     }
     if(indexPath.section == 0)
     {
-        NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
+        NSString *address = [NSString stringWithFormat:@"收货地址: %@",[b2bMyCableDetailData fullAddress]];
         CGSize size;
-        if(address.length == 0 || [address isKindOfClass:[NSNull class]])
-        {
-            size = CGSizeMake(30, 0);
-        }
-        else
-        {
-            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-40, MAXFLOAT)];
-        }
+//        if(address.length == 0 || [address isKindOfClass:[NSNull class]])
+//        {
+//            size = CGSizeMake(30, 0);
+//        }
+//        else
+//        {
+            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+//        }
         return size.height+40;
     }
     
@@ -182,14 +193,14 @@
     
     
     
-//    NSString *theNumber = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];  //数量
-//    NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];   //单位
-//    NSString *thDeliver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];   //交货期
+    //    NSString *theNumber = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];  //数量
+    //    NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];   //单位
+    //    NSString *thDeliver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];   //交货期
     NSString *theInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]]; //规格
     NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
     NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
     
-    NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]]; //价格
+    NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"buyerPrice"]]; //价格
     NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
     
     CGFloat height_1 = 0.0;
@@ -267,39 +278,33 @@
         {
             if(indexPath.row == 0)
             {
-                NSString *name = [self.addressDic objectForKey:@"name"];
-                NSString *tel = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"tel"]];
-                NSString *str = [NSString stringWithFormat:@"%@      %@",name,tel];
-                UILabel *nameAndTelLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, cell.contentView.frame.size.width-40, 30)];
-                [nameAndTelLabel setText:str];
-                [nameAndTelLabel setFont:[UIFont systemFontOfSize:12]];
-                [cell.contentView addSubview:nameAndTelLabel];
+                NSString *name = [NSString stringWithFormat:@"收货人: %@",[b2bMyCableDetailData reciver]];
+                NSString *tel = [NSString stringWithFormat:@"联系电话: %@",[b2bMyCableDetailData theTel]];
                 
-                NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
-                NSString *myAdd = nil;
-                if([address rangeOfString:@"(null)"].location != NSNotFound)
+                CGSize nameSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, nameSize.width, 30)];
+                [nameLabel setText:name];
+                [nameLabel setFont:[UIFont systemFontOfSize:12]];
+                [cell.contentView addSubview:nameLabel];
+                
+                CGSize telSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
+                UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-telSize.width, 5, telSize.width, 30)];
+                [telLabel setText:tel];
+                [telLabel setFont:[UIFont systemFontOfSize:12]];
+                [cell.contentView addSubview:telLabel];
+                
+                NSString *address = [NSString stringWithFormat:@"收货地址: %@",[b2bMyCableDetailData fullAddress]];
+                CGSize addressSize;
+                if([DCFCustomExtra validateString:address] == NO)
                 {
-                    myAdd = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
-                }
-                else if([address rangeOfString:@"null"].location != NSNotFound)
-                {
-                    myAdd = [address stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                    addressSize = CGSizeMake(30, 0);
                 }
                 else
                 {
-                    myAdd = address;
+                    addressSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
                 }
-                CGSize size;
-                if([DCFCustomExtra validateString:myAdd] == NO)
-                {
-                    size = CGSizeMake(30, 30);
-                }
-                else
-                {
-                    size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:myAdd WithSize:CGSizeMake(cell.contentView.frame.size.width-40, MAXFLOAT)];
-                }
-                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, nameAndTelLabel.frame.origin.y + nameAndTelLabel.frame.size.height, size.width, size.height)];
-                [addressLabel setText:myAdd];
+                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height,ScreenWidth-20,addressSize.height)];
+                [addressLabel setText:address];
                 [addressLabel setFont:[UIFont systemFontOfSize:12]];
                 [addressLabel setNumberOfLines:0];
                 [cell.contentView addSubview:addressLabel];
@@ -314,7 +319,6 @@
             CGFloat width = cell.contentView.frame.size.width/2;
             
             NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[dataArray objectAtIndex:indexPath.row]];
-            
             CGSize size_model = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"型号:" WithSize:CGSizeMake(MAXFLOAT, 30)];
             UILabel *modelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_model.width, 30)];
             [modelLabel setText:@"型号:"];
@@ -348,14 +352,13 @@
             
             NSString *theNumber = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];  //数量
             NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];   //单位
-            NSString *thDeliver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];   //交货期
-            NSString *theInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]]; //规格
+            NSString *thDeliver = [NSString stringWithFormat:@"%@天",[dic objectForKey:@"deliver"]];   //交货期
+            NSString *theInquirySpec = [NSString stringWithFormat:@"%@平方",[dic objectForKey:@"spec"]]; //规格
             NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
             NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
-            
-            NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]]; //价格
+            NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"buyerPrice"]]; //价格
             NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
-            
+
             CGFloat height_1 = 0.0;
             CGFloat height_2 = 0.0;
             
@@ -401,7 +404,7 @@
                         
                     case 2:
                     {
-                        if([DCFCustomExtra validateString:theInquirySpec] == NO || [theInquirySpec intValue] == 0)
+                        if([DCFCustomExtra validateString:theInquirySpec] == NO)
                         {
                             [label setText:@"规格:"];
                             [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30, width, 0)];

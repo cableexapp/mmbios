@@ -159,6 +159,7 @@
     mySB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
 
     MyCableOrderDetailViewController *myCableOrderDetailViewController = [mySB instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
+    myCableOrderDetailViewController.myOrderNumber = self.myOrderNum;
 //    myCableOrderDetailViewController.b2bMyCableOrderListData = [dataArray objectAtIndex:tag];
     [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
 }

@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
+#import "B2BMyCableDetailData.h"
+
+@protocol RequestHasFinished <NSObject>
+
+- (void) requestHasFinished:(B2BMyCableDetailData *) b2bMyCableDetailData;
+
+@end
 
 @interface MyCableDetailTableViewController : UITableViewController<ConnectionDelegate>
 {
@@ -15,6 +22,8 @@
 }
 
 @property (strong,nonatomic) NSString *myOrderid;
-@property (strong,nonatomic) NSDictionary *addressDic;
+
+@property (assign,nonatomic) id<RequestHasFinished> delegate;
 
 @end
+

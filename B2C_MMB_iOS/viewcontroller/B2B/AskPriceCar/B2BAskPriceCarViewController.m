@@ -926,7 +926,7 @@
             if(i == 0)
             {
                 [cellLabel setFrame:CGRectMake(10, 5, size_1.width, 20)];
-                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] num]] == NO || [[[dataArray objectAtIndex:indexPath.section] num] intValue] == 0)
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] num]] == NO)
                 {
                     [cellLabel setText:@"数量"];
                 }
@@ -938,7 +938,7 @@
             if(i == 1)
             {
                 [cellLabel setFrame:CGRectMake(halfWidth, 5, size_2.width, 20)];
-                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] deliver]] == NO || [[[dataArray objectAtIndex:indexPath.section] deliver] intValue] == 0)
+                if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] deliver]] == NO)
                 {
                     [cellLabel setText:@"交货期"];
                 }

@@ -614,7 +614,7 @@
     {
         h2 = 20;
     }
-    if([DCFCustomExtra validateString:thePrice] == NO || [thePrice intValue] == 0)
+    if([DCFCustomExtra validateString:thePrice] == NO)
     {
         h3 = 0;
     }
@@ -796,7 +796,9 @@
                     case 0:
                     {
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5.5, halfWidth, 20)];
-                        if([[dic objectForKey:@"num"] intValue] == 0)
+                        
+                        NSString *number = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
+                        if([DCFCustomExtra validateString:number] == NO)
                         {
                             [label setText:@"采购数量:0"];
                         }
@@ -809,7 +811,9 @@
                     case 1:
                     {
                         [label setFrame:CGRectMake(10+halfWidth, lineView.frame.origin.y+5.5, halfWidth, 20)];
-                        if([[dic objectForKey:@"deliver"] intValue] == 0)
+                        NSString *deliver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
+
+                        if([DCFCustomExtra validateString:deliver] == NO)
                         {
                             [label setText:[NSString stringWithFormat:@"交货期:%@",@""]];
                         }
@@ -901,7 +905,9 @@
             
             UILabel *pricelabel = [[UILabel alloc] init];
             [pricelabel setFont:[UIFont systemFontOfSize:12]];
-            if([[dic objectForKey:@"buyerPrice"] intValue] == 0)
+            
+            NSString *buyerPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"buyerPrice"]];
+            if([DCFCustomExtra validateString:buyerPrice] == NO)
             {
                 [pricelabel setFrame:CGRectMake(10, 65.5+height_1+height_2,ScreenWidth-20,0)];
                 height_3 = 0;

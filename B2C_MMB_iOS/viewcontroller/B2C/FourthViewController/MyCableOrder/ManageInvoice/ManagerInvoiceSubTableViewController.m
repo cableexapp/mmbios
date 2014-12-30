@@ -104,7 +104,6 @@
             }
             else
             {
-                
                 [dataArray addObjectsFromArray:[B2BManagBillData getListArray:[dicRespon objectForKey:@"items"]]];
                 
                 for(int i=0;i<dataArray.count;i++)

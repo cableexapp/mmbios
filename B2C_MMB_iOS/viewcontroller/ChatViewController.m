@@ -86,7 +86,7 @@ int messageCountNum = 0;
     self.navigationItem.titleView = naviTitle;
     
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-49) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 //    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
@@ -493,7 +493,7 @@ int messageCountNum = 0;
     //聊天输入工具条
     if (!btn || !toolBar || !rightBtn || !keyboardButton || !sendButton || !messageField)
     {
-        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-49);
+        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
       
         
         toolBar = [[UIView alloc] init];

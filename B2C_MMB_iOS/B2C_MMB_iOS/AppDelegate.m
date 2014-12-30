@@ -53,7 +53,9 @@ NSString *strUserId = @"";
 {
     UIStoryboard *sb;
     
-    NSString *messageg_me;
+    NSString *messageg_noLogin;
+    
+    NSString *messageg_hasLogin;
 }
 @synthesize mainQueue;
 @synthesize db;
@@ -62,7 +64,7 @@ NSString *strUserId = @"";
 @synthesize personName;
 @synthesize sendMessageInfo;
 @synthesize roster;
-@synthesize xmppRosterStorage;
+//@synthesize xmppRosterStorage;
 @synthesize xmppStream;
 @synthesize xmppRoom;
 @synthesize uesrID;
@@ -687,21 +689,17 @@ NSString *strUserId = @"";
     [self queryRoster];
     UIApplicationState state = UIApplicationStateInactive;
     NSLog(@"state = %zi",state);
-    
-    if ([self.pushChatView isEqualToString:@"push"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
-    }
-    self.pushChatView = nil;
+
     NSLog(@"程序进入前台+++++++++++++++");
 }
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-
     NSLog(@"在线客服——收到后台推送 = %@",notification);
-    
-
+    if ([self.pushChatView isEqualToString:@"push"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+    }
 }
 
 -(void)chatRoomMessage:(NSNotification *)chatRoomMessage
@@ -727,18 +725,26 @@ NSString *strUserId = @"";
             _localNotification = [[UILocalNotification alloc] init];
             //        _localNotification.applicationIconBadgeNumber = 1;
             _localNotification.timeZone = [NSTimeZone defaultTimeZone];
-            _localNotification.alertBody = messageg_me;
+            BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+            if (hasLogin == YES)
+            {
+                 _localNotification.alertBody = messageg_hasLogin;
+            }
+            else
+            {
+                 _localNotification.alertBody = messageg_noLogin;
+            }
             _localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
             _localNotification.soundName= UILocalNotificationDefaultSoundName;
             [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
             NSLog(@"running in the background");
         }
-        if (_localNotification)
-        {
-            [[UIApplication sharedApplication] cancelAllLocalNotifications];
-            return;
-        }
-        
+//        if (_localNotification)
+//        {
+//            [[UIApplication sharedApplication] cancelAllLocalNotifications];
+//            return;
+//        }
+    
        
 //    });
     self.appDelegate.pushChatView = @"push";
@@ -769,28 +775,28 @@ NSString *strUserId = @"";
     xmppReconnect = [[XMPPReconnect alloc] init];
     
     // 初始化roster
-    xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
-    xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:xmppRosterStorage];
-    xmppRoster.autoFetchRoster = YES;
-    xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;
-    
-    // 初始化 vCard support
-    xmppvCardStorage = [XMPPvCardCoreDataStorage sharedInstance];
-    xmppvCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:xmppvCardStorage];
-    xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:xmppvCardTempModule];
+//    xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
+//    xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:xmppRosterStorage];
+//    xmppRoster.autoFetchRoster = YES;
+//    xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;
+//    
+//    // 初始化 vCard support
+//    xmppvCardStorage = [XMPPvCardCoreDataStorage sharedInstance];
+//    xmppvCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:xmppvCardStorage];
+//    xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:xmppvCardTempModule];
     
     // 初始化 capabilities
-    xmppCapabilitiesStorage = [XMPPCapabilitiesCoreDataStorage sharedInstance];
-    xmppCapabilities = [[XMPPCapabilities alloc] initWithCapabilitiesStorage:xmppCapabilitiesStorage];
-    xmppCapabilities.autoFetchHashedCapabilities = YES;
-    xmppCapabilities.autoFetchNonHashedCapabilities = NO;
+//    xmppCapabilitiesStorage = [XMPPCapabilitiesCoreDataStorage sharedInstance];
+//    xmppCapabilities = [[XMPPCapabilities alloc] initWithCapabilitiesStorage:xmppCapabilitiesStorage];
+//    xmppCapabilities.autoFetchHashedCapabilities = YES;
+//    xmppCapabilities.autoFetchNonHashedCapabilities = NO;
     
     // 激活xmpp的模块
     [xmppReconnect         activate:xmppStream];
     [xmppRoster            activate:xmppStream];
-    [xmppvCardTempModule   activate:xmppStream];
-    [xmppvCardAvatarModule activate:xmppStream];
-    [xmppCapabilities      activate:xmppStream];
+//    [xmppvCardTempModule   activate:xmppStream];
+//    [xmppvCardAvatarModule activate:xmppStream];
+//    [xmppCapabilities      activate:xmppStream];
     
     [xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
@@ -1035,36 +1041,75 @@ NSString *strUserId = @"";
         self.personName = to;
         self.uesrID = from;
     }
-    else if ([from rangeOfString:[PhoneHelper getDeviceId]].location ==NSNotFound)
+    
+    if(hasLogin == YES)
     {
-       messageg_me = [[message elementForName:@"body"] stringValue];
-      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_me];
-        
-        //获得本地时间
-        NSDate *dates = [NSDate date];
-        NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
-        NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
-        [formatter setTimeZone:timeZone];
-        NSString *loctime = [formatter stringFromDate:dates];
-        
-        if(hasLogin == YES)
+        if ([from rangeOfString:tempUserName].location ==NSNotFound && [from rangeOfString:@"workgroup"].location ==NSNotFound &&([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound))
         {
-            [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:messageg_me];
+            messageg_hasLogin = [[message elementForName:@"body"] stringValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_hasLogin];
+            
+            //获得本地时间
+            NSDate *dates = [NSDate date];
+            NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+            NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
+            [formatter setTimeZone:timeZone];
+            NSString *loctime = [formatter stringFromDate:dates];
+            
+            [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:messageg_hasLogin];
             NSLog(@"登录状态_收消息——---------------------------------存储消息");
             self.personName = to;
         }
-        else
+    }
+    else
+    {
+        if ([from rangeOfString:[PhoneHelper getDeviceId]].location ==NSNotFound  && [from rangeOfString:@"workgroup"].location ==NSNotFound && ([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound))
         {
-            [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:messageg_me];
+            messageg_noLogin = [[message elementForName:@"body"] stringValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_noLogin];
+            
+            //获得本地时间
+            NSDate *dates = [NSDate date];
+            NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+            NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
+            [formatter setTimeZone:timeZone];
+            NSString *loctime = [formatter stringFromDate:dates];
+            
+            [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:messageg_noLogin];
             NSLog(@"未登录状态_收消息——-------------------------------存储消息");
         }
+    }
+    
+//    if ([from rangeOfString:[PhoneHelper getDeviceId]].location ==NSNotFound)
+//    {
+//       messageg_me = [[message elementForName:@"body"] stringValue];
+//      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_me];
+//        
+//        //获得本地时间
+//        NSDate *dates = [NSDate date];
+//        NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+//        NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
+//        [formatter setTimeZone:timeZone];
+//        NSString *loctime = [formatter stringFromDate:dates];
+//        
+//        if(hasLogin == YES)
+//        {
+//           
+//        }
+//        else
+//        {
+//            [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:messageg_me];
+//            NSLog(@"未登录状态_收消息——-------------------------------存储消息");
+//        }
         NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
         if ([tempMessagePush isEqualToString:@"1"])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
         }
-    }
+//    }
     
     NSRange range=[from rangeOfString:@"@"];
     if(range.length==0)

@@ -48,11 +48,11 @@
 
     NSString *password;
     XMPPRoster *xmppRoster;
-    XMPPvCardCoreDataStorage *xmppvCardStorage;
-    XMPPvCardTempModule *xmppvCardTempModule;
-    XMPPvCardAvatarModule *xmppvCardAvatarModule;
-    XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesStorage;
-    XMPPCapabilities *xmppCapabilities;
+//    XMPPvCardCoreDataStorage *xmppvCardStorage;
+//    XMPPvCardTempModule *xmppvCardTempModule;
+//    XMPPvCardAvatarModule *xmppvCardAvatarModule;
+//    XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesStorage;
+//    XMPPCapabilities *xmppCapabilities;
 
     NSString *isOnLine;
     NSString *pushChatView;
@@ -88,7 +88,7 @@
 
 //XMPP
 @property (nonatomic,strong) NSString *sendMessageInfo;
-@property (nonatomic,strong) XMPPRosterCoreDataStorage *xmppRosterStorage;
+//@property (nonatomic,strong) XMPPRosterCoreDataStorage *xmppRosterStorage;
 @property (nonatomic,strong) XMPPStream *xmppStream;
 @property (nonatomic,strong) XMPPRoom *xmppRoom;
 

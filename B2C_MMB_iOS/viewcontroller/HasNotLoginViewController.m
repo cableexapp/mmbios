@@ -79,7 +79,6 @@
 {
     [super viewWillAppear:YES];
     [self loadbadgeCount];
-    [self loadShopCarCount];
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_notLogin:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
@@ -147,6 +146,9 @@
         if(result == 1)
         {
             tempCount = [[dicRespon objectForKey:@"value"] intValue];
+            
+            [self loadShopCarCount];
+
         }
     }
     if (URLTag == URLShopCarCountTag)

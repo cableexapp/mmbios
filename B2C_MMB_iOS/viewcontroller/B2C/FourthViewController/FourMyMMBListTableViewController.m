@@ -268,6 +268,9 @@
                     [cellBtn addSubview:btn];
                 }
             }
+            
+            [self loadbadgeCount];
+
         }
         else
         {
@@ -280,6 +283,9 @@
         if(result == 1)
         {
             tempCount = [[dicRespon objectForKey:@"value"] intValue];
+            
+            [self loadShopCarCount];
+
         }
     }
     if (URLTag == URLShopCarCountTag)
@@ -338,10 +344,8 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-    
-    [self loadbadgeCount];
-    
-    [self loadShopCarCount];
+//
+//
     
     self.tableView.scrollEnabled = YES;
     isPopShow = NO;

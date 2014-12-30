@@ -1022,8 +1022,6 @@ NSString *strUserId = @"";
 // 发送消息回调方法
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
 {
-    NSLog(@"发送消息回调方法sender = ++++++++++%@\n\n",sender);
-    
     NSLog(@"发送消息回调方法message = ++++++++++%@\n\n",message);
 }
 
@@ -1115,16 +1113,18 @@ NSString *strUserId = @"";
         //执行sql语句
         sqlite3_exec(dataBase, sqlCreate, nil, nil, &error);
         
-        NSLog(@"创建数据库 错误信息---%s",error);
+//        NSLog(@"创建数据库 错误信息---%s",error);
         
         //版本更新增加新字段creater
         
         //字段增加
-        NSLog(@"进入数据库增加字段方法");
+//        NSLog(@"进入数据库增加字段方法");
+        
         char * sqlAdd = "ALTER TABLE MESSAGELIST ADD creater varchar(30)";
         
         sqlite3_exec(dataBase, sqlAdd, nil, nil, &error);
-        NSLog(@"增加字段错误信息----%s",error);
+        
+//        NSLog(@"增加字段错误信息----%s",error);
         
         //数据库使用完成后关闭数据库
         sqlite3_close(dataBase);

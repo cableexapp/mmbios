@@ -236,18 +236,7 @@ int messageCountNum = 0;
         if([self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
             NSLog(@"111111111111");
-          
-          [self .navigationController popToRootViewControllerAnimated:YES];
-//            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-            
-//          [self .navigationController popViewControllerAnimated:YES];
-//          [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar_im" object:nil];
-//            [self.tabBarController setSelectedIndex:0];
-//            NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
-//            [ViewArray removeObjectAtIndex:0];
-//            [ViewArray removeObjectAtIndex:1];
-//            [ViewArray removeObjectAtIndex:2];
-//            [self.navigationController setViewControllers:ViewArray];
+            [self.tabBarController setSelectedIndex:0];
         }
         else
         {
@@ -285,29 +274,7 @@ int messageCountNum = 0;
         }
         else if([self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
-            
-            
-//            NSMutableArray *navigationArray = [[NSMutableArray alloc] initWithArray: self.navigationController.viewControllers];
-//            
-//            // [navigationArray removeAllObjects]; // This is just for remove all view controller from navigation stack.
-//            [navigationArray removeObjectAtIndex: 2]; // You can pass your index here
-//            self.navigationController.viewControllers = navigationArray;
-          
-
-            
-//             [self.tabBarController setSelectedIndex:0];
-            
-            
-            
-            
-//            NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
-//            [ViewArray removeObjectAtIndex:0];
-//            [ViewArray removeObjectAtIndex:1];
-//            [ViewArray removeAllObjects];
-//            [self.navigationController setViewControllers:ViewArray];
-            [self .navigationController popToRootViewControllerAnimated:YES];
-//             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"tabbar_im" object:nil];
+             [self.tabBarController setSelectedIndex:0];
              NSLog(@"3333333333");
         }
         if ([self.fromStringFlag rangeOfString:@"@"].location != NSNotFound)

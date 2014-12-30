@@ -70,7 +70,9 @@
 //        [self.navigationController setViewControllers:ViewArray];
         ChatListViewController *chatListVC = [[ChatListViewController alloc] init];
         chatListVC.fromString = @"工具栏客服";
-        [self pushViewController:chatListVC animated:YES];
+//        [self pushViewController:chatListVC animated:YES];
+        
+        [self setViewControllers:[NSArray arrayWithObject:chatListVC]];
        
     }
 }

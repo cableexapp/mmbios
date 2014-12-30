@@ -25,6 +25,7 @@
 		6114F7B41A189E54007DAC39 /* welcome_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 6114F7B11A189E54007DAC39 /* welcome_3.png */; };
 		6114F7D21A18D301007DAC39 /* BPushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6114F7D11A18D301007DAC39 /* BPushConfig.plist */; };
 		6115ACC21A52367100D810F3 /* B2BMyCableDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6115ACC11A52367100D810F3 /* B2BMyCableDetailData.m */; };
+		6115ACC41A52AB6600D810F3 /* tradeCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 6115ACC31A52AB6600D810F3 /* tradeCar.png */; };
 		6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */; };
 		6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */; };
 		611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */; };
@@ -810,6 +811,7 @@
 		6114F7D11A18D301007DAC39 /* BPushConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BPushConfig.plist; sourceTree = "<group>"; };
 		6115ACC01A52367100D810F3 /* B2BMyCableDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BMyCableDetailData.h; sourceTree = "<group>"; };
 		6115ACC11A52367100D810F3 /* B2BMyCableDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BMyCableDetailData.m; sourceTree = "<group>"; };
+		6115ACC31A52AB6600D810F3 /* tradeCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tradeCar.png; sourceTree = "<group>"; };
 		6116A22A19EE1099005C3572 /* MyOrderHostBtnTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostBtnTableViewCell.h; sourceTree = "<group>"; };
 		6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOrderHostBtnTableViewCell.m; sourceTree = "<group>"; };
 		6116A22C19EE1099005C3572 /* MyOrderHostTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyOrderHostTableViewCell.h; sourceTree = "<group>"; };
@@ -2725,6 +2727,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				6115ACC31A52AB6600D810F3 /* tradeCar.png */,
 				6186F40F1A50F465009FA26E /* tabbar */,
 				61E0E17A1A36DD0E00F6D5F1 /* AliImage */,
 				6114F7AE1A189E25007DAC39 /* WelCome */,
@@ -4699,6 +4702,7 @@
 				8BA7C05C1A10A85500758B0F /* chat_timeline_bg.png in Resources */,
 				8BA7C0CE1A10A85500758B0F /* 心碎@2x.png in Resources */,
 				8BA7C0C01A10A85500758B0F /* 左哼@2x.png in Resources */,
+				6115ACC41A52AB6600D810F3 /* tradeCar.png in Resources */,
 				6181A36519CFC3F9000E2D14 /* Images.xcassets in Resources */,
 				8BF452441A3989E400E3665F /* YellowDownArrow.png in Resources */,
 				6166ED5A19D2B86400D9A219 /* area.plist in Resources */,

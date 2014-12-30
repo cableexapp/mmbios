@@ -305,10 +305,6 @@
             NSString *headPortraitUrl = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/",headUrl];
             [[NSUserDefaults standardUserDefaults] setObject:headPortraitUrl forKey:@"headPortraitUrl"];
             [self.tableView reloadData];
-//            NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:0];
-//            NSArray *reload = [NSArray arrayWithObject:path];
-//            [self.tableView reloadRowsAtIndexPaths:reload withRowAnimation:0];
-            
             [DCFStringUtil showNotice:msg];
         }
         else
@@ -532,10 +528,16 @@
 
 - (void)photoBtnAction:(id)sender
 {
-    changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像", nil];
+//    changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像", nil];
+//    if (self.navigationController)
+//    {
+//        [changePhotoSheet showInView:self.navigationController.navigationBar];
+//    }
+    
+    albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
     if (self.navigationController)
     {
-        [changePhotoSheet showInView:self.navigationController.navigationBar];
+        [albumSheet showInView:self.navigationController.navigationBar];
     }
 }
 
@@ -575,11 +577,11 @@
 #pragma mark - 上传头像
 - (void)uploadPhoto
 {
-    albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
-    if (self.navigationController)
-    {
-        [albumSheet showInView:self.navigationController.navigationBar];
-    }
+//    albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
+//    if (self.navigationController)
+//    {
+//        [albumSheet showInView:self.navigationController.navigationBar];
+//    }
 }
 
 - (void) openAlbum:(id) sender

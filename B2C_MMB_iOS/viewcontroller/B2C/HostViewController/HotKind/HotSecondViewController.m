@@ -51,7 +51,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     NSString *userPhone = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"];
     NSString *tel = [[NSUserDefaults standardUserDefaults] objectForKey:@"HotKindNum"];
     
@@ -72,6 +72,11 @@
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -85,7 +90,7 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交所选分类"];
     self.navigationItem.titleView = top;
-    [super viewDidLoad];
+//    [super viewDidLoad];
     
    [self.view endEditing:YES];
     
@@ -96,7 +101,8 @@
     self.secondTextView.delegate = self;
 //    数据加载到文本框
     NSString *str = @"";
-    for (NSDictionary *aDic in upArray) {
+    for (NSDictionary *aDic in upArray)
+    {
         str = [str stringByAppendingString:[NSString stringWithFormat:@"%@\n",[aDic objectForKey:@"typePls"]]];
     }
     [self.markView setText:str];
@@ -119,16 +125,6 @@
 
 - (void)textViewDidBeginEditing:(UITextField *)textView
 {
-//    CGRect frame = textView.frame;
-//    int offset = frame.origin.y + 60 - (self.view.frame.size.height-200.0);
-//    NSTimeInterval animationDuration=0.30f;
-//    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-//    [UIView setAnimationDuration:animationDuration];
-//    if (offset)
-//    {
-//        self.view.frame=CGRectMake(0.0f, -offset, self.view.frame.size.width, self.view.frame.size.height);
-//        [UIView commitAnimations];
-//    }
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDuration:0.3f];
@@ -253,10 +249,9 @@
     }
     
     NSString *memberid = [self getMemberId];
-
-        NSString *time = [DCFCustomExtra getFirstRunTime];
-        NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
-        NSString *token = [DCFCustomExtra md5:string];
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"SubHotType",time];
+    NSString *token = [DCFCustomExtra md5:string];
     
     NSString *phoneNum = nil;
     if([DCFCustomExtra validateString:self.PhoneNumber.text] == NO)

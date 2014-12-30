@@ -69,13 +69,16 @@
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+     [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
     rightButtonView.hidden = YES;
-
 }
-
 
 - (void)viewDidLoad
 {
@@ -103,10 +106,10 @@
     [rightBtn addTarget:self action:@selector(searchRightBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:rightBtn];
     
-    [super viewDidLoad];
+//    [super viewDidLoad];
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"热门分类"];
     self.navigationItem.titleView = top;
-    [super viewDidLoad];
+//    [super viewDidLoad];
 
     //读取plist文件
     NSString *filePath = [[NSString alloc] initWithFormat:@"%@",[[NSBundle mainBundle] pathForResource:@"Hotpst" ofType:@"plist"]];
@@ -151,29 +154,34 @@
     {
         [self.navigationController popViewControllerAnimated:YES];
         return;
-    }else
+    }
+    else
     {
         //  跳转到首页
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚有分类未加入询价车,是否加入" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                     message:@"是否将已选中的分类提交询价后再返回？"
+                                                    delegate:self
+                                           cancelButtonTitle:@"是"
+                                           otherButtonTitles:@"直接返回", nil];
         [av setTag:10];
         [av show];
     }
-   
 }
 
 //      返回按钮的代理
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex != 0)
+    if (buttonIndex == 0)
     {
+        HotSecondViewController *secCtr = [self.storyboard instantiateViewControllerWithIdentifier:@"hotSecondViewController"];
+        secCtr.upArray = selectArray;
         [self setHidesBottomBarWhenPushed:YES];
-        B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
-        [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
-        return;
-    }else
+        [self.navigationController pushViewController:secCtr animated:YES];
+        [self deleteHistorySelestData];
+    }
+    else
     {
         [self.navigationController popViewControllerAnimated:YES];
-
     }
 }
 
@@ -207,9 +215,9 @@
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     NSString *str;
-    if (tableView.tag == 33) {
+    if (tableView.tag == 33)
+    {
         str = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"typePls"]];
     }
     else
@@ -401,9 +409,12 @@ if ( _opend )
 #pragma mark - 清空按钮
 - (IBAction)clearBtn:(id)sender
 {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"您确定要清空吗？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"确认要清空已选择的分类吗？"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                             destructiveButtonTitle:@"清空"
+                                                  otherButtonTitles:nil, nil];
       [sheet showInView:self.view];
-    
 }
 
 #pragma mark - 提交
@@ -411,22 +422,20 @@ if ( _opend )
 {
     //   隐藏底部
     [self setHidesBottomBarWhenPushed:YES];
-    if (selectArray.count == 0) {
+    if (selectArray.count == 0)
+    {
         [DCFStringUtil showNotice:@"请选择分类"];
     }
     else
     {
-            HotSecondViewController *secCtr = [self.storyboard instantiateViewControllerWithIdentifier:@"hotSecondViewController"];
-            secCtr.upArray = selectArray;
-            [self.navigationController pushViewController:secCtr animated:YES];
+        HotSecondViewController *secCtr = [self.storyboard instantiateViewControllerWithIdentifier:@"hotSecondViewController"];
+        secCtr.upArray = selectArray;
+        [self.navigationController pushViewController:secCtr animated:YES];
     }
 }
 
-
-#pragma mark - actionsheet的代理方法
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+-(void)deleteHistorySelestData
 {
-    if (buttonIndex != 0) return;
     self.opend = NO;
     backView.hidden = YES;
     self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);
@@ -439,7 +448,26 @@ if ( _opend )
     [_testTableView reloadData];
     [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
     self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+}
 
+#pragma mark - actionsheet的代理方法
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        self.opend = NO;
+        backView.hidden = YES;
+        self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);
+        self.selectView.hidden = YES;
+        _testSubTableView.hidden = YES;
+        _testTableView.userInteractionEnabled = YES;
+        [_testSubTableView setFrame:CGRectMake(_testSubTableView.frame.origin.x, _testSubTableView.frame.origin.y, _testSubTableView.frame.size.width, 0)];
+        [dataArray addObjectsFromArray:selectArray];
+        [selectArray removeAllObjects];
+        [_testTableView reloadData];
+        [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+        self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -447,20 +475,13 @@ if ( _opend )
     return YES;
 }
 
-
-
-
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // Get the new view controller using [segue destinationViewController].

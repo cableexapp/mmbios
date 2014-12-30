@@ -77,6 +77,11 @@
     }
 }
 
+-(void)viewDidDisappear:(BOOL)animated
+{
+//    self.content_Tv.text = nil;
+//    [picBtnArray removeAllObjects];
+}
 
 - (void)viewDidLoad
 {
@@ -518,6 +523,7 @@
 #pragma mark - 加载图片按钮
 - (void) loadImageBtn:(NSMutableArray *)ImageArray WithFlag:(BOOL)flag
 {
+    
 }
 
 -(void)procesPic:(NSMutableArray*)imgarray
@@ -816,6 +822,23 @@
             [self setHidesBottomBarWhenPushed:YES];
             SpeedAskPriceSecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceSecondViewController"];
             [self.navigationController pushViewController:second animated:YES];
+            
+            self.content_Tv.text = nil;
+//            [chooseImageArray removeAllObjects];
+ 
+
+//            for (int i = 1; i < picBtnArray.count-1; i++)
+//            {
+            
+//                    [picBtnArray removeObjectAtIndex:i];
+            
+                
+//            }
+//            for(UIButton *btn in picBtnArray)
+//            {
+//                [btn removeFromSuperview];
+//            }
+            [picBtnArray removeAllObjects];
         }
         else
         {
@@ -827,18 +850,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

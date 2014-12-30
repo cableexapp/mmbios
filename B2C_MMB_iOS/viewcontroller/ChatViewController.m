@@ -164,24 +164,24 @@ int messageCountNum = 0;
     
 //    NSLog(@"viewDidLoad_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
     
-    if ([self.appDelegate.isOnLine isEqualToString:@"unavailable"])
-    {
-        NSLog(@"客服已经离开!");
-        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
-        naviTitle.text = @"客服已经离开";
-        noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
-        noNet.hidden = NO;
-        noNetView.hidden = NO;
-        noNetMessage.hidden = NO;
-        [messageField resignFirstResponder];
-        toolBar.hidden = YES;
-        self.appDelegate.isConnect = @"断开";
-    }
-    else
-    {
-         NSLog(@"客服在线!");
-        naviTitle.text = @"正在咨询";
-    }
+//    if ([self.appDelegate.isOnLine isEqualToString:@"unavailable"])
+//    {
+//        NSLog(@"客服已经离开!");
+//        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+//        naviTitle.text = @"客服已经离开";
+//        noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
+//        noNet.hidden = NO;
+//        noNetView.hidden = NO;
+//        noNetMessage.hidden = NO;
+//        [messageField resignFirstResponder];
+//        toolBar.hidden = YES;
+//        self.appDelegate.isConnect = @"断开";
+//    }
+//    else
+//    {
+//         NSLog(@"客服在线!");
+//        naviTitle.text = @"正在咨询";
+//    }
 }
 
 //检查网络是否连接

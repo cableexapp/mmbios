@@ -10,13 +10,12 @@
 
 @class HotKindFirstViewController;
 
-
 @protocol HotKindHostViewControllerDelegate <NSObject>
 
-
-	@end
+@end
 
 @interface HotKindFirstViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIAlertViewDelegate>
+
 //选中属性
 @property (weak, nonatomic) IBOutlet UIButton *typeBtn;
 //清空属性

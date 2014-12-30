@@ -68,7 +68,6 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,[self getMemberId]];
-    //    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@",token,@"668"];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInvoiceListTag delegate:self];
     

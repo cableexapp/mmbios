@@ -176,8 +176,6 @@
     {
         
         ordernum = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"ordernum"]];
-        NSLog(@"ordernum = %@",ordernum);
-        
         [self performSelectorOnMainThread:@selector(doOrdernum) withObject:nil waitUntilDone:YES];
     }
     [self.tableView reloadData];
@@ -545,7 +543,7 @@
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, thecolor.length-3)];
             
-            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@/%@",[dic objectForKey:@"price"],unit]; //价格
+            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@元/%@",[dic objectForKey:@"price"],unit]; //价格
             NSMutableAttributedString *myPrice = [[NSMutableAttributedString alloc] initWithString:thePrice];
             [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
             [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, thePrice.length-5)];

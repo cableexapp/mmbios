@@ -24,10 +24,9 @@
     
     ManageInvoiceViewController *manageInvoiceViewController;
 }
-@property (strong,nonatomic) B2BMyCableOrderListData *b2bMyCableOrderListData;
 
 @property (strong,nonatomic) NSString *myOrderid;
-@property (strong,nonatomic) NSDictionary *addressDic;
+
 @property (assign,nonatomic) id<PopDelegate> delegate;
 - (void) loadRequest;
 

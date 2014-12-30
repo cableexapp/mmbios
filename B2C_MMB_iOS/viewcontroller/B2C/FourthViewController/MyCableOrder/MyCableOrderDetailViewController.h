@@ -10,7 +10,7 @@
 #import "B2BMyCableOrderListData.h"
 #import "MyCableDetailTableViewController.h"
 
-@interface MyCableOrderDetailViewController : UIViewController
+@interface MyCableOrderDetailViewController : UIViewController<RequestHasFinished>
 {
     MyCableDetailTableViewController *myCableDetailTableViewController;
 }
@@ -33,8 +33,9 @@
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 
-@property (strong,nonatomic) B2BMyCableOrderListData *b2bMyCableOrderListData;
+//@property (strong,nonatomic) B2BMyCableOrderListData *b2bMyCableOrderListData;
 
+@property (strong,nonatomic) NSString *myOrderNumber;
 
 @property (assign,nonatomic) int btnIndex;
 

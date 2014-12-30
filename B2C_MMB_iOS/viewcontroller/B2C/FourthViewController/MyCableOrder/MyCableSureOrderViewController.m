@@ -17,6 +17,7 @@
 @interface MyCableSureOrderViewController ()
 {
     MyCableSureOrderTableViewController *myCableSureOrderTableViewController;
+    B2BMyCableDetailData *detailData;
 }
 @end
 
@@ -38,8 +39,6 @@
 
 - (void) popDelegate
 {
-//    MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
-//    myCableOrder.btnIndex = self.btnIndex;
     int n = self.navigationController.viewControllers.count;
     for(UIViewController *vc in self.navigationController.viewControllers)
     {
@@ -60,6 +59,37 @@
     }
 }
 
+- (void) refreshView
+{
+    NSString *orderNum = [NSString stringWithFormat:@"订单号:%@",detailData.ordernum];
+    [self.myOrderNumberLabel setFrame:CGRectMake(5, 0, 150, 20)];
+    [self.myOrderNumberLabel setText:orderNum];
+    [self.myOrderNumberLabel setFont:[UIFont systemFontOfSize:11]];
+    
+    [self.myOrderTimeLabel setFrame:CGRectMake(self.myOrderNumberLabel.frame.origin.x+self.myOrderNumberLabel.frame.size.width, 0, ScreenWidth-10-self.myOrderNumberLabel.frame.size.width, 20)];
+    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"%@",detailData.cableOrderTime]];
+    
+    
+    NSString *orderStatus = [NSString stringWithFormat:@"状态: %@",detailData.myStatus];
+    NSMutableAttributedString *theOrderStatus = [[NSMutableAttributedString alloc] initWithString:orderStatus];
+    [theOrderStatus addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
+    [theOrderStatus addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(3, orderStatus.length-3)];
+    [self.myOrderStatusLabel setAttributedText:theOrderStatus];
+    
+    NSString *orderTotal = [NSString stringWithFormat:@"订单总额: ¥%@",detailData.ordertotal];
+    NSMutableAttributedString *theOrderTotal = [[NSMutableAttributedString alloc] initWithString:orderTotal];
+    [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
+    [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(5, orderTotal.length-5)];
+    [self.myOrderTotalLabel setAttributedText:theOrderTotal];
+    
+}
+
+- (void) doMyCableSureOrderTableVCHasFinished:(NSNotification *) noti
+{
+    detailData = (B2BMyCableDetailData *)[noti object];
+    [self refreshView];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -71,21 +101,19 @@
     
     [self pushAndPopStyle];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doMyCableSureOrderTableVCHasFinished:) name:@"MyCableSureOrderTableVCHasFinished" object:nil];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableSubView.backgroundColor = [UIColor whiteColor];
     myCableSureOrderTableViewController.view.backgroundColor = [UIColor whiteColor];
-    NSString *fullAddress = [NSString stringWithFormat:@"%@%@%@%@",_b2bMyCableOrderListData.receiveprovince,_b2bMyCableOrderListData.receivecity,_b2bMyCableOrderListData.receivedistrict,_b2bMyCableOrderListData.receiveaddress];
-    fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
-    NSString *tel = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系电话:%@",_b2bMyCableOrderListData.tel]];
-    NSString *name = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"联系人:%@",_b2bMyCableOrderListData.receivename]];
-    NSDictionary *myDic = [NSDictionary dictionaryWithObjectsAndKeys:name,@"name",tel,@"tel",fullAddress,@"fullAddress",_b2bMyCableOrderListData.receiveprovince,@"receiveprovince",_b2bMyCableOrderListData.receivecity,@"receivecity",_b2bMyCableOrderListData.receivedistrict,@"receivedistrict",_b2bMyCableOrderListData.receiveaddress,@"receiveaddress", nil];
+
+    
     
     myCableSureOrderTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderTableViewController"];
     myCableSureOrderTableViewController.delegate = self;
     [self addChildViewController:myCableSureOrderTableViewController];
-    myCableSureOrderTableViewController.addressDic = [[NSDictionary alloc] initWithDictionary:myDic];
-    myCableSureOrderTableViewController.b2bMyCableOrderListData = _b2bMyCableOrderListData;
-    myCableSureOrderTableViewController.myOrderid = [[NSString alloc] initWithFormat:@"%@",_b2bMyCableOrderListData.orderserial];
+    myCableSureOrderTableViewController.myOrderid = [[NSString alloc] initWithFormat:@"%@",_theOrderId];
     myCableSureOrderTableViewController.view.frame = self.tableSubView.bounds;
     [self.tableSubView addSubview:myCableSureOrderTableViewController.view];
 
@@ -95,21 +123,21 @@
     [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    if(_b2bMyCableOrderListData.cableOrderTime.length == 0 || [_b2bMyCableOrderListData.cableOrderTime isKindOfClass:[NSNull class]])
-    {
-        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-85, 2, 80, 20)];
-    }
-    else
-    {
-        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime] WithSize:CGSizeMake(MAXFLOAT, 20)];
-        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-5-size.width, 2, size.width, 20)];
-    }
-    [self.myOrderNumberLabel setFrame:CGRectMake(5, 2, ScreenWidth-5-self.myOrderTimeLabel.frame.size.width, 20)];
-    [self.myOrderNumberLabel setText:[NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial]];
-    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime]];
-    [self.myOrderStatusLabel setText:[NSString stringWithFormat:@"状态: %@",_b2bMyCableOrderListData.myStatus]];
-    [self.myOrderTotalLabel setText:[NSString stringWithFormat:@"订单总额:¥ %@",_b2bMyCableOrderListData.ordertotal]];
-    self.myOrderTotalLabel.textColor = [UIColor redColor];
+//    if(_b2bMyCableOrderListData.cableOrderTime.length == 0 || [_b2bMyCableOrderListData.cableOrderTime isKindOfClass:[NSNull class]])
+//    {
+//        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-85, 2, 80, 20)];
+//    }
+//    else
+//    {
+//        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime] WithSize:CGSizeMake(MAXFLOAT, 20)];
+//        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-5-size.width, 2, size.width, 20)];
+//    }
+//    [self.myOrderNumberLabel setFrame:CGRectMake(5, 2, ScreenWidth-5-self.myOrderTimeLabel.frame.size.width, 20)];
+//    [self.myOrderNumberLabel setText:[NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial]];
+//    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime]];
+//    [self.myOrderStatusLabel setText:[NSString stringWithFormat:@"状态: %@",_b2bMyCableOrderListData.myStatus]];
+//    [self.myOrderTotalLabel setText:[NSString stringWithFormat:@"订单总额:¥ %@",_b2bMyCableOrderListData.ordertotal]];
+//    self.myOrderTotalLabel.textColor = [UIColor redColor];
 }
 
 - (void)didReceiveMemoryWarning

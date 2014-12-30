@@ -12,6 +12,7 @@
 #import "DCFChenMoreCell.h"
 #import "B2CAddressData.h"
 #import "DCFStringUtil.h"
+#import "B2BMyCableDetailData.h"
 
 @interface MyCableSureOrderTableViewController ()
 {
@@ -43,6 +44,8 @@
     CGFloat height_4;
   
     ChooseReceiveAddressViewController *chooseAddress;
+    
+    B2BMyCableDetailData *b2bMyCableDetailData;
 }
 
 @end
@@ -71,6 +74,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    
     
     if(!billMsgTypeLabel)
     {
@@ -193,10 +197,9 @@
     
 //    loginid,token,ordernum(订单编号),usefp(是否使用发票,1-使用，2-不使用),receiveprovince(收货省),receivecity(收货市),receivedistrict(收货区),receiveaddress(详细地址),receiver(收货人),tel(电话),invoiceid(发票id),invoiceprovince(发票邮寄省）, invoicecity（发票邮寄市）, invoicedistrict（发票邮寄区）, invoiceaddress（发票邮寄具体地址）, invoicetel（发票收获人电话）, invoicereceiver（发票收获人）
     
-//    if([DCFCustomExtra validateString:<#(NSString *)#>])
     NSString *pushString = nil;
-    
-    NSString *name = [self.addressDic objectForKey:@"name"];
+//
+    NSString *name = b2bMyCableDetailData.reciver;
     int index_1 = 0;
     for(int i=0;i<name.length;i++)
     {
@@ -212,32 +215,32 @@
     {
         name = @"";
     }
-    
-    NSString *province = [self.addressDic objectForKey:@"receiveprovince"];
+//
+    NSString *province = b2bMyCableDetailData.province;
     if([DCFCustomExtra validateString:province] == NO)
     {
         province = @"";
     }
-    
-    NSString *city = [self.addressDic objectForKey:@"receivecity"];
+//
+    NSString *city = b2bMyCableDetailData.city;
     if([DCFCustomExtra validateString:city] == NO)
     {
         city = @"";
     }
-    
-    NSString *district = [self.addressDic objectForKey:@"receivedistrict"];
+//
+    NSString *district = b2bMyCableDetailData.district;
     if([DCFCustomExtra validateString:district] == NO)
     {
         district = @"";
     }
-    
-    NSString *address = [self.addressDic objectForKey:@"receiveaddress"];
+//
+    NSString *address = b2bMyCableDetailData.address;
     if([DCFCustomExtra validateString:address] == NO)
     {
         address = @"";
     }
-    
-    NSString *tel = [self.addressDic objectForKey:@"tel"];
+//
+    NSString *tel = b2bMyCableDetailData.theTel;
     int index_2 = 0;
     for(int i=0;i<tel.length;i++)
     {
@@ -296,6 +299,23 @@
                 [DCFStringUtil showNotice:msg];
             }
         }
+    }
+    if(URLTag == URLOrderDetailTag)
+    {
+        NSLog(@"%@",dicRespon);
+        if(result == 1)
+        {
+            b2bMyCableDetailData = [[B2BMyCableDetailData alloc] init];
+            [b2bMyCableDetailData dealData:dicRespon];
+            dataArray = [[NSMutableArray alloc] initWithArray:b2bMyCableDetailData.myItems];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"MyCableSureOrderTableVCHasFinished" object:b2bMyCableDetailData userInfo:nil];
+        }
+        else
+        {
+            dataArray = [[NSMutableArray alloc] init];
+        }
+        [self.tableView reloadData];
     }
 }
 
@@ -514,7 +534,7 @@
     {
         return 1;
     }
-    return [_b2bMyCableOrderListData myItems].count;
+    return [b2bMyCableDetailData myItems].count;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -550,27 +570,28 @@
     }
     if(indexPath.section == 2)
     {
-        NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
+        NSString *address = [NSString stringWithFormat:@"%@",b2bMyCableDetailData.fullAddress];
         CGSize size;
         if([DCFCustomExtra validateString:address] == NO)
         {
             size = CGSizeMake(30, 0);
+            return 30;
         }
         else
         {
             size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-40, MAXFLOAT)];
+            return size.height+40;
         }
-        return size.height+40;
     }
     
-    NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[_b2bMyCableOrderListData.myItems objectAtIndex:indexPath.row]];
+    NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[b2bMyCableDetailData.myItems objectAtIndex:indexPath.row]];
     
     NSString *theInquirySpec = [NSString stringWithFormat:@"%@平方",[dic objectForKey:@"spec"]]; //规格
     NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
     NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
     NSString *thecolor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]]; //颜色
     
-    NSString *thePrice = [NSString stringWithFormat:@"¥ %@",[dic objectForKey:@"price"]]; //价格
+    NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"buyerPrice"]]; //价格
     NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
     
     CGFloat h1 = 0.0;
@@ -643,39 +664,32 @@
         {
             if(indexPath.row == 0)
             {
-                NSString *name = [self.addressDic objectForKey:@"name"];
-                NSString *tel = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"tel"]];
-                NSString *str = [NSString stringWithFormat:@"%@     %@",name,tel];
-                UILabel *nameAndTelLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cell.contentView.frame.size.width-40, 30)];
-                [nameAndTelLabel setText:str];
-                [nameAndTelLabel setFont:[UIFont systemFontOfSize:12]];
-                [cell.contentView addSubview:nameAndTelLabel];
+                NSString *name = [NSString stringWithFormat:@"收货人: %@",[b2bMyCableDetailData reciver]];
+                NSString *tel = [NSString stringWithFormat:@"联系电话: %@",[b2bMyCableDetailData theTel]];
                 
-                CGSize size_Name = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
-                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size_Name.width, 30)];
+                CGSize nameSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
+                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, nameSize.width, 30)];
                 [nameLabel setText:name];
                 [nameLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:nameLabel];
                 
-                CGSize size_tel = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
-                UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-10-size_tel.width, 5, size_tel.width, 30)];
+                CGSize telSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:tel WithSize:CGSizeMake(MAXFLOAT, 30)];
+                UILabel *telLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-telSize.width, 5, telSize.width, 30)];
                 [telLabel setText:tel];
-                [telLabel setTextAlignment:NSTextAlignmentRight];
                 [telLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:telLabel];
                 
-                NSString *address = [NSString stringWithFormat:@"%@",[self.addressDic objectForKey:@"fullAddress"]];
-                address = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
-                CGSize size;
+                NSString *address = [NSString stringWithFormat:@"收货地址: %@",[b2bMyCableDetailData fullAddress]];
+                CGSize addressSize;
                 if([DCFCustomExtra validateString:address] == NO)
                 {
-                    size = CGSizeMake(30, 30);
+                    addressSize = CGSizeMake(30, 0);
                 }
                 else
                 {
-                    size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(cell.contentView.frame.size.width-40, MAXFLOAT)];
+                    addressSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(cell.contentView.frame.size.width-20, MAXFLOAT)];
                 }
-                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameAndTelLabel.frame.origin.y + nameAndTelLabel.frame.size.height, size.width, size.height)];
+                UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, nameLabel.frame.origin.y + nameLabel.frame.size.height,ScreenWidth-20,addressSize.height)];
                 [addressLabel setText:address];
                 [addressLabel setFont:[UIFont systemFontOfSize:12]];
                 [addressLabel setNumberOfLines:0];
@@ -690,7 +704,7 @@
             
             CGFloat halfWidth = (ScreenWidth-20)/2;
             
-            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[[_b2bMyCableOrderListData myItems] objectAtIndex:indexPath.row]];
+            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[[b2bMyCableDetailData myItems] objectAtIndex:indexPath.row]];
             //型号
             NSString *model = [NSString stringWithFormat:@"型号: %@",[dic objectForKey:@"model"]];
             NSMutableAttributedString *myModel = [[NSMutableAttributedString alloc] initWithString:model];
@@ -734,33 +748,27 @@
             [myDeliver addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
             [myDeliver addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, thDeliver.length-4)];
             
-            
-            
             NSString *theInquirySpec = [NSString stringWithFormat:@"规格: %@平方",[dic objectForKey:@"spec"]]; //规格
             NSMutableAttributedString *myInquirySpec = [[NSMutableAttributedString alloc] initWithString:theInquirySpec];
             [myInquirySpec addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myInquirySpec addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theInquirySpec.length-3)];
-            
-            
             
             NSString *theInquiryVoltage = [NSString stringWithFormat:@"电压: %@",[dic objectForKey:@"voltage"]]; //电压
             NSMutableAttributedString *myInquiryVoltage = [[NSMutableAttributedString alloc] initWithString:theInquiryVoltage];
             [myInquiryVoltage addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myInquiryVoltage addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theInquiryVoltage.length-3)];
             
-            
             NSString *theInquiryFeature = [NSString stringWithFormat:@"阻燃耐火: %@",[dic objectForKey:@"feature"]]; //阻燃
             NSMutableAttributedString *myInquiryFeature = [[NSMutableAttributedString alloc] initWithString:theInquiryFeature];
-            [myInquiryFeature addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
+            [myInquiryFeature addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
             [myInquiryFeature addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, theInquiryFeature.length-5)];
-            
             
             NSString *thecolor = [NSString stringWithFormat:@"颜色: %@",[dic objectForKey:@"color"]]; //颜色
             NSMutableAttributedString *myColor = [[NSMutableAttributedString alloc] initWithString:thecolor];
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, thecolor.length-3)];
             
-            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@/%@",[dic objectForKey:@"price"],unit]; //价格
+            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@元/%@",[dic objectForKey:@"buyerPrice"],unit]; //价格
             NSMutableAttributedString *myPrice = [[NSMutableAttributedString alloc] initWithString:thePrice];
             [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
             [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, thePrice.length-5)];
@@ -787,8 +795,6 @@
                 switch (i) {
                     case 0:
                     {
-                        
-                        
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5.5, halfWidth, 20)];
                         if([[dic objectForKey:@"num"] intValue] == 0)
                         {
@@ -813,7 +819,6 @@
                         }
                         break;
                     }
-                        
                     case 2:
                     {
                         if([DCFCustomExtra validateString:[dic objectForKey:@"spec"]] == NO)
@@ -827,7 +832,6 @@
                         }
                         break;
                     }
-                        
                     case 3:
                     {
                         if([DCFCustomExtra validateString:[dic objectForKey:@"voltage"]] == NO)
@@ -839,7 +843,7 @@
                             [label setAttributedText:myInquiryVoltage];
                             [label setFrame:CGRectMake(10+halfWidth,65.5, halfWidth, 20)];
                         }
-                        
+//
                         if([DCFCustomExtra validateString:[dic objectForKey:@"spec"]] == NO && [DCFCustomExtra validateString:[dic objectForKey:@"voltage"]] == NO)
                         {
                             height_1 = 0;
@@ -851,7 +855,6 @@
                         
                         break;
                     }
-                        
                     case 4:
                     {
                         if([DCFCustomExtra validateString:[dic objectForKey:@"feature"]] == NO)
@@ -865,7 +868,6 @@
                         }
                         break;
                     }
-                        
                     case 5:
                     {
                         if([DCFCustomExtra validateString:[dic objectForKey:@"color"]] == NO)
@@ -877,7 +879,6 @@
                             [label setAttributedText:myColor];
                             [label setFrame:CGRectMake(10+halfWidth, 65.5+height_1, halfWidth, 20)];
                         }
-                        
                         if([DCFCustomExtra validateString:[dic objectForKey:@"feature"]] == NO && [DCFCustomExtra validateString:[dic objectForKey:@"color"]] == NO)
                         {
                             height_2 = 0;
@@ -889,18 +890,18 @@
                         
                         break;
                     }
-                        
+//
                     default:
                         break;
                 }
-                
+//
                 [cell.contentView addSubview:label];
             }
             
             
             UILabel *pricelabel = [[UILabel alloc] init];
             [pricelabel setFont:[UIFont systemFontOfSize:12]];
-            if([[dic objectForKey:@"price"] intValue] == 0)
+            if([[dic objectForKey:@"buyerPrice"] intValue] == 0)
             {
                 [pricelabel setFrame:CGRectMake(10, 65.5+height_1+height_2,ScreenWidth-20,0)];
                 height_3 = 0;
@@ -917,7 +918,7 @@
             UILabel *requestLabel = [[UILabel alloc] init];
             [requestLabel setFont:[UIFont systemFontOfSize:12]];
             [requestLabel setNumberOfLines:0];
-            
+//
             CGSize requestSize;
             if([DCFCustomExtra validateString:[dic objectForKey:@"require"]] == NO)
             {
@@ -932,7 +933,6 @@
                 [requestLabel setAttributedText:myRequire];
                 height_4 = requestSize.height;
             }
-            
             [cell.contentView addSubview:requestLabel];
             
             

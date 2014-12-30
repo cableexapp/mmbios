@@ -22,15 +22,15 @@
 @interface MyCableOrderB2BViewController ()
 {
     UISearchBar *search;
-
+    
     NSMutableArray *searchResults;
     NSMutableArray *dataArray;
     UIStoryboard *mySB;
     DCFChenMoreCell *moreCell;
-  
+    
     NSMutableArray *lookBtnArray;  //查看按钮数组
     NSMutableArray *upTimeLabelArray;  //提交时间数组
-
+    
     int index;  //确认收货时用到
     NSMutableArray *tempOrderNum;
     
@@ -59,7 +59,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-  
+    
     
     //导航栏标题
     UILabel *naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100, 44)];
@@ -190,7 +190,7 @@
                     
                     tempOrderNum = [dicRespon objectForKey:@"items"];
                 }
-    
+                
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
                 if(intTotal == 0)
@@ -198,10 +198,10 @@
                     noResultView.hidden = YES;
                     [moreCell noDataAnimation];
                 }
-//                else
-//                {
-//                    [moreCell noSearchResult];
-//                }
+                //                else
+                //                {
+                //                    [moreCell noSearchResult];
+                //                }
             }
             else
             {
@@ -251,7 +251,7 @@
     }
     if(dataArray.count > 0)
     {
-         return 40;
+        return 40;
     }
     return 40;
 }
@@ -445,7 +445,7 @@
     }
     if(dataArray.count == 0)
     {
-        return [self returnMoreCell:self.myTableView];                                                                                                                                                                                                                                                                                                              
+        return [self returnMoreCell:self.myTableView];
     }
     else
     {
@@ -714,7 +714,7 @@
                 [cell.contentView addSubview:statusBtn];
             }
         }
-
+        
     }
     return cell;
 }
@@ -739,7 +739,9 @@
     {
         [self setHidesBottomBarWhenPushed:YES];
         MyCableOrderDetailViewController *myCableOrderDetailViewController = [mySB instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
-        myCableOrderDetailViewController.b2bMyCableOrderListData = [dataArray objectAtIndex:tag];
+        B2BMyCableOrderListData *data = [dataArray objectAtIndex:tag];
+        myCableOrderDetailViewController.myOrderNumber = [NSString stringWithFormat:@"%@",data.orderserial];
+        //        myCableOrderDetailViewController.b2bMyCableOrderListData = [dataArray objectAtIndex:tag];
         [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
     }
 }
@@ -762,7 +764,8 @@
         {
             [self setHidesBottomBarWhenPushed:YES];
             MyCableOrderDetailViewController *myCableOrderDetailViewController = [mySB instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
-            myCableOrderDetailViewController.b2bMyCableOrderListData = [dataArray objectAtIndex:indexPath.section];
+            myCableOrderDetailViewController.myOrderNumber = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] orderserial]];
+            //            myCableOrderDetailViewController.b2bMyCableOrderListData = [dataArray objectAtIndex:indexPath.section];
             [self.navigationController pushViewController:myCableOrderDetailViewController animated:YES];
         }
         
@@ -830,12 +833,12 @@
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-   
+    
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-
+    
 }
 
 - (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar

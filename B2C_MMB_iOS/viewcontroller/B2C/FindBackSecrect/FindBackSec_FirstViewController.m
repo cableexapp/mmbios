@@ -15,9 +15,15 @@
 #import "ValidateForPhoneViewController.h"
 #import "ValidateForEmailViewController.h"
 #import "MCDefine.h"
+#import "LoginNaviViewController.h"
 
 @interface FindBackSec_FirstViewController ()
-
+{
+    NSString *phone;
+    NSString *email;
+    NSString *memberId;
+    NSString *userName;
+}
 @end
 
 @implementation FindBackSec_FirstViewController
@@ -63,6 +69,19 @@
     return YES;
 }
 
+
+- (NSString *) getMemberId
+{
+    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    
+    if([DCFCustomExtra validateString:memberid] == NO)
+    {
+        memberid = @"";
+    }
+    return memberid;
+}
+
+
 - (IBAction)nextBtnClick:(id)sender
 {
     if([_tf_confirm isFirstResponder])
@@ -70,21 +89,45 @@
         [_tf_confirm resignFirstResponder];
     }
     
-    NSString *string = [_tf_confirm.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *string_TF = [_tf_confirm.text stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     
-    if([DCFCustomExtra validateString:string] == NO)
+    if([DCFCustomExtra validateString:string_TF] == NO)
     {
         [DCFStringUtil showNotice:@"请输入账号信息"];
         return;
     }
     
-//    if([DCFCustomExtra validateMobile:self.tf_confirm.text] == NO)
-//    {
-//        [DCFStringUtil showNotice:@"请输入正确的手机号码"];
-//        return;
-//    }
-    [self push];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    
+    NSString *string = nil;
+    NSString *pushString = nil;
+    NSString *token = nil;
+    NSString *urlString = nil;
+    if([DCFCustomExtra validateMobile:string_TF] == NO)
+    {
+        NSLog(@"不是手机号码");
+        
+        string = [NSString stringWithFormat:@"%@%@",@"getMemberObjByUsername",time];
+        token = [DCFCustomExtra md5:string];
+        pushString = [NSString stringWithFormat:@"token=%@&username=%@",token,string_TF];
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getMemberObjByUsername.html?"];
+    }
+    else
+    {
+        NSLog(@"是手机号码");
+        
+        string = [NSString stringWithFormat:@"%@%@",@"getMemberObjByPhone",time];
+        token = [DCFCustomExtra md5:string];
+        pushString = [NSString stringWithFormat:@"token=%@&phone=%@&memberid=%@",token,string_TF,[self getMemberId]];
+        urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getMemberObjByPhone.html?"];
+    }
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetMemberObjByUsernameTag delegate:self];
+
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+//    [self push];
 }
 
 - (void) next:(UIButton *) sender
@@ -92,27 +135,53 @@
 
 }
 
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    NSString *msg = [dicRespon objectForKey:@"msg"];
+    if(URLTag == URLGetMemberObjByUsernameTag)
+    {
+        NSLog(@"%@",dicRespon);
+        if(result == 1)
+        {
+            phone = [NSString stringWithFormat:@"%@",[[dicRespon objectForKey:@"items"] objectForKey:@"phone"]];
+            [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"UserPhone"];
+            
+            email = [NSString stringWithFormat:@"%@",[[dicRespon objectForKey:@"items"] objectForKey:@"email"]];
+            [[NSUserDefaults standardUserDefaults] setObject:email forKey:@"UserEmail"];
+            
+            
+            memberId = [NSString stringWithFormat:@"%@",[[dicRespon objectForKey:@"items"] objectForKey:@"memberId"]];
+            [[NSUserDefaults standardUserDefaults] setObject:memberId forKey:@"memberId"];
+            
+            userName = [NSString stringWithFormat:@"%@",[[dicRespon objectForKey:@"items"] objectForKey:@"userName"]];
+            [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"userName"];
+
+            [self push];
+        }
+        else
+        {
+            if([DCFCustomExtra validateString:msg] == NO)
+            {
+                
+            }
+            else
+            {
+                [DCFStringUtil showNotice:msg];
+            }
+            phone = @"";
+            email = @"";
+            userName = @"";
+            memberId = @"";
+        }
+    }
+    if(URLTag == URLGetMemberObjByPhoneTag)
+    {
+    }
+}
 
 - (void) push
-{
-    //    NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
-    //    NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
-    //
-    //
-    //    if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil || [phone isEqualToString:@"(null)"]) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email == NULL || email == nil || [email isEqualToString:@"(null)"]))
-    //    {
-    //        [DCFStringUtil showNotice:@"您尚未绑定任何设备,请联系客服"];
-    //        return;
-    //    }
-    //    else
-    //    {
-    
-    //    }
-
-    NSString *phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
-    NSString *email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
-    NSLog(@"%@  %@",phone,email);
-    
+{    
     if([DCFCustomExtra validateString:phone] == NO && [DCFCustomExtra validateString:email] == NO)
     {
         [DCFStringUtil showNotice:@"您尚未绑定任何设备,请联系客服"];
@@ -120,13 +189,13 @@
     }
 
     //只绑定邮箱没有绑定手机进入邮箱验证界面
-     if((phone.length == 0 || [phone isKindOfClass:[NSNull class]] || phone == NULL || phone == nil) && (email.length != 0 || ![email isKindOfClass:[NSNull class]] || email != NULL || email != nil))
+     if(([DCFCustomExtra validateString:phone] == NO) && (email.length != 0 || ![email isKindOfClass:[NSNull class]] || email != NULL || email != nil))
     {
         ValidateForEmailViewController *validateForEmailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"validateForEmailViewController"];
         [self.navigationController pushViewController:validateForEmailViewController animated:YES];
     }
     //只绑定手机没绑定邮箱,进入手机安全验证界面
-    else if((phone.length != 0 || ![phone isKindOfClass:[NSNull class]] || phone != NULL || phone != nil) && (email.length == 0 || [email isKindOfClass:[NSNull class]] || email == NULL || email == nil))
+    else if((phone.length != 0 || ![phone isKindOfClass:[NSNull class]] || phone != NULL || phone != nil) && ([DCFCustomExtra validateString:email] == NO))
     {
         ValidateForPhoneViewController *validateForPhoneViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"validateForPhoneViewController"];
         [self.navigationController pushViewController:validateForPhoneViewController animated:YES];

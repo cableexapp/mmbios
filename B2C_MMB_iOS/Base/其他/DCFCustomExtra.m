@@ -525,8 +525,9 @@
 #pragma mark - 验证手机号码
 + (BOOL)validateMobile:(NSString *)mobileNum
 {
-    NSString *regex = @"^((13[0-9])|(14[^4,\\D])|(17[^4,\\D])|(15[^4,\\D])|(18[0,1,2,5-9]))\\d{8}$";
-    
+//    NSString *regex = @"^((13[0-9])|(14[^4,\\D])|(17[^4,\\D])|(15[^4,\\D])|(18[0,1,2,5-9]))\\d{8}$";
+    NSString *regex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
+
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     
     BOOL isMatch = [pred evaluateWithObject:mobileNum];
@@ -538,7 +539,7 @@
         return NO;
         
     }
-    
+
     
     
     return YES;

@@ -228,7 +228,6 @@
             }
         }
     }
-    NSLog(@"%@",dicRespon);
 }
 
 - (IBAction)validateBtnClick:(id)sender
@@ -334,7 +333,6 @@
         [DCFStringUtil showNotice:@"请输入绑定手机"];
         return;
     }
-
         if([DCFCustomExtra validateMobile:self.teltf.text] == NO)
         {
             [DCFStringUtil showNotice:@"请输入正确的手机号码"];
@@ -352,7 +350,6 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&phone=%@",[self getMemberId],token,self.teltf.text];
-    NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLChangeBindPhoneTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ChangeBindPhone.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];

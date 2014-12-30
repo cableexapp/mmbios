@@ -88,11 +88,9 @@
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
-    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:memberid] == NO)
     {
-        LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
-        [self presentViewController:loginNavi animated:YES completion:nil];
-        
+        memberid = @"";
     }
     return memberid;
 }
@@ -152,6 +150,7 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&oldpassword=%@&newpassword=%@",memberid,token,@"",self.tf_newSec.text];
+    NSLog(@"%@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLChangePasswordTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ChangePassword.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -187,7 +186,7 @@
         }
         else
         {
-            if(msg.length == 0 || [msg isKindOfClass:[NSNull class]])
+            if([DCFCustomExtra validateString:msg] == NO)
             {
                 [DCFStringUtil showNotice:@"修改绑定手机失败"];
             }

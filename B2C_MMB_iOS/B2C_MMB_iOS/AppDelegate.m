@@ -77,6 +77,7 @@ NSString *strUserId = @"";
 @synthesize errorMessage;
 @synthesize isConnect;
 
+
 - (void) reachabilityChanged: (NSNotification* )note
 {
     Reachability *curReach = [note object];

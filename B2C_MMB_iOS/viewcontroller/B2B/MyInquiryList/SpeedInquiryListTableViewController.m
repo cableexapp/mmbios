@@ -85,7 +85,7 @@
     [self.tableView addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
     
-    [self loadRequest];
+//    [self loadRequest];
 }
 
 - (void) loadRequest

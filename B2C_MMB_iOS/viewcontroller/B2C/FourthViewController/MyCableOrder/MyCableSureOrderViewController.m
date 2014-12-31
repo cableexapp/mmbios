@@ -13,6 +13,7 @@
 #import "DCFTopLabel.h"
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MyCableOrderHostViewController.h"
+#import "MyInquiryListFirstViewController.h"
 
 @interface MyCableSureOrderViewController ()
 {
@@ -46,6 +47,11 @@
         {
 //            [myCableOrder loadRequest:self.btnIndex];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"MyCableOrderHostViewControllerRefreshRequest" object:[NSNumber numberWithInt:self.btnIndex]];
+            [self.navigationController popToViewController:vc animated:YES];
+            return;
+        }
+        if([vc isKindOfClass:[MyInquiryListFirstViewController class]])
+        {
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }

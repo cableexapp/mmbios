@@ -174,7 +174,6 @@
     }
     if(URLTag == URLOrderDetailByNumTag)
     {
-        
         ordernum = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"ordernum"]];
         [self performSelectorOnMainThread:@selector(doOrdernum) withObject:nil waitUntilDone:YES];
     }

@@ -25,5 +25,8 @@
 }
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 @property (assign,nonatomic) id<PushViewController> delegate;
+
+- (void) loadRequest;
+
 @end
 

@@ -302,7 +302,6 @@
     }
     if(URLTag == URLOrderDetailTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             b2bMyCableDetailData = [[B2BMyCableDetailData alloc] init];

@@ -50,6 +50,20 @@
         self.segment.selectedSegmentIndex = 1;
         [self.sv setContentOffset:CGPointMake(ScreenWidth, 0) animated:YES];
     }
+    
+    normal = [self.storyboard instantiateViewControllerWithIdentifier:@"normalInquiryListTableViewController"];
+    normal.view.frame = self.firstView.bounds;
+    [normal loadRequest];
+    normal.delegate = self;
+    [self addChildViewController:normal];
+    [self.firstView addSubview:normal.view];
+    
+    speed = [self.storyboard instantiateViewControllerWithIdentifier:@"speedInquiryListTableViewController"];
+    speed.view.frame = self.secondView.bounds;
+    [speed loadRequest];
+    speed.delegate = self;
+    [self addChildViewController:speed];
+    [self.secondView addSubview:speed.view];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -82,29 +96,8 @@
     [self.sv setShowsHorizontalScrollIndicator:NO];
     [self.sv setShowsVerticalScrollIndicator:NO];
     
-    normal = [self.storyboard instantiateViewControllerWithIdentifier:@"normalInquiryListTableViewController"];
-    normal.view.frame = self.firstView.bounds;
-    normal.delegate = self;
-    [self addChildViewController:normal];
-    [self.firstView addSubview:normal.view];
-    
-    speed = [self.storyboard instantiateViewControllerWithIdentifier:@"speedInquiryListTableViewController"];
-    speed.view.frame = self.secondView.bounds;
-    speed.delegate = self;
-    [self addChildViewController:speed];
-    [self.secondView addSubview:speed.view];
-    
-//    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
-//    [self.navigationController.navigationBar addSubview:rightButtonView];
-//    
-//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [rightBtn setBackgroundColor:[UIColor clearColor]];
-//    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
-//    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-//    [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
-//    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [rightButtonView addSubview:rightBtn];
+
+
 }
 
 //-(void)searchOrderBtnClick

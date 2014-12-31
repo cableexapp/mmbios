@@ -26,5 +26,8 @@
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 @property (assign,nonatomic) id<PushToNextVC> delegate;
 
+- (void) loadRequest;
+
+
 @end
 

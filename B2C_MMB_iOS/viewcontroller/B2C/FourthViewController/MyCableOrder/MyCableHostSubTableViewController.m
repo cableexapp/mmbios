@@ -178,7 +178,6 @@
     }
     if(URLTag == URLConfirmReceiveTag)
     {
-//        NSLog(@"%@",dicRespon);
   
         
 
@@ -229,7 +228,7 @@
         }
         return 0;
     }
-    NSLog(@"count = %d", [[[dataArray objectAtIndex:section] myItems] count]);
+
     return  [[[dataArray objectAtIndex:section] myItems] count] + 2;
 }
 
@@ -691,6 +690,13 @@
             [secondLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:secondLabel];
             
+            float shippedLastestNum = 0.0;
+            NSArray *myItems = [NSArray arrayWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
+            for(int i=0;i<myItems.count;i++)
+            {
+                NSDictionary *itemDic = [NSDictionary dictionaryWithDictionary:[myItems objectAtIndex:i]];
+                shippedLastestNum = [[NSString stringWithFormat:@"%@",[itemDic objectForKey:@"shippedLastestNum"]] floatValue] + shippedLastestNum;
+            }
             if ([status intValue] == 2)
             {
                 UILabel *messageLabel = [[UILabel alloc] init];
@@ -699,6 +705,7 @@
                 messageLabel.font = [UIFont systemFontOfSize:12];
                 [cell.contentView addSubview:messageLabel];
             }
+            
             
             if([status intValue] == 0 || [status intValue] == 5)
             {
@@ -711,7 +718,15 @@
                 }
                 if([status intValue] == 5)
                 {
-                    [statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+                    if(shippedLastestNum > 0.0)
+                    {
+                        [statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+                    }
+                    else
+                    {
+                        [statusBtn setFrame:CGRectMake(cellWidth-120, 5, 0, 0)];
+                        [statusBtn setHidden:YES];
+                    }
                 }
                 [statusBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 statusBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:144/255.0 blue:1/255.0 alpha:1.0];
@@ -762,7 +777,7 @@
     else
     {
         NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
-        NSLog(@"status = %@",status);
+
         if([status intValue] == 5)
         {
             
@@ -806,7 +821,8 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"ConfirmReceive",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@",token,[NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:index] orderid]]];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@",token,[NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:index] orderserial]]];
+
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmReceiveTag delegate:self];
     

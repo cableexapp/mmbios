@@ -430,7 +430,7 @@
                             [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5+30, width, 30)];
                         }
                         
-                        if([DCFCustomExtra validateString:theInquiryVoltage] == NO || [DCFCustomExtra validateString:theInquirySpec] == NO)
+                        if([DCFCustomExtra validateString:theInquiryVoltage] == NO && [DCFCustomExtra validateString:theInquirySpec] == NO)
                         {
                             height_1 = 0;
                         }

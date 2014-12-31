@@ -61,6 +61,7 @@
 //        [self.view.layer addAnimation:transition forKey:nil];
         [self setHidesBottomBarWhenPushed:YES];
         [self pushViewController:chatVC animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
     
 //      [self setViewControllers:[NSArray arrayWithObject:chatVC]];
         
@@ -75,6 +76,8 @@
 //      [self pushViewController:chatListVC animated:YES];
        
         [self setViewControllers:[NSArray arrayWithObject:chatListVC]];
+        
+        [self setHidesBottomBarWhenPushed:NO];
        
         NSLog(@"工具栏入口连接状态ViewArray = %@",self.viewControllers);
     }

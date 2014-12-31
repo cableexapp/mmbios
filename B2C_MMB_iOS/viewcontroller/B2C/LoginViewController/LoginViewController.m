@@ -190,10 +190,33 @@
     
 }
 
+//连接服务器
+- (BOOL)connect:(NSString *)userName;
+{
+    NSString *myJID = [NSString stringWithFormat:@"%@@%@",userName,@"fgame.com"];
+    
+    NSString *myPassword = @"123456";
+    if (myJID == nil || myPassword == nil)
+    {
+        return NO;
+    }
+    XMPPJID *jid = [XMPPJID jidWithString:myJID resource:@"XMPP"];
+    [xmppStream setMyJID:jid];
+    
+    NSError *error = nil;
+    if (![xmppStream connect:&error])
+    {
+        return NO;
+    }
+    return YES;
+    
+    NSLog(@"用户登录-IM-连接");
+}
+
 //IM注册
 - (void)registerInSide:(NSString *)userName;
 {
-    NSLog(@"App登录_IM注册");
+    NSLog(@"用户登录_IM注册");
     NSError *error;
     NSString *hostName = @"58.215.50.9";
     NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",userName,hostName];
@@ -222,9 +245,8 @@
 }
 
 ////IM登录
-- (BOOL)connect:(NSString *)userName;
+- (BOOL)reConnect:(NSString *)userName;
 {
-    NSLog(@"App登录_IM登录");
     if (![xmppStream isDisconnected])
     {
         [app goonline];
@@ -244,9 +266,8 @@
         return NO;
     }
     return YES;
+    NSLog(@"用户登录-IM-登录");
 }
-
-
 
 //登录
 - (IBAction)loginBtnClick:(id)sender
@@ -334,12 +355,11 @@
             
             //切换登录账号，结束之前对话
             [app goOffline];
-            [app disconnect];
-            app.isConnect = @"断开";
-            
+//            [app disconnect];
+//            [self connect:self.tf_Account.text];
             [self registerInSide:self.tf_Account.text];
-            
-            [self connect:self.tf_Account.text];
+            [self reConnect:self.tf_Account.text];
+            app.isConnect = @"断开";
             
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"app_username"];
             

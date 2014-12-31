@@ -671,6 +671,7 @@ NSString *strUserId = @"";
 //            }
 //        });
 //    });
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
     //接收客服会话通知栏推送
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
 }
@@ -1056,18 +1057,22 @@ NSString *strUserId = @"";
             if ([from rangeOfString:tempUserName].location ==NSNotFound)
             {
                 messageg_hasLogin = [[message elementForName:@"body"] stringValue];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_hasLogin];
+                if ([messageg_hasLogin rangeOfString:@"null"].location == NSNotFound || [messageg_hasLogin rangeOfString:@"(null)"].location == NSNotFound)
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_hasLogin];
+                    
+                    //获得本地时间
+                    NSDate *dates = [NSDate date];
+                    NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+                    NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
+                    [formatter setTimeZone:timeZone];
+                    NSString *loctime = [formatter stringFromDate:dates];
+                    
+                    [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:messageg_hasLogin];
+                    NSLog(@"登录状态_收消息——---------------------------------存储消息");
+                }
                 
-                //获得本地时间
-                NSDate *dates = [NSDate date];
-                NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
-                NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
-                [formatter setTimeZone:timeZone];
-                NSString *loctime = [formatter stringFromDate:dates];
-                
-                [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:messageg_hasLogin];
-                NSLog(@"登录状态_收消息——---------------------------------存储消息");
                 self.personName = to;
             }
         }
@@ -1076,21 +1081,24 @@ NSString *strUserId = @"";
             if ([from rangeOfString:[PhoneHelper getDeviceId]].location ==NSNotFound)
             {
                 messageg_noLogin = [[message elementForName:@"body"] stringValue];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_noLogin];
-                
-                //获得本地时间
-                NSDate *dates = [NSDate date];
-                NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
-                NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
-                [formatter setTimeZone:timeZone];
-                NSString *loctime = [formatter stringFromDate:dates];
-                
-                [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:messageg_noLogin];
-                NSLog(@"未登录状态_收消息——-------------------------------存储消息");
+                if ([messageg_noLogin rangeOfString:@"null"].location == NSNotFound || [messageg_noLogin rangeOfString:@"(null)"].location == NSNotFound)
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:messageg_noLogin];
+                    
+                    //获得本地时间
+                    NSDate *dates = [NSDate date];
+                    NSDateFormatter *formatter =  [[NSDateFormatter alloc] init];
+                    [formatter setDateFormat:@"yyyy:MM:dd:HH:mm:ss"];
+                    NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/beijing"];
+                    [formatter setTimeZone:timeZone];
+                    NSString *loctime = [formatter stringFromDate:dates];
+                    
+                    [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:messageg_noLogin];
+                    NSLog(@"未登录状态_收消息——-------------------------------存储消息");
+                }
             }
+            self.personName = to;
         }
-
     }
 
     NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];

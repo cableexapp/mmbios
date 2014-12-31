@@ -39,8 +39,6 @@ int messageCountNum = 0;
     NSString *stringLabel;
     NSString *roomMessage;
     
-    NSString *messagePush;
-    
     NSString *isOn;
     
     NSString *MessageFlag; //商品详情是否发送商品网址链接标记
@@ -156,9 +154,6 @@ int messageCountNum = 0;
     
     //接收客服会话窗口关闭通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (noFriendOnLineMessage:) name:@"noFriendOnLine" object:nil];
-    
-    //接收客服会话通知栏推送
-//    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
 
     ArrTimeCheck = [[NSMutableArray alloc]init];
     
@@ -213,8 +208,7 @@ int messageCountNum = 0;
 
 -(void)goBackActionToHome
 {
-    messagePush = @"1";
-    [[NSUserDefaults standardUserDefaults] setObject:messagePush forKey:@"message_Push"];
+    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
    
     if ([self.appDelegate.isOnLine isEqualToString:@"available"])
     {
@@ -395,7 +389,10 @@ int messageCountNum = 0;
         }
     }
 
-      [self firstPageMessageData];
+    [self firstPageMessageData];
+    
+     [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
+    
      NSLog(@"聊天窗口self.navigationController.viewControllers = %@",self.navigationController.viewControllers);
     
     self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -487,7 +484,6 @@ int messageCountNum = 0;
         {
             MessageFlag = nil;
         }
-        
         if (GoodsFaststring.length > 0)
         {
             MessageTempFlag = @"消息";
@@ -981,6 +977,7 @@ int messageCountNum = 0;
 //        if (messagePush == 1)
 //        {
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
+       
 //        }
     }
 }

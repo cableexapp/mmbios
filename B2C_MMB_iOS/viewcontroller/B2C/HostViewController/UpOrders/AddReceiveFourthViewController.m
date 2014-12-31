@@ -157,6 +157,8 @@
             if([vc isKindOfClass:[AddReceiveFinalViewController class]])
             {
                 NSArray *arr = [NSArray arrayWithObjects:str,_pushDic, nil];
+                NSLog(@"four = %@  %@",str,_pushDic);
+                NSLog(@"%@",[_pushDic objectForKey:@"detailAddress"]);
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"FourthAddressStr" object:arr];
                 [self.navigationController popToViewController:vc animated:YES];
                 return;

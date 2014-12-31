@@ -225,6 +225,7 @@
                 if([vc isKindOfClass:[AddReceiveFinalViewController class]])
                 {
                     NSArray *arr = [NSArray arrayWithObjects:str,_pushDic, nil];
+                    NSLog(@"third = %@   %@",str,_pushDic);
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ThirdAddressStr" object:arr];
                     [self.navigationController popToViewController:vc animated:YES];
                     return;

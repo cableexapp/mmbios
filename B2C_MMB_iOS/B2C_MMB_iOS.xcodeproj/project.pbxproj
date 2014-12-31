@@ -29,6 +29,8 @@
 		6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22B19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m */; };
 		6116A22F19EE1099005C3572 /* MyOrderHostTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */; };
 		611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */ = {isa = PBXBuildFile; fileRef = 611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */; };
+		611E34821A53BB7500CA3012 /* iosappAd.png in Resources */ = {isa = PBXBuildFile; fileRef = 611E34801A53BB7500CA3012 /* iosappAd.png */; };
+		611E34831A53BB7500CA3012 /* iosappAd2.png in Resources */ = {isa = PBXBuildFile; fileRef = 611E34811A53BB7500CA3012 /* iosappAd2.png */; };
 		61222AD31A087DBB00B8A686 /* B2BAskPriceDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61222AD21A087DBB00B8A686 /* B2BAskPriceDetailData.m */; };
 		612C909519D6561900430140 /* B2CGoodsDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 612C909419D6561900430140 /* B2CGoodsDetailData.m */; };
 		6130A8E21A3EC4D8000B4FB2 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6130A8E01A3EC4D8000B4FB2 /* AlipaySDK.bundle */; };
@@ -818,6 +820,8 @@
 		6116A22D19EE1099005C3572 /* MyOrderHostTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOrderHostTableViewCell.m; sourceTree = "<group>"; };
 		611C8C3E19E3BDD2000F4532 /* B2CAddressData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CAddressData.h; sourceTree = "<group>"; };
 		611C8C3F19E3BDD2000F4532 /* B2CAddressData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CAddressData.m; sourceTree = "<group>"; };
+		611E34801A53BB7500CA3012 /* iosappAd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iosappAd.png; sourceTree = "<group>"; };
+		611E34811A53BB7500CA3012 /* iosappAd2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iosappAd2.png; sourceTree = "<group>"; };
 		61222AD11A087DBB00B8A686 /* B2BAskPriceDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2BAskPriceDetailData.h; sourceTree = "<group>"; };
 		61222AD21A087DBB00B8A686 /* B2BAskPriceDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2BAskPriceDetailData.m; sourceTree = "<group>"; };
 		612C909319D6561900430140 /* B2CGoodsDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGoodsDetailData.h; sourceTree = "<group>"; };
@@ -2727,6 +2731,8 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				611E34801A53BB7500CA3012 /* iosappAd.png */,
+				611E34811A53BB7500CA3012 /* iosappAd2.png */,
 				6115ACC31A52AB6600D810F3 /* tradeCar.png */,
 				6186F40F1A50F465009FA26E /* tabbar */,
 				61E0E17A1A36DD0E00F6D5F1 /* AliImage */,
@@ -4899,6 +4905,7 @@
 				8B7549461A270A4B00271985 /* shopPic.png in Resources */,
 				8BA7C0FF1A10A85500758B0F /* 猪头.png in Resources */,
 				8BA7C0681A10A85500758B0F /* del_emoji_normal@2x.png in Resources */,
+				611E34821A53BB7500CA3012 /* iosappAd.png in Resources */,
 				8BA7C0F61A10A85500758B0F /* 激动@2x.png in Resources */,
 				6186F4221A50F465009FA26E /* p_centerSelect.png in Resources */,
 				6181A4F019CFC4C2000E2D14 /* Set@2x.png in Resources */,
@@ -4947,6 +4954,7 @@
 				8BA7C1251A10A85500758B0F /* 调皮.png in Resources */,
 				8BA7C12B1A10A85500758B0F /* 跳跳.png in Resources */,
 				8BA7C1011A10A85500758B0F /* 献吻.png in Resources */,
+				611E34831A53BB7500CA3012 /* iosappAd2.png in Resources */,
 				8BA7C0911A10A85500758B0F /* 发疯.png in Resources */,
 				8BA7C0951A10A85500758B0F /* 可爱.png in Resources */,
 				8BA7C1001A10A85500758B0F /* 猪头@2x.png in Resources */,

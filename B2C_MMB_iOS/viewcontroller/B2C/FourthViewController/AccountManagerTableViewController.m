@@ -140,7 +140,9 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
 
-    
+    phone = @"";
+    email = @"";
+//    cxboss405@163.com
     if(indexPath.row == 0)
     {
         if([DCFCustomExtra validateString:phone] == NO && [DCFCustomExtra validateString:email] == NO)

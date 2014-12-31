@@ -30,6 +30,8 @@ double secondsCountDown =0;
     UILabel *noNetMessage;
     FBShimmeringView *shimmeringView;
     UIStoryboard *sb;
+    
+    NSString *isShowJoinMessage;
 }
 
 
@@ -315,10 +317,19 @@ double secondsCountDown =0;
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    
     [self checkNet];
 
     //发起请求加入咨询队列
     [self sendJoinRequest];
+
+    NSLog(@"self.appDelegate.errorMessage = %@",self.appDelegate.errorMessage);
+    
+    if ([self.appDelegate.errorMessage isEqualToString:@"cancel"])
+    {
+        [timeCountTimer invalidate];
+        [self isBetweenFromHour:9 toHour:21];
+    }
 }
 
 //检查网络是否连接
@@ -440,16 +451,14 @@ double secondsCountDown =0;
 //请求连接客服
 -(void)autoMessageToServer:(NSNotification *)newMessage
 {
+    NSLog(@"请求连接客服 = %@",newMessage.object);
     if(self.appDelegate.tempID.length > 0)
     {
         memberCount = self.appDelegate.tempID;
         tempCount = [self.appDelegate.tempID intValue];
     }
-    if ([newMessage.object isEqualToString:@"cancel"])
-    {
-        [timeCountTimer invalidate];
-        [self isBetweenFromHour:9 toHour:21];
-    }
+    
+    isShowJoinMessage = newMessage.object;
 }
 
 - (BOOL)isBetweenFromHour:(NSInteger)fromHour toHour:(NSInteger)toHour

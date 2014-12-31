@@ -548,13 +548,11 @@ NSString *strUserId = @"";
     [tabbar setSelectedIndex:3];
 }
 
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
     //跳转支付宝钱包进行支付，需要将支付宝钱包的支付结果回传给SDK
-    if ([url.host isEqualToString:@"safepay"]) {
+    if ([url.host isEqualToString:@"safepay"])
+    {
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
          standbyCallback:^(NSDictionary *resultDic) {
@@ -581,8 +579,8 @@ NSString *strUserId = @"";
 }
 
 //独立客户端回调函数
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
 //	[self parse:url application:application];
 	return YES;
 }
@@ -991,6 +989,8 @@ NSString *strUserId = @"";
         self.errorMessage = [[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue];
       
         [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue]];
+        
+//        [[NSUserDefaults standardUserDefaults] setObject:msg forKey:@"isShowJoinMessage"];
     }
     return NO;
 }
@@ -998,7 +998,7 @@ NSString *strUserId = @"";
 //收到消息
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    // NSLog(@"接收++++message = %@\n\n",message);
+    NSLog(@"接收++++message = %@\n\n",message);
     //消息内容
     NSString *msg = [[message elementForName:@"body"] stringValue];
     NSString *from = [[message attributeForName:@"from"] stringValue];
@@ -1031,7 +1031,9 @@ NSString *strUserId = @"";
            self.chatRequestJID = [PhoneHelper getDeviceId];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:msg];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:msg];
+        
+//        [[NSUserDefaults standardUserDefaults] setObject:msg forKey:@"isShowJoinMessage"];
     }
     else if([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound)
     {
@@ -1111,8 +1113,8 @@ NSString *strUserId = @"";
 - (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
 {
     //取得添加好友状态
-    //NSString *presenceType = [NSString stringWithFormat:@"%@", [presence type]];
-    //NSLog(@"好友状态 = %@",presenceType);
+    NSString *presenceType = [NSString stringWithFormat:@"%@", [presence type]];
+    NSLog(@"好友状态 = %@",presenceType);
     
     //请求的用户
     NSString *presenceFromUser =[NSString stringWithFormat:@"%@", [[presence from] user]];

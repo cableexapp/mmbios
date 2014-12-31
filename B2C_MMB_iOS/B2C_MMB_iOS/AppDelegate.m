@@ -896,6 +896,7 @@ NSString *strUserId = @"";
 //                                                  otherButtonTitles:nil];
 //        [alertView show];
     }
+    NSLog(@"APP-IM-注册");
 }
 
 //连接服务器
@@ -918,6 +919,8 @@ NSString *strUserId = @"";
         return NO;
     }
     return YES;
+    
+     NSLog(@"APP-IM-连接");
 }
 
 //注册账号成功后，重新登录连接
@@ -943,6 +946,7 @@ NSString *strUserId = @"";
         return NO;
     }
     return YES;
+    NSLog(@"APP-IM-重新连接");
 }
 
 
@@ -958,14 +962,13 @@ NSString *strUserId = @"";
     [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
     [iq addChild:query];
     [[self xmppStream] sendElement:iq];
-//    NSLog(@"iq = %@",iq);
-//    NSLog(@"查询列表");
+    NSLog(@"查询列表 = %@",iq);
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-//  NSLog(@"[IQ description] = %@\n\n",iq);
+  NSLog(@"[IQ description] = %@\n\n",iq);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])
@@ -984,13 +987,15 @@ NSString *strUserId = @"";
             }
         }
     }
-    if ([iq.type isEqualToString:@"error"])
+    if ([iq.type isEqualToString:@"error"] && [[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue] isEqualToString:@"cancel"])
     {
-        self.errorMessage = [[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue];
-      
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue]];
+//        self.errorMessage = [[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue];
         
-//        [[NSUserDefaults standardUserDefaults] setObject:msg forKey:@"isShowJoinMessage"];
+         NSLog(@"self.errorMessage = %@",self.errorMessage);
+        
+        self.errorMessage = @"cancel";
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckTheStatus_offline" object:nil];
     }
     return NO;
 }
@@ -1013,6 +1018,8 @@ NSString *strUserId = @"";
     if([DCFCustomExtra validateString:[[message.children objectAtIndex:0] elementForName:@"position"].stringValue] == YES)
     {
         self.tempID = [[message.children objectAtIndex:0] elementForName:@"position"].stringValue;
+        self.errorMessage = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckTheStatus_online" object:nil];
     }
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
@@ -1030,13 +1037,15 @@ NSString *strUserId = @"";
         {
            self.chatRequestJID = [PhoneHelper getDeviceId];
         }
-        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"joinRoomMessage" object:msg];
-        
-//        [[NSUserDefaults standardUserDefaults] setObject:msg forKey:@"isShowJoinMessage"];
+
+
     }
     else if([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound)
     {
+        NSLog(@"APP-self.personName = %@",self.personName);
+        
+        NSLog(@"APP-self.uesrID = %@",self.uesrID);
+        
         self.personName = to;
         self.uesrID = from;
     }
@@ -1081,6 +1090,7 @@ NSString *strUserId = @"";
                 NSLog(@"未登录状态_收消息——-------------------------------存储消息");
             }
         }
+
     }
 
     NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];

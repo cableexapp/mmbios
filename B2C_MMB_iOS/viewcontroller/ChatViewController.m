@@ -206,9 +206,9 @@ int messageCountNum = 0;
 {
     [xmppRoom leaveRoom];
     
-    self.appDelegate.isConnect = @"断开";
-    
     [self pageFromWhere];
+    
+    self.appDelegate.isConnect = @"断开";
 }
 
 -(void)goBackActionToHome
@@ -216,8 +216,6 @@ int messageCountNum = 0;
     messagePush = @"1";
     [[NSUserDefaults standardUserDefaults] setObject:messagePush forKey:@"message_Push"];
    
-   
-    
     if ([self.appDelegate.isOnLine isEqualToString:@"available"])
     {
         self.appDelegate.isConnect = @"连接";
@@ -243,7 +241,11 @@ int messageCountNum = 0;
         {
             NSLog(@"111111111111");
             [self.tabBarController setSelectedIndex:0];
-        }      
+        }
+        else if([self.fromStringFlag isEqualToString:@"首页在线客服"])
+        {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
         else
         {
             NSLog(@"2222222222222");
@@ -323,35 +325,6 @@ int messageCountNum = 0;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCount" object:nil];
 }
 
--(void)chatRoomMessage:(NSNotification *)chatRoomMessage
-{
-//    #if SUPPORT_IOS8
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-//    {
-//        UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
-//        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-//    }else
-//  #endif
-//    {
-//        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
-//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
-//    }
-//    UILocalNotification *_localNotification=[[UILocalNotification alloc] init];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//
-//        NSLog(@"running in the background");
-//        
-////        _localNotification.applicationIconBadgeNumber = 1;
-//        _localNotification.timeZone = [NSTimeZone defaultTimeZone];
-//        _localNotification.alertBody = roomMessage;
-//        _localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
-//        _localNotification.soundName= UILocalNotificationDefaultSoundName;
-//        [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
-//    });
-//    self.appDelegate.pushChatView = @"push";
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
-}
 
 - (AppDelegate *)appDelegate
 {
@@ -825,6 +798,7 @@ int messageCountNum = 0;
             NSXMLElement *mes = [NSXMLElement elementWithName:@"message"];
             [mes addAttributeWithName:@"type" stringValue:@"groupchat"];
             [mes addAttributeWithName:@"id" stringValue:[NSString stringWithFormat:@"%@-10",self.changeString]];
+
             if (self.appDelegate.uesrID.length > 0)
             {
                 [mes addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",self.appDelegate.uesrID]];

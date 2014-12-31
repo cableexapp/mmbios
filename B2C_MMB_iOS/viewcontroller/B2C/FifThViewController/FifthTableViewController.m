@@ -396,7 +396,8 @@
 
             //切换登录账号，结束之前对话
             [self.appDelegate goOffline];
-
+            [app disconnect];
+            [app reConnect];
             self.appDelegate.isConnect = @"断开";
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
         }

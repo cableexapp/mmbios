@@ -334,6 +334,7 @@
             
             //切换登录账号，结束之前对话
             [app goOffline];
+            [app disconnect];
             app.isConnect = @"断开";
             
             [self registerInSide:self.tf_Account.text];

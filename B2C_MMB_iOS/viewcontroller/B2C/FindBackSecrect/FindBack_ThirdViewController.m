@@ -152,6 +152,7 @@
     NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&oldpassword=%@&newpassword=%@",memberid,token,@"",self.tf_newSec.text];
     NSLog(@"%@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLChangePasswordTag delegate:self];
+    conn.LogIn = YES;
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ChangePassword.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }

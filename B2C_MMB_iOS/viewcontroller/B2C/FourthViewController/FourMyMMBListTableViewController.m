@@ -507,7 +507,6 @@
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
     }
    
-    //陈晓修改头像上传
     self.photoBtn = [[UIImageView alloc] init];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoBtnAction:)];
     [self.photoBtn setUserInteractionEnabled:YES];

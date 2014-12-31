@@ -950,7 +950,7 @@ BOOL isPopShow = NO;
     {
         if(!es)
         {
-            NSArray *imageArray = [[NSArray alloc] initWithObjects:@"sv_1.png",@"sv_2.png",@"sv_3.png", nil];
+            NSArray *imageArray = [[NSArray alloc] initWithObjects:@"iosappAd.png",@"iosappAd2.png", nil];
             es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 100) ImageArray:imageArray TitleArray:nil WithTag:0];
             es.delegate = self;
             [cell.contentView addSubview:es];
@@ -1282,7 +1282,20 @@ BOOL isPopShow = NO;
 
 -(void)EScrollerViewDidClicked:(NSUInteger)index
 {
-    
+    NSLog(@"index = %d",index);
+
+    [self setHidesBottomBarWhenPushed:YES];
+    if (index == 2)
+    {
+        SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
+        speedAskPriceFirstViewController.fromWherePush = @"首页";
+        [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
+    }
+    else
+    {
+        ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
+        [self.navigationController pushViewController:shoppingHost animated:YES];
+    }
 }
 
 - (void) timer:(NSTimer *) sender

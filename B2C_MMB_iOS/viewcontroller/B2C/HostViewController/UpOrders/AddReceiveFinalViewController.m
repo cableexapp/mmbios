@@ -332,7 +332,7 @@
         NSString *token = [DCFCustomExtra md5:string];
         
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,receiver,province,city,area,chooseAddressName,zip,mobile,tel,b2cAddressData.addressId];
-        
+        NSLog(@"push = %@",pushString);
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
         
         NSString *urlString = nil;
@@ -379,8 +379,17 @@
 - (void) dealEditData
 {
     NSString *string = [notiArray objectAtIndex:0];
+    NSLog(@"string = %@",string);
+    NSArray *arr = [string componentsSeparatedByString:@","];
+    NSLog(@"arr = %@",arr);
+    
+    province = [arr objectAtIndex:0];
+    city = [arr objectAtIndex:1];
+    area = [arr lastObject];
+    NSLog(@"p = %@   c = %@   a = %@",province,city,area);
     chooseAddress = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
     
+    NSLog(@"chooseAddress = %@",chooseAddress);
     [topTf setText:chooseAddress];
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithDictionary:[notiArray lastObject]];
@@ -550,13 +559,12 @@
         else if (result == 1)
         {
             [DCFStringUtil showNotice:msg];
-//            [self.navigationController popViewControllerAnimated:YES];
             for(UIViewController *vc in self.navigationController.viewControllers)
             {
                 if([vc isKindOfClass:[ChooseReceiveAddressViewController class]])
                 {
-                    [self.navigationController popToViewController:vc animated:YES];
-                    return;
+//                    [self.navigationController popToViewController:vc animated:YES];
+//                    return;
                 }
             }
         }
@@ -584,11 +592,13 @@
     
     if(!b2cAddressData)
     {
+        NSLog(@"finalAddress = %@",finalAddress);
         [topTf setText:finalAddress];
     }
     else
     {
         NSString *str = [NSString stringWithFormat:@"%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area];
+        NSLog(@"str = %@",str);
         [topTf setText:str];
     }
     [topTf setTextAlignment:NSTextAlignmentCenter];

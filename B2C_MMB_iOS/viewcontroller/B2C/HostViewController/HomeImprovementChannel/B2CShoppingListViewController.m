@@ -214,7 +214,6 @@
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     int tag = btn.tag;
-    NSLog(@"tag = %d",tag);
     
     //    NSLog(@"%@",btn.subviews);
     //    for(UIView *view in btn.subviews)

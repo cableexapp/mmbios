@@ -778,9 +778,27 @@
     [payBtn setTitle:btnTitle forState:UIControlStateNormal];
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+}
+
+- (void) doLoadRequest
+{
+    [self loadRequest];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doLoadRequest) name:@"B2CGoodsHasBuy" object:nil];
     
     [self pushAndPopStyle];
     

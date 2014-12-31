@@ -360,30 +360,7 @@
             {
                 needBtn = billBtn;
             }
-#pragma mark - 当editOrAddBill为0的时候表示新增发票，为1的时候表示编辑发票   当status为1的时候表示需要发票，为2的时候表示不需要发票
-            if(_editOrAddBill == NO)
-            {
-                [noNeedBtn setSelected:NO];
-                [needBtn setSelected:YES];
-                [self showSubViews];
-            }
-            if(_editOrAddBill == YES)
-            {
-                if([status intValue] == 1)
-                {
-                    [noNeedBtn setSelected:NO];
-                    [needBtn setSelected:YES];
-                    [self showSubViews];
-                }
-                else if ([status intValue] == 2)
-                {
-                    [noNeedBtn setSelected:YES];
-                    [needBtn setSelected:NO];
-                    [self hideSubViews];
-                }
-            }
 
-            
             UILabel *billLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10+40*i, 200, 30)];
             if(i == 0)
             {
@@ -488,14 +465,29 @@
             [self.view addSubview:sureBtn];
         }
     }
-    
+
+#pragma mark - 当editOrAddBill为0的时候表示新增发票，为1的时候表示编辑发票   当status为1的时候表示需要发票，为2的时候表示不需要发票
     if(_editOrAddBill == NO)
     {
+        [noNeedBtn setSelected:YES];
+        [needBtn setSelected:NO];
+        [self hideSubViews];
     }
-    else
+    if(_editOrAddBill == YES)
     {
+        if([status intValue] == 1)
+        {
+            [noNeedBtn setSelected:NO];
+            [needBtn setSelected:YES];
+            [self showSubViews];
+        }
+        else if ([status intValue] == 2)
+        {
+            [noNeedBtn setSelected:YES];
+            [needBtn setSelected:NO];
+            [self hideSubViews];
+        }
     }
-    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
 }

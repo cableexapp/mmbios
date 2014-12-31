@@ -634,7 +634,7 @@
 
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
     {
-        billMsg = @"不需要发票";
+        billMsg = @"暂无发票信息";
         billId = 0;
     }
     else
@@ -698,6 +698,8 @@
     {
         if(result == 1)
         {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"B2CGoodsHasBuy" object:nil];
+            
             NSDictionary *dic = [[NSDictionary alloc] initWithDictionary:[b2cOrderData.summariesArray lastObject]];
             NSArray *itemsArray = [dic objectForKey:@"items"];
             NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemsArray lastObject]];

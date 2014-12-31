@@ -204,7 +204,7 @@
 
                 for(int i=0;i<specsArray.count;i++)
                 {
-                    if([str isEqualToString:[specsArray objectAtIndex:i]])
+                    if([str isEqualToString:[NSString stringWithFormat:@"%@平方",[specsArray objectAtIndex:i]]])
                     {
                         [btn setEnabled:YES];
                         break;
@@ -258,43 +258,44 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    NSString *tempBtand = [[NSUserDefaults standardUserDefaults] objectForKey:@"brand_save"];
-    NSString *tempModel = [[NSUserDefaults standardUserDefaults] objectForKey:@"model_save"];
-    NSString *tempUse = [[NSUserDefaults standardUserDefaults] objectForKey:@"use_save"];
-    NSString *tempSpec = [[NSUserDefaults standardUserDefaults] objectForKey:@"spec_save"];
+    
+//    NSString *tempBtand = [[NSUserDefaults standardUserDefaults] objectForKey:@"brand_save"];
+//    NSString *tempModel = [[NSUserDefaults standardUserDefaults] objectForKey:@"model_save"];
+//    NSString *tempUse = [[NSUserDefaults standardUserDefaults] objectForKey:@"use_save"];
+//    NSString *tempSpec = [[NSUserDefaults standardUserDefaults] objectForKey:@"spec_save"];
  
-    if (tempBtand.length > 0)
-    {
-        brandString = tempBtand;
-        [brandBtn setHidden:NO];
-        [brandBtn_0 setHidden:NO];
-        [triangle setHidden:YES];
-        [brandBtn setTitle:brandString forState:UIControlStateNormal];
-    }
-    if (tempModel.length > 0)
-    {
-        modelString = tempModel;
-        [modelBtn setHidden:NO];
-        [modelBtn_1 setHidden:NO];
-        [triangle_1 setHidden:YES];
-        [modelBtn setTitle:modelString forState:UIControlStateNormal];
-    }
-    if (tempUse.length > 0)
-    {
-        useString = tempUse;
-        [useBtn setHidden:NO];
-        [useBtn_2 setHidden:NO];
-        [triangle_2 setHidden:YES];
-        [useBtn setTitle:useString forState:UIControlStateNormal];
-    }
-    if (tempSpec.length > 0)
-    {
-        specString = tempSpec;
-        [specBtn setHidden:NO];
-        [specBtn_3 setHidden:NO];
-        [triangle_3 setHidden:YES];
-        [specBtn setTitle:specString forState:UIControlStateNormal];
-    }
+//    if (tempBtand.length > 0)
+//    {
+//        brandString = tempBtand;
+//        [brandBtn setHidden:NO];
+//        [brandBtn_0 setHidden:NO];
+//        [triangle setHidden:YES];
+//        [brandBtn setTitle:brandString forState:UIControlStateNormal];
+//    }
+//    if (tempModel.length > 0)
+//    {
+//        modelString = tempModel;
+//        [modelBtn setHidden:NO];
+//        [modelBtn_1 setHidden:NO];
+//        [triangle_1 setHidden:YES];
+//        [modelBtn setTitle:modelString forState:UIControlStateNormal];
+//    }
+//    if (tempUse.length > 0)
+//    {
+//        useString = tempUse;
+//        [useBtn setHidden:NO];
+//        [useBtn_2 setHidden:NO];
+//        [triangle_2 setHidden:YES];
+//        [useBtn setTitle:useString forState:UIControlStateNormal];
+//    }
+//    if (tempSpec.length > 0)
+//    {
+//        specString = tempSpec;
+//        [specBtn setHidden:NO];
+//        [specBtn_3 setHidden:NO];
+//        [triangle_3 setHidden:YES];
+//        [specBtn setTitle:specString forState:UIControlStateNormal];
+//    }
 }
 
 #pragma mark - 品牌按钮点击
@@ -308,9 +309,9 @@
     [triangle setHidden:YES];
     [brandBtn setTitle:brandString forState:UIControlStateNormal];
     
-    [[NSUserDefaults standardUserDefaults] setObject:brandString forKey:@"brand_save"];
+//    [[NSUserDefaults standardUserDefaults] setObject:brandString forKey:@"brand_save"];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",sectionIndex] forKey:@"brandBtn_save"];
+//    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",sectionIndex] forKey:@"brandBtn_save"];
     
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
@@ -325,7 +326,7 @@
     [modelBtn_1 setHidden:NO];
     [triangle_1 setHidden:YES];
 
-    [[NSUserDefaults standardUserDefaults] setObject:modelString forKey:@"model_save"];
+//    [[NSUserDefaults standardUserDefaults] setObject:modelString forKey:@"model_save"];
     
     [modelBtn setTitle:modelString forState:UIControlStateNormal];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
@@ -342,7 +343,7 @@
     [triangle_2 setHidden:YES];
     [useBtn setTitle:useString forState:UIControlStateNormal];
     
-    [[NSUserDefaults standardUserDefaults] setObject:useString forKey:@"use_save"];
+//    [[NSUserDefaults standardUserDefaults] setObject:useString forKey:@"use_save"];
     
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
     
@@ -359,7 +360,7 @@
     [triangle_3 setHidden:YES];
     [specBtn setTitle:specString forState:UIControlStateNormal];
     
-    [[NSUserDefaults standardUserDefaults] setObject:specString forKey:@"spec_save"];
+//    [[NSUserDefaults standardUserDefaults] setObject:specString forKey:@"spec_save"];
     
 //    specString = [self getNumFromString:specString];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
@@ -381,20 +382,18 @@
     [topView addSubview:label];
     
     _clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_clearBtn setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width+10, 0,(ScreenWidth-130)/2, 40)];
+    [_clearBtn setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width, 0,(ScreenWidth-130)/2+10, 40)];
     [_clearBtn setTitle:@"清空" forState:UIControlStateNormal];
     [_clearBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [_clearBtn setTitleColor:[UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     [_clearBtn addTarget:self action:@selector(clear:) forControlEvents:UIControlEventTouchUpInside];
-//    _clearBtn.backgroundColor = [UIColor yellowColor];
     [topView addSubview:_clearBtn];
     
     _sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_sureBtn setTitleColor:[UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     [_sureBtn setTitle:@"确定" forState:UIControlStateNormal];
     [_sureBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    [_sureBtn setFrame:CGRectMake(_clearBtn.frame.origin.x+_clearBtn.frame.size.width+5, 0,ScreenWidth-(_clearBtn.frame.origin.x+_clearBtn.frame.size.width+40),40)];
-//    _sureBtn.backgroundColor = [UIColor greenColor];
+    [_sureBtn setFrame:CGRectMake(_clearBtn.frame.origin.x+_clearBtn.frame.size.width, 0,ScreenWidth-(_clearBtn.frame.origin.x+_clearBtn.frame.size.width+40),40)];
     [_sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:_sureBtn];
     
@@ -645,9 +644,9 @@
         specString = @"";
         modelString = @"";
 
-        showUseCell = YES;
-        showModelCell = YES;
-        showSpecCell = YES;
+        showUseCell = NO;
+        showModelCell = NO;
+        showSpecCell = NO;
         showBrandCell = YES;
     }
     return self;
@@ -880,11 +879,11 @@
         specString = @"";
         brandString = @"";
     
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
-        
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
+    
         [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 //    }
 
@@ -1031,7 +1030,7 @@
         }
         else
         {
-            return 0;
+//            return 0;
         }
     }
     if(section == 1)
@@ -1042,7 +1041,7 @@
         }
         else
         {
-            return 0;
+//            return 0;
         }
     }
     if(section == 3)
@@ -1053,7 +1052,7 @@
         }
         else
         {
-            return 0;
+//            return 0;
         }
     }
     if(section == 0)
@@ -1064,7 +1063,7 @@
         }
         else
         {
-            return 0;
+//            return 0;
         }
     }
     return 40;
@@ -1179,10 +1178,30 @@
 
 -(void)headerClicked:(UIButton*)sender
 {
-    NSLog(@"headerClicked+++++++++++ = %d",sender.tag);
+//    NSLog(@"headerClicked+++++++++++ = %d",sender.tag);
 	int sectionIndex = sender.tag;
+    if(sectionIndex == 0)
+    {
+        showBrandCell = !showBrandCell;
+        flag[sectionIndex] = showBrandCell;
+    }
+    if(sectionIndex == 1)
+    {
+        showModelCell = !showModelCell;
+        flag[sectionIndex] = showModelCell;
+    }
+    if(sectionIndex == 2)
+    {
+        showUseCell = !showUseCell;
+        flag[sectionIndex] = showUseCell;
+    }
+    if(sectionIndex == 3)
+    {
+        showSpecCell = !showSpecCell;
+        flag[sectionIndex] = showSpecCell;
+    }
 	UIButton *btn = sender;
-	flag[sectionIndex] = !flag[sectionIndex];
+//	flag[sectionIndex] = !flag[sectionIndex];
     UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
     switch (sectionIndex)
     {
@@ -1212,17 +1231,15 @@
             break;
     }
     
-    
- if(flag[sectionIndex])
+    NSLog(@"flag[sectionIndex] = %d",flag[sectionIndex]);
+    if(flag[sectionIndex])
 	{
-     btn.selected = YES;
-//       [iv setImage:[UIImage imageNamed:@"click1.png"]];
-       iv.transform = CGAffineTransformMakeRotation(M_2_PI);
+        btn.selected = YES;
+        iv.transform = CGAffineTransformMakeRotation(M_2_PI);
 	}
 	else
     {
 		btn.selected = NO;
-//        [iv setImage:[UIImage imageNamed:@"next.png"]];
         iv.transform = CGAffineTransformMakeRotation(0);
 	}
     

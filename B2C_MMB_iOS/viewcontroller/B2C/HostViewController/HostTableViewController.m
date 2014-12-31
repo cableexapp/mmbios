@@ -349,12 +349,12 @@ BOOL isPopShow = NO;
     [self.refreshView refreshLastUpdatedDate];
     
     
-    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 4, 34,34)];
+    UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10,8, 28,28)];
     naviImageView.image = [UIImage imageNamed:@"global_main_logo"];
     [naviImageView setTag:100];
     [self.navigationController.navigationBar addSubview:naviImageView];
     
-    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(53,7,ScreenWidth-66, 30)];
+    UIImageView *searchImageView = [[UIImageView alloc] initWithFrame:CGRectMake(46,7,ScreenWidth-56, 30)];
     [searchImageView setUserInteractionEnabled:YES];
     [searchImageView setTag:101];
     searchImageView.backgroundColor = [UIColor whiteColor];

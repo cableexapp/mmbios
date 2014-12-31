@@ -78,6 +78,7 @@
 {
     [super viewWillDisappear:YES];
     rightButtonView.hidden = YES;
+    [self deleteHistorySelestData];
 }
 
 - (void)viewDidLoad
@@ -177,7 +178,6 @@
         secCtr.upArray = selectArray;
         [self setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:secCtr animated:YES];
-        [self deleteHistorySelestData];
     }
     else
     {
@@ -436,6 +436,7 @@ if ( _opend )
 
 -(void)deleteHistorySelestData
 {
+    NSLog(@"清空选中记录");
     self.opend = NO;
     backView.hidden = YES;
     self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);

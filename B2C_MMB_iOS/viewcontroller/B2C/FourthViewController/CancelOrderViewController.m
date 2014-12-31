@@ -232,14 +232,18 @@
     }
     else if(indexPath.row == 9)
     {
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
-        [iv setImage:[UIImage imageNamed:@"Set.png"]];
-        [cell.contentView addSubview:iv];
+//       UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
+//       [iv setImage:[UIImage imageNamed:@"Set.png"]];
+//       [cell.contentView addSubview:iv];
+    
+        [cell.textLabel setText:@"其他原因"];
+        [cell.textLabel setTextColor:[UIColor colorWithRed:24.0/255.0 green:120.0/255.0 blue:249.0/255.0 alpha:1.0]];
         
-        UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + iv.frame.size.width + 5, iv.frame.origin.y, 200, iv.frame.size.height)];
-        [cellLabel setTextColor:[UIColor colorWithRed:24.0/255.0 green:120.0/255.0 blue:249.0/255.0 alpha:1.0]];
-        [cellLabel setText:@"其他原因"];
-        [cell.contentView addSubview:cellLabel];
+//       UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + iv.frame.size.width + 5, iv.frame.origin.y, 200, iv.frame.size.height)];
+//       [cellLabel setTextColor:[UIColor colorWithRed:24.0/255.0 green:120.0/255.0 blue:249.0/255.0 alpha:1.0]];
+//       [cellLabel setText:@"其他原因"];
+//       [cell.contentView addSubview:cellLabel];
+        
     }
     else
     {

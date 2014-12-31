@@ -131,8 +131,6 @@
     //接收分组列表
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (memberGroupList:) name:@"memberGroupName" object:nil];
     
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backToTabBarIm:) name:@"tabbar_im" object:nil];
    
 //    NSLog(@"self.appDelegate.roster = %@",self.appDelegate.roster);
     
@@ -189,6 +187,7 @@
         self.memberTableView.separatorColor = [UIColor clearColor];
         self.memberTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
         [self.view addSubview:self.memberTableView];
+        [self.memberTableView reloadData];
     }
     else
     {
@@ -258,19 +257,6 @@
     self.memberTableView.separatorColor = [UIColor clearColor];
     self.memberTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
     [self.view addSubview:self.memberTableView];
-}
-
--(void)backToTabBarIm:(NSNotification *)sender
-{
-//    [self.tabBarController setSelectedIndex:0];
-//    NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
-    //            [ViewArray removeObjectAtIndex:0];
-    //            [ViewArray removeObjectAtIndex:1];
-//    [ViewArray removeAllObjects];
-//    [self.navigationController setViewControllers:ViewArray];
-//    [self.navigationController.tabBarController.tabBar setHidden:NO];
-    NSLog(@"44444444444");
-    
 }
 
 -(void)goBackAction

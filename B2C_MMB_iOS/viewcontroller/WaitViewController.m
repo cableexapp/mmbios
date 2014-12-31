@@ -30,6 +30,8 @@ double secondsCountDown =0;
     UILabel *noNetMessage;
     FBShimmeringView *shimmeringView;
     UIStoryboard *sb;
+    
+    NSString *isShowJoinMessage;
 }
 
 
@@ -150,9 +152,12 @@ double secondsCountDown =0;
     self.progressView.textColor = [UIColor whiteColor];
     [self.view addSubview:self.progressView];
     
-    //接收服务端自动回复
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (autoMessageToServer:) name:@"joinRoomMessage" object:nil];
+    //接收openfire服务端客服在线自动回复
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (autoMessageToServer_online:) name:@"CheckTheStatus_online" object:nil];
     
+    //接收openfire服务端客服不在线自动回复
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (autoMessageToServer_offline:) name:@"CheckTheStatus_offline" object:nil];
+
     //重置等待排队环形计时初值
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (resetSecondsCountDown:) name:@"resetCount" object:nil];
     
@@ -315,6 +320,7 @@ double secondsCountDown =0;
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    
     [self checkNet];
 
     //发起请求加入咨询队列
@@ -437,19 +443,29 @@ double secondsCountDown =0;
     [[self xmppStream] sendElement:iq];
 }
 
-//请求连接客服
--(void)autoMessageToServer:(NSNotification *)newMessage
+-(void)autoMessageToServer_offline:(NSNotification *)newMessage
 {
+    NSLog(@"self.appDelegate.errorMessage = %@",self.appDelegate.errorMessage);
+    
+    if ([self.appDelegate.errorMessage isEqualToString:@"cancel"])
+    {
+        [timeCountTimer invalidate];
+        [self isBetweenFromHour:9 toHour:21];
+    }
+}
+
+
+//请求连接客服
+-(void)autoMessageToServer_online:(NSNotification *)newMessage
+{
+    NSLog(@"请求连接客服 = %@",newMessage.object);
     if(self.appDelegate.tempID.length > 0)
     {
         memberCount = self.appDelegate.tempID;
         tempCount = [self.appDelegate.tempID intValue];
     }
-    if ([newMessage.object isEqualToString:@"cancel"])
-    {
-        [timeCountTimer invalidate];
-        [self isBetweenFromHour:9 toHour:21];
-    }
+    
+    isShowJoinMessage = newMessage.object;
 }
 
 - (BOOL)isBetweenFromHour:(NSInteger)fromHour toHour:(NSInteger)toHour

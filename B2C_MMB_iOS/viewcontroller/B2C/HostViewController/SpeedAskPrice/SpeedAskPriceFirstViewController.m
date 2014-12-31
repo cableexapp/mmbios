@@ -77,11 +77,6 @@
     }
 }
 
--(void)viewDidDisappear:(BOOL)animated
-{
-//    self.content_Tv.text = nil;
-//    [picBtnArray removeAllObjects];
-}
 
 - (void)viewDidLoad
 {
@@ -106,12 +101,12 @@
     tel_lineView.frame = CGRectMake(0, self.tel_Tf.frame.origin.y+self.tel_Tf.frame.size.height-1, ScreenWidth, 1);
     [self.mySv addSubview:tel_lineView];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0,0, 15,22);
-    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(goBack) forControlEvents: UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    self.navigationItem.leftBarButtonItem = leftItem;
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    btn.frame = CGRectMake(0,0, 15,22);
+//    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+//    [btn addTarget:self action:@selector(goBack) forControlEvents: UIControlEventTouchUpInside];
+//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+//    self.navigationItem.leftBarButtonItem = leftItem;
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = @"";
@@ -208,6 +203,8 @@
 {
     deleteOrNot = NO;
     
+    NSLog(@"picBtnClick++++++++++++++++++++++");
+    
     [self setHidesBottomBarWhenPushed:YES];
     LookForBigPicViewController *lookForBigPicViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"lookForBigPicViewController"];
     lookForBigPicViewController.delegate = self;
@@ -282,6 +279,9 @@
 
 - (void) deleteWithPicBtn:(NSMutableArray *)btnArray WithImageArray:(NSMutableArray *)imageArray
 {
+    
+    NSLog(@"deleteWithPicBtn------------------------");
+    
     deleteOrNot = YES;
     
     if(chooseImageArray && chooseImageArray.count != 0)
@@ -337,7 +337,7 @@
     for(int i=0;i<picBtnArray.count;i++)
     {
         UIButton *btn = [picBtnArray objectAtIndex:i];
-        
+        UIImageView *iv = [[UIImageView alloc] init];
         //相机
         if(cameraOrPhoto == 0)
         {
@@ -357,6 +357,7 @@
                     [self.lastUpPicBtn setFrame:CGRectMake(btn.frame.origin.x+btn.frame.size.width+20,btn.frame.origin.y,(ScreenWidth-80)/3,(ScreenWidth-80)/3)];
                 }
             }
+            iv.frame = CGRectMake(0,10, (ScreenWidth-80)/3, (ScreenWidth-80)/3);
         }
         else
         {
@@ -365,9 +366,9 @@
             {
                 [self.lastUpPicBtn setFrame:CGRectMake(btn.frame.origin.x+btn.frame.size.width+20,btn.frame.origin.y,(ScreenWidth-80)/3,(ScreenWidth-80)/3)];
             }
+            iv.frame = CGRectMake(0,0, (ScreenWidth-80)/3, (ScreenWidth-80)/3);
         }
-        
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn.frame.size.width, btn.frame.size.height)];
+                           
         [iv setImage:(UIImage *)[chooseImageArray objectAtIndex:i]];
         [btn addSubview:iv];
         [self.mySv addSubview:btn];
@@ -378,7 +379,7 @@
     
     
     
-    UIButton *lastbtn = [picBtnArray lastObject];
+//    UIButton *lastbtn = [picBtnArray lastObject];
     
     
     if(chooseImageArray.count > 0 && chooseImageArray.count < 3)
@@ -406,6 +407,8 @@
 
 - (IBAction)lastUpPicBtnClick:(id)sender
 {
+    NSLog(@"lastUpPicBtnClick#########################");
+    
     UIActionSheet *sheet;
     
     // 判断是否支持相机
@@ -417,7 +420,8 @@
                                destructiveButtonTitle:@"取消"
                                     otherButtonTitles:@"拍照", @"从相册选择", nil];
     }
-    else {
+    else
+    {
         sheet = [[UIActionSheet alloc] initWithTitle:@"选择图像"
                                             delegate:self
                                    cancelButtonTitle:nil
@@ -433,11 +437,14 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (actionSheet.tag == 255) {
+    if (actionSheet.tag == 255)
+    {
         NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         // 判断是否支持相机
-        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            switch (buttonIndex) {
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            switch (buttonIndex)
+            {
                 case 0:
                     //                    hasClickPicBtn = NO;
                     return;
@@ -472,20 +479,24 @@
                     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
                     if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
                     {
-                        [navigationController.navigationBar setBackgroundImage:[DCFCustomExtra imageWithColor:[DCFColorUtil colorFromHexRGB:@"63a309"] size:CGSizeMake(1, 1)] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
+                        [navigationController.navigationBar setBackgroundImage:[DCFCustomExtra imageWithColor:[DCFColorUtil colorFromHexRGB:@"#1465ba"] size:CGSizeMake(1, 1)] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
                     }
                     else
                     {
-                        [navigationController.navigationBar setBackgroundImage:[DCFCustomExtra imageWithColor:[DCFColorUtil colorFromHexRGB:@"63a309"] size:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
+                        [navigationController.navigationBar setBackgroundImage:[DCFCustomExtra imageWithColor:[DCFColorUtil colorFromHexRGB:@"#1465ba"] size:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
                     }
                     [self presentViewController:navigationController animated:YES completion:NULL];
                     break;
             }
         }
-        else {
-            if (buttonIndex == 0) {
+        else
+        {
+            if (buttonIndex == 0)
+            {
                 return;
-            } else {
+            }
+            else
+            {
                 sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
             }
         }
@@ -523,11 +534,13 @@
 #pragma mark - 加载图片按钮
 - (void) loadImageBtn:(NSMutableArray *)ImageArray WithFlag:(BOOL)flag
 {
-    
+    NSLog(@"ImageArray = %@",ImageArray);
 }
 
 -(void)procesPic:(NSMutableArray*)imgarray
 {
+    
+    NSLog(@"procesPic++++++++++++++++++");
     if(imgarray.count == 0 || [imgarray isKindOfClass:[NSNull class]])
     {
         
@@ -618,8 +631,16 @@
     }
 //    loginid,token,memberid,membername,phone(联系电话),linkman(联系人),content(内容)
     NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@&loginid=%@",[self getMemberId],token,[self getUserName],telStr,[self getUserName],contentStr,@"3",loginid];
+    
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?",strRequest];
+    
+    NSLog(@"urlString = %@",urlString);
+    
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
+    
+    NSLog(@"imgDic = %@",imgDic);
+    
+     NSLog(@"strImageFileNameArray = %@",strImageFileNameArray);
     
     [conn getResultFromUrlString:urlString dicText:nil dicImage:imgDic imageFilename:strImageFileNameArray];
 }
@@ -629,6 +650,7 @@
 
 - (void)imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingMediaWithInfo:(id)info
 {
+    NSLog(@"info = %@",info);
     [self dismissViewControllerAnimated:YES completion:NULL];
     
     if(!chooseImageArray || chooseImageArray.count == 0)
@@ -637,7 +659,7 @@
     }
     else if(chooseImageArray || chooseImageArray.count != 0)
     {
-        //          [chooseImageArray removeAllObjects];
+       //[chooseImageArray removeAllObjects];
     }
     
     //相册
@@ -646,6 +668,8 @@
         if(imagePickerController.allowsMultipleSelection)
         {
             NSArray *mediaInfoArray = (NSArray *)info;
+            
+            NSLog(@"mediaInfoArray = %@",mediaInfoArray);
             
             if(mediaInfoArray.count + chooseImageArray.count > 3)
             {
@@ -656,8 +680,16 @@
             for(int i = 0;i<mediaInfoArray.count;i++)
             {
                 NSDictionary *dic = (NSDictionary *)[mediaInfoArray objectAtIndex:i];
+                
+                NSLog(@"dic = %@",dic);
+                
                 UIImage *img=[dic objectForKey:UIImagePickerControllerOriginalImage];
+                
+                NSLog(@"img = %@",img);
+                
                 [chooseImageArray addObject:img];
+                
+                NSLog(@"chooseImageArray = %@",chooseImageArray);
             }
         }
     }
@@ -690,7 +722,6 @@
         [picBtnArray removeAllObjects];
     }
     
-    
     if(chooseImageArray.count > 3)
     {
         //        [chooseImageArray removeAllObjects];
@@ -711,7 +742,7 @@
     for(int i=0;i<chooseImageArray.count;i++)
     {
         UIButton *picBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        //        [picBtn setFrame:CGRectMake(20, self.upLabel.frame.origin.y+self.upLabel.frame.size.height+10, 80, 80)];
+        [picBtn setFrame:CGRectMake(20, self.upLabel.frame.origin.y+self.upLabel.frame.size.height+10, 80, 80)];
         //        [picBtn setFrame:CGRectZero];
         //        picBtn.enabled = NO;
         [picBtnArray addObject:picBtn];
@@ -823,22 +854,11 @@
             SpeedAskPriceSecondViewController *second = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceSecondViewController"];
             [self.navigationController pushViewController:second animated:YES];
             
+            
+            //上传完成后，清空询价需求
             self.content_Tv.text = nil;
-//            [chooseImageArray removeAllObjects];
- 
-
-//            for (int i = 1; i < picBtnArray.count-1; i++)
-//            {
-            
-//                    [picBtnArray removeObjectAtIndex:i];
-            
-                
-//            }
-//            for(UIButton *btn in picBtnArray)
-//            {
-//                [btn removeFromSuperview];
-//            }
-            [picBtnArray removeAllObjects];
+            //上传完成后，清空上传图片
+           [self deleteWithPicBtn:picBtnArray WithImageArray:chooseImageArray];
         }
         else
         {

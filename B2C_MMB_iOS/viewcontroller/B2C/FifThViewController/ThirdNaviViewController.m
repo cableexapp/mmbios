@@ -44,30 +44,42 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"工具栏入口状态 = %@",self.appDelegate.isConnect);
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
         NSLog(@"工具栏入口ViewArray = %@",ViewArray);
+        
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = @"工具栏客服";
-        CATransition *transition = [CATransition animation];
-        transition.duration = 0.4f;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-        transition.type =  kCATransitionMoveIn;
-        transition.subtype =  kCATransitionFromTop;
-        transition.delegate = self;
-        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-        [self.navigationController pushViewController:chatVC animated:NO];
+//        CATransition *transition = [CATransition animation];
+//        transition.duration = 0.4f;
+//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+//        transition.type =  kCATransitionMoveIn;
+//        transition.subtype =  kCATransitionFromTop;
+//        transition.delegate = self;
+//        [self.view.layer addAnimation:transition forKey:nil];
+        [self setHidesBottomBarWhenPushed:YES];
+        [self pushViewController:chatVC animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
+    
+//      [self setViewControllers:[NSArray arrayWithObject:chatVC]];
+        
+        NSLog(@"工具栏入口连接状态ViewArray = %@",self.viewControllers);
     }
     else
     {
         ChatListViewController *chatListVC = [[ChatListViewController alloc] init];
         chatListVC.fromString = @"工具栏客服";
-//        [self pushViewController:chatListVC animated:YES];
         
-        [self setViewControllers:[NSArray arrayWithObject:chatListVC]];
+         [self setHidesBottomBarWhenPushed:YES];
+//      [self pushViewController:chatListVC animated:YES];
        
+        [self setViewControllers:[NSArray arrayWithObject:chatListVC]];
+        
+        [self setHidesBottomBarWhenPushed:NO];
+       
+        NSLog(@"工具栏入口连接状态ViewArray = %@",self.viewControllers);
     }
 }
 

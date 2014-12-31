@@ -182,6 +182,8 @@
             [DCFStringUtil showNotice:@"编辑成功"];
             [self.delegate removeSubView];
             [self.delegate reloadData];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:self.unitBtn.titleLabel.text forKey:@"unit"];
         }
         else
         {

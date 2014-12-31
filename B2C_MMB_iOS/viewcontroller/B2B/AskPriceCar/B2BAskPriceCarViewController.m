@@ -808,7 +808,6 @@
     if(indexPath.row == 0)
     {
         CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
-        
         NSString *num = [NSString stringWithFormat:@"数量 %@%@",[[dataArray objectAtIndex:indexPath.section] num],[[dataArray objectAtIndex:indexPath.section] unit]];
         NSString *deliver = [NSString stringWithFormat:@"交货期 %@天",[[dataArray objectAtIndex:indexPath.section] deliver]];
         NSString *cartSpec = [NSString stringWithFormat:@"规格 %@平方",[[dataArray objectAtIndex:indexPath.section] cartSpec]];  //规格

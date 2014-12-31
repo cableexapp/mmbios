@@ -20,9 +20,8 @@
 {
 //    NSDictionary *myDic;
 	BOOL *flag;
-	
-	UIView *view1;
-	UIView *view2;
+
+	UIView *headClickView;
 
     UITableView *tv;
     

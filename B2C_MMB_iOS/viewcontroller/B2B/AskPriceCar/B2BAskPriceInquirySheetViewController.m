@@ -576,10 +576,10 @@
             
             CGFloat halfWidth = (ScreenWidth-20)/2;
             
-            
-            NSString *num = [NSString stringWithFormat:@"数量: %@",data.num];
-            NSString *deliver = [NSString stringWithFormat:@"交货期: %@",data.deliver];
-            NSString *cartSpec = [NSString stringWithFormat:@"规格: %@",data.cartSpec];  //规格
+            NSString *uintString = [[NSUserDefaults standardUserDefaults] objectForKey:@"unit"];
+            NSString *num = [NSString stringWithFormat:@"数量: %@%@",data.num,uintString];
+            NSString *deliver = [NSString stringWithFormat:@"交货期: %@天",data.deliver];
+            NSString *cartSpec = [NSString stringWithFormat:@"规格: %@平方",data.cartSpec];  //规格
             NSString *cartVoltage = [NSString stringWithFormat:@"电压: %@",data.cartVoltage];
             NSString *color = [NSString stringWithFormat:@"颜色: %@", data.cartColor];
             NSString *featureone = [NSString stringWithFormat:@"阻燃特性: %@",data.featureone];  //阻燃特性
@@ -775,18 +775,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

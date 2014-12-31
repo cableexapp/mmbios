@@ -300,7 +300,6 @@
 #pragma mark - 品牌按钮点击
 - (void) brandBtnClick:(UIButton *) sender
 {
-
     int sectionIndex = ((UIButton*)sender).tag;
     flag[sectionIndex] = !flag[sectionIndex];
     brandString = sender.titleLabel.text;
@@ -374,35 +373,31 @@
     [topView setBackgroundColor:[UIColor colorWithRed:212.0/255.0 green:212.0/255.0 blue:212.0/255.0 alpha:1.0]];
     [self.view addSubview:topView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 70, 40)];
     [label setText:@"商品分类"];
     [label setTextAlignment:NSTextAlignmentLeft];
-    [label setFont:[UIFont boldSystemFontOfSize:17]];
-    [label setBackgroundColor:[UIColor clearColor]];
+    [label setFont:[UIFont boldSystemFontOfSize:15]];
+//    [label setBackgroundColor:[UIColor redColor]];
     [topView addSubview:label];
     
     _clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_clearBtn setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width + 10, 10, 40, 20)];
+    [_clearBtn setFrame:CGRectMake(label.frame.origin.x + label.frame.size.width+10, 0,(ScreenWidth-130)/2, 40)];
     [_clearBtn setTitle:@"清空" forState:UIControlStateNormal];
+    [_clearBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [_clearBtn setTitleColor:[UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     [_clearBtn addTarget:self action:@selector(clear:) forControlEvents:UIControlEventTouchUpInside];
+//    _clearBtn.backgroundColor = [UIColor yellowColor];
     [topView addSubview:_clearBtn];
-    
-    
-       _lineView = [[UIView alloc] initWithFrame:CGRectMake(_clearBtn.frame.origin.x + _clearBtn.frame.size.width, _clearBtn.frame.origin.y, 1, 20)];
-//    [_lineView setBackgroundColor:MYCOLOR];
-//    [topView addSubview:_lineView];
     
     _sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_sureBtn setTitleColor:[UIColor colorWithRed:0.0/255.0 green:54.0/255.0 blue:166.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     [_sureBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [_sureBtn setFrame:CGRectMake(_lineView.frame.origin.x+_lineView.frame.size.width + 10, _lineView.frame.origin.y, 40, 20)];
+    [_sureBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [_sureBtn setFrame:CGRectMake(_clearBtn.frame.origin.x+_clearBtn.frame.size.width+5, 0,ScreenWidth-(_clearBtn.frame.origin.x+_clearBtn.frame.size.width+40),40)];
+//    _sureBtn.backgroundColor = [UIColor greenColor];
     [_sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:_sureBtn];
     
-    //    sectionArray = [[NSArray alloc] initWithObjects:@"品牌",@"用途",@"型号",@"横截面",@"颜色",@"芯数",@"单位", nil];
-    
-
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topView.frame.size.height, myRect.size.width, myRect.size.height-90) style:0];
     [tv setDataSource:self];
@@ -615,8 +610,9 @@
         [btn setFrame:CGRectMake(originX,originY, btnWidth-20, 30)];
         
 
-    }
-    _myDic = [[NSDictionary alloc] initWithObjectsAndKeys:array1,@"用途",
+    }    
+    _myDic = [[NSDictionary alloc] initWithObjectsAndKeys:
+              array1,@"用途",
               array2,@"品牌",
               array3,@"型号",
               array4,@"横截面",nil];
@@ -679,6 +675,7 @@
     
     [super viewDidLoad];
 
+    self.view.backgroundColor = [UIColor brownColor];
     
     brandBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //   [brandBtn setTitle:brandString forState:UIControlStateNormal];
@@ -1075,46 +1072,32 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-//    if(section == 0)
-//    {
-//        return nil;
-//    }
-    
-    view1 = nil;
-	view2 = nil;
-	view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 30)];
-	view1.backgroundColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0];
-    
-	view2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 40)];
-	view2.backgroundColor = [UIColor clearColor];
+	headClickView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, myRect.size.width, 40)];
+    headClickView.backgroundColor = [UIColor whiteColor];
     
     UIView *lineView = [[UIView alloc]init];
-    lineView.frame = CGRectMake(0, 39, myRect.size.width, 1.0);
+    lineView.frame = CGRectMake(0, 39.5, myRect.size.width, 0.5);
     lineView.backgroundColor = [UIColor colorWithRed:220.0/255.0 green:220.0/255.0 blue:220.0/255.0 alpha:1.0];
-    [view2 addSubview:lineView];
-	[view1 addSubview:view2];
+	[headClickView addSubview:lineView];
 
     UIView *triangView = [[UIView alloc]init];
     triangView.frame = CGRectMake(210, 6, 28, 28);
-    [view2 addSubview:triangView];
+    [headClickView addSubview:triangView];
     
     abtn = [UIButton buttonWithType:UIButtonTypeCustom];
     abtn.frame = CGRectMake(0, 0,myRect.size.width, 40);
     abtn.tag = section;
 	[abtn addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
-    abtn.backgroundColor = [UIColor clearColor];
-	[view2 addSubview:abtn];
+	[headClickView addSubview:abtn];
     
-	UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, myRect.size.width, 30)];
-	label1.backgroundColor = [UIColor clearColor];
-    [label1 setFont:[UIFont systemFontOfSize:13]];
-	label1.text = [[_myDic allKeys] objectAtIndex:section];
-    [abtn addSubview:label1];
+	UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, myRect.size.width, 30)];
+    [titleLabel setFont:[UIFont systemFontOfSize:13]];
+	titleLabel.text = [[_myDic allKeys] objectAtIndex:section];
+    [abtn addSubview:titleLabel];
  
-    switch (section)
+    switch(section)
     {
         case 0:
-            
             [abtn addSubview:brandBtn];
             [abtn addSubview:brandBtn_0];
             [triangView addSubview:triangle];
@@ -1137,12 +1120,9 @@
             [abtn addSubview:specBtn];
             [abtn addSubview:specBtn_3];
             [triangView addSubview:triangle_3];
-
             break;
      }
-    
-	return view1;
-    
+	return headClickView;
 }
 
 
@@ -1154,7 +1134,6 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:0];
-//        [cell.contentView setBackgroundColor:[UIColor redColor]];
         [cell.contentView setBackgroundColor:[UIColor whiteColor]];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -1198,13 +1177,15 @@
 }
 
 
--(void)headerClicked:(id)sender
+-(void)headerClicked:(UIButton*)sender
 {
-	int sectionIndex = ((UIButton*)sender).tag;
-	UIButton *btn = (UIButton *)sender;
+    NSLog(@"headerClicked+++++++++++ = %d",sender.tag);
+	int sectionIndex = sender.tag;
+	UIButton *btn = sender;
 	flag[sectionIndex] = !flag[sectionIndex];
     UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
-    switch (sectionIndex) {
+    switch (sectionIndex)
+    {
         case 0:
             if(!flag[sectionIndex])
                 triangle.transform = CGAffineTransformMakeRotation(-M_PI);
@@ -1229,7 +1210,6 @@
             else
                 triangle_3.transform = CGAffineTransformMakeRotation(0);
             break;
-       
     }
     
     
@@ -1253,7 +1233,8 @@
 
 - (int)numberOfRowsInSection:(NSInteger)section
 {
-	if (flag[section]) {
+	if (flag[section])
+    {
         //		return [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:section]] count];
         return 1;
 	}

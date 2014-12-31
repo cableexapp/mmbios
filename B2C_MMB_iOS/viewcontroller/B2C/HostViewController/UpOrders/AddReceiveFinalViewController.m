@@ -57,6 +57,7 @@
     
     NSArray *notiArray;
 //    NSString *pushLocationStr;
+    
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -332,7 +333,6 @@
         NSString *token = [DCFCustomExtra md5:string];
         
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,receiver,province,city,area,chooseAddressName,zip,mobile,tel,b2cAddressData.addressId];
-        NSLog(@"push = %@",pushString);
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
         
         NSString *urlString = nil;
@@ -362,7 +362,6 @@
 - (void) doFourthAddressStr:(NSNotification *) noti
 {
     notiArray = [[NSArray alloc] initWithArray:(NSArray *)[noti object]];
-    NSLog(@"noti = %@",notiArray);
 
     [self dealEditData];
 }
@@ -370,7 +369,6 @@
 - (void) doThirdAddressStr:(NSNotification *) noti
 {
     notiArray = [[NSArray alloc] initWithArray:(NSArray *)[noti object]];
-    NSLog(@"noti = %@",notiArray);
     
     [self dealEditData];
 }
@@ -379,18 +377,15 @@
 - (void) dealEditData
 {
     NSString *string = [notiArray objectAtIndex:0];
-    NSLog(@"string = %@",string);
     NSArray *arr = [string componentsSeparatedByString:@","];
-    NSLog(@"arr = %@",arr);
     
-    province = [arr objectAtIndex:0];
-    city = [arr objectAtIndex:1];
+    chooseProvince = [arr objectAtIndex:0];
+    chooseCity = [arr objectAtIndex:1];
     area = [arr lastObject];
-    NSLog(@"p = %@   c = %@   a = %@",province,city,area);
-    chooseAddress = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
+    chooseAddress = area;
     
-    NSLog(@"chooseAddress = %@",chooseAddress);
-    [topTf setText:chooseAddress];
+    NSString *topStr = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
+    [topTf setText:topStr];
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithDictionary:[notiArray lastObject]];
     
@@ -424,6 +419,26 @@
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    
+    if(isEditOrAdd == YES)
+    {
+        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightBtn setTitle:@"返回" forState:UIControlStateNormal];
+        [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [rightBtn setFrame:CGRectMake(0, 0, 50, 50)];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+        self.navigationItem.rightBarButtonItem = rightItem;
+        [rightBtn setHidden:NO];
+    }
+    else
+    {
+//        [rightBtn setHidden:YES];
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -461,8 +476,8 @@
     
     [self loadSubViews];
     
-    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:0 target:self action:@selector(rightBtnClick:)];
-    self.navigationItem.rightBarButtonItem = rightBtn;
+    
+
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
@@ -563,8 +578,8 @@
             {
                 if([vc isKindOfClass:[ChooseReceiveAddressViewController class]])
                 {
-//                    [self.navigationController popToViewController:vc animated:YES];
-//                    return;
+                    [self.navigationController popToViewController:vc animated:YES];
+                    return;
                 }
             }
         }
@@ -592,13 +607,11 @@
     
     if(!b2cAddressData)
     {
-        NSLog(@"finalAddress = %@",finalAddress);
         [topTf setText:finalAddress];
     }
     else
     {
         NSString *str = [NSString stringWithFormat:@"%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area];
-        NSLog(@"str = %@",str);
         [topTf setText:str];
     }
     [topTf setTextAlignment:NSTextAlignmentCenter];
@@ -746,7 +759,6 @@
                 }
                 if(i == 4)
                 {
-                    NSLog(@"chooseTel = %@",chooseTel);
                     [textField setText:chooseTel];
                 }
             }
@@ -852,7 +864,6 @@
                                      chooseTel,@"tel",
                                      nil];
             add.edit = YES;
-            NSLog(@"pushDic=%@",pushDic);
             add.pushDic = [NSDictionary dictionaryWithDictionary:pushDic];
             
             [self.navigationController pushViewController:add animated:YES];

@@ -100,7 +100,7 @@
     self.navigationItem.titleView = top;
     
     UIImageView *titleImageView = [[UIImageView alloc] init];
-    titleImageView.frame = CGRectMake(20, 0, ScreenWidth-40, 100);
+    titleImageView.frame = CGRectMake((ScreenWidth-246)/2, 20, 246, 70);
     titleImageView.image = [UIImage imageNamed:@"mmb"];
     [self.view addSubview:titleImageView];
     
@@ -117,20 +117,20 @@
     
     [_tf_Secrect setReturnKeyType:UIReturnKeyDone];
     
-    self.loginBtn.frame =CGRectMake(20, 250, ScreenWidth-40, 50);
+    self.loginBtn.frame =CGRectMake(20, 240, ScreenWidth-40, 43);
     [self.loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     self.loginBtn.layer.cornerRadius = 5.0f;
     self.loginBtn.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
     UIButton *forgetBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [forgetBtn setFrame:CGRectMake(ScreenWidth-93, 270, 80, 22)];
+    [forgetBtn setFrame:CGRectMake(ScreenWidth-93, 255, 80, 30)];
     [forgetBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
     [forgetBtn addTarget:self action:@selector(forgetBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:forgetBtn];
     
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [registerBtn setFrame:CGRectMake(ScreenWidth-170, 270, 80, 22)];
+    [registerBtn setFrame:CGRectMake(ScreenWidth-170, 255, 80, 30)];
     [registerBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
     [registerBtn setTitle:@"用户注册" forState:UIControlStateNormal];
     [registerBtn addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];

@@ -52,6 +52,9 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改登录密码"];
     self.navigationItem.titleView = top;
     
+    self.backView.layer.borderWidth = 1;
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    
     [self pushAndPopStyle];
     
     self.sureBtn.backgroundColor = [UIColor colorWithRed:0/255.0 green:99/255.0 blue:206/255.0 alpha:1.0];

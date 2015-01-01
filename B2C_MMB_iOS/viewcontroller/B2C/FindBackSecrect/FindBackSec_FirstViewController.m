@@ -43,11 +43,20 @@
     
     [self pushAndPopStyle];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"找回密码"];
     self.navigationItem.titleView = top;
     
-    self.nextBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.nextBtn.layer.borderWidth = 1.0f;
+    UILabel *nameLabel = [[UILabel alloc] init];
+    nameLabel.frame = CGRectMake(0, 0, 50, 43);
+    nameLabel.font = [UIFont systemFontOfSize:15];
+    nameLabel.text = @"用户名:";
+    self.tf_confirm.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.tf_confirm.layer.borderWidth = 1;
+    self.tf_confirm.leftView = nameLabel;
+    self.tf_confirm.leftViewMode = UITextFieldViewModeAlways;
+    
     self.nextBtn.layer.cornerRadius = 5.0f;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];

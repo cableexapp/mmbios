@@ -12,7 +12,7 @@
 #import "DCFCustomExtra.h"
 #import "MCdes.h"
 #import "MCDefine.h"
-#import "RegisterAgreementViewController.h"
+#import "RegisterProvisionViewController.h"
 
 @interface RegisterViewController ()
 {
@@ -180,11 +180,13 @@
     
     self.regesterBtn.layer.cornerRadius = 5.0f;
     
+    self.subView.layer.borderWidth = 1;
+    self.subView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    
     [self.sv setContentSize:CGSizeMake(ScreenWidth-50, self.sv.frame.size.height-200)];
     [self.sv setDelegate:self];
     [self.sv setPagingEnabled:YES];
     [self.sv setBounces:NO];
-    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
@@ -192,15 +194,32 @@
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
     [self.agreeBtn setSelected:YES];
+    
+    UIButton *agrementBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    agrementBtn.frame = CGRectMake(90, 324, 210, 30);
+    
+//    agrementBtn.frame = CGRectMake(90,self.agreeBtn.frame.origin.y, 210, 30);
+    
+    [agrementBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    [agrementBtn setTitle:@"《电缆买卖宝用户注册协议》" forState:UIControlStateNormal];
+//    agrementBtn.backgroundColor = [UIColor redColor];
+    [agrementBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+    [agrementBtn addTarget:self action:@selector(agreementBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:agrementBtn];
 }
 
-- (IBAction)agreementBtn:(id)sender
+
+- (IBAction)agreeBtn:(id)sender
 {
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     [self.agreeBtn setSelected:!btn.selected];
+}
+
+- (void)agreementBtn
+{
     [self setHidesBottomBarWhenPushed:YES];
-    RegisterAgreementViewController *registerVC = [[RegisterAgreementViewController alloc] init];
+    RegisterProvisionViewController *registerVC = [[RegisterProvisionViewController alloc] init];
     [self.navigationController pushViewController:registerVC animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

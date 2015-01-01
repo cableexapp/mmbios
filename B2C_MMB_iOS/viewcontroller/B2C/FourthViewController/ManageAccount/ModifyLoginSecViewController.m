@@ -59,6 +59,9 @@
     self.navigationItem.titleView = top;
     
     self.buttomBtn.layer.cornerRadius = 5.0f;
+    
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.backView.layer.borderWidth = 1;
 }
 
 

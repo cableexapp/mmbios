@@ -330,6 +330,7 @@
 		8B12EA0F1A3869C700046CA7 /* b2b_enquiry_makecall.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B12EA0E1A3869C700046CA7 /* b2b_enquiry_makecall.png */; };
 		8B1672531A36D72200C79A2B /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1672521A36D72200C79A2B /* location.png */; };
 		8B1672551A36DCE100C79A2B /* location_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1672541A36DCE100C79A2B /* location_arrow.png */; };
+		8B17CA241A555A0F00193ED2 /* RegisterProvisionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B17CA231A555A0F00193ED2 /* RegisterProvisionViewController.m */; };
 		8B1F0FC81A16FCEA00F819D1 /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1F0FC61A16FCEA00F819D1 /* clock.png */; };
 		8B1F0FC91A16FCEA00F819D1 /* clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1F0FC71A16FCEA00F819D1 /* clock@2x.png */; };
 		8B1F0FCC1A174E6000F819D1 /* MyCableOrderSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */; };
@@ -773,7 +774,6 @@
 		8BF452501A39A8BC00E3665F /* askPriceCar_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF4524F1A39A8BC00E3665F /* askPriceCar_arrow.png */; };
 		8BF452521A39C73500E3665F /* askPriceCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF452511A39C73500E3665F /* askPriceCar.png */; };
 		8BF5D5441A1F565300A3287C /* set_clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BF5D5431A1F565300A3287C /* set_clear.png */; };
-		8BFCF9FF1A3599F6005774D1 /* RegisterAgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFCF9FE1A3599F6005774D1 /* RegisterAgreementViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1404,6 +1404,8 @@
 		8B12EA0E1A3869C700046CA7 /* b2b_enquiry_makecall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b2b_enquiry_makecall.png; sourceTree = "<group>"; };
 		8B1672521A36D72200C79A2B /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
 		8B1672541A36DCE100C79A2B /* location_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_arrow.png; sourceTree = "<group>"; };
+		8B17CA221A555A0F00193ED2 /* RegisterProvisionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterProvisionViewController.h; sourceTree = "<group>"; };
+		8B17CA231A555A0F00193ED2 /* RegisterProvisionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterProvisionViewController.m; sourceTree = "<group>"; };
 		8B1F0FC61A16FCEA00F819D1 /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		8B1F0FC71A16FCEA00F819D1 /* clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock@2x.png"; sourceTree = "<group>"; };
 		8B1F0FCA1A174E6000F819D1 /* MyCableOrderSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderSearchViewController.h; sourceTree = "<group>"; };
@@ -1998,8 +2000,6 @@
 		8BF4524F1A39A8BC00E3665F /* askPriceCar_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = askPriceCar_arrow.png; sourceTree = "<group>"; };
 		8BF452511A39C73500E3665F /* askPriceCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = askPriceCar.png; sourceTree = "<group>"; };
 		8BF5D5431A1F565300A3287C /* set_clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = set_clear.png; sourceTree = "<group>"; };
-		8BFCF9FD1A3599F6005774D1 /* RegisterAgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterAgreementViewController.h; sourceTree = "<group>"; };
-		8BFCF9FE1A3599F6005774D1 /* RegisterAgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterAgreementViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3357,8 +3357,8 @@
 				61B710A919FF3B53001CC3BD /* LoginViewController.m */,
 				61B710AA19FF3B53001CC3BD /* RegisterViewController.h */,
 				61B710AB19FF3B53001CC3BD /* RegisterViewController.m */,
-				8BFCF9FD1A3599F6005774D1 /* RegisterAgreementViewController.h */,
-				8BFCF9FE1A3599F6005774D1 /* RegisterAgreementViewController.m */,
+				8B17CA221A555A0F00193ED2 /* RegisterProvisionViewController.h */,
+				8B17CA231A555A0F00193ED2 /* RegisterProvisionViewController.m */,
 			);
 			path = LoginViewController;
 			sourceTree = "<group>";
@@ -5020,7 +5020,6 @@
 				61B710D519FF3B53001CC3BD /* ChooseListTableViewController.m in Sources */,
 				6181A50C19CFC4C2000E2D14 /* PhoneHelper.m in Sources */,
 				8BB7D49D1A29A70F00C716E4 /* MyCableOrderB2BViewController.m in Sources */,
-				8BFCF9FF1A3599F6005774D1 /* RegisterAgreementViewController.m in Sources */,
 				617E980E1A4A5AF4004D8371 /* ioapi.c in Sources */,
 				8BA7C17D1A10A8CC00758B0F /* FBShimmeringLayer.m in Sources */,
 				61551E911A0B4D6D004F50FF /* B2BAskPriceInquirySheetViewController.m in Sources */,
@@ -5260,6 +5259,7 @@
 				61551E8D1A0B4D21004F50FF /* B2BAskPriceCarEditViewController.m in Sources */,
 				61CD8D041A1DF279003C75F8 /* ValidateForEmailViewController.m in Sources */,
 				6181A51019CFC4C2000E2D14 /* SDWebImageCompat.m in Sources */,
+				8B17CA241A555A0F00193ED2 /* RegisterProvisionViewController.m in Sources */,
 				61EF03801A2071520048FBBB /* ModifyLoginSecViewController.m in Sources */,
 				8BA7C2AE1A10A8DD00758B0F /* XMPPvCardCoreDataStorage.m in Sources */,
 				8BA7C28B1A10A8DD00758B0F /* NSNumber+XMPP.m in Sources */,

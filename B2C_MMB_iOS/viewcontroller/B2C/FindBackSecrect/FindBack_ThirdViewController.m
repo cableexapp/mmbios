@@ -72,6 +72,10 @@
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
 
+    self.backView.layer.borderWidth = 1;
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.backView.layer.cornerRadius = 5;
+
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];

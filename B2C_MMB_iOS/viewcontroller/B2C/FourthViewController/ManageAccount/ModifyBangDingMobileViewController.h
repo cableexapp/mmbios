@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *validateBtn;
 @property (weak, nonatomic) IBOutlet UITextField *validateTf;
 @property (weak, nonatomic) IBOutlet UIButton *upBtn;
+@property (weak, nonatomic) IBOutlet UIView *backView;
 
 @end

@@ -53,6 +53,7 @@
     self.navigationItem.titleView = top;
     
     self.backView.layer.borderWidth = 1;
+    self.backView.layer.cornerRadius = 5;
     self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
     [self pushAndPopStyle];

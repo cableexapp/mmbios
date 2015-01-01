@@ -125,6 +125,10 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"修改/新增绑定手机"];
     self.navigationItem.titleView = top;
     
+    self.backView.layer.borderWidth = 1;
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.backView.layer.cornerRadius = 5;
+    
     self.validateBtn.layer.cornerRadius = 5.0f;
     
     self.upBtn.layer.cornerRadius = 5.0f;

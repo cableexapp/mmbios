@@ -94,6 +94,8 @@
     
     self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.backView.layer.borderWidth = 1;
+    self.backView.layer.cornerRadius = 5;
+    
     _getValidateBtn.layer.cornerRadius = 5;
     _getValidateBtn.layer.masksToBounds = YES;
     [_getValidateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -101,7 +103,7 @@
     [_chooseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _chooseBtn.frame = CGRectMake(_getValidateBtn.frame.origin.x, (_getValidateBtn.frame.origin.y-_getValidateBtn.frame.size.height-18)                            , _getValidateBtn.frame.size.width,_getValidateBtn.frame.size.height+5);
     [_chooseBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-        _chooseBtn.backgroundColor = [UIColor colorWithRed:4.0/255.0 green:94.0/255.0 blue:253.0/255.0 alpha:1.0];
+//        _chooseBtn.backgroundColor = [UIColor colorWithRed:4.0/255.0 green:94.0/255.0 blue:253.0/255.0 alpha:1.0];
     _chooseBtn.layer.cornerRadius = 5.0f;
    
     
@@ -229,7 +231,7 @@
     [self.chooseBtn setTitle:@"已验证手机" forState:UIControlStateNormal];
 
     self.nextBtn.layer.cornerRadius = 5.0f;
-    [self.nextBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
+//    [self.nextBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
     [_nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height+20, self.nextBtn.frame.size.width, self.nextBtn.frame.size.height)];
     
     [_buttomLabel setText:@"如果您没有收到验证码,可以直接联系买卖宝在线客服,或者拨打客服服务热线4008280188"];

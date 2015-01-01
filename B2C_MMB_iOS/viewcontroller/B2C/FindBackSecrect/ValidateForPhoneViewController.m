@@ -81,16 +81,17 @@
     NSString *tel = [NSString stringWithFormat:@"%@%@%@",s1,s3,s2];
     [self.numberLabel setText:[NSString stringWithFormat:@"%@",tel]];
     
+    self.backView.layer.borderWidth = 1;
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.backView.layer.cornerRadius = 5;
+    
+    self.validateBtn.layer.cornerRadius = 5.0f;
     self.telTf.layer.borderColor = [UIColor whiteColor].CGColor;
     self.telTf.layer.borderWidth = 1.0f;
-    
-    self.validateBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.validateBtn.layer.borderWidth = 1.0f;
+
     self.validateBtn.layer.cornerRadius = 5.0f;
     
-    
-    self.buttomBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.buttomBtn.layer.borderWidth = 1.0f;
+
     self.buttomBtn.layer.cornerRadius = 5.0f;
     
     [self.telTf setDelegate:self];

@@ -95,9 +95,6 @@
     [self.sv setBounces:NO];
     [self.sv setShowsHorizontalScrollIndicator:NO];
     [self.sv setShowsVerticalScrollIndicator:NO];
-    
-
-
 }
 
 //-(void)searchOrderBtnClick

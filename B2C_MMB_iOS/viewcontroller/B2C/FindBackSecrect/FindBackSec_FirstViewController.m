@@ -54,6 +54,7 @@
     nameLabel.text = @"用户名:";
     self.tf_confirm.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.tf_confirm.layer.borderWidth = 1;
+    self.tf_confirm.layer.cornerRadius = 5;
     self.tf_confirm.leftView = nameLabel;
     self.tf_confirm.leftViewMode = UITextFieldViewModeAlways;
     

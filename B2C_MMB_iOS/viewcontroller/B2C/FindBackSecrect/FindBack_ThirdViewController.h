@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *tf_newSec;
 @property (weak, nonatomic) IBOutlet UITextField *tf_sureSec;
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
+@property (weak, nonatomic) IBOutlet UIView *backView;
 
 @end

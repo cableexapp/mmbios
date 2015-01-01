@@ -32,6 +32,7 @@
     {
         [self setBackgroundImage:[DCFCustomExtra imageWithColor:[DCFColorUtil colorFromHexRGB:@"#1465ba"] size:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
     }
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
 }
 
 /*

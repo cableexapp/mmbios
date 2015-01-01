@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *validateBtn;
 @property (weak, nonatomic) IBOutlet UILabel *buttomLabel;
 
+@property (weak, nonatomic) IBOutlet UIView *backView;
 
 
 @end

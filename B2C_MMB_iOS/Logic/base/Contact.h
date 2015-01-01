@@ -217,7 +217,7 @@ typedef NSUInteger ResultCode;
 
 
 
-#define URL_PersonInformation    URL_HOST"10001/07?"       //个人信息(登陆)
+#define URL_PersonInformation    URL_HOST"10001/07?"       //个人信息(登录)
 
 
 

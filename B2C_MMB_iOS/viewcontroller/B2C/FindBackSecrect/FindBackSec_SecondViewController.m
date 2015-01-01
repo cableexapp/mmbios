@@ -92,6 +92,9 @@
     [_chooseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _chooseBtn.layer.cornerRadius = 5.0f;
     
+    self.backView.layer.borderWidth = 1;
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.backView.layer.cornerRadius = 5;
     
     _getValidateBtn.layer.borderColor = MYCOLOR.CGColor;
     _getValidateBtn.layer.borderWidth = 1.0f;

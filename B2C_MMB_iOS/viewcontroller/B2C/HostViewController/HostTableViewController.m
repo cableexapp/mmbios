@@ -407,6 +407,13 @@ BOOL isPopShow = NO;
     countLabel.image = [UIImage imageNamed:@"msg_bq"];
     [secondBarView addSubview:countLabel];
 
+    
+    NSArray *imageArray = [[NSArray alloc] initWithObjects:@"iosappAd.png",@"iosappAd2.png", nil];
+    es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 100) ImageArray:imageArray TitleArray:nil WithTag:0];
+    es.delegate = self;
+    
+    
+    
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
     
      [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
@@ -487,7 +494,6 @@ BOOL isPopShow = NO;
 
 -(void)IMTap:(UITapGestureRecognizer *)sender
 {
-    NSLog(@"工具栏IM点击");
 //    [self.navigationController.tabBarController setSelectedIndex:2];
 #pragma mark - 在线客服
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
@@ -609,7 +615,6 @@ BOOL isPopShow = NO;
 
 - (void) section1BtnClick:(UIButton *) sender
 {
-    NSLog(@"tag = %d",[sender tag]);
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -776,7 +781,6 @@ BOOL isPopShow = NO;
 
 - (void) HostSection1BtnClick:(UIButton *)btn
 {
-    NSLog(@"btn = %d  %@",btn.tag,btn.titleLabel.text);
     [self setHidesBottomBarWhenPushed:YES];
     if(btn.tag == 0)
     {
@@ -818,7 +822,6 @@ BOOL isPopShow = NO;
     {
         #pragma mark - 热门分类
           HotKindFirstViewController *hotKindFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"hotKindFirstViewController"];
-        NSLog(@"%@",hotKindFirstViewController);
         [self.navigationController pushViewController:hotKindFirstViewController animated:YES];
     }
     if(btn.tag == 5)
@@ -939,22 +942,27 @@ BOOL isPopShow = NO;
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell setSelectionStyle:0];
+//    NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+//    static NSString *cellId = @"cellId";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+//    if(!cell)
+//    {
+//        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+//        [cell setSelectionStyle:0];
 //    }
+//    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+//        [CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+//    }
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
     if(indexPath.section == 0)
     {
-        if(!es)
-        {
-            NSArray *imageArray = [[NSArray alloc] initWithObjects:@"iosappAd.png",@"iosappAd2.png", nil];
-            es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 100) ImageArray:imageArray TitleArray:nil WithTag:0];
-            es.delegate = self;
+//        if(!es)
+//        {
+
             [cell.contentView addSubview:es];
-        }
+//        }
         
     }
     if(indexPath.section == 1)
@@ -1221,7 +1229,6 @@ BOOL isPopShow = NO;
                     NSString *picUrl = [[dataArray objectAtIndex:indexPath.row*2 + i] p1Path];
                     NSString *content = [[dataArray objectAtIndex:indexPath.row*2 + i] productName];
                     NSString *price = [[dataArray objectAtIndex:indexPath.row*2 + i] productPrice];
-                    
                     UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 145, 145)];
                     [pic setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                     pic.layer.borderWidth = 0.5;
@@ -1248,7 +1255,7 @@ BOOL isPopShow = NO;
             }
         }
     }
-}
+//}
     return cell;
 }
 
@@ -1282,8 +1289,6 @@ BOOL isPopShow = NO;
 
 -(void)EScrollerViewDidClicked:(NSUInteger)index
 {
-    NSLog(@"index = %d",index);
-
     [self setHidesBottomBarWhenPushed:YES];
     if (index == 2)
     {
@@ -1350,13 +1355,13 @@ BOOL isPopShow = NO;
         {
             if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
             {
-                [self loadRequest];
-                
-                [self loadProductType];
-                
-                [self loadbadgeCount];
-                
-                [self loadShopCarCount];
+//                [self loadRequest];
+//                
+//                [self loadProductType];
+//                
+//                [self loadbadgeCount];
+//                
+//                [self loadShopCarCount];
             }
         }
     }

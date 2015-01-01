@@ -56,6 +56,13 @@
     return memberid;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -105,32 +112,36 @@
             else
             {
                 [dataArray addObjectsFromArray:[B2BManagBillData getListArray:[dicRespon objectForKey:@"items"]]];
+
+                NSString *invoiceId = nil;
+                if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+                {
+                    invoiceId = @"";
+                }
+                else
+                {
+                    invoiceId = [NSString stringWithFormat:@"%@",[[[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"] objectForKey:@"invoiceId"]];
+                }
                 
                 for(int i=0;i<dataArray.count;i++)
                 {
-                    //                    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
-                    //                    {
-                    if(i == 0)
+                    NSString *dataInvoiceId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:i] invoiceId]];
+                    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
+                    if(self.status == YES)
                     {
-                        B2BManagBillData *data = (B2BManagBillData *)[dataArray objectAtIndex:0];
-                        if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+                        if([invoiceId isEqualToString:dataInvoiceId])
                         {
-                            
+                            [iv setImage:[UIImage imageNamed:@"choose.png"]];
                         }
                         else
                         {
-                            
+                            [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
                         }
-                        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:data.headType,@"type",data.headName,@"name",data.invoiceId,@"invoiceId", nil];
-                        [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
                     }
-                    //                    }
-                    //                    else
-                    //                    {
-                    //
-                    //                    }
-                    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 30, 30)];
-                    [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
+                    else
+                    {
+                        [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
+                    }
                     [cellImageArray addObject:iv];
                     
                     UILabel *firstLabel = [[UILabel alloc] init];
@@ -295,6 +306,37 @@
                 [label setTextColor:[UIColor lightGrayColor]];
             }
         }
+        
+        NSString *invoiceId = nil;
+        if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+        {
+            invoiceId = @"";
+        }
+        else
+        {
+            invoiceId = [NSString stringWithFormat:@"%@",[[[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"] objectForKey:@"invoiceId"]];
+        }
+        for(int i = 0;i<cellImageArray.count;i++)
+        {
+            UIImageView *iv = (UIImageView *)[cellImageArray objectAtIndex:i];
+            if(self.status == YES)
+            {
+                    NSString *dataInvoiceId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:i] invoiceId]];
+                    if([invoiceId isEqualToString:dataInvoiceId])
+                    {
+                        [iv setImage:[UIImage imageNamed:@"choose.png"]];
+                    }
+                    else
+                    {
+                        [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
+                    }
+            }
+            else
+            {
+                [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
+            }
+        }
+        [self.tableView reloadData];
     }
 }
 

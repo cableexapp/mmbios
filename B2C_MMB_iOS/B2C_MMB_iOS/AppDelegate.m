@@ -524,6 +524,13 @@ NSString *strUserId = @"";
             {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"BillMsg"];
             }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"B2BBillMsg"];
+            }
+            
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
           
             [self performSelector:@selector(EnterToLogin) withObject:nil afterDelay:2.5];

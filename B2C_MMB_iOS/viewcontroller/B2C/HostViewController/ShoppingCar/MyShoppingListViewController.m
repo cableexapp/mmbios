@@ -22,6 +22,7 @@
 #import "AppDelegate.h"
 #import "ShoppingHostViewController.h"
 #import "GoodsDetailViewController.h"
+#import "ShopHostTableViewController.h"
 
 @interface MyShoppingListViewController ()
 {
@@ -1335,6 +1336,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 46)];
     [view setBackgroundColor:[UIColor whiteColor]];
     [view addSubview:[[headBtnArray objectAtIndex:section] lastObject]];
+    [view setTag:section];
     
     NSString *title = [[[dataArray objectAtIndex:section] lastObject] sShopName];
     UILabel *sectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 200, 30)];
@@ -1350,7 +1352,26 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [lineView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [view addSubview:lineView];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionTap:)];
+    [view addGestureRecognizer:tap];
+    
     return view;
+}
+
+- (void) sectionTap:(UITapGestureRecognizer *) sender
+{
+    int tag = [[sender view] tag];
+    if(!dataArray || dataArray.count == 0)
+    {
+        
+    }
+    else
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:[[[dataArray objectAtIndex:tag] lastObject] sShopName] WithShopId:[[[dataArray objectAtIndex:tag] lastObject] shopId] WithUse:@""];
+        [self.navigationController pushViewController:shopHost animated:YES];
+    }
+ 
 }
 
 - (void) logBtnClick:(UIButton *) sender

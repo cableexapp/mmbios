@@ -718,7 +718,7 @@
                 }
                 if([status intValue] == 5)
                 {
-                    if(shippedLastestNum > 0.0)
+                    if(shippedLastestNum <= 0.0)
                     {
                         [statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
                     }

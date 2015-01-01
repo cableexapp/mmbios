@@ -259,43 +259,43 @@
 {
     [super viewWillAppear:YES];
     
-//    NSString *tempBtand = [[NSUserDefaults standardUserDefaults] objectForKey:@"brand_save"];
-//    NSString *tempModel = [[NSUserDefaults standardUserDefaults] objectForKey:@"model_save"];
-//    NSString *tempUse = [[NSUserDefaults standardUserDefaults] objectForKey:@"use_save"];
-//    NSString *tempSpec = [[NSUserDefaults standardUserDefaults] objectForKey:@"spec_save"];
+    NSString *tempBtand = [[NSUserDefaults standardUserDefaults] objectForKey:@"brand_save"];
+    NSString *tempModel = [[NSUserDefaults standardUserDefaults] objectForKey:@"model_save"];
+    NSString *tempUse = [[NSUserDefaults standardUserDefaults] objectForKey:@"use_save"];
+    NSString *tempSpec = [[NSUserDefaults standardUserDefaults] objectForKey:@"spec_save"];
  
-//    if (tempBtand.length > 0)
-//    {
-//        brandString = tempBtand;
-//        [brandBtn setHidden:NO];
-//        [brandBtn_0 setHidden:NO];
-//        [triangle setHidden:YES];
-//        [brandBtn setTitle:brandString forState:UIControlStateNormal];
-//    }
-//    if (tempModel.length > 0)
-//    {
-//        modelString = tempModel;
-//        [modelBtn setHidden:NO];
-//        [modelBtn_1 setHidden:NO];
-//        [triangle_1 setHidden:YES];
-//        [modelBtn setTitle:modelString forState:UIControlStateNormal];
-//    }
-//    if (tempUse.length > 0)
-//    {
-//        useString = tempUse;
-//        [useBtn setHidden:NO];
-//        [useBtn_2 setHidden:NO];
-//        [triangle_2 setHidden:YES];
-//        [useBtn setTitle:useString forState:UIControlStateNormal];
-//    }
-//    if (tempSpec.length > 0)
-//    {
-//        specString = tempSpec;
-//        [specBtn setHidden:NO];
-//        [specBtn_3 setHidden:NO];
-//        [triangle_3 setHidden:YES];
-//        [specBtn setTitle:specString forState:UIControlStateNormal];
-//    }
+    if (tempBtand.length > 0)
+    {
+        brandString = tempBtand;
+        [brandBtn setHidden:NO];
+        [brandBtn_0 setHidden:NO];
+        [triangle setHidden:YES];
+        [brandBtn setTitle:brandString forState:UIControlStateNormal];
+    }
+    if (tempModel.length > 0)
+    {
+        modelString = tempModel;
+        [modelBtn setHidden:NO];
+        [modelBtn_1 setHidden:NO];
+        [triangle_1 setHidden:YES];
+        [modelBtn setTitle:modelString forState:UIControlStateNormal];
+    }
+    if (tempUse.length > 0)
+    {
+        useString = tempUse;
+        [useBtn setHidden:NO];
+        [useBtn_2 setHidden:NO];
+        [triangle_2 setHidden:YES];
+        [useBtn setTitle:useString forState:UIControlStateNormal];
+    }
+    if (tempSpec.length > 0)
+    {
+        specString = tempSpec;
+        [specBtn setHidden:NO];
+        [specBtn_3 setHidden:NO];
+        [triangle_3 setHidden:YES];
+        [specBtn setTitle:specString forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - 品牌按钮点击
@@ -309,7 +309,7 @@
     [triangle setHidden:YES];
     [brandBtn setTitle:brandString forState:UIControlStateNormal];
     
-//    [[NSUserDefaults standardUserDefaults] setObject:brandString forKey:@"brand_save"];
+    [[NSUserDefaults standardUserDefaults] setObject:brandString forKey:@"brand_save"];
     
 //    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",sectionIndex] forKey:@"brandBtn_save"];
     
@@ -326,7 +326,7 @@
     [modelBtn_1 setHidden:NO];
     [triangle_1 setHidden:YES];
 
-//    [[NSUserDefaults standardUserDefaults] setObject:modelString forKey:@"model_save"];
+    [[NSUserDefaults standardUserDefaults] setObject:modelString forKey:@"model_save"];
     
     [modelBtn setTitle:modelString forState:UIControlStateNormal];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
@@ -343,7 +343,7 @@
     [triangle_2 setHidden:YES];
     [useBtn setTitle:useString forState:UIControlStateNormal];
     
-//    [[NSUserDefaults standardUserDefaults] setObject:useString forKey:@"use_save"];
+    [[NSUserDefaults standardUserDefaults] setObject:useString forKey:@"use_save"];
     
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
     
@@ -360,7 +360,7 @@
     [triangle_3 setHidden:YES];
     [specBtn setTitle:specString forState:UIControlStateNormal];
     
-//    [[NSUserDefaults standardUserDefaults] setObject:specString forKey:@"spec_save"];
+    [[NSUserDefaults standardUserDefaults] setObject:specString forKey:@"spec_save"];
     
 //    specString = [self getNumFromString:specString];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
@@ -783,6 +783,7 @@
     brandString = @"";
     showBrandCell = YES;
     [triangle setHidden:NO];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
     
 }
@@ -796,6 +797,7 @@
     modelString = @"";
     showModelCell = YES;
     [triangle_1 setHidden:NO];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 
 }
@@ -809,7 +811,7 @@
      useString = @"";
     showUseCell = YES;
     [triangle_2 setHidden:NO];
-
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
 
@@ -822,10 +824,9 @@
     specString = @"";
     showSpecCell = YES;
     [triangle_3 setHidden:NO];
-
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
-
 
 -(void)closeView:(NSNotification *)sender
 {
@@ -879,12 +880,12 @@
         specString = @"";
         brandString = @"";
     
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
     
-        [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 //    }
 
 //    

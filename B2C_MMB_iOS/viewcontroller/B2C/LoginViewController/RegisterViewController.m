@@ -189,6 +189,8 @@
     [self.sv setPagingEnabled:YES];
     [self.sv setBounces:NO];
     
+    self.getValidateBtn.layer.cornerRadius = 5;
+    
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = @"";
     self.navigationItem.backBarButtonItem = backButton;

@@ -119,8 +119,6 @@
 }
 
 
-
-
 //请求询价车商品数量
 -(void)loadbadgeCount
 {
@@ -331,6 +329,7 @@
 {
     [super viewWillAppear:YES];
     
+    [self.navigationController popToRootViewControllerAnimated:YES];
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [self getMemberId];
     
@@ -344,15 +343,20 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-//
-//
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
+
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"frommmb"];
+    if (str.length > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_mmb" object:nil];
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
+    }
     
     self.tableView.scrollEnabled = YES;
     isPopShow = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC:) name:@"goToHomeView" object:nil];
+    [KxMenu dismissMenu];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -371,17 +375,9 @@
     [self setHidesBottomBarWhenPushed:NO];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
-//     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView" object:nil];
-}
-
--(void)goToHomeVC:(NSNotification *)sender
-{
-    NSLog(@"我的买卖宝");
     
-//    [self.tabBarController setSelectedIndex:0];
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHostView_mmb" object:nil];
 }
-
 
 - (void)viewDidLoad
 {

@@ -61,7 +61,7 @@
     [self setHidesBottomBarWhenPushed:NO];
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView_more" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView_mmb" object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -75,34 +75,31 @@
     {
         [self.logOutBtn setHidden:NO];
     }
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
+//    [self.navigationController.tabBarController.tabBar setHidden:NO];
     
     [self loadbadgeCount];
     
     [self loadShopCarCount];
-    
-    self.tableView.scrollEnabled = YES;
-    isPopShow = NO;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
     
-   
-}
-
--(void)goToHomeVC_more:(NSNotification *)sender
-{
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"frommore"];
+    if (str.length > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_more" object:nil];
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
+        NSLog(@"来自询价车通知-更多");
+    }
     
-    NSLog(@"更多");
-    
-//    [self.tabBarController setSelectedIndex:0];
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:NO];
+    self.tableView.scrollEnabled = YES;
+    isPopShow = NO;
+    [KxMenu dismissMenu];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHomeVC_more:) name:@"goToHomeView_more" object:nil];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     

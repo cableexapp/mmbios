@@ -127,7 +127,7 @@
             [self.tradeBtn setHidden:YES];
             [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth,  MainScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
 
-            cancelLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.buttomView.frame.size.width-10, self.buttomView.frame.size.height)];
+            cancelLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.buttomView.frame.size.width, self.buttomView.frame.size.height)];
             if([_myStatus intValue] == 5)
             {
                 [cancelLabel setText:@"已申请取消,客服会第一时间进行处理,请耐心等待"];

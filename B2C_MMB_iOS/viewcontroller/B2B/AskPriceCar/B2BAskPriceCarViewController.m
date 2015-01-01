@@ -103,10 +103,6 @@
     }
 }
 
-- (void) backToHostBtnClick:(UIButton *) sender
-{
-    NSLog(@"回到首页");
-}
 
 - (void) loadRequest
 {
@@ -157,16 +153,15 @@
             [view setHidden:YES];
         }
     }
-    [self setHidesBottomBarWhenPushed:YES];
-    
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
     [self loadRequest];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-    //    [self setHidesBottomBarWhenPushed:NO];
-    
+
     if(conn)
     {
         [conn stopConnection];
@@ -355,8 +350,6 @@
     
     UIButton *btn = (UIButton *) sender;
     deleteBtnTag = btn.tag;
-    
-    NSLog(@"tag = %d",deleteBtnTag);
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -682,13 +675,6 @@
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
 {
-    //    NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%d%d", [indexPath section], [indexPath row]];
-    //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    //    if (cell == nil)
-    //    {
-    //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    //        cell.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    
     [noCell setSelectionStyle:0];
     
     NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
@@ -734,7 +720,7 @@
     }
     if (!buyBtn)
     {
-        buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
         [buyBtn setTitle:@"去首页看看" forState:UIControlStateNormal];
         buyBtn.backgroundColor = [UIColor whiteColor];
@@ -743,16 +729,11 @@
         [buyBtn addTarget:self action:@selector(buyBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [noCell addSubview:buyBtn];
     }
-    
-    
-    
-    
-    //        [self.view insertSubview:buyBtn aboveSubview:tv];
-    
+
     buttomView.hidden = YES;
     tv.scrollEnabled = NO;
     tv.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //    }
+    
     return noCell;
 }
 
@@ -770,13 +751,14 @@
     }
     else if ([self.fromString isEqualToString:@"我的买卖宝"])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHomeView" object:nil];
-        NSLog(@"询价车入口——我的买卖宝");
+        [[NSUserDefaults standardUserDefaults] setObject:@"mmb" forKey:@"frommmb"];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else if ([self.fromString isEqualToString:@"更多"])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHomeView_more" object:nil];
-        NSLog(@"询价车入口——更多");
+        NSLog(@"询价车-更多++++++++++++++");
+         [[NSUserDefaults standardUserDefaults] setObject:@"mmb" forKey:@"frommore"];
+         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else
     {

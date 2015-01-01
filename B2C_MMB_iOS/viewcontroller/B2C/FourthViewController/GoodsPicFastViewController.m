@@ -68,6 +68,7 @@
     [self.view addSubview:tv];
     
     self.buttomBtn.layer.cornerRadius = 5;
+    [self.buttomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线商品快照"];
     self.navigationItem.titleView = top;

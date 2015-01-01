@@ -235,7 +235,7 @@
     [self pushAndPopStyle];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
+    [backBtn setFrame:CGRectMake(0, 0, 15, 22)];
     [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     

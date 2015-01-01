@@ -895,6 +895,10 @@
 
 - (void) sure:(UIButton *) sender
 {
+//    NSLog(@"useString = %@",useString);
+//    NSLog(@"brandString = %@",brandString);
+//    NSLog(@"specString = %@",specString);
+//    NSLog(@"modelString = %@",modelString);
     
     if([self.delegate respondsToSelector:@selector(requestStringWithUse:WithBrand:WithSpec:WithModel:WithSeq:)])
     {

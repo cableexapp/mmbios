@@ -266,6 +266,12 @@
     number++;
     [btnRotationNumArray replaceObjectAtIndex:tag withObject:[NSNumber numberWithInt:number]];
     
+    if(!HUD)
+    {
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [HUD setLabelText:@"数据加载中..."];
+        [HUD setDelegate:self];
+    }
     
     for(int i = 0;i < btnArray.count; i++)
     {
@@ -433,7 +439,6 @@
         {
             case 0:
                 [selctBtn setTitle:@"相关度" forState:UIControlStateNormal];
-                selctBtn.tag = 111;
                 [selctBtn setSelected:YES];
                 break;
             case 1:
@@ -531,7 +536,7 @@
 -(void)reloadNomalData:(NSNotification *)sender
 {
     flag = YES;
-    if (selctBtn.tag == 111)
+    if (selctBtn.tag == 0)
     {
         selctBtn.selected = YES;
     }
@@ -627,7 +632,15 @@
     {
         if(_reloading == YES)
         {
-            [self doneLoadingViewData];
+            if (dataArray.count > 0)
+            {
+                if(HUD)
+                {
+                    [HUD hide:YES];
+                }
+                 [self doneLoadingViewData];
+            }
+           
         }
         else if(_reloading == NO)
         {
@@ -648,11 +661,16 @@
                 }
                 [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
                 
+                if (dataArray.count > 0)
+                {
+                    if(HUD)
+                    {
+                        [HUD hide:YES];
+                    }
+                }
 //                NSLog(@"dicRespon = %@",[dicRespon objectForKey:@"items"]);
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
-                
-                
                 
                 if(intTotal == 0)
                 {
@@ -982,8 +1000,8 @@
 //#pragma mark REFRESH HEADER DELEGATE METHODS
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
 {
-    
-    [self reloadViewDataSource];
+    [self performSelectorOnMainThread:@selector(reloadViewDataSource)withObject:nil waitUntilDone:NO];
+//    [self reloadViewDataSource];
 }
 //
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view

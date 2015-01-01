@@ -577,6 +577,10 @@
             CGFloat halfWidth = (ScreenWidth-20)/2;
             
             NSString *uintString = [[NSUserDefaults standardUserDefaults] objectForKey:@"unit"];
+            if([DCFCustomExtra validateString:uintString] == NO)
+            {
+                uintString = @"";
+            }
             NSString *num = [NSString stringWithFormat:@"数量: %@%@",data.num,uintString];
             NSString *deliver = [NSString stringWithFormat:@"交货期: %@天",data.deliver];
             NSString *cartSpec = [NSString stringWithFormat:@"规格: %@平方",data.cartSpec];  //规格
@@ -621,7 +625,7 @@
                 if(i == 0)
                 {
                     [cellLabel setFrame:CGRectMake(10, kindLabel.frame.origin.y+kindLabel.frame.size.height, halfWidth, 20)];
-                    if([DCFCustomExtra validateString:data.num] == NO)
+                    if([DCFCustomExtra validateString:data.num] == NO || [data.num floatValue] <= 0.0)
                     {
                         [cellLabel setText:@"数量:"];
                     }

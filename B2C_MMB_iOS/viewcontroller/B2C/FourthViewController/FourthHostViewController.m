@@ -177,7 +177,7 @@
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的家装馆订单"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的家装线订单"];
     self.navigationItem.titleView = top;
     
     intPage = 1;

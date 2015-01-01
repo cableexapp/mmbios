@@ -377,15 +377,16 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HotKindNum"];
             }
             
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"HotScreenNum"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HotScreenNum"];
-            }
-            
             if([[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
             {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"BillMsg"];
             }
+            
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"B2BBillMsg"];
+            }
+
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             

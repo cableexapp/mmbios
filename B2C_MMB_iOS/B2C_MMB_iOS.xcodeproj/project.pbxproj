@@ -77,6 +77,8 @@
 		616BE0C21A14A4020061C956 /* MyCableOrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616BE0C11A14A4020061C956 /* MyCableOrderDetailViewController.m */; };
 		616BE0C51A14ABC60061C956 /* MyCableDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616BE0C41A14ABC60061C956 /* MyCableDetailTableViewController.m */; };
 		616D7A0019E62DFC00D7A357 /* B2CUpOrderData.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D79FF19E62DFC00D7A357 /* B2CUpOrderData.m */; };
+		617395CB1A54E9D100509531 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 617395CA1A54E9D100509531 /* Default@2x.png */; };
+		617395CD1A54EB7D00509531 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 617395CC1A54EB7D00509531 /* Default-568h@2x.png */; };
 		61760A711A15981500F3BA0B /* MyCableSureOrderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A6D1A15981500F3BA0B /* MyCableSureOrderTableViewController.m */; };
 		61760A721A15981500F3BA0B /* MyCableSureOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A6F1A15981500F3BA0B /* MyCableSureOrderViewController.m */; };
 		61760A7B1A15D71200F3BA0B /* ManageInvoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61760A781A15D71200F3BA0B /* ManageInvoiceViewController.m */; };
@@ -976,6 +978,8 @@
 		616BE0C41A14ABC60061C956 /* MyCableDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableDetailTableViewController.m; sourceTree = "<group>"; };
 		616D79FE19E62DFC00D7A357 /* B2CUpOrderData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CUpOrderData.h; sourceTree = "<group>"; };
 		616D79FF19E62DFC00D7A357 /* B2CUpOrderData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CUpOrderData.m; sourceTree = "<group>"; };
+		617395CA1A54E9D100509531 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		617395CC1A54EB7D00509531 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		61760A6C1A15981500F3BA0B /* MyCableSureOrderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableSureOrderTableViewController.h; sourceTree = "<group>"; };
 		61760A6D1A15981500F3BA0B /* MyCableSureOrderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableSureOrderTableViewController.m; sourceTree = "<group>"; };
 		61760A6E1A15981500F3BA0B /* MyCableSureOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableSureOrderViewController.h; sourceTree = "<group>"; };
@@ -2382,6 +2386,15 @@
 			path = B2CUpOrderData;
 			sourceTree = "<group>";
 		};
+		617395C91A54E96C00509531 /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				617395CC1A54EB7D00509531 /* Default-568h@2x.png */,
+				617395CA1A54E9D100509531 /* Default@2x.png */,
+			);
+			path = Default;
+			sourceTree = "<group>";
+		};
 		61760A761A15D71200F3BA0B /* ManageInvoice */ = {
 			isa = PBXGroup;
 			children = (
@@ -2501,6 +2514,7 @@
 		6181A34F19CFC3F8000E2D14 /* B2C_MMB_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				617395C91A54E96C00509531 /* Default */,
 				619A624C1A00C09900556B90 /* storyBoard */,
 				61CCBCDA19CFFF150008A46B /* icon */,
 				6181A35819CFC3F9000E2D14 /* AppDelegate.h */,
@@ -4760,6 +4774,7 @@
 				6181A4D619CFC4C2000E2D14 /* arrow.png in Resources */,
 				8BA7C0B21A10A85500758B0F /* 大兵@2x.png in Resources */,
 				8BA7C0931A10A85500758B0F /* 可怜.png in Resources */,
+				617395CD1A54EB7D00509531 /* Default-568h@2x.png in Resources */,
 				8BA7C1171A10A85500758B0F /* 胜利.png in Resources */,
 				8BA7C0701A10A85500758B0F /* _expression_cn.plist in Resources */,
 				8BA7C0FE1A10A85500758B0F /* 爱情@2x.png in Resources */,
@@ -4800,6 +4815,7 @@
 				8BA7C0C41A10A85500758B0F /* 差劲@2x.png in Resources */,
 				8BA7C0B91A10A85500758B0F /* 委屈.png in Resources */,
 				8BBB2CA61A1E162800895B4C /* 5.png in Resources */,
+				617395CB1A54E9D100509531 /* Default@2x.png in Resources */,
 				8BA7C10D1A10A85500758B0F /* 磕头.png in Resources */,
 				61E0E17E1A36DD0E00F6D5F1 /* complete.png in Resources */,
 				8BA7C0E71A10A85500758B0F /* 撇嘴.png in Resources */,

@@ -16,6 +16,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @property (weak, nonatomic) IBOutlet UILabel *showLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *headpic;
+@property (weak, nonatomic) IBOutlet UIButton *registerBtn;
 
 
 @end

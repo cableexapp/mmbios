@@ -60,7 +60,12 @@
 {
     [super viewWillAppear:YES];
     
-    
+//    if(_flag == YES)
+//    {
+//        RegisterViewController *regist = [self.storyboard instantiateViewControllerWithIdentifier:@"registerViewController"];
+//        [self.navigationController pushViewController:regist animated:NO];
+//    }
+//    
     regiserDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"]];
     if([[regiserDic allKeys] count] == 0 || [regiserDic isKindOfClass:[NSNull class]])
     {
@@ -77,11 +82,13 @@
     }
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
     
     logInSuccess = NO;
     

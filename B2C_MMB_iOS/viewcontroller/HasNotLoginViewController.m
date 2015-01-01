@@ -15,6 +15,8 @@
 #import "MCDefine.h"
 #import "MyShoppingListViewController.h"
 #import "B2BAskPriceCarViewController.h"
+#import "UIImageView+WebCache.h"
+#import "RegisterViewController.h"
 
 @interface HasNotLoginViewController ()
 {
@@ -82,6 +84,11 @@
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_notLogin:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
+    
+    [self.headpic.layer setCornerRadius:CGRectGetHeight([self.headpic bounds]) / 2];  //修改半径，实现头像的圆形化
+    self.headpic.layer.masksToBounds = YES;
+    NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
+    [self.headpic setImageWithURL:[NSURL URLWithString:headPortraitUrl] placeholderImage:[UIImage imageNamed:@"headPic.png"]];
 }
 
 //请求询价车商品数量
@@ -223,6 +230,18 @@
         isPopShow = YES;
     }
 }
+
+- (IBAction)registerBtnClick:(id)sender
+{
+//    UIStoryboard *MainSB = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+//    RegisterViewController *regist = [MainSB instantiateViewControllerWithIdentifier:@"registerViewController"];
+//    [self.navigationController pushViewController:regist animated:YES];
+    
+    LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
+    [self presentViewController:loginNavi animated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"HasNotLoginViewControllerNoti" object:nil];
+}
+
 
 
 - (void)didReceiveMemoryWarning

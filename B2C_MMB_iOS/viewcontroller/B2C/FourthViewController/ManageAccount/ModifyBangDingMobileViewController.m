@@ -93,13 +93,10 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.validateBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.validateBtn.layer.borderWidth = 1.0f;
+
     self.validateBtn.layer.cornerRadius = 5.0f;
     
-    
-    self.upBtn.layer.borderColor = MYCOLOR.CGColor;
-    self.upBtn.layer.borderWidth = 1.0f;
+
     self.upBtn.layer.cornerRadius = 5.0f;
     
 }

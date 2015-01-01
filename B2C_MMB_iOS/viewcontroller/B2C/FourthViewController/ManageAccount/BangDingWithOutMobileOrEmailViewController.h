@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *setNewSecTf;
 @property (weak, nonatomic) IBOutlet UITextField *sureSecTf;
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
+@property (weak, nonatomic) IBOutlet UIView *backView;
 
 @end

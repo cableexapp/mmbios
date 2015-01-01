@@ -92,6 +92,8 @@
     
     [self.tf_getValidate setDelegate:self];
     
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.backView.layer.borderWidth = 1;
     _getValidateBtn.layer.cornerRadius = 5;
     _getValidateBtn.layer.masksToBounds = YES;
     [_getValidateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

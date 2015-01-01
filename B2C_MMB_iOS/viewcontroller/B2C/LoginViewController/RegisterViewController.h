@@ -32,8 +32,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *getValidateBtn;
 @property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
 
-
-- (IBAction)agreementBtn:(id)sender;
+- (IBAction)agreeBtn:(id)sender;
 
 @end
 

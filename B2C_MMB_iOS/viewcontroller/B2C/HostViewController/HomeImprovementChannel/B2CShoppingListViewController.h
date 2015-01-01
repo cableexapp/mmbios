@@ -39,5 +39,6 @@
 @property (strong,nonatomic) NSString *seq;
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 
+
 - (id) initWithUse:(NSString *) string;
 @end

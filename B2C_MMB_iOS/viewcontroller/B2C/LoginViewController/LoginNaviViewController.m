@@ -7,6 +7,8 @@
 //
 
 #import "LoginNaviViewController.h"
+#import "RegisterViewController.h"
+#import "LoginViewController.h"
 
 @interface LoginNaviViewController ()
 
@@ -23,9 +25,19 @@
     return self;
 }
 
+- (void) doHasNotLoginViewControllerNoti
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    RegisterViewController *regist = [sb instantiateViewControllerWithIdentifier:@"registerViewController"];
+    self.viewControllers = [NSArray arrayWithObjects:regist, nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doHasNotLoginViewControllerNoti) name:@"HasNotLoginViewControllerNoti" object:nil];
     // Do any additional setup after loading the view.
 }
 

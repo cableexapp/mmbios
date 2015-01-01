@@ -26,4 +26,6 @@
 
 @property (nonatomic,strong) XMPPStream *xmppStream;
 
+@property (assign,nonatomic) BOOL flag;
+
 @end

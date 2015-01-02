@@ -878,20 +878,22 @@
     
     moneyLabel = [[UILabel alloc] init];
     totalMoney = 0.00;
-    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
-    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:totalMoney afterPoint:2] WithSize:CGSizeMake(MAXFLOAT, 20)];
-    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
+
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]]];
     [moneyLabel setFont:[UIFont systemFontOfSize:12]];
-    [moneyLabel setTextColor:[UIColor colorWithRed:203.0/255.0 green:24.0/255.0 blue:0.0/255.0 alpha:1.0]];
+    [moneyLabel setTextColor:[UIColor redColor]];
+    moneyLabel.backgroundColor = [UIColor yellowColor];
     [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
     [moneyLabel setTextAlignment:NSTextAlignmentRight];
     [buttomView addSubview:moneyLabel];
     
-    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
+    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x-50, 10, 50, 20)];
     [countLabel setTextColor:[UIColor blackColor]];
+    countLabel.backgroundColor = [UIColor redColor];
     [countLabel setFont:[UIFont systemFontOfSize:12]];
     [countLabel setTextAlignment:NSTextAlignmentRight];
-    [countLabel setText:@"合计:¥"];
+    [countLabel setText:@"合计:"];
     [buttomView addSubview:countLabel];
     
     UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(countLabel.frame.origin.x, countLabel.frame.origin.y+countLabel.frame.size.height, countLabel.frame.size.width+moneyLabel.frame.size.width+5, 14)];
@@ -1551,7 +1553,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [cellIv addGestureRecognizer:tap];
     
     //单价
-    NSString *shopPrice = [NSString stringWithFormat:@"¥%@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] price]];
+    NSString *shopPrice = [NSString stringWithFormat:@"¥ %@",[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] price]];
     CGSize shopPriceSize;
     if([DCFCustomExtra validateString:shopPrice] == NO)
     {
@@ -1579,7 +1581,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [label setFrame:CGRectMake(cell.contentView.frame.size.width-10-shopPriceSize.width,25, shopPriceSize.width, 30)];
     [label setText:shopPrice];
     [label setFont:[UIFont systemFontOfSize:12]];
-    [label setTextColor:[UIColor blackColor]];
+    [label setTextColor:[UIColor redColor]];
     [label setTextAlignment:NSTextAlignmentRight];
     [cell.contentView addSubview:label];
     
@@ -1596,7 +1598,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     UILabel *subColorLab = [[colorLabelArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [subColorLab setFrame:CGRectMake(cell.contentView.frame.size.width-10-shopColorSize.width,label.frame.origin.y+label.frame.size.height,shopColorSize.width,30)];
-    [subColorLab setText:shopColor];
+    [subColorLab setText:[NSString stringWithFormat:@"颜色:%@",shopColor]];
     [subColorLab setFont:[UIFont systemFontOfSize:12]];
     [subColorLab setTextColor:[UIColor lightGrayColor]];
     [subColorLab setTextAlignment:NSTextAlignmentRight];

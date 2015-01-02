@@ -798,9 +798,9 @@
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
+    switch (buttonIndex)
+    {
         case 0:
-            
             break;
         case 1:
         {
@@ -814,20 +814,15 @@
 
 - (void) sureReceiveRequest
 {
-    
-
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"ConfirmReceive",time];
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@",token,[NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:index] orderserial]]];
 
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmReceiveTag delegate:self];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ConfirmReceive.html?"];
-    
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }

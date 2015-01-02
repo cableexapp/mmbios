@@ -72,6 +72,7 @@
     
     myTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 5, ScreenWidth-10, 60-10)];
     [myTextView setDelegate:self];
+    myTextView.font = [UIFont systemFontOfSize:16];
     [myTextView setReturnKeyType:UIReturnKeyDone];
     
     label = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, myTextView.frame.size.width-10, 20)];
@@ -88,12 +89,11 @@
     
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
-    
-    // Do any additional setup after loading the view.
 }
 
 - (void) rightBtnClick:(UIButton *) sender
 {
+    
     if(str.length == 0)
     {
         [DCFStringUtil showNotice:@"请选择或者输入取消原因"];
@@ -221,8 +221,10 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
     }
-    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+    {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
     if(indexPath.row < 9)
@@ -232,18 +234,8 @@
     }
     else if(indexPath.row == 9)
     {
-//       UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 30, 30)];
-//       [iv setImage:[UIImage imageNamed:@"Set.png"]];
-//       [cell.contentView addSubview:iv];
-    
         [cell.textLabel setText:@"其他原因"];
         [cell.textLabel setTextColor:[UIColor colorWithRed:24.0/255.0 green:120.0/255.0 blue:249.0/255.0 alpha:1.0]];
-        
-//       UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + iv.frame.size.width + 5, iv.frame.origin.y, 200, iv.frame.size.height)];
-//       [cellLabel setTextColor:[UIColor colorWithRed:24.0/255.0 green:120.0/255.0 blue:249.0/255.0 alpha:1.0]];
-//       [cellLabel setText:@"其他原因"];
-//       [cell.contentView addSubview:cellLabel];
-        
     }
     else
     {
@@ -264,7 +256,7 @@
     }
     if(indexPath.row == 9)
     {
-        
+        str = @"";
     }
     if(indexPath.row == 10)
     {
@@ -349,19 +341,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
 

@@ -63,8 +63,6 @@
     UIButton *modelBtn_1;
     UIButton *useBtn_2;
     UIButton *specBtn_3;
-
-    int didClear;
 }
 @end
 
@@ -876,10 +874,10 @@
          triangle_2.hidden = NO;
          triangle_3.hidden = NO;
     
-        useString = @"";
-        modelString = @"";
-        specString = @"";
-        brandString = @"";
+        useString = nil;
+        modelString = nil;
+        specString = nil;
+        brandString = nil;
     
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
@@ -887,9 +885,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
     
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
-//    }
 
-    didClear = 2;
 //    
 //    // 背影view的通知事件
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadNomalData" object:nil];
@@ -902,39 +898,22 @@
     NSLog(@"specString = %@",specString);
     NSLog(@"modelString = %@",modelString);
 
-    if (didClear == 2)
+    if([self.delegate respondsToSelector:@selector(requestStringWithUse:WithBrand:WithSpec:WithModel:WithSeq:)])
     {
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadNomalData" object:nil];
+        [self.delegate requestStringWithUse:useString WithBrand:brandString WithSpec:specString WithModel:modelString WithSeq:@""];
     }
-    else
-    {
-        if([self.delegate respondsToSelector:@selector(requestStringWithUse:WithBrand:WithSpec:WithModel:WithSeq:)])
-        {
-            [self.delegate requestStringWithUse:useString WithBrand:brandString WithSpec:specString WithModel:modelString WithSeq:@""];
-        }
-    }
-    
-   
-    
-    if (useString.length == 0 && brandString.length == 0 && specString.length == 0 && modelString.length == 0)
-    {
-        
-       
-    }
-    
+
     //关闭筛选界面_动画效果
      [self closeViewAnimations];
     
     // 背影view的通知事件
     [[NSNotificationCenter defaultCenter] postNotificationName:@"closeBackView" object:nil];
-    
 }
 
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source

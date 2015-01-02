@@ -79,7 +79,7 @@
     {
         [self setHidesBottomBarWhenPushed:YES];
         MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
-        myCableOrder.btnIndex = tag;
+        myCableOrder.btnIndex = 0;
         [self.navigationController pushViewController:myCableOrder animated:YES];
         [self setHidesBottomBarWhenPushed:NO];
     }

@@ -73,7 +73,7 @@
     
     
     NSString *orderNum = [NSString stringWithFormat:@"订单号:%@",detailData.ordernum];
-    [self.myOrderNumberLabel setFrame:CGRectMake(5, 0, 150, 20)];
+    [self.myOrderNumberLabel setFrame:CGRectMake(5, 0, 180, 20)];
     [self.myOrderNumberLabel setText:orderNum];
     [self.myOrderNumberLabel setFont:[UIFont systemFontOfSize:11]];
     
@@ -84,13 +84,13 @@
     NSString *orderStatus = [NSString stringWithFormat:@"状态: %@",detailData.myStatus];
     NSMutableAttributedString *theOrderStatus = [[NSMutableAttributedString alloc] initWithString:orderStatus];
     [theOrderStatus addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
-    [theOrderStatus addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(3, orderStatus.length-3)];
+    [theOrderStatus addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(3, orderStatus.length-3)];
     [self.myOrderStatusLabel setAttributedText:theOrderStatus];
 
     NSString *orderTotal = [NSString stringWithFormat:@"订单总额: ¥%@",detailData.ordertotal];
     NSMutableAttributedString *theOrderTotal = [[NSMutableAttributedString alloc] initWithString:orderTotal];
     [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
-    [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(5, orderTotal.length-5)];
+    [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(5, orderTotal.length-5)];
     [self.myOrderTotalLabel setAttributedText:theOrderTotal];
 
 }

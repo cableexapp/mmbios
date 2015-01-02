@@ -135,29 +135,42 @@
 #pragma mark - delegate
 - (void) requestStringWithUse:(NSString *)myUse WithBrand:(NSString *)myBrand WithSpec:(NSString *)mySpec WithModel:(NSString *)myModel WithSeq:(NSString *)mySeq
 {
-    
-    flag = NO;
-    delegateMyUse = myUse;
-    delegateMyBrand = myBrand;
-    delegateMySpec = [[mySpec componentsSeparatedByString:@"平方"] objectAtIndex:0];
-    delegateMyModel = myModel;
-    
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductListByCondition",time];
-    NSString *token = [DCFCustomExtra md5:string];
- 
-    pageSize = 10;
-    
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&brand=%@&spec=%@&pagesize=%d&pageindex=%d&memberid=%@&loginid=%@",token,delegateMyUse,delegateMyModel,delegateMyBrand,delegateMySpec,pageSize,intPage,@"",@""];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductListByCondition.html?"];
-    
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    [moreCell startAnimation];
-    
+    if (myUse.length == 0 && myBrand.length == 0 && mySpec.length == 0 && myModel.length == 0)
+    {
+        flag = YES;
+        if (selctBtn.tag == 0)
+        {
+            selctBtn.selected = YES;
+        }
+        _seq = @"";
+        seqmethod = @"";
+        [self loadRequest:_seq WithUse:_use];
+    }
+    else
+    {
+        flag = NO;
+        delegateMyUse = myUse;
+        delegateMyBrand = myBrand;
+        delegateMySpec = [[mySpec componentsSeparatedByString:@"平方"] objectAtIndex:0];
+        delegateMyModel = myModel;
+        
+        NSString *time = [DCFCustomExtra getFirstRunTime];
+        NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductListByCondition",time];
+        NSString *token = [DCFCustomExtra md5:string];
+        
+        pageSize = 10;
+        
+        NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&brand=%@&spec=%@&pagesize=%d&pageindex=%d&memberid=%@&loginid=%@",token,delegateMyUse,delegateMyModel,delegateMyBrand,delegateMySpec,pageSize,intPage,@"",@""];
+        
+        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductListByCondition.html?"];
+        
+        
+        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+        [moreCell startAnimation];
+    }
+
 }
 
 #pragma mark- 筛选

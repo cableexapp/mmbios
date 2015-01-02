@@ -167,6 +167,11 @@
 
 - (void) loadRequest:(int) sender
 {
+    if(sender == 0)
+    {
+        subTV_1.statusIndex = @"";
+        [subTV_1 loadRequestWithStatus:@""];
+    }
     if(sender == 1)
     {
         subTV_2.statusIndex = @"0";
@@ -223,14 +228,6 @@
         {
             [b setSelected:NO];
         }
-        //        if(btn.selected == YES)
-        //        {
-        //
-        //        }
-        //        else
-        //        {
-        //            [btn setSelected:NO];
-        //        }
     }
     
     int tag = btn.tag;

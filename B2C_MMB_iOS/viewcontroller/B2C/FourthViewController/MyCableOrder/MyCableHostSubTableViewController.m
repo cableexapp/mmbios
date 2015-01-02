@@ -776,22 +776,18 @@
     }
     else
     {
-        NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
+//        NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
 
-        if([status intValue] == 5)
-        {
-            
-//            index = indexPath.section;
-            
-            
-        }
-        else
-        {
+//        if([status intValue] == 5)
+//        {
+//        }
+//        else
+//        {
             if([self.delegate respondsToSelector:@selector(pushToDetailVCWithData:WithFlag:)])
             {
                 [self.delegate pushToDetailVCWithData:[dataArray objectAtIndex:indexPath.section] WithFlag:0];
             }
-        }
+//        }
 
     }
 }

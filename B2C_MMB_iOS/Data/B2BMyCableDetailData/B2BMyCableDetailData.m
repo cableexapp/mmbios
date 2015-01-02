@@ -94,6 +94,15 @@
     {
         _myStatus = @"已关闭";
     }
+    
+    if([[dic objectForKey:@"invoice"] isKindOfClass:[NSNull class]])
+    {
+        _invoiceDic = [[NSDictionary alloc] init];
+    }
+    else
+    {
+        _invoiceDic = [NSDictionary dictionaryWithDictionary:[dic objectForKey:@"invoice"]];
+    }
 }
 
 - (id) initWithDic:(NSDictionary *) dic

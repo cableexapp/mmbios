@@ -16,6 +16,8 @@
 #import "ChatListViewController.h"
 #import "AppDelegate.h"
 #import "ChatViewController.h"
+#import "HotScreenFirstViewController.h"
+
 @interface HotScreenFirstViewController ()
 {
     int page;
@@ -221,7 +223,7 @@
 
 - (IBAction)reViewBtnClick:(id)sender
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.sv setContentOffset:CGPointMake(0, 0) animated:NO];
 }
 
 

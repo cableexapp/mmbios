@@ -379,10 +379,13 @@
                     if([name_1 rangeOfString:@"(null)"].location != NSNotFound)
                     {
                         name_2 = [name_1 stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                        name_2 = [name_1 stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
+
                     }
                     else if([name_1 rangeOfString:@"null"].location != NSNotFound)
                     {
                         name_2 = [name_1 stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                        name_2 = [name_1 stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
                     }
                     else
                     {
@@ -394,10 +397,12 @@
                     if([tel rangeOfString:@"(null)"].location != NSNotFound)
                     {
                         tel_2 = [tel stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                        tel_2 = [tel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
                     }
                     else if([tel rangeOfString:@"null"].location != NSNotFound)
                     {
                         tel_2 = [tel stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                        tel_2 = [tel stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
                     }
                     else
                     {
@@ -418,10 +423,12 @@
                     if([address rangeOfString:@"(null)"].location != NSNotFound)
                     {
                         myAdd = [address stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                        myAdd = [address stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
                     }
                     else if([address rangeOfString:@"null"].location != NSNotFound)
                     {
                         myAdd = [address stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                        myAdd = [address stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
                     }
                     else
                     {
@@ -474,10 +481,12 @@
             if([type_1 rangeOfString:@"(null)"].location != NSNotFound)
             {
                 type = [type_1 stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                type = [type_1 stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
             }
             else if([type_1 rangeOfString:@"null"].location != NSNotFound)
             {
                 type = [type_1 stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                type = [type_1 stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
             }
             else
             {

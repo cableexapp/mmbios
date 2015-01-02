@@ -31,7 +31,7 @@
     
     NSLog(@"%@ %@ %@",self.mylogisticsNum,self.mylogisticsName,self.mylogisticsId);
     [self.logisticsNameLabel setText:self.mylogisticsName];
-    [self.logisticsNumLabel setText:self.mylogisticsId];
+    [self.logisticsNumLabel setText:[NSString stringWithFormat:@"快递单号:%@",self.mylogisticsId]];
     
     logisticsTrackingTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingTableViewController"];
     logisticsTrackingTableViewController.view.frame = self.tableBackView.bounds;
@@ -58,12 +58,7 @@
 {
 }
 
-- (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    NSLog(@"error = %@",error.description);
-}
-
-- (void) webViewDidFinishLoad:(UIWebView *)webView
+- (void) loadRequest
 {
     if(!conn)
     {
@@ -73,18 +68,24 @@
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLogisticsTrackingTag delegate:self];
         
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        
-   
     }
-    else
-    {
-    }
+
+}
+
+- (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    NSLog(@"error = %@",error.description);
+}
+
+- (void) webViewDidFinishLoad:(UIWebView *)webView
+{
+    [self loadRequest];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
+    NSLog(@"%@",dicRespon);
     int logistStatus = [[dicRespon objectForKey:@"status"] intValue];
-    NSString *msg = [dicRespon objectForKey:@"message"];
     
     if(URLTag == URLLogisticsTrackingTag)
     {
@@ -96,47 +97,50 @@
             {
                 [logisticsTrackingTableViewController.myArray addObject:[arr objectAtIndex:i]];
             }
+            
+            logisticsTrackingTableViewController.isRequest = NO;
+            [logisticsTrackingTableViewController.tableView reloadData];
+            
+            NSString *statusString = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"state"]];
+            int statusInt = [statusString intValue];
+            if([DCFCustomExtra validateString:statusString] == NO)
+            {
+                [self.logisticsStatusLabel setText:[NSString stringWithFormat:@"%@",@"状态请求错误"]];
+                return;
+            }
+            switch (statusInt) {
+                case 0:
+                    [self.logisticsStatusLabel setText:@"物流状态:在途"];
+                    break;
+                case 1:
+                    [self.logisticsStatusLabel setText:@"物流状态:已揽件"];
+                    break;
+                case 2:
+                    [self.logisticsStatusLabel setText:@"物流状态:疑难"];
+                    break;
+                case 3:
+                    [self.logisticsStatusLabel setText:@"物流状态:已签收"];
+                    break;
+                case 4:
+                    [self.logisticsStatusLabel setText:@"物流状态:退签"];
+                    break;
+                case 5:
+                    [self.logisticsStatusLabel setText:@"物流状态:派件中"];
+                    break;
+                case 6:
+                    [self.logisticsStatusLabel setText:@"物流状态:退回中"];
+                    break;
+                default:
+                    break;
+            }
         }
         else
         {
-            [DCFStringUtil showNotice:msg];
+//            [DCFStringUtil showNotice:msg];
+            [self loadRequest];
         }
 
-        logisticsTrackingTableViewController.isRequest = NO;
-        [logisticsTrackingTableViewController.tableView reloadData];
-        
-        NSString *statusString = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"state"]];
-        int statusInt = [statusString intValue];
-        if([DCFCustomExtra validateString:statusString] == NO)
-        {
-            [self.logisticsStatusLabel setText:[NSString stringWithFormat:@"%@",@"状态请求错误"]];
-            return;
-        }
-        switch (statusInt) {
-            case 0:
-                [self.logisticsStatusLabel setText:@"在途"];
-                break;
-            case 1:
-                [self.logisticsStatusLabel setText:@"已揽件"];
-                break;
-            case 2:
-                [self.logisticsStatusLabel setText:@"疑难"];
-                break;
-            case 3:
-                [self.logisticsStatusLabel setText:@"已签收"];
-                break;
-            case 4:
-                [self.logisticsStatusLabel setText:@"退签"];
-                break;
-            case 5:
-                [self.logisticsStatusLabel setText:@"派件中"];
-                break;
-            case 6:
-                [self.logisticsStatusLabel setText:@"退回中"];
-                break;
-            default:
-                break;
-        }
+
     }
 }
 

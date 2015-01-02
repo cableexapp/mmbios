@@ -61,6 +61,10 @@
 
         _logisticsCompanay = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsCompanay"]];
 
+        _orderId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderId"]];
+
+        _orderNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderNum"]];
+
     }
     return self;
 }

@@ -35,6 +35,10 @@
 
 @property (strong,nonatomic) NSString *logisticsId;
 
+@property (strong,nonatomic) NSString *orderNum;
+
+@property (strong,nonatomic) NSString *orderId;
+
 @property (strong,nonatomic) NSString *logisticsNum;
 
 @property (strong,nonatomic) NSString *logisticsCompanay;

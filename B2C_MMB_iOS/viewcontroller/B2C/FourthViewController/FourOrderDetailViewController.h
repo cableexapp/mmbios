@@ -16,7 +16,7 @@
     MBProgressHUD *hud;
     
     BOOL showOrHideDisCussBtn;
-    BOOL showOrHideTradeBtn;`
+    BOOL showOrHideTradeBtn;
 }
 @property (strong,nonatomic) NSString *myOrderNum;
 //@property (strong,nonatomic) NSString *myTime;

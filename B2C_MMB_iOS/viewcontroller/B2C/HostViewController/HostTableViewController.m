@@ -429,6 +429,7 @@ BOOL isPopShow = NO;
 
    [self.tabBarController setSelectedIndex:0];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHostView_mmb" object:nil];
 
 }
 
@@ -438,7 +439,7 @@ BOOL isPopShow = NO;
     
     [self.tabBarController setSelectedIndex:0];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHostView_more" object:nil];
 }
 
 

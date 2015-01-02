@@ -61,7 +61,6 @@
     [self setHidesBottomBarWhenPushed:NO];
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHomeView_mmb" object:nil];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -88,7 +87,6 @@
     if (str.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_more" object:nil];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
         NSLog(@"来自询价车通知-更多");
     }
     

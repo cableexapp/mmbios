@@ -752,6 +752,7 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if(!dataArray || dataArray.count == 0)
     {
         return;
@@ -760,83 +761,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [mySB instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
 
-    fourOrderDetailViewController.theLogiId = [NSString stringWithFormat:@"%@",[dataArray[indexPath.row] objectForKey:@"logisticsId"]];
-    fourOrderDetailViewController.theLogiNum = [NSString stringWithFormat:@"%@",[dataArray[indexPath.row] objectForKey:@"logisticsNum"]];
- 
-    fourOrderDetailViewController.theLogiArray = [[NSMutableArray alloc] initWithArray:[dataArray[indexPath.row] objectForKey:@"items"]];
-    fourOrderDetailViewController.theShopId = [NSString stringWithFormat:@"%@",[dataArray[indexPath.row] objectForKey:@"shopId"]];
-    fourOrderDetailViewController.theOrderNum = [NSString stringWithFormat:@"%@",[dataArray[indexPath.row] objectForKey:@"orderNum"]];
-    fourOrderDetailViewController.theDic = [[NSDictionary alloc] initWithDictionary:[dataArray[indexPath.row] objectForKey:@"subDate"]];
-
-    int status = [[dataArray[indexPath.row] objectForKey:@"status"] intValue];
-    if(status == 1)
-    {
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = NO;
-    }
-    
-    if(status == 2)
-    {
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = NO;
-    }
-    
-    if(status == 3)
-    {
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = YES;
-    }
-    
-    if(status == 5)
-    {
-        fourOrderDetailViewController.myStatus = @"5";
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = NO;
-    }
-    if(status == 6)
-    {
-        int judgeStatus = [[dataArray[indexPath.row] objectForKey:@"juderstatus"] intValue];
-        int afterStatus = [[dataArray[indexPath.row] objectForKey:@"afterStatus"]  intValue];
-
-        if(judgeStatus == 1)
-        {
-            if(afterStatus == 2 || afterStatus == 3)
-            {
-                fourOrderDetailViewController.showOrHideDisCussBtn = YES;
-                fourOrderDetailViewController.showOrHideTradeBtn = YES;
-            }
-            else
-            {
-                fourOrderDetailViewController.showOrHideDisCussBtn = YES;
-                fourOrderDetailViewController.showOrHideTradeBtn = YES;
-            }
-        }
-        else if (judgeStatus == 2)
-        {
-            if(afterStatus == 2 || afterStatus == 3)
-            {
-                fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-                fourOrderDetailViewController.showOrHideTradeBtn = YES;
-            }
-            else
-            {
-                fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-                fourOrderDetailViewController.showOrHideTradeBtn = YES;
-            }
-        }
-    }
-    if(status == 7)
-    {
-        fourOrderDetailViewController.myStatus = @"7";
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = NO;
-    }
-    
     fourOrderDetailViewController.myOrderNum = [dataArray[indexPath.row] objectForKey:@"orderNum"];
-    
-    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[[dataArray[indexPath.row]objectForKey:@"subDate"] objectForKey:@"time"] doubleValue]/1000];
-    timeLabel.text = [DCFCustomExtra nsdateToString:confromTimesp];
-    fourOrderDetailViewController.myTime = [DCFCustomExtra nsdateToString:confromTimesp];
     
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
 }

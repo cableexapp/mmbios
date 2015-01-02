@@ -412,14 +412,36 @@ BOOL isPopShow = NO;
     es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 100) ImageArray:imageArray TitleArray:nil WithTag:0];
     es.delegate = self;
     
-    
-    
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
     
      [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
     
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (hidenShopCarRedPoint:) name:@"hidenRedPoint" object:nil];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostVC_mmb:) name:@"goToHostView_mmb" object:nil];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostVC_more:) name:@"goToHostView_more" object:nil];
 }
+
+-(void)goToHostVC_mmb:(NSNotification *)sender
+{
+    NSLog(@"主页-我的买卖宝");
+
+   [self.tabBarController setSelectedIndex:0];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
+
+}
+
+-(void)goToHostVC_more:(NSNotification *)sender
+{
+    NSLog(@"主页-更多");
+    
+    [self.tabBarController setSelectedIndex:0];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
+    
+}
+
+
 
 -(void)hidenShopCarRedPoint:(NSNotification *)sender
 {

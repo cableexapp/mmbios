@@ -66,6 +66,10 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"安全验证"];
     self.navigationItem.titleView = top;
     
+    self.backView.layer.borderWidth = 1;
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.backView.layer.cornerRadius = 5;
+    
     self.validateBtn.layer.borderColor = MYCOLOR.CGColor;
     self.validateBtn.layer.borderWidth = 1.0f;
     self.validateBtn.layer.cornerRadius = 5.0f;

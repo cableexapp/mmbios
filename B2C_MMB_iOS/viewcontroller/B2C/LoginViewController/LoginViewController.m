@@ -89,7 +89,6 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
     logInSuccess = NO;
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -100,11 +99,12 @@
     self.navigationItem.titleView = top;
     
     UIImageView *titleImageView = [[UIImageView alloc] init];
-    titleImageView.frame = CGRectMake((ScreenWidth-246)/2, 20, 246, 70);
+    titleImageView.frame = CGRectMake((ScreenWidth-176)/2, 20, 176, 50);
     titleImageView.image = [UIImage imageNamed:@"mmb"];
     [self.view addSubview:titleImageView];
     
     _tf_BackView.layer.borderWidth = 1.0f;
+    _tf_BackView.layer.cornerRadius = 5;
     _tf_BackView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     _tf_BackView.frame = CGRectMake(20, 100, ScreenWidth-40, 101);
     _tf_BackView.layer.masksToBounds = YES;

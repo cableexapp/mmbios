@@ -181,12 +181,19 @@
     self.regesterBtn.layer.cornerRadius = 5.0f;
     
     self.subView.layer.borderWidth = 1;
+    self.subView.layer.cornerRadius = 5;
     self.subView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     
     [self.sv setContentSize:CGSizeMake(ScreenWidth-50, self.sv.frame.size.height-200)];
     [self.sv setDelegate:self];
     [self.sv setPagingEnabled:YES];
     [self.sv setBounces:NO];
+    
+    self.getValidateBtn.layer.cornerRadius = 5;
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+    backButton.title = @"";
+    self.navigationItem.backBarButtonItem = backButton;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];

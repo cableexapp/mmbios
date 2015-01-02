@@ -356,8 +356,8 @@
 /* Class = "IBUIButton"; normalTitle = "AGR"; ObjectID = "Woy-Ae-YLo"; */
 "Woy-Ae-YLo.normalTitle" = "AGR";
 
-/* Class = "IBUIButton"; normalTitle = "返回登陆页面"; ObjectID = "X7q-Wy-GmW"; */
-"X7q-Wy-GmW.normalTitle" = "返回登陆页面";
+/* Class = "IBUIButton"; normalTitle = "返回登录页面"; ObjectID = "X7q-Wy-GmW"; */
+"X7q-Wy-GmW.normalTitle" = "返回登录页面";
 
 /* Class = "IBUIButton"; normalTitle = "KX-G-VVP"; ObjectID = "Yuv-z0-os0"; */
 "Yuv-z0-os0.normalTitle" = "KX-G-VVP";
@@ -371,8 +371,8 @@
 /* Class = "IBUILabel"; text = "外观颜色"; ObjectID = "Z3M-Ph-8si"; */
 "Z3M-Ph-8si.text" = "外观颜色";
 
-/* Class = "IBUIButton"; normalTitle = "登陆"; ObjectID = "Z3t-2b-TD8"; */
-"Z3t-2b-TD8.normalTitle" = "登陆";
+/* Class = "IBUIButton"; normalTitle = "登录"; ObjectID = "Z3t-2b-TD8"; */
+"Z3t-2b-TD8.normalTitle" = "登录";
 
 /* Class = "IBUIButton"; normalTitle = "YZW"; ObjectID = "Z6K-Jb-Zac"; */
 "Z6K-Jb-Zac.normalTitle" = "YZW";
@@ -404,8 +404,8 @@
 /* Class = "IBUIButton"; normalTitle = "CEV/DA"; ObjectID = "b76-mS-9tg"; */
 "b76-mS-9tg.normalTitle" = "CEV/DA";
 
-/* Class = "IBUILabel"; text = "2.使用手机号登陆电缆买卖宝"; ObjectID = "bA8-iT-TaA"; */
-"bA8-iT-TaA.text" = "2.使用手机号登陆电缆买卖宝";
+/* Class = "IBUILabel"; text = "2.使用手机号登录电缆买卖宝"; ObjectID = "bA8-iT-TaA"; */
+"bA8-iT-TaA.text" = "2.使用手机号登录电缆买卖宝";
 
 /* Class = "IBUIButton"; normalTitle = "KVVP2-22"; ObjectID = "bKa-gn-fdi"; */
 "bKa-gn-fdi.normalTitle" = "KVVP2-22";

@@ -93,7 +93,9 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-
+    self.backView.layer.borderWidth = 1;
+    self.backView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.backView.layer.cornerRadius = 5;
     self.validateBtn.layer.cornerRadius = 5.0f;
     
 

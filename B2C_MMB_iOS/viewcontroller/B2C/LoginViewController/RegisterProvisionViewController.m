@@ -42,7 +42,7 @@
     
     
     UIWebView *register_webview = [[UIWebView alloc] init];
-    register_webview.frame = CGRectMake(0, 0,self.view.frame.size.width,self.view.frame.size.height-54);
+    register_webview.frame = CGRectMake(0, 0,self.view.frame.size.width,self.view.frame.size.height-64);
     register_webview.delegate = self;
     [self.view addSubview:register_webview];
     
@@ -58,7 +58,6 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidStartLoad");
     if(!HUD)
     {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -69,7 +68,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"webViewDidFinishLoad");
     if(HUD)
     {
         [HUD hide:YES];

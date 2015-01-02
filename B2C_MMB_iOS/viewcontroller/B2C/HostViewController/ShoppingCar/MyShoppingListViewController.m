@@ -118,7 +118,13 @@
             [view setHidden:YES];
         }
     }
-    
+    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightBtn setFrame:CGRectMake(0, 0, 60, 40)];
+    [rightBtn setTitle:@"删除" forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
     if(moneyLabel)
     {
         [moneyLabel setText:@"0"];
@@ -813,17 +819,6 @@
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆购物车"];
     self.navigationItem.titleView = top;
-    
-
-    
-    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightBtn setFrame:CGRectMake(0, 0, 60, 40)];
-    [rightBtn setTitle:@"删除" forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
     
     buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - 114, ScreenWidth, 54)];
     [self.view addSubview:buttomView];

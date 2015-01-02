@@ -139,14 +139,8 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    if ([self.fromFlag isEqualToString:@"我的电缆订单"])
-    {
-    }
-    else
-    {
-//        [self loadRequestB2COrderListAllWithStatus:@"1"];
-        [self loadRequestB2COrderListAllWithStatus:@""];
-    }
+
+    [self loadRequestB2COrderListAllWithStatus:@""];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -197,11 +191,6 @@
     if(URLTag == URLB2COrderListAllTag)
     {
 //        NSLog(@"家装线订单搜索dicRespon = %@\n\n",dicRespon);
-        NSLog(@"家装线订单搜索dataArray = %@\n\n",[dicRespon objectForKey:@"items"]);
-        
-        NSLog(@"家装线订单搜索dicRespon = %d\n\n",[[dicRespon objectForKey:@"items"]  count]);
-        
-        
         int intTotal = [[dicRespon objectForKey:@"total"] intValue];
         int result = [[dicRespon objectForKey:@"result"] intValue];
 
@@ -223,14 +212,6 @@
                         noResultView.hidden = NO;
                         dataArray = [dicRespon objectForKey:@"items"];
                         tempOrderNum = [dicRespon objectForKey:@"items"];
-//                        intTotal = [[dicRespon objectForKey:@"total"] intValue];
-                        
-                        for (int i=0; i<dataArray.count; i++)
-                        {
-                            NSLog(@"家装线订单搜索dicRespon = %@",[dataArray[i] objectForKey:@"orderNum"]);
-                            
-                            NSLog(@"订单状态 = %@",[dataArray[i] objectForKey:@"status"]);
-                        }
                     }
                 }
                 else
@@ -281,15 +262,15 @@
     }
     else
     {
-        int status = [[dataArray[indexPath.row] objectForKey:@"status"] intValue];
-        if(status == 5 || status == 7)
-        {
-            height = 188;
-        }
-        else
-        {
+//        int status = [[dataArray[indexPath.row] objectForKey:@"status"] intValue];
+//        if(status == 5 || status == 7)
+//        {
+//            height = 188;
+//        }
+//        else
+//        {
             height = 230;
-        }
+//        }
     }
     return height;
 }
@@ -771,6 +752,7 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if(!dataArray || dataArray.count == 0)
     {
         return;
@@ -778,10 +760,11 @@
     
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [mySB instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
+
     fourOrderDetailViewController.myOrderNum = [dataArray[indexPath.row] objectForKey:@"orderNum"];
+    
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
 }
-
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {

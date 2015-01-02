@@ -64,7 +64,7 @@
     UIButton *useBtn_2;
     UIButton *specBtn_3;
 
-    
+    int didClear;
 }
 @end
 
@@ -297,6 +297,7 @@
         [specBtn setTitle:specString forState:UIControlStateNormal];
     }
 }
+
 
 #pragma mark - 品牌按钮点击
 - (void) brandBtnClick:(UIButton *) sender
@@ -888,6 +889,7 @@
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 //    }
 
+    didClear = 2;
 //    
 //    // 背影view的通知事件
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadNomalData" object:nil];
@@ -895,14 +897,29 @@
 
 - (void) sure:(UIButton *) sender
 {
-//    NSLog(@"useString = %@",useString);
-//    NSLog(@"brandString = %@",brandString);
-//    NSLog(@"specString = %@",specString);
-//    NSLog(@"modelString = %@",modelString);
-    
-    if([self.delegate respondsToSelector:@selector(requestStringWithUse:WithBrand:WithSpec:WithModel:WithSeq:)])
+    NSLog(@"useString = %@",useString);
+    NSLog(@"brandString = %@",brandString);
+    NSLog(@"specString = %@",specString);
+    NSLog(@"modelString = %@",modelString);
+
+    if (didClear == 2)
     {
-        [self.delegate requestStringWithUse:useString WithBrand:brandString WithSpec:specString WithModel:modelString WithSeq:@""];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadNomalData" object:nil];
+    }
+    else
+    {
+        if([self.delegate respondsToSelector:@selector(requestStringWithUse:WithBrand:WithSpec:WithModel:WithSeq:)])
+        {
+            [self.delegate requestStringWithUse:useString WithBrand:brandString WithSpec:specString WithModel:modelString WithSeq:@""];
+        }
+    }
+    
+   
+    
+    if (useString.length == 0 && brandString.length == 0 && specString.length == 0 && modelString.length == 0)
+    {
+        
+       
     }
     
     //关闭筛选界面_动画效果

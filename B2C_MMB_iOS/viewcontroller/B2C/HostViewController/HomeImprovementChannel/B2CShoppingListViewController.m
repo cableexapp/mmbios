@@ -121,12 +121,21 @@
     [rightBtn addSubview:countLabel];
     self.navigationItem.rightBarButtonItem = right;
     [self loadShopCarCount];
-
+    
+    NSString *tempBtand = [[NSUserDefaults standardUserDefaults] objectForKey:@"brand_save"];
+    NSString *tempModel = [[NSUserDefaults standardUserDefaults] objectForKey:@"model_save"];
+    NSString *tempUse = [[NSUserDefaults standardUserDefaults] objectForKey:@"use_save"];
+    NSString *tempSpec = [[NSUserDefaults standardUserDefaults] objectForKey:@"spec_save"];
+    if (tempBtand.length > 0 || tempModel.length > 0 || tempSpec.length > 0 ||tempUse.length > 0)
+    {
+        flag = NO;
+    }
 }
 
 #pragma mark - delegate
 - (void) requestStringWithUse:(NSString *)myUse WithBrand:(NSString *)myBrand WithSpec:(NSString *)mySpec WithModel:(NSString *)myModel WithSeq:(NSString *)mySeq
 {
+    
     flag = NO;
     delegateMyUse = myUse;
     delegateMyBrand = myBrand;
@@ -306,13 +315,10 @@
             }
             if(flag == YES)
             {
-                NSLog(@"排序1111 = %@ %@",_seq,_use);
                 [self loadRequest:_seq WithUse:_use];
             }
             else
             {
-                 NSLog(@"排序2222 = %@ %@ %@ %@ %@ %@",_seq,delegateMyUse,delegateMyBrand,delegateMyModel,delegateMySpec,seqmethod);
-//                if(selctBtn)
                 //选择筛选条件后，数据排序
                 [self seqencingData];
             }
@@ -391,7 +397,7 @@
         [topView addSubview:lineView];
     }
     
-    searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(5, 10, 265, 34)];
+    searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, 260, 34)];
     [searchTextField setDelegate:self];
     [searchTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等"];
     [searchTextField setBackgroundColor:[UIColor whiteColor]];

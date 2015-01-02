@@ -74,8 +74,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单详情"];
-    self.navigationItem.titleView= top;
 
+    
     self.discussBtn.layer.cornerRadius = 5;
     [self.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
@@ -529,8 +529,6 @@
                 UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(10,8, 60, 60)];
                 NSString *picStr = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItemPic"];
                 picStr = [self dealPic:picStr];
-                //                cellIv.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                //                cellIv.layer.borderWidth = 0.5;
                 NSURL *picUrl = [NSURL URLWithString:picStr];
                 [cellIv setImageWithURL:picUrl placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                 [cell.contentView addSubview:cellIv];

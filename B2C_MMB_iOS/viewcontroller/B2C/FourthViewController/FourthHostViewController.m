@@ -807,14 +807,7 @@
             return [self returnMoreCell:tableView];
         }
     }
-    
-    
     return nil;
-    //    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
-    //    {
-    //        [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-    //    }
-    
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -823,20 +816,7 @@
     {
         return;
     }
-    
-    
-    
-//    NSString *s1 = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"month"];
-//    NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
-//    
-//    NSString *date = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"date"];
-//    
-//    NSString *hours = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"hours"];
-//    
-//    NSString *minutes = [[[dataArray objectAtIndex:indexPath.section] subDate] objectForKey:@"minutes"];
-//    
-//    NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
-    
+
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
     fourOrderDetailViewController.myOrderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] orderNum]];
@@ -928,7 +908,6 @@
 #pragma mark - 取消
 - (void) cancelOrderBtnClick:(UIButton *) sender
 {
-    
     [self setHidesBottomBarWhenPushed:YES];
     CancelOrderViewController *cancelOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cancelOrderViewController"];
     cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];

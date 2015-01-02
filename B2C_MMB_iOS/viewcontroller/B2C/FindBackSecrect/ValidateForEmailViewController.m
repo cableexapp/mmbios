@@ -169,7 +169,8 @@
 - (NSString *) getUserName
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-    
+    userName = [DCFCustomExtra UTF8Encoding:userName];
+
     if([DCFCustomExtra validateString:userName] == NO)
     {
         userName = @"";

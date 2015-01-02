@@ -88,6 +88,17 @@
 {
     
     [super viewWillAppear:YES];
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if(app.isB2CPush == YES)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        FourOrderDetailViewController *fourOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
+        fourOrderDetailViewController.myOrderNum = [NSString stringWithFormat:@"%@",app.key3];
+        [self.navigationController pushViewController:fourOrderDetailViewController animated:NO];
+        app.isB2CPush = NO;
+    }
+    
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     rightButtonView.hidden = NO;
     if(!btnArray)
@@ -167,7 +178,6 @@
 {
     [super viewDidLoad];
     
-    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     app.aliPayHasFinished = NO;
     
     [self.tv setDataSource:self];
@@ -809,83 +819,8 @@
 
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
-    
-    fourOrderDetailViewController.theLogiId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] logisticsId]];
-    fourOrderDetailViewController.theLogiNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] logisticsNum]];
-    
-    
-    fourOrderDetailViewController.theLogiArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:indexPath.section] myItems]];
-    fourOrderDetailViewController.theShopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] shopId]];
-    fourOrderDetailViewController.theOrderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] orderNum]];
-    fourOrderDetailViewController.theDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:indexPath.section] subDate]];
-    
-    int status = [[[dataArray objectAtIndex:indexPath.section] status] intValue];
-    if(status == 1)
-    {
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = NO;
-    }
-    
-    if(status == 2)
-    {
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = NO;
-    }
-    
-    if(status == 3)
-    {
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = YES;
-    }
-    
-    if(status == 5)
-    {
-        fourOrderDetailViewController.myStatus = @"5";
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = NO;
-    }
-    
-    if(status == 6)
-    {
-        int judgeStatus = [[[dataArray objectAtIndex:indexPath.section] juderstatus] intValue];
-        int afterStatus = [[[dataArray objectAtIndex:indexPath.section] afterStatus] intValue];
-        if(judgeStatus == 1)
-        {
-            if(afterStatus == 2 || afterStatus == 3)
-            {
-                fourOrderDetailViewController.showOrHideDisCussBtn = YES;
-                fourOrderDetailViewController.showOrHideTradeBtn = YES;
-            }
-            else
-            {
-                fourOrderDetailViewController.showOrHideDisCussBtn = YES;
-                fourOrderDetailViewController.showOrHideTradeBtn = YES;
-            }
-        }
-        else if (judgeStatus == 2)
-        {
-            if(afterStatus == 2 || afterStatus == 3)
-            {
-                fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-                fourOrderDetailViewController.showOrHideTradeBtn = YES;
-            }
-            else
-            {
-                fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-                fourOrderDetailViewController.showOrHideTradeBtn = YES;
-            }
-        }
-    }
-    
-    if(status == 7)
-    {
-        fourOrderDetailViewController.myStatus = @"7";
-        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
-        fourOrderDetailViewController.showOrHideTradeBtn = NO;
-    }
-    
-    fourOrderDetailViewController.myOrderNum = [[dataArray objectAtIndex:indexPath.section] orderNum];
-    fourOrderDetailViewController.myTime = [[dataArray objectAtIndex:indexPath.section] myOderDataTime];
+    fourOrderDetailViewController.myOrderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] orderNum]];
+
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
 //    [self setHidesBottomBarWhenPushed:NO];
 }

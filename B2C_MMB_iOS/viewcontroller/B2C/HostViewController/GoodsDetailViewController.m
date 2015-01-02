@@ -996,22 +996,35 @@
                 }
                 else
                 {
+                    NSString *finalName = nil;
+                    NSString *isAnonymous = [NSString stringWithFormat:@"%@",[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"isAnonymous"]];
                     NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
-                    NSMutableString *discussName = [[NSMutableString alloc] init];
-                    for(int i=0;i<s1.length-2;i++)
+                    NSString *discusserName = [s1 stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+                    //1匿名  0本名
+                    if([isAnonymous intValue] == 1)
                     {
-                        NSString *s = @"*";
-                        [discussName appendString:s];
+                        NSMutableString *discussName = [[NSMutableString alloc] init];
+                        for(int i=0;i<discusserName.length-2;i++)
+                        {
+                            NSString *s = @"*";
+                            [discussName appendString:s];
+                        }
+                        NSRange range_1;
+                        range_1 = NSMakeRange(0, 1);
+                        NSString *firstStr = [discusserName substringWithRange:range_1];
+                        
+                        NSRange range_2;
+                        range_2 = NSMakeRange(discusserName.length-1, 1);
+                        NSString *lastStr = [discusserName substringWithRange:range_2];
+                        
+                        finalName = [NSString stringWithFormat:@"%@%@%@",firstStr,discussName,lastStr];
                     }
-                    NSRange range_1;
-                    range_1 = NSMakeRange(0, 1);
-                    NSString *firstStr = [s1 substringWithRange:range_1];
-                    
-                    NSRange range_2;
-                    range_2 = NSMakeRange(s1.length-1, 1);
-                    NSString *lastStr = [s1 substringWithRange:range_2];
-                    
-                    NSString *finalName = [NSString stringWithFormat:@"%@%@%@",firstStr,discussName,lastStr];
+                    else
+                    {
+                        finalName = discusserName;
+                    }
+    
                     
                     CGSize nameSize;
                     

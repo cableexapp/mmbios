@@ -100,65 +100,7 @@
     
     tv = [[UITableView alloc] init];
 
-    if(self.showOrHideDisCussBtn == YES || self.showOrHideTradeBtn == YES)
-    {
-        [self.buttomView setHidden:NO];
-        
-        [self.discussBtn setHidden:!self.showOrHideDisCussBtn];
-        
-        [self.tradeBtn setHidden:!self.showOrHideTradeBtn];
-  
-        [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth,  MainScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
-    }
-    else
-    {
-        if([_myStatus intValue] == 5 || [_myStatus intValue] == 7)
-        {
 
-            [self.buttomView setHidden:NO];
-//            [self.buttomView setBackgroundColor:[UIColor redColor]];
-            [self.discussBtn setHidden:YES];
-            [self.tradeBtn setHidden:YES];
-            [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth,  MainScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
-
-            cancelLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.buttomView.frame.size.width, self.buttomView.frame.size.height)];
-            if([_myStatus intValue] == 5)
-            {
-                [cancelLabel setText:@"已申请取消,客服会第一时间进行处理,请耐心等待"];
-            }
-            else
-            {
-                [cancelLabel setText:@"订单已取消"];
-            }
-            [cancelLabel setTextAlignment:NSTextAlignmentCenter];
-            [cancelLabel setTextColor:[UIColor whiteColor]];
-            [cancelLabel setFont:[UIFont boldSystemFontOfSize:12]];
-            [cancelLabel setBackgroundColor:[DCFColorUtil colorFromHexRGB:@"#AFABAB"]];
-            [self.buttomView addSubview:cancelLabel];
-//            [self.view ins ertSubview:cancelLabel aboveSubview:self.buttomView];
-        }
-        else
-        {
-            [self.buttomView setHidden:YES];
-            [self.buttomView setFrame:CGRectMake(0, ScreenHeight, MainScreenHeight, 0)];
-            for(UIView *view in self.buttomView.subviews)
-            {
-                if([view isKindOfClass:[UIButton class]])
-                {
-                    [view setHidden:YES];
-                    [view setFrame:CGRectMake(view.frame.origin.x, MainScreenHeight, view.frame.size.width, 0)];
-                }
-     
-            }
-            [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, MainScreenHeight-self.topView.frame.size.height-64)];
-        }
-
-    }
-    [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
-    [tv setDataSource:self];
-    [tv setDelegate:self];
-    tv.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
-    [self.tableBackView addSubview:tv];
     
 
 }
@@ -168,6 +110,7 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetOrderDetailTag)
     {
+        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CGetOrderDetailData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -189,14 +132,75 @@
             [nameBtn setTitle:[[dataArray lastObject] shopName] forState:UIControlStateNormal];
             [nameBtn addTarget:self action:@selector(nameBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             
-            //            nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 30)];
-            //            [nameLabel setTextColor:[UIColor blackColor]];
-            //            [nameLabel setFont:[UIFont systemFontOfSize:13]];
-            //            [nameLabel setText:[[dataArray lastObject] shopName]];
-            //            [nameLabel setTextAlignment:NSTextAlignmentLeft];
-            //
-            //            UITapGestureRecognizer *labelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelTap:)];
-            //            [nameLabel addGestureRecognizer:labelTap];
+            
+            [self.myOederLabel setText:[NSString stringWithFormat:@"%@",[[dataArray lastObject] orderNum]]];
+            [self.myTimeLabel setText:[NSString stringWithFormat:@"%@",[[dataArray lastObject] myTime]]];
+            
+            int status = [[[dataArray lastObject] status] intValue];
+
+            if(status == 1)
+            {
+                showOrHideDisCussBtn = NO;
+                showOrHideTradeBtn = NO;
+            }
+            
+            if(showOrHideDisCussBtn == YES || showOrHideTradeBtn == YES)
+            {
+                [self.buttomView setHidden:NO];
+                
+                [self.discussBtn setHidden:!showOrHideDisCussBtn];
+                
+                [self.tradeBtn setHidden:!showOrHideTradeBtn];
+                
+                [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth,  MainScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
+            }
+            else
+            {
+                if(status == 5 || status == 7)
+                {
+                    [self.buttomView setHidden:NO];
+                    [self.discussBtn setHidden:YES];
+                    [self.tradeBtn setHidden:YES];
+                    [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth,  MainScreenHeight-self.buttomView.frame.size.height-self.topView.frame.size.height-64)];
+                    
+                    cancelLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.buttomView.frame.size.width, self.buttomView.frame.size.height)];
+                    if(status == 5)
+                    {
+                        [cancelLabel setText:@"已申请取消,客服会第一时间进行处理,请耐心等待"];
+                    }
+                    else
+                    {
+                        [cancelLabel setText:@"订单已取消"];
+                    }
+                    [cancelLabel setTextAlignment:NSTextAlignmentCenter];
+                    [cancelLabel setTextColor:[UIColor whiteColor]];
+                    [cancelLabel setFont:[UIFont boldSystemFontOfSize:12]];
+                    [cancelLabel setBackgroundColor:[DCFColorUtil colorFromHexRGB:@"#AFABAB"]];
+                    [self.buttomView addSubview:cancelLabel];
+                }
+                else
+                {
+                    [self.buttomView setHidden:YES];
+                    [self.buttomView setFrame:CGRectMake(0, ScreenHeight, MainScreenHeight, 0)];
+                    for(UIView *view in self.buttomView.subviews)
+                    {
+                        if([view isKindOfClass:[UIButton class]])
+                        {
+                            [view setHidden:YES];
+                            [view setFrame:CGRectMake(view.frame.origin.x, MainScreenHeight, view.frame.size.width, 0)];
+                        }
+                        
+                    }
+                    [self.tableBackView setFrame:CGRectMake(0, self.tableBackView.frame.origin.y, ScreenWidth, MainScreenHeight-self.topView.frame.size.height-64)];
+                }
+                
+            }
+            [tv setFrame:CGRectMake(0, 0, self.tableBackView.frame.size.width, self.tableBackView.frame.size.height)];
+            [tv setDataSource:self];
+            [tv setDelegate:self];
+            tv.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
+            [self.tableBackView addSubview:tv];
+            
             
             [tv reloadData];
         }
@@ -207,10 +211,10 @@
 {
     DiscussViewController *disCuss = [self.storyboard instantiateViewControllerWithIdentifier:@"discussViewController"];
     
-    disCuss.itemArray = [[NSMutableArray alloc] initWithArray:self.theLogiArray];
-    disCuss.shopId = [NSString stringWithFormat:@"%@",self.theShopId];
-    disCuss.orderNum = [NSString stringWithFormat:@"%@",self.theOrderNum];
-    disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:self.theDic];
+    disCuss.itemArray = [[NSMutableArray alloc] initWithArray:[[dataArray lastObject] myItems]];
+    disCuss.shopId = [NSString stringWithFormat:@"%@",[[dataArray lastObject] shopId]];
+    disCuss.orderNum = [NSString stringWithFormat:@"%@",[[dataArray lastObject] orderNum]];
+    disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray lastObject] subDate]];
     
     [self.navigationController pushViewController:disCuss animated:YES];
 }
@@ -218,8 +222,8 @@
 - (IBAction)tradeBtnClick:(id)sender
 {
     logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
-    logisticsTrackingView.mylogisticsId = self.theLogiId;
-    logisticsTrackingView.mylogisticsNum = self.theLogiNum;
+    logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray lastObject] logisticsId]];
+    logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray lastObject] logisticsNum]];
     NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
 }

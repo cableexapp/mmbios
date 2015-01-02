@@ -15,6 +15,7 @@
 #import "MyCableOrderDetailViewController.h"
 #import "MyCableOrderB2BViewController.h"
 #import "MyCableSureOrderViewController.h"
+#import "AppDelegate.h"
 
 @interface MyCableOrderHostViewController ()
 {
@@ -22,6 +23,7 @@
     int currentPageIndex;
     UIView *rightButtonView;
     UIButton *rightBtn;
+    AppDelegate *app;
 }
 @end
 
@@ -42,6 +44,96 @@
     
     [self.sv setContentOffset:CGPointMake(ScreenWidth*self.btnIndex, 0) animated:YES];
     rightButtonView.hidden = NO;
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    if(app.isB2BPush == YES)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+
+        MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
+        myCableOrderDetailViewController.myOrderNumber = app.key3;
+        NSLog(@"key3 = %@",app.key3);
+        myCableOrderDetailViewController.btnIndex = self.btnIndex;
+        //        myCableOrderDetailViewController.b2bMyCableOrderListData = data;
+        [self.navigationController pushViewController:myCableOrderDetailViewController animated:NO];
+        app.isB2BPush = NO;
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshRequest:) name:@"MyCableOrderHostViewControllerRefreshRequest" object:nil];
+        
+        DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的电缆订单"];
+        self.navigationItem.titleView = top;
+        
+        [self pushAndPopStyle];
+        
+        rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
+        [self.navigationController.navigationBar addSubview:rightButtonView];
+        
+        rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightBtn setBackgroundColor:[UIColor clearColor]];
+        [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
+        [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+        [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
+        [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [rightButtonView addSubview:rightBtn];
+        
+        subTV_1 = [[MyCableHostSubTableViewController alloc] init];
+        subTV_1.tag = 1;
+        subTV_1.delegate = self;
+        [self addChildViewController:subTV_1];
+        subTV_1.view.frame = self.firstView.bounds;
+        [self.firstView addSubview:subTV_1.view];
+        
+        subTV_2 = [[MyCableHostSubTableViewController alloc] init];
+        subTV_2.tag = 2;
+        subTV_2.delegate = self;
+        [self addChildViewController:subTV_2];
+        subTV_2.view.frame = self.secondView.bounds;
+        [self.secondView addSubview:subTV_2.view];
+        
+        subTV_3 = [[MyCableHostSubTableViewController alloc] init];
+        subTV_3.tag = 3;
+        subTV_3.delegate = self;
+        [self addChildViewController:subTV_3];
+        subTV_3.view.frame = self.thirdView.bounds;
+        [self.thirdView addSubview:subTV_3.view];
+        
+        subTV_4 = [[MyCableHostSubTableViewController alloc] init];
+        subTV_4.tag = 4;
+        subTV_4.delegate = self;
+        [self addChildViewController:subTV_4];
+        subTV_4.view.frame = self.fourView.bounds;
+        [self.fourView addSubview:subTV_4.view];
+        
+        [self.sv setDelegate:self];
+        [self.sv setContentSize:CGSizeMake(ScreenWidth*4, ScreenHeight-200)];
+        
+        topBtnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.sureBtn,self.payBtn,self.receiveBtn, nil];
+        for(int i=0;i<topBtnArray.count;i++)
+        {
+            UIButton *btn = (UIButton *)[topBtnArray objectAtIndex:i];
+            [btn setTag:i];
+            [btn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
+            [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor whiteColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+            [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+            btn.layer.borderColor = MYCOLOR.CGColor;
+            btn.layer.borderWidth = 0.5f;
+            [btn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            if(btn.tag == self.btnIndex)
+            {
+                [btn setSelected:YES];
+            }
+            else
+            {
+                [btn setSelected:NO];
+            }
+        }
+        
+        [self loadRequest:_btnIndex];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -106,79 +198,7 @@
 {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshRequest:) name:@"MyCableOrderHostViewControllerRefreshRequest" object:nil];
-    
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的电缆订单"];
-    self.navigationItem.titleView = top;
-    
-    [self pushAndPopStyle];
-    
-    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
-    [self.navigationController.navigationBar addSubview:rightButtonView];
-    
-    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundColor:[UIColor clearColor]];
-    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
-    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
-    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [rightButtonView addSubview:rightBtn];
-    
-    subTV_1 = [[MyCableHostSubTableViewController alloc] init];
-    subTV_1.tag = 1;
-    subTV_1.delegate = self;
-    [self addChildViewController:subTV_1];
-    subTV_1.view.frame = self.firstView.bounds;
-    [self.firstView addSubview:subTV_1.view];
-    
-    subTV_2 = [[MyCableHostSubTableViewController alloc] init];
-    subTV_2.tag = 2;
-    subTV_2.delegate = self;
-    [self addChildViewController:subTV_2];
-    subTV_2.view.frame = self.secondView.bounds;
-    [self.secondView addSubview:subTV_2.view];
-    
-    subTV_3 = [[MyCableHostSubTableViewController alloc] init];
-    subTV_3.tag = 3;
-    subTV_3.delegate = self;
-    [self addChildViewController:subTV_3];
-    subTV_3.view.frame = self.thirdView.bounds;
-    [self.thirdView addSubview:subTV_3.view];
-    
-    subTV_4 = [[MyCableHostSubTableViewController alloc] init];
-    subTV_4.tag = 4;
-    subTV_4.delegate = self;
-    [self addChildViewController:subTV_4];
-    subTV_4.view.frame = self.fourView.bounds;
-    [self.fourView addSubview:subTV_4.view];
-    
-    [self.sv setDelegate:self];
-    [self.sv setContentSize:CGSizeMake(ScreenWidth*4, ScreenHeight-200)];
-    
-    topBtnArray = [[NSMutableArray alloc] initWithObjects:self.allBtn,self.sureBtn,self.payBtn,self.receiveBtn, nil];
-    for(int i=0;i<topBtnArray.count;i++)
-    {
-        UIButton *btn = (UIButton *)[topBtnArray objectAtIndex:i];
-        [btn setTag:i];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:MYCOLOR size:CGSizeMake(1, 1)] forState:UIControlStateSelected];
-        [btn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor whiteColor] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [btn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-        btn.layer.borderColor = MYCOLOR.CGColor;
-        btn.layer.borderWidth = 0.5f;
-        [btn addTarget:self action:@selector(topBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        if(btn.tag == self.btnIndex)
-        {
-            [btn setSelected:YES];
-        }
-        else
-        {
-            [btn setSelected:NO];
-        }
-    }
-    
-    [self loadRequest:_btnIndex];
+
 }
 
 -(void)searchOrderBtnClick

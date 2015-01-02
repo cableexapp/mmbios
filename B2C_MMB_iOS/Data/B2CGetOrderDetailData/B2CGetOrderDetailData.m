@@ -7,6 +7,7 @@
 //
 
 #import "B2CGetOrderDetailData.h"
+#import "DCFCustomExtra.h"
 
 @implementation B2CGetOrderDetailData
 
@@ -28,7 +29,19 @@
         
         _receiveMember = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveMember"]];
         
-        _subDate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"subDate"]];
+        if([[[dic objectForKey:@"subDate"] allKeys] count] == 0 || [[dic objectForKey:@"subDate"] isKindOfClass:[NSNull class]])
+        {
+            _subDate = [[NSDictionary alloc] init];
+            _myTime = @"";
+        }
+        else
+        {
+            _subDate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"subDate"]];
+            //时间戳
+            NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[_subDate objectForKey:@"time"] doubleValue]/1000];
+            
+            _myTime = [DCFCustomExtra nsdateToString:confromTimesp];
+        }
         
         _shopName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopName"]];
         
@@ -41,6 +54,17 @@
         _snapId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"snapId"]];
         
         _shopId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopId"]];
+        
+        _logisticsId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsId"]];
+        
+        _logisticsNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsNum"]];
+
+        _logisticsCompanay = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsCompanay"]];
+
+        _orderId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderId"]];
+
+        _orderNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderNum"]];
+
     }
     return self;
 }

@@ -112,7 +112,7 @@
 - (void) pushToVC
 {
     [self setHidesBottomBarWhenPushed:YES];
-    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
+//    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     fourthHostViewController.myStatus = @"";
     [self.navigationController pushViewController:fourthHostViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
@@ -329,6 +329,12 @@
 {
     [super viewWillAppear:YES];
     
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
+
+
+    
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [self getMemberId];
@@ -357,6 +363,23 @@
     self.tableView.scrollEnabled = YES;
     isPopShow = NO;
     [KxMenu dismissMenu];
+    
+    if(app.isB2BPush == YES)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
+        myCableOrder.btnIndex = 1;
+        [self.navigationController pushViewController:myCableOrder animated:NO];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+    if(app.isB2CPush == YES)
+    {
+        [self setHidesBottomBarWhenPushed:YES];
+        fourthHostViewController.myStatus = @"1";
+        [self.navigationController pushViewController:fourthHostViewController animated:NO];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+    
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -387,10 +410,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;
     
-    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
-    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
-	    if(app.aliPayHasFinished == YES)
+    if(app.aliPayHasFinished == YES)
     {
         [self pushToVC];
     }

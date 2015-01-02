@@ -284,7 +284,7 @@
 - (NSString *) getUserName
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-    
+    userName = [DCFCustomExtra UTF8Encoding:userName];
     if(userName.length == 0)
     {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];

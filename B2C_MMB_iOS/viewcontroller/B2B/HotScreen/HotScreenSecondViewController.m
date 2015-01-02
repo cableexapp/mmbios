@@ -88,7 +88,8 @@
 - (NSString *) getUserName
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-    
+    userName = [DCFCustomExtra UTF8Encoding:userName];
+
     if(userName.length == 0)
     {
         userName = @"";
@@ -96,6 +97,12 @@
 //        LoginNaviViewController *loginNavi = [self.storyboard instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
 //        [self presentViewController:loginNavi animated:YES completion:nil];
     }
+    else
+    {
+//        NSString *userName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    }
+    NSLog(@"%@",userName);
     return userName;
     
 }
@@ -142,7 +149,7 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
     
-    
+    NSLog(@"%@",urlString);
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 

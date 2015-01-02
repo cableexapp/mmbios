@@ -54,4 +54,5 @@
 
 + (BOOL) validateZip:(NSString *) email;
 
++ (NSString *) UTF8Encoding:(NSString *) str;
 @end

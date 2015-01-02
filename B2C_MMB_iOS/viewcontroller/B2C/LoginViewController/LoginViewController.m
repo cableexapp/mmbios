@@ -295,7 +295,7 @@
         [self.tf_Secrect resignFirstResponder];
     }
     
-    if(acc.length == 0)
+    if([DCFCustomExtra validateString:acc] == NO)
     {
         [DCFStringUtil showNotice:@"请输入账号"];
         return;
@@ -318,6 +318,7 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
     NSString *des = [MCdes encryptUseDES:sec key:@"cableex_app*#!Key"];
+    
     
     
     NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",acc,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];

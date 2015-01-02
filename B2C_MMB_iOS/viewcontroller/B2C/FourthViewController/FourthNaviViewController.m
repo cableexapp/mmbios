@@ -9,6 +9,8 @@
 #import "FourthNaviViewController.h"
 #import "HasNotLoginViewController.h"
 #import "FourMyMMBListTableViewController.h"
+#import "DCFCustomExtra.h"
+#import "AppDelegate.h"
 
 @interface FourthNaviViewController ()
 {
@@ -16,6 +18,7 @@
     UIStoryboard *sb;
     FourMyMMBListTableViewController *fourMyMMBListTableViewController;
     HasNotLoginViewController *hasNotLoginViewController;
+    AppDelegate *app;
 }
 @end
 
@@ -37,6 +40,8 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
 }
 
 - (void) dealChangeFourthNaviRootViewController:(NSNotification *) noti
@@ -80,12 +85,18 @@
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
     sb = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
-    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:memberid] == NO)
     {
         hasNotLoginViewController = [sb instantiateViewControllerWithIdentifier:@"hasNotLoginViewController"];
         [self setViewControllers:[NSArray arrayWithObject:hasNotLoginViewController]];
     }
     else
+    {
+        fourMyMMBListTableViewController = [sb instantiateViewControllerWithIdentifier:@"fourMyMMBListTableViewController"];
+        [self setViewControllers:[NSArray arrayWithObject:fourMyMMBListTableViewController]];
+    }
+    
+    if(app.isB2BPush == YES || app.isB2CPush == YES)
     {
         fourMyMMBListTableViewController = [sb instantiateViewControllerWithIdentifier:@"fourMyMMBListTableViewController"];
         [self setViewControllers:[NSArray arrayWithObject:fourMyMMBListTableViewController]];

@@ -14,9 +14,12 @@
 {
     DCFConnectionUtil *conn;
     MBProgressHUD *hud;
+    
+    BOOL showOrHideDisCussBtn;
+    BOOL showOrHideTradeBtn;`
 }
 @property (strong,nonatomic) NSString *myOrderNum;
-@property (strong,nonatomic) NSString *myTime;
+//@property (strong,nonatomic) NSString *myTime;
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
 
@@ -32,17 +35,17 @@
 @property (weak, nonatomic) IBOutlet UIView *buttomView;
 
 
-@property (assign,nonatomic) BOOL showOrHideDisCussBtn;
-@property (assign,nonatomic) BOOL showOrHideTradeBtn;
+//@property (assign,nonatomic) BOOL showOrHideDisCussBtn;
+//@property (assign,nonatomic) BOOL showOrHideTradeBtn;
+//
+//@property (strong,nonatomic) NSString *theLogiId;
+//@property (strong,nonatomic) NSString *theLogiNum;
+//
+//@property (strong,nonatomic) NSMutableArray *theLogiArray;
+//@property (strong,nonatomic) NSString *theShopId;
+//@property (strong,nonatomic) NSString *theOrderNum;
+//@property (strong,nonatomic) NSDictionary *theDic;
 
-@property (strong,nonatomic) NSString *theLogiId;
-@property (strong,nonatomic) NSString *theLogiNum;
-
-@property (strong,nonatomic) NSMutableArray *theLogiArray;
-@property (strong,nonatomic) NSString *theShopId;
-@property (strong,nonatomic) NSString *theOrderNum;
-@property (strong,nonatomic) NSDictionary *theDic;
-
-@property (strong,nonatomic) NSString *myStatus;
+//@property (strong,nonatomic) NSString *myStatus;
 
 @end

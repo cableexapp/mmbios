@@ -23,10 +23,12 @@
 #import "SecondNaviViewController.h"
 #import "ThirdNaviViewController.h"
 #import "FourthNaviViewController.h"
+#import "AppDelegate.h"
 
 @interface DCFTabBarCtrl ()
 {
     FourthNaviViewController *fourthNavi;
+    AppDelegate *app;
 }
 @end
 
@@ -123,8 +125,8 @@
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:18/255.0 green:104/255.0 blue:253/255.0 alpha:1.0]];
 //    [[UITabBar appearance] setTintColor:[UIColor orangeColor]];
 
-    
 }
+
 - (BOOL)shouldAutorotate
 {
     return YES;

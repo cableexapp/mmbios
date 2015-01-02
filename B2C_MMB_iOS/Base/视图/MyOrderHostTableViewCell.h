@@ -11,8 +11,13 @@
 @interface MyOrderHostTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *cellIv;
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *numberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *STATUSlABEL;
+@property (weak, nonatomic) IBOutlet UILabel *colorLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *logisticsPriceLabel;
+
 
 @end

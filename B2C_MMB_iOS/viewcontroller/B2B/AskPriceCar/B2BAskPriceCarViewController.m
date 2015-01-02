@@ -153,8 +153,6 @@
             [view setHidden:YES];
         }
     }
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
     [self loadRequest];
 }
 
@@ -720,14 +718,15 @@
     }
     if (!buyBtn)
     {
-                buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
+        buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [buyBtn setFrame:CGRectMake(90, label_2.frame.origin.y + label_2.frame.size.height + 50, 140, 43)];
         [buyBtn setTitle:@"去首页看看" forState:UIControlStateNormal];
         buyBtn.backgroundColor = [UIColor whiteColor];
         buyBtn.layer.cornerRadius = 5.0f;
         [buyBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [buyBtn addTarget:self action:@selector(buyBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [noCell addSubview:buyBtn];
+
     }
 
     buttomView.hidden = YES;
@@ -745,6 +744,7 @@
 
 -(void)buyBtnClick
 {
+    NSLog(@"buyBtnClick--去首页看看");
     if ([self.fromString isEqualToString:@"首页"])
     {
         [self.navigationController popViewControllerAnimated:YES];
@@ -753,12 +753,13 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"mmb" forKey:@"frommmb"];
         [self.navigationController popToRootViewControllerAnimated:YES];
+        NSLog(@"询价车----买卖宝通知");
     }
     else if ([self.fromString isEqualToString:@"更多"])
     {
-        NSLog(@"询价车-更多++++++++++++++");
          [[NSUserDefaults standardUserDefaults] setObject:@"mmb" forKey:@"frommore"];
          [self.navigationController popToRootViewControllerAnimated:YES];
+         NSLog(@"询价车----更多通知");
     }
     else
     {

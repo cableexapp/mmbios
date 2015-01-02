@@ -522,7 +522,7 @@
                 moneyLabel.textColor = [UIColor redColor];
                 [cell.contentView addSubview:moneyLabel];
                 
-                NSString *count = [NSString stringWithFormat:@"×%@",[[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productNum"]];
+                NSString *count = [NSString stringWithFormat:@"数量:%@",[[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productNum"]];
                 CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:count WithSize:CGSizeMake(MAXFLOAT, 20)];
                 UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_2.width, colorLabel.frame.origin.y + colorLabel.frame.size.height + 5, size_2.width, 20)];
                 [countLabel setText:count];

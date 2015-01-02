@@ -32,7 +32,7 @@
         }
         
         _orderId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderId"]];
-        
+ 
         _orderMergeId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderMergeId"]];
 
         _orderNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderNum"]];

@@ -96,7 +96,8 @@ BOOL isPopShow = NO;
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
     isPopShow = NO;
     self.tableView.scrollEnabled = YES;
     [self loadbadgeCount];
@@ -425,24 +426,15 @@ BOOL isPopShow = NO;
 
 -(void)goToHostVC_mmb:(NSNotification *)sender
 {
-    NSLog(@"主页-我的买卖宝");
-
+    NSLog(@"主页响应-我的买卖宝通知");
    [self.tabBarController setSelectedIndex:0];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHostView_mmb" object:nil];
-
 }
 
 -(void)goToHostVC_more:(NSNotification *)sender
 {
-    NSLog(@"主页-更多");
-    
+    NSLog(@"主页响应-更多通知");
     [self.tabBarController setSelectedIndex:0];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHostView_more" object:nil];
 }
-
-
 
 -(void)hidenShopCarRedPoint:(NSNotification *)sender
 {

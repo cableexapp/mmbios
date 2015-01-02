@@ -87,7 +87,7 @@
     if (str.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_more" object:nil];
-        NSLog(@"来自询价车通知-更多");
+       NSLog(@"更多---首页通知");
     }
     
     self.tableView.scrollEnabled = YES;

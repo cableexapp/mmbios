@@ -357,7 +357,7 @@
     if (str.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_mmb" object:nil];
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
+        NSLog(@"买卖宝---首页通知");
     }
     
     self.tableView.scrollEnabled = YES;
@@ -398,8 +398,6 @@
     [self setHidesBottomBarWhenPushed:NO];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"goToHostView_mmb" object:nil];
 }
 
 - (void)viewDidLoad

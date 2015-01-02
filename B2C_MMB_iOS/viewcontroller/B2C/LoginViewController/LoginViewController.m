@@ -88,7 +88,7 @@
     if(app.speedRegister == YES)
     {
         RegisterViewController *regist = [self.storyboard instantiateViewControllerWithIdentifier:@"registerViewController"];
-        [self.navigationController pushViewController:regist animated:YES];
+        [self.navigationController pushViewController:regist animated:NO];
     }
     
     

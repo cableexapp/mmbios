@@ -1230,7 +1230,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
         return;
     }
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要删除么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要删除么"
+                                                 message:nil
+                                                delegate:self
+                                       cancelButtonTitle:@"取消"
+                                       otherButtonTitles:@"确定", nil];
     [av show];
 }
 
@@ -1469,7 +1473,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     if (!buyBtn)
     {
         buyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [buyBtn setFrame:CGRectMake(100, label_2.frame.origin.y + label_2.frame.size.height + 50, 120, 40)];
+        [buyBtn setFrame:CGRectMake(90, label_2.frame.origin.y + label_2.frame.size.height + 50, 140, 43)];
         [buyBtn setTitle:@"去选购商品" forState:UIControlStateNormal];
         buyBtn.backgroundColor = [UIColor whiteColor];
         buyBtn.layer.cornerRadius = 5.0f;

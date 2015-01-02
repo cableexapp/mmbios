@@ -177,12 +177,12 @@
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
-//    NSLog(@"dicRespon = %@",dicRespon);
     if(URLTag == URLGetCountNumTag)
     {
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
+            NSLog(@"%@",cellBtnArray);
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];

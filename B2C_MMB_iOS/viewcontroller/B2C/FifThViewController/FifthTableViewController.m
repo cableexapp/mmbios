@@ -384,6 +384,10 @@
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"B2BBillMsg"];
             }
 
+            if([[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"B2BManageBillSwitchStatus"];
+            }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             

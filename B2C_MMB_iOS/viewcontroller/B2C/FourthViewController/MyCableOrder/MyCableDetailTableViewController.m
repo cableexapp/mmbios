@@ -232,9 +232,8 @@
     }
     else
     {
-        height_3 = 30;
+        height_3 = 0;
     }
-    
     
     
     CGSize requestSize;
@@ -494,9 +493,9 @@
             }
             else
             {
-                [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+35+height_1+height_2, size_1.width, 30)];
-                [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+10,lineView.frame.origin.y+35+height_1+height_2, size_2.width, 30)];
-                [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width + 10,lineView.frame.origin.y+35+height_1+height_2, 150, 30)];
+                [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+35+height_1+height_2, size_1.width, 0)];
+                [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+10,lineView.frame.origin.y+35+height_1+height_2, size_2.width, 0)];
+                [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width + 10,lineView.frame.origin.y+35+height_1+height_2, 150, 0)];
             }
             
             UILabel *label_3 = [[UILabel alloc] init];

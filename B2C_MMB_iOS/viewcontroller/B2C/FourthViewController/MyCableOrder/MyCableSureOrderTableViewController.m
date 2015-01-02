@@ -157,6 +157,8 @@
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"])
     {
         usefp = @"2";
+        [billMsgTypeLabel setText:@"暂无发票信息"];
+        [billMsgNameLabel setText:@""];
     }
     else
     {

@@ -68,8 +68,6 @@
         {
             if(result == 1)
             {
-                NSLog(@"dic = %@",dicRespon);
-                
                 b2bMyCableDetailData = [[B2BMyCableDetailData alloc] init];
                 [b2bMyCableDetailData dealData:dicRespon];
                 dataArray = [[NSMutableArray alloc] initWithArray:b2bMyCableDetailData.myItems];
@@ -110,7 +108,7 @@
     {
         return 1;
     }
-    return 2;
+    return 4;
 }
 
 
@@ -119,6 +117,49 @@
     if(!dataArray || dataArray.count == 0)
     {
         return 0;
+    }
+    BOOL hide = YES;
+    NSString *invoceName = nil;
+    if([[[b2bMyCableDetailData invoiceDic] allKeys] count] == 0 || [[b2bMyCableDetailData invoiceDic] isKindOfClass:[NSNull class]])
+    {
+        hide = YES;
+        invoceName = @"";
+    }
+    else
+    {
+        invoceName = [[b2bMyCableDetailData invoiceDic] objectForKey:@"name"];
+    }
+    
+    if([DCFCustomExtra validateString:invoceName] == NO)
+    {
+        hide = YES;
+    }
+    else
+    {
+        hide = NO;
+    }
+    
+    if(section == 0)
+    {
+        if(hide == YES)
+        {
+            return 0;
+        }
+        else
+        {
+            return 40;
+        }
+    }
+    if(section == 1)
+    {
+        if(hide == YES)
+        {
+            return 0;
+        }
+        else
+        {
+            return 40;
+        }
     }
     return 40;
 }
@@ -129,6 +170,27 @@
     {
         return nil;
     }
+    
+    BOOL hide = YES;
+    NSString *invoceName = nil;
+    if([[[b2bMyCableDetailData invoiceDic] allKeys] count] == 0 || [[b2bMyCableDetailData invoiceDic] isKindOfClass:[NSNull class]])
+    {
+        hide = YES;
+        invoceName = @"";
+    }
+    else
+    {
+        invoceName = [[b2bMyCableDetailData invoiceDic] objectForKey:@"name"];
+    }
+    
+    if([DCFCustomExtra validateString:invoceName] == NO)
+    {
+        hide = YES;
+    }
+    else
+    {
+        hide = NO;
+    }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
     //    [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     
@@ -136,9 +198,25 @@
     [label setFont:[UIFont boldSystemFontOfSize:13]];
     if(section == 0)
     {
-        [label setText:@"收货地址"];
+        [label setText:@"发票信息"];
+        if(hide == YES)
+        {
+            [label setFrame:CGRectMake(0, 0, ScreenWidth, 0)];
+        }
     }
     if(section == 1)
+    {
+        [label setText:@"发票邮寄地址"];
+        if(hide == YES)
+        {
+            [label setFrame:CGRectMake(0, 0, ScreenWidth, 0)];
+        }
+    }
+    if(section == 2)
+    {
+        [label setText:@"收货地址"];
+    }
+    if(section == 3)
     {
         [label setText:@"型号信息"];
     }
@@ -165,6 +243,14 @@
     {
         return 1;
     }
+    if(section == 1)
+    {
+        return 1;
+    }
+    if(section == 2)
+    {
+        return 1;
+    }
     return dataArray.count;
 }
 
@@ -174,21 +260,68 @@
     {
         return 44;
     }
+    
+    BOOL hide = YES;
+    NSString *invoceName = nil;
+    if([[[b2bMyCableDetailData invoiceDic] allKeys] count] == 0 || [[b2bMyCableDetailData invoiceDic] isKindOfClass:[NSNull class]])
+    {
+        hide = YES;
+        invoceName = @"";
+    }
+    else
+    {
+        invoceName = [[b2bMyCableDetailData invoiceDic] objectForKey:@"name"];
+    }
+    
+    if([DCFCustomExtra validateString:invoceName] == NO)
+    {
+        hide = YES;
+    }
+    else
+    {
+        hide = NO;
+    }
+    
     if(indexPath.section == 0)
+    {
+        if(hide == YES)
+        {
+            return 0;
+        }
+        else
+        {
+            return 44;
+        }
+    }
+    if(indexPath.section == 1)
+    {
+        if(hide == YES)
+        {
+            return 0;
+        }
+        else
+        {
+            NSString *receiveAddress = [NSString stringWithFormat:@"收货地址: %@%@%@%@",[[b2bMyCableDetailData invoiceDic] objectForKey:@"province"],[[b2bMyCableDetailData invoiceDic] objectForKey:@"city"],[[b2bMyCableDetailData invoiceDic] objectForKey:@"district"],[[b2bMyCableDetailData invoiceDic] objectForKey:@"address"]];
+            receiveAddress = [receiveAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
+            receiveAddress = [receiveAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
+            
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:receiveAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+            
+            return size.height+40;
+        }
+    }
+    
+    
+    
+    if(indexPath.section == 2)
     {
         NSString *address = [NSString stringWithFormat:@"收货地址: %@",[b2bMyCableDetailData fullAddress]];
         CGSize size;
-//        if(address.length == 0 || [address isKindOfClass:[NSNull class]])
-//        {
-//            size = CGSizeMake(30, 0);
-//        }
-//        else
-//        {
-            size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-//        }
+        
+        size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
         return size.height+40;
     }
-    
+
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[dataArray objectAtIndex:indexPath.row]];
     
     
@@ -273,13 +406,111 @@
         [cell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
         
+        BOOL hide = YES;
+        NSString *invoceName = nil;
+        if([[[b2bMyCableDetailData invoiceDic] allKeys] count] == 0 || [[b2bMyCableDetailData invoiceDic] isKindOfClass:[NSNull class]])
+        {
+            hide = YES;
+            invoceName = @"";
+        }
+        else
+        {
+            invoceName = [[b2bMyCableDetailData invoiceDic] objectForKey:@"name"];
+        }
+        
+        if([DCFCustomExtra validateString:invoceName] == NO)
+        {
+            hide = YES;
+        }
+        else
+        {
+            hide = NO;
+        }
+        
         if(indexPath.section == 0)
+        {
+            if(hide == YES)
+            {
+                
+            }
+            else
+            {
+                NSString *invoiceType = [NSString stringWithFormat:@"%@",[[b2bMyCableDetailData invoiceDic] objectForKey:@"type"]];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 34)];
+                NSString *invoiceStr = nil;
+                NSMutableAttributedString *myInvoiceName = nil;
+                if([invoiceType intValue] == 1)
+                {
+                    invoiceStr = [NSString stringWithFormat:@"普通发票: %@",invoceName];
+                    myInvoiceName = [[NSMutableAttributedString alloc] initWithString:invoiceStr];
+                    [myInvoiceName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
+                    [myInvoiceName addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, invoiceStr.length-5)];
+                }
+                else
+                {
+                    invoiceStr = [NSString stringWithFormat:@"增值税发票: %@",invoceName];
+                    myInvoiceName = [[NSMutableAttributedString alloc] initWithString:invoiceStr];
+                    [myInvoiceName addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 6)];
+                    [myInvoiceName addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(6, invoiceStr.length-6)];
+                }
+                [label setFont:[UIFont systemFontOfSize:12]];
+                [label setAttributedText:myInvoiceName];
+                [cell.contentView addSubview:label];
+            }
+        }
+        else if(indexPath.section == 1)
+        {
+            if(hide == YES)
+            {
+                
+            }
+            else
+            {
+                NSString *recipient = [NSString stringWithFormat:@"%@",[[b2bMyCableDetailData invoiceDic] objectForKey:@"recipient"]];
+                UILabel *recipientLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 150, 30)];
+                NSString *invoiceName = nil;
+                NSMutableAttributedString *myRecipient = nil;
+                
+                invoiceName = [NSString stringWithFormat:@"收货人: %@",recipient];
+                myRecipient = [[NSMutableAttributedString alloc] initWithString:invoiceName];
+                [myRecipient addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
+                [myRecipient addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, invoiceName.length-4)];
+ 
+                [recipientLabel setAttributedText:myRecipient];
+                [recipientLabel setFont:[UIFont systemFontOfSize:12]];
+                [cell.contentView addSubview:recipientLabel];
+                
+                NSString *receiveTel = [NSString stringWithFormat:@"%@",[[b2bMyCableDetailData invoiceDic] objectForKey:@"receiveTel"]];
+                UILabel *receiveTelLabel = [[UILabel alloc] initWithFrame:CGRectMake(160, 5, 150, 30)];
+                [receiveTelLabel setText:receiveTel];
+                [receiveTelLabel setFont:[UIFont systemFontOfSize:12]];
+                [receiveTelLabel setTextAlignment:NSTextAlignmentRight];
+                [cell.contentView addSubview:receiveTelLabel];
+                
+                NSString *receiveAddress = [NSString stringWithFormat:@"收货地址: %@%@%@%@",[[b2bMyCableDetailData invoiceDic] objectForKey:@"province"],[[b2bMyCableDetailData invoiceDic] objectForKey:@"city"],[[b2bMyCableDetailData invoiceDic] objectForKey:@"district"],[[b2bMyCableDetailData invoiceDic] objectForKey:@"address"]];
+                receiveAddress = [receiveAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
+                receiveAddress = [receiveAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
+                
+                CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:receiveAddress WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+                
+                NSMutableAttributedString *myReceiveAddress = [[NSMutableAttributedString alloc] initWithString:receiveAddress];
+                [myReceiveAddress addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
+                [myReceiveAddress addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, receiveAddress.length-5)];
+                
+                UILabel *receiveAddressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, recipientLabel.frame.origin.y+recipientLabel.frame.size.height, ScreenWidth-20, size.height)];
+                [receiveAddressLabel setFont:[UIFont systemFontOfSize:12]];
+                [receiveAddressLabel setAttributedText:myReceiveAddress];
+                [receiveAddressLabel setFont:[UIFont systemFontOfSize:12]];
+                [receiveAddressLabel setNumberOfLines:0];
+                [cell.contentView addSubview:receiveAddressLabel];
+            }
+        }
+        else if(indexPath.section == 2)
         {
             if(indexPath.row == 0)
             {
                 NSString *name = [NSString stringWithFormat:@"收货人: %@",[b2bMyCableDetailData reciver]];
                 NSString *tel = [NSString stringWithFormat:@"联系电话: %@",[b2bMyCableDetailData theTel]];
-                NSLog(@"name = %@",name);
                 
                 CGSize nameSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:name WithSize:CGSizeMake(MAXFLOAT, 30)];
                 UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, nameSize.width, 30)];

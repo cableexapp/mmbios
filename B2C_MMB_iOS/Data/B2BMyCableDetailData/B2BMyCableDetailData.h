@@ -12,6 +12,8 @@
 
 @property (strong,nonatomic) NSDictionary *createDate;
 
+@property (strong,nonatomic) NSDictionary *invoiceDic;
+
 @property (strong,nonatomic) NSString *cableOrderTime;
 
 @property (strong,nonatomic) NSArray *myItems;

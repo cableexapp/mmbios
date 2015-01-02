@@ -803,6 +803,7 @@
     
     BOOL validatePhone = [DCFCustomExtra validateMobile:self.tel_Tf.text];
     BOOL validateTel = [DCFCustomExtra validateTel:self.tel_Tf.text];
+    
     if(validateTel == YES || validatePhone == YES)
     {
         

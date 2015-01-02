@@ -384,10 +384,12 @@
             if([kind rangeOfString:@"(null)"].location != NSNotFound)
             {
                 finalKind = [kind stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+                finalKind = [kind stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
             }
             else if([kind rangeOfString:@"null"].location != NSNotFound)
             {
                 finalKind = [kind stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                finalKind = [kind stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
             }
             else
             {

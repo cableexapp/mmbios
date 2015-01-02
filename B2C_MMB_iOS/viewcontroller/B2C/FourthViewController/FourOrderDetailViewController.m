@@ -551,14 +551,15 @@
             [cell.contentView addSubview:tel];
             
             NSString *add = [NSString stringWithFormat:@"收货地址: %@",[[dataArray lastObject] receiveAddr]];
-            if([add rangeOfString:@"null"].location != NSNotFound)
+            
+            if([add rangeOfString:@"(null)"].location != NSNotFound)
             {
-                add = [add stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                [add stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             }
-            else
-            {
-                
-            }
+            add = [add stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
+            
+            add = [add stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
+
             add = [add stringByReplacingOccurrencesOfString:@" " withString:@""];
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:add WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, ScreenWidth-20, size.height)];

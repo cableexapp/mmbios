@@ -68,6 +68,7 @@
 
 @property (strong,nonatomic) FMDatabase *db;
 
+@property (assign,nonatomic) BOOL speedRegister;
 
 @property (strong, nonatomic) NSString *appId;
 @property (strong, nonatomic) NSString *channelId;

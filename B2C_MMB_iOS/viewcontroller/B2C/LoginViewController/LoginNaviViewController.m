@@ -27,18 +27,14 @@
 
 - (void) doHasNotLoginViewControllerNoti
 {
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    RegisterViewController *regist = [sb instantiateViewControllerWithIdentifier:@"registerViewController"];
-    self.viewControllers = [NSArray arrayWithObjects:regist, nil];
+    //    LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+    //    loginViewController.flag = YES;
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doHasNotLoginViewControllerNoti) name:@"HasNotLoginViewControllerNoti" object:nil];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning

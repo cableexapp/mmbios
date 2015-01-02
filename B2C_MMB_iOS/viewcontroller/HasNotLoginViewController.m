@@ -58,6 +58,8 @@
 
 - (IBAction)loginBtnClick:(id)sender
 {
+    app.speedRegister = NO;
+
     LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
     [self presentViewController:loginNavi animated:YES completion:nil];
 
@@ -233,13 +235,10 @@
 
 - (IBAction)registerBtnClick:(id)sender
 {
-//    UIStoryboard *MainSB = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-//    RegisterViewController *regist = [MainSB instantiateViewControllerWithIdentifier:@"registerViewController"];
-//    [self.navigationController pushViewController:regist animated:YES];
+    app.speedRegister = YES;
     
     LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
     [self presentViewController:loginNavi animated:YES completion:nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"HasNotLoginViewControllerNoti" object:nil];
 }
 
 

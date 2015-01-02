@@ -59,13 +59,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-//    if(_flag == YES)
-//    {
-//        RegisterViewController *regist = [self.storyboard instantiateViewControllerWithIdentifier:@"registerViewController"];
-//        [self.navigationController pushViewController:regist animated:NO];
-//    }
-//    
+
     regiserDic = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"]];
     if([[regiserDic allKeys] count] == 0 || [regiserDic isKindOfClass:[NSNull class]])
     {
@@ -89,9 +83,17 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    if(app.speedRegister == YES)
+    {
+        RegisterViewController *regist = [self.storyboard instantiateViewControllerWithIdentifier:@"registerViewController"];
+        [self.navigationController pushViewController:regist animated:YES];
+    }
+    
+    
     logInSuccess = NO;
     
-    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     [self pushAndPopStyle];
     

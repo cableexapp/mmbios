@@ -84,7 +84,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_more:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
     
-    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"fro mmore"];
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"frommore"];
     if (str.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_more" object:nil];

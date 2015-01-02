@@ -756,14 +756,7 @@
     {
         return;
     }
-
-    NSString *s1 = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"createDate"] objectForKey:@"month"];
-    NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
-    NSString *date = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"createDate"] objectForKey:@"date"];
-    NSString *hours = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"createDate"] objectForKey:@"hours"];
-    NSString *minutes = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"createDate"] objectForKey:@"minutes"];
-    NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
-
+    
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [mySB instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
 

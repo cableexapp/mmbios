@@ -45,9 +45,10 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+
+
     
-    [self.myOederLabel setText:self.myOrderNum];
-    [self.myTimeLabel setText:self.myTime];
+    
 }
 
 - (NSString *) getMemberId
@@ -73,10 +74,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单详情"];
-    self.navigationItem.titleView= top;
-    
-    [self.myTimeLabel setText:self.myTime];
-    [self.myOederLabel setText:self.myOrderNum];
+
     
     self.discussBtn.layer.cornerRadius = 5;
     [self.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

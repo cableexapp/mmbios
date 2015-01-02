@@ -139,14 +139,8 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    if ([self.fromFlag isEqualToString:@"我的电缆订单"])
-    {
-    }
-    else
-    {
-//        [self loadRequestB2COrderListAllWithStatus:@"1"];
-        [self loadRequestB2COrderListAllWithStatus:@""];
-    }
+
+    [self loadRequestB2COrderListAllWithStatus:@""];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -197,11 +191,6 @@
     if(URLTag == URLB2COrderListAllTag)
     {
 //        NSLog(@"家装线订单搜索dicRespon = %@\n\n",dicRespon);
-        NSLog(@"家装线订单搜索dataArray = %@\n\n",[dicRespon objectForKey:@"items"]);
-        
-        NSLog(@"家装线订单搜索dicRespon = %d\n\n",[[dicRespon objectForKey:@"items"]  count]);
-        
-        
         int intTotal = [[dicRespon objectForKey:@"total"] intValue];
         int result = [[dicRespon objectForKey:@"result"] intValue];
 
@@ -223,14 +212,6 @@
                         noResultView.hidden = NO;
                         dataArray = [dicRespon objectForKey:@"items"];
                         tempOrderNum = [dicRespon objectForKey:@"items"];
-//                        intTotal = [[dicRespon objectForKey:@"total"] intValue];
-                        
-                        for (int i=0; i<dataArray.count; i++)
-                        {
-                            NSLog(@"家装线订单搜索dicRespon = %@",[dataArray[i] objectForKey:@"orderNum"]);
-                            
-                            NSLog(@"订单状态 = %@",[dataArray[i] objectForKey:@"status"]);
-                        }
                     }
                 }
                 else
@@ -281,15 +262,15 @@
     }
     else
     {
-        int status = [[dataArray[indexPath.row] objectForKey:@"status"] intValue];
-        if(status == 5 || status == 7)
-        {
-            height = 188;
-        }
-        else
-        {
+//        int status = [[dataArray[indexPath.row] objectForKey:@"status"] intValue];
+//        if(status == 5 || status == 7)
+//        {
+//            height = 188;
+//        }
+//        else
+//        {
             height = 230;
-        }
+//        }
     }
     return height;
 }
@@ -775,26 +756,25 @@
     {
         return;
     }
-    
+
     NSString *s1 = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"createDate"] objectForKey:@"month"];
     NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
     NSString *date = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"createDate"] objectForKey:@"date"];
     NSString *hours = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"createDate"] objectForKey:@"hours"];
     NSString *minutes = [[[[dataArray[indexPath.row] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"createDate"] objectForKey:@"minutes"];
     NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
-    
+
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [mySB instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
-    
+
     fourOrderDetailViewController.theLogiId = [NSString stringWithFormat:@"%@",[dataArray[indexPath.row] objectForKey:@"logisticsId"]];
     fourOrderDetailViewController.theLogiNum = [NSString stringWithFormat:@"%@",[dataArray[indexPath.row] objectForKey:@"logisticsNum"]];
-    
-    
+ 
     fourOrderDetailViewController.theLogiArray = [[NSMutableArray alloc] initWithArray:[dataArray[indexPath.row] objectForKey:@"items"]];
     fourOrderDetailViewController.theShopId = [NSString stringWithFormat:@"%@",[dataArray[indexPath.row] objectForKey:@"shopId"]];
     fourOrderDetailViewController.theOrderNum = [NSString stringWithFormat:@"%@",[dataArray[indexPath.row] objectForKey:@"orderNum"]];
     fourOrderDetailViewController.theDic = [[NSDictionary alloc] initWithDictionary:[dataArray[indexPath.row] objectForKey:@"subDate"]];
-    
+
     int status = [[dataArray[indexPath.row] objectForKey:@"status"] intValue];
     if(status == 1)
     {
@@ -814,10 +794,17 @@
         fourOrderDetailViewController.showOrHideTradeBtn = YES;
     }
     
+    if(status == 5)
+    {
+        fourOrderDetailViewController.myStatus = @"5";
+        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+        fourOrderDetailViewController.showOrHideTradeBtn = NO;
+    }
     if(status == 6)
     {
         int judgeStatus = [[dataArray[indexPath.row] objectForKey:@"juderstatus"] intValue];
         int afterStatus = [[dataArray[indexPath.row] objectForKey:@"afterStatus"]  intValue];
+
         if(judgeStatus == 1)
         {
             if(afterStatus == 2 || afterStatus == 3)
@@ -845,11 +832,21 @@
             }
         }
     }
+    if(status == 7)
+    {
+        fourOrderDetailViewController.myStatus = @"7";
+        fourOrderDetailViewController.showOrHideDisCussBtn = NO;
+        fourOrderDetailViewController.showOrHideTradeBtn = NO;
+    }
+    
     fourOrderDetailViewController.myOrderNum = [dataArray[indexPath.row] objectForKey:@"orderNum"];
-    fourOrderDetailViewController.myTime = time;
+    
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[[dataArray[indexPath.row]objectForKey:@"subDate"] objectForKey:@"time"] doubleValue]/1000];
+    timeLabel.text = [DCFCustomExtra nsdateToString:confromTimesp];
+    fourOrderDetailViewController.myTime = [DCFCustomExtra nsdateToString:confromTimesp];
+    
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
 }
-
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {

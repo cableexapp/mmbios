@@ -48,9 +48,6 @@
     
     [self.myOederLabel setText:self.myOrderNum];
     [self.myTimeLabel setText:self.myTime];
-
-    
-    
 }
 
 - (NSString *) getMemberId
@@ -80,9 +77,6 @@
     
     [self.myTimeLabel setText:self.myTime];
     [self.myOederLabel setText:self.myOrderNum];
-    
-    
-
     
     self.discussBtn.layer.cornerRadius = 5;
     [self.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -533,8 +527,6 @@
                 UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(10,8, 60, 60)];
                 NSString *picStr = [[[[dataArray lastObject] myItems] objectAtIndex:indexPath.row-1] objectForKey:@"productItemPic"];
                 picStr = [self dealPic:picStr];
-                //                cellIv.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-                //                cellIv.layer.borderWidth = 0.5;
                 NSURL *picUrl = [NSURL URLWithString:picStr];
                 [cellIv setImageWithURL:picUrl placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                 [cell.contentView addSubview:cellIv];

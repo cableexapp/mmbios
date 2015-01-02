@@ -84,25 +84,25 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
     //    [self pushAndPopStyle];
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setFrame:CGRectMake(0, 0, 18, 25)];
+    [backBtn setFrame:CGRectMake(0, 0, 15, 22)];
     [backBtn setBackgroundImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftItem;
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"选择支付方式"];
     self.navigationItem.titleView = top;
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
-    
-    
     cellBackView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 110)];
     cellBackView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     cellBackView.layer.borderWidth = 1.0f;
+    cellBackView.layer.cornerRadius = 5;
     
     UILabel *chooseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, cellBackView.frame.size.width, 40)];
     [chooseLabel setFont:[UIFont boldSystemFontOfSize:14]];
@@ -188,7 +188,7 @@
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 110)];
-    [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     
     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(20, 40, 30, 30)];
     [iv setImage:[UIImage imageNamed:@"complete.png"]];
@@ -210,9 +210,10 @@
     
     
     UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_1.frame.origin.y + label_1.frame.size.height, 250, 30)];
-    NSString *s = [NSString stringWithFormat:@"订单金额:¥  %@",myTotal];
+    NSString *s = [NSString stringWithFormat:@"订单金额:¥ %@",myTotal];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 8)];
+    label_3.font = [UIFont systemFontOfSize:15];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(8, s.length-8)];
     [label_3 setAttributedText:str];
     [view addSubview:label_3];

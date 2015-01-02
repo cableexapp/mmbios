@@ -178,8 +178,7 @@
     [self.refreshView refreshLastUpdatedDate];
     [self loadRequest:_shopId WithUse:shopUse];
     
-
-    
+    self.tableView.separatorStyle =UITableViewCellSeparatorStyleNone;
 }
 
 - (void)rightItemClick:(id) sender
@@ -312,7 +311,7 @@
     //    if(indexPath.row <= row - 1)
     if(indexPath.row >= 1 && indexPath.row < row + 1)
     {
-        return 200;
+        return 210;
         //        for(int i=0;i<2;i++)
         //        {
         //            int n = (indexPath.row-1)*2 + i;
@@ -579,13 +578,13 @@
     [qualityLabel_2.layer setCornerRadius:5.0]; //设置矩圆角半径
     [headView addSubview:qualityLabel_2];
     
-    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 250, 30)];
+    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, 250, 30)];
     [headLabel setText:[NSString stringWithFormat:@"%@",_myTitle]];
     [headLabel setTextColor:[UIColor blackColor]];
     [headLabel setFont:[UIFont boldSystemFontOfSize:18]];
     [headView addSubview:headLabel];
     UILabel *headLabel_1 = [[UILabel alloc] initWithFrame:CGRectMake(8, 25, 250, 30)];
-    [headLabel_1 setText:[NSString stringWithFormat:@"(公司：%@)",_myTitle]];
+    [headLabel_1 setText:[NSString stringWithFormat:@"(公司:%@)",_myTitle]];
     [headLabel_1 setTextColor:[UIColor grayColor]];
     [headLabel_1 setFont:[UIFont boldSystemFontOfSize:13]];
     //            [headView addSubview:headLabel_1];
@@ -720,7 +719,7 @@
         if(moreCell == nil)
         {
             moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
         }
         return moreCell;
     }
@@ -733,7 +732,8 @@
             cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
             [cell setSelectionStyle:0];
         }
-        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
+        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+        {
             [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
         }
         if(indexPath.row == 0)
@@ -754,29 +754,35 @@
                 int n = (indexPath.row-1)*2 + i;
                 if(n <= dataArray.count-1)
                 {
-                    UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(20+155*i, 10, 125, 125)];
+                    UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(10+155*i, 10, 145, 200)];
                     [cellView setTag:n];
+                    cellView.layer.borderWidth = 0.8;
+                    cellView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
                     [cell.contentView addSubview:cellView];
                     
                     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
                     [cellView addGestureRecognizer:tap];
                     
                     NSString *picUrl = [[dataArray objectAtIndex:n] p1Path];
-                    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 125, 125)];
+                    UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 125, 125)];
+                  
                     [iv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                     [cellView addSubview:iv];
                     
+                    UIView *lineView = [[UIView alloc] init];
+                    lineView.frame = CGRectMake(0, 145, 145, 0.8);
+                    lineView.backgroundColor = [UIColor lightGrayColor];
+                    [cellView addSubview:lineView];
+                    
                     NSString *str_1 = [[dataArray objectAtIndex:n] productName];
-                    //                    CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str_1 WithSize:CGSizeMake(125, MAXFLOAT)];
-                    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, iv.frame.origin.y+iv.frame.size.height, 125, 35)];
+                    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, iv.frame.origin.y+iv.frame.size.height+20, 135, 35)];
                     [nameLabel setText:str_1];
                     [nameLabel setFont:[UIFont systemFontOfSize:11]];
                     [nameLabel setNumberOfLines:0];
                     [cellView addSubview:nameLabel];
                     
                     NSString *str_2 = [[dataArray objectAtIndex:n] productPrice];
-                    //                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str_2 WithSize:CGSizeMake(125, MAXFLOAT)];
-                    UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, nameLabel.frame.origin.y+nameLabel.frame.size.height, 125, 20)];
+                    UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, nameLabel.frame.origin.y+nameLabel.frame.size.height, 135, 20)];
                     [priceLabel setText:[NSString stringWithFormat:@"¥ %@",str_2]];
                     [priceLabel setFont:[UIFont systemFontOfSize:11]];
                     [priceLabel setTextColor:[UIColor redColor]];

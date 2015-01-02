@@ -1156,7 +1156,7 @@
         cellWebView = [[UIWebView alloc] init];
         cellWebView.delegate = self;
         cellWebView.opaque = NO;
-        [cellWebView setScalesPageToFit:YES];
+        [cellWebView setScalesPageToFit:NO];
         cellWebView.scrollView.bounces = NO;
         [(UIScrollView *)[[cellWebView subviews] objectAtIndex:0] setBounces:NO];
         [cellWebView setBackgroundColor:[UIColor clearColor]];

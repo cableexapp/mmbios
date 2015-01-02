@@ -317,6 +317,7 @@
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
+             [self reloadViewDataSource];
         }
         else
         {

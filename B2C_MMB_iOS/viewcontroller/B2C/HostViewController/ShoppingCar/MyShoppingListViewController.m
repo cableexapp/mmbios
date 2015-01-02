@@ -125,11 +125,7 @@
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem = rightItem;
-    if(moneyLabel)
-    {
-        [moneyLabel setText:@"0"];
-        totalMoney = 0.00;
-    }
+
     if(buttomBtn)
     {
         [buttomBtn setSelected:NO];
@@ -880,17 +876,17 @@
     totalMoney = 0.00;
 
     CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]] WithSize:CGSizeMake(MAXFLOAT, 20)];
+ 
     [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]]];
+    
     [moneyLabel setFont:[UIFont systemFontOfSize:12]];
     [moneyLabel setTextColor:[UIColor redColor]];
-    moneyLabel.backgroundColor = [UIColor yellowColor];
     [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
     [moneyLabel setTextAlignment:NSTextAlignmentRight];
     [buttomView addSubview:moneyLabel];
     
-    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x-50, 10, 50, 20)];
+    countLabel = [[UILabel alloc] initWithFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
     [countLabel setTextColor:[UIColor blackColor]];
-    countLabel.backgroundColor = [UIColor redColor];
     [countLabel setFont:[UIFont systemFontOfSize:12]];
     [countLabel setTextAlignment:NSTextAlignmentRight];
     [countLabel setText:@"合计:"];
@@ -1734,10 +1730,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
         NSString *price = carlist.price;
         totalMoney = [price doubleValue]*[carlist.num intValue] + totalMoney;
     }
-    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:totalMoney afterPoint:2] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]] WithSize:CGSizeMake(MAXFLOAT, 20)];
     [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
     [countLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
-    [moneyLabel setText:[DCFCustomExtra notRounding:totalMoney afterPoint:2]];
+    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]]];
 }
 
 #pragma  mark  -  滚动加载

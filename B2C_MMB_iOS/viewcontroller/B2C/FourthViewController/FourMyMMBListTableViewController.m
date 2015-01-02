@@ -325,6 +325,10 @@
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+      [self.tabBarController.tabBar setHidden:NO];
+}
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -332,10 +336,10 @@
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
 
+    [self.tabBarController.tabBar setHidden:NO];
 
+//    [self.navigationController popToRootViewControllerAnimated:YES];
     
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     NSString *memberid = [self getMemberId];
     

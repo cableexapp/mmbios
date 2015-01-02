@@ -146,7 +146,7 @@
 {
     if(URLTag == URLHotSaleProductTag)
     {
-        NSLog(@"%@",dicRespon);
+        NSLog(@"家装馆频道 = %@",dicRespon);
         NSMutableArray *moneyArray = nil;
         NSMutableArray *arr = nil;
         

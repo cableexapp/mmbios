@@ -50,6 +50,7 @@
     
     NSMutableArray *colorLabelArray;
     
+    NSString *itemprice;
     NSString *itemid;
     NSString *num;
     
@@ -378,20 +379,15 @@
     {
         if(result == 1)
         {
-            
-            //            if (btn.tag == 100)
-            //            {
-            //                [btn becomeFirstResponder];
-            //
-            //            }
-            //            if (btn.tag == 101)
-            //            {
-            //                [btn becomeFirstResponder];
-            //            }
             [DCFStringUtil showNotice:msg];
             num = @"0";
             itemid = @"";
+            itemprice = @"";
             [self loadShopCarCount];
+        }
+        else if (result == 4)
+        {
+            [DCFStringUtil showNotice:msg];
         }
         else
         {
@@ -418,7 +414,11 @@
             [self.navigationController pushViewController:order animated:YES];
             num = @"0";
             itemid = @"";
-            
+            itemprice = @"";
+        }
+        else if (result == 4)
+        {
+            [DCFStringUtil showNotice:msg];
         }
         else
         {
@@ -1479,6 +1479,7 @@
     {
         num = @"0";
         itemid = @"";
+        itemprice = @"";
         
         colorLabelArray = [[NSMutableArray alloc] init];
         
@@ -1695,7 +1696,8 @@
         productNum = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"productNum"]];
         
         itemid = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"recordId"]];
-        
+        itemprice = colorPrice;
+
         if(detailData.coloritems.count == 0 || [detailData.coloritems isKindOfClass:[NSNull class]])
         {
             
@@ -1873,12 +1875,15 @@
     }
     if (colorName.length > 0 && num.length >0)
     {
-        
+        if([DCFCustomExtra validateString:itemprice] == NO)
+        {
+            itemprice = @"";
+        }
         
         if(btnTag == 100)
         {
 #pragma mark - 立即购买
-            
+
             memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
 
                 NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -1888,8 +1893,7 @@
                 NSString *token = [DCFCustomExtra md5:string];
                 
                 
-                NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@",_productid,token,[self getMemberId],itemid,num];
-                
+                NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@&itemprice=%@",_productid,token,[self getMemberId],itemid,num,itemprice];
                 NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
                 conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
                 [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -1898,7 +1902,6 @@
         }
         else
         {
-            
 #pragma mark - 加入购物车
             [self setHidesBottomBarWhenPushed:YES];
             
@@ -1922,12 +1925,12 @@
             if(hasLogin == YES)
             {
                 arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,memberid, nil];
-                pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@",shopid,productid,itemid,num,token,memberid];
+                pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&memberid=%@&itemprice=%@",shopid,productid,itemid,num,token,memberid,itemprice];
             }
             else
             {
                 arr = [[NSArray alloc] initWithObjects:shopid,productid,itemid,num,token,visitorid, nil];
-                pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@",shopid,productid,itemid,num,token,visitorid];
+                pushString = [NSString stringWithFormat:@"shopid=%@&productid=%@&itemid=%@&num=%@&token=%@&visitorid=%@&itemprice=%@",shopid,productid,itemid,num,token,visitorid,itemprice];
             }
             NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addToCart.html?"];
             

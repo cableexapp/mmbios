@@ -72,7 +72,6 @@
 {
     if(conn)
     {
-        NSLog(@"status = 2");
         [conn stopConnection];
         conn = nil;
     }
@@ -101,6 +100,7 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int logistStatus = [[dicRespon objectForKey:@"status"] intValue];
+    NSLog(@"logistStatus = %d",logistStatus);
     
     if(URLTag == URLLogisticsTrackingTag)
     {
@@ -149,13 +149,15 @@
                     break;
             }
         }
-        else
+        else if(logistStatus == 2)
         {
 //            [DCFStringUtil showNotice:msg];
             [self loadRequest];
         }
-
-
+        else if (logistStatus == 0)
+        {
+            
+        }
     }
 }
 

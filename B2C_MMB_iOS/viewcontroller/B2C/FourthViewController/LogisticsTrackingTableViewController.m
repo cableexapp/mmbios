@@ -116,12 +116,12 @@
     }
     if(indexPath.row == 0)
     {
-        [cell.showBtn setBackgroundColor:[UIColor greenColor]];
+        [cell.showBtn setBackgroundImage:[UIImage imageNamed:@"tradeDocSelect.png"] forState:UIControlStateNormal];
         [cell.statusLabel setTextColor:[UIColor greenColor]];
     }
     else
     {
-        [cell.showBtn setBackgroundColor:[UIColor grayColor]];
+        [cell.showBtn setBackgroundImage:[UIImage imageNamed:@"tradeDocUnselect.png"] forState:UIControlStateNormal];
         [cell.statusLabel setTextColor:[UIColor grayColor]];
     }
     [cell.statusLabel setText:[[[_myArray lastObject] objectAtIndex:indexPath.row] objectForKey:@"context"]];

@@ -851,89 +851,89 @@
             [cell.contentView addSubview:view];
         }
         
-        
-        NSString *content = [[dataArray objectAtIndex:indexPath.row] productName];
-        CGSize size_1;
-        if([DCFCustomExtra validateString:content] == NO)
+        if(!dataArray || dataArray.count == 0)
         {
-            size_1 = CGSizeMake(100, 30);
+            
         }
         else
         {
-            size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
+            NSString *content = [[dataArray objectAtIndex:indexPath.row] productName];
+            CGSize size_1;
+            if([DCFCustomExtra validateString:content] == NO)
+            {
+                size_1 = CGSizeMake(100, 30);
+            }
+            else
+            {
+                size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
+            }
+            UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 10, ScreenWidth-100, size_1.height)];
+            [contentLabel setText:content];
+            [contentLabel setNumberOfLines:0];
+            [contentLabel setFont:[UIFont boldSystemFontOfSize:15]];
+            [contentLabel setTextAlignment:NSTextAlignmentLeft];
+            [cell.contentView addSubview:contentLabel];
+            
+            NSString *price = [NSString stringWithFormat:@"¥ %@",[[dataArray objectAtIndex:indexPath.row] productPrice]];
+            CGSize size_2;
+            if([DCFCustomExtra validateString:price] == NO)
+            {
+                size_2 = CGSizeMake(100, 30);
+            }
+            else
+            {
+                size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:price WithSize:CGSizeMake(MAXFLOAT, 30)];
+            }
+            UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height, size_2.width, 30)];
+            [priceLabel setText:price];
+            [priceLabel setFont:[UIFont systemFontOfSize:12]];
+            [priceLabel setTextAlignment:NSTextAlignmentLeft];
+            [priceLabel setTextColor:[UIColor redColor]];
+            [cell.contentView addSubview:priceLabel];
+            
+            CGSize size_3;
+            NSString *saleOut = [NSString stringWithFormat:@"%@%@",@"已售出",[[dataArray objectAtIndex:indexPath.row] saleNum]];
+            if([DCFCustomExtra validateString:saleOut] == NO)
+            {
+                size_3 = CGSizeMake(30, 30);
+            }
+            else
+            {
+                size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:saleOut WithSize:CGSizeMake(MAXFLOAT, 30)];
+            }
+            UILabel *saleOutLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, priceLabel.frame.origin.y, size_3.width, 30)];
+            [saleOutLabel setText:saleOut];
+            [saleOutLabel setFont:[UIFont systemFontOfSize:12]];
+            [saleOutLabel setTextAlignment:NSTextAlignmentLeft];
+            [saleOutLabel setTextColor:[UIColor colorWithRed:118.0/255.0 green:118.0/255.0 blue:118.0/255.0 alpha:1.0]];
+            [cell.contentView addSubview:saleOutLabel];
+            
+            CGSize size_4;
+            NSString *shopName = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] shopName]];
+            if([DCFCustomExtra validateString:shopName] == NO)
+            {
+                size_4 = CGSizeMake(100, 30);
+            }
+            else
+            {
+                size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:shopName WithSize:CGSizeMake(ScreenWidth-100, 30)];
+            }
+            UILabel *shopNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, saleOutLabel.frame.origin.y+saleOutLabel.frame.size.height, size_4.width, 30)];
+            [shopNameLabel setText:shopName];
+            [shopNameLabel setFont:[UIFont systemFontOfSize:14]];
+            [cell.contentView addSubview:shopNameLabel];
+            
+            UIImageView *cellIv = [[UIImageView alloc] init];
+            
+            [cellIv setFrame:CGRectMake(10, (size_1.height+20)/2, 60, 60)];
+            NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
+            [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
+            [cellIv.layer setCornerRadius:2.0]; //设置矩圆角半径
+            [cellIv.layer setBorderWidth:1.0];   //边框宽度
+            cellIv.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
+            [cell.contentView addSubview:cellIv];
         }
-        UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 10, ScreenWidth-100, size_1.height)];
-        [contentLabel setText:content];
-        [contentLabel setNumberOfLines:0];
-        [contentLabel setFont:[UIFont boldSystemFontOfSize:15]];
-        [contentLabel setTextAlignment:NSTextAlignmentLeft];
-        [cell.contentView addSubview:contentLabel];
-        
-        NSString *price = [NSString stringWithFormat:@"¥ %@",[[dataArray objectAtIndex:indexPath.row] productPrice]];
-        CGSize size_2;
-        if([DCFCustomExtra validateString:price] == NO)
-        {
-            size_2 = CGSizeMake(100, 30);
-        }
-        else
-        {
-            size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:price WithSize:CGSizeMake(MAXFLOAT, 30)];
-        }
-        UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height, size_2.width, 30)];
-        [priceLabel setText:price];
-        [priceLabel setFont:[UIFont systemFontOfSize:12]];
-        [priceLabel setTextAlignment:NSTextAlignmentLeft];
-        [priceLabel setTextColor:[UIColor redColor]];
-        [cell.contentView addSubview:priceLabel];
-        
-        CGSize size_3;
-        NSString *saleOut = [NSString stringWithFormat:@"%@%@",@"已售出",[[dataArray objectAtIndex:indexPath.row] saleNum]];
-        if([DCFCustomExtra validateString:saleOut] == NO)
-        {
-            size_3 = CGSizeMake(30, 30);
-        }
-        else
-        {
-            size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:saleOut WithSize:CGSizeMake(MAXFLOAT, 30)];
-        }
-        UILabel *saleOutLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, priceLabel.frame.origin.y, size_3.width, 30)];
-        [saleOutLabel setText:saleOut];
-        [saleOutLabel setFont:[UIFont systemFontOfSize:12]];
-        [saleOutLabel setTextAlignment:NSTextAlignmentLeft];
-        [saleOutLabel setTextColor:[UIColor colorWithRed:118.0/255.0 green:118.0/255.0 blue:118.0/255.0 alpha:1.0]];
-        [cell.contentView addSubview:saleOutLabel];
-        
-        CGSize size_4;
-        NSString *shopName = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] shopName]];
-        if([DCFCustomExtra validateString:shopName] == NO)
-        {
-            size_4 = CGSizeMake(100, 30);
-        }
-        else
-        {
-            size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:shopName WithSize:CGSizeMake(ScreenWidth-100, 30)];
-        }
-        UILabel *shopNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, saleOutLabel.frame.origin.y+saleOutLabel.frame.size.height, size_4.width, 30)];
-        [shopNameLabel setText:shopName];
-        [shopNameLabel setFont:[UIFont systemFontOfSize:14]];
-        [cell.contentView addSubview:shopNameLabel];
-        
-        UIImageView *cellIv = [[UIImageView alloc] init];
-        //        if(size_1.height + 30 <= 60)
-        //        {
-        //            [cellIv setFrame:CGRectMake(10, 10, 60, 60)];
-        //        }
-        //        else
-        //        {
-        [cellIv setFrame:CGRectMake(10, (size_1.height+20)/2, 60, 60)];
-        //        }
-        NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
-        //        NSLog(@"picUrl = %@",picUrl);
-        [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
-        [cellIv.layer setCornerRadius:2.0]; //设置矩圆角半径
-        [cellIv.layer setBorderWidth:1.0];   //边框宽度
-        cellIv.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
-        [cell.contentView addSubview:cellIv];
+     
         
         return cell;
     }

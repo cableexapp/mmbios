@@ -45,8 +45,6 @@
     
     BOOL _reloading;
     
-    UIView *rightButtonView;
-    
     NSString *sureReceiveNumber; //确认收货
     
     AppDelegate *app;
@@ -67,7 +65,15 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-    rightButtonView.hidden = YES;
+   
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [rightBtn setFrame:CGRectMake(0, 0, 22, 17)];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"global_delete"] forState:UIControlStateNormal];
+    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     if(conn)
     {
         [conn stopConnection];
@@ -100,7 +106,7 @@
     }
     
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    rightButtonView.hidden = NO;
+ 
     if(!btnArray)
     {
         [self.allBtn setTag:0];
@@ -202,20 +208,6 @@
     [self.refreshView setDelegate:self];
     [self.tv addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
-    
-
-    
-    rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
-    [self.navigationController.navigationBar addSubview:rightButtonView];
-    
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundColor:[UIColor clearColor]];
-    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
-    [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
-    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [rightButtonView addSubview:rightBtn];
 }
 
 -(void)searchOrderBtnClick

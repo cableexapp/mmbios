@@ -355,7 +355,11 @@
         {
             detailData = [[B2CGoodsDetailData alloc] init];
             [detailData dealData:dicRespon];
-            detailData.phoneDescribe = @"<p>远东买卖宝</p>";
+//            detailData.phoneDescribe = @"<p>远东买卖宝</p>";
+            
+            //测试字段
+            detailData.phoneDescribe = [[NSUserDefaults standardUserDefaults] objectForKey:@"content"];
+            
             [self loadWebView];
         }
         else
@@ -1156,7 +1160,7 @@
         cellWebView = [[UIWebView alloc] init];
         cellWebView.delegate = self;
         cellWebView.opaque = NO;
-        [cellWebView setScalesPageToFit:NO];
+        [cellWebView setScalesPageToFit:YES];
         cellWebView.scrollView.bounces = NO;
         [(UIScrollView *)[[cellWebView subviews] objectAtIndex:0] setBounces:NO];
         [cellWebView setBackgroundColor:[UIColor clearColor]];
@@ -1173,26 +1177,6 @@
     }
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    NSString *height_str= [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
-    int height = [height_str intValue];
-    webView.frame = CGRectMake(0,0,ScreenWidth,height);
-    
-    NSLog(@"height: %@", [webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]);
-    
-    [tv reloadData];
-}
-
-//-(void)webViewDidFinishLoad:(UIWebView *)webView
-//{
-//    CGFloat webViewHeight= [[webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"]floatValue];
-//    // CGFloat webViewHeight= [[webView stringByEvaluatingJavaScriptFromString: @"document.body.scrollHeight"]floatValue];
-//    CGRect newFrame = webView.frame;
-//    newFrame.size.height = webViewHeight;
-//    webView.frame = newFrame;
-//    [tv reloadData];
-//}
 
 //- (void) webViewDidFinishLoad:(UIWebView *)webView
 //{
@@ -1213,15 +1197,22 @@
 //    [tv reloadData];
 //}
 
-//- (void)webViewDidFinishLoad:(UIWebView *)webView
-//{ //webview 自适应高度
-//    CGRect frame = webView.frame;
-//    CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
-//    frame.size = fittingSize;
-//    webView.frame = frame;
-//    //tableView reloadData
-//    [tv reloadData];
-//}
+
+
+//webview 自适应高度
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSString *height_str= [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
+    
+    int height = [height_str intValue];
+    
+    webView.frame = CGRectMake(0,0,ScreenWidth,height-ScreenHeight+20);
+
+    NSLog(@"height: %@", [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"]);
+    
+    [tv reloadData];
+}
+
 
 #pragma mark - 商家自定义内容
 - (UITableViewCell *) loadCustomCell:(NSIndexPath *) path WithTableView:(UITableView *) tableview

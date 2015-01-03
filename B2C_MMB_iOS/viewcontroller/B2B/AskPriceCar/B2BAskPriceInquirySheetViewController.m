@@ -582,6 +582,10 @@
                 uintString = @"";
             }
             NSString *num = [NSString stringWithFormat:@"数量: %@%@",data.num,uintString];
+            if([DCFCustomExtra validateString:data.deliver] == NO || [data.deliver isEqualToString:@"0"])
+            {
+                data.deliver = @"";
+            }
             NSString *deliver = [NSString stringWithFormat:@"交货期: %@天",data.deliver];
             NSString *cartSpec = [NSString stringWithFormat:@"规格: %@平方",data.cartSpec];  //规格
             NSString *cartVoltage = [NSString stringWithFormat:@"电压: %@",data.cartVoltage];

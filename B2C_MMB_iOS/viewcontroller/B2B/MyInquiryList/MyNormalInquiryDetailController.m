@@ -53,7 +53,7 @@
     {
         NSMutableAttributedString *status = [[NSMutableAttributedString alloc] initWithString:s];
         [status addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
-        [status addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:134.0/255.0 green:0 blue:0 alpha:1.0] range:NSMakeRange(3, s.length-3)];
+        [status addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(3, s.length-3)];
         [statusLabel setAttributedText:status];
     }
     else

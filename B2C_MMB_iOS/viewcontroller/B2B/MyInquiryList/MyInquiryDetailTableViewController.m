@@ -281,7 +281,7 @@
         {
             size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-40, MAXFLOAT)];
         }
-        return size.height+40;
+        return size.height+50;
     }
     else
     {
@@ -513,26 +513,39 @@
             [lineView setBackgroundColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
             [cell.contentView addSubview:lineView];
             
+            NSString *theNumber;   //数量
             NSString *unit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
-            NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",[dic objectForKey:@"num"],unit];  //数量
+            if([[dic objectForKey:@"num"] floatValue] <= 0.0)
+            {
+                theNumber = [NSString stringWithFormat:@"数量:"];
+            }
+            else
+            {
+               theNumber = [NSString stringWithFormat:@"数量: %@%@",[dic objectForKey:@"num"],unit];
+            }
+            
             NSMutableAttributedString *myNumber = [[NSMutableAttributedString alloc] initWithString:theNumber];
             [myNumber addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myNumber addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theNumber.length-3)];
             
             
-            NSString *thDeliver = [NSString stringWithFormat:@"交货期: %@天",[dic objectForKey:@"deliver"]];   //交货期
+            NSString *thDeliver;  //交货期
+            if([[dic objectForKey:@"deliver"] floatValue] <= 0.0)
+            {
+                thDeliver = [NSString stringWithFormat:@"交货期:"];
+            }
+            else
+            {
+                thDeliver = [NSString stringWithFormat:@"交货期: %@天",[dic objectForKey:@"deliver"]];
+            }
             NSMutableAttributedString *myDeliver = [[NSMutableAttributedString alloc] initWithString:thDeliver];
             [myDeliver addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
             [myDeliver addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, thDeliver.length-4)];
-            
-            
             
             NSString *theInquirySpec = [NSString stringWithFormat:@"规格: %@平方",[dic objectForKey:@"inquirySpec"]]; //规格
             NSMutableAttributedString *myInquirySpec = [[NSMutableAttributedString alloc] initWithString:theInquirySpec];
             [myInquirySpec addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myInquirySpec addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theInquirySpec.length-3)];
-            
-            
             
             NSString *theInquiryVoltage = [NSString stringWithFormat:@"电压: %@",[dic objectForKey:@"inquiryVoltage"]]; //电压
             NSMutableAttributedString *myInquiryVoltage = [[NSMutableAttributedString alloc] initWithString:theInquiryVoltage];
@@ -551,11 +564,19 @@
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myColor addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, thecolor.length-3)];
             
-            NSString *thePrice = [NSString stringWithFormat:@"询价结果: %@元/%@",[dic objectForKey:@"price"],unit]; //价格
-            NSMutableAttributedString *myPrice = [[NSMutableAttributedString alloc] initWithString:thePrice];
-            [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
-            [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, thePrice.length-5)];
-            
+            NSString *thePrice;//价格
+            NSMutableAttributedString *myPrice;
+            if([[dic objectForKey:@"price"] floatValue] <= 0.0)
+            {
+                thePrice = [NSString stringWithFormat:@""];
+            }
+            else
+            {
+                thePrice = [NSString stringWithFormat:@"询价结果: %@元/%@",[dic objectForKey:@"price"],unit];
+                myPrice = [[NSMutableAttributedString alloc] initWithString:thePrice];
+                [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
+                [myPrice addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, thePrice.length-5)];
+            }
             
             NSString *theRequire = [NSString stringWithFormat:@"特殊要求: %@",[dic objectForKey:@"require"]]; //特殊要求
             NSMutableAttributedString *myRequire = [[NSMutableAttributedString alloc] initWithString:theRequire];

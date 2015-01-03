@@ -55,6 +55,10 @@
         [conn stopConnection];
         conn = nil;
     }
+    if(HUD)
+    {
+        [HUD hide:YES];
+    }
     
     // 1. 获取Documents目录,删除pic文件夹
     [self deletePic];
@@ -193,8 +197,8 @@
         [myPhone addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, myphone.length-5)];
         [self.telLabel setAttributedText:myPhone];
     }
-    
-    NSString *myman = [NSString stringWithFormat:@"联系人: %@",self.fastData.linkman];
+    NSString *linkmanName = [self.fastData.linkman stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *myman = [NSString stringWithFormat:@"联系人: %@",linkmanName];
     if([DCFCustomExtra validateString:self.fastData.linkman] == NO)
     {
         [self.linkManLabel setFrame:CGRectMake(10, self.telLabel.frame.origin.y+self.telLabel.frame.size.height, ScreenWidth-20, 0)];
@@ -310,8 +314,14 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/OemDetail.html?"];
     
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+    
+//    if(!HUD)
+//    {
+//        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        [HUD setLabelText:@"数据加载中..."];
+//        [HUD setDelegate:self];
+//    }
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -356,7 +366,7 @@
 
 - (void) loadPicView:(NSString *) sender
 {
-
+    
 //    sender = @"http://www.icodeblog.com/wp-content/uploads/2012/08/zipfile.zip";
 
     dispatch_queue_t queue = dispatch_get_global_queue(
@@ -475,7 +485,10 @@
             [self.sv setContentSize:CGSizeMake(ScreenWidth, situationView.frame.origin.y+situationView.frame.size.height+20)];
         }
     }
-
+//    if(HUD)
+//    {
+//        [HUD hide:YES];
+//    }
 }
 
 - (void) fail

@@ -289,12 +289,7 @@
     number++;
     [btnRotationNumArray replaceObjectAtIndex:tag withObject:[NSNumber numberWithInt:number]];
     
-    if(!HUD)
-    {
-        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [HUD setLabelText:@"数据加载中..."];
-        [HUD setDelegate:self];
-    }
+    
     
     for(int i = 0;i < btnArray.count; i++)
     {
@@ -746,7 +741,7 @@
             
             ScreeningCondition = [[NSMutableArray alloc] initWithObjects:brandsArray,modelsArray,specsArray,usesArray, nil];
             
-            NSLog(@"ScreeningCondition = %@",ScreeningCondition);
+//            NSLog(@"ScreeningCondition = %@",ScreeningCondition);
         }
     }
 }

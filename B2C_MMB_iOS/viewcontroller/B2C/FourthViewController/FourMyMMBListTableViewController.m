@@ -191,7 +191,6 @@
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
-            NSLog(@"%@",cellBtnArray);
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
@@ -378,7 +377,7 @@
     if (str.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_mmb" object:nil];
-        NSLog(@"买卖宝---首页通知");
+//        NSLog(@"买卖宝---首页通知");
     }
     
     self.tableView.scrollEnabled = YES;

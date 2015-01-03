@@ -1002,18 +1002,42 @@
                 {
                     NSString *finalName = nil;
                     NSString *isAnonymous = [NSString stringWithFormat:@"%@",[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"isAnonymous"]];
+                    
+//                    NSLog(@"商品详情匿名 = %@",[detailData.ctems objectAtIndex:0]);
+//                    
+//                    NSLog(@"商品详情是否匿名 = %@",isAnonymous);
+                    
                     NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
+                    
                     NSString *discusserName = [s1 stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
+//                    //1匿名  0本名
+//                    if([isAnonymous intValue] == 1)
+//                    {
+//                        NSMutableString *discussName = [[NSMutableString alloc] init];
+//                        for(int i=0;i<discusserName.length-2;i++)
+//                        {
+//                            NSString *s = @"*";
+//                            [discussName appendString:s];
+//                        }
+//                        NSRange range_1;
+//                        range_1 = NSMakeRange(0, 1);
+//                        NSString *firstStr = [discusserName substringWithRange:range_1];
+//                        
+//                        NSRange range_2;
+//                        range_2 = NSMakeRange(discusserName.length-1, 1);
+//                        NSString *lastStr = [discusserName substringWithRange:range_2];
+//                        
+//                        finalName = [NSString stringWithFormat:@"%@%@%@(匿名)",firstStr,discussName,lastStr];
+//                    }
+//                    else
+//                    {
+//                        finalName = discusserName;
+//                    }
+    
                     //1匿名  0本名
                     if([isAnonymous intValue] == 1)
                     {
-                        NSMutableString *discussName = [[NSMutableString alloc] init];
-                        for(int i=0;i<discusserName.length-2;i++)
-                        {
-                            NSString *s = @"*";
-                            [discussName appendString:s];
-                        }
                         NSRange range_1;
                         range_1 = NSMakeRange(0, 1);
                         NSString *firstStr = [discusserName substringWithRange:range_1];
@@ -1021,15 +1045,21 @@
                         NSRange range_2;
                         range_2 = NSMakeRange(discusserName.length-1, 1);
                         NSString *lastStr = [discusserName substringWithRange:range_2];
-                        
-                        finalName = [NSString stringWithFormat:@"%@%@%@",firstStr,discussName,lastStr];
+     
+                        if (discusserName.length == 2)
+                        {
+                            finalName = [NSString stringWithFormat:@"%@*(匿名)",firstStr];
+                        }
+                        if (discusserName.length > 2)
+                        {
+                            finalName = [NSString stringWithFormat:@"%@**%@(匿名)",firstStr,lastStr];
+                        }
                     }
                     else
                     {
                         finalName = discusserName;
                     }
-    
-                    
+
                     CGSize nameSize;
                     
                     UILabel *nameLabel = nil;
@@ -1045,7 +1075,7 @@
                         nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, nameSize.width, 30)];
                         [nameLabel setText:finalName];
                         [nameLabel setTextAlignment:NSTextAlignmentLeft];
-                        [nameLabel setFont:[UIFont systemFontOfSize:13]];
+                        [nameLabel setFont:[UIFont systemFontOfSize:12]];
                         [nameLabel setTextColor:[UIColor blackColor]];
                         [cell.contentView addSubview:nameLabel];
                         
@@ -1055,6 +1085,7 @@
                         CGSize colorSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:colorStr WithSize:CGSizeMake(MAXFLOAT, 30)];
                         UILabel *colorLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-colorSize.width, 5, colorSize.width, 30)];
                         [colorLabel setText:colorStr];
+                        colorLabel.textColor = [UIColor blackColor];
                         [colorLabel setTextAlignment:NSTextAlignmentLeft];
                         [colorLabel setFont:[UIFont systemFontOfSize:10]];
                         [cell.contentView addSubview:colorLabel];
@@ -1078,6 +1109,7 @@
                         UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width-20-colorLabel.frame.size.width-dateSize.width, 5, dateSize.width, 30)];
                         [dateLabel setTextAlignment:NSTextAlignmentRight];
                         [dateLabel setText:dateStr];
+                        dateLabel.textColor = [UIColor blackColor];
                         [dateLabel setFont:[UIFont systemFontOfSize:10]];
                         [cell.contentView addSubview:dateLabel];
                     }
@@ -1103,11 +1135,15 @@
                     {
                         contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,nameLabel.frame.origin.y+nameLabel.frame.size.height, ScreenWidth-20, 0)];
                     }
-                    UIView *lineView = [[UIView alloc] init];
-                    lineView.frame = CGRectMake(10, contentLabel.frame.origin.y+contentLabel.frame.size.height+4,ScreenWidth-20, 1);
-                    lineView.backgroundColor = [UIColor lightGrayColor];
-                    [cell.contentView addSubview:lineView];
-                    
+   
+                    UIView *judgementLineView;
+                    if (!judgementLineView)
+                    {
+                        judgementLineView = [[UIView alloc] init];
+                        judgementLineView.frame = CGRectMake(0, contentLabel.frame.origin.y+contentLabel.frame.size.height+4,ScreenWidth, 0.5);
+                        judgementLineView.backgroundColor = [UIColor lightGrayColor];
+                        [cell.contentView addSubview:judgementLineView];
+                    }
                 }
             }
             else if (indexPath.row == detailData.ctems.count +6)

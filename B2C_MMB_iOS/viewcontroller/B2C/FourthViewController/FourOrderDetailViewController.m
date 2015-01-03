@@ -104,7 +104,7 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetOrderDetailTag)
     {
-        NSLog(@"%@",dicRespon);
+//        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CGetOrderDetailData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -218,7 +218,7 @@
     logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
     logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray lastObject] logisticsId]];
     logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray lastObject] logisticsNum]];
-    NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
+//    NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
 }
 
@@ -552,11 +552,17 @@
             {
                 [add stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             }
+            if ([add rangeOfString:@"null"].location != NSNotFound)
+            {
+                 [add stringByReplacingOccurrencesOfString:@"null" withString:@""];
+            }
+           
             add = [add stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
-            
+
             add = [add stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
 
             add = [add stringByReplacingOccurrencesOfString:@" " withString:@""];
+ 
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:add WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, ScreenWidth-20, size.height)];
             [label setText:add];

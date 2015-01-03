@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface MyFastInquiryOrderLookPicViewController : UIViewController<UIScrollViewDelegate>
 {
     UIScrollView *sv;
     NSMutableArray *myPicArray;
     int myTag;
+
 }
 - (id) initWithArray:(NSMutableArray *) picArray WithTag:(int) tag;
 @end

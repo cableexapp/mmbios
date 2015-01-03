@@ -1070,7 +1070,7 @@
         }
         if ([imageFlag isEqualToString:@"1"])
         {
-            searchImageView.image = [UIImage imageNamed:@"clock"];
+            searchImageView.image = [UIImage imageNamed:@"clock@2x.png"];
         }
         else if ([imageFlag isEqualToString:@"0"])
         {

@@ -120,8 +120,7 @@
     }
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightBtn setFrame:CGRectMake(0, 0, 22, 17)];
-//    [rightBtn setTitle:@"删除" forState:UIControlStateNormal];
+    [rightBtn setFrame:CGRectMake(0, 0, 22, 22)];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"global_delete"] forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];

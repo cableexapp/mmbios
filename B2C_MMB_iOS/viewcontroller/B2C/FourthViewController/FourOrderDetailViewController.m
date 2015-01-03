@@ -74,7 +74,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线订单详情"];
-
+    self.navigationItem.titleView = top;
     
     self.discussBtn.layer.cornerRadius = 5;
     [self.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -97,10 +97,6 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     tv = [[UITableView alloc] init];
-
-
-    
-
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode

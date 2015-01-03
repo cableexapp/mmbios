@@ -65,14 +65,6 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-   
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightBtn setFrame:CGRectMake(0, 0, 22, 17)];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"global_delete"] forState:UIControlStateNormal];
-    [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = rightItem;
     
     if(conn)
     {
@@ -94,6 +86,14 @@
 {
     
     [super viewWillAppear:YES];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0, 0,22,22)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"orderSearch"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if(app.isB2CPush == YES)

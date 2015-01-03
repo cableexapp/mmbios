@@ -49,9 +49,7 @@
         }
     }
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [btn setTitle:@"搜索" forState:UIControlStateNormal];
-    [btn setBackgroundImage:[UIImage imageNamed:@"search"] forState:UIControlStateNormal];
-//    [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:@"orderSearch"] forState:UIControlStateNormal];
     [btn setFrame:CGRectMake(0, 0,22,22)];
     [btn addTarget:self action:@selector(searchBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];

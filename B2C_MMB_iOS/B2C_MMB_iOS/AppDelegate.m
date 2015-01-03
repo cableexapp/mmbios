@@ -448,6 +448,7 @@ NSString *strUserId = @"";
     else
     {
         [DCFStringUtil showNotice:@"您的账号在其他地方登录,请重新登录"];
+        self.appDelegate.isConnect = @"断开";
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
     }
     NSString *time = [DCFCustomExtra getFirstRunTime];
@@ -1011,13 +1012,13 @@ NSString *strUserId = @"";
     [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
     [iq addChild:query];
     [[self xmppStream] sendElement:iq];
-    NSLog(@"查询列表 = %@",iq);
+//    NSLog(@"查询列表 = %@",iq);
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-    NSLog(@"[IQ description] = %@\n\n",iq);
+//    NSLog(@"[IQ description] = %@\n\n",iq);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])

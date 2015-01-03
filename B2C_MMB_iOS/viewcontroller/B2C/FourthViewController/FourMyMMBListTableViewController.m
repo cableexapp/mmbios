@@ -191,7 +191,6 @@
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
-            NSLog(@"%@",cellBtnArray);
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
@@ -268,7 +267,13 @@
                 
                 if(s.intValue == 0)
                 {
-                    
+                    for(UIView *view in cellBtn.subviews)
+                    {
+                        if([view isKindOfClass:[UIButton class]])
+                        {
+                            [view removeFromSuperview];
+                        }
+                    }
                 }
                 else
                 {

@@ -267,7 +267,13 @@
                 
                 if(s.intValue == 0)
                 {
-                    
+                    for(UIView *view in cellBtn.subviews)
+                    {
+                        if([view isKindOfClass:[UIButton class]])
+                        {
+                            [view removeFromSuperview];
+                        }
+                    }
                 }
                 else
                 {

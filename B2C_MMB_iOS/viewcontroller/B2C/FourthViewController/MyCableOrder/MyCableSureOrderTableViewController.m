@@ -243,17 +243,19 @@
     }
 //
     NSString *tel = b2bMyCableDetailData.theTel;
-    int index_2 = 0;
-    for(int i=0;i<tel.length;i++)
-    {
-        char c = [tel characterAtIndex:i];
-        if(c == ':')
-        {
-            index_2 = i;
-        }
-    }
-    NSRange range_2 = NSMakeRange(index_2+1, tel.length-index_2-1);
-    tel = [tel substringWithRange:range_2];
+    NSLog(@"tel = %@",tel);
+//    int index_2 = 0;
+//    for(int i=0;i<tel.length;i++)
+//    {
+//        char c = [tel characterAtIndex:i];
+//        if(c == ':')
+//        {
+//            index_2 = i;
+//        }
+//    }
+//    NSRange range_2 = NSMakeRange(index_2+1, tel.length-index_2-1);
+//    tel = [tel substringWithRange:range_2];
+    NSLog(@"%@",tel);
     if([DCFCustomExtra validateString:tel] == NO)
     {
         tel = @"";

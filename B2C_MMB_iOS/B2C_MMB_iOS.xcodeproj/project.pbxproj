@@ -63,6 +63,8 @@
 		61551E9C1A0BA00C004F50FF /* MyInquiryListFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61551E9B1A0BA00C004F50FF /* MyInquiryListFirstViewController.m */; };
 		61551E9F1A0BA18A004F50FF /* NormalInquiryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61551E9E1A0BA18A004F50FF /* NormalInquiryListTableViewController.m */; };
 		61551EA21A0BA1A2004F50FF /* SpeedInquiryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61551EA11A0BA1A2004F50FF /* SpeedInquiryListTableViewController.m */; };
+		61565BCC1A57D606003A9DE8 /* tradeDocSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61565BCA1A57D606003A9DE8 /* tradeDocSelect.png */; };
+		61565BCD1A57D606003A9DE8 /* tradeDocUnselect.png in Resources */ = {isa = PBXBuildFile; fileRef = 61565BCB1A57D606003A9DE8 /* tradeDocUnselect.png */; };
 		615B01B219D8000A0002592E /* B2CShopCarListData.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B01B119D8000A0002592E /* B2CShopCarListData.m */; };
 		615C8F8A19F8A7E400A2B8CD /* B2CAfterSaleData.m in Sources */ = {isa = PBXBuildFile; fileRef = 615C8F8919F8A7E400A2B8CD /* B2CAfterSaleData.m */; };
 		615C8F8E19F8EFDF00A2B8CD /* ratingbar_selected_low.png in Resources */ = {isa = PBXBuildFile; fileRef = 615C8F8B19F8EFDF00A2B8CD /* ratingbar_selected_low.png */; };
@@ -941,6 +943,8 @@
 		61551E9E1A0BA18A004F50FF /* NormalInquiryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalInquiryListTableViewController.m; sourceTree = "<group>"; };
 		61551EA01A0BA1A2004F50FF /* SpeedInquiryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeedInquiryListTableViewController.h; sourceTree = "<group>"; };
 		61551EA11A0BA1A2004F50FF /* SpeedInquiryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeedInquiryListTableViewController.m; sourceTree = "<group>"; };
+		61565BCA1A57D606003A9DE8 /* tradeDocSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tradeDocSelect.png; sourceTree = "<group>"; };
+		61565BCB1A57D606003A9DE8 /* tradeDocUnselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tradeDocUnselect.png; sourceTree = "<group>"; };
 		615B01B019D8000A0002592E /* B2CShopCarListData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShopCarListData.h; sourceTree = "<group>"; };
 		615B01B119D8000A0002592E /* B2CShopCarListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShopCarListData.m; sourceTree = "<group>"; };
 		615C8F8819F8A7E400A2B8CD /* B2CAfterSaleData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CAfterSaleData.h; sourceTree = "<group>"; };
@@ -2715,6 +2719,8 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				61565BCA1A57D606003A9DE8 /* tradeDocSelect.png */,
+				61565BCB1A57D606003A9DE8 /* tradeDocUnselect.png */,
 				611E34801A53BB7500CA3012 /* iosappAd.png */,
 				611E34811A53BB7500CA3012 /* iosappAd2.png */,
 				6115ACC31A52AB6600D810F3 /* tradeCar.png */,
@@ -4679,6 +4685,7 @@
 				8BA7C1101A10A85500758B0F /* 示爱@2x.png in Resources */,
 				8BA7C1401A10A85500758B0F /* 米饭@2x.png in Resources */,
 				8BA7C0AA1A10A85500758B0F /* 安静@2x.png in Resources */,
+				61565BCC1A57D606003A9DE8 /* tradeDocSelect.png in Resources */,
 				8BA7C0C61A10A85500758B0F /* 很弱@2x.png in Resources */,
 				8B1672531A36D72200C79A2B /* location.png in Resources */,
 				8BA7C0621A10A85500758B0F /* active_page_image@2x.png in Resources */,
@@ -4855,6 +4862,7 @@
 				8BCC0C841A1F6AE2004F0EF8 /* headPic.png in Resources */,
 				8B4969901A1DB05E008C75DF /* board_system.png in Resources */,
 				8BA7C0B01A10A85500758B0F /* 坏笑@2x.png in Resources */,
+				61565BCD1A57D606003A9DE8 /* tradeDocUnselect.png in Resources */,
 				8BA7C11C1A10A85500758B0F /* 菜刀@2x.png in Resources */,
 				8B49698D1A1DB05E008C75DF /* board_system@2x.png in Resources */,
 				8BB3509A1A2425AC00E76495 /* choose.png in Resources */,

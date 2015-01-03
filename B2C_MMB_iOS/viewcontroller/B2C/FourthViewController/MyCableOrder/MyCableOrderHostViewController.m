@@ -21,8 +21,6 @@
 {
     NSMutableArray *topBtnArray;
     int currentPageIndex;
-    UIView *rightButtonView;
-    UIButton *rightBtn;
     AppDelegate *app;
 }
 @end
@@ -43,8 +41,7 @@
     [super viewWillAppear:YES];
     
     [self.sv setContentOffset:CGPointMake(ScreenWidth*self.btnIndex, 0) animated:YES];
-    rightButtonView.hidden = NO;
-    
+
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if(app.isB2BPush == YES)
     {
@@ -67,17 +64,12 @@
         
         [self pushAndPopStyle];
         
-        rightButtonView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-60, 0, 60, 44)];
-        [self.navigationController.navigationBar addSubview:rightButtonView];
-        
-        rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightBtn setBackgroundColor:[UIColor clearColor]];
-        [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [rightBtn setTitle:@"搜索" forState:UIControlStateNormal];
-        [rightBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-        [rightBtn setFrame:CGRectMake(0, 0, 60, 44)];
-        [rightBtn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [rightButtonView addSubview:rightBtn];
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(0, 0,22,22)];
+        [btn setBackgroundImage:[UIImage imageNamed:@"orderSearch"] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(searchOrderBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+        self.navigationItem.rightBarButtonItem = rightItem;
         
         subTV_1 = [[MyCableHostSubTableViewController alloc] init];
         subTV_1.tag = 1;
@@ -139,7 +131,6 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-    rightButtonView.hidden = YES;
 }
 
 - (void) pushToDetailVCWithData:(B2BMyCableOrderListData *)data WithFlag:(int)flag

@@ -358,7 +358,7 @@
 //            detailData.phoneDescribe = @"<p>远东买卖宝</p>";
             
             //测试字段
-            detailData.phoneDescribe = [[NSUserDefaults standardUserDefaults] objectForKey:@"content"];
+//            detailData.phoneDescribe = [[NSUserDefaults standardUserDefaults] objectForKey:@"content"];
             
             [self loadWebView];
         }

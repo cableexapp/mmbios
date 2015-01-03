@@ -134,7 +134,7 @@
     }
     [self readHistoryData];
     NSLog(@"viewWillAppear");
-     [self loadbadgeCount];
+    [self loadbadgeCount];
 }
 
 -(void)viewDidAppear:(BOOL)animated

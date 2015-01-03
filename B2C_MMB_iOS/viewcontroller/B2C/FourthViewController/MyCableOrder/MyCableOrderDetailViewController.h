@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "B2BMyCableOrderListData.h"
 #import "MyCableDetailTableViewController.h"
+#import "DCFConnectionUtil.h"
 
-@interface MyCableOrderDetailViewController : UIViewController<RequestHasFinished>
+@interface MyCableOrderDetailViewController : UIViewController<RequestHasFinished,ConnectionDelegate>
 {
     MyCableDetailTableViewController *myCableDetailTableViewController;
+    DCFConnectionUtil *conn;
 }
 @property (weak, nonatomic) IBOutlet UILabel *myOrderNumberLabel;
 

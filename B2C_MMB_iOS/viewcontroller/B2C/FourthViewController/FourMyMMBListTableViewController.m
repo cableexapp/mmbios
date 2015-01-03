@@ -179,6 +179,15 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLGetCountNumTag)
     {
+        if(_reloading == YES)
+        {
+            [self doneLoadingViewData];
+        }
+        else if(_reloading == NO)
+        {
+            
+        }
+        
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
@@ -329,6 +338,22 @@
 {
       [self.tabBarController.tabBar setHidden:NO];
 }
+
+- (void) loadGetCountNumRequest
+{
+    NSString *memberid = [self getMemberId];
+    
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"getCountNum",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetCountNumTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -341,17 +366,9 @@
 //    [self.navigationController popToRootViewControllerAnimated:YES];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    NSString *memberid = [self getMemberId];
+ 
+    [self loadGetCountNumRequest];
     
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"getCountNum",time];
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
-    
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetCountNumTag delegate:self];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getCountNum.html?"];
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     [self.navigationController.tabBarController.tabBar setHidden:NO];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
@@ -529,6 +546,12 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoBtnAction:)];
     [self.photoBtn setUserInteractionEnabled:YES];
     [self.photoBtn addGestureRecognizer:tapGesture];
+    
+    //ADD REFRESH VIEW
+    _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, ScreenWidth, 300)];
+    [self.refreshView setDelegate:self];
+    [self.tableView addSubview:self.refreshView];
+    [self.refreshView refreshLastUpdatedDate];
 }
 
 
@@ -995,6 +1018,74 @@
     [self.navigationController pushViewController:fourthHostViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
+
+
+#pragma  mark  -  滚动加载
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.refreshView egoRefreshScrollViewDidEndDragging:scrollView];
+    if (self.tableView == (UITableView *)scrollView)
+    {
+        if (scrollView.contentSize.height > 0 && (scrollView.contentSize.height-scrollView.frame.size.height)>0)
+        {
+            if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
+            {
+                //                [self loadRequest];
+                //
+                //                [self loadProductType];
+                //
+                //                [self loadbadgeCount];
+                //
+                //                [self loadShopCarCount];
+            }
+        }
+    }
+}
+
+#pragma mark SCROLLVIEW DELEGATE METHODS
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    [self.refreshView egoRefreshScrollViewDidScroll:self.tableView];
+}
+//
+#pragma mark -
+#pragma mark DATA SOURCE LOADING / RELOADING METHODS
+- (void)reloadViewDataSource
+{
+    _reloading = YES;
+    
+    [self loadGetCountNumRequest];
+}
+//
+- (void)doneLoadingViewData
+{
+    
+    _reloading = NO;
+    [self.refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
+//
+//#pragma mark -
+//#pragma mark REFRESH HEADER DELEGATE METHODS
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
+{
+    
+    [self reloadViewDataSource];
+}
+//
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    
+    return _reloading;
+}
+
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+    
+    return [NSDate date];
+}
+
 
 - (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {

@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 #import "HasNotLoginViewController.h"
+#import "CKRefreshControl.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface FourMyMMBListTableViewController : UITableViewController<ConnectionDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITabBarControllerDelegate,UITabBarDelegate>
+@interface FourMyMMBListTableViewController : UITableViewController<ConnectionDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITabBarControllerDelegate,UITabBarDelegate,EGORefreshTableHeaderDelegate>
 {
     HasNotLoginViewController *hasNotLoginViewController;
     DCFConnectionUtil *conn;
+    BOOL _reloading;
 }
 
 @property(nonatomic,strong) UIImageView *photoBtn;
@@ -41,5 +44,6 @@
 @property (weak, nonatomic) IBOutlet UIView *view22;
 @property (weak, nonatomic) IBOutlet UIView *view33;
 
+@property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 
 @end

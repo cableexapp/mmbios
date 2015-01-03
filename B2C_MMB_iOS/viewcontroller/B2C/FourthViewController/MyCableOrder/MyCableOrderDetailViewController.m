@@ -14,6 +14,7 @@
 #import "UIViewController+AddPushAndPopStyle.h"
 #import "MyCableSureOrderViewController.h"
 #import "B2BMyCableDetailData.h"
+#import "MyCableOrderHostViewController.h"
 
 @interface MyCableOrderDetailViewController ()
 {
@@ -36,11 +37,71 @@
 {
     NSLog(@"sure");
     
+    NSString *btnTitle = [(UIButton *)sender titleLabel].text;
+    if([btnTitle isEqualToString:@"确认订单"])
+    {
+        MyCableSureOrderViewController *myCableSureOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderViewController"];
+        myCableSureOrderViewController.btnIndex = self.btnIndex;
+        myCableSureOrderViewController.theOrderId = _myOrderNumber;
+        [self.navigationController pushViewController:myCableSureOrderViewController animated:YES];
+    }
+    else if([btnTitle isEqualToString:@"确认收货"])
+    {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您确认要收货嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认收货", nil];
+        [av show];
+    }
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex)
+    {
+        case 0:
+            break;
+        case 1:
+        {
+            [self sureReceiveRequest];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void) sureReceiveRequest
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"ConfirmReceive",time];
+    NSString *token = [DCFCustomExtra md5:string];
     
-    MyCableSureOrderViewController *myCableSureOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderViewController"];
-    myCableSureOrderViewController.btnIndex = self.btnIndex;
-    myCableSureOrderViewController.theOrderId = _myOrderNumber;
-    [self.navigationController pushViewController:myCableSureOrderViewController animated:YES];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&orderid=%@",token,[NSString stringWithFormat:@"%@",[detailData ordernum]]];
+    
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmReceiveTag delegate:self];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ConfirmReceive.html?"];
+    
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+- (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
+{
+    if(URLTag == URLConfirmReceiveTag)
+    {
+        for(UIViewController *vc in self.navigationController.viewControllers)
+        {
+            if([vc isKindOfClass:[MyCableOrderHostViewController class]])
+            {
+                [self.navigationController popToViewController:vc animated:YES];
+                return;
+            }
+            else
+            {
+                [self.navigationController popViewControllerAnimated:YES];
+                return;
+            }
+        }
+    }
 }
 
 - (void) requestHasFinished:(B2BMyCableDetailData *)b2bMyCableDetailData
@@ -52,10 +113,12 @@
 - (void) refreshView
 {
     NSString *status = [[NSString alloc] initWithFormat:@"%@",detailData.status];
+    //确认订单
     if([status intValue] == 0 )
     {
         [self.sureBtn setHidden:NO];
         [self.buttomLabel setHidden:YES];
+        [self.sureBtn setTitle:@"确认订单" forState:UIControlStateNormal];
     }
     //待付款
     else if([status intValue] == 2)
@@ -63,12 +126,29 @@
         [self.sureBtn setHidden:YES];
         [self.buttomLabel setHidden:NO];
     }
+    //确认收货
     else
     {
-        [self.buttomView setFrame:CGRectMake(0, ScreenHeight, ScreenWidth, 0)];
-        [self.buttomLabel setFrame:CGRectMake(self.buttomLabel.frame.origin.x, self.buttomLabel.frame.origin.y, self.buttomLabel.frame.size.width, 0)];
-        [self.sureBtn setFrame:CGRectMake(self.sureBtn.frame.origin.x, self.sureBtn.frame.origin.y, self.sureBtn.frame.size.width, 0)];
-        [self.tableSubView setFrame:CGRectMake(self.tableSubView.frame.origin.x, self.tableSubView.frame.origin.y, self.tableSubView.frame.size.width, MainScreenHeight-self.topView.frame.size.height)];
+        
+        float shippedLastestNum = 0.0;
+        NSArray *myItems = [NSArray arrayWithArray:[detailData myItems]];
+        for(int i=0;i<myItems.count;i++)
+        {
+            NSDictionary *itemDic = [NSDictionary dictionaryWithDictionary:[myItems objectAtIndex:i]];
+            shippedLastestNum = [[NSString stringWithFormat:@"%@",[itemDic objectForKey:@"shippedLastestNum"]] floatValue] + shippedLastestNum;
+        }
+        if(shippedLastestNum <= 0.0)
+        {
+            [self.sureBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+            [self.sureBtn setHidden:NO];
+            [self.buttomLabel setHidden:YES];
+        }
+        else
+        {
+            [self.sureBtn setFrame:CGRectMake(0, 5, 0, 0)];
+            [self.sureBtn setHidden:YES];
+            [self.buttomLabel setHidden:YES];
+        }
     }
     
     

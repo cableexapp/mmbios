@@ -358,7 +358,7 @@
 //            detailData.phoneDescribe = @"<p>远东买卖宝</p>";
             
             //测试字段
-//            detailData.phoneDescribe = [[NSUserDefaults standardUserDefaults] objectForKey:@"content"];
+            detailData.phoneDescribe = [[NSUserDefaults standardUserDefaults] objectForKey:@"content"];
             
             [self loadWebView];
         }
@@ -606,7 +606,7 @@
                         return 0;
                     }
                     NSLog(@"cellWebView.frame.size.height = %f",cellWebView.frame.size.height);
-                    return cellWebView.frame.size.height + 5;
+                    return cellWebView.frame.size.height;
 //                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
 //                    return size.height+15;
                 }
@@ -689,7 +689,7 @@
                     {
                         return 0;
                     }
-                    return cellWebView.frame.size.height + 15;
+                    return cellWebView.frame.size.height;
                     //                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                     //                    return size.height+15;
                 }
@@ -1160,7 +1160,7 @@
         cellWebView = [[UIWebView alloc] init];
         cellWebView.delegate = self;
         cellWebView.opaque = NO;
-        [cellWebView setScalesPageToFit:NO];
+        [cellWebView setScalesPageToFit:YES];
         cellWebView.scrollView.bounces = NO;
         [(UIScrollView *)[[cellWebView subviews] objectAtIndex:0] setBounces:NO];
         [cellWebView setBackgroundColor:[UIColor clearColor]];
@@ -1178,22 +1178,38 @@
 }
 
 
-- (void) webViewDidFinishLoad:(UIWebView *)webView
+//- (void) webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    const CGFloat defaultWebViewHeight = 22.0;
+//    //reset webview size
+//    CGRect originalFrame = webView.frame;
+//    webView.frame = CGRectMake(originalFrame.origin.x, originalFrame.origin.y, ScreenWidth, defaultWebViewHeight);
+//    
+//    CGSize actualSize = [webView sizeThatFits:CGSizeZero];
+//    
+//    if (actualSize.height <= defaultWebViewHeight)
+//    {
+//        actualSize.height = defaultWebViewHeight;
+//    }
+//    CGRect webViewFrame = webView.frame;
+//    webViewFrame.size.height = actualSize.height;
+//    webView.frame = webViewFrame;
+//    [tv reloadData];
+//}
+
+
+
+//webview 自适应高度
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    const CGFloat defaultWebViewHeight = 22.0;
-    //reset webview size
-    CGRect originalFrame = webView.frame;
-    webView.frame = CGRectMake(originalFrame.origin.x, originalFrame.origin.y, ScreenWidth, defaultWebViewHeight);
+    NSString *height_str= [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"];
     
-    CGSize actualSize = [webView sizeThatFits:CGSizeZero];
+    int height = [height_str intValue];
     
-    if (actualSize.height <= defaultWebViewHeight)
-    {
-        actualSize.height = defaultWebViewHeight;
-    }
-    CGRect webViewFrame = webView.frame;
-    webViewFrame.size.height = actualSize.height;
-    webView.frame = webViewFrame;
+    webView.frame = CGRectMake(0,0,ScreenWidth,height-ScreenHeight+20);
+
+    NSLog(@"height: %@", [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"]);
+    
     [tv reloadData];
 }
 

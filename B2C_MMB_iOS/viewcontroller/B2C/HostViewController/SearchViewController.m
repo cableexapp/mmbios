@@ -1041,7 +1041,7 @@
         cell.backgroundColor = [UIColor whiteColor];
        
         searchImageView = [[UIImageView alloc] init];
-        searchImageView.frame = CGRectMake(8, 12, 20, 20);
+        searchImageView.frame = CGRectMake(8, 12, 22, 22);
         [cell addSubview:searchImageView];
         
         searchResultLabel = [[UILabel alloc] init];

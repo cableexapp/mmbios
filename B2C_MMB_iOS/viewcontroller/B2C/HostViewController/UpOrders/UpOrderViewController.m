@@ -1127,8 +1127,9 @@
                 
                 NSString *str = [data productItmeTitle];
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
-                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-5, 160, 50)];
+                UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-10, 160, 60)];
                 [titleLabel setText:str];
+//                titleLabel.backgroundColor = [UIColor redColor];
                 [titleLabel setFont:[UIFont systemFontOfSize:12]];
                 [titleLabel setNumberOfLines:0];
                 
@@ -1191,8 +1192,8 @@
                 }
                 else
                 {
-                    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
-                    //                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 43, ScreenWidth, 1)];
+                   [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
                     [cell.contentView addSubview:view];
                     
                     NSString *str = nil;
@@ -1231,6 +1232,7 @@
                         [btn setTitle:str forState:UIControlStateNormal];
                         //                            [sendMoneyLabel setText:str];
                         [cell.contentView addSubview:btn];
+                        
                     }
                     
                     
@@ -1583,6 +1585,16 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.1;
 }
 
 @end

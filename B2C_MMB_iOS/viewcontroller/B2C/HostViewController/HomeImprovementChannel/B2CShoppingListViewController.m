@@ -412,17 +412,19 @@
     
     searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, 260, 34)];
     [searchTextField setDelegate:self];
-    [searchTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等"];
+    [searchTextField setPlaceholder:@"家装馆内电线型号、品牌等"];
     [searchTextField setBackgroundColor:[UIColor whiteColor]];
-    UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 30, 30)];
-    [leftView setImage:[UIImage imageNamed:@"magnifying glass.png"]];
-    [searchTextField setLeftView:leftView];
+    
+    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 32.0,22.0)];//左端缩进
+    UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5,0, 22, 22)];
+    leftImageView.image = [UIImage imageNamed:@"search"];
+    [view1 addSubview:leftImageView];
+    searchTextField.leftView = view1;
+    searchTextField.leftViewMode = UITextFieldViewModeAlways;
+  
     [searchTextField setFont:[UIFont systemFontOfSize:12]];
-    //    searchTextField.layer.borderWidth = 0.3;
     searchTextField.layer.cornerRadius = 5;
-    [searchTextField setReturnKeyType:UIReturnKeyDone];
-    [searchTextField setLeftViewMode:UITextFieldViewModeAlways];
-    [self.view setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [self.view addSubview:searchTextField];
     
     searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];

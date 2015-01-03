@@ -146,6 +146,7 @@
 {
     if(URLTag == URLHotSaleProductTag)
     {
+        NSLog(@"家装馆频道 = %@",[dicRespon objectForKey:@"items"]);
         NSLog(@"家装馆频道 = %@",[[[dicRespon objectForKey:@"items"] objectAtIndex:0] objectForKey:@"describe"]);
         
         [[NSUserDefaults standardUserDefaults] setObject:[[[dicRespon objectForKey:@"items"] objectAtIndex:0] objectForKey:@"describe"] forKey:@"content"];
@@ -282,27 +283,27 @@
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [self.view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
-//    [top setTextColor:[UIColor colorWithRed:18.0/255.0 green:104.0/255.0 blue:253.0/255.0 alpha:1.0]];
     [top setTextColor:[UIColor whiteColor]];
     self.navigationItem.titleView = top;
     
-    topTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, 300, 34)];
-    topTextField.layer.borderWidth = 0.3;
+    topTextField = [[UITextField alloc] initWithFrame:CGRectMake(10,10, 300, 34)];
     topTextField.layer.cornerRadius = 5;
-    topTextField.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
     topTextField.layer.masksToBounds = YES;
     [topTextField setBackgroundColor:[UIColor whiteColor]];
     [topTextField setFont:[UIFont systemFontOfSize:13]];
     [topTextField setDelegate:self];
     [topTextField setReturnKeyType:UIReturnKeyDone];
-    UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    [leftImageView setImage:[UIImage imageNamed:@"magnifying glass.png"]];
-    [topTextField setLeftView:leftImageView];
-    [topTextField setLeftViewMode:UITextFieldViewModeAlways];
-    [topTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等信息"];
+    
+    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 32.0,22.0)];//左端缩进
+    UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5,0, 22, 22)];
+    leftImageView.image = [UIImage imageNamed:@"search"];
+    [view1 addSubview:leftImageView];
+    topTextField.leftView = view1;
+    topTextField.leftViewMode = UITextFieldViewModeAlways;
+    [topTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等"];
     [self.view addSubview:topTextField];
 
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];

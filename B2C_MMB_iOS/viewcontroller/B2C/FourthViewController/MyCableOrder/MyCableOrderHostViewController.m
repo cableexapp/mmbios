@@ -154,7 +154,6 @@
     }
     else
     {
-#pragma mark - 在家修改
         MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
         myCableOrderDetailViewController.myOrderNumber = [NSString stringWithFormat:@"%@",data.orderserial];
         myCableOrderDetailViewController.btnIndex = self.btnIndex;

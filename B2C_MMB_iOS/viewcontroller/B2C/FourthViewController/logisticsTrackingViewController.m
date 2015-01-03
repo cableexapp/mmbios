@@ -22,6 +22,16 @@
     return self;
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -60,15 +70,21 @@
 
 - (void) loadRequest
 {
-    if(!conn)
+    if(conn)
     {
+        NSLog(@"status = 2");
+        [conn stopConnection];
+        conn = nil;
+    }
+//    if(!conn)
+//    {
         NSString *pushString = [NSString stringWithFormat:@"id=%@&com=%@&nu=%@&show=%@&muti=%@&order=%@",@"ac0b8f2dcfe149fc",self.mylogisticsNum,self.mylogisticsId,@"0",@"1",@"desc"];
         
         NSString *urlString = [NSString stringWithFormat:@"%@",@"http://api.kuaidi100.com/api?"];
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLogisticsTrackingTag delegate:self];
         
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    }
+//    }
 
 }
 
@@ -84,7 +100,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    NSLog(@"%@",dicRespon);
     int logistStatus = [[dicRespon objectForKey:@"status"] intValue];
     
     if(URLTag == URLLogisticsTrackingTag)

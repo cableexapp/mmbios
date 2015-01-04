@@ -14,6 +14,8 @@
 @interface RegisterViewController : UIViewController<UITextFieldDelegate,MBProgressHUDDelegate,ConnectionDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate>
 {
     MBProgressHUD *HUD;
+    
+    BOOL justValidate;
 }
 
 
@@ -33,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
 
 - (IBAction)agreeBtn:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *agreeMentBtn;
 
 @end
 

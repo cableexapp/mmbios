@@ -292,7 +292,22 @@
             NSString *theModel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"model"]];
             NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
             
-            NSString *theNumber = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"num"],theUnit];
+            NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
+            NSString *testNum = nil;
+            for(int i=0;i<NumBer.length;i++)
+            {
+                char c = [NumBer characterAtIndex:i];
+                if(c == '.')
+                {
+                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                    break;
+                }
+                else if(i == NumBer.length-1)
+                {
+                    testNum = NumBer;
+                }
+            }
+            NSString *theNumber = [NSString stringWithFormat:@"%@%@",testNum,theUnit];
             
             NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
             
@@ -547,7 +562,23 @@
                     NSString *theModel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"model"]];
                     NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
                     
-                    NSString *theNumber = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"num"],theUnit];
+                    NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
+                    NSString *testNum = nil;
+                    for(int i=0;i<NumBer.length;i++)
+                    {
+                        char c = [NumBer characterAtIndex:i];
+                        if(c == '.')
+                        {
+                            testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                            break;
+                        }
+                        else if(i == NumBer.length-1)
+                        {
+                            testNum = NumBer;
+                        }
+                    }
+                    
+                    NSString *theNumber = [NSString stringWithFormat:@"%@%@",testNum,theUnit];
                     
                     NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
                     

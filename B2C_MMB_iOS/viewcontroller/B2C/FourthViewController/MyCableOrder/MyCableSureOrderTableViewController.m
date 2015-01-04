@@ -740,7 +740,24 @@
             [cell.contentView addSubview:lineView];
             
             NSString *unit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
-            NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",[dic objectForKey:@"num"],unit];  //数量
+            
+            NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
+            NSString *testNum = nil;
+            for(int i=0;i<NumBer.length;i++)
+            {
+                char c = [NumBer characterAtIndex:i];
+                if(c == '.')
+                {
+                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                    break;
+                }
+                else if(i == NumBer.length-1)
+                {
+                    testNum = NumBer;
+                }
+            }
+            
+            NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",testNum,unit];  //数量
             NSMutableAttributedString *myNumber = [[NSMutableAttributedString alloc] initWithString:theNumber];
             [myNumber addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 2)];
             [myNumber addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(3, theNumber.length-3)];
@@ -800,7 +817,23 @@
                     {
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5.5, halfWidth, 20)];
                         
-                        NSString *number = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
+                        NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
+                        NSString *testNum = nil;
+                        for(int i=0;i<NumBer.length;i++)
+                        {
+                            char c = [NumBer characterAtIndex:i];
+                            if(c == '.')
+                            {
+                                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                                break;
+                            }
+                            else if(i == NumBer.length-1)
+                            {
+                                testNum = NumBer;
+                            }
+                        }
+                        
+                        NSString *number = [NSString stringWithFormat:@"%@",testNum];
                         if([DCFCustomExtra validateString:number] == NO)
                         {
                             [label setText:@"采购数量:0"];

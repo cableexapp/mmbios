@@ -19,11 +19,13 @@
 @interface MyCableDetailTableViewController : UITableViewController<ConnectionDelegate>
 {
     DCFConnectionUtil *conn;
+    NSString *status;
 }
 
 @property (strong,nonatomic) NSString *myOrderid;
 
 @property (assign,nonatomic) id<RequestHasFinished> delegate;
 
+//@property (assign,nonatomic) BOOL isWaitForReceive;
 @end
 

@@ -200,6 +200,13 @@
     [self.tableSubView addSubview:myCableDetailTableViewController.view];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+    NSLog(@"btnIndex=%d",self.btnIndex);
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

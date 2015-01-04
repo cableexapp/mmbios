@@ -786,7 +786,6 @@
     else
     {
         NSString *status = [[dataArray objectAtIndex:indexPath.section] status];
-        NSLog(@"status = %@",status);
         if([status intValue] == 5)
         {
             //            index = indexPath.section;

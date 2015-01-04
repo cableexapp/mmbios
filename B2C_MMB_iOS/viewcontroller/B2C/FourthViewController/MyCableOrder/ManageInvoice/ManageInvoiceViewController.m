@@ -79,15 +79,18 @@
     swithStatus = [[[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"] boolValue];
     
     
-    
-    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setTitle:@"新增" forState:UIControlStateNormal];
-    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [rightBtn setFrame:CGRectMake(0, 0, 50, 40)];
-    [rightBtn addTarget:self action:@selector(rightBtnclick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    self.navigationItem.rightBarButtonItem = barItem;
+    if(!rightBtn)
+    {
+        rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightBtn setTitle:@"新增" forState:UIControlStateNormal];
+        [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [rightBtn setFrame:CGRectMake(0, 0, 50, 40)];
+        [rightBtn addTarget:self action:@selector(rightBtnclick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+        self.navigationItem.rightBarButtonItem = barItem;
+    }
+
     
     self.sureBtn.layer.cornerRadius = 5.0f;
     [self.sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];

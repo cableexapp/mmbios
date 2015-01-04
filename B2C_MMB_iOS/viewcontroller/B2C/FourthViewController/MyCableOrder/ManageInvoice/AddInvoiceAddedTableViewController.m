@@ -39,6 +39,50 @@
     return self;
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+//    UITextView *headTV;
+//    UITextView *companyTV;
+//    UITextView *tokenTV;
+//    UITextView *addressTV;
+//    UITextView *telTV;
+//    UITextView *bankTV;
+//    UITextView *accountTV;
+    if([headTV isFirstResponder])
+    {
+        [headTV resignFirstResponder];
+    }
+    if([companyTV isFirstResponder])
+    {
+        [companyTV resignFirstResponder];
+    }
+    if([tokenTV isFirstResponder])
+    {
+        [tokenTV resignFirstResponder];
+    }
+    if([addressTV isFirstResponder])
+    {
+        [addressTV resignFirstResponder];
+    }
+    if([telTV isFirstResponder])
+    {
+        [telTV resignFirstResponder];
+    }
+    if([bankTV isFirstResponder])
+    {
+        [bankTV resignFirstResponder];
+    }
+    if([accountTV isFirstResponder])
+    {
+        [accountTV resignFirstResponder];
+    }
+}
 - (void)contentSizeToFit:(UITextView *) sender
 {
     if([sender.text length]>0) {

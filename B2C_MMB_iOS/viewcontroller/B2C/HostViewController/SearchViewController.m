@@ -23,6 +23,7 @@
 #import "B2BAskPriceCarViewController.h"
 #import "MyShoppingListViewController.h"
 #import "DCFStringUtil.h"
+#import "DCFTopLabel.h"
 
 #define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
 
@@ -49,6 +50,7 @@
     NSString *tempType;
 
     NSMutableArray *tempArray;
+    
     NSMutableArray *typeIdArray;
     
     NSMutableArray *B2BhistoryArray;
@@ -176,13 +178,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     //导航栏标题
-    UILabel *naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100, 44)];
-    naviTitle.textColor = [UIColor whiteColor];
-    naviTitle.backgroundColor = [UIColor clearColor];
-    naviTitle.font = [UIFont systemFontOfSize:19];
-    naviTitle.textAlignment = NSTextAlignmentCenter;
-    naviTitle.text = @"搜索";
-    self.navigationItem.titleView = naviTitle;
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"搜索"];
+    self.navigationItem.titleView = top;
     
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
     backButton.title = @"返回";

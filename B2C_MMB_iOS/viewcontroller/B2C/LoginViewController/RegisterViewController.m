@@ -318,11 +318,7 @@
         //            [DCFStringUtil showNotice:@"用户名只支持数字、字母、下划线、中文"];
         //            return NO;
         //        }
-        
-        
-        
-        
-        
+
         if([self.userTf.text hasSuffix:@"_"] || [self.userTf.text hasPrefix:@"_"])
         {
             [DCFStringUtil showNotice:@"用户名不能以下划线开头或结尾"];
@@ -456,61 +452,36 @@
     {
         [self.userTf resignFirstResponder];
         
-        //校验是否是手机注册
+        //离框校验手机号是否已注册
         if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
         {
             phoneOrUserName = YES;
             
-            NSString *time = [DCFCustomExtra getFirstRunTime];
-            NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
-            NSString *token = [DCFCustomExtra md5:string];
-            
-            NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@",self.userTf.text,token];
-            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCheckPhoneTag delegate:self];
-            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/CheckPhone.html?"];
-            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            [self RegisterByMobile];
         }
         else
         {
+            //离框校验用户名是否已注册
             phoneOrUserName = NO;
  
-            NSString *time = [DCFCustomExtra getFirstRunTime];
-            
-            NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
-            
-            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
-       
-            NSString *token = [DCFCustomExtra md5:string];
-            
-            NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
-            
-            NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
-            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
-            
-            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            [self RegisterByUserName];
         }
         [self checkStatus];
     }
-    
-    
 }
 
 #pragma mark - 纯字母
 -(BOOL)PureLetters:(NSString*)str
 {
-    
-    for(int i=0;i<str.length;i++){
-        
+    for(int i=0;i<str.length;i++)
+    {
         unichar c=[str characterAtIndex:i];
         
         if((c<'A'||c>'Z')&&(c<'a'||c>'z'))
             
             return NO;
-        
     }
-    
     return YES;
-    
 }
 
 - (BOOL)isAllNum:(NSString *)string
@@ -527,44 +498,57 @@
     return YES;
 }
 
+//校验是否是手机注册
+-(void)RegisterByMobile
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@",self.userTf.text,token];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCheckPhoneTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/CheckPhone.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
+
+//校验是否是用户名注册
+-(void)RegisterByUserName
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
+    
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
+    
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
+    
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
+
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
     if(textField == self.userTf)
     {
         [self.userTf resignFirstResponder];
         
-        //校验是否是手机注册
+        //校验手机号是否已注册
         if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
         {
             phoneOrUserName = YES;
             
-            NSString *time = [DCFCustomExtra getFirstRunTime];
-            NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
-            NSString *token = [DCFCustomExtra md5:string];
-            
-            NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@",self.userTf.text,token];
-            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCheckPhoneTag delegate:self];
-            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/CheckPhone.html?"];
-            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            [self RegisterByMobile];
         }
-        else
+        else //校验用户名是否已注册
         {
             phoneOrUserName = NO;
             
-            NSString *time = [DCFCustomExtra getFirstRunTime];
-            
-            NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
-            
-            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
-            
-            NSString *token = [DCFCustomExtra md5:string];
-            
-            NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
-            
-            NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
-            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
-            
-            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            [self RegisterByUserName];
         }
         [self checkStatus];
     }
@@ -580,8 +564,7 @@
     return YES;
 }
 
-
-
+//注册按钮
 - (void) regester
 {
     if([self.userTf isFirstResponder])

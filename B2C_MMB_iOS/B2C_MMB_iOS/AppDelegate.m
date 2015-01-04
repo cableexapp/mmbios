@@ -264,6 +264,7 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#pragma mark - 修改测试
     //检测是否第一次安装，还是第一次启动
     [self isFirstOpen];
     

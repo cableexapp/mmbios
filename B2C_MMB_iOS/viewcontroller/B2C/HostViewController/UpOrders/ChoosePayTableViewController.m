@@ -207,15 +207,18 @@
     [label_1 setFont:[UIFont systemFontOfSize:13]];
     [view addSubview:label_1];
     
+    UILabel *orderLabel = [[UILabel alloc] init];
+    orderLabel.frame = CGRectMake(60, label_1.frame.origin.y + label_1.frame.size.height, 67, 30);
+    orderLabel.text = @"订单金额:";
+    orderLabel.textColor = [UIColor blackColor];
+    orderLabel.font = [UIFont systemFontOfSize:15];
+    [view addSubview:orderLabel];
     
-    
-    UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(60, label_1.frame.origin.y + label_1.frame.size.height, 250, 30)];
-    NSString *s = [NSString stringWithFormat:@"订单金额:¥ %@",myTotal];
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:s];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 8)];
+    UILabel *label_3 = [[UILabel alloc] initWithFrame:CGRectMake(127, label_1.frame.origin.y + label_1.frame.size.height,ScreenWidth-137, 30)];
+    NSString *s = [NSString stringWithFormat:@"¥ %@",myTotal];
     label_3.font = [UIFont systemFontOfSize:15];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(8, s.length-8)];
-    [label_3 setAttributedText:str];
+    label_3.textColor = [UIColor redColor];
+    label_3.text = s;
     [view addSubview:label_3];
     
     return view;

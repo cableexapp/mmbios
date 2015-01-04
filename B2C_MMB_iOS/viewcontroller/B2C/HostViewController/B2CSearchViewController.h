@@ -7,7 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DCFConnectionUtil.h"
+#import "iflyMSC/IFlyRecognizerViewDelegate.h"
+#import <sqlite3.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface B2CSearchViewController : UIViewController
+@interface B2CSearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,ConnectionDelegate,IFlyRecognizerViewDelegate>
+{
+    DCFConnectionUtil *conn;
+    
+    IFlyRecognizerView *_iflyRecognizerView;
+    
+    NSString *tempSearchText;
+}
+
+@property(nonatomic,strong) NSString *tempSearchText;
 
 @end

@@ -23,10 +23,7 @@
 #import "BPush.h"
 #import "MobClick.h"
 #import "LoginNaviViewController.h"
-
 #import <AlipaySDK/AlipaySDK.h>
-
-
 
 #define SUPPORT_IOS8 0
 
@@ -85,28 +82,22 @@ NSString *strUserId = @"";
         return;
     
     NetworkStatus netStatus = [curReach currentReachabilityStatus];
-    switch (netStatus) {
+    switch (netStatus)
+    {
         case NotReachable:  //无网络
         {
             [DCFStringUtil showNotice:@"似乎断开了互联网连接"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"netErrorMessage" object:nil];
-            
-            //            curNetType=NETWORK_NO;
-            //            NSLog(@"%@:NotReachable",NSStringFromSelector(_cmd));
         }
             break;
         case ReachableViaWWAN:  //使用3g/gprs网络
         {
-            //            curNetType=NETWORK_3G;
-            //            NSLog(@"%@:ReachableViaWWAN 3g",NSStringFromSelector(_cmd));
             [self reConnect];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NetisConnect" object:nil];
         }
             break;
         case ReachableViaWiFi:  //使用wifi网络
         {
-            //            curNetType=NETWORK_WIFI;
-            //            NSLog(@"%@:ReachableViaWiFi",NSStringFromSelector(_cmd));
             [self reConnect];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NetisConnect" object:nil];
         }
@@ -114,7 +105,6 @@ NSString *strUserId = @"";
         default:
             break;
     }
-    
 }
 
 #pragma mark - 屏幕旋转
@@ -153,6 +143,7 @@ NSString *strUserId = @"";
 
 - (void) onMethod:(NSString*)method response:(NSDictionary*)data
 {
+    
     if ([BPushRequestMethod_Bind isEqualToString:method])
     {
         NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
@@ -188,7 +179,8 @@ NSString *strUserId = @"";
     //    if([_key2 isEqualToString:memberid])
     //    {
     
-    if (application.applicationState == UIApplicationStateActive) {
+    if (application.applicationState == UIApplicationStateActive)
+    {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
                                                             message:pushTitle
                                                            delegate:self
@@ -220,8 +212,6 @@ NSString *strUserId = @"";
     {
 
     }
-    
-    
     [BPush handleNotification:userInfo];
 }
 
@@ -229,7 +219,6 @@ NSString *strUserId = @"";
 #if SUPPORT_IOS8
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
-    //register to receive notifications
     [application registerForRemoteNotifications];
 }
 #endif
@@ -237,7 +226,7 @@ NSString *strUserId = @"";
 - (void)onlineConfigCallBack:(NSNotification *)note
 {
     
-    //    NSLog(@"online config has fininshed and note = %@", note.userInfo);
+    //NSLog(@"online config has fininshed and note = %@", note.userInfo);
 }
 
 - (void)umengTrack
@@ -286,11 +275,13 @@ NSString *strUserId = @"";
     
     [application setApplicationIconBadgeNumber:0];
 #if SUPPORT_IOS8
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
         UIUserNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
-    }else
+    }
+    else
 #endif
     {
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
@@ -763,9 +754,8 @@ NSString *strUserId = @"";
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
-    UILocalNotification *_localNotification;
-    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
+    UILocalNotification *_localNotification;
     if (!_localNotification)
     {
         _localNotification = [[UILocalNotification alloc] init];
@@ -785,14 +775,6 @@ NSString *strUserId = @"";
         [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
         NSLog(@"running in the background");
     }
-    //        if (_localNotification)
-    //        {
-    //            [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    //            return;
-    //        }
-    
-    
-    //    });
     self.appDelegate.pushChatView = @"push";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
 }

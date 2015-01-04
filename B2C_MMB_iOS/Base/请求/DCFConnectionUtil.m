@@ -268,6 +268,7 @@
     NSError *error;
 //    NSString *resultStr = [[NSString alloc] initWithData:_dtReviceData encoding:NSUTF8StringEncoding];
 //    NSLog(@"result str:%@",resultStr);
+    
     NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:_dtReviceData options:NSJSONReadingMutableLeaves error:&error];
 
     ResultCode theResultCode = RS_Error;

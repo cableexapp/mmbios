@@ -339,7 +339,6 @@
 {
     if(URLTag == URLLoginTag)
     {
-        NSLog(@"%@",dicRespon);
         if(HUD)
         {
             [HUD hide:YES];

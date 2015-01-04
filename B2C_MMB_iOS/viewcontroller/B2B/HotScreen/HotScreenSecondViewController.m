@@ -102,7 +102,6 @@
 //        NSString *userName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
     }
-    NSLog(@"%@",userName);
     return userName;
     
 }
@@ -149,7 +148,6 @@
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubHotType.html?"];
     
-    NSLog(@"%@",urlString);
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 

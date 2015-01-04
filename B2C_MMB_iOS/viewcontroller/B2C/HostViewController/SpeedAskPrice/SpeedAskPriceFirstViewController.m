@@ -520,7 +520,8 @@
 - (NSString *) getUserName
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
-    userName = [DCFCustomExtra UTF8Encoding:userName];
+//    userName = [DCFCustomExtra UTF8Encoding:userName];
+    userName = [userName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
     if([DCFCustomExtra validateString:userName] == NO)
     {
@@ -626,14 +627,13 @@
     }
     else
     {
-//        contentStr = [contentStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        contentStr = [contentStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
 //    loginid,token,memberid,membername,phone(联系电话),linkman(联系人),content(内容)
     NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@&loginid=%@",[self getMemberId],token,[self getUserName],telStr,[self getUserName],contentStr,@"3",loginid];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2BAppRequest/SubOem.html?",strRequest];
     
-    NSLog(@"urlString = %@",urlString);
     
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
     

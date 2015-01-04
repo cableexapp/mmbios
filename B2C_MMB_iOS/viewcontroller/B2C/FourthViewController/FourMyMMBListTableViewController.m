@@ -861,7 +861,7 @@
         [view insertSubview:backView belowSubview:self.photoBtn];
         
         
-#pragma mark - UTF8转中文
+#pragma mark - UTF8解码
         NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]);
         NSString *userName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSLog(@"%@",userName);

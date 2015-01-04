@@ -540,8 +540,6 @@
 
 -(void)procesPic:(NSMutableArray*)imgarray
 {
-    
-    NSLog(@"procesPic++++++++++++++++++");
     if(imgarray.count == 0 || [imgarray isKindOfClass:[NSNull class]])
     {
         
@@ -628,7 +626,7 @@
     }
     else
     {
-        contentStr = [contentStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//        contentStr = [contentStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     }
 //    loginid,token,memberid,membername,phone(联系电话),linkman(联系人),content(内容)
     NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@&membername=%@&phone=%@&linkman=%@&content=%@&source=%@&loginid=%@",[self getMemberId],token,[self getUserName],telStr,[self getUserName],contentStr,@"3",loginid];

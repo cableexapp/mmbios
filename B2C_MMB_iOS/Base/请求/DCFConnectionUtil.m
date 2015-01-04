@@ -40,7 +40,8 @@
 //异步请求数据,strUrl表示域名,strPostBody表示上传的参数,theMethod表示请求方式
 - (void)getResultFromUrlString:(NSString *)strUrl postBody:(NSString *)strPostBody method:(URLMethod)theMethod
 {
-    strUrl = [strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+#pragma mark - UTF8编码
+//    strUrl = [strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //登录
     if(self.LogIn == YES)
     {

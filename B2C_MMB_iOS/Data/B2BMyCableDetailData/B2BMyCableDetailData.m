@@ -26,13 +26,13 @@
         _cableOrderTime = [DCFCustomExtra nsdateToString:confromTimesp];
     }
     
-    if([[dic objectForKey:@"items"] count] == 0 || [[dic objectForKey:@"items"] isKindOfClass:[NSNull class]])
+    if([[dic objectForKey:@"items_logistics"] count] == 0 || [[dic objectForKey:@"items_logistics"] isKindOfClass:[NSNull class]])
     {
         _myItems = [[NSMutableArray alloc] init];
     }
     else
     {
-        _myItems = [[NSArray alloc] initWithArray:[dic objectForKey:@"items"]];
+        _myItems = [[NSArray alloc] initWithArray:[dic objectForKey:@"items_logistics"]];
     }
     
     _ordernum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ordernum"]];

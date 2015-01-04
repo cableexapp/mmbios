@@ -281,7 +281,22 @@
             NSString *theModel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"model"]];
             NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
             
-            NSString *theNumber = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"num"],theUnit];
+            NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
+            NSString *testNum = nil;
+            for(int i=0;i<NumBer.length;i++)
+            {
+                char c = [NumBer characterAtIndex:i];
+                if(c == '.')
+                {
+                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                    break;
+                }
+                else if(i == NumBer.length-1)
+                {
+                    testNum = NumBer;
+                }
+            }
+            NSString *theNumber = [NSString stringWithFormat:@"%@%@",testNum,theUnit];
             
             NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
             
@@ -545,7 +560,22 @@
                     NSString *theModel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"model"]];
                     NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
                     
-                    NSString *theNumber = [NSString stringWithFormat:@"%@%@",[dic objectForKey:@"num"],theUnit];
+                    NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
+                    NSString *testNum = nil;
+                    for(int i=0;i<NumBer.length;i++)
+                    {
+                        char c = [NumBer characterAtIndex:i];
+                        if(c == '.')
+                        {
+                            testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:1 WithBackIndex:1];
+                            break;
+                        }
+                        else if(i == NumBer.length-1)
+                        {
+                            testNum = NumBer;
+                        }
+                    }
+                    NSString *theNumber = [NSString stringWithFormat:@"%@%@",testNum,theUnit];
                     
                     NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
                     
@@ -585,6 +615,20 @@
 
                     }
                     
+           
+                    CGSize priceSize;
+                    if(thePrice.length == 0 || [thePrice isKindOfClass:[NSNull class]])
+                    {
+                        [priceLabel setFrame:CGRectMake(cellWidth-10-cellWidth/3,  orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  (cellWidth-20)/3, 0)];
+                    }
+                    else
+                    {
+                        NSString *s = [NSString stringWithFormat:@"¥%@元/%@",thePrice,theUnit];
+                        priceSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
+                        [priceLabel setFrame:CGRectMake(cellWidth-10-priceSize.width,   orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  priceSize.width, 30)];
+                        [priceLabel setText:s];
+                    }
+                    
                     if(theTime.length == 0 || [theTime isKindOfClass:[NSNull class]])
                     {
                         [timeLabel setFrame:CGRectMake(numLabel.frame.origin.x + numLabel.frame.size.width, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, (cellWidth-20)/3, 0)];
@@ -593,21 +637,9 @@
                     {
                         NSString *s = [NSString stringWithFormat:@"交货期: %@天",theTime];
                         CGSize timeSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
-                        [timeLabel setFrame:CGRectMake(numLabel.frame.origin.x + numLabel.frame.size.width+10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, timeSize.width, 30)];
+                        [timeLabel setFrame:CGRectMake(cellWidth-10-priceSize.width-timeSize.width-10, orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height, timeSize.width, 30)];
                         [timeLabel setText:s];
-
-                    }
-                    
-                    if(thePrice.length == 0 || [thePrice isKindOfClass:[NSNull class]])
-                    {
-                        [priceLabel setFrame:CGRectMake(cellWidth-10-cellWidth/3,  orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  (cellWidth-20)/3, 0)];
-                    }
-                    else
-                    {
-                        NSString *s = [NSString stringWithFormat:@"¥ %@元/%@",thePrice,theUnit];
-                        CGSize priceSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 30)];
-                        [priceLabel setFrame:CGRectMake(cellWidth-10-cellWidth/3,   orderNumLabel.frame.origin.y + orderNumLabel.frame.size.height,  priceSize.width, 30)];
-                        [priceLabel setText:s];
+                        
                     }
                     
                     if(theSpec.length == 0 || [theSpec isKindOfClass:[NSNull class]])

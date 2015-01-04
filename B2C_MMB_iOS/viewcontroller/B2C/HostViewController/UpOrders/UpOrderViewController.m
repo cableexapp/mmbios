@@ -1294,8 +1294,23 @@
                 }
                 [priceLabel setFont:[UIFont systemFontOfSize:12]];
                 
+                NSString *NumBer = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"num"]];
+                NSString *testNum = nil;
+                for(int i=0;i<NumBer.length;i++)
+                {
+                    char c = [NumBer characterAtIndex:i];
+                    if(c == '.')
+                    {
+                        testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                        break;
+                    }
+                    else if(i == NumBer.length-1)
+                    {
+                        testNum = NumBer;
+                    }
+                }
                 
-                NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[itemDic objectForKey:@"num"]]];
+                NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",testNum]];
                 UILabel *countlabel = nil;
                 if(number.length == 0)
                 {

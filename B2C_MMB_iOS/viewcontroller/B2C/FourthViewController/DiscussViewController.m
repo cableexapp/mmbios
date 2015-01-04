@@ -65,7 +65,8 @@
     [dic setObject:self.textView.text forKey:@"comment"];
     [dic setObject:[NSString stringWithFormat:@"%d",isAnonymousFlag] forKey:@"isAnonymous"];
     
-    
+    NSLog(@"是否匿名 = %@",[dic objectForKey:@"isAnonymous"]);
+                                                                                                          
     if(self.itemArray.count != 0)
     {
         [self.itemArray removeAllObjects];
@@ -694,6 +695,7 @@
 
 - (IBAction)showOrHideBtnClick:(id)sender
 {
+    NSLog(@"评价+++++++++++");
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     isAnonymousFlag = btn.selected;
@@ -702,18 +704,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

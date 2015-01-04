@@ -383,7 +383,7 @@
     if (str.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_mmb" object:nil];
-        NSLog(@"买卖宝---首页通知");
+//        NSLog(@"买卖宝---首页通知");
     }
     
     self.tableView.scrollEnabled = YES;

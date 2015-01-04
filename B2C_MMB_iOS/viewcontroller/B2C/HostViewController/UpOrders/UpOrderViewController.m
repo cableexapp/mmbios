@@ -1141,6 +1141,8 @@
 //                [totalLabel setText:smallCal];
 //                [totalLabel setFont:[UIFont systemFontOfSize:12]];
                 
+                /*丁瑞-订单确认页面修改*/
+                
                 NSString *color = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"颜色:%@",data.colorName]];
                 CGSize size_color = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:color WithSize:CGSizeMake(MAXFLOAT, 20)];
                 UILabel *colorLabel = [[UILabel alloc] init];

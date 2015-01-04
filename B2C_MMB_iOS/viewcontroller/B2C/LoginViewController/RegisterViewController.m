@@ -57,6 +57,9 @@
         [timer_tel invalidate];
         timer_tel = nil;
     }
+    self.userTf.text = nil;
+    self.secTf.text = nil;
+    self.sureSecTf.text = nil;
     [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     timeCount_tel = 60;
 }
@@ -284,9 +287,6 @@
 
 - (BOOL) checkUseAndSec:(UITextField *) sender
 {
-    
-    
-    
     if(sender == self.userTf)
     {
         int userTfLength = [self convertToInt:self.userTf.text];
@@ -473,9 +473,25 @@
         else
         {
             phoneOrUserName = NO;
+ 
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
+       
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
+            
+            NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
+            
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         }
         [self checkStatus];
     }
+    
     
 }
 
@@ -534,6 +550,21 @@
         else
         {
             phoneOrUserName = NO;
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
+            
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
+            
+            NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
+            
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         }
         [self checkStatus];
     }
@@ -713,7 +744,16 @@
                 }
                 else
                 {
-                    [DCFStringUtil showNotice:msg];
+
+//                    [DCFStringUtil showNotice:msg];
+                    
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                        message:msg
+                                                                       delegate:self
+                                                              cancelButtonTitle:nil
+                                                              otherButtonTitles:nil];
+                    [alertView show];
+                    [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.5];
                 }
             }
             else if (result == 1)

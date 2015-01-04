@@ -192,18 +192,12 @@
     self.sureBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:144/255.0 blue:1/255.0 alpha:1.0];
     [self.sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-
-    
     myCableDetailTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableDetailTableViewController"];
     myCableDetailTableViewController.delegate = self;
     [self addChildViewController:myCableDetailTableViewController];
     myCableDetailTableViewController.myOrderid = _myOrderNumber;
     myCableDetailTableViewController.view.frame = self.tableSubView.bounds;
     [self.tableSubView addSubview:myCableDetailTableViewController.view];
-    
-    
-    
- 
 }
 
 - (void)didReceiveMemoryWarning

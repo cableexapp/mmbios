@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "B2BMyInquiryListFastData.h"
 #import "DCFConnectionUtil.h"
+#import "MBProgressHUD.h"
 
-@interface MyFastInquiryOrder : UIViewController<ConnectionDelegate>
+@interface MyFastInquiryOrder : UIViewController<ConnectionDelegate,MBProgressHUDDelegate>
 {
     DCFConnectionUtil *conn;
+    
+    MBProgressHUD *HUD;
 }
 @property (strong,nonatomic) B2BMyInquiryListFastData *fastData;
 

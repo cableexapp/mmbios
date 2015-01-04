@@ -1273,6 +1273,21 @@
                 colorLabel.font = [UIFont systemFontOfSize:12];
 
                 
+                NSString *NumBer = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"num"]];
+                NSString *testNum = nil;
+                for(int i=0;i<NumBer.length;i++)
+                {
+                    char c = [NumBer characterAtIndex:i];
+                    if(c == '.')
+                    {
+                        testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                        break;
+                    }
+                    else if(i == NumBer.length-1)
+                    {
+                        testNum = NumBer;
+                    }
+                }
                 
                 NSString *price = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"price"]];
                 CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"¥ %@",price] WithSize:CGSizeMake(MAXFLOAT, 20)];

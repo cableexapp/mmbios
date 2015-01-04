@@ -205,17 +205,14 @@
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
     [self.agreeBtn setSelected:YES];
     
-    UIButton *agrementBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    agrementBtn.frame = CGRectMake(90, 324, 210, 30);
-    
-//    agrementBtn.frame = CGRectMake(90,self.agreeBtn.frame.origin.y, 210, 30);
-    
-    [agrementBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-    [agrementBtn setTitle:@"《电缆买卖宝用户注册协议》" forState:UIControlStateNormal];
-//    agrementBtn.backgroundColor = [UIColor redColor];
-    [agrementBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-    [agrementBtn addTarget:self action:@selector(agreementBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:agrementBtn];
+//    NSLog(@"%f",self.agreeBtn.frame.origin.y);
+//    UIButton *agrementBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [agrementBtn setFrame:CGRectMake(90, self.agreeBtn.frame.origin.y, 210, 30)];
+//    [agrementBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+//    [agrementBtn setTitle:@"《电缆买卖宝用户注册协议》" forState:UIControlStateNormal];
+//    [agrementBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+//    [agrementBtn addTarget:self action:@selector(agreementBtn) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:agrementBtn];
 }
 
 
@@ -225,13 +222,17 @@
     btn.selected = !btn.selected;
     [self.agreeBtn setSelected:!btn.selected];
 }
-
-- (void)agreementBtn
+- (IBAction)agreeMentBtnClick:(id)sender
 {
     [self setHidesBottomBarWhenPushed:YES];
     RegisterProvisionViewController *registerVC = [[RegisterProvisionViewController alloc] init];
     [self.navigationController pushViewController:registerVC animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
+}
+
+- (void)agreementBtn
+{
+
 }
 
 - (void) tap:(UITapGestureRecognizer *) sender
@@ -250,21 +251,7 @@
     }
 }
 
-- (void) textFieldDidBeginEditing:(UITextField *)textField
-{
-    if(textField == self.secTf || textField == self.sureSecTf)
-    {
-        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
-        {
-            phoneOrUserName = YES;
-        }
-        else
-        {
-            phoneOrUserName = NO;
-        }
-        [self checkStatus];
-    }
-}
+
 
 #pragma mark - 输入框长度
 - (int)convertToInt:(NSString*)strtemp
@@ -445,30 +432,7 @@
     
 }
 
-- (void) textFieldDidEndEditing:(UITextField *)textField
-{
-    [self checkUseAndSec:textField];
-    if(textField == self.userTf)
-    {
-        [self.userTf resignFirstResponder];
-        
-        //离框校验手机号是否已注册
-        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
-        {
-            phoneOrUserName = YES;
-            
-            [self RegisterByMobile];
-        }
-        else
-        {
-            //离框校验用户名是否已注册
-            phoneOrUserName = NO;
- 
-            [self RegisterByUserName];
-        }
-        [self checkStatus];
-    }
-}
+
 
 #pragma mark - 纯字母
 -(BOOL)PureLetters:(NSString*)str
@@ -501,6 +465,14 @@
 //校验是否是手机注册
 -(void)RegisterByMobile
 {
+    if([DCFCustomExtra validateString:self.userTf.text] == NO || [DCFCustomExtra validateString:self.secTf.text] == NO || [DCFCustomExtra validateString:self.sureSecTf.text] == NO)
+    {
+        justValidate = YES;
+    }
+    else
+    {
+        justValidate = NO;
+    }
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -515,6 +487,14 @@
 //校验是否是用户名注册
 -(void)RegisterByUserName
 {
+    if([DCFCustomExtra validateString:self.userTf.text] == NO || [DCFCustomExtra validateString:self.secTf.text] == NO || [DCFCustomExtra validateString:self.sureSecTf.text] == NO)
+    {
+        justValidate = YES;
+    }
+    else
+    {
+        justValidate = NO;
+    }
     NSString *time = [DCFCustomExtra getFirstRunTime];
     
     NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
@@ -531,21 +511,73 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField == self.secTf || textField == self.sureSecTf)
+    {
+        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
+        {
+            phoneOrUserName = YES;
+        }
+        else
+        {
+            phoneOrUserName = NO;
+        }
+        [self checkStatus];
+    }
+}
+
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
+//    if(textField == self.userTf)
+//    {
+//        [self.userTf resignFirstResponder];
+//        
+//        //校验手机号是否已注册
+//        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
+//        {
+//            phoneOrUserName = YES;
+//            
+//            [self RegisterByMobile];
+//        }
+//        else //校验用户名是否已注册
+//        {
+//            phoneOrUserName = NO;
+//            
+//            [self RegisterByUserName];
+//        }
+//        [self checkStatus];
+//    }
+//    if(textField == self.secTf)
+//    {
+//        [self.secTf resignFirstResponder];
+//    }
+//    
+//    if(textField == self.sureSecTf)
+//    {
+//        [self.sureSecTf resignFirstResponder];
+//    }
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void) textFieldDidEndEditing:(UITextField *)textField
+{
+    [self checkUseAndSec:textField];
     if(textField == self.userTf)
     {
         [self.userTf resignFirstResponder];
         
-        //校验手机号是否已注册
+        //离框校验手机号是否已注册
         if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
         {
             phoneOrUserName = YES;
             
             [self RegisterByMobile];
         }
-        else //校验用户名是否已注册
+        else
         {
+            //离框校验用户名是否已注册
             phoneOrUserName = NO;
             
             [self RegisterByUserName];
@@ -561,9 +593,7 @@
     {
         [self.sureSecTf resignFirstResponder];
     }
-    return YES;
 }
-
 //注册按钮
 - (void) regester
 {
@@ -595,23 +625,23 @@
         [DCFStringUtil showNotice:@"您确定不同意电缆买卖宝用户注册协议吗"];
         return;
     }
-    if(self.userTf.text.length == 0)
+    if([DCFCustomExtra validateString:self.userTf.text] == NO)
     {
         [DCFStringUtil showNotice:@"请输入账号"];
         return;
     }
-    if(self.secTf.text.length == 0)
+    if([DCFCustomExtra validateString:self.secTf.text] == NO)
     {
         [DCFStringUtil showNotice:@"请输入密码"];
         return;
     }
     
-    if(self.sureSecTf.text.length == 0 && phoneOrUserName == YES)
+    if([DCFCustomExtra validateString:self.userTf.text] == NO && phoneOrUserName == YES)
     {
         [DCFStringUtil showNotice:@"请输入验证码"];
         return;
     }
-    if(self.sureSecTf.text.length == 0 && phoneOrUserName == NO)
+    if([DCFCustomExtra validateString:self.secTf.text] == NO && phoneOrUserName == NO)
     {
         [DCFStringUtil showNotice:@"请确认密码"];
         return;
@@ -702,10 +732,7 @@
     
     if(URLTag == URLRegesterTag)
     {
-        if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
-        {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
-        }
+
         NSDictionary *dic = nil;
         
         [HUD hide:YES];
@@ -727,9 +754,6 @@
                 }
                 else
                 {
-
-//                    [DCFStringUtil showNotice:msg];
-                    
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
                                                                         message:msg
                                                                        delegate:self
@@ -741,10 +765,23 @@
             }
             else if (result == 1)
             {
-                dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.userTf.text,@"registerAccount",self.secTf.text,@"registerSecrect", nil];
-                [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
-                
-                [self.navigationController popViewControllerAnimated:YES];
+                if(justValidate == YES)
+                {
+                    
+                }
+                else
+                {
+                    if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
+                    {
+                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
+                    }
+                    
+                    dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.userTf.text,@"registerAccount",self.secTf.text,@"registerSecrect", nil];
+                    [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            
             }
         }
         
@@ -752,32 +789,53 @@
     
     if(URLTag == URLCheckPhoneTag)
     {
-        if(result == 0)
+        NSDictionary *dic = nil;
+
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
         {
-            if([DCFCustomExtra validateString:msg] == YES)
-            {
-                //                [DCFStringUtil showNotice:msg];
-                
-                remindMessage = msg;
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-                                                                    message:msg
-                                                                   delegate:self
-                                                          cancelButtonTitle:nil
-                                                          otherButtonTitles:nil];
-                [alertView show];
-                [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.5];
-            }
-            else
-            {
-                [DCFStringUtil showNotice:@"此用户已经存在"];
-            }
-            isRegisterFlag = 1;
+            dic = [[NSDictionary alloc] init];
         }
         else
         {
-            isRegisterFlag = 2;
+            if(result == 0)
+            {
+                dic = [[NSDictionary alloc] init];
+
+                if([DCFCustomExtra validateString:msg] == YES)
+                {
+                    remindMessage = msg;
+                    
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                        message:msg
+                                                                       delegate:self
+                                                              cancelButtonTitle:nil
+                                                              otherButtonTitles:nil];
+                    [alertView show];
+                    [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.5];
+                }
+                else
+                {
+                    [DCFStringUtil showNotice:@"此用户已经存在"];
+                }
+                isRegisterFlag = 1;
+            }
+            else if(result == 1)
+            {
+                isRegisterFlag = 2;
+                if(justValidate == YES)
+                {
+                    
+                }
+                else
+                {
+                    dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.userTf.text,@"registerAccount",self.secTf.text,@"registerSecrect", nil];
+                    [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }
         }
+
     }
 }
 

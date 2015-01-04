@@ -16,6 +16,7 @@
 #import "MyShoppingListViewController.h"
 #import "B2CShoppingListViewController.h"
 #import "ShoppingHostViewController.h"
+#import "HostTableViewController.h"
 
 @interface ChoosePayTableViewController ()
 {
@@ -73,6 +74,11 @@
         {
             [self.navigationController popToViewController:vc
                                                   animated:YES];
+            return;
+        }
+        else if ([vc isKindOfClass:[HostTableViewController class]])
+        {
+            [self.navigationController popToViewController:vc animated:YES];
             return;
         }
     }

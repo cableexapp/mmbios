@@ -68,6 +68,30 @@
     tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+//    if(conn)
+//    {
+//        [conn stopConnection];
+//        conn = nil;
+//    }
+//    if(labelArray && labelArray.count != 0)
+//    {
+//        [labelArray removeAllObjects];
+//        labelArray = nil;
+//    }
+//    if(textViewArray && textViewArray.count != 0)
+//    {
+//        [textViewArray removeAllObjects];
+//        textViewArray = nil;
+//    }
+    if([headTV isFirstResponder])
+    {
+        [headTV resignFirstResponder];
+    }
+}
+
 
 - (void)viewDidLoad
 {

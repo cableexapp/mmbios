@@ -325,7 +325,7 @@
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:self.naviTitle];
     self.navigationItem.titleView = top;
@@ -431,10 +431,12 @@
         }
         if(i == 6)
         {
-            tf = [[DCFMyTextField alloc] initWithFrame:CGRectMake(10, 250, 300, 30)];
+            tf = [[DCFMyTextField alloc] initWithFrame:CGRectMake(10, 250, 300, 35)];
             [tf setDelegate:self];
             [tf setReturnKeyType:UIReturnKeyDone];
-
+            tf.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+            tf.layer.cornerRadius = 5;
+            tf.layer.borderWidth = 1;
 //            [tf setText:_tfContent];
             [tf setPlaceholder:_tfContent];
             
@@ -456,12 +458,11 @@
         {
             sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
-            [sureBtn setFrame:CGRectMake((320-200)/2, billContentLabel.frame.origin.y+billContentLabel.frame.size.height+20, 200, 50)];
-            [sureBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
+            [sureBtn setFrame:CGRectMake((320-200)/2, billContentLabel.frame.origin.y+billContentLabel.frame.size.height+20, 200,50)];
+            [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
-            sureBtn.layer.borderColor = MYCOLOR.CGColor;
-            sureBtn.layer.borderWidth = 1.0f;
-            sureBtn.layer.cornerRadius = 5.0f;
+            sureBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+            sureBtn.layer.cornerRadius = 4.0f;
             [self.view addSubview:sureBtn];
         }
     }
@@ -557,7 +558,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

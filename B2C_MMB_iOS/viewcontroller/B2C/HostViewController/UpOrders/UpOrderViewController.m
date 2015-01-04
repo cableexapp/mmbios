@@ -1129,17 +1129,8 @@
                 CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
                 UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-10, 160, 60)];
                 [titleLabel setText:str];
-//                titleLabel.backgroundColor = [UIColor redColor];
                 [titleLabel setFont:[UIFont systemFontOfSize:12]];
                 [titleLabel setNumberOfLines:0];
-                
-//                NSString *numberr = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",data.num]];
-//                double money = [numberr intValue] * [data.price doubleValue];
-//                NSString *smallCal = [NSString stringWithFormat:@"合计: %@",[DCFCustomExtra notRounding:money afterPoint:2]];
-//                CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
-//                UILabel *totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_3.width, 60, size_3.width, 20)];
-//                [totalLabel setText:smallCal];
-//                [totalLabel setFont:[UIFont systemFontOfSize:12]];
                 
                 /*丁瑞-订单确认页面修改*/
                 
@@ -1178,7 +1169,6 @@
                 [cell.contentView addSubview:titleLabel];
                 [cell.contentView addSubview:priceLabel];
                 [cell.contentView addSubview:countlabel];
-//                [cell.contentView addSubview:totalLabel];
                 [cell.contentView addSubview:colorLabel];
             }
             else
@@ -1236,8 +1226,6 @@
                         [cell.contentView addSubview:btn];
                         
                     }
-                    
-                    
                 }
             }
         }
@@ -1263,36 +1251,27 @@
                 CGSize size = CGSizeZero;
                 if(str.length == 0)
                 {
-                    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, iv.frame.origin.y, 220, 30)];
+                    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-10, 160, 30)];
                     [titleLabel setText:str];
                     
                 }
                 else
                 {
                     size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(220, MAXFLOAT)];
-                    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, iv.frame.origin.y, 220, size.height)];
+                    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, iv.frame.origin.y-10, 160,60)];
                     [titleLabel setText:str];
                     
                 }
                 [titleLabel setFont:[UIFont systemFontOfSize:12]];
                 [titleLabel setNumberOfLines:0];
                 
-                NSString *price = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"price"]];
-                UILabel *priceLabel = nil;
-                CGSize size_1 = CGSizeZero;
-                if(price.length == 0)
-                {
-                    priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, titleLabel.frame.origin.y + titleLabel.frame.size.height,40, 20)];
-                    [priceLabel setText:@""];
-                    //                        [priceLabel setFont:[UIFont systemFontOfSize:12]];
-                }
-                else
-                {
-                    size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:price WithSize:CGSizeMake(MAXFLOAT, 20)];
-                    priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, titleLabel.frame.origin.y + titleLabel.frame.size.height, size_1.width, 20)];
-                    [priceLabel setText:price];
-                }
-                [priceLabel setFont:[UIFont systemFontOfSize:12]];
+                NSString *color = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"颜色:%@",[itemDic objectForKey:@"colorName"]]];
+                CGSize size_color = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:color WithSize:CGSizeMake(MAXFLOAT, 20)];
+                UILabel *colorLabel = [[UILabel alloc] init];
+                colorLabel.frame = CGRectMake(ScreenWidth-size_color.width-10, 28, size_color.width, 20);
+                colorLabel.text = color;
+                colorLabel.font = [UIFont systemFontOfSize:12];
+
                 
                 NSString *NumBer = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"num"]];
                 NSString *testNum = nil;
@@ -1310,40 +1289,21 @@
                     }
                 }
                 
-                NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",testNum]];
-                UILabel *countlabel = nil;
-                if(number.length == 0)
-                {
-                    countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 5, priceLabel.frame.origin.y, 30, 20)];
-                    [countlabel setText:[NSString stringWithFormat:@"数量:%@",@""]];
-                }
-                else
-                {
-                    CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"×%@",number] WithSize:CGSizeMake(MAXFLOAT, 20)];
-                    countlabel = [[UILabel alloc] initWithFrame:CGRectMake(priceLabel.frame.origin.x + priceLabel.frame.size.width + 5, priceLabel.frame.origin.y, size_2.width, 20)];
-                    [countlabel setText:[NSString stringWithFormat:@"数量:%@",number]];
-                }
+                NSString *price = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"price"]];
+                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"¥ %@",price] WithSize:CGSizeMake(MAXFLOAT, 20)];
+                
+                UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-10-size_1.width,5, size_1.width, 20)];
+                [priceLabel setText:[NSString stringWithFormat:@"¥ %@",price]];
+                priceLabel.textColor = [UIColor redColor];
+                [priceLabel setFont:[UIFont systemFontOfSize:12]];
+                
+               
+                NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"数量: %@",[itemDic objectForKey:@"num"]]];
+                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:number WithSize:CGSizeMake(MAXFLOAT, 20)];
+                UILabel *countlabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-size_2.width-10,50, size_2.width, 20)];
+                [countlabel setText:number];
                 [countlabel setFont:[UIFont systemFontOfSize:12]];
-                
-                
-                double money = [number intValue] * [price doubleValue];
-                NSString *smallCal = [NSString stringWithFormat:@"合计:¥%@",[DCFCustomExtra notRounding:money afterPoint:2]];
-                UILabel *totalLabel = nil;
-                if(smallCal.length == 0)
-                {
-                    totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-30-30, countlabel.frame.origin.y, 30, 20)];
-                    [totalLabel setText:@""];
-                }
-                else
-                {
-                    CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:smallCal WithSize:CGSizeMake(MAXFLOAT, 20)];
-                    totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-30-size_3.width, countlabel.frame.origin.y, size_3.width, 20)];
-                    [totalLabel setText:smallCal];
-                }
-                [totalLabel setFont:[UIFont systemFontOfSize:12]];
-                
-                
-                
+ 
                 UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
                 //                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                 CGFloat height = size.height+size_1.height;
@@ -1361,7 +1321,7 @@
                 [cell.contentView addSubview:titleLabel];
                 [cell.contentView addSubview:priceLabel];
                 [cell.contentView addSubview:countlabel];
-                [cell.contentView addSubview:totalLabel];
+                [cell.contentView addSubview:colorLabel];
             }
             else
             {
@@ -1376,8 +1336,8 @@
                 }
                 else
                 {
-                    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 44)];
-                    //                    [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
+                    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 43, ScreenWidth, 1)];
+                    [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
                     [cell.contentView addSubview:view];
                     
                     NSString *str = nil;

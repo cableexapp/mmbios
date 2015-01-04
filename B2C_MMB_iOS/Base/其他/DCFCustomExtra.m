@@ -675,10 +675,12 @@
     return myStatus;
 }
 
-#pragma mark - UTF8转中文
+#pragma mark - UTF8解码
 + (NSString *) UTF8Encoding:(NSString *) str
 {
+    NSLog(@"str = %@",str);
     NSString *userName = [str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@",userName);
     return userName;
 }
 

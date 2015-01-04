@@ -319,10 +319,17 @@
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserLogin.html?"];
     NSString *des = [MCdes encryptUseDES:sec key:@"cableex_app*#!Key"];
     
-    
+    if([DCFCustomExtra validateString:app.baiduPushUserId] == NO)
+    {
+        app.baiduPushUserId = @"";
+    }
+    if([DCFCustomExtra validateString:app.channelId] == NO)
+    {
+        app.channelId = @"";
+    }
     
     NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",acc,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
-   
+    NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     conn.LogIn = YES;
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -332,7 +339,7 @@
 {
     if(URLTag == URLLoginTag)
     {
-        
+        NSLog(@"%@",dicRespon);
         if(HUD)
         {
             [HUD hide:YES];
@@ -381,8 +388,8 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLogin"];
            
 #pragma mark - UTF8编码
-            NSString *userName = [self.tf_Account.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"userName"];
+//            NSString *userName = [self.tf_Account.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName"];
             
             
             NSString *phone = [NSString stringWithFormat:@"%@",[iems objectForKey:@"phone"]];

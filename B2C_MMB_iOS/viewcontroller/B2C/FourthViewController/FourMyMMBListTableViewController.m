@@ -862,7 +862,9 @@
         
         
 #pragma mark - UTF8转中文
+        NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"]);
         NSString *userName = [[[NSUserDefaults standardUserDefaults] objectForKey:@"userName"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@",userName);
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(self.photoBtn.frame.origin.x +self.photoBtn.frame.size.width + 10, 30, 200, 30)];
         [label setTextAlignment:NSTextAlignmentLeft];
         if([DCFCustomExtra validateString:userName] == NO)

@@ -337,6 +337,7 @@
 		8B52C5031A392FD6005DC53D /* mob.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B52C5011A392FD6005DC53D /* mob.png */; };
 		8B52C5041A392FD6005DC53D /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B52C5021A392FD6005DC53D /* setting.png */; };
 		8B52C5061A396DE3005DC53D /* 购物车.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B52C5051A396DE3005DC53D /* 购物车.png */; };
+		8B5C040F1A58E10F002315A4 /* B2CSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C040E1A58E10F002315A4 /* B2CSearchViewController.m */; };
 		8B7549421A26FB2E00271985 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549411A26FB2E00271985 /* close.png */; };
 		8B7549441A27013600271985 /* chatBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549431A27013600271985 /* chatBtn.png */; };
 		8B7549461A270A4B00271985 /* shopPic.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549451A270A4B00271985 /* shopPic.png */; };
@@ -1405,6 +1406,8 @@
 		8B52C5011A392FD6005DC53D /* mob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mob.png; sourceTree = "<group>"; };
 		8B52C5021A392FD6005DC53D /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
 		8B52C5051A396DE3005DC53D /* 购物车.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "购物车.png"; sourceTree = "<group>"; };
+		8B5C040D1A58E10F002315A4 /* B2CSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CSearchViewController.h; sourceTree = "<group>"; };
+		8B5C040E1A58E10F002315A4 /* B2CSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CSearchViewController.m; sourceTree = "<group>"; };
 		8B7549411A26FB2E00271985 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		8B7549431A27013600271985 /* chatBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatBtn.png; sourceTree = "<group>"; };
 		8B7549451A270A4B00271985 /* shopPic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopPic.png; sourceTree = "<group>"; };
@@ -3222,6 +3225,8 @@
 				61B7108019FF3B53001CC3BD /* HostTableViewController.m */,
 				8BC2AD891A19B81F00E44BC2 /* SearchViewController.h */,
 				8BC2AD8A1A19B81F00E44BC2 /* SearchViewController.m */,
+				8B5C040D1A58E10F002315A4 /* B2CSearchViewController.h */,
+				8B5C040E1A58E10F002315A4 /* B2CSearchViewController.m */,
 				61B7108119FF3B53001CC3BD /* ShopHostPreTableViewController.h */,
 				61B7108219FF3B53001CC3BD /* ShopHostPreTableViewController.m */,
 				61B7108319FF3B53001CC3BD /* ShopHostTableViewController.h */,
@@ -5095,6 +5100,7 @@
 				8BA7C3191A10A93B00758B0F /* FaceBoard.m in Sources */,
 				8BC2ADA51A19F0E200E44BC2 /* Reachability.m in Sources */,
 				8BA7C2BA1A10A8DD00758B0F /* TURNSocket.m in Sources */,
+				8B5C040F1A58E10F002315A4 /* B2CSearchViewController.m in Sources */,
 				61E65DDF1A17815800E22E2E /* ModifyLogSecSuccessViewController.m in Sources */,
 				8BA7C2E21A10A8DD00758B0F /* GCDMulticastDelegate.m in Sources */,
 				617E52CC1A2AC0F600121C49 /* B2CHotSaleData.m in Sources */,

@@ -21,7 +21,9 @@
 #import "AliViewController.h"
 #import "DCFChenMoreCell.h"
 #import "DCFCustomExtra.h"
+#import "DCFTopLabel.h"
 #define GoodsDetail_URL @"http://mmb.fgame.com:8083"
+
 @interface MyCableOrderSearchViewController ()
 {
     UISearchBar *search;
@@ -92,13 +94,8 @@
     searchArray = [[NSMutableArray alloc] init];
     
     //导航栏标题
-    UILabel *naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(0,0,100, 44)];
-    naviTitle.textColor = [UIColor whiteColor];
-    naviTitle.backgroundColor = [UIColor clearColor];
-    naviTitle.font = [UIFont systemFontOfSize:19];
-    naviTitle.textAlignment = NSTextAlignmentCenter;
-    naviTitle.text = @"搜索家装线订单";
-    self.navigationItem.titleView = naviTitle;
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"搜索家装线订单"];
+    self.navigationItem.titleView = top;
     
     mySB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
     

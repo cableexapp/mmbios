@@ -389,7 +389,7 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆电线频道"];
     self.navigationItem.titleView = top;
     
     seqmethod = @"";

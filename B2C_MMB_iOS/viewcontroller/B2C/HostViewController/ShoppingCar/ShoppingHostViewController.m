@@ -285,7 +285,7 @@
     
     [self.view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆电线频道"];
     [top setTextColor:[UIColor whiteColor]];
     self.navigationItem.titleView = top;
     
@@ -396,12 +396,12 @@
         {
             return nil;
         }
-        [hotLabel setText:@"  热卖商品"];
+        [hotLabel setText:@"  热销商品"];
  
     }
     else if (section == 1)
     {
-        [hotLabel setText:@"  家装线主题馆"];
+        [hotLabel setText:@"  电线用途"];
     }
     [hotLabel setTextAlignment:NSTextAlignmentLeft];
     [hotLabel setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];

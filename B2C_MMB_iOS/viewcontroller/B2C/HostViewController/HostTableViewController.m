@@ -426,13 +426,11 @@ BOOL isPopShow = NO;
 
 -(void)goToHostVC_mmb:(NSNotification *)sender
 {
-    NSLog(@"主页响应-我的买卖宝通知");
    [self.tabBarController setSelectedIndex:0];
 }
 
 -(void)goToHostVC_more:(NSNotification *)sender
 {
-    NSLog(@"主页响应-更多通知");
     [self.tabBarController setSelectedIndex:0];
 }
 
@@ -630,6 +628,7 @@ BOOL isPopShow = NO;
 
 - (void) section1BtnClick:(UIButton *) sender
 {
+    
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -778,7 +777,7 @@ BOOL isPopShow = NO;
         {
             return nil;
         }
-        [headLabel setText:@"热门商品"];
+        [headLabel setText:@"热门电线"];
     }
     else if (section == 2)
     {

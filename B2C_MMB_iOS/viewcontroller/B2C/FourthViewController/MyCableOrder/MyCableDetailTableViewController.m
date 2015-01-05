@@ -720,9 +720,9 @@
                     {
                         if([DCFCustomExtra validateString:theInquiryFeature] == NO)
                         {
-                            [label setText:[NSString stringWithFormat:@"阻燃耐火:"]];
-                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+20+height_1, width*2-20, 20)];
-                            height_2 = 20;
+//                            [label setText:[NSString stringWithFormat:@"阻燃耐火:"]];
+//                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+20+height_1, width*2-20, 20)];
+//                            height_2 = 20;
                         }
                         else
                         {
@@ -780,16 +780,17 @@
             UILabel *label_3 = [[UILabel alloc] init];
             [label_3 setText:@"特殊要求:"];
             [label_3 setFont:[UIFont systemFontOfSize:12]];
-            [cell.contentView addSubview:label_3];
+           
             
             CGSize requestSize;
             if(theRequire.length == 0 || [theRequire isKindOfClass:[NSNull class]])
             {
-                requestSize = CGSizeMake(ScreenWidth-20, 20);
-                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height,55,requestSize.height)];
+//                requestSize = CGSizeMake(ScreenWidth-20, 20);
+//                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height,55,requestSize.height)];
             }
             else
             {
+                [cell.contentView addSubview:label_3];
                 requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
                 [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height,55, requestSize.height+5)];
             }

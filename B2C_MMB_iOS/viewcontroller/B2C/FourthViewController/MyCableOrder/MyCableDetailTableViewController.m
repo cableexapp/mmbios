@@ -783,69 +783,73 @@
             [cell.contentView addSubview:requestLabel];
       
             NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
-            
-            if(logstics_listArray.count != 0 || ![logstics_listArray isKindOfClass:[NSNull class]])
+            float shippedHasNum = [[dic objectForKey:@"shippedHasNum"] floatValue];
+            if(shippedHasNum > 0.00)
             {
-                UIView *seperateView = [[UIView alloc] initWithFrame:CGRectMake(0, requestLabel.frame.origin.y+requestLabel.frame.size.height, ScreenWidth, 1)];
-                [seperateView setBackgroundColor:[UIColor lightGrayColor]];
-                [cell.contentView addSubview:seperateView];
-                
-                
-                NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
-                for(int i=0;i<logstics_listArray.count;i++)
+                if(logstics_listArray.count != 0 || ![logstics_listArray isKindOfClass:[NSNull class]])
                 {
-                    UIView *logsticsView = [[UIView alloc] initWithFrame:CGRectMake(0, (seperateView.frame.origin.y+0.5)+80*i, ScreenWidth, 60)];
-                    [cell.contentView addSubview:logsticsView];
+                    UIView *seperateView = [[UIView alloc] initWithFrame:CGRectMake(0, requestLabel.frame.origin.y+requestLabel.frame.size.height, ScreenWidth, 1)];
+                    [seperateView setBackgroundColor:[UIColor lightGrayColor]];
+                    [cell.contentView addSubview:seperateView];
                     
-                    NSDictionary *logsticsDic = [NSDictionary dictionaryWithDictionary:[logstics_listArray objectAtIndex:i]];
-                    NSString *s1 = @"发货信息";
-                    UILabel *s1Label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, ScreenWidth-10, 20)];
-                    [s1Label setText:s1];
-                    [s1Label setFont:[UIFont systemFontOfSize:12]];
-                    [logsticsView addSubview:s1Label];
                     
-                    NSString *s2 = [NSString stringWithFormat:@"已发货: %@%@",[logsticsDic objectForKey:@"current_num"],unit];
-                    NSMutableAttributedString *current_num = [[NSMutableAttributedString alloc] initWithString:s2];
-                    [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
-                    [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, s2.length-4)];
-                    UILabel *current_numLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 20, ScreenWidth-10, 20)];
-                    [current_numLabel setAttributedText:current_num];
-                    [current_numLabel setFont:[UIFont systemFontOfSize:12]];
-                    [logsticsView addSubview:current_numLabel];
-                    
-                    NSString *s3 = [NSString stringWithFormat:@"物流公司: %@",[logsticsDic objectForKey:@"logistics_company"]];
-                    NSMutableAttributedString *logistics_company = [[NSMutableAttributedString alloc] initWithString:s3];
-                    [logistics_company addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
-                    [logistics_company addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, s3.length-5)];
-                    UILabel *logistics_companyLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 40, ScreenWidth-10, 20)];
-                    [logistics_companyLabel setAttributedText:logistics_company];
-                    [logistics_companyLabel setFont:[UIFont systemFontOfSize:12]];
-                    [logsticsView addSubview:logistics_companyLabel];
-                    
-                    NSString *s4 = [NSString stringWithFormat:@"物流单号: %@",[logsticsDic objectForKey:@"logistics_no"]];
-                    NSMutableAttributedString *logistics_no = [[NSMutableAttributedString alloc] initWithString:s4];
-                    [logistics_no addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
-                    [logistics_no addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, s4.length-5)];
-                    UILabel *logistics_noLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 60, ScreenWidth-10, 20)];
-                    [logistics_noLabel setAttributedText:logistics_no];
-                    [logistics_noLabel setFont:[UIFont systemFontOfSize:12]];
-                    [logsticsView addSubview:logistics_noLabel];
-                    
-                    if(logstics_listArray.count >= 2)
+                    NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
+                    for(int i=0;i<logstics_listArray.count;i++)
                     {
-                        if(i <= logstics_listArray.count-2)
+                        UIView *logsticsView = [[UIView alloc] initWithFrame:CGRectMake(0, (seperateView.frame.origin.y+0.5)+80*i, ScreenWidth, 60)];
+                        [cell.contentView addSubview:logsticsView];
+                        
+                        NSDictionary *logsticsDic = [NSDictionary dictionaryWithDictionary:[logstics_listArray objectAtIndex:i]];
+                        NSString *s1 = @"发货信息";
+                        UILabel *s1Label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, ScreenWidth-10, 20)];
+                        [s1Label setText:s1];
+                        [s1Label setFont:[UIFont systemFontOfSize:12]];
+                        [logsticsView addSubview:s1Label];
+                        
+                        NSString *s2 = [NSString stringWithFormat:@"已发货: %@%@",[logsticsDic objectForKey:@"current_num"],unit];
+                        NSMutableAttributedString *current_num = [[NSMutableAttributedString alloc] initWithString:s2];
+                        [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
+                        [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, s2.length-4)];
+                        UILabel *current_numLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 20, ScreenWidth-10, 20)];
+                        [current_numLabel setAttributedText:current_num];
+                        [current_numLabel setFont:[UIFont systemFontOfSize:12]];
+                        [logsticsView addSubview:current_numLabel];
+                        
+                        NSString *s3 = [NSString stringWithFormat:@"物流公司: %@",[logsticsDic objectForKey:@"logistics_company"]];
+                        NSMutableAttributedString *logistics_company = [[NSMutableAttributedString alloc] initWithString:s3];
+                        [logistics_company addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
+                        [logistics_company addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, s3.length-5)];
+                        UILabel *logistics_companyLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 40, ScreenWidth-10, 20)];
+                        [logistics_companyLabel setAttributedText:logistics_company];
+                        [logistics_companyLabel setFont:[UIFont systemFontOfSize:12]];
+                        [logsticsView addSubview:logistics_companyLabel];
+                        
+                        NSString *s4 = [NSString stringWithFormat:@"物流单号: %@",[logsticsDic objectForKey:@"logistics_no"]];
+                        NSMutableAttributedString *logistics_no = [[NSMutableAttributedString alloc] initWithString:s4];
+                        [logistics_no addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
+                        [logistics_no addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, s4.length-5)];
+                        UILabel *logistics_noLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 60, ScreenWidth-10, 20)];
+                        [logistics_noLabel setAttributedText:logistics_no];
+                        [logistics_noLabel setFont:[UIFont systemFontOfSize:12]];
+                        [logsticsView addSubview:logistics_noLabel];
+                        
+                        if(logstics_listArray.count >= 2)
                         {
-                            UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, logistics_noLabel.frame.origin.y+logistics_noLabel.frame.size.height, ScreenWidth, 0.5)];
-                            [line setBackgroundColor:[UIColor lightGrayColor]];
-                            [logsticsView addSubview:line];
+                            if(i <= logstics_listArray.count-2)
+                            {
+                                UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, logistics_noLabel.frame.origin.y+logistics_noLabel.frame.size.height, ScreenWidth, 0.5)];
+                                [line setBackgroundColor:[UIColor lightGrayColor]];
+                                [logsticsView addSubview:line];
+                            }
                         }
                     }
                 }
+                else
+                {
+                    
+                }
             }
-            else
-            {
-                
-            }
+ 
 
         }
     }

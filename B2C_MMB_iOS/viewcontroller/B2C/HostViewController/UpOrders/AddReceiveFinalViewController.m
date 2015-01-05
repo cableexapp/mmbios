@@ -78,12 +78,14 @@
         chooseCity = b2cAddressData.city;
         chooseProvince = b2cAddressData.province;
         chooseBorough = b2cAddressData.area;
-        chooseStreet = b2cAddressData.fullAddress;
+        chooseStreet = b2cAddressData.addressName;
+        chooseDetailAddress = b2cAddressData.fullAddress;
+        
         chooseReceiver = b2cAddressData.receiver;
         chooseCode = b2cAddressData.zip;
         choosePhone = b2cAddressData.mobile;
         chooseTel = b2cAddressData.tel;
-        NSLog(@"chooseCity = %@ chooseProvince = %@ chooseAddress = %@ chooseAddressName = %@",chooseCity,chooseProvince,chooseBorough,chooseStreet);
+        NSLog(@"chooseProvince = %@ chooseCity = %@ chooseAddress = %@ chooseAddressName = %@ chooseDetailAddress = %@",chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress);
         //        swith.on = [[_msgDic objectForKey:@"swithStatus"] boolValue];
         
         DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"编辑收货地址"];
@@ -330,7 +332,6 @@
             chooseStreet = @"";
         }
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,chooseReceiver,chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress,chooseCode,choosePhone,chooseTel];
-        NSLog(@"%@",pushString);
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -390,6 +391,7 @@
 - (void) dealEditData
 {
     NSString *string = [notiArray objectAtIndex:0];
+    NSLog(@"str = %@",string);
     NSArray *arr = [string componentsSeparatedByString:@","];
     
     chooseProvince = [arr objectAtIndex:0];
@@ -628,7 +630,10 @@
     }
     else
     {
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area];
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area,b2cAddressData.addressName];
+        str = [str stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+        str = [str stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
+        str = [str stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
         [topTf setText:str];
     }
     [topTf setTextAlignment:NSTextAlignmentCenter];

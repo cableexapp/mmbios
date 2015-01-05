@@ -19,6 +19,7 @@
 #import "B2CHotSaleData.h"
 #import "UIImageView+WebCache.h"
 #import "AppDelegate.h"
+#import "B2CSearchViewController.h"
 
 @interface ShoppingHostViewController ()
 {
@@ -59,6 +60,7 @@
         [conn stopConnection];
         conn = nil;
     }
+    topTextField.text = nil;
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -304,6 +306,7 @@
     topTextField.leftView = view1;
     topTextField.leftViewMode = UITextFieldViewModeAlways;
     [topTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等"];
+     [topTextField setReturnKeyType:UIReturnKeySearch];
     [self.view addSubview:topTextField];
 
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
@@ -316,6 +319,8 @@
 
     [self loadScrollview];
 }
+
+
 
 - (void) rightBtnClick:(UIButton *) sender
 {
@@ -348,17 +353,14 @@
     {
         [topTextField resignFirstResponder];
     }
-    
-//    OneStepViewController *one = [[OneStepViewController alloc] init];
-//    [self.navigationController pushViewController:one animated:YES];
-    if (topTextField.text.length > 0)
-    {
-        [self setHidesBottomBarWhenPushed:YES];
-        SearchViewController *searchVC = [[SearchViewController alloc] init];
-        searchVC.searchFlag = [NSString stringWithFormat:@"B2C+%@",topTextField.text];
-        [self.navigationController pushViewController:searchVC animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
-    }
+
+//    if (topTextField.text.length > 0)
+//    {
+//        [self setHidesBottomBarWhenPushed:YES];
+//        B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
+//        B2CVC.tempSearchText = topTextField.text;
+//        [self.navigationController pushViewController:B2CVC animated:YES];
+//    }
     
     return YES;
 }
@@ -369,10 +371,16 @@
     {
         [textField setText:@""];
     }
+    [textField resignFirstResponder];
+    [self setHidesBottomBarWhenPushed:YES];
+    B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
+//    B2CVC.tempSearchText = topTextField.text;
+    [self.navigationController pushViewController:B2CVC animated:YES];
 }
 
 - (void) textFieldDidEndEditing:(UITextField *)textField
 {
+    
 }
 - (void)didReceiveMemoryWarning
 {

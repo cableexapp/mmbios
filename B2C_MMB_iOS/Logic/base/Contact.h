@@ -37,6 +37,8 @@ enum {
     
     URLB2CGoodsListTag,  //商铺商品列表
     
+    URLB2CGoodsListSearchTag, //家装馆列表搜索
+    
     URLB2CGetShopProductTypeTag,  //商铺商品页筛选分类
     
     URLB2CProductDetailTag,  //b2c商品详情

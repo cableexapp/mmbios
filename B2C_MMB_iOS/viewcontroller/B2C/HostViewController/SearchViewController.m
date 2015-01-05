@@ -124,8 +124,8 @@
             [view setHidden:YES];
         }
     }
+    tempSearch = 0;
     [self readHistoryData];
-    NSLog(@"viewWillAppear");
     [self loadbadgeCount];
 }
 
@@ -148,7 +148,7 @@
     rightButtonView.hidden = YES;
     rightBtn.hidden = YES;
     tempFlag = @"4";
-    
+
     [mySearchBar resignFirstResponder];
 
     [self.navigationController.tabBarController.tabBar setHidden:NO];
@@ -213,7 +213,7 @@
     UITapGestureRecognizer *searchTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftBtnClick:)];
     [tempview addGestureRecognizer:searchTap];
     
-     sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(68,16,10,10)];
+    sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(68,16,10,10)];
     [sectionBtnIv setImage:[UIImage imageNamed:@"down_dark.png"]];
     [sectionBtnIv setContentMode:UIViewContentModeScaleToFill];
     sectionBtnIv.tag = 300;
@@ -343,7 +343,7 @@
     if (URLTag == URLSearchProductTypeTag)
     {
         [self refreshTableView];
-        if ([tempType isEqualToString:@"1"] && [leftBtn.text isEqualToString:@"电缆采购"])
+        if ([tempType isEqualToString:@"1"])
         {
             if ([[dicRespon objectForKey:@"types"] count] > 0)
             {
@@ -357,6 +357,7 @@
             {
                 dataArray = [dicRespon objectForKey:@"items"];
                 tempSearch = 2;
+                [rightBtn setTitle:@"询价车" forState:UIControlStateNormal];
                 noResultView.hidden = YES;
                 isShowClearBtn = 2;
                 [mySearchBar resignFirstResponder];
@@ -394,23 +395,25 @@
             {
                 noResultView.hidden = NO;
                 dataArray = tempArray;
+                [self.view bringSubviewToFront:noResultView];
             }
         }
        if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"])
         {
-            if ([[dicRespon objectForKey:@"products"] count] > 0)
-            {
-                noResultView.hidden = YES;
-                dataArray = [dicRespon objectForKey:@"products"];
-                isShowClearBtn = 2;
-                tempSearch = 0;
-                [mySearchBar resignFirstResponder];
-            }
-            else
-            {
-                noResultView.hidden = NO;
-                dataArray = tempArray;
-            }
+//            if ([[dicRespon objectForKey:@"products"] count] > 0)
+//            {
+//                noResultView.hidden = YES;
+//                dataArray = [dicRespon objectForKey:@"products"];
+//                isShowClearBtn = 2;
+//                tempSearch = 0;
+//                [mySearchBar resignFirstResponder];
+//            }
+//            else
+//            {
+//                noResultView.hidden = NO;
+//                dataArray = tempArray;
+//            }
+            tempType = @"2";
         }
         [self.serchResultView reloadData];
     }
@@ -546,7 +549,6 @@
 //请求接口
 -(void)sendRquest
 {
-    NSLog(@"搜索+++++++++++++++++++");
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"SearchProduct",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -566,9 +568,15 @@
 //键盘手动搜索
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [self sendRquest];
+    if(mySearchBar.text.length  == 0)
+    {
+        [DCFStringUtil showNotice:@"搜索内容不能为空哦~"];
+        return;
+    }
+   
     if ([tempType isEqualToString:@"1"])
     {
+         [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"1" ProductId:nil ProductName:mySearchBar.text];
@@ -577,6 +585,7 @@
     }
     if ([tempType isEqualToString:@"2"])
     {
+         [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
@@ -617,6 +626,7 @@
     mySearchBar.text = soundInput;
     if ([tempType isEqualToString:@"1"])
     {
+        [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"1" ProductId:nil ProductName:mySearchBar.text];
@@ -625,6 +635,7 @@
     }
     if ([tempType isEqualToString:@"2"])
     {
+        [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
@@ -640,7 +651,7 @@
         [self cancelIFlyRecognizer];
         speakButtonView.hidden = YES;
         speakButton.hidden = YES;
-        [self sendRquest];
+
         clearBtn.hidden = YES;
     }
 }
@@ -680,11 +691,11 @@
     [self refreshTableView];
     [self.serchResultView reloadData];
     
-    NSLog(@"搜索历史 = %@",dataArray);
+//    NSLog(@"搜索历史 = %@",dataArray);
     if (dataArray.count > 0)
     {
         isShowClearBtn = 1;
-        NSLog(@"搜索历史关键词 = %@",[[dataArray objectAtIndex:0] objectForKey:@"productName"]);
+//        NSLog(@"搜索历史关键词 = %@",[[dataArray objectAtIndex:0] objectForKey:@"productName"]);
     }
 }
 
@@ -722,7 +733,7 @@
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    NSLog(@"searchBarTextDidBeginEditing");
+//    NSLog(@"searchBarTextDidBeginEditing");
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -735,9 +746,39 @@
     return YES;
 }
 
+float lastContentOffset;
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.view endEditing:YES];
+    lastContentOffset = scrollView.contentOffset.y;
+}
+
+
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    if (lastContentOffset < scrollView.contentOffset.y)
+    {
+//        NSLog(@"向上滚动");
+        if ([tempFlag isEqualToString:@"4"])
+        {
+            leftBtn.hidden = YES;
+            sectionBtnIv.hidden = YES;
+            mySearchBar.hidden = YES;
+            mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(81, -scrollView.contentOffset.y,self.view.frame.size.width-81, 45)];
+        }
+    }
+    else
+    {
+//        NSLog(@"向下滚动");
+        if ([tempFlag isEqualToString:@"4"])
+        {
+            leftBtn.hidden = NO;
+            sectionBtnIv.hidden = NO;
+            mySearchBar.hidden = NO;
+            self.serchResultView.frame = CGRectMake(0, 45, ScreenWidth, ScreenHeight-45);
+        }
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -752,15 +793,16 @@
     {
         speakButton.hidden = NO;
         speakButtonView.hidden = NO;
-        noResultView.hidden = YES;
 
         if (B2ChistoryArray.count > 0)
         {
             [self readHistoryData];
+            noResultView.hidden = YES;
         }
         if (B2ChistoryArray.count == 0)
         {
            dataArray = tempArray;
+           noResultView.hidden = NO;
         }
     }
     else
@@ -891,16 +933,12 @@
 -(void)addtoAskCarClick:(UIButton *)sender
 {
     btnTag = sender.tag;
- 
-    NSLog(@"addtoAskCarClick_sender.tag = %d",sender.tag);
 
     NSString *text = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"model"]];
     
-    NSLog(@"addtoAskCarClick_text = %@",text);
-    
     if ([text isEqualToString:@""])
     {
-        NSLog(@"数据为空。。。。。。");
+//        NSLog(@"数据为空。。。。。。");
     }
     else
     {
@@ -994,7 +1032,6 @@
         
         if ([tempFlag isEqualToString:@"4"] && dataArray.count > 0)
         {
-                    NSLog(@"11111111111111");
             if ([tempType isEqualToString:@"1"])
             {
                 if (indexPath.row == dataArray.count)
@@ -1047,7 +1084,6 @@
                             cell.selectionStyle = UITableViewCellSelectionStyleNone;
                         }
                      }
-                     NSLog(@"2222222222222 = %@",dataArray);
                     if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"1"])
                     {
                         searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"firsttype"];
@@ -1082,10 +1118,11 @@
             {
                 searchImageView.image = nil;
                 clearBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                [clearBtn setBackgroundColor:[UIColor colorWithRed:0/255 green:86.0/255 blue:176.0/255 alpha:1.0]];
+                [clearBtn setBackgroundColor:[UIColor colorWithRed:9/255 green:99.0/255 blue:189.0/255 alpha:1.0]];
                 [clearBtn setTitle:@"清空历史纪录" forState:UIControlStateNormal];
-                clearBtn.frame = CGRectMake((ScreenWidth-120)/2, 4.5, 120, 35);
+                clearBtn.frame = CGRectMake((ScreenWidth-100)/2, 4.5, 100, 35);
                 [clearBtn setTintColor:[UIColor whiteColor]];
+                [clearBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
                 [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 clearBtn.layer.cornerRadius = 3;
                 [cell addSubview:clearBtn];
@@ -1107,16 +1144,13 @@
 
     if ([tempFlag isEqualToString:@"4"])
     {
-
         if (dataArray.count > 0)
         {
-            
             [self setHidesBottomBarWhenPushed:YES];
             CableSecondAndThirdStepViewController *cstVC = [sb instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
             CableChoosemodelViewController *ccmVC = [sb instantiateViewControllerWithIdentifier:@"cableChoosemodelViewController"];
             if ([tempType isEqualToString:@"1"])
             {
-                NSLog(@"3333333333333");
                 if ([[dataArray[indexPath.row] objectForKey:@"seq"] isEqualToString:@"1"])
                 {
                     cstVC.myTitle = [dataArray[indexPath.row] objectForKey:@"firsttype"];
@@ -1144,15 +1178,29 @@
     }
     if ([tempFlag isEqualToString:@"5"])
     {
+        if ([[dataArray[indexPath.row] objectForKey:@"type"] isEqualToString:@"1"])
+        {
+            searchBarText = [dataArray[indexPath.row] objectForKey:@"productName"];
+            mySearchBar.text = searchBarText;
+            speakButton.hidden = YES;
+            speakButtonView.hidden = YES;
+            tempType = @"1";
+            [self sendRquest];
+            [self loadbadgeCount];
+        }
+        else if ([[dataArray[indexPath.row] objectForKey:@"type"] isEqualToString:@"2"])
+        {
+            tempType = @"2";
+            [self setHidesBottomBarWhenPushed:YES];
+            B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
+            B2CVC.tempSearchText = [dataArray[indexPath.row] objectForKey:@"productName"];
+            [self.navigationController pushViewController:B2CVC animated:YES];
+            [self setHidesBottomBarWhenPushed:NO];
+        }
         
-        searchBarText = [dataArray[indexPath.row] objectForKey:@"productName"];
-        NSLog(@"点击历史搜索 = %@ 行 = %d",mySearchBar.text,indexPath.row);
-        speakButton.hidden = YES;
-        speakButtonView.hidden = YES;
-        tempType = @"1";
-        [self sendRquest];
+//        NSLog(@"点击历史搜索 = %@ 行 = %d",mySearchBar.text,indexPath.row);
         
-        NSLog(@"点击历史tempType = %@  tempFlag = %@",tempType,tempFlag);
+//        NSLog(@"点击历史tempType = %@  tempFlag = %@",tempType,tempFlag);
     }
 }
 
@@ -1190,17 +1238,17 @@
         const char *dbpath = [databasePathB2C UTF8String];
         if (sqlite3_open(dbpath, &contactDBB2C)==SQLITE_OK)
         {
-             NSLog(@"创建B2C表成功\n");
+//             NSLog(@"创建B2C表成功\n");
             char *errMsg;
             const char *sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS(ID INTEGER PRIMARY KEY AUTOINCREMENT,TYPE TEXT ,PRODUCTID TEXT, PRODUCTNAME TEXT)";
             if (sqlite3_exec(contactDBB2C, sql_stmt, NULL, NULL, &errMsg)!=SQLITE_OK)
             {
-                NSLog(@"创建B2C表失败\n");
+//                NSLog(@"创建B2C表失败\n");
             }
         }
         else
         {
-            NSLog(@"创建B2C_打开数据库失败\n");
+//            NSLog(@"创建B2C_打开数据库失败\n");
         }
     }
 }
@@ -1219,11 +1267,11 @@
         sqlite3_prepare_v2(contactDBB2C, insert_stmt, -1, &statement, NULL);
         if (sqlite3_step(statement)==SQLITE_DONE)
         {
-            NSLog(@"已存储到数据库");
+//            NSLog(@"已存储到数据库");
         }
         else
         {
-            NSLog(@"保存失败！");
+//            NSLog(@"保存失败！");
         }
         sqlite3_finalize(statement);
         sqlite3_close(contactDBB2C);
@@ -1253,20 +1301,20 @@
                         
                         NSString *productName = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement,3)];
                         
-                        NSLog(@"查询结果 = %@ %@ %@",type,productId,productName);
-                        NSLog(@"已查到结果\n\n");
+//                        NSLog(@"查询结果 = %@ %@ %@",type,productId,productName);
+//                        NSLog(@"已查到结果\n\n");
                         
                         NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:type,@"type",productId,@"productId",productName,@"productName",nil];
-                        NSLog(@"dic = %@\n\n",dic);
+//                        NSLog(@"dic = %@\n\n",dic);
                         
                         [B2ChistoryArray addObject:dic];
 
-                        NSLog(@"self.history = %@",B2ChistoryArray);
+//                        NSLog(@"self.history = %@",B2ChistoryArray);
                     }
             }
             else
             {
-                NSLog(@"未查到结果");
+//                NSLog(@"未查到结果");
             }
             sqlite3_finalize(statement);
         }

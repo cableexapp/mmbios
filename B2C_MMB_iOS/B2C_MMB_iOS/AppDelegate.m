@@ -151,7 +151,7 @@ NSString *strUserId = @"";
         self.appId = [res valueForKey:BPushRequestAppIdKey];
         self.baiduPushUserId = [res valueForKey:BPushRequestUserIdKey];
         self.channelId = [res valueForKey:BPushRequestChannelIdKey];
-        NSLog(@"%@  %@   %@",self.appId,self.baiduPushUserId,self.channelId);
+        NSLog(@"appId = %@  baiduPushUserId = %@   channelId = %@",self.appId,self.baiduPushUserId,self.channelId);
         
         int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
         NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];

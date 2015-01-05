@@ -173,40 +173,35 @@
     {
         if([[dicRespon allKeys] count] == 0)
         {
-            [moreCell noDataAnimation];
+//            [moreCell noDataAnimation];
+            noResultView.hidden = NO;
         }
         else
         {
             if(result == 1)
             {
-                NSLog(@"B2B全部订单 = %@",dicRespon);
+//                NSLog(@"B2B全部订单 = %@",dicRespon);
                 if ([[dicRespon objectForKey:@"items"] count] > 0)
                 {
-                    noResultView.hidden = NO;
                     [tempDataArray removeAllObjects];
                     [tempDataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:[dicRespon objectForKey:@"items"]]];
-                    
                     dataArray = [self arrayWithMemberIsOnly:tempDataArray];
-                    
                     tempOrderNum = [dicRespon objectForKey:@"items"];
+                    noResultView.hidden = YES;
                 }
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
                 if(intTotal == 0)
                 {
-                    noResultView.hidden = YES;
-                    [moreCell noDataAnimation];
+                    noResultView.hidden = NO;
+//                  [moreCell noDataAnimation];
                 }
-                //                else
-                //                {
-                //                    [moreCell noSearchResult];
-                //                }
             }
             else
             {
-                noResultView.hidden = YES;
-                [moreCell failAcimation];
+                noResultView.hidden = NO;
+//                [moreCell failAcimation];
             }
         }
         [self.myTableView reloadData];

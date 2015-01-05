@@ -89,6 +89,8 @@
     sb = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
     if([DCFCustomExtra validateString:memberid] == NO || [DCFCustomExtra validateString:userName] == NO)
     {
+        [DCFCustomExtra cleanData];
+
         hasNotLoginViewController = [sb instantiateViewControllerWithIdentifier:@"hasNotLoginViewController"];
         [self setViewControllers:[NSArray arrayWithObject:hasNotLoginViewController]];
     }

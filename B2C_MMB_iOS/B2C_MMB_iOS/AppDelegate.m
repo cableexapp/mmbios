@@ -25,7 +25,7 @@
 #import "LoginNaviViewController.h"
 #import <AlipaySDK/AlipaySDK.h>
 
-#define SUPPORT_IOS8 0
+#define SUPPORT_IOS8 1
 
 //XMPP
 #import <AudioToolbox/AudioToolbox.h>

@@ -418,7 +418,7 @@
                     [nameAndTelLabel setFont:[UIFont systemFontOfSize:12]];
                     [cell.contentView addSubview:nameAndTelLabel];
                     
-                    NSString *address = [NSString stringWithFormat:@"收货地址: %@%@%@%@",[ctemsDic objectForKey:@"province"],[ctemsDic objectForKey:@"city"],[ctemsDic objectForKey:@"district"],[ctemsDic objectForKey:@"address"]];
+                    NSString *address = [NSString stringWithFormat:@"收货地址: %@%@%@%@%@",[ctemsDic objectForKey:@"province"],[ctemsDic objectForKey:@"city"],[ctemsDic objectForKey:@"district"],[ctemsDic objectForKey:@"address"],[ctemsDic objectForKey:@"fulladdress"]];
                     NSString *myAdd = nil;
                     if([address rangeOfString:@"(null)"].location != NSNotFound)
                     {

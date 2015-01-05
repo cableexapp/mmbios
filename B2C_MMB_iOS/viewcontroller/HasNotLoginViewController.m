@@ -83,7 +83,6 @@
 {
     [super viewDidAppear:YES];
     
-    [DCFCustomExtra cleanData];
 }
 
 -(void)viewWillAppear:(BOOL)animated

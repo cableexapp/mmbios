@@ -145,7 +145,7 @@
     {
         return;
     }
-    NSString *str = [NSString stringWithFormat:@"%@%@",_town,[[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
+    NSString *str = [NSString stringWithFormat:@"%@,%@",_town,[[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"]];
     NSLog(@"str = %@",str);
     NSString *code = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.row] objectForKey:@"code"]];
     

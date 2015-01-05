@@ -127,7 +127,7 @@
         [self.buttomLabel setHidden:NO];
     }
     //确认收货
-    else
+    else if([status intValue] == 5)
     {
         
         float shippedLastestNum = 0.0;
@@ -149,6 +149,11 @@
             [self.sureBtn setHidden:YES];
             [self.buttomLabel setHidden:YES];
         }
+    }
+    else
+    {
+        [self.sureBtn setHidden:YES];
+        [self.buttomLabel setHidden:YES];
     }
     
     

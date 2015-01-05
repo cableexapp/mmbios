@@ -70,6 +70,10 @@
     {
         _myStatus = @"待确认";
     }
+    if([_status isEqualToString:@"1"])
+    {
+        _myStatus = @"";
+    }
     if([_status isEqualToString:@"2"])
     {
         _myStatus = @"待付款";
@@ -84,11 +88,11 @@
     }
     if([_status isEqualToString:@"5"])
     {
-        _myStatus = @"待收货";
+        _myStatus = @"已发货";
     }
     if([_status isEqualToString:@"6"])
     {
-        _myStatus = @"已收货";
+        _myStatus = @"已完成";
     }
     if([_status isEqualToString:@"7"])
     {

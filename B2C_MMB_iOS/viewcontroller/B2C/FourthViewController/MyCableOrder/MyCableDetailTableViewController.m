@@ -782,7 +782,9 @@
             [requestLabel setNumberOfLines:0];
             [cell.contentView addSubview:requestLabel];
       
-            if([status intValue] == 5)
+            NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
+            
+            if(logstics_listArray.count != 0 || ![logstics_listArray isKindOfClass:[NSNull class]])
             {
                 UIView *seperateView = [[UIView alloc] initWithFrame:CGRectMake(0, requestLabel.frame.origin.y+requestLabel.frame.size.height, ScreenWidth, 1)];
                 [seperateView setBackgroundColor:[UIColor lightGrayColor]];

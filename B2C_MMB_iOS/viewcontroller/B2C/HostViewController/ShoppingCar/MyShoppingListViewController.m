@@ -1049,37 +1049,6 @@
         return;
     }
 
-//    NSString *items = nil;
-
-//    if(chooseGoodsArray && chooseGoodsArray.count != 0)
-//    {
-//        for(int i=0;i<chooseGoodsArray.count;i++)
-//        {
-//            B2CShopCarListData *data = [chooseGoodsArray objectAtIndex:i];
-//            if(i == 0)
-//            {
-//                items = [NSString stringWithFormat:@"%@,",data.itemId];
-//            }
-//            else
-//            {
-//                items = [items stringByAppendingString:[NSString stringWithFormat:@"%@,",data.itemId]];
-//            }
-//        }
-//        items = [items substringWithRange:NSMakeRange(0, items.length-1)];
-//    }
-    
-//    NSString *time = [DCFCustomExtra getFirstRunTime];
-    
-//    NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
-    
-//    NSString *token = [DCFCustomExtra md5:string];
-    
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
-//    NSString *pushString = nil;
-    
-//    pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
-//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
-//    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     NSMutableArray *goodsArray = [[NSMutableArray alloc] init];
 //
@@ -1128,6 +1097,7 @@
 //
 //
     NSString *memberId = [self getMemberId];
+    NSLog(@"memberId = %@",memberId);
     if([DCFCustomExtra validateString:memberId] == NO)
     {
         

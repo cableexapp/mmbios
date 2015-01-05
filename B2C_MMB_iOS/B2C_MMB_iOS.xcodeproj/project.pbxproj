@@ -70,6 +70,7 @@
 		615C8F8E19F8EFDF00A2B8CD /* ratingbar_selected_low.png in Resources */ = {isa = PBXBuildFile; fileRef = 615C8F8B19F8EFDF00A2B8CD /* ratingbar_selected_low.png */; };
 		615C8F8F19F8EFDF00A2B8CD /* ratingbar_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 615C8F8C19F8EFDF00A2B8CD /* ratingbar_selected.png */; };
 		615C8F9019F8EFDF00A2B8CD /* ratingbar_unselect.png in Resources */ = {isa = PBXBuildFile; fileRef = 615C8F8D19F8EFDF00A2B8CD /* ratingbar_unselect.png */; };
+		6161093F1A5A947F00B152FF /* PushMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6161093E1A5A947F00B152FF /* PushMusic.m4a */; };
 		6166ED5A19D2B86400D9A219 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5919D2B86400D9A219 /* area.plist */; };
 		6166ED5C19D2BAD200D9A219 /* t_prov_city_area_street.db in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5B19D2BAD200D9A219 /* t_prov_city_area_street.db */; };
 		616BE0BA1A1447C60061C956 /* MyCableHostSubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616BE0B71A1447C60061C956 /* MyCableHostSubTableViewController.m */; };
@@ -955,6 +956,7 @@
 		615C8F8B19F8EFDF00A2B8CD /* ratingbar_selected_low.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ratingbar_selected_low.png; sourceTree = "<group>"; };
 		615C8F8C19F8EFDF00A2B8CD /* ratingbar_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ratingbar_selected.png; sourceTree = "<group>"; };
 		615C8F8D19F8EFDF00A2B8CD /* ratingbar_unselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ratingbar_unselect.png; sourceTree = "<group>"; };
+		6161093E1A5A947F00B152FF /* PushMusic.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = PushMusic.m4a; sourceTree = "<group>"; };
 		6166ED5919D2B86400D9A219 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		6166ED5B19D2BAD200D9A219 /* t_prov_city_area_street.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = t_prov_city_area_street.db; sourceTree = "<group>"; };
 		616BE0B61A1447C60061C956 /* MyCableHostSubTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableHostSubTableViewController.h; sourceTree = "<group>"; };
@@ -2495,6 +2497,7 @@
 		6181A34F19CFC3F8000E2D14 /* B2C_MMB_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6161093E1A5A947F00B152FF /* PushMusic.m4a */,
 				617395C91A54E96C00509531 /* Default */,
 				619A624C1A00C09900556B90 /* storyBoard */,
 				61CCBCDA19CFFF150008A46B /* icon */,
@@ -4823,6 +4826,7 @@
 				8BA7C0D61A10A85500758B0F /* 惊讶@2x.png in Resources */,
 				6186F41E1A50F465009FA26E /* imSelect.png in Resources */,
 				8BD9B8B21A13562F0037FB65 /* chatto_bg_normal.png in Resources */,
+				6161093F1A5A947F00B152FF /* PushMusic.m4a in Resources */,
 				8BA7C0D31A10A85500758B0F /* 惊恐.png in Resources */,
 				615C8F9019F8EFDF00A2B8CD /* ratingbar_unselect.png in Resources */,
 				8BA7C0AD1A10A85500758B0F /* 困了.png in Resources */,

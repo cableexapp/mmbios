@@ -746,9 +746,39 @@
     return YES;
 }
 
+float lastContentOffset;
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.view endEditing:YES];
+    lastContentOffset = scrollView.contentOffset.y;
+}
+
+
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    if (lastContentOffset < scrollView.contentOffset.y)
+    {
+//        NSLog(@"向上滚动");
+        if ([tempFlag isEqualToString:@"4"])
+        {
+            leftBtn.hidden = YES;
+            sectionBtnIv.hidden = YES;
+            mySearchBar.hidden = YES;
+            mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(81, -scrollView.contentOffset.y,self.view.frame.size.width-81, 45)];
+        }
+    }
+    else
+    {
+//        NSLog(@"向下滚动");
+        if ([tempFlag isEqualToString:@"4"])
+        {
+            leftBtn.hidden = NO;
+            sectionBtnIv.hidden = NO;
+            mySearchBar.hidden = NO;
+            self.serchResultView.frame = CGRectMake(0, 45, ScreenWidth, ScreenHeight-45);
+        }
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -1151,6 +1181,7 @@
         if ([[dataArray[indexPath.row] objectForKey:@"type"] isEqualToString:@"1"])
         {
             searchBarText = [dataArray[indexPath.row] objectForKey:@"productName"];
+            mySearchBar.text = searchBarText;
             speakButton.hidden = YES;
             speakButtonView.hidden = YES;
             tempType = @"1";

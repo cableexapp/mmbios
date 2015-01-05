@@ -194,7 +194,7 @@
         hide = NO;
     }
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 40)];
-    //    [view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, ScreenWidth-20, 30)];
     [label setFont:[UIFont boldSystemFontOfSize:13]];
@@ -222,8 +222,8 @@
     {
         [label setText:@"型号信息"];
     }
-    [label setBackgroundColor:[UIColor whiteColor]];
-    [view setBackgroundColor:[UIColor whiteColor]];
+//    [label setBackgroundColor:[UIColor whiteColor]];
+//    [view setBackgroundColor:[UIColor whiteColor]];
     [view addSubview:label];
     
     for(int i=0;i<2;i++)
@@ -367,7 +367,7 @@
     }
     else
     {
-        height_3 = 0;
+        height_3 = 30;
     }
     
     
@@ -387,7 +387,7 @@
     {
         NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
         
-        return 95.5+height_1+height_2+height_3+height_4+10 + 80*logstics_listArray.count;
+        return 95.5+height_1+height_2+height_3+height_4 + 80*logstics_listArray.count + 15;
     }
     else
     {
@@ -407,7 +407,7 @@
         if(moreCell == nil)
         {
             moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
         }
         return moreCell;
     }
@@ -417,7 +417,7 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+//        [cell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
         
         BOOL hide = YES;
@@ -639,14 +639,14 @@
                 switch (i) {
                     case 0:
                     {
-                        [label setFrame:CGRectMake(10, lineView.frame.origin.y+5, width, 30)];
+                        [label setFrame:CGRectMake(10, lineView.frame.origin.y, width, 20)];
                         if([DCFCustomExtra validateString:theNumber] == NO)
                         {
                             [label setText:@"采购数量:"];
                         }
                         else
                         {
-                            [label setText:[NSString stringWithFormat:@"采购数量:%@%@",theNumber,theUnit]];
+                            [label setText:[NSString stringWithFormat:@"采购数量: %@%@",theNumber,theUnit]];
                         }
                         break;
                     }
@@ -658,9 +658,9 @@
                         }
                         else
                         {
-                            [label setText:[NSString stringWithFormat:@"交货期:%@",thDeliver]];
+                            [label setText:[NSString stringWithFormat:@"交货期: %@",thDeliver]];
                         }
-                        [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5, width, 30)];
+                        [label setFrame:CGRectMake(10+width, lineView.frame.origin.y, width, 20)];
                         break;
                     }
                         
@@ -669,12 +669,12 @@
                         if([DCFCustomExtra validateString:theInquirySpec] == NO)
                         {
                             [label setText:@"规格:"];
-                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30, width, 0)];
+                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+20, width, 20)];
                         }
                         else
                         {
-                            [label setText:[NSString stringWithFormat:@"规格:%@",theInquirySpec]];
-                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30, width, 30)];
+                            [label setText:[NSString stringWithFormat:@"规格: %@",theInquirySpec]];
+                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+20, width, 20)];
                         }
                         break;
                     }
@@ -684,21 +684,21 @@
                         if([DCFCustomExtra validateString:theInquiryVoltage] == NO)
                         {
                             [label setText:[NSString stringWithFormat:@"电压:"]];
-                            [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5+30, width, 0)];
+                            [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+20, width, 20)];
                         }
                         else
                         {
-                            [label setText:[NSString stringWithFormat:@"电压:%@",theInquiryVoltage]];
-                            [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+5+30, width, 30)];
+                            [label setText:[NSString stringWithFormat:@"电压: %@",theInquiryVoltage]];
+                            [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+20, width, 20)];
                         }
                         
                         if([DCFCustomExtra validateString:theInquiryVoltage] == NO && [DCFCustomExtra validateString:theInquirySpec] == NO)
                         {
-                            height_1 = 0;
+                            height_1 = 20;
                         }
                         else
                         {
-                            height_1 = 30;
+                            height_1 = 20;
                         }
                         break;
                     }
@@ -707,15 +707,15 @@
                     {
                         if([DCFCustomExtra validateString:theInquiryFeature] == NO)
                         {
-                            [label setText:[NSString stringWithFormat:@"阻燃耐火:%@",@""]];
-                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30+height_1, width*2, 0)];
-                            height_2 = 0;
+                            [label setText:[NSString stringWithFormat:@"阻燃耐火:"]];
+                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+20+height_1, width*2-20, 20)];
+                            height_2 = 20;
                         }
                         else
                         {
-                            [label setText:[NSString stringWithFormat:@"阻燃耐火:%@",theInquiryFeature]];
-                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+5+30+height_1, width*2, 30)];
-                            height_2 = 30;
+                            [label setText:[NSString stringWithFormat:@"阻燃耐火: %@",theInquiryFeature]];
+                            [label setFrame:CGRectMake(10, lineView.frame.origin.y+20+height_1, width*2-20, 20)];
+                            height_2 = 20;
                         }
                         
                         break;
@@ -729,13 +729,12 @@
                 [cell.contentView addSubview:label];
             }
             
-            CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"询价结果:" WithSize:CGSizeMake(MAXFLOAT, 30)];
+            CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"询价结果:" WithSize:CGSizeMake(MAXFLOAT, 20)];
             UILabel *label_1 = [[UILabel alloc] init];
             [label_1 setText:@"询价结果:"];
             [label_1 setFont:[UIFont systemFontOfSize:12]];
-            [cell.contentView addSubview:label_1];
             
-            CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:thePrice WithSize:CGSizeMake(MAXFLOAT, 30)];
+            CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:thePrice WithSize:CGSizeMake(MAXFLOAT, 20)];
             UILabel *pricelabel = [[UILabel alloc] init];
             [pricelabel setFont:[UIFont systemFontOfSize:12]];
             [pricelabel setText:thePrice];
@@ -746,42 +745,50 @@
             UILabel *label_2 = [[UILabel alloc] init];
             [label_2 setFont:[UIFont systemFontOfSize:12]];
             [label_2 setText:[NSString stringWithFormat:@"元/%@",theUnit]];
-            [cell.contentView addSubview:label_2];
+           
             
             if([DCFCustomExtra validateString:thePrice] == NO)
             {
-                [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+35+height_1+height_2, size_1.width, 0)];
-                [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+10, lineView.frame.origin.y+35+height_1+height_2, size_2.width, 0)];
-                [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width + 10, lineView.frame.origin.y+35+height_1+height_2, 150, 0)];
+                [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+height_1+height_2+20, size_1.width, 20)];
+                
+                [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+5, lineView.frame.origin.y+35+height_1+height_2, size_2.width, 20)];
+                
+                [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width + 10, lineView.frame.origin.y+35+height_1+height_2, 150, 20)];
             }
             else
             {
-                [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+35+height_1+height_2, size_1.width, 0)];
-                [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+10,lineView.frame.origin.y+35+height_1+height_2, size_2.width, 0)];
-                [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width + 10,lineView.frame.origin.y+35+height_1+height_2, 150, 0)];
+                [label_1 setFrame:CGRectMake(10, lineView.frame.origin.y+height_1+height_2+20, size_1.width,20)];
+                
+                [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+5,lineView.frame.origin.y+20+height_1+height_2, size_2.width, 20)];
+                
+                [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width+5,lineView.frame.origin.y+20+height_1+height_2, 150, 20)];
             }
             
             UILabel *label_3 = [[UILabel alloc] init];
-            [label_3 setText:@"特殊要求"];
+            [label_3 setText:@"特殊要求:"];
+            [label_3 setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:label_3];
             
             CGSize requestSize;
             if(theRequire.length == 0 || [theRequire isKindOfClass:[NSNull class]])
             {
-                requestSize = CGSizeMake(ScreenWidth-20, 0);
-                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-20,0)];
+                requestSize = CGSizeMake(ScreenWidth-20, 20);
+                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height,55,requestSize.height)];
             }
             else
             {
                 requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-20, 30)];
+                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height,55, requestSize.height+5)];
             }
-            UILabel *requestLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, label_3.frame.origin.y+label_3.frame.size.height, ScreenWidth-20,requestSize.height)];
+            UILabel *requestLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-75,requestSize.height+5)];
             [requestLabel setFont:[UIFont systemFontOfSize:12]];
             [requestLabel setText:theRequire];
             [requestLabel setNumberOfLines:0];
+            
+            [cell.contentView addSubview:label_1];
+            [cell.contentView addSubview:label_2];
             [cell.contentView addSubview:requestLabel];
-      
+            
             if([status intValue] == 5)
             {
                 UIView *seperateView = [[UIView alloc] initWithFrame:CGRectMake(0, requestLabel.frame.origin.y+requestLabel.frame.size.height, ScreenWidth, 1)];
@@ -797,16 +804,16 @@
                     
                     NSDictionary *logsticsDic = [NSDictionary dictionaryWithDictionary:[logstics_listArray objectAtIndex:i]];
                     NSString *s1 = @"发货信息";
-                    UILabel *s1Label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, ScreenWidth-10, 20)];
+                    UILabel *s1Label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, ScreenWidth-20, 20)];
                     [s1Label setText:s1];
-                    [s1Label setFont:[UIFont systemFontOfSize:12]];
+                    [s1Label setFont:[UIFont boldSystemFontOfSize:13]];
                     [logsticsView addSubview:s1Label];
                     
                     NSString *s2 = [NSString stringWithFormat:@"已发货: %@%@",[logsticsDic objectForKey:@"current_num"],unit];
                     NSMutableAttributedString *current_num = [[NSMutableAttributedString alloc] initWithString:s2];
                     [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
                     [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, s2.length-4)];
-                    UILabel *current_numLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 20, ScreenWidth-10, 20)];
+                    UILabel *current_numLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, ScreenWidth-20, 20)];
                     [current_numLabel setAttributedText:current_num];
                     [current_numLabel setFont:[UIFont systemFontOfSize:12]];
                     [logsticsView addSubview:current_numLabel];
@@ -815,7 +822,7 @@
                     NSMutableAttributedString *logistics_company = [[NSMutableAttributedString alloc] initWithString:s3];
                     [logistics_company addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
                     [logistics_company addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, s3.length-5)];
-                    UILabel *logistics_companyLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 40, ScreenWidth-10, 20)];
+                    UILabel *logistics_companyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, ScreenWidth-20, 20)];
                     [logistics_companyLabel setAttributedText:logistics_company];
                     [logistics_companyLabel setFont:[UIFont systemFontOfSize:12]];
                     [logsticsView addSubview:logistics_companyLabel];
@@ -824,7 +831,7 @@
                     NSMutableAttributedString *logistics_no = [[NSMutableAttributedString alloc] initWithString:s4];
                     [logistics_no addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
                     [logistics_no addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, s4.length-5)];
-                    UILabel *logistics_noLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 60, ScreenWidth-10, 20)];
+                    UILabel *logistics_noLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, ScreenWidth-20, 20)];
                     [logistics_noLabel setAttributedText:logistics_no];
                     [logistics_noLabel setFont:[UIFont systemFontOfSize:12]];
                     [logsticsView addSubview:logistics_noLabel];

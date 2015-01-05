@@ -29,6 +29,9 @@
     
     MBProgressHUD *HUD;
     
+    sqlite3 *contact; //家装馆搜索数据库表
+    
+    NSString *databasePath; //家装馆搜索数据库路径
 }
 
 @property(nonatomic,strong) NSString *tempSearchText;
@@ -37,5 +40,6 @@
 
 @property (strong,nonatomic) UIView *lineView;
 @property (strong,nonatomic) UIView *lineView_1;
+@property (strong,nonatomic) NSString *seq;
 
 @end

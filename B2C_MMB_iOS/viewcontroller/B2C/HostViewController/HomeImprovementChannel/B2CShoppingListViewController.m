@@ -18,9 +18,9 @@
 #import "B2CGoodsListData.h"
 #import "DCFCustomExtra.h"
 #import "GoodsDetailViewController.h"
-#import "SearchViewController.h"
 #import "MyShoppingListViewController.h"
 #import "DCFStringUtil.h"
+#import "B2CSearchViewController.h"
 
 #define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
 
@@ -229,6 +229,7 @@
     {
         [moreCell stopAnimation];
     }
+    searchTextField.text = nil;
     flag = YES;
 }
 
@@ -237,16 +238,8 @@
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     int tag = btn.tag;
-    
-    //    NSLog(@"%@",btn.subviews);
-    //    for(UIView *view in btn.subviews)
-    //    {
-    //        if([view isKindOfClass:[UIImageView class]])
-    //        {
-    //        }
-    //    }
-    
-    //    遍历数组比较tag
+
+    //遍历数组比较tag
     for(UIView *view in buttonLineViewArray)
     {
         if(view.tag == tag)
@@ -416,7 +409,8 @@
     [view1 addSubview:leftImageView];
     searchTextField.leftView = view1;
     searchTextField.leftViewMode = UITextFieldViewModeAlways;
-  
+    [searchTextField setReturnKeyType:UIReturnKeySearch];
+
     [searchTextField setFont:[UIFont systemFontOfSize:12]];
     searchTextField.layer.cornerRadius = 5;
     [self.view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
@@ -584,13 +578,27 @@
     {
         [textField resignFirstResponder];
     }
-    if (searchTextField.text.length > 0)
-    {
-        SearchViewController *searchVC = [[SearchViewController alloc] init];
-        searchVC.searchFlag = [NSString stringWithFormat:@"B2C+%@",searchTextField.text];
-        [self.navigationController pushViewController:searchVC animated:YES];
-    }
+//    if (searchTextField.text.length > 0)
+//    {
+//        [self setHidesBottomBarWhenPushed:YES];
+//        B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
+//        B2CVC.tempSearchText = searchTextField.text;
+//        [self.navigationController pushViewController:B2CVC animated:YES];
+//    }
     return YES;
+}
+
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField.text.length != 0)
+    {
+        [textField setText:@""];
+    }
+    [textField resignFirstResponder];
+    [self setHidesBottomBarWhenPushed:YES];
+    B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
+//    B2CVC.tempSearchText = topTextField.text;
+    [self.navigationController pushViewController:B2CVC animated:YES];
 }
 
 - (void) loadRequest:(NSString *) seq WithUse:(NSString *) use
@@ -775,18 +783,7 @@
     {
         NSString *content = [[dataArray objectAtIndex:indexPath.row] productName];
         CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
-        
-        
-        //        CGFloat h = size_1.height + 30;
-        
-        //        if(h <= 60)
-        //        {
-        //            return 80;
-        //        }
-        //        else
-        //        {
         return size_1.height + 60 + 20;
-        //        }
     }
     else
     {

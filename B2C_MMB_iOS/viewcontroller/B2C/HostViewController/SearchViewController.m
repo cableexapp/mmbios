@@ -214,7 +214,7 @@
     UITapGestureRecognizer *searchTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftBtnClick:)];
     [tempview addGestureRecognizer:searchTap];
     
-     sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(68,16,10,10)];
+    sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(68,16,10,10)];
     [sectionBtnIv setImage:[UIImage imageNamed:@"down_dark.png"]];
     [sectionBtnIv setContentMode:UIViewContentModeScaleToFill];
     sectionBtnIv.tag = 300;
@@ -343,6 +343,7 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if (URLTag == URLSearchProductTypeTag)
     {
+        NSLog(@"dicRespon = %@",dicRespon);
         [self refreshTableView];
         if ([tempType isEqualToString:@"1"])
         {
@@ -399,8 +400,8 @@
                 [self.view bringSubviewToFront:noResultView];
             }
         }
-//       if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"])
-//        {
+       if ([tempType isEqualToString:@"2"] && [leftBtn.text isEqualToString:@"家装线专卖"])
+        {
 //            if ([[dicRespon objectForKey:@"products"] count] > 0)
 //            {
 //                noResultView.hidden = YES;
@@ -414,7 +415,8 @@
 //                noResultView.hidden = NO;
 //                dataArray = tempArray;
 //            }
-//        }
+            tempType = @"2";
+        }
         [self.serchResultView reloadData];
     }
     if (URLTag == URLInquiryCartCountTag)
@@ -568,9 +570,15 @@
 //键盘手动搜索
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    [self sendRquest];
+    if(mySearchBar.text.length  == 0)
+    {
+        [DCFStringUtil showNotice:@"搜索内容不能为空哦~"];
+        return;
+    }
+   
     if ([tempType isEqualToString:@"1"])
     {
+         [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"1" ProductId:nil ProductName:mySearchBar.text];
@@ -579,6 +587,7 @@
     }
     if ([tempType isEqualToString:@"2"])
     {
+         [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
@@ -619,6 +628,7 @@
     mySearchBar.text = soundInput;
     if ([tempType isEqualToString:@"1"])
     {
+        [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"1" ProductId:nil ProductName:mySearchBar.text];
@@ -627,6 +637,7 @@
     }
     if ([tempType isEqualToString:@"2"])
     {
+        [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
@@ -642,7 +653,7 @@
         [self cancelIFlyRecognizer];
         speakButtonView.hidden = YES;
         speakButton.hidden = YES;
-        [self sendRquest];
+
         clearBtn.hidden = YES;
     }
 }
@@ -1104,10 +1115,8 @@
 
     if ([tempFlag isEqualToString:@"4"])
     {
-
         if (dataArray.count > 0)
         {
-            
             [self setHidesBottomBarWhenPushed:YES];
             CableSecondAndThirdStepViewController *cstVC = [sb instantiateViewControllerWithIdentifier:@"cableSecondAndThirdStepViewController"];
             CableChoosemodelViewController *ccmVC = [sb instantiateViewControllerWithIdentifier:@"cableChoosemodelViewController"];
@@ -1151,10 +1160,12 @@
         }
         else if ([[dataArray[indexPath.row] objectForKey:@"type"] isEqualToString:@"2"])
         {
+            tempType = @"2";
             [self setHidesBottomBarWhenPushed:YES];
             B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
             B2CVC.tempSearchText = [dataArray[indexPath.row] objectForKey:@"productName"];
             [self.navigationController pushViewController:B2CVC animated:YES];
+            [self setHidesBottomBarWhenPushed:NO];
         }
         
         NSLog(@"点击历史搜索 = %@ 行 = %d",mySearchBar.text,indexPath.row);

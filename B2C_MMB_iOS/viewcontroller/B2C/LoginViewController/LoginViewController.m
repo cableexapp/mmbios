@@ -300,7 +300,7 @@
         [DCFStringUtil showNotice:@"请输入账号"];
         return;
     }
-    if(sec.length == 0)
+    if([DCFCustomExtra validateString:sec] == NO)
     {
         [DCFStringUtil showNotice:@"请输入密码"];
         return;
@@ -329,7 +329,6 @@
     }
     
     NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",acc,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
-    NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     conn.LogIn = YES;
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];

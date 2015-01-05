@@ -121,12 +121,15 @@
                 [docArray addObject:[NSNumber numberWithInt:i]];
             }
         }
+        NSLog(@"finalAddress = %@",finalAddress);
+        
         chooseProvince = [finalAddress substringToIndex:[[docArray objectAtIndex:0] intValue]];
         int cityLength = [[docArray objectAtIndex:1] intValue] - [[docArray objectAtIndex:0] intValue];
         chooseCity = [finalAddress substringWithRange:NSMakeRange([[docArray objectAtIndex:0] intValue]+1, cityLength-1)];
         int addressLength = finalAddress.length - [[docArray objectAtIndex:1] intValue];
         chooseAddress = [finalAddress substringWithRange:NSMakeRange([[docArray objectAtIndex:1] intValue]+1, addressLength-1)];
         finalAddress = [finalAddress stringByReplacingOccurrencesOfString:@"," withString:@""];
+        NSLog(@"chooseProvince = %@ chooseCity = %@ chooseAddress = %@",chooseProvince,chooseCity,chooseAddress);
     }
     return self;
 }
@@ -318,7 +321,7 @@
         NSString *token = [DCFCustomExtra md5:string];
 
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiver,province,city,area,chooseAddressName,chooseAddressName,zip,mobile,tel];
-        
+        NSLog(@"%@",pushString);
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];

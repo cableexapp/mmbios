@@ -317,75 +317,7 @@
         {
             [self.logOutBtn setHidden:YES];
             
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"memberId"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"hasLogin"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"userName"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userName"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserPhone"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"UserEmail"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"headPortraitUrl"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"defaultReceiveAddress"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"defaultReceiveAddress"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"SppedAskPriceTelNum"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SppedAskPriceTelNum"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"loginid"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loginid"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"HotKindNum"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"HotKindNum"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"BillMsg"];
-            }
-            
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"B2BBillMsg"];
-            }
-
-            if([[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"])
-            {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"B2BManageBillSwitchStatus"];
-            }
+            [DCFCustomExtra cleanData];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             

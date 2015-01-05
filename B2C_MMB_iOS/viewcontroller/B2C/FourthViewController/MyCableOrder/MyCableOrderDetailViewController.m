@@ -157,9 +157,10 @@
     }
     
     
-    NSString *orderNum = [NSString stringWithFormat:@"订单号:%@",detailData.ordernum];
+    NSString *orderNum = [NSString stringWithFormat:@"订单号: %@",detailData.ordernum];
     [self.myOrderNumberLabel setFrame:CGRectMake(5, 0, 180, 20)];
     [self.myOrderNumberLabel setText:orderNum];
+    self.myOrderNumberLabel.backgroundColor = [UIColor whiteColor];
     [self.myOrderNumberLabel setFont:[UIFont systemFontOfSize:11]];
     
     [self.myOrderTimeLabel setFrame:CGRectMake(self.myOrderNumberLabel.frame.origin.x+self.myOrderNumberLabel.frame.size.width, 0, ScreenWidth-10-self.myOrderNumberLabel.frame.size.width, 20)];
@@ -171,12 +172,14 @@
     [theOrderStatus addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 3)];
     [theOrderStatus addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(3, orderStatus.length-3)];
     [self.myOrderStatusLabel setAttributedText:theOrderStatus];
+    self.myOrderStatusLabel.backgroundColor = [UIColor whiteColor];
 
     NSString *orderTotal = [NSString stringWithFormat:@"订单总额: ¥%@",detailData.ordertotal];
     NSMutableAttributedString *theOrderTotal = [[NSMutableAttributedString alloc] initWithString:orderTotal];
     [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
     [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(5, orderTotal.length-5)];
     [self.myOrderTotalLabel setAttributedText:theOrderTotal];
+    self.myOrderTotalLabel.backgroundColor = [UIColor whiteColor];
 
 }
 
@@ -191,10 +194,11 @@
     
     [self pushAndPopStyle];
     
+    self.topView.backgroundColor = [UIColor whiteColor];
     
     self.sureBtn.layer.cornerRadius = 5.0f;
     [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.sureBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:144/255.0 blue:1/255.0 alpha:1.0];
+    self.sureBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     [self.sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     myCableDetailTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableDetailTableViewController"];

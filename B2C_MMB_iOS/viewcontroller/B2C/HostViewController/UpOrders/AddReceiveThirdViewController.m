@@ -201,7 +201,7 @@
     
     NSString *town = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
     NSString *str = [NSString stringWithFormat:@"%@,%@",_provinceAndCity,town];
-
+    NSLog(@"str = %@",str);
     
     if(arr.count != 0)
     {

@@ -83,9 +83,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealhasLogOut:) name:@"hasLogOut" object:nil];
     
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+    NSLog(@"MEMBERID = %@",memberid);
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     
     sb = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
-    if([DCFCustomExtra validateString:memberid] == NO)
+    if([DCFCustomExtra validateString:memberid] == NO || [DCFCustomExtra validateString:userName] == NO)
     {
         hasNotLoginViewController = [sb instantiateViewControllerWithIdentifier:@"hasNotLoginViewController"];
         [self setViewControllers:[NSArray arrayWithObject:hasNotLoginViewController]];

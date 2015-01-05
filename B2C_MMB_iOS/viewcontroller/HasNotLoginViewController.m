@@ -79,6 +79,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    
+    [DCFCustomExtra cleanData];
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];

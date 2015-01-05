@@ -45,15 +45,14 @@
     UILabel *addressLabel_2;
     
     NSDictionary *addSuccessDic;
-    NSString *receiver;
-    NSString *province;
-    NSString *city;
-    NSString *area;
-//    NSString *addressname;
-    NSString *zip;
-    NSString *mobile;
-    NSString *tel;
-    NSString *fulladdress;
+//    NSString *receiver;
+//    NSString *province;
+//    NSString *city;
+//    NSString *area;
+//    NSString *zip;
+//    NSString *mobile;
+//    NSString *tel;
+//    NSString *fulladdress;
     
     NSArray *notiArray;
 //    NSString *pushLocationStr;
@@ -78,14 +77,13 @@
 
         chooseCity = b2cAddressData.city;
         chooseProvince = b2cAddressData.province;
-        chooseAddress = b2cAddressData.area;
-        chooseAddressName = b2cAddressData.fullAddress;
-//        chooseFullAddress = b2cAddressData.fullAddress;
+        chooseBorough = b2cAddressData.area;
+        chooseStreet = b2cAddressData.fullAddress;
         chooseReceiver = b2cAddressData.receiver;
         chooseCode = b2cAddressData.zip;
         choosePhone = b2cAddressData.mobile;
         chooseTel = b2cAddressData.tel;
-        
+        NSLog(@"chooseCity = %@ chooseProvince = %@ chooseAddress = %@ chooseAddressName = %@",chooseCity,chooseProvince,chooseBorough,chooseStreet);
         //        swith.on = [[_msgDic objectForKey:@"swithStatus"] boolValue];
         
         DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"编辑收货地址"];
@@ -121,15 +119,24 @@
                 [docArray addObject:[NSNumber numberWithInt:i]];
             }
         }
-        NSLog(@"finalAddress = %@",finalAddress);
         
-        chooseProvince = [finalAddress substringToIndex:[[docArray objectAtIndex:0] intValue]];
-        int cityLength = [[docArray objectAtIndex:1] intValue] - [[docArray objectAtIndex:0] intValue];
-        chooseCity = [finalAddress substringWithRange:NSMakeRange([[docArray objectAtIndex:0] intValue]+1, cityLength-1)];
-        int addressLength = finalAddress.length - [[docArray objectAtIndex:1] intValue];
-        chooseAddress = [finalAddress substringWithRange:NSMakeRange([[docArray objectAtIndex:1] intValue]+1, addressLength-1)];
+        NSArray *addressArrayForAdd = [finalAddress componentsSeparatedByString:@","];
+        
+        chooseProvince = [addressArrayForAdd objectAtIndex:0];
+        chooseCity = [addressArrayForAdd objectAtIndex:1];
+        chooseBorough = [addressArrayForAdd objectAtIndex:2];
+        
+        //用来区分只有3级还是4级
+        if(addressArrayForAdd.count <= 3)
+        {
+            chooseStreet = @"";
+        }
+        else
+        {
+            chooseStreet = [addressArrayForAdd lastObject];
+        }
         finalAddress = [finalAddress stringByReplacingOccurrencesOfString:@"," withString:@""];
-        NSLog(@"chooseProvince = %@ chooseCity = %@ chooseAddress = %@",chooseProvince,chooseCity,chooseAddress);
+        NSLog(@"chooseProvince = %@ chooseCity = %@ chooseBorough = %@  chooseStreet = %@",chooseProvince,chooseCity,chooseBorough,chooseStreet);
     }
     return self;
 }
@@ -232,38 +239,36 @@
     
     if([DCFCustomExtra validateString:receiverTf.text] == NO)
     {
-        receiver = @"";
+        chooseReceiver = @"";
     }
     else
     {
-        receiver = receiverTf.text;
+        chooseReceiver = receiverTf.text;
     }
     
     if([DCFCustomExtra validateString:chooseProvince] == NO)
     {
-        province = @"";
+        chooseProvince = @"";
     }
     else
     {
-        province = chooseProvince;
+//        chooseProvince = chooseProvince;
     }
     
     if([DCFCustomExtra validateString:chooseCity] == NO)
     {
-        city = @"";
+        chooseCity = @"";
     }
     else
     {
-        city = chooseCity;
     }
     
-    if([DCFCustomExtra validateString:chooseAddress] == NO)
+    if([DCFCustomExtra validateString:chooseBorough] == NO)
     {
-        area = @"";
+        chooseBorough = @"";
     }
     else
     {
-        area = chooseAddress;
     }
     
 //    if([DCFCustomExtra validateString:chooseAddressName] == NO)
@@ -277,38 +282,38 @@
     
     if([DCFCustomExtra validateString:zipTf.text] == NO)
     {
-        zip = @"";
+        chooseCode = @"";
     }
     else
     {
-        zip = zipTf.text;
+        chooseCode = zipTf.text;
     }
     
     if([DCFCustomExtra validateString:mobileTf.text] == NO)
     {
-        mobile = @"";
+        choosePhone = @"";
     }
     else
     {
-        mobile = mobileTf.text;
+        choosePhone = mobileTf.text;
     }
     
     if([DCFCustomExtra validateString:fixedLineTelephone.text] == NO)
     {
-        tel = @"";
+        chooseTel = @"";
     }
     else
     {
-        tel = fixedLineTelephone.text;
+        chooseTel = fixedLineTelephone.text;
     }
     
     if([DCFCustomExtra validateString:addressNameTf.text] == NO)
     {
-        chooseAddressName = @"";
+        chooseDetailAddress = @"";
     }
     else
     {
-        chooseAddressName = addressNameTf.text;
+        chooseDetailAddress = addressNameTf.text;
     }
     
     //新增
@@ -320,7 +325,11 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
 
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,receiver,province,city,area,chooseAddressName,chooseAddressName,zip,mobile,tel];
+        if([DCFCustomExtra validateString:chooseStreet] == NO)
+        {
+            chooseStreet = @"";
+        }
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,chooseReceiver,chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress,chooseCode,choosePhone,chooseTel];
         NSLog(@"%@",pushString);
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
@@ -335,7 +344,8 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"editMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,receiver,province,city,area,chooseAddressName,zip,mobile,tel,b2cAddressData.addressId];
+//        province(省份)city(城市),area(地区),addressname(街道),fulladdress(详细地址)
+        NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,chooseReceiver,chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress,chooseCode,choosePhone,chooseTel,b2cAddressData.addressId];
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
         
         NSString *urlString = nil;
@@ -384,8 +394,7 @@
     
     chooseProvince = [arr objectAtIndex:0];
     chooseCity = [arr objectAtIndex:1];
-    area = [arr lastObject];
-    chooseAddress = area;
+    chooseBorough = [arr lastObject];
     
     NSString *topStr = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
     [topTf setText:topStr];
@@ -395,8 +404,8 @@
     chooseReceiver = [dictionary objectForKey:@"receiver"];
     [receiverTf setText:chooseReceiver];
     
-    chooseAddressName = [dictionary objectForKey:@"detailAddress"];
-    [addressNameTf setText:chooseAddressName];
+    chooseDetailAddress = [dictionary objectForKey:@"detailAddress"];
+    [addressNameTf setText:chooseDetailAddress];
     
     chooseCode = [dictionary objectForKey:@"zip"];
     if([DCFCustomExtra validateString:chooseCode] == NO)
@@ -539,8 +548,13 @@
             NSString *addressid_b2b = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"addressid_b2b"]];
             NSString *addressid_b2c = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"addressid_b2c"]];
 
-            NSString *receiveFullAddress = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,chooseAddressName];
-            addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",receiver,@"receiver",mobile,@"mobile",addressid_b2b,@"addressid_b2b",addressid_b2c,@"addressid_b2c", nil];
+            NSString *receiveFullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress];
+            receiveFullAddress = [receiveFullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+            receiveFullAddress = [receiveFullAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
+            receiveFullAddress = [receiveFullAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
+            NSLog(@"receiveFullAddress = %@",receiveFullAddress);
+            
+            addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",chooseReceiver,@"receiver",choosePhone,@"mobile",addressid_b2b,@"addressid_b2b",addressid_b2c,@"addressid_b2c", nil];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAddressSuccessForB2B" object:addSuccessDic];
             
@@ -750,7 +764,7 @@
                 }
                 if(i == 1)
                 {
-                    [textField setText:chooseAddressName];
+                    [textField setText:chooseDetailAddress];
                 }
                 if(i == 2)
                 {
@@ -771,7 +785,7 @@
     receiverTf = [textFieldArray objectAtIndex:0];
     
     addressNameTf = [textFieldArray objectAtIndex:1];
-    chooseAddressName = addressNameTf.text;
+    chooseDetailAddress = addressNameTf.text;
     
     zipTf = [textFieldArray objectAtIndex:2];
     

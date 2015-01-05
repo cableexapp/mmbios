@@ -329,6 +329,7 @@
     }
     
     NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@&visitorid=%@&userid=%@&channelid=%@&devicetype=%@",acc,des,token,[app getUdid],app.baiduPushUserId,app.channelId,@"4"];
+    NSLog(@"push = %@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLoginTag delegate:self];
     conn.LogIn = YES;
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];

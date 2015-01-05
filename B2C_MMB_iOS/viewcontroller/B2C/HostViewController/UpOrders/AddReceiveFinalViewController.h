@@ -25,14 +25,13 @@
 {
     NSString *chooseProvince;   //省
     NSString *chooseCity;             //市
-    NSString *chooseAddress;     //区和街道
-    NSString *chooseAddressName;  //具体地址
-//    NSString *chooseFullAddress;
+    NSString *chooseBorough;     //区
+    NSString *chooseStreet;  //街道
+    NSString *chooseDetailAddress;   //详细地址
     NSString *chooseReceiver;
     NSString *choosePhone;
     NSString *chooseTel;
-    
-    NSString *chooseCode;
+    NSString *chooseCode;   //邮编
     
     DCFConnectionUtil *conn;
     

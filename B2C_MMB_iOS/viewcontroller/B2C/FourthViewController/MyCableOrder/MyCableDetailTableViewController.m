@@ -38,6 +38,8 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     [self.tableView setBackgroundColor:[UIColor whiteColor]];
     
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"OrderDetail",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -387,12 +389,11 @@
     {
         NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
         
-        return 95.5+height_1+height_2+height_3+height_4 + 80*logstics_listArray.count + 15;
+        return 95+height_1+height_2+height_3+height_4+20 + 77*logstics_listArray.count;
     }
     else
     {
-        return 95.5+height_1+height_2+height_3+height_4+10;
-
+        return 95+height_1+height_2+height_3+height_4+20;
     }
 
 }

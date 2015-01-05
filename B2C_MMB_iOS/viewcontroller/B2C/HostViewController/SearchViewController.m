@@ -126,7 +126,6 @@
     }
     tempSearch = 0;
     [self readHistoryData];
-    NSLog(@"viewWillAppear");
     [self loadbadgeCount];
 }
 
@@ -149,7 +148,7 @@
     rightButtonView.hidden = YES;
     rightBtn.hidden = YES;
     tempFlag = @"4";
-    
+
     [mySearchBar resignFirstResponder];
 
     [self.navigationController.tabBarController.tabBar setHidden:NO];
@@ -343,7 +342,6 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if (URLTag == URLSearchProductTypeTag)
     {
-        NSLog(@"dicRespon = %@",dicRespon);
         [self refreshTableView];
         if ([tempType isEqualToString:@"1"])
         {
@@ -693,11 +691,11 @@
     [self refreshTableView];
     [self.serchResultView reloadData];
     
-    NSLog(@"搜索历史 = %@",dataArray);
+//    NSLog(@"搜索历史 = %@",dataArray);
     if (dataArray.count > 0)
     {
         isShowClearBtn = 1;
-        NSLog(@"搜索历史关键词 = %@",[[dataArray objectAtIndex:0] objectForKey:@"productName"]);
+//        NSLog(@"搜索历史关键词 = %@",[[dataArray objectAtIndex:0] objectForKey:@"productName"]);
     }
 }
 
@@ -735,7 +733,7 @@
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    NSLog(@"searchBarTextDidBeginEditing");
+//    NSLog(@"searchBarTextDidBeginEditing");
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -1090,10 +1088,11 @@
             {
                 searchImageView.image = nil;
                 clearBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                [clearBtn setBackgroundColor:[UIColor colorWithRed:0/255 green:86.0/255 blue:176.0/255 alpha:1.0]];
+                [clearBtn setBackgroundColor:[UIColor colorWithRed:9/255 green:99.0/255 blue:189.0/255 alpha:1.0]];
                 [clearBtn setTitle:@"清空历史纪录" forState:UIControlStateNormal];
-                clearBtn.frame = CGRectMake((ScreenWidth-120)/2, 4.5, 120, 35);
+                clearBtn.frame = CGRectMake((ScreenWidth-100)/2, 4.5, 100, 35);
                 [clearBtn setTintColor:[UIColor whiteColor]];
+                [clearBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
                 [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 clearBtn.layer.cornerRadius = 3;
                 [cell addSubview:clearBtn];
@@ -1168,9 +1167,9 @@
             [self setHidesBottomBarWhenPushed:NO];
         }
         
-        NSLog(@"点击历史搜索 = %@ 行 = %d",mySearchBar.text,indexPath.row);
+//        NSLog(@"点击历史搜索 = %@ 行 = %d",mySearchBar.text,indexPath.row);
         
-        NSLog(@"点击历史tempType = %@  tempFlag = %@",tempType,tempFlag);
+//        NSLog(@"点击历史tempType = %@  tempFlag = %@",tempType,tempFlag);
     }
 }
 
@@ -1208,17 +1207,17 @@
         const char *dbpath = [databasePathB2C UTF8String];
         if (sqlite3_open(dbpath, &contactDBB2C)==SQLITE_OK)
         {
-             NSLog(@"创建B2C表成功\n");
+//             NSLog(@"创建B2C表成功\n");
             char *errMsg;
             const char *sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS(ID INTEGER PRIMARY KEY AUTOINCREMENT,TYPE TEXT ,PRODUCTID TEXT, PRODUCTNAME TEXT)";
             if (sqlite3_exec(contactDBB2C, sql_stmt, NULL, NULL, &errMsg)!=SQLITE_OK)
             {
-                NSLog(@"创建B2C表失败\n");
+//                NSLog(@"创建B2C表失败\n");
             }
         }
         else
         {
-            NSLog(@"创建B2C_打开数据库失败\n");
+//            NSLog(@"创建B2C_打开数据库失败\n");
         }
     }
 }
@@ -1237,11 +1236,11 @@
         sqlite3_prepare_v2(contactDBB2C, insert_stmt, -1, &statement, NULL);
         if (sqlite3_step(statement)==SQLITE_DONE)
         {
-            NSLog(@"已存储到数据库");
+//            NSLog(@"已存储到数据库");
         }
         else
         {
-            NSLog(@"保存失败！");
+//            NSLog(@"保存失败！");
         }
         sqlite3_finalize(statement);
         sqlite3_close(contactDBB2C);
@@ -1271,20 +1270,20 @@
                         
                         NSString *productName = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement,3)];
                         
-                        NSLog(@"查询结果 = %@ %@ %@",type,productId,productName);
-                        NSLog(@"已查到结果\n\n");
+//                        NSLog(@"查询结果 = %@ %@ %@",type,productId,productName);
+//                        NSLog(@"已查到结果\n\n");
                         
                         NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:type,@"type",productId,@"productId",productName,@"productName",nil];
-                        NSLog(@"dic = %@\n\n",dic);
+//                        NSLog(@"dic = %@\n\n",dic);
                         
                         [B2ChistoryArray addObject:dic];
 
-                        NSLog(@"self.history = %@",B2ChistoryArray);
+//                        NSLog(@"self.history = %@",B2ChistoryArray);
                     }
             }
             else
             {
-                NSLog(@"未查到结果");
+//                NSLog(@"未查到结果");
             }
             sqlite3_finalize(statement);
         }

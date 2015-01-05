@@ -235,7 +235,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    NSLog(@"tempSearchText = %@",self.tempSearchText);
     [super viewWillAppear:YES];
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
@@ -302,14 +301,12 @@
 
 -(void)rightSearchBtnClick
 {
-    NSLog(@"家装馆搜索 = %@",mySearchBar.text);
     intPage = 1;
     [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
 }
 
 -(void)soundSrarchTap
 {
-    NSLog(@"点击语音搜索= %@",mySearchBar.text);
     [mySearchBar resignFirstResponder];
     //启动识别服务
     [_iflyRecognizerView start];
@@ -324,7 +321,6 @@
 //键盘手动搜索
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSLog(@"键盘手动搜索= %@",mySearchBar.text);
     intPage = 1;
     [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
 //    if (mySearchBar.text.length > 0)
@@ -557,7 +553,6 @@
         }
         [self loadRequestSeq:_seq WithseqMethod:seqmethod WithContent:mySearchBar.text];
     }
-    NSLog(@"btnRotationNumArray = %@",btnRotationNumArray);
 }
 
 - (void) loadRequestSeq:(NSString *)seq WithseqMethod:(NSString *)seqMethod WithContent:(NSString *)content
@@ -612,8 +607,6 @@
             {
                 NSString *result = [dicRespon objectForKey:@"result"];
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
-                NSLog(@"result = %@\n\n",result);
-                NSLog(@"intTotal = %d\n\n",intTotal);
                 if([result isEqualToString:@"1"])
                 {
                     if(intPage == 1)
@@ -643,7 +636,6 @@
                         [moreCell stopAnimation];
                     }
                     intPage++;
-                    NSLog(@"intPage = %d",intPage);
                 }
                 else
                 {

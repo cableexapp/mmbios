@@ -789,13 +789,16 @@
             [cell.contentView addSubview:label_1];
             [cell.contentView addSubview:label_2];
             [cell.contentView addSubview:requestLabel];
-            
-            if([status intValue] == 5)
+      
+            NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
+            float shippedHasNum = [[dic objectForKey:@"shippedHasNum"] floatValue];
+            if(shippedHasNum > 0.00)
             {
                 if(logstics_listArray.count != 0 || ![logstics_listArray isKindOfClass:[NSNull class]])
                 {
-                    UIView *logsticsView = [[UIView alloc] initWithFrame:CGRectMake(0, (seperateView.frame.origin.y+0.5)+80*i, ScreenWidth, 60)];
-                    [cell.contentView addSubview:logsticsView];
+                    UIView *seperateView = [[UIView alloc] initWithFrame:CGRectMake(0, requestLabel.frame.origin.y+requestLabel.frame.size.height, ScreenWidth, 1)];
+                    [seperateView setBackgroundColor:[UIColor lightGrayColor]];
+                    [cell.contentView addSubview:seperateView];
                     
                     NSDictionary *logsticsDic = [NSDictionary dictionaryWithDictionary:[logstics_listArray objectAtIndex:i]];
                     NSString *s1 = @"发货信息";
@@ -803,33 +806,6 @@
                     [s1Label setText:s1];
                     [s1Label setFont:[UIFont boldSystemFontOfSize:13]];
                     [logsticsView addSubview:s1Label];
-                    
-                    NSString *s2 = [NSString stringWithFormat:@"已发货: %@%@",[logsticsDic objectForKey:@"current_num"],unit];
-                    NSMutableAttributedString *current_num = [[NSMutableAttributedString alloc] initWithString:s2];
-                    [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
-                    [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, s2.length-4)];
-                    UILabel *current_numLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, ScreenWidth-20, 20)];
-                    [current_numLabel setAttributedText:current_num];
-                    [current_numLabel setFont:[UIFont systemFontOfSize:12]];
-                    [logsticsView addSubview:current_numLabel];
-                    
-                    NSString *s3 = [NSString stringWithFormat:@"物流公司: %@",[logsticsDic objectForKey:@"logistics_company"]];
-                    NSMutableAttributedString *logistics_company = [[NSMutableAttributedString alloc] initWithString:s3];
-                    [logistics_company addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
-                    [logistics_company addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, s3.length-5)];
-                    UILabel *logistics_companyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, ScreenWidth-20, 20)];
-                    [logistics_companyLabel setAttributedText:logistics_company];
-                    [logistics_companyLabel setFont:[UIFont systemFontOfSize:12]];
-                    [logsticsView addSubview:logistics_companyLabel];
-                    
-                    NSString *s4 = [NSString stringWithFormat:@"物流单号: %@",[logsticsDic objectForKey:@"logistics_no"]];
-                    NSMutableAttributedString *logistics_no = [[NSMutableAttributedString alloc] initWithString:s4];
-                    [logistics_no addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
-                    [logistics_no addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(5, s4.length-5)];
-                    UILabel *logistics_noLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 60, ScreenWidth-20, 20)];
-                    [logistics_noLabel setAttributedText:logistics_no];
-                    [logistics_noLabel setFont:[UIFont systemFontOfSize:12]];
-                    [logsticsView addSubview:logistics_noLabel];
                     
                     NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
                     for(int i=0;i<logstics_listArray.count;i++)

@@ -35,28 +35,34 @@
     self.avState.hidden = YES;
 }
 
-- (void)startAnimation{
+- (void)startAnimation
+{
     self.avState.hidden = NO;
     self.lblContent.text = @"加载中...";
+    self.lblContent.font = [UIFont systemFontOfSize:12];
     [self.avState startAnimating];
 }
 
-- (void)stopAnimation{
+- (void)stopAnimation
+{
     //    self.avState.frame = CGRectMake(99, 12, 20, 20);
     //    self.lblContent.frame = CGRectMake(94, 11, 132, 21);
     [self setUserInteractionEnabled:NO];
     self.lblContent.text = @"上拉加载更多";
+    self.lblContent.font = [UIFont systemFontOfSize:12];
     [self.avState stopAnimating];
     self.avState.hidden = YES;
 }
 
-- (void)awakeFromNib{
+- (void)awakeFromNib
+{
     self.avState.frame = CGRectMake(99, 12, 20, 20);
     self.lblContent.frame = CGRectMake(0, 11,320, 21);
     self.lblContent.textAlignment = NSTextAlignmentCenter;
 }
 
-- (void)failAcimation{
+- (void)failAcimation
+{
     self.tag = 50;
     self.lblContent.text = @"加载失败";
     [self.avState stopAnimating];
@@ -71,7 +77,8 @@
     self.avState.hidden = YES;
 }
 
-- (void)noDataAnimation{
+- (void)noDataAnimation
+{
     self.lblContent.text = @"没有相关数据";
     [self.avState stopAnimating];
     self.avState.hidden = YES;

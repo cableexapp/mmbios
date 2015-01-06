@@ -109,10 +109,8 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    if ([self.fromFlag isEqualToString:@"我的电缆订单"])
-    {
-        [self loadRequestB2BOrderListAllWithStatus:@"0"];
-    }
+ 
+    [self loadRequestB2BOrderListAllWithStatus:@""];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -183,11 +181,11 @@
                 NSLog(@"B2B全部订单 = %@",dicRespon);
                 if ([[dicRespon objectForKey:@"items"] count] > 0)
                 {
+                    noResultView.hidden = NO;
                     [tempDataArray removeAllObjects];
                     [tempDataArray addObjectsFromArray:[B2BMyCableOrderListData getListArray:[dicRespon objectForKey:@"items"]]];
                     dataArray = [self arrayWithMemberIsOnly:tempDataArray];
                     tempOrderNum = [dicRespon objectForKey:@"items"];
-                    noResultView.hidden = YES;
                 }
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
@@ -471,6 +469,7 @@
         UIView *lineView = [[UIView alloc] init];
         lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         [cell addSubview:lineView];
+
         if (indexPath.row == 0)
         {
             //        lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);

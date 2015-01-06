@@ -121,7 +121,7 @@
     [speakButton setBackgroundImage:[UIImage imageNamed:@"speak"] forState:UIControlStateNormal];
     [self.view insertSubview:speakButton atIndex:1];
     
-    selectBtnView = [[UIView alloc] initWithFrame:CGRectMake(0,45, ScreenWidth, 60)];
+    selectBtnView = [[UIView alloc] initWithFrame:CGRectMake(0,45, ScreenWidth,40)];
     [selectBtnView setBackgroundColor:[UIColor whiteColor]];
     selectBtnView.hidden = YES;
     [self.view addSubview:selectBtnView];
@@ -134,13 +134,12 @@
     for(int i=0;i<3;i++)
     {
         selctBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [selctBtn setFrame:CGRectMake(10 + 100*i, 13, 100, 30)];
-        
+        [selctBtn setFrame:CGRectMake(10 + 100*i, 5, 100, 30)];
+        [selctBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
         UIImageView *sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(selctBtn.frame.size.width-20, 10, 15, 15)];
         [sectionBtnIv setImage:[UIImage imageNamed:@"down_dark.png"]];
         [sectionBtnIv setContentMode:UIViewContentModeScaleAspectFit];
         [sectionBtnIv setHidden:YES];
-        
         [sectionBtnIvArray addObject:sectionBtnIv];
         
         switch (i)
@@ -163,29 +162,26 @@
         
         int num = 0;
         [btnRotationNumArray addObject:[NSNumber numberWithInt:num]];
-        
-        
-        
-        [selctBtn setTitleColor:[UIColor colorWithRed:133.0/255.0 green:133.0/255.0 blue:133.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [selctBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         
         if(i == 0)
         {
             //蓝色下划线
-            lineView_2 = [[UIView alloc] initWithFrame:CGRectMake(8, selctBtn.frame.origin.y+40, 100, 3)];
+            lineView_2 = [[UIView alloc] initWithFrame:CGRectMake(10, 36, 100, 2)];
             [lineView_2 setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
             [selectBtnView addSubview:lineView_2];
             [lineView_2 setTag:0];
             lineView_2.hidden = NO;
             [buttonLineViewArray addObject:lineView_2];
             
-            lineView_3 = [[UIView alloc] initWithFrame:CGRectMake(110, selctBtn.frame.origin.y+40, 100, 3)];
+            lineView_3 = [[UIView alloc] initWithFrame:CGRectMake(110,36, 100, 2)];
             [lineView_3 setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
             [selectBtnView addSubview:lineView_3];
             [lineView_3 setTag:1];
             lineView_3.hidden = YES;
             [buttonLineViewArray addObject:lineView_3];
             
-            lineView_4 = [[UIView alloc] initWithFrame:CGRectMake(215, selctBtn.frame.origin.y+40, 100, 3)];
+            lineView_4 = [[UIView alloc] initWithFrame:CGRectMake(215,36, 100, 2)];
             [lineView_4 setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
             [selectBtnView addSubview:lineView_4];
             [lineView_4 setTag:2];
@@ -208,16 +204,16 @@
         toplineView.frame = CGRectMake(0, selectBtnView.frame.size.height-1, ScreenWidth, 1);
         toplineView.backgroundColor = [UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0];
         [selectBtnView addSubview:toplineView];
- 
+        
         [selectBtnView addSubview:selctBtn];
         [btnArray addObject:selctBtn];
     }
-
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 169) style:0];
+    
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 155) style:0];
     [tv setDelegate:self];
     [tv setDataSource:self];
+    tv.backgroundColor = [UIColor whiteColor];
     [tv setShowsVerticalScrollIndicator:NO];
-    tv.hidden = YES;
     [tv setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:tv];
     
@@ -260,13 +256,17 @@
         speakButton.hidden = YES;
         speakButtonView.hidden = YES;
         [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
-         [self.navigationController.tabBarController.tabBar setHidden:YES];
+        [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
+        [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
+        [self.navigationController.tabBarController.tabBar setHidden:YES];
     }
     else
     {
         speakButton.hidden = NO;
         speakButtonView.hidden = NO;
-         [self readHistoryData];
+        tempFlag = 2;
+        [_refreshView removeFromSuperview];
+        [self readHistoryData];
     }
     
     //初始化语音识别控件
@@ -411,15 +411,20 @@
 -(void)readHistoryData
 {
 //    [self refreshTableView];
-    [self refreshHistoryTableView];
-    [self SearchHomeDataFromDataBase];
+//    [self refreshHistoryTableView];
 
+    [self SearchHomeDataFromDataBase];
+        NSLog(@"self.history = %@",homehistoryArray);
     if (homehistoryArray.count > 0)
     {
         selectBtnView.hidden = YES;
         tv.frame = CGRectMake(0, 45, ScreenWidth, ScreenHeight-45);
         tempFlag = 2;
         dataArray = [self arrayWithMemberIsOnly:homehistoryArray];
+        if (dataArray.count > 0)
+        {
+            isShowClearBtn = 1;
+        }
     }
     else
     {
@@ -429,26 +434,22 @@
     [tv reloadData];
     
     NSLog(@"搜索历史 = %@",dataArray);
-    if (dataArray.count > 0)
-    {
-        isShowClearBtn = 1;
-        NSLog(@"搜索历史关键词 = %@",[[dataArray objectAtIndex:0] objectForKey:@"searchName"]);
-    }
+    
 }
 
 -(void)refreshTableView
 {
-    [tv removeFromSuperview];
-
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0,109, ScreenWidth, ScreenHeight - 109) style:0];
-
-    [tv setDelegate:self];
-    [tv setDataSource:self];
-    tv.backgroundColor = [UIColor whiteColor];
-    [tv setShowsVerticalScrollIndicator:NO];
-    [tv setShowsHorizontalScrollIndicator:NO];
-    [self.view addSubview:tv];
-    
+//    [tv removeFromSuperview];
+//
+//    tv = [[UITableView alloc] initWithFrame:CGRectMake(0,109, ScreenWidth, ScreenHeight - 109) style:0];
+//
+//    [tv setDelegate:self];
+//    [tv setDataSource:self];
+//    tv.backgroundColor = [UIColor whiteColor];
+//    [tv setShowsVerticalScrollIndicator:NO];
+//    [tv setShowsHorizontalScrollIndicator:NO];
+//    [self.view addSubview:tv];
+//    
     //ADD REFRESH VIEW
     _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, ScreenWidth, 300)];
     [self.refreshView setDelegate:self];
@@ -461,6 +462,7 @@
 -(void)refreshHistoryTableView
 {
     [tv removeFromSuperview];
+    [_refreshView removeFromSuperview];
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, ScreenWidth, ScreenHeight-45) style:0];
     [tv setDelegate:self];
     [tv setDataSource:self];
@@ -468,6 +470,8 @@
     [tv setShowsVerticalScrollIndicator:NO];
     [tv setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:tv];
+//    [dataArray removeAllObjects];
+//    [tv reloadData];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
@@ -492,10 +496,6 @@
 
     if (searchBar.text.length == 0)
     {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"keywords"];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"keyseq"];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"keybtntag"];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"keymethod"];
         [self readHistoryData];
         speakButton.hidden = NO;
         speakButtonView.hidden = NO;
@@ -603,15 +603,9 @@
             [arrowIv setHidden:YES];
             [b setSelected:NO];
         }
-        if (tag == 0)
-        {
-            [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
-        }
-        else
-        {
-            [self loadRequestSeq:_seq WithseqMethod:seqmethod WithContent:mySearchBar.text];
-        }
-        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",tag] forKey:@"keybtntag"];
+  
+        [self loadRequestSeq:_seq WithseqMethod:seqmethod WithContent:mySearchBar.text];
+   
     }
 }
 
@@ -674,7 +668,18 @@
                     {
                         [dataArray removeAllObjects];
                     }
-                    
+                    if (dataArray.count == 1)
+                    {
+                        [tempDataArray removeAllObjects];
+                        [tempDataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
+                        dataArray = [self arrayWithMemberIsOnly:tempDataArray];
+                    }
+                    if (homehistoryArray.count > 0)
+                    {
+                        [dataArray removeAllObjects];
+                         [tv reloadData];
+                    }
+                                        tempFlag = 1;
                     [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
                     
 //                    NSLog(@"家装馆搜索 = %@",[[dataArray objectAtIndex:0] productName]);
@@ -683,10 +688,11 @@
                     {
                          [self refreshTableView];
                         noResultView.hidden = YES;
-                        tempFlag = 1;
+    
                         selectBtnView.hidden = NO;
-                        tv.frame = CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 109);
+                        tv.frame = CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight -85);
                         tv.hidden = NO;
+//                        [self.view bringSubviewToFront:tv];
                         [mySearchBar resignFirstResponder];
                         
                     }
@@ -725,15 +731,15 @@
     {
         if(indexPath.row <= dataArray.count - 1)
         {
-//            NSString *content = [[dataArray objectAtIndex:indexPath.row] productName];
+            NSString *content = [[dataArray objectAtIndex:indexPath.row] productName];
 //            NSLog(@"家装馆搜索 = %@",dataArray);
-//            CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
-//            return size_1.height + 60 + 20;
-            return 115;
+            CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:13] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
+            return size_1.height + 60 + 20;
+//            return 115;
         }
         else
         {
-            return 43;
+            return 40;
         }
     }
     return 0;
@@ -806,16 +812,17 @@
             searchResultLabel.font = [UIFont systemFontOfSize:13];
             [cell addSubview:searchResultLabel];
         }
-        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
-        {
-            [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-        }
+
         if(!dataArray || dataArray.count == 0)
         {
             
         }
         else
         {
+            while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+            {
+                [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+            }
             if (tempFlag == 2)
             {
                 if (indexPath.row == dataArray.count)
@@ -842,6 +849,13 @@
                 {
                     searchImageView.image = [UIImage imageNamed:@"clock.png"];
                     searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"searchName"];
+                    
+                    tv.separatorColor = [UIColor clearColor];
+                    
+                    UIView *lineView = [[UIView alloc] init];
+                    lineView.backgroundColor = [UIColor lightGrayColor];
+                    lineView.frame = CGRectMake(0,cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
+                    [cell addSubview:lineView];
                 }
             }
             else
@@ -858,6 +872,7 @@
                     }
                     return moreCell;
                 }
+                tv.separatorColor = [UIColor lightGrayColor];
                 NSString *content = [[dataArray objectAtIndex:indexPath.row] productName];
                 CGSize size_1;
                 if([DCFCustomExtra validateString:content] == NO)
@@ -866,12 +881,12 @@
                 }
                 else
                 {
-                    size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:15] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
+                    size_1 = [DCFCustomExtra adjustWithFont:[UIFont boldSystemFontOfSize:13] WithText:content WithSize:CGSizeMake(220, MAXFLOAT)];
                 }
                 UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 10, ScreenWidth-100, size_1.height)];
                 [contentLabel setText:content];
                 [contentLabel setNumberOfLines:0];
-                [contentLabel setFont:[UIFont boldSystemFontOfSize:15]];
+                [contentLabel setFont:[UIFont boldSystemFontOfSize:13]];
                 [contentLabel setTextAlignment:NSTextAlignmentLeft];
                 [cell.contentView addSubview:contentLabel];
                 
@@ -917,24 +932,26 @@
                 }
                 else
                 {
-                    size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:shopName WithSize:CGSizeMake(ScreenWidth-100, 30)];
+                    size_4 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:shopName WithSize:CGSizeMake(ScreenWidth-100, 30)];
                 }
                 UILabel *shopNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, saleOutLabel.frame.origin.y+saleOutLabel.frame.size.height, size_4.width, 30)];
                 [shopNameLabel setText:shopName];
-                [shopNameLabel setFont:[UIFont systemFontOfSize:14]];
+                [shopNameLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:shopNameLabel];
                 
                 UIImageView *cellIv = [[UIImageView alloc] init];
                 
-                [cellIv setFrame:CGRectMake(10, (size_1.height+20)/2, 60, 60)];
+                [cellIv setFrame:CGRectMake(10, (size_1.height+10)/2, 70, 70)];
                 NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
                 [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
-                [cellIv.layer setCornerRadius:2.0]; //设置矩圆角半径
-                [cellIv.layer setBorderWidth:1.0];   //边框宽度
+                [cellIv.layer setBorderWidth:0.5];   //边框宽度
                 cellIv.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
                 [cell.contentView addSubview:cellIv];
+                
+                tv.separatorColor = [UIColor lightGrayColor];
             }
         }
+    
         return cell;
 //       }
 }
@@ -956,12 +973,19 @@
     else
     {
         tempFlag = 1;
-        searchBarText = [dataArray[indexPath.row] objectForKey:@"searchName"];
-        mySearchBar.text = searchBarText;
-        speakButton.hidden = YES;
-        speakButtonView.hidden = YES;
-        intPage = 1;
-        [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
+        if (indexPath.row == dataArray.count)
+        {
+            
+        }
+        else
+        {
+            searchBarText = [dataArray[indexPath.row] objectForKey:@"searchName"];
+            mySearchBar.text = searchBarText;
+            speakButton.hidden = YES;
+            speakButtonView.hidden = YES;
+            intPage = 1;
+            [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
+        }
     }
 }
 
@@ -1072,24 +1096,32 @@
 #pragma  mark  -  滚动加载
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self.refreshView egoRefreshScrollViewDidEndDragging:scrollView];
-    if (tv == (UITableView *)scrollView)
+    if (tempFlag == 2)
     {
-        if (scrollView.contentSize.height > 0 && (scrollView.contentSize.height-scrollView.frame.size.height)>0)
+        
+    }
+    else
+    {
+        [self.refreshView egoRefreshScrollViewDidEndDragging:scrollView];
+        if (tv == (UITableView *)scrollView)
         {
-            if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
+            if (scrollView.contentSize.height > 0 && (scrollView.contentSize.height-scrollView.frame.size.height)>0)
             {
-                if ((intPage-1) * pageSize < intTotal )
+                if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
                 {
-                    if (mySearchBar.text.length > 0)
+                    if ((intPage-1) * pageSize < intTotal )
                     {
-                        tempFlag = 1;
-                        NSLog(@"上拉加载 = %d",intPage);
-                        [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
+                        if (mySearchBar.text.length > 0)
+                        {
+                            tempFlag = 1;
+                            NSLog(@"上拉加载 = %d",intPage);
+                            [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
+                        }
                     }
                 }
             }
         }
+
     }
 }
 

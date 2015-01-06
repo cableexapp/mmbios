@@ -126,7 +126,14 @@
     }
     tempSearch = 0;
     [self readHistoryData];
-    [self loadbadgeCount];
+    if ([rightBtn.titleLabel.text isEqualToString:@"购物车"])
+    {
+        [self loadShopCarCount];
+    }
+    else
+    {
+        [self loadbadgeCount];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated

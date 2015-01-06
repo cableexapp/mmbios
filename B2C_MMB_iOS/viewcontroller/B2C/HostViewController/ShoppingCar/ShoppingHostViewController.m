@@ -300,7 +300,7 @@
     [topTextField setReturnKeyType:UIReturnKeyDone];
     
     UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 32.0,22.0)];//左端缩进
-    UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5,0, 22, 22)];
+    UIImageView *leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5,2,18, 18)];
     leftImageView.image = [UIImage imageNamed:@"search"];
     [view1 addSubview:leftImageView];
     topTextField.leftView = view1;
@@ -452,7 +452,7 @@
             {
                 if(sv)
                 {
-                    return sv.frame.size.height;
+                    return sv.frame.size.height+10;
                 }
             }
         }
@@ -507,7 +507,7 @@
                 label.numberOfLines = 2;
 //                label.textAlignment = 1; 
                 [view addSubview:label];
-                [view.layer setBorderWidth:1.0];   //边框宽度
+                [view.layer setBorderWidth:0.5];   //边框宽度
                  view.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
 
                 [view addSubview:label];

@@ -369,11 +369,11 @@ BOOL isPopShow = NO;
 //    speakView.image = [UIImage imageNamed:@"speak"];
 //    [searchImageView addSubview:speakView];
 
-    UIImageView *search = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 22, 22)];
+    UIImageView *search = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 18,18)];
     search.image = [UIImage imageNamed:@"search"];
     [searchImageView addSubview:search];
     
-    UILabel *searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(43, 5, 190, 20)];
+    UILabel *searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(31, 5, 190, 20)];
     searchLabel.text = @"寻找电缆、品牌、型号、规格";
     searchLabel.font = [UIFont systemFontOfSize:14];
     searchLabel.textColor = [UIColor lightGrayColor];

@@ -139,8 +139,8 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"OrderListAll",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-    NSString *status = [NSString stringWithFormat:@"%@",sender];
-    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&status=%@",token,[self getMemberId],status];
+//    NSString *status = [NSString stringWithFormat:@"%@",sender];
+    NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&status=%@",token,[self getMemberId],@""];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2BOrderListAllTag delegate:self];
     
@@ -180,7 +180,7 @@
         {
             if(result == 1)
             {
-//                NSLog(@"B2B全部订单 = %@",dicRespon);
+                NSLog(@"B2B全部订单 = %@",dicRespon);
                 if ([[dicRespon objectForKey:@"items"] count] > 0)
                 {
                     [tempDataArray removeAllObjects];
@@ -875,7 +875,7 @@
 {
     if (search.text.length == 0)
     {
-        [self loadRequestB2BOrderListAllWithStatus:@"0"];
+        [self loadRequestB2BOrderListAllWithStatus:@""];
         noResultView.hidden = NO;
     }
 }

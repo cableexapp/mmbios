@@ -203,17 +203,20 @@
         _lineView_1 = [[UIView alloc] initWithFrame:CGRectMake(207, selctBtn.frame.origin.y+5, 1, 20)];
         [_lineView_1 setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0]];
         [selectBtnView addSubview:_lineView_1];
+        
+        UIView *toplineView = [[UIView alloc] init];
+        toplineView.frame = CGRectMake(0, selectBtnView.frame.size.height-1, ScreenWidth, 1);
+        toplineView.backgroundColor = [UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0];
+        [selectBtnView addSubview:toplineView];
  
         [selectBtnView addSubview:selctBtn];
         [btnArray addObject:selctBtn];
     }
 
-    
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 169) style:0];
     [tv setDelegate:self];
     [tv setDataSource:self];
     [tv setShowsVerticalScrollIndicator:NO];
-//    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
     tv.hidden = YES;
     [tv setShowsHorizontalScrollIndicator:NO];
     [self.view addSubview:tv];
@@ -251,86 +254,24 @@
         }
     }
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-//    mySearchBar.text = self.tempSearchText;
-//    if (<#condition#>)
-//    {
-//        <#statements#>
-//    }
-//    if (mySearchBar.text.length > 0)
-//    {
-//        speakButton.hidden = YES;
-//        speakButtonView.hidden = YES;
-//        [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
-//    }
-//    else
-//    {
-//        speakButton.hidden = NO;
-//        speakButtonView.hidden = NO;
-//    }
-    
-    //初始化语音识别控件
-    _iflyRecognizerView = [[IFlyRecognizerView alloc] initWithCenter:self.view.center];
-    _iflyRecognizerView.delegate = self;
-    
-    NSString *tempKeyWords = [[NSUserDefaults standardUserDefaults] objectForKey:@"keywords"];
-    NSString *tempKeySeq = [[NSUserDefaults standardUserDefaults] objectForKey:@"keyseq"];
-    NSString *tempKeyBtnTag = [[NSUserDefaults standardUserDefaults] objectForKey:@"keybtntag"];
-    NSString *tempKeyMethod = [[NSUserDefaults standardUserDefaults] objectForKey:@"keymethod"];
-    if (tempKeyWords.length > 0)
+    mySearchBar.text = self.tempSearchText;
+    if (mySearchBar.text.length > 0)
     {
         speakButton.hidden = YES;
         speakButtonView.hidden = YES;
-        mySearchBar.text = tempKeyWords;
-        if ([tempKeyBtnTag isEqualToString:@"0"])
-        {
-            if (selctBtn.tag == 0)
-            {
-                selctBtn.selected = YES;
-            }
-            if (selctBtn.tag == 1 || selctBtn.tag == 2)
-            {
-                lineView_2.hidden = NO;
-                lineView_3.hidden = YES;
-                lineView_4.hidden = YES;
-            }
-        }
-        if ([tempKeyBtnTag isEqualToString:@"1"])
-        {
-            if (selctBtn.tag == 1)
-            {
-                selctBtn.selected = YES;
-            }
-            if (selctBtn.tag == 0 || selctBtn.tag == 2)
-            {
-                lineView_2.hidden = NO;
-                lineView_3.hidden = YES;
-                lineView_4.hidden = YES;
-            }
-        }
-        if ([tempKeyBtnTag isEqualToString:@"2"])
-        {
-            if (selctBtn.tag == 2)
-            {
-                selctBtn.selected = YES;
-            }
-            if (selctBtn.tag == 0 || selctBtn.tag == 1)
-            {
-                lineView_2.hidden = NO;
-                lineView_3.hidden = YES;
-                lineView_4.hidden = YES;
-            }
-        }
-        NSLog(@"tempKeySeq = %@",tempKeySeq);
-        NSLog(@"tempKeyMethod = %@",tempKeyMethod);
-        NSLog(@"mySearchBar.text = %@",mySearchBar.text);
-        [self loadRequestSeq:tempKeySeq WithseqMethod:tempKeyMethod WithContent:mySearchBar.text];
+        [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
+         [self.navigationController.tabBarController.tabBar setHidden:YES];
     }
     else
     {
         speakButton.hidden = NO;
         speakButtonView.hidden = NO;
-        [self readHistoryData];
+         [self readHistoryData];
     }
+    
+    //初始化语音识别控件
+    _iflyRecognizerView = [[IFlyRecognizerView alloc] initWithCenter:self.view.center];
+    _iflyRecognizerView.delegate = self;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -355,20 +296,6 @@
     {
         [moreCell stopAnimation];
     }
-    
-    if (_seq.length ==0 && seqmethod.length == 0)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:mySearchBar.text forKey:@"keywords"];
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"keyseq"];
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"keymethod"];
-    }
-    if (_seq.length > 0 && seqmethod.length > 0)
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:mySearchBar.text forKey:@"keywords"];
-        [[NSUserDefaults standardUserDefaults] setObject:_seq forKey:@"keyseq"];
-        [[NSUserDefaults standardUserDefaults] setObject:seqmethod forKey:@"keymethod"];
-    }
-    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -483,8 +410,10 @@
 
 -(void)readHistoryData
 {
+//    [self refreshTableView];
+    [self refreshHistoryTableView];
     [self SearchHomeDataFromDataBase];
-    [self refreshTableView];
+
     if (homehistoryArray.count > 0)
     {
         selectBtnView.hidden = YES;
@@ -510,20 +439,29 @@
 -(void)refreshTableView
 {
     [tv removeFromSuperview];
-    if (tempFlag == 1)
-    {
-        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 109) style:0];
-        //ADD REFRESH VIEW
-        _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, ScreenWidth, 300)];
-        [self.refreshView setDelegate:self];
-        [tv addSubview:self.refreshView];
-        [self.refreshView refreshLastUpdatedDate];
-    }
-    else
-    {
-         tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, ScreenWidth, ScreenHeight-45) style:0];
-         tv.separatorStyle = UITableViewCellSeparatorStyleNone;
-    }
+
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0,109, ScreenWidth, ScreenHeight - 109) style:0];
+
+    [tv setDelegate:self];
+    [tv setDataSource:self];
+    tv.backgroundColor = [UIColor whiteColor];
+    [tv setShowsVerticalScrollIndicator:NO];
+    [tv setShowsHorizontalScrollIndicator:NO];
+    [self.view addSubview:tv];
+    
+    //ADD REFRESH VIEW
+    _refreshView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, -300, ScreenWidth, 300)];
+    [self.refreshView setDelegate:self];
+    [tv addSubview:self.refreshView];
+    [self.refreshView refreshLastUpdatedDate];
+    
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+}
+
+-(void)refreshHistoryTableView
+{
+    [tv removeFromSuperview];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 45, ScreenWidth, ScreenHeight-45) style:0];
     [tv setDelegate:self];
     [tv setDataSource:self];
     tv.backgroundColor = [UIColor whiteColor];
@@ -704,7 +642,8 @@
 {
     if(URLTag == URLB2CGoodsListSearchTag)
     {
-        NSLog(@"家装馆搜索 = %@",[dicRespon objectForKey:@"items"]);
+       
+//        NSLog(@"家装馆搜索 = %@",[dicRespon objectForKey:@"items"]);
         NSLog(@"家装馆搜索message = %@",[dicRespon objectForKey:@"msg"]);
 
             if(_reloading == YES)
@@ -735,36 +674,35 @@
                     {
                         [dataArray removeAllObjects];
                     }
+                    
                     [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
+                    
 //                    NSLog(@"家装馆搜索 = %@",[[dataArray objectAtIndex:0] productName]);
             
                     if (dataArray.count > 0)
                     {
+                         [self refreshTableView];
                         noResultView.hidden = YES;
                         tempFlag = 1;
                         selectBtnView.hidden = NO;
                         tv.frame = CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight - 109);
                         tv.hidden = NO;
                         [mySearchBar resignFirstResponder];
-                        [self refreshTableView];
+                        
                     }
                     if(intTotal == 0)
                     {
-//                      [moreCell noDataAnimation];
                         noResultView.hidden = NO;
                         [self.view bringSubviewToFront:noResultView];
                     }
                     else
                     {
                         [moreCell stopAnimation];
-//                       noResultView.hidden = NO;
-//                       [self.view bringSubviewToFront:noResultView];
                     }
                     intPage++;
                 }
                 else
                 {
-//                    [moreCell failAcimation];
                     noResultView.hidden = NO;
                     [self.view bringSubviewToFront:noResultView];
                 }
@@ -850,19 +788,6 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if(indexPath.row == dataArray.count)
-//    {
-//        static NSString *moreCellId = @"moreCell";
-//        moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
-//        if(moreCell == nil)
-//        {
-//            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-//            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
-//        }
-//        return moreCell;
-//    }
-//    else
-//    {
         static NSString *cellId = @"cellId";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
         if(cell == nil)
@@ -917,11 +842,6 @@
                 {
                     searchImageView.image = [UIImage imageNamed:@"clock.png"];
                     searchResultLabel.text = [dataArray[indexPath.row] objectForKey:@"searchName"];
-                    
-                    UIView *lineView = [[UIView alloc] init];
-                    lineView.frame = CGRectMake(0, cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
-                    lineView.backgroundColor = [UIColor lightGrayColor];
-                    [cell addSubview:lineView];
                 }
             }
             else
@@ -1164,6 +1084,7 @@
                     if (mySearchBar.text.length > 0)
                     {
                         tempFlag = 1;
+                        NSLog(@"上拉加载 = %d",intPage);
                         [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
                     }
                 }

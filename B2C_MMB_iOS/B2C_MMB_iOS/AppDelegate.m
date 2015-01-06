@@ -143,7 +143,6 @@ NSString *strUserId = @"";
 
 - (void) onMethod:(NSString*)method response:(NSDictionary*)data
 {
-    
     if ([BPushRequestMethod_Bind isEqualToString:method])
     {
         NSDictionary* res = [[NSDictionary alloc] initWithDictionary:data];
@@ -358,8 +357,6 @@ NSString *strUserId = @"";
     
     //注册
     [self registerInSide];
-    
-    
     
     return YES;
 }

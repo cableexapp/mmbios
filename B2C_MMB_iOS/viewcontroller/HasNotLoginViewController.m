@@ -82,12 +82,13 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
-    
+    [self.tabBarController.tabBar setHidden:NO];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [self.tabBarController.tabBar setHidden:NO];
     [self loadbadgeCount];
     isPopShow = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_notLogin:) name:@"popShopCar" object:nil];

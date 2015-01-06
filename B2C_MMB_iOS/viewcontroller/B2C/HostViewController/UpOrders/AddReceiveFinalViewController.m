@@ -85,7 +85,6 @@
         chooseCode = b2cAddressData.zip;
         choosePhone = b2cAddressData.mobile;
         chooseTel = b2cAddressData.tel;
-        NSLog(@"chooseProvince = %@ chooseCity = %@ chooseAddress = %@ chooseAddressName = %@ chooseDetailAddress = %@",chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress);
         //        swith.on = [[_msgDic objectForKey:@"swithStatus"] boolValue];
         
         DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"编辑收货地址"];

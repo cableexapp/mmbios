@@ -263,6 +263,7 @@
     self.serchResultView.dataSource = self;
     self.serchResultView.delegate = self;
     self.serchResultView.scrollEnabled = YES;
+    self.serchResultView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.serchResultView.backgroundColor = [UIColor whiteColor];
     self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
     self.serchResultView.separatorColor = [UIColor lightGrayColor];
@@ -671,6 +672,7 @@
     self.serchResultView.scrollEnabled = YES;
     self.serchResultView.backgroundColor = [UIColor whiteColor];
     self.serchResultView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    self.serchResultView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.serchResultView.separatorColor = [UIColor lightGrayColor];
     self.serchResultView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.serchResultView];
@@ -765,7 +767,7 @@ float lastContentOffset;
             leftBtn.hidden = YES;
             sectionBtnIv.hidden = YES;
             mySearchBar.hidden = YES;
-            mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(81, -scrollView.contentOffset.y,self.view.frame.size.width-81, 45)];
+            self.serchResultView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
         }
     }
     else
@@ -1135,7 +1137,15 @@ float lastContentOffset;
         }
     }
   }
-        return cell;
+    if (indexPath.row != dataArray.count)
+    {
+        UIView *lineView = [[UIView alloc] init];
+        lineView.frame = CGRectMake(0, cell.frame.size.height-0.5, cell.frame.size.width, 0.5);
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [cell addSubview:lineView];
+    }
+
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

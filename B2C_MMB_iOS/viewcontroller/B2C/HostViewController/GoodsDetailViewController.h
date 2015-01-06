@@ -11,6 +11,12 @@
 #import "MBProgressHUD.h"
 #import "EScrollerView.h"
 
+@protocol ChangeDelegate <NSObject>
+
+- (void)popSearchText:(NSString *) str;
+
+@end
+
 @interface GoodsDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ConnectionDelegate,EScrollerViewDelegate,UIWebViewDelegate>
 {
     DCFConnectionUtil *conn;
@@ -19,10 +25,15 @@
     UITableView *tv;
     EScrollerView *es;
     NSString *GoodsDetailUrl;
+    
+
 }
 @property (strong,nonatomic) NSString *productid;
 
 @property (nonatomic,strong) NSString *GoodsDetailUrl;
 
 - (id) initWithProductId:(NSString *) productid;
+
+@property(nonatomic,assign) id<ChangeDelegate>_degegate;
+
 @end

@@ -507,9 +507,10 @@
         [_lineView_1 setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0]];
         [selectBtnView addSubview:_lineView_1];
         
-        //        selctBtn.layer.borderColor = MYCOLOR.CGColor;
-        //        selctBtn.layer.borderWidth = 1.0f;
-        //        selctBtn.layer.masksToBounds = YES;
+        UIView *toplineView = [[UIView alloc] init];
+        toplineView.frame = CGRectMake(0, selectBtnView.frame.size.height-1, ScreenWidth, 1);
+        toplineView.backgroundColor = [UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0];
+        [selectBtnView addSubview:toplineView];
         
         [selectBtnView addSubview:selctBtn];
         [btnArray addObject:selctBtn];
@@ -835,14 +836,6 @@
         {
             [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
         }
-        
-        if(indexPath.row == 0)
-        {
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 3)];
-            [view setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
-            [cell.contentView addSubview:view];
-        }
-        
         if(!dataArray || dataArray.count == 0)
         {
             

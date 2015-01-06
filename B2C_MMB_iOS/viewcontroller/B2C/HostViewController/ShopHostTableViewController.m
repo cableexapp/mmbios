@@ -486,7 +486,7 @@
         }
     }
     float avg = [[discussArray valueForKeyPath:@"@avg.floatValue"] floatValue]; //取平均数
-    [scoreLabel_1 setText:[DCFCustomExtra notRounding:avg afterPoint:1 WithBackIndex:1]];
+    [scoreLabel_1 setText:[DCFCustomExtra notRounding:avg afterOnePoint:1]];
     [scoreLabel_1 setTextColor:[UIColor colorWithRed:251.0/255.0 green:61.0/255.0 blue:9.0/255.0 alpha:1.0]];
     [headView addSubview:scoreLabel_1];
     UIButton *scoreLabel_2 = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -626,7 +626,7 @@
                 }
             }
 
-            [moneyLabel setText:[DCFCustomExtra notRounding:0.00 afterPoint:2]];
+            [moneyLabel setText:[DCFCustomExtra notRounding:0.00]];
             [buttomBtn setSelected:NO];
             [tv reloadData];
             [self payBtnChange];
@@ -875,9 +875,9 @@
     moneyLabel = [[UILabel alloc] init];
     totalMoney = 0.00;
 
-    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney]] WithSize:CGSizeMake(MAXFLOAT, 20)];
  
-    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]]];
+    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney]]];
     
     [moneyLabel setFont:[UIFont systemFontOfSize:12]];
     [moneyLabel setTextColor:[UIColor redColor]];
@@ -1700,10 +1700,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
         NSString *price = carlist.price;
         totalMoney = [price doubleValue]*[carlist.num intValue] + totalMoney;
     }
-    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney]] WithSize:CGSizeMake(MAXFLOAT, 20)];
     [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
     [countLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
-    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney afterPoint:2]]];
+    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:totalMoney]]];
 }
 
 #pragma  mark  -  滚动加载

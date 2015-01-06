@@ -32,9 +32,10 @@
 + (BOOL)isValidateEmail:(NSString *)email;
 
 + (NSString *) compareSessionKey:(NSString *) sessionKey;
-+ (NSString *)notRounding:(double)price afterPoint:(int)position;
 
-+ (NSString *)notRounding:(double)price afterPoint:(int)position WithBackIndex:(int) index;
++ (NSString *)notRounding:(double)price;
+
++ (NSString *)notRounding:(double)price afterOnePoint:(int)position ;
 
 + (CGSize) adjustWithFont:(UIFont*) font WithText:(NSString *) text WithSize:(CGSize) size;
 
@@ -57,5 +58,7 @@
 + (NSString *) UTF8Encoding:(NSString *) str;
 
 + (void) cleanData;
+
++ (NSString *)testRound:(NSString *)price;
 
 @end

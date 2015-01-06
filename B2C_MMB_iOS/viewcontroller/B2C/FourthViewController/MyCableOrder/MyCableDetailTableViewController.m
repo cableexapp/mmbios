@@ -617,7 +617,7 @@
                 char c = [NumBer characterAtIndex:i];
                 if(c == '.')
                 {
-                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
                     break;
                 }
                 else if(i == NumBer.length-1)
@@ -825,7 +825,9 @@
                         [s1Label setFont:[UIFont boldSystemFontOfSize:13]];
                         [logsticsView addSubview:s1Label];
                         
-                        NSString *s2 = [NSString stringWithFormat:@"已发货: %@%@",[logsticsDic objectForKey:@"current_num"],unit];
+                        NSString *sendPrice = [NSString stringWithFormat:@"%@",[logsticsDic objectForKey:@"current_num"]];
+                        NSLog(@"sendPrice = %@",sendPrice);
+                        NSString *s2 = [NSString stringWithFormat:@"已发货: %@%@",[DCFCustomExtra testRound:sendPrice],unit];
                         NSMutableAttributedString *current_num = [[NSMutableAttributedString alloc] initWithString:s2];
                         [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
                         [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, s2.length-4)];

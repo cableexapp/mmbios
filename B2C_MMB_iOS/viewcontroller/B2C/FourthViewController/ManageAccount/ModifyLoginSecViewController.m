@@ -70,7 +70,7 @@
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
+    if([DCFCustomExtra validateString:memberid] == NO)
     {
         LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
         [self presentViewController:loginNavi animated:YES completion:nil];

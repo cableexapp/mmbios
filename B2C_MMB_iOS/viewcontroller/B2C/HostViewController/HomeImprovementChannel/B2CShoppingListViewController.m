@@ -913,7 +913,7 @@
             NSString *picUrl = [[dataArray objectAtIndex:indexPath.row] p1Path];
             [cellIv setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
             [cellIv.layer setBorderWidth:0.5];   //边框宽度
-            cellIv.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
+            cellIv.layer.borderColor = [[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]CGColor];
             [cell.contentView addSubview:cellIv];
         }
      

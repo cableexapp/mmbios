@@ -267,10 +267,10 @@
     [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
     NSError *error;
     NSString *resultStr = [[NSString alloc] initWithData:_dtReviceData encoding:NSUTF8StringEncoding];
-    NSLog(@"result str:%@",resultStr);
+//    NSLog(@"result str:%@",resultStr);
     
     NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:_dtReviceData options:NSJSONReadingMutableLeaves error:&error];
-    NSLog(@"%@",dicRespon);
+//    NSLog(@"%@",dicRespon);
     
 //    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
 //    NSError *err;

@@ -282,20 +282,21 @@
             NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
             
             NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
-            NSString *testNum = nil;
-            for(int i=0;i<NumBer.length;i++)
-            {
-                char c = [NumBer characterAtIndex:i];
-                if(c == '.')
-                {
-                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-                    break;
-                }
-                else if(i == NumBer.length-1)
-                {
-                    testNum = NumBer;
-                }
-            }
+            NSString *testNum = [DCFCustomExtra notRounding:NumBer];
+//            NSString *testNum = nil;
+//            for(int i=0;i<NumBer.length;i++)
+//            {
+//                char c = [NumBer characterAtIndex:i];
+//                if(c == '.')
+//                {
+//                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+//                    break;
+//                }
+//                else if(i == NumBer.length-1)
+//                {
+//                    testNum = NumBer;
+//                }
+//            }
             NSString *theNumber = [NSString stringWithFormat:@"%@%@",testNum,theUnit];
             
             NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
@@ -561,20 +562,21 @@
                     NSString *theUnit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
                     
                     NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
-                    NSString *testNum = nil;
-                    for(int i=0;i<NumBer.length;i++)
-                    {
-                        char c = [NumBer characterAtIndex:i];
-                        if(c == '.')
-                        {
-                            testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-                            break;
-                        }
-                        else if(i == NumBer.length-1)
-                        {
-                            testNum = NumBer;
-                        }
-                    }
+                    NSString *testNum = [DCFCustomExtra notRounding:NumBer];
+//                    NSString *testNum = nil;
+//                    for(int i=0;i<NumBer.length;i++)
+//                    {
+//                        char c = [NumBer characterAtIndex:i];
+//                        if(c == '.')
+//                        {
+//                            testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+//                            break;
+//                        }
+//                        else if(i == NumBer.length-1)
+//                        {
+//                            testNum = NumBer;
+//                        }
+//                    }
                     NSString *theNumber = [NSString stringWithFormat:@"%@%@",testNum,theUnit];
                     
                     NSString *theTime = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];

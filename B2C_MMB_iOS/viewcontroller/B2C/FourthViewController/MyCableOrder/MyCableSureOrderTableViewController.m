@@ -742,20 +742,20 @@
             NSString *unit = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unit"]];
             
             NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
-            NSString *testNum = nil;
-            for(int i=0;i<NumBer.length;i++)
-            {
-                char c = [NumBer characterAtIndex:i];
-                if(c == '.')
-                {
-                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-                    break;
-                }
-                else if(i == NumBer.length-1)
-                {
-                    testNum = NumBer;
-                }
-            }
+            NSString *testNum = [DCFCustomExtra notRounding:NumBer];
+            //            for(int i=0;i<NumBer.length;i++)
+//            {
+//                char c = [NumBer characterAtIndex:i];
+//                if(c == '.')
+//                {
+//                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+//                    break;
+//                }
+//                else if(i == NumBer.length-1)
+//                {
+//                    testNum = NumBer;
+//                }
+//            }
             
             NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",testNum,unit];  //数量
             NSMutableAttributedString *myNumber = [[NSMutableAttributedString alloc] initWithString:theNumber];
@@ -818,20 +818,21 @@
                         [label setFrame:CGRectMake(10, lineView.frame.origin.y+5.5, halfWidth, 20)];
                         
                         NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
-                        NSString *testNum = nil;
-                        for(int i=0;i<NumBer.length;i++)
-                        {
-                            char c = [NumBer characterAtIndex:i];
-                            if(c == '.')
-                            {
-                                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-                                break;
-                            }
-                            else if(i == NumBer.length-1)
-                            {
-                                testNum = NumBer;
-                            }
-                        }
+                        NSString *testNum = [DCFCustomExtra notRounding:NumBer];
+//                        NSString *testNum = nil;
+//                        for(int i=0;i<NumBer.length;i++)
+//                        {
+//                            char c = [NumBer characterAtIndex:i];
+//                            if(c == '.')
+//                            {
+//                                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+//                                break;
+//                            }
+//                            else if(i == NumBer.length-1)
+//                            {
+//                                testNum = NumBer;
+//                            }
+//                        }
                         
                         NSString *number = [NSString stringWithFormat:@"%@",testNum];
                         if([DCFCustomExtra validateString:number] == NO)

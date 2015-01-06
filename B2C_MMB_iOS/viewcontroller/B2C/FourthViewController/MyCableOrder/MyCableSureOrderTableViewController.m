@@ -748,7 +748,7 @@
                 char c = [NumBer characterAtIndex:i];
                 if(c == '.')
                 {
-                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
                     break;
                 }
                 else if(i == NumBer.length-1)
@@ -824,7 +824,7 @@
                             char c = [NumBer characterAtIndex:i];
                             if(c == '.')
                             {
-                                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue] afterPoint:2];
+                                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
                                 break;
                             }
                             else if(i == NumBer.length-1)

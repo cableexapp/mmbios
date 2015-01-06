@@ -192,6 +192,18 @@
         return;
     }
     
+    if(self.setNewSecTf.text.length < 6 || self.setNewSecTf.text.length > 18)
+    {
+        [DCFStringUtil showNotice:@"密码长度必须在6-18位"];
+        return;
+    }
+    
+    if(self.sureSecTf.text.length < 6 || self.sureSecTf.text.length > 18)
+    {
+        [DCFStringUtil showNotice:@"密码长度必须在6-18位"];
+        return;
+    }
+    
     NSString *memberid = [self getMemberId];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];

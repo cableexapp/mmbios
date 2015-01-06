@@ -38,7 +38,6 @@
 {
     phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
     email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
-    NSLog(@"phone = %@   email = %@",phone,email);
     
     [self.tableView reloadData];
 }
@@ -141,6 +140,9 @@
     [self setHidesBottomBarWhenPushed:YES];
 
 //    cxboss405@163.com
+    
+//    phone = @"13921307054";
+//    email = @"cxboss405@163.com";
     if(indexPath.row == 0)
     {
         if([DCFCustomExtra validateString:phone] == NO && [DCFCustomExtra validateString:email] == NO)

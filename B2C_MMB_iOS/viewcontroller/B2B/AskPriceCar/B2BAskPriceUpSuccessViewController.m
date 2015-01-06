@@ -55,7 +55,7 @@
 {
     [super viewDidLoad];
 
-//    [self pushAndPopStyle];
+    [self pushAndPopStyle];
     
     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0, 0, 15, 22)];

@@ -176,6 +176,7 @@ NSString *strUserId = @"";
     _key2 = [NSString stringWithFormat:@"%@",[userInfo objectForKey:@"key2"]];
     _key3 = [NSString stringWithFormat:@"%@",[userInfo objectForKey:@"key3"]];
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
+//    NSLog(@"memberId = %@",memberid);
     //    if([_key2 isEqualToString:memberid])
     //    {
     
@@ -210,9 +211,8 @@ NSString *strUserId = @"";
     }
     else
     {
-
+        [BPush handleNotification:userInfo];
     }
-    [BPush handleNotification:userInfo];
 }
 
 

@@ -45,17 +45,17 @@
     UILabel *addressLabel_2;
     
     NSDictionary *addSuccessDic;
-//    NSString *receiver;
-//    NSString *province;
-//    NSString *city;
-//    NSString *area;
-//    NSString *zip;
-//    NSString *mobile;
-//    NSString *tel;
-//    NSString *fulladdress;
+    //    NSString *receiver;
+    //    NSString *province;
+    //    NSString *city;
+    //    NSString *area;
+    //    NSString *zip;
+    //    NSString *mobile;
+    //    NSString *tel;
+    //    NSString *fulladdress;
     
     NSArray *notiArray;
-//    NSString *pushLocationStr;
+    //    NSString *pushLocationStr;
     
 }
 
@@ -74,16 +74,18 @@
     if(self = [super init])
     {
         b2cAddressData = addressData;
-
+        
         chooseCity = b2cAddressData.city;
         chooseProvince = b2cAddressData.province;
         chooseBorough = b2cAddressData.area;
-        chooseStreet = b2cAddressData.fullAddress;
+        chooseStreet = b2cAddressData.addressName;
+        chooseDetailAddress = b2cAddressData.fullAddress;
+        
         chooseReceiver = b2cAddressData.receiver;
         chooseCode = b2cAddressData.zip;
         choosePhone = b2cAddressData.mobile;
         chooseTel = b2cAddressData.tel;
-        NSLog(@"chooseCity = %@ chooseProvince = %@ chooseAddress = %@ chooseAddressName = %@",chooseCity,chooseProvince,chooseBorough,chooseStreet);
+        NSLog(@"chooseProvince = %@ chooseCity = %@ chooseAddress = %@ chooseAddressName = %@ chooseDetailAddress = %@",chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress);
         //        swith.on = [[_msgDic objectForKey:@"swithStatus"] boolValue];
         
         DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"编辑收货地址"];
@@ -164,32 +166,23 @@
         
     }
     
-//    if(textField == receiverTf)
-//    {
-        if(receiverTf.text.length > 20)
-        {
-            [DCFStringUtil showNotice:@"收货人不能超过20字"];
-            return;
-        }
-//    }
-//    if(textField == addressNameTf)
-//    {
-        if(addressNameTf.text.length > 100)
-        {
-            [DCFStringUtil showNotice:@"详细地址不能超过100字"];
-            return;
-        }
-//    }
-//    if(textField == zipTf)
-//    {
-        if(zipTf.text.length > 6)
-        {
-            [DCFStringUtil showNotice:@"邮编不能超过6位"];
-            return;
-        }
-//    }
+    if(receiverTf.text.length > 20)
+    {
+        [DCFStringUtil showNotice:@"收货人不能超过20字"];
+        return;
+    }
     
-    //    fullAddressTf = [textFieldArray objectAtIndex:<#(NSUInteger)#>];
+    if(addressNameTf.text.length > 100)
+    {
+        [DCFStringUtil showNotice:@"详细地址不能超过100字"];
+        return;
+    }
+    if(zipTf.text.length > 6)
+    {
+        [DCFStringUtil showNotice:@"邮编不能超过6位"];
+        return;
+    }
+    
     if([DCFCustomExtra validateString:receiverTf.text] == NO)
     {
         [DCFStringUtil showNotice:@"请您填写收货人姓名"];
@@ -252,7 +245,7 @@
     }
     else
     {
-//        chooseProvince = chooseProvince;
+        //        chooseProvince = chooseProvince;
     }
     
     if([DCFCustomExtra validateString:chooseCity] == NO)
@@ -271,14 +264,14 @@
     {
     }
     
-//    if([DCFCustomExtra validateString:chooseAddressName] == NO)
-//    {
-//        addressname = @"";
-//    }
-//    else
-//    {
-//        addressname = chooseAddressName;
-//    }
+    //    if([DCFCustomExtra validateString:chooseAddressName] == NO)
+    //    {
+    //        addressname = @"";
+    //    }
+    //    else
+    //    {
+    //        addressname = chooseAddressName;
+    //    }
     
     if([DCFCustomExtra validateString:zipTf.text] == NO)
     {
@@ -324,13 +317,12 @@
         NSString *time = [DCFCustomExtra getFirstRunTime];
         NSString *string = [NSString stringWithFormat:@"%@%@",@"addMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
-
+        
         if([DCFCustomExtra validateString:chooseStreet] == NO)
         {
             chooseStreet = @"";
         }
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@",memberid,token,chooseReceiver,chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress,chooseCode,choosePhone,chooseTel];
-        NSLog(@"%@",pushString);
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLAddMemberAddressTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/addMemberAddress.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -344,10 +336,10 @@
         NSString *string = [NSString stringWithFormat:@"%@%@",@"editMemberAddress",time];
         NSString *token = [DCFCustomExtra md5:string];
         
-//        province(省份)city(城市),area(地区),addressname(街道),fulladdress(详细地址)
+        //        province(省份)city(城市),area(地区),addressname(街道),fulladdress(详细地址)
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,chooseReceiver,chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress,chooseCode,choosePhone,chooseTel,b2cAddressData.addressId];
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
-        
+        NSLog(@"push = %@",pushString);
         NSString *urlString = nil;
         if(self.B2COrB2B == YES)
         {
@@ -375,7 +367,7 @@
 - (void) doFourthAddressStr:(NSNotification *) noti
 {
     notiArray = [[NSArray alloc] initWithArray:(NSArray *)[noti object]];
-
+    
     [self dealEditData];
 }
 
@@ -390,12 +382,24 @@
 - (void) dealEditData
 {
     NSString *string = [notiArray objectAtIndex:0];
-    NSArray *arr = [string componentsSeparatedByString:@","];
+    NSLog(@"str = %@",string);
+    NSArray *addressArrayForEdit = [string componentsSeparatedByString:@","];
     
-    chooseProvince = [arr objectAtIndex:0];
-    chooseCity = [arr objectAtIndex:1];
-    chooseBorough = [arr lastObject];
+    chooseProvince = [addressArrayForEdit objectAtIndex:0];
+    chooseCity = [addressArrayForEdit objectAtIndex:1];
+    chooseBorough = [addressArrayForEdit objectAtIndex:2];
     
+    //用来区分只有3级还是4级
+    if(addressArrayForEdit.count <= 3)
+    {
+        chooseStreet = @"";
+    }
+    else
+    {
+        chooseStreet = [addressArrayForEdit lastObject];
+    }
+    finalAddress = [finalAddress stringByReplacingOccurrencesOfString:@"," withString:@""];
+    NSLog(@"chooseProvince = %@ chooseCity = %@ chooseBorough = %@  chooseStreet = %@",chooseProvince,chooseCity,chooseBorough,chooseStreet);
     NSString *topStr = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
     [topTf setText:topStr];
     
@@ -448,7 +452,7 @@
     }
     else
     {
-//        [rightBtn setHidden:YES];
+        //        [rightBtn setHidden:YES];
     }
 }
 - (void)viewDidLoad
@@ -463,7 +467,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doFourthAddressStr:) name:@"FourthAddressStr" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doThirdAddressStr:) name:@"ThirdAddressStr" object:nil];
-
+    
     
     backView = [[UIView alloc] initWithFrame:CGRectMake(10, 20, ScreenWidth-20, 250)];
     [backView setBackgroundColor:[UIColor whiteColor]];
@@ -484,12 +488,12 @@
     
     textFieldArray = [[NSMutableArray alloc] init];
     
-
+    
     
     [self loadSubViews];
     
     
-
+    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:tap];
@@ -547,7 +551,7 @@
             
             NSString *addressid_b2b = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"addressid_b2b"]];
             NSString *addressid_b2c = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"addressid_b2c"]];
-
+            
             NSString *receiveFullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress];
             receiveFullAddress = [receiveFullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             receiveFullAddress = [receiveFullAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
@@ -628,7 +632,10 @@
     }
     else
     {
-        NSString *str = [NSString stringWithFormat:@"%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area];
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area,b2cAddressData.addressName];
+        str = [str stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
+        str = [str stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
+        str = [str stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
         [topTf setText:str];
     }
     [topTf setTextAlignment:NSTextAlignmentCenter];
@@ -955,7 +962,7 @@
 
 - (void) swithChange:(UISwitch *) sender
 {
-//    BOOL flag = sender.on;
+    //    BOOL flag = sender.on;
 }
 
 - (void)didReceiveMemoryWarning

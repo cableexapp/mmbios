@@ -51,7 +51,7 @@
         
         _zip = [NSString stringWithFormat:@"%@",[dic objectForKey:@"zip"]];
 
-        
+        NSLog(@"%@  %@  %@  %@   %@",_province,_city,_area,_addressName,_fullAddress);
     }
     return self;
 }

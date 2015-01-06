@@ -172,7 +172,7 @@
     if (URLTag == URLReceiveAddressTag)
     {
         int result= [[dicRespon objectForKey:@"result"] intValue];
-//        NSString *msg = [dicRespon objectForKey:@"msg"];
+        //        NSString *msg = [dicRespon objectForKey:@"msg"];
         
         NSDictionary *receiveDic = nil;
         if(result == 0)
@@ -408,23 +408,33 @@
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
+        NSString *street = addressData.addressName;
         NSString *fullAddress = addressData.fullAddress;
         
-        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,fullAddress];
+        if([DCFCustomExtra validateString:street] == NO)
+        {
+            street = @"";
+        }
+        if([DCFCustomExtra validateString:fullAddress] == NO)
+        {
+            fullAddress = @"";
+        }
+        
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,street, fullAddress];
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(nameLabel.frame.size.width, MAXFLOAT)];
-
+        
         UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y + nameLabel.frame.size.height, nameLabel.frame.size.width, size_3.height)];
         [provinceLabel setNumberOfLines:0];
         [provinceLabel setText:str];
         [provinceLabel setFont:[UIFont systemFontOfSize:13]];
         [cell.contentView addSubview:provinceLabel];
         
-//        
-//        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
-//        [addressLabel setText:address];
-//        [addressLabel setFont:[UIFont systemFontOfSize:13]];
-//        [addressLabel setNumberOfLines:0];
-//        [cell.contentView addSubview:addressLabel];
+        //
+        //        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, 270, size_3.height)];
+        //        [addressLabel setText:address];
+        //        [addressLabel setFont:[UIFont systemFontOfSize:13]];
+        //        [addressLabel setNumberOfLines:0];
+        //        [cell.contentView addSubview:addressLabel];
         
         //        if(rightItemBtnHasClick == NO)
         //        {

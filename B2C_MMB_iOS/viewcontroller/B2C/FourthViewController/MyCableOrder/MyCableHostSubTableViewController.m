@@ -316,7 +316,7 @@
             }
             else
             {
-                height = 20;
+                height = 25;
             }
             
             if(theNumber.length == 0 && theTime.length == 0 && thePrice.length == 0)
@@ -325,7 +325,7 @@
             }
             else
             {
-                height = height +20;
+                height = height +25;
             }
             
             if(theSpec.length == 0 && theVol.length == 0)
@@ -334,7 +334,7 @@
             }
             else
             {
-                height = height +20;
+                height = height +25;
             }
             
             if(theFeature.length == 0)
@@ -343,7 +343,7 @@
             }
             else
             {
-                height = height +20;
+                height = height +25;
             }
             
             if(request.length == 0)
@@ -455,7 +455,7 @@
         [cell setSelectionStyle:0];
         
         UIView *lineView = [[UIView alloc] init];
-        lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+         lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
         [cell addSubview:lineView];
         if (indexPath.row == 0)
         {
@@ -463,11 +463,11 @@
         }
         else if (indexPath.row == 1)
         {
-            lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+            lineView.frame = CGRectMake(0, 0, cell.frame.size.width, 1);
         }
-        else  if (indexPath.row == 2)
+        else  if (indexPath.row >= 2)
         {
-            lineView.frame = CGRectMake(0, cell.frame.size.height-1, cell.frame.size.width, 1);
+            lineView.frame = CGRectMake(0, 0, cell.frame.size.width, 1);
         }
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -641,7 +641,7 @@
                     {
                         NSString *s = [NSString stringWithFormat:@"交货期: %@天",theTime];
                         CGSize timeSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:s WithSize:CGSizeMake(MAXFLOAT, 20)];
-                        [timeLabel setFrame:CGRectMake(cellWidth-10-priceSize.width-timeSize.width-10, priceLabel.frame.origin.y + priceLabel.frame.size.height, timeSize.width, 20)];
+                        [timeLabel setFrame:CGRectMake(cellWidth-priceSize.width-timeSize.width, priceLabel.frame.origin.y + priceLabel.frame.size.height, timeSize.width, 20)];
 //                        timeLabel.backgroundColor = [UIColor blueColor];
                         [timeLabel setText:s];
                         
@@ -705,16 +705,16 @@
         if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
             NSString *time = [NSString stringWithFormat:@"提交时间: %@",[[dataArray objectAtIndex:indexPath.section] cableOrderTime]];
-            UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, cellWidth-20, 20)];
+            UILabel *timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, cellWidth-20, 20)];
             [timeLabel setText:time];
             [timeLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:timeLabel];
         }
         if (indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count] + 1)
         {
-            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"状态" WithSize:CGSizeMake(MAXFLOAT, 30)];
+            CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"状态:" WithSize:CGSizeMake(MAXFLOAT, 30)];
             UILabel *firstLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, 30)];
-            [firstLabel setText:@"状态"];
+            [firstLabel setText:@"状态:"];
             [firstLabel setFont:[UIFont systemFontOfSize:12]];
             [cell.contentView addSubview:firstLabel];
             

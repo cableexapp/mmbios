@@ -348,7 +348,7 @@
                 
                 mon = mon + [[self getNumFromString:title] doubleValue];
             }
-            totalString = [NSString stringWithFormat:@"¥%@",[DCFCustomExtra notRounding:mon]];
+            totalString = [NSString stringWithFormat:@"¥%@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",mon]]];
         }
         //立即购买进来
         else if (myTag == 0)
@@ -369,7 +369,7 @@
             }
             [priceArray addObject:[NSNumber numberWithDouble:[[self getNumFromString:title] doubleValue]]];
             double doubleMoney = goodsMoney + [[self getNumFromString:title] doubleValue];
-            totalString = [NSString stringWithFormat:@"%@",[DCFCustomExtra notRounding:doubleMoney]];
+            totalString = [NSString stringWithFormat:@"%@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",doubleMoney]]];
             
             
             for(int i=0;i<goodsListArray.count;i++)
@@ -824,8 +824,8 @@
     [self.view addSubview:buttomView];
     
     moneyLabel = [[UILabel alloc] init];
-    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:goodsMoney] WithSize:CGSizeMake(MAXFLOAT, 20)];
-    [moneyLabel setText:[DCFCustomExtra notRounding:goodsMoney]];
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",goodsMoney]] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    [moneyLabel setText:[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",goodsMoney]]];
     [moneyLabel setFont:[UIFont systemFontOfSize:12]];
     [moneyLabel setTextColor:[UIColor redColor]];
     [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
@@ -1274,20 +1274,21 @@
 
                 
                 NSString *NumBer = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"num"]];
-                NSString *testNum = nil;
-                for(int i=0;i<NumBer.length;i++)
-                {
-                    char c = [NumBer characterAtIndex:i];
-                    if(c == '.')
-                    {
-                        testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-                        break;
-                    }
-                    else if(i == NumBer.length-1)
-                    {
-                        testNum = NumBer;
-                    }
-                }
+                NSString *testNum = [DCFCustomExtra notRounding:NumBer];
+//                NSString *testNum = nil;
+//                for(int i=0;i<NumBer.length;i++)
+//                {
+//                    char c = [NumBer characterAtIndex:i];
+//                    if(c == '.')
+//                    {
+//                        testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+//                        break;
+//                    }
+//                    else if(i == NumBer.length-1)
+//                    {
+//                        testNum = NumBer;
+//                    }
+//                }
                 
                 NSString *price = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"price"]];
                 CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"¥ %@",price] WithSize:CGSizeMake(MAXFLOAT, 20)];
@@ -1534,7 +1535,7 @@
         myTotalMoney = myTotalMoney + [[priceArray objectAtIndex:i] doubleValue];
         
     }
-    NSString *totalString = [NSString stringWithFormat:@"%@",[DCFCustomExtra notRounding:myTotalMoney]];
+    NSString *totalString = [NSString stringWithFormat:@"%@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",myTotalMoney]]];
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:totalString WithSize:CGSizeMake(MAXFLOAT, 20)];
     [moneyLabel setFrame:CGRectMake(ScreenWidth-110-size.width, 10, size.width, 20)];
     [moneyLabel setText:totalString];

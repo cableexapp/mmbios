@@ -75,13 +75,11 @@
 
 #pragma mark - 截取小数点后2位，四舍五入，如果不要，修改NSRoundUp
 //+ (NSString *)notRounding:(double)price afterPoint:(int)position
-+ (NSString *)notRounding:(double)price
++ (NSString *)notRounding:(NSString *)price
 {
-    NSLog(@"%f",price);
-    NSString *priceString = [NSString stringWithFormat:@"%f",price];
-    if([priceString rangeOfString:@"."].location != NSNotFound)
+    if([price rangeOfString:@"."].location != NSNotFound)
     {
-        NSArray *arr = [priceString componentsSeparatedByString:@"."];
+        NSArray *arr = [price componentsSeparatedByString:@"."];
         NSLog(@"arr = %@",arr);
         
         NSString *lastStr = [arr lastObject];
@@ -89,21 +87,18 @@
         
         if(lastStr.length <= 1)
         {
-            return [NSString stringWithFormat:@"%.1f",round(price*100)/100];
+            return [NSString stringWithFormat:@"%.1f",[price floatValue]];
         }
         else if (lastStr.length == 2)
         {
-            return [NSString stringWithFormat:@"%.2f",round(price*100)/100];
+            return [NSString stringWithFormat:@"%.2f",[price floatValue]];
         }
         else if (lastStr.length >= 3)
         {
-            NSLog(@"******   %@ ******",[NSString stringWithFormat:@"%.3f",round(price*100)/100]);
-            NSLog(@"^^^^^   %@ ^^^^^^",[NSString stringWithFormat:@"%f",(price*100)/100]);
-
-            return [NSString stringWithFormat:@"%.3f",round(price*100)/100];
+            return [NSString stringWithFormat:@"%.3f",[price floatValue]];
         }
     }
-    return [NSString stringWithFormat:@"%f",price];
+    return price;
 }
 
 + (NSString *)notRounding:(double)price afterOnePoint:(int)position

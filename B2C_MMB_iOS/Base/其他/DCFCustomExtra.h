@@ -33,7 +33,7 @@
 
 + (NSString *) compareSessionKey:(NSString *) sessionKey;
 
-+ (NSString *)notRounding:(double)price;
++ (NSString *)notRounding:(NSString *)price;
 
 + (NSString *)notRounding:(double)price afterOnePoint:(int)position ;
 

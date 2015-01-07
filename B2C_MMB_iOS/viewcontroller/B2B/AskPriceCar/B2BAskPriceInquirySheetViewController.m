@@ -48,6 +48,7 @@
     NSString *receivecity;
     NSString *receivedistrict;
     NSString *receiveprovince;
+    NSString *detailAddress;
     NSString *receiver;
     NSString *fullAddress;
 
@@ -195,12 +196,14 @@
     {
         receiveAddressId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveAddressId"]];
         receiveTel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveTel"]];
-        receiveaddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveaddress"]];
+        
+        receiveprovince = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveprovince"]];
         receivecity = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivecity"]];
         receivedistrict = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivedistrict"]];
-        receiveprovince = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveprovince"]];
+        receiveaddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveaddress"]];
+        detailAddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fullAddress"]];
         receiver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiver"]];
-        fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        fullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress,detailAddress];
         fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
         NSLog(@"receiver = %@",dic);
     }

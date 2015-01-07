@@ -160,6 +160,19 @@
 {
     [super viewWillDisappear:YES];
 
+    if(b2bAskPriceCarEditViewController)
+    {
+        [b2bAskPriceCarEditViewController.view removeFromSuperview];
+        [b2bAskPriceCarEditViewController removeFromParentViewController];
+        b2bAskPriceCarEditViewController = nil;
+    }
+    
+    if(subViewBtn)
+    {
+        [subViewBtn removeFromSuperview];
+        subViewBtn = nil;
+    }
+    
     if(conn)
     {
         [conn stopConnection];

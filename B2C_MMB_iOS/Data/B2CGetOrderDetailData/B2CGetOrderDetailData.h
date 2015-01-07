@@ -43,6 +43,10 @@
 
 @property (strong,nonatomic) NSString *logisticsCompanay;
 
+@property (strong,nonatomic) NSString *juderstatus;
+
+@property (strong,nonatomic) NSString *afterStatus;
+
 
 - (id) initWithDic:(NSDictionary *) dic;
 

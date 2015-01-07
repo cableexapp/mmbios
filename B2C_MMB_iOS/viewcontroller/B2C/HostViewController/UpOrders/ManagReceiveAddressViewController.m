@@ -248,8 +248,9 @@
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
-        NSString *fullAddress = addressData.fullAddress;
-        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,fullAddress];
+        NSString *streetAndTown = addressData.streetOrTown;
+        NSString *detailAddress = addressData.detailAddress;
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,streetAndTown,detailAddress];
         if([DCFCustomExtra validateString:str]  == NO)
         {
             return 40;
@@ -315,17 +316,17 @@
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
-        NSString *street = addressData.addressName;
-        NSString *fullAddress = addressData.fullAddress;
-        if([DCFCustomExtra validateString:street] == NO)
+        NSString *streetAndTown = addressData.streetOrTown;
+        NSString *detailAddress = addressData.detailAddress;
+        if([DCFCustomExtra validateString:streetAndTown] == NO)
         {
-            street = @"";
+            streetAndTown = @"";
         }
-        if([DCFCustomExtra validateString:fullAddress] == NO)
+        if([DCFCustomExtra validateString:detailAddress] == NO)
         {
-            fullAddress = @"";
+            detailAddress = @"";
         }
-        NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,street,fullAddress];
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,streetAndTown,detailAddress];
         
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
         

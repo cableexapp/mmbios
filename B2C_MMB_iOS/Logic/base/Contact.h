@@ -157,7 +157,7 @@ enum {
     URLSendMsgTag,   //发送验证码
     URLChangeBindPhoneTag,  //修改绑定手机
     URLCheckPhoneTag,   //校验手机是否已经被绑定
-    
+    URLCheckUseNameTag,
     URLGetMemberObjByPhoneTag,    //根据手机号获取用户对象
     URLGetMemberObjByUsernameTag  //根据用户名获取用户对象
 };

@@ -21,7 +21,7 @@
     
     int timeCount_tel;     //倒计时
     
-    BOOL phoneOrUserName;  //判断用户用手机注册还是用户名注册
+    BOOL phoneOrUserName;  //判断用户用手机注册还是用户名注册，YES表示手机,NO表示用户名
     
     NSString *code;
     NSTimer *timer_tel;
@@ -463,16 +463,16 @@
 }
 
 //校验是否是手机注册
--(void)RegisterByMobile
+-(void)CheckPhone
 {
-    if([DCFCustomExtra validateString:self.userTf.text] == NO || [DCFCustomExtra validateString:self.secTf.text] == NO || [DCFCustomExtra validateString:self.sureSecTf.text] == NO)
-    {
-        justValidate = YES;
-    }
-    else
-    {
-        justValidate = NO;
-    }
+//    if([DCFCustomExtra validateString:self.userTf.text] == NO || [DCFCustomExtra validateString:self.secTf.text] == NO || [DCFCustomExtra validateString:self.sureSecTf.text] == NO)
+//    {
+//        justValidate = YES;
+//    }
+//    else
+//    {
+//        justValidate = NO;
+//    }
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -483,32 +483,44 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
+- (void) checkUserName
+{
+    NSString *time = [DCFCustomExtra getFirstRunTime];
+    NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckUsername",time];
+    NSString *token = [DCFCustomExtra md5:string];
+    
+    NSString *pushString = [NSString stringWithFormat:@"username=%@&token=%@",self.userTf.text,token];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCheckUseNameTag delegate:self];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/CheckUsername.html?"];
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+}
 
 //校验是否是用户名注册
 -(void)RegisterByUserName
 {
-    if([DCFCustomExtra validateString:self.userTf.text] == NO || [DCFCustomExtra validateString:self.secTf.text] == NO || [DCFCustomExtra validateString:self.sureSecTf.text] == NO)
-    {
-        justValidate = YES;
-    }
-    else
-    {
-        justValidate = NO;
-    }
-    NSString *time = [DCFCustomExtra getFirstRunTime];
-    
-    NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
-    
-    NSString *token = [DCFCustomExtra md5:string];
-    
-    NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
-    
-    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
-    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
-    
-    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+//    if([DCFCustomExtra validateString:self.userTf.text] == NO || [DCFCustomExtra validateString:self.secTf.text] == NO || [DCFCustomExtra validateString:self.sureSecTf.text] == NO)
+//    {
+//        justValidate = YES;
+//    }
+//    else
+//    {
+//        justValidate = NO;
+//    }
+//    NSString *time = [DCFCustomExtra getFirstRunTime];
+//    
+//    NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
+//    
+//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
+//    
+//    NSString *token = [DCFCustomExtra md5:string];
+//    
+//    NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
+//    
+//    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
+//    NSLog(@"push = %@",pushString);
+//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
+//    
+//    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
@@ -568,21 +580,26 @@
     {
         [self.userTf resignFirstResponder];
         
+        if([DCFCustomExtra validateString:self.userTf.text] == NO)
+        {
+            [DCFStringUtil showNotice:@"请输入账号"];
+            return;
+        }
+        
         //离框校验手机号是否已注册
         if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
         {
-            phoneOrUserName = YES;
             
-            [self RegisterByMobile];
+            [self CheckPhone];
         }
         else
         {
             //离框校验用户名是否已注册
             phoneOrUserName = NO;
             
-            [self RegisterByUserName];
+            [self checkUserName];
+//            [self RegisterByUserName];
         }
-        [self checkStatus];
     }
     if(textField == self.secTf)
     {
@@ -765,12 +782,7 @@
             }
             else if (result == 1)
             {
-                if(justValidate == YES)
-                {
-                    
-                }
-                else
-                {
+
                     if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
                     {
                         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
@@ -780,7 +792,6 @@
                     [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
                     
                     [self.navigationController popViewControllerAnimated:YES];
-                }
             
             }
         }
@@ -799,6 +810,8 @@
         {
             if(result == 0)
             {
+                [self.regesterBtn setEnabled:NO];
+
                 dic = [[NSDictionary alloc] init];
 
                 if([DCFCustomExtra validateString:msg] == YES)
@@ -821,18 +834,61 @@
             }
             else if(result == 1)
             {
+                [self.regesterBtn setEnabled:YES];
+
                 isRegisterFlag = 2;
-                if(justValidate == YES)
+
+                phoneOrUserName = YES;
+
+                [self checkStatus];
+            }
+        }
+
+    }
+    
+    if(URLTag == URLCheckUseNameTag)
+    {
+        NSDictionary *dic = nil;
+        
+        if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
+        {
+            dic = [[NSDictionary alloc] init];
+        }
+        else
+        {
+            if(result == 0)
+            {
+                [self.regesterBtn setEnabled:NO];
+                dic = [[NSDictionary alloc] init];
+                
+                if([DCFCustomExtra validateString:msg] == YES)
                 {
+                    remindMessage = msg;
                     
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
+                                                                        message:msg
+                                                                       delegate:self
+                                                              cancelButtonTitle:nil
+                                                              otherButtonTitles:nil];
+                    [alertView show];
+                    [self performSelector:@selector(dimissAlert:) withObject:alertView afterDelay:1.5];
                 }
                 else
                 {
-                    dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.userTf.text,@"registerAccount",self.secTf.text,@"registerSecrect", nil];
-                    [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
-                    
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [DCFStringUtil showNotice:@"此用户已经存在"];
                 }
+                isRegisterFlag = 1;
+            }
+            else if(result == 1)
+            {
+                [self.regesterBtn setEnabled:YES];
+
+                
+                isRegisterFlag = 2;
+                
+                phoneOrUserName = NO;
+                
+                [self checkStatus];
             }
         }
 

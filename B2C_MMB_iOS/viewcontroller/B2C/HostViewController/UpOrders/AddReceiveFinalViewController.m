@@ -78,8 +78,8 @@
         chooseCity = b2cAddressData.city;
         chooseProvince = b2cAddressData.province;
         chooseBorough = b2cAddressData.area;
-        chooseStreet = b2cAddressData.addressName;
-        chooseDetailAddress = b2cAddressData.fullAddress;
+        chooseStreet = b2cAddressData.streetOrTown;
+        chooseDetailAddress = b2cAddressData.detailAddress;
         
         chooseReceiver = b2cAddressData.receiver;
         chooseCode = b2cAddressData.zip;
@@ -631,7 +631,7 @@
     }
     else
     {
-        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area,b2cAddressData.addressName];
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",b2cAddressData.province,b2cAddressData.city,b2cAddressData.area,b2cAddressData.streetOrTown];
         str = [str stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
         str = [str stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
         str = [str stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];

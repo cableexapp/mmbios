@@ -62,6 +62,7 @@
     NSString *receivecity;
     NSString *receivedistrict;
     NSString *receiveaddress;
+    NSString *detailAddress;
     NSString *receiver;
     NSString *receiveAddressId;
     NSString *receiveTel;
@@ -121,6 +122,7 @@
         receivecity = @"";
         receivedistrict = @"";
         receiveprovince = @"";
+        detailAddress = @"";
         receiver = @"";
         receiveTel = @"";
         receiveAddressId = @"";
@@ -129,13 +131,22 @@
     }
     else
     {
-        
+//        receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                      data.province,@"receiveprovince",
+//                      data.city,@"receivecity",
+//                      data.area,@"receivedistrict",
+//                      data.streetOrTown,@"receiveaddress",
+//                      data.detailAddress,@"fullAddress",
+//                      data.receiver,@"receiver",
+//                      data.mobile,@"receiveTel",
+//                      data.addressId,@"receiveAddressId",
         receiver = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiver"]];
         receiveTel = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveTel"]];
         receiveprovince = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveprovince"]];
         receivecity = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receivecity"]];
         receivedistrict = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receivedistrict"]];
         receiveaddress = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveaddress"]];
+        detailAddress = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"fullAddress"]];
         receiveAddressId = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveAddressId"]];
         
         [billReceiveAddressLabel_1 setText:[NSString stringWithFormat:@"收货人: %@    %@",receiver,receiveTel]];

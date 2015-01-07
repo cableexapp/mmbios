@@ -65,6 +65,10 @@
 
         _orderNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderNum"]];
 
+        _juderstatus = [NSString stringWithFormat:@"%@",[dic objectForKey:@"juderstatus"]];
+
+        _afterStatus = [NSString stringWithFormat:@"%@",[dic objectForKey:@"afterStatus"]];
+
     }
     return self;
 }

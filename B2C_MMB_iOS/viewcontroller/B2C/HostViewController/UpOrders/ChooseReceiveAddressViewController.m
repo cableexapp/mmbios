@@ -171,6 +171,7 @@
 {
     if (URLTag == URLReceiveAddressTag)
     {
+        NSLog(@"%@",dicRespon);
         int result= [[dicRespon objectForKey:@"result"] intValue];
         //        NSString *msg = [dicRespon objectForKey:@"msg"];
         
@@ -213,7 +214,15 @@
                         
                     }
                     receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId",data.fullAddress,@"fullAddress", nil];
+                                  data.province,@"receiveprovince",
+                                  data.city,@"receivecity",
+                                  data.area,@"receivedistrict",
+                                  data.streetOrTown,@"receiveaddress",
+                                  data.detailAddress,@"fullAddress",
+                                  data.receiver,@"receiver",
+                                  data.mobile,@"receiveTel",
+                                  data.addressId,@"receiveAddressId",
+                                   nil];
                 }
                 else
                 {
@@ -258,7 +267,7 @@
         NSString *area = addressData.area;
         NSString *str = [NSString stringWithFormat:@"%@%@%@",province,city,area];
         
-        NSString *address = addressData.addressName;
+        NSString *address = addressData.streetOrTown;
         
         NSString *myStr = [NSString stringWithFormat:@"%@%@",str,address];
         [testArray addObject:myStr];
@@ -345,9 +354,10 @@
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
-        NSString *fullAddress = addressData.fullAddress;
+        NSString *streetAndTown = addressData.streetOrTown;
+        NSString *detailAddress = addressData.detailAddress;
         
-        NSString *str = [NSString stringWithFormat:@"%@%@%@%@",province,city,area,fullAddress];
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,streetAndTown,detailAddress];
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(ScreenWidth-60, MAXFLOAT)];
         return size_3.height + 40;
         
@@ -408,19 +418,19 @@
         NSString *province = addressData.province;
         NSString *city = addressData.city;
         NSString *area = addressData.area;
-        NSString *street = addressData.addressName;
-        NSString *fullAddress = addressData.fullAddress;
+        NSString *street = addressData.streetOrTown;
+        NSString *detailAddress = addressData.detailAddress;
         
         if([DCFCustomExtra validateString:street] == NO)
         {
             street = @"";
         }
-        if([DCFCustomExtra validateString:fullAddress] == NO)
+        if([DCFCustomExtra validateString:detailAddress] == NO)
         {
-            fullAddress = @"";
+            detailAddress = @"";
         }
         
-        NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,street, fullAddress];
+        NSString *str = [NSString stringWithFormat:@"%@%@%@%@%@",province,city,area,street,detailAddress];
         CGSize size_3 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str WithSize:CGSizeMake(nameLabel.frame.size.width, MAXFLOAT)];
         
         UILabel *provinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabel.frame.origin.x, nameLabel.frame.origin.y + nameLabel.frame.size.height, nameLabel.frame.size.width, size_3.height)];
@@ -473,8 +483,27 @@
         }
     }
     [self.navigationController popViewControllerAnimated:YES];
+    
+//    data.province,@"receiveprovince",
+//    data.city,@"receivecity",
+//    data.area,@"receivedistrict",
+//    data.streetOrTown,@"receiveaddress",
+//    data.detailAddress,@"fullAddress",
+//    data.receiver,@"receiver",
+//    data.mobile,@"receiveTel",
+//    data.addressId,@"receiveAddressId",
     B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:tag];
-    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.fullAddress,@"fullAddress",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
+    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                data.province,@"receiveprovince",
+                                data.city,@"receivecity",
+                                data.area,@"receivedistrict",
+                                data.streetOrTown,@"receiveaddress",
+                                data.detailAddress,@"fullAddress",
+                                data.receiver,@"receiver",
+                                data.mobile,@"receiveTel",
+                                data.addressId,@"receiveAddressId",
+                                nil];
+    NSLog(@"receiveDic=%@",receiveDic);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"B2CReceiveAddressHasChange" object:receiveDic userInfo:nil];
     //    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
 }

@@ -7,6 +7,7 @@
 //
 
 #import "B2CAddressData.h"
+#import "DCFCustomExtra.h"
 
 @implementation B2CAddressData
 
@@ -16,7 +17,11 @@
     {
         _addressId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"addressId"]];
         
-        _addressName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"addressName"]];
+        _streetOrTown = [NSString stringWithFormat:@"%@",[dic objectForKey:@"addressName"]];
+        if([DCFCustomExtra validateString:_streetOrTown] == NO)
+        {
+            _streetOrTown = @"";
+        }
         
         _area = [NSString stringWithFormat:@"%@",[dic objectForKey:@"area"]];
         
@@ -31,7 +36,11 @@
             _myCreateDate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"createDate"]];
         }
         
-        _fullAddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fullAddress"]];
+        _detailAddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fullAddress"]];
+        if([DCFCustomExtra validateString:_detailAddress] == NO)
+        {
+            _detailAddress = @"";
+        }
         
         _isDefault = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isDefault"]];
         
@@ -50,8 +59,9 @@
         _tel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"tel"]];
         
         _zip = [NSString stringWithFormat:@"%@",[dic objectForKey:@"zip"]];
+        
+        NSLog(@"%@   %@   %@   %@   %@  ",_province,_city,_area,_streetOrTown,_detailAddress);
 
-        NSLog(@"%@  %@  %@  %@   %@",_province,_city,_area,_addressName,_fullAddress);
     }
     return self;
 }

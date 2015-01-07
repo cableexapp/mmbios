@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 
-@interface ManagerInvoiceSubTableViewController : UITableViewController<ConnectionDelegate>
+@interface ManagerInvoiceSubTableViewController : UITableViewController<ConnectionDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     DCFConnectionUtil *conn;
 }

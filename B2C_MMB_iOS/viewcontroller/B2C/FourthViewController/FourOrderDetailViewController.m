@@ -42,6 +42,16 @@
     return self;
 }
 
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if(conn)
+    {
+        [conn stopConnection];
+        conn = nil;
+    }
+}
+
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -131,13 +141,49 @@
             [self.myTimeLabel setText:[NSString stringWithFormat:@"%@",[[dataArray lastObject] myTime]]];
             
             int status = [[[dataArray lastObject] status] intValue];
-
-            if(status == 1)
+            if(status == 1  || status == 2)
             {
                 showOrHideDisCussBtn = NO;
                 showOrHideTradeBtn = NO;
             }
-            
+            if(status == 3)
+            {
+                showOrHideDisCussBtn = NO;
+                showOrHideTradeBtn = YES;
+            }
+
+            if(status == 6)
+            {
+                int judgeStatus = [[[dataArray lastObject] juderstatus] intValue];
+                int afterStatus = [[[dataArray lastObject] afterStatus] intValue];
+                if(judgeStatus == 1)
+                {
+                    if(afterStatus == 2 || afterStatus == 3)
+                    {
+                        showOrHideDisCussBtn = YES;
+                        showOrHideTradeBtn = YES;
+                    }
+                    else
+                    {
+                        showOrHideDisCussBtn = YES;
+                        showOrHideTradeBtn = YES;
+                    }
+                }
+                else if (judgeStatus == 2)
+                {
+                    if(afterStatus == 2 || afterStatus == 3)
+                    {
+                        showOrHideDisCussBtn = NO;
+                        showOrHideTradeBtn = YES;
+                    }
+                    else
+                    {
+                        showOrHideDisCussBtn = NO;
+                        showOrHideTradeBtn = YES;
+                    }
+                }
+            }
+
             if(showOrHideDisCussBtn == YES || showOrHideTradeBtn == YES)
             {
                 [self.buttomView setHidden:NO];
@@ -237,15 +283,45 @@
     {
         return [[[dataArray lastObject] myItems] count] + 2;
     }
-    else
+    else if(section == 1)
     {
         return 1;
+    }
+    else if (section == 2)
+    {
+        NSString *invoiceType = [NSString stringWithFormat:@"%@",[[dataArray lastObject] invoiceType]];
+        NSString *nvoiceTitle = [[dataArray lastObject] nvoiceTitle];
+        if([DCFCustomExtra validateString:invoiceType] == NO || [DCFCustomExtra validateString:nvoiceTitle] == NO)
+        {
+            return 0;
+        }
+        else
+        {
+            
+        }
     }
     return 1;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if(!dataArray || dataArray.count == 0)
+    {
+        return 0;
+    }
+    if(section == 2)
+    {
+        NSString *invoiceType = [NSString stringWithFormat:@"%@",[[dataArray lastObject] invoiceType]];
+        NSString *nvoiceTitle = [[dataArray lastObject] nvoiceTitle];
+        if([DCFCustomExtra validateString:invoiceType] == NO || [DCFCustomExtra validateString:nvoiceTitle] == NO)
+        {
+            return 0;
+        }
+        else
+        {
+            
+        }
+    }
     return 30;
 //    CGFloat height;
 //    if (section == 0)
@@ -295,6 +371,16 @@
     }
     else
     {
+        NSString *invoiceType = [NSString stringWithFormat:@"%@",[[dataArray lastObject] invoiceType]];
+        NSString *nvoiceTitle = [[dataArray lastObject] nvoiceTitle];
+        if([DCFCustomExtra validateString:invoiceType] == NO || [DCFCustomExtra validateString:nvoiceTitle] == NO)
+        {
+            return 0;
+        }
+        else
+        {
+            
+        }
         return 30;
     }
     return 30;
@@ -302,52 +388,6 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-//    UILabel *titleLabel;
-//    if (section == 0)
-//    {
-//        NSLog(@"myOederLabel = %@",self.myOrderNum);
-//        NSLog(@"myTimeLabel = %@",self.myTime);
-//        
-//        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 98)];
-//        [label setBackgroundColor:[UIColor whiteColor]];
-//        UILabel *orderNumLabel = [[UILabel alloc] init];
-//        orderNumLabel.frame = CGRectMake(0, 0, 75, 25);
-//        orderNumLabel.font = [UIFont systemFontOfSize:15];
-//        orderNumLabel.text = @"  订单编号:";
-//        [label addSubview:orderNumLabel];
-//        
-//        
-//        UILabel *tempOrderNumLabel = [[UILabel alloc] init];
-//        [tempOrderNumLabel setBackgroundColor:[UIColor clearColor]];
-//        tempOrderNumLabel.frame = CGRectMake(75, 0, ScreenWidth-75, 25);
-//        tempOrderNumLabel.font = [UIFont systemFontOfSize:13];
-//        tempOrderNumLabel.text = [NSString stringWithFormat:@" %@",self.myOrderNum];
-//        [tempOrderNumLabel setTextColor:[UIColor blackColor]];
-//        [label addSubview:tempOrderNumLabel];
-//        
-//        UILabel *upTimeLabel = [[UILabel alloc] init];
-//        upTimeLabel.frame = CGRectMake(0, 25,75, 25);
-//        upTimeLabel.font = [UIFont systemFontOfSize:15];
-//        upTimeLabel.text = @"  提交时间:";
-//        [label addSubview:upTimeLabel];
-//        
-//        UILabel *tempUpTimeLabel = [[UILabel alloc] init];
-//        tempUpTimeLabel.frame = CGRectMake(75, 25, ScreenWidth-75, 25);
-//        tempUpTimeLabel.font = [UIFont systemFontOfSize:13];
-//        tempUpTimeLabel.text = [NSString stringWithFormat:@" %@",self.myTime];
-//        [label addSubview:tempUpTimeLabel];
-//        
-//        titleLabel = [[UILabel alloc] init];
-//        titleLabel.frame = CGRectMake(0, 53, ScreenHeight, 45);
-//        titleLabel.font = [UIFont systemFontOfSize:15];
-//        titleLabel.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-//        [label addSubview:titleLabel];
-//    }
-//    else
-//    {
-//  
-//    }
-    
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, ScreenWidth+2, 28)];
     [label setTextAlignment:NSTextAlignmentLeft];
     [label setTextColor:[UIColor blackColor]];
@@ -574,12 +614,21 @@
         {
             if(indexPath.row == 0)
             {
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, cell.contentView.frame.size.width-20, 26)];
-                NSString *str = [NSString stringWithFormat:@"%@  %@",[[dataArray lastObject] invoiceType],[[dataArray lastObject] nvoiceTitle]];
-                [label setTextAlignment:NSTextAlignmentLeft];
-                [label setFont:[UIFont systemFontOfSize:12]];
-                [label setText:str];
-                [cell.contentView addSubview:label];
+                NSString *invoiceType = [NSString stringWithFormat:@"%@",[[dataArray lastObject] invoiceType]];
+                NSString *nvoiceTitle = [[dataArray lastObject] nvoiceTitle];
+                if([DCFCustomExtra validateString:invoiceType] == NO || [DCFCustomExtra validateString:nvoiceTitle] == NO)
+                {
+                    
+                }
+                else
+                {
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, cell.contentView.frame.size.width-20, 26)];
+                    NSString *str = [NSString stringWithFormat:@"%@:%@",invoiceType,nvoiceTitle];
+                    [label setTextAlignment:NSTextAlignmentLeft];
+                    [label setFont:[UIFont systemFontOfSize:12]];
+                    [label setText:str];
+                    [cell.contentView addSubview:label];
+                }
             }
             
         }

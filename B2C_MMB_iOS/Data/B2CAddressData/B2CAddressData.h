@@ -12,9 +12,9 @@
 @property (strong,nonatomic) NSString *addressId;
 @property (strong,nonatomic) NSString *province;
 @property (strong,nonatomic) NSString *city;
-@property (strong,nonatomic) NSString *area;
-@property (strong,nonatomic) NSString *addressName;
-@property (strong,nonatomic) NSString *fullAddress;
+@property (strong,nonatomic) NSString *area;  //区
+@property (strong,nonatomic) NSString *streetOrTown; //街道或镇
+@property (strong,nonatomic) NSString *detailAddress;  //详细地址
 @property (strong,nonatomic) NSDictionary *myCreateDate;
 @property (strong,nonatomic) NSString *isDefault;
 @property (strong,nonatomic) NSString *isDelete;

@@ -272,7 +272,10 @@
         NSString *visitorid = [app getUdid];
         
         NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-        
+        if([DCFCustomExtra validateString:memberid] == NO)
+        {
+            memberid = @"";
+        }
         NSString *pushString = nil;
         if(hasLogin == YES)
         {

@@ -29,6 +29,7 @@
     NSString *receivecity;
     NSString *receivedistrict;
     NSString *receiveaddress;
+    NSString *receiveDetailAddress;
     NSString *receiver;
     NSString *receiveTel;
     NSString *receiveAddressId;
@@ -202,59 +203,34 @@
     NSString *pushString = nil;
 //
     NSString *name = b2bMyCableDetailData.reciver;
-    int index_1 = 0;
-    for(int i=0;i<name.length;i++)
-    {
-        char c = [name characterAtIndex:i];
-        if(c == ':')
-        {
-            index_1 = i;
-        }
-    }
-    NSRange range_1 = NSMakeRange(index_1+1, name.length-index_1-1);
-    name = [name substringWithRange:range_1];
     if([DCFCustomExtra validateString:name] == NO)
     {
         name = @"";
     }
-//
+    
     NSString *province = b2bMyCableDetailData.province;
     if([DCFCustomExtra validateString:province] == NO)
     {
         province = @"";
     }
-//
     NSString *city = b2bMyCableDetailData.city;
     if([DCFCustomExtra validateString:city] == NO)
     {
         city = @"";
     }
-//
     NSString *district = b2bMyCableDetailData.district;
     if([DCFCustomExtra validateString:district] == NO)
     {
         district = @"";
     }
-//
     NSString *address = b2bMyCableDetailData.address;
     if([DCFCustomExtra validateString:address] == NO)
     {
         address = @"";
     }
-//
     NSString *tel = b2bMyCableDetailData.theTel;
     NSLog(@"tel = %@",tel);
-//    int index_2 = 0;
-//    for(int i=0;i<tel.length;i++)
-//    {
-//        char c = [tel characterAtIndex:i];
-//        if(c == ':')
-//        {
-//            index_2 = i;
-//        }
-//    }
-//    NSRange range_2 = NSMakeRange(index_2+1, tel.length-index_2-1);
-//    tel = [tel substringWithRange:range_2];
+
     NSLog(@"%@",tel);
     if([DCFCustomExtra validateString:tel] == NO)
     {
@@ -264,16 +240,15 @@
     
     if([usefp intValue] == 1)
     {
-        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,name,tel,invoiceId,receiveprovince,receivecity,receivedistrict,receiveaddress,receiveTel,receiver];
+        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicefulladdress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,name,tel,invoiceId,receiveprovince,receivecity,receivedistrict,receiveaddress,receiveDetailAddress,receiveTel,receiver];
     }
     else
     {
-        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,name,tel,invoiceId,@"",@"",@"",@"",@"",@""];
+        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicefulladdress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,name,tel,invoiceId,@"",@"",@"",@"",@"",@"",@""];
     }
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmOrderTag delegate:self];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ConfirmOrder.html?"];
-    
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
@@ -306,6 +281,8 @@
     }
     if(URLTag == URLOrderDetailTag)
     {
+        NSLog(@"%@",dicRespon);
+
         if(result == 1)
         {
             b2bMyCableDetailData = [[B2BMyCableDetailData alloc] init];
@@ -328,8 +305,10 @@
     [self changeReceiveAddress:dic];
 }
 
+#pragma mark - 发票收货信息
 - (void) changeReceiveAddress:(NSDictionary *) dic
 {
+    NSLog(@"dic = %@",dic);
     if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
     {
         receiveAddressId = @"";
@@ -340,6 +319,7 @@
         receiveprovince = @"";
         receiver = @"";
         fullAddress = @"";
+        receiveDetailAddress = @"";
     }
     else
     {
@@ -349,8 +329,9 @@
         receivecity = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivecity"]];
         receivedistrict = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivedistrict"]];
         receiveprovince = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveprovince"]];
+        receiveDetailAddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"fullAddress"]];
         receiver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiver"]];
-        fullAddress = [NSString stringWithFormat:@"%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress];
+        fullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress,receiveDetailAddress];
         fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
     }
     if([DCFCustomExtra validateString:fullAddress] == NO)

@@ -15,7 +15,7 @@
 {
     MBProgressHUD *HUD;
     
-    BOOL justValidate;
+//    BOOL justValidate;
 }
 
 

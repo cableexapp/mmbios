@@ -142,7 +142,6 @@
                     {
                         [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
                     }
-                    [cellImageArray addObject:iv];
                     
                     UILabel *firstLabel = [[UILabel alloc] init];
                     NSString *headType = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:i] headType]];
@@ -157,7 +156,6 @@
                     }
                     [firstLabel setText:headType];
                     [firstLabel setFont:[UIFont systemFontOfSize:13]];
-                    [cellLabelArray addObject:firstLabel];
                     
                     UILabel *secondLabel = [[UILabel alloc] init];
                     NSString *headName = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:i] headName]];
@@ -174,14 +172,13 @@
                         }
                         else
                         {
-                            [secondLabel setFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + 5, 5, ScreenWidth-35-iv.frame.size.width-firstLabel.frame.size.width, MAXFLOAT)];
+                            [secondLabel setFrame:CGRectMake(firstLabel.frame.origin.x + firstLabel.frame.size.width + 5, 5, ScreenWidth-35-iv.frame.size.width-firstLabel.frame.size.width, size.height)];
                         }
                     }
                     [secondLabel setText:headName];
                     [secondLabel setFont:[UIFont systemFontOfSize:13]];
                     [secondLabel setNumberOfLines:0];
-                    [secondLabel setTextAlignment:NSTextAlignmentRight];
-                    [cellAnotherLabelArray addObject:secondLabel];
+//                    [secondLabel setTextAlignment:NSTextAlignmentRight];
                     
                     //重设frame
                     [iv setFrame:CGRectMake(iv.frame.origin.x, (secondLabel.frame.size.height+10-30)/2, iv.frame.size.width, 30)];
@@ -199,13 +196,24 @@
                         [firstLabel setTextColor:[UIColor lightGrayColor]];
                         [secondLabel setTextColor:[UIColor lightGrayColor]];
                     }
+                    [cellLabelArray addObject:firstLabel];
+                    [cellAnotherLabelArray addObject:secondLabel];
+                    [cellImageArray addObject:iv];
+
                 }
             }
         }
-        [self.tableView reloadData];
+        [self performSelectorOnMainThread:@selector(reloadDataWithTableView) withObject:nil waitUntilDone:YES];
     }
 }
 
+- (void) reloadDataWithTableView
+{
+    if(self.tableView)
+    {
+        [self.tableView reloadData];
+    }
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -258,23 +266,36 @@
         }
         return moreCell;
     }
-    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
+    static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     
     if(!cell)
     {
+        NSLog(@"row = %d",indexPath.row);
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:0];
-        
+    
         UIImageView *iv = (UIImageView *)[cellImageArray objectAtIndex:indexPath.row];
+        [iv setTag:100];
         [cell.contentView addSubview:iv];
         
         UILabel *firstLabel = (UILabel *)[cellLabelArray objectAtIndex:indexPath.row];
+        [firstLabel setTag:101];
         [cell.contentView addSubview:firstLabel];
         
         UILabel *secondLabel = (UILabel *)[cellAnotherLabelArray objectAtIndex:indexPath.row];
+        [secondLabel setTag:102];
         [cell.contentView addSubview:secondLabel];
     }
+    UIImageView *cellIv = (UIImageView *)[cell.contentView viewWithTag:100];
+    [cell.contentView addSubview:cellIv];
+    
+    UILabel *first = (UILabel *)[cell.contentView viewWithTag:101];
+    [cell.contentView addSubview:first];
+    
+    UILabel *second = (UILabel *)[cell.contentView viewWithTag:102];
+    [cell.contentView addSubview:second];
+
     return cell;
 }
 
@@ -392,13 +413,13 @@
     return chooseArray;
 }
 
-- (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [UIView new];
-}
-
-- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 0.1;
-}
+//- (UIView *) tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    return [UIView new];
+//}
+//
+//- (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 0.1;
+//}
 @end

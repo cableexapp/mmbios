@@ -75,7 +75,6 @@
                 dataArray = [[NSMutableArray alloc] initWithArray:b2bMyCableDetailData.myItems];
                 
                 status = [[NSString alloc] initWithFormat:@"%@",b2bMyCableDetailData.status];
-                NSLog(@"status = %@",status);
                 
                 if([self.delegate respondsToSelector:@selector(requestHasFinished:)])
                 {
@@ -619,7 +618,7 @@
             NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
             NSString *thePrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"buyerPrice"]]; //价格
             NSString *theRequire = [NSString stringWithFormat:@"%@",[dic objectForKey:@"require"]]; //特殊要求
-
+            
             CGFloat height_1 = 0.0;
             CGFloat height_2 = 0.0;
             
@@ -651,7 +650,7 @@
                     }
                     case 1:
                     {
-                        if([DCFCustomExtra validateString:[dic objectForKey:@"deliver"]] == NO)
+                        if([DCFCustomExtra validateString:thDeliver] == NO)
                         {
                             [label setText:@"交货期:"];
                         }
@@ -667,7 +666,7 @@
                     {
                         if([DCFCustomExtra validateString:[dic objectForKey:@"spec"]] == NO)
                         {
-                            [label setText:@"规格:"];
+//                            [label setText:@"规格:"];
                             [label setFrame:CGRectMake(10, lineView.frame.origin.y+20, width, 0)];
                         }
                         else
@@ -682,7 +681,7 @@
                     {
                         if([DCFCustomExtra validateString:theInquiryVoltage] == NO)
                         {
-                            [label setText:[NSString stringWithFormat:@"电压:"]];
+//                            [label setText:[NSString stringWithFormat:@"电压:"]];
                             [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+20, width, 0)];
                         }
                         else
@@ -729,15 +728,12 @@
             }
             
             CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:@"询价结果:" WithSize:CGSizeMake(MAXFLOAT, 20)];
+            
             UILabel *label_1 = [[UILabel alloc] init];
-            [label_1 setText:@"询价结果:"];
-            [label_1 setFont:[UIFont systemFontOfSize:12]];
             
             CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:thePrice WithSize:CGSizeMake(MAXFLOAT, 20)];
             UILabel *pricelabel = [[UILabel alloc] init];
-            [pricelabel setFont:[UIFont systemFontOfSize:12]];
-            [pricelabel setText:thePrice];
-            [pricelabel setTextColor:[UIColor redColor]];
+
             
             UILabel *label_2 = [[UILabel alloc] init];
             [label_2 setFont:[UIFont systemFontOfSize:12]];
@@ -755,36 +751,49 @@
             else
             {
                 [label_1 setFrame:CGRectMake(10, 85.5+height_1+height_2, size_1.width,20)];
+                [label_1 setText:@"询价结果:"];
+                [label_1 setFont:[UIFont systemFontOfSize:12]];
                 
                 [pricelabel setFrame:CGRectMake(label_1.frame.origin.x + label_1.frame.size.width+5,label_1.frame.origin.y, size_2.width, 20)];
+                [pricelabel setFont:[UIFont systemFontOfSize:12]];
+                [pricelabel setText:thePrice];
+                [pricelabel setTextColor:[UIColor redColor]];
                 
                 [label_2 setFrame:CGRectMake(pricelabel.frame.origin.x + pricelabel.frame.size.width+5,label_1.frame.origin.y, 150, 20)];
+                [cell.contentView addSubview:label_1];
+                [cell.contentView addSubview:label_2];
+                [cell.contentView addSubview:pricelabel];
             }
-            [cell.contentView addSubview:label_1];
-            [cell.contentView addSubview:label_2];
-            [cell.contentView addSubview:pricelabel];
+  
             
             UILabel *label_3 = [[UILabel alloc] init];
-            [label_3 setText:@"特殊要求:"];
-            [label_3 setFont:[UIFont systemFontOfSize:12]];
+            UILabel *requestLabel = [[UILabel alloc] init];
+
             
             CGSize requestSize;
             if([DCFCustomExtra validateString:theRequire] == NO)
             {
                 requestSize = CGSizeMake(ScreenWidth-20, 0);
                 [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height,55,0)];
+                [requestLabel setFrame:CGRectMake(65, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-75,0)];
             }
             else
             {
                 requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)];
-                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height,55, requestSize.height+5)];
+
+                [label_3 setText:@"特殊要求:"];
+                [label_3 setFont:[UIFont systemFontOfSize:12]];
+                
+                [requestLabel setFont:[UIFont systemFontOfSize:12]];
+                [requestLabel setText:theRequire];
+                [requestLabel setNumberOfLines:0];
+                [requestLabel setFrame:CGRectMake(65, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-75,requestSize.height)];
+                [label_3 setFrame:CGRectMake(10, pricelabel.frame.origin.y+pricelabel.frame.size.height,55, requestSize.height)];
+                [cell.contentView addSubview:label_3];
+                [cell.contentView addSubview:requestLabel];
             }
-            UILabel *requestLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, pricelabel.frame.origin.y+pricelabel.frame.size.height, ScreenWidth-75,requestSize.height+5)];
-            [requestLabel setFont:[UIFont systemFontOfSize:12]];
-            [requestLabel setText:theRequire];
-            [requestLabel setNumberOfLines:0];
-            [cell.contentView addSubview:label_3];
-            [cell.contentView addSubview:requestLabel];
+   
+       
       
             NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
             float shippedHasNum = [[dic objectForKey:@"shippedHasNum"] floatValue];
@@ -810,7 +819,6 @@
                         [logsticsView addSubview:s1Label];
                         
                         NSString *sendPrice = [NSString stringWithFormat:@"%@",[logsticsDic objectForKey:@"current_num"]];
-                        NSLog(@"sendPrice = %@",sendPrice);
                         NSString *s2 = [NSString stringWithFormat:@"已发货: %@%@",[DCFCustomExtra testRound:sendPrice],unit];
                         NSMutableAttributedString *current_num = [[NSMutableAttributedString alloc] initWithString:s2];
                         [current_num addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];

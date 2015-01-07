@@ -69,7 +69,6 @@
 
 + (NSString *)testRound:(NSString *)price
 {
-    NSLog(@"****  %@ *****",[NSString stringWithFormat:@"%.3f",[price floatValue]]);
     return [NSString stringWithFormat:@"%.3f",[price floatValue]];
 }
 
@@ -80,10 +79,8 @@
     if([price rangeOfString:@"."].location != NSNotFound)
     {
         NSArray *arr = [price componentsSeparatedByString:@"."];
-        NSLog(@"arr = %@",arr);
         
         NSString *lastStr = [arr lastObject];
-        NSLog(@"last  = %@",lastStr);
         
         if(lastStr.length <= 1)
         {

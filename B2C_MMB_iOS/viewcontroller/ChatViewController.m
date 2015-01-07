@@ -13,7 +13,6 @@
 #import "AppDelegate.h"
 #import "Reachability.h"
 #import "DDLog.h"
-#define SUPPORT_IOS8 0
 
 int messageCountNum = 0;
 
@@ -80,6 +79,7 @@ int messageCountNum = 0;
     naviTitle.textColor = [UIColor whiteColor];
     naviTitle.backgroundColor = [UIColor clearColor];
     naviTitle.font = [UIFont systemFontOfSize:20];
+    naviTitle.text = @"在线咨询";
     naviTitle.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = naviTitle;
     
@@ -88,10 +88,9 @@ int messageCountNum = 0;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
-//    self.tableView.backgroundColor = [UIColor yellowColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
-//
+
     getArray = [[NSMutableArray alloc] init];
     
     //下拉加载
@@ -156,27 +155,6 @@ int messageCountNum = 0;
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (noFriendOnLineMessage:) name:@"noFriendOnLine" object:nil];
 
     ArrTimeCheck = [[NSMutableArray alloc]init];
-    
-//    NSLog(@"viewDidLoad_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
-    
-//    if ([self.appDelegate.isOnLine isEqualToString:@"unavailable"])
-//    {
-//        NSLog(@"客服已经离开!");
-//        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
-//        naviTitle.text = @"客服已经离开";
-//        noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
-//        noNet.hidden = NO;
-//        noNetView.hidden = NO;
-//        noNetMessage.hidden = NO;
-//        [messageField resignFirstResponder];
-//        toolBar.hidden = YES;
-//        self.appDelegate.isConnect = @"断开";
-//    }
-//    else
-//    {
-//         NSLog(@"客服在线!");
-//        naviTitle.text = @"正在咨询";
-//    }
 }
 
 //检查网络是否连接
@@ -210,6 +188,10 @@ int messageCountNum = 0;
 {
     [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
    
+    self.appDelegate.forgroudPushMessage = @"前台推送";
+    
+    [self pageFromWhere];
+    
     if ([self.appDelegate.isOnLine isEqualToString:@"available"])
     {
         self.appDelegate.isConnect = @"连接";
@@ -218,8 +200,6 @@ int messageCountNum = 0;
     {
          self.appDelegate.isConnect = @"断开";
     }
-    
-     [self pageFromWhere];
 }
 
 -(void)pageFromWhere
@@ -227,8 +207,7 @@ int messageCountNum = 0;
     NSLog(@"返回self.appDelegate.isConnect = %@",self.appDelegate.isConnect);
     
     NSLog(@"返回self.fromStringFlag = %@",self.fromStringFlag);
-    
-//    if ([self.appDelegate.isConnect isEqualToString:@"连接"] || [self.appDelegate.isConnect  rangeOfString:@"null"].location !=NSNotFound)
+
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         if([self.fromStringFlag isEqualToString:@"工具栏客服"])
@@ -252,7 +231,19 @@ int messageCountNum = 0;
         self.appDelegate.personName = nil;
       if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"] || [self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
-//            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
+            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
+            if (self.navigationController.viewControllers.count == 11)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:7] animated:NO];
+            }
+            if (self.navigationController.viewControllers.count == 10)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:6] animated:NO];
+            }
+            if (self.navigationController.viewControllers.count == 9)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:5] animated:NO];
+            }
             if (self.navigationController.viewControllers.count == 8)
             {
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:NO];
@@ -283,7 +274,19 @@ int messageCountNum = 0;
         {
             if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
             {
-//                NSLog(@"页面数组_家装线商品详情 = %d",self.navigationController.viewControllers.count);
+                NSLog(@"页面数组_家装线商品详情 = %d",self.navigationController.viewControllers.count);
+                if (self.navigationController.viewControllers.count == 11)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:7] animated:NO];
+                }
+                if (self.navigationController.viewControllers.count == 10)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:6] animated:NO];
+                }
+                if (self.navigationController.viewControllers.count == 9)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:5] animated:NO];
+                }
                 if (self.navigationController.viewControllers.count == 8)
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
@@ -300,11 +303,27 @@ int messageCountNum = 0;
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
                 }
+                if (self.navigationController.viewControllers.count == 4)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+                }
             }
             if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"商品快照在线客服"])
             {
-//                NSLog(@"页面数组_商品快照在线客服 = %d",self.navigationController.viewControllers.count);
+                NSLog(@"页面数组_商品快照在线客服 = %d",self.navigationController.viewControllers.count);
 
+                if (self.navigationController.viewControllers.count == 11)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:7] animated:NO];
+                }
+                if (self.navigationController.viewControllers.count == 10)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:6] animated:NO];
+                }
+                if (self.navigationController.viewControllers.count == 9)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:5] animated:NO];
+                }
                 if (self.navigationController.viewControllers.count == 8)
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
@@ -312,6 +331,18 @@ int messageCountNum = 0;
                 if (self.navigationController.viewControllers.count == 7)
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+                }
+                if (self.navigationController.viewControllers.count == 6)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:2] animated:YES];
+                }
+                if (self.navigationController.viewControllers.count == 5)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+                }
+                if (self.navigationController.viewControllers.count == 4)
+                {
+                    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
                 }
             }
         }
@@ -328,7 +359,6 @@ int messageCountNum = 0;
 -(void)noFriendOnLineMessage:(NSNotification *)busyMessage
 {
     isOn = @"unavailable";
-    
     [messageField resignFirstResponder];
     self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
     toolBar.hidden = YES;
@@ -363,7 +393,7 @@ int messageCountNum = 0;
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    [self.tabBarController.tabBar setHidden:YES];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -375,6 +405,45 @@ int messageCountNum = 0;
 {
     [super viewWillAppear:YES];
     messageCountNum = 0;
+    self.appDelegate.messageCount = 0;
+    self.appDelegate.forgroudPushMessage = @"取消前台推送";
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.appDelegate.messageCount]];
+
+    // 获得 UIApplication
+    UIApplication *app = [UIApplication sharedApplication];
+    
+    //获取本地推送数组
+    NSArray *localArray = [app scheduledLocalNotifications];
+    
+    //声明本地通知对象
+    UILocalNotification *localNotification;
+    
+    if (localArray)
+    {
+        for (UILocalNotification *noti in localArray)
+        {
+            NSDictionary *dict = noti.userInfo;
+            
+            if (dict)
+            {
+                NSString *inKey = [dict objectForKey:@"key"];
+                
+                if ([inKey isEqualToString:@"对应的key值"])
+                {
+                    
+                    if (localNotification)
+                    {
+       
+                        
+                        localNotification = nil;  
+                        
+                    }
+                    break;  
+                    
+                }
+            }
+        }
+    }
     self.appDelegate.pushChatView = nil;
     [self checkNet];
     if ([[self appDelegate].xmppStream isDisconnected])
@@ -394,11 +463,9 @@ int messageCountNum = 0;
      [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
     
      NSLog(@"聊天窗口self.navigationController.viewControllers = %@",self.navigationController.viewControllers);
-    
-    self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 
-    [self.navigationController.tabBarController.tabBar setHidden:YES];
-    self.hidesBottomBarWhenPushed = YES;
+    [self.tabBarController.tabBar setHidden:YES];
+    
     for(UIView *view in self.navigationController.navigationBar.subviews)
     {
         if([view tag] == 100 || [view isKindOfClass:[UIButton class]] || [view tag] == 101)
@@ -430,9 +497,8 @@ int messageCountNum = 0;
     //聊天输入工具条
     if (!btn || !toolBar || !rightBtn || !keyboardButton || !sendButton || !messageField)
     {
-        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+       self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
       
-        
         toolBar = [[UIView alloc] init];
         toolBar.frame = CGRectMake(0, self.view.frame.size.height-44, self.view.frame.size.width, 44);
         toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
@@ -494,7 +560,14 @@ int messageCountNum = 0;
         }
     }
    
-   
+    if (_allMessagesFrame.count > 0)
+    {
+        [self.tableView reloadData];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_allMessagesFrame.count - 1
+                                                                  inSection:0]
+                              atScrollPosition:UITableViewScrollPositionBottom
+                                      animated:NO];
+    }
 //    NSLog(@"咨询入口 = %@",self.fromStringFlag);
 //    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
@@ -549,7 +622,7 @@ int messageCountNum = 0;
     }
     if (_allMessagesFrame.count)
     {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_allMessagesFrame.count - 1
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_allMessagesFrame.count-1
                                                                     inSection:0]
                                 atScrollPosition:UITableViewScrollPositionBottom
                                         animated:NO];
@@ -863,9 +936,7 @@ int messageCountNum = 0;
 
 //创建房间
 -(void)creatRoom
-{
-    naviTitle.text = @"正在咨询";
-    
+{    
     //初始化聊天室
     XMPPRoomCoreDataStorage *roomMemory = [[XMPPRoomCoreDataStorage alloc] init];
     
@@ -921,13 +992,13 @@ int messageCountNum = 0;
 // 收到好友名单列表
 - (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items
 {
-//    NSLog(@"收到好友名单列表 = %@\n\n",items);
+    NSLog(@"收到好友名单列表 = %@\n\n",items);
 }
 
 // 收到主持人名单列表
 - (void)xmppRoom:(XMPPRoom *)sender didFetchModeratorsList:(NSArray *)items
 {
-//    NSLog(@"收到主持人名单列表 = %@\n\n",items);
+    NSLog(@"收到主持人名单列表 = %@\n\n",items);
 }
 
 //创建聊天室成功
@@ -940,6 +1011,13 @@ int messageCountNum = 0;
 - (void)xmppRoomDidLeave:(XMPPRoom *)sender
 {
     NSLog(@"离开聊天室");
+    [messageField resignFirstResponder];
+    self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+    toolBar.hidden = YES;
+    noNetMessage.text = @"账号已在其他设备登录，请重新登录!";
+    noNet.hidden = NO;
+    noNetView.hidden = NO;
+    noNetMessage.hidden = NO;
     self.appDelegate.isConnect = @"断开";
 }
 
@@ -1041,8 +1119,6 @@ int messageCountNum = 0;
         {
             selectString = [NSString stringWithFormat:@"select * from messagelist where user_name = '%@' order by id  desc limit %d offset %d",[self.appDelegate getUdid],10,pageIndex*10+messageCountNum];
         }
-//        NSLog(@"查询条件selectString = %@\n\n",selectString);
-        
         if (sqlite3_prepare_v2(dataBase,[selectString UTF8String],-1, &statement, nil)==SQLITE_OK)
         {
             while (sqlite3_step(statement)==SQLITE_ROW)
@@ -1066,11 +1142,6 @@ int messageCountNum = 0;
                 NSString *time =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 4) encoding:NSUTF8StringEncoding];
                 
                 NSString *msg =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 5) encoding:NSUTF8StringEncoding];
-                
-//                NSLog(@"rec_userId = %@ sen_userId = %@ sen_userName = %@  time = %@ msg = %@\n\n",rec_userId,sen_userId,sen_userName,time,msg);
- 
-                
-//                NSLog(@"tempUserName = %@\n\n",tempUserName);
                 
                 NSDictionary * dic;
 
@@ -1203,12 +1274,10 @@ int messageCountNum = 0;
     if(hasLogin == YES)
     {
         [self recUserId:timeShowFlage toUserId:@"0" toUserName:tempUserName toTime:message.time toMessage:message.content];
-         NSLog(@"登录状态_发送消息+++++++++++++++++++++++++存储消息");
     }
     else
     {
         [self recUserId:timeShowFlage toUserId:@"0" toUserName:[self.appDelegate getUdid] toTime:message.time toMessage:message.content];
-        NSLog(@"未登录状态_发送消息+++++++++++++++++++++++++存储消息");
     }
     
     if (_allMessagesFrame.count > 0)

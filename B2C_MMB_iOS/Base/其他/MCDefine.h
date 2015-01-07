@@ -35,6 +35,8 @@
 
 #define MYCOLOR [UIColor colorWithRed:44.0/255.0 green:122.0/255.0 blue:250.0/255.0 alpha:1.0]
 
+//IM_hostName
+#define IM_hostName @"58.215.50.9"
 
 #define URL_USER_LOGIN                     URL_HOST_CHEN"10001/01?"
 #define URL_USER_LOGOUT                  URL_HOST_CHEN"10001/02?"

@@ -210,6 +210,14 @@ double secondsCountDown =0;
     {
         if([[[self.tempFrom componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
         {
+            if (self.navigationController.viewControllers.count == 8)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:5] animated:YES];
+            }
+            if (self.navigationController.viewControllers.count == 7)
+            {
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
+            }
             if (self.navigationController.viewControllers.count == 6)
             {
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
@@ -228,11 +236,11 @@ double secondsCountDown =0;
             
             if (self.navigationController.viewControllers.count == 8)
             {
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:5] animated:YES];
             }
             if (self.navigationController.viewControllers.count == 7)
             {
-                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:3] animated:YES];
+                [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:4] animated:YES];
             }
             if (self.navigationController.viewControllers.count == 6)
             {

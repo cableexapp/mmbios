@@ -98,10 +98,13 @@ BOOL isPopShow = NO;
     [self.navigationController.tabBarController.tabBar setHidden:NO];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommmb"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"frommore"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"goToHostView_hasnologin"];
     isPopShow = NO;
     self.tableView.scrollEnabled = YES;
     [self loadbadgeCount];
     [self loadShopCarCount];
+    self.appDelegate.messageCount = 0;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.appDelegate.messageCount]];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -281,7 +284,6 @@ BOOL isPopShow = NO;
         {
             cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:4];
         }
-
     }
     else
     {
@@ -363,11 +365,6 @@ BOOL isPopShow = NO;
     searchImageView.layer.borderColor = [[UIColor clearColor] CGColor];
     searchImageView.layer.borderWidth = 1;
     [self.navigationController.navigationBar addSubview:searchImageView];
-    
-//    UIImageView *speakView = [[UIImageView alloc] init];
-//    speakView.frame = CGRectMake(searchImageView.frame.size.width-28, 3.5, 23, 23);
-//    speakView.image = [UIImage imageNamed:@"speak"];
-//    [searchImageView addSubview:speakView];
 
     UIImageView *search = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 18,18)];
     search.image = [UIImage imageNamed:@"search"];
@@ -392,14 +389,7 @@ BOOL isPopShow = NO;
     
     UITapGestureRecognizer *popShopCarTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popShopCarTap:)];
     [secondBarView addGestureRecognizer:popShopCarTap];
-    
-//    UIView *thirdBarView = [[UIView alloc] init];
-//    thirdBarView.frame = CGRectMake((self.view.frame.size.width/5)*2, 0, self.view.frame.size.width/5, 49);
-//    [self.navigationController.tabBarController.tabBar addSubview:thirdBarView];
-//    
-//    UITapGestureRecognizer *IMTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(IMTap:)];
-//    [thirdBarView addGestureRecognizer:IMTap];
-  
+
     useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
     
     countLabel = [[UIImageView alloc] init];
@@ -408,7 +398,6 @@ BOOL isPopShow = NO;
     countLabel.image = [UIImage imageNamed:@"msg_bq"];
     [secondBarView addSubview:countLabel];
 
-    
     NSArray *imageArray = [[NSArray alloc] initWithObjects:@"iosappAd.png",@"iosappAd2.png", nil];
     es = [[EScrollerView alloc] initWithFrameRect:CGRectMake(0, 0, ScreenWidth, 100) ImageArray:imageArray TitleArray:nil WithTag:0];
     es.delegate = self;
@@ -422,6 +411,8 @@ BOOL isPopShow = NO;
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostVC_mmb:) name:@"goToHostView_mmb" object:nil];
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostVC_more:) name:@"goToHostView_more" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostView_hasnologin:) name:@"goToHostView_hasnologin" object:nil];
 }
 
 -(void)goToHostVC_mmb:(NSNotification *)sender
@@ -430,6 +421,11 @@ BOOL isPopShow = NO;
 }
 
 -(void)goToHostVC_more:(NSNotification *)sender
+{
+    [self.tabBarController setSelectedIndex:0];
+}
+
+-(void)goToHostView_hasnologin:(NSNotification *)sender
 {
     [self.tabBarController setSelectedIndex:0];
 }

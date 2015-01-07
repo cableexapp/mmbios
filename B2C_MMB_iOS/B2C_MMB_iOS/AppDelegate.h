@@ -31,7 +31,7 @@
     BOOL * isOpen;//是否开着
     XMPPStream * xmppStream;
     XMPPReconnect *xmppReconnect;
-    XMPPRosterCoreDataStorage * xmppRosterStorage;
+
     NSString *personName;
     NSString *sendMessageInfo;
     NSString *userID;
@@ -46,16 +46,14 @@
     
     BOOL isXmppConnected;
 
-    NSString *password;
     XMPPRoster *xmppRoster;
-//    XMPPvCardCoreDataStorage *xmppvCardStorage;
-//    XMPPvCardTempModule *xmppvCardTempModule;
-//    XMPPvCardAvatarModule *xmppvCardAvatarModule;
-//    XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesStorage;
-//    XMPPCapabilities *xmppCapabilities;
 
     NSString *isOnLine;
     NSString *pushChatView;
+    
+    int messageCount;
+    
+    NSString *forgroudPushMessage;
 }
 
 //修改登录密码之后不需要显示弹出框
@@ -95,7 +93,7 @@
 
 //XMPP
 @property (nonatomic,strong) NSString *sendMessageInfo;
-//@property (nonatomic,strong) XMPPRosterCoreDataStorage *xmppRosterStorage;
+
 @property (nonatomic,strong) XMPPStream *xmppStream;
 @property (nonatomic,strong) XMPPRoom *xmppRoom;
 
@@ -107,6 +105,9 @@
 @property (nonatomic,strong) NSString *tempID;
 @property (nonatomic,strong) NSString *errorMessage;
 @property (nonatomic,strong) NSString *isConnect;
+@property (nonatomic,assign) int messageCount;
+
+@property (nonatomic,strong) NSString *forgroudPushMessage;
 
 
 #pragma mark - XMPP方法
@@ -120,11 +121,12 @@
 
 -(void)goOffline;
 
-- (BOOL)reConnect;
+-(BOOL)reConnect;
 
 -(void)registerInSide;
 
-- (void) aliPayChange;
+-(void)aliPayChange;
 
-- (void) logOutMethod;
+-(void)logOutMethod;
+
 @end

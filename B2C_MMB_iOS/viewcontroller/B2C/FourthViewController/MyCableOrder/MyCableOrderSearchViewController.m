@@ -535,13 +535,15 @@
         
         lookForCustomBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [lookForCustomBtn setTitle:@"查看售后" forState:UIControlStateNormal];
-        [lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
+        [lookForCustomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        lookForCustomBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         lookForCustomBtn.layer.cornerRadius = 5;
         
         lookForTradeBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [lookForTradeBtn setTitle:@"物流跟踪" forState:UIControlStateNormal];
+        [lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [lookForTradeBtn setFrame:CGRectMake(onLinePayBtn.frame.origin.x + onLinePayBtn.frame.size.width + 10, 195, onLinePayBtn.frame.size.width, 30)];
+        lookForTradeBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         lookForTradeBtn.layer.cornerRadius = 5;
         
         receiveBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -551,12 +553,12 @@
         receiveBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         receiveBtn.layer.cornerRadius = 5;
         
-        [cell addSubview:onLinePayBtn];
-        [cell addSubview:cancelOrderBtn];
-        [cell addSubview:discussBtn];
-        [cell addSubview:lookForCustomBtn];
-        [cell addSubview:lookForTradeBtn];
-        [cell addSubview:receiveBtn];
+        [cell.contentView addSubview:onLinePayBtn];
+        [cell.contentView addSubview:cancelOrderBtn];
+        [cell.contentView addSubview:discussBtn];
+        [cell.contentView addSubview:lookForCustomBtn];
+        [cell.contentView addSubview:lookForTradeBtn];
+        [cell.contentView addSubview:receiveBtn];
         
         
         titleBackView = [[UIView alloc] init];
@@ -665,8 +667,8 @@
                 {
                     [discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-40)/3, 30)];
                     
-                    [lookForCustomBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 10, 5, discussBtn.frame.size.width, 30)];
-                    [lookForTradeBtn setFrame:CGRectMake(lookForCustomBtn.frame.origin.x + lookForCustomBtn.frame.size.width + 10, 5, lookForCustomBtn.frame.size.width, 30)];
+                    [lookForCustomBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 10, 151, discussBtn.frame.size.width, 30)];
+                    [lookForTradeBtn setFrame:CGRectMake(lookForCustomBtn.frame.origin.x + lookForCustomBtn.frame.size.width + 10,151, lookForCustomBtn.frame.size.width, 30)];
                    
                     [lookForCustomBtn setHidden:NO];
                     [lookForTradeBtn setHidden:NO];
@@ -782,15 +784,15 @@
     else
     {
         noResultView.hidden = YES;
-        [self.myTableView removeFromSuperview];
-        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
-        self.myTableView.delegate = self;
-        self.myTableView.dataSource = self;
-        self.myTableView.scrollEnabled = YES;
-        self.myTableView.backgroundColor = [UIColor clearColor];
-        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-        [self.view addSubview:self.myTableView];
+//        [self.myTableView removeFromSuperview];
+//        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
+//        self.myTableView.delegate = self;
+//        self.myTableView.dataSource = self;
+//        self.myTableView.scrollEnabled = YES;
+//        self.myTableView.backgroundColor = [UIColor clearColor];
+//        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+//        [self.view addSubview:self.myTableView];
         dataArray = searchResults;
     }
     [self.myTableView reloadData];

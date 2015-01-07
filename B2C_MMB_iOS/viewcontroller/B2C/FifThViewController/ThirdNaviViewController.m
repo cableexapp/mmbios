@@ -39,8 +39,6 @@
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-
-
 -(void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"工具栏入口状态 = %@",self.appDelegate.isConnect);
@@ -52,33 +50,18 @@
         
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = @"工具栏客服";
-//        CATransition *transition = [CATransition animation];
-//        transition.duration = 0.4f;
-//        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-//        transition.type =  kCATransitionMoveIn;
-//        transition.subtype =  kCATransitionFromTop;
-//        transition.delegate = self;
-//        [self.view.layer addAnimation:transition forKey:nil];
         [self setHidesBottomBarWhenPushed:YES];
-        [self pushViewController:chatVC animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
-    
-//      [self setViewControllers:[NSArray arrayWithObject:chatVC]];
-        
+//        [self pushViewController:chatVC animated:YES];
+      
+        [self setViewControllers:[NSArray arrayWithObject:chatVC]];
         NSLog(@"工具栏入口连接状态ViewArray = %@",self.viewControllers);
     }
     else
     {
         ChatListViewController *chatListVC = [[ChatListViewController alloc] init];
         chatListVC.fromString = @"工具栏客服";
-        
-         [self setHidesBottomBarWhenPushed:YES];
-//      [self pushViewController:chatListVC animated:YES];
-       
+        [self setHidesBottomBarWhenPushed:YES];
         [self setViewControllers:[NSArray arrayWithObject:chatListVC]];
-        
-        [self setHidesBottomBarWhenPushed:NO];
-       
         NSLog(@"工具栏入口连接状态ViewArray = %@",self.viewControllers);
     }
 }

@@ -62,7 +62,6 @@
     tv.separatorStyle = UITableViewCellSeparatorStyleNone;
     [tv setDataSource:self];
     [tv setDelegate:self];
-//    tv.backgroundColor = [UIColor greenColor];
     [tv setShowsHorizontalScrollIndicator:NO];
     [tv setShowsVerticalScrollIndicator:NO];
     [self.view addSubview:tv];
@@ -126,7 +125,6 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetProductSnapTag)
     {
-        NSLog(@"商品快照dicRespon = %@",dicRespon);
         if(result == 1)
         {
             if([[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]] || [[dicRespon objectForKey:@"items"] count] == 0)
@@ -138,10 +136,6 @@
                 [moreCell stopAnimation];
                 dataArray = [[NSMutableArray alloc] initWithArray:[B2CGoodsFastPicData getListArray:[dicRespon objectForKey:@"items"]]];
                 data = [dataArray lastObject];
-          
-                NSLog(@"商品快照dataArray = %@",dataArray);
-                NSLog(@"商品快照data = %@",data);
-                
             }
             [tv reloadData];
         }
@@ -149,18 +143,6 @@
         {
             [moreCell failAcimation];
         }
-        
-//        NSString *time = [DCFCustomExtra getFirstRunTime];
-//        
-//        NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductDetail",time];
-//        
-//        NSString *token = [DCFCustomExtra md5:string];
-//        
-//        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_myProductId,token];
-//        
-//        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
-//        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
-//        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
     else if(URLTag == URLB2CProductDetailTag)
     {
@@ -172,12 +154,9 @@
             detailData = [[B2CGoodsDetailData alloc] init];
             [detailData dealData:dicRespon];
             
-             NSLog(@"商品快照detailData = %@",detailData);
-            
             if ([[dicRespon objectForKey:@"score"] count] > 0)
             {
                 statrScore = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
-                
             }
             
             producturl = [dicRespon objectForKey:@"producturl"];

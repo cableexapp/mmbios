@@ -20,6 +20,7 @@
 #import "MyShoppingListViewController.h"
 #import "B2BAskPriceCarViewController.h"
 #import "KxMenu.h"
+#import "PhoneHelper.h"
 
 @interface FifthTableViewController ()
 {
@@ -328,9 +329,11 @@
 
             //切换登录账号，结束之前对话
             [self.appDelegate goOffline];
-            [app disconnect];
-            [app reConnect];
+            [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
+            [self.appDelegate disconnect];
+            [self.appDelegate reConnect];
             self.appDelegate.isConnect = @"断开";
+            
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
         }
     }

@@ -143,6 +143,9 @@
     [super viewWillAppear:YES];
     [self checkNet];
     [self reloadMemberList];
+    
+    self.tabBarController.tabBarItem.badgeValue = @"3";
+    
     //检查服务器是否连接
     if ([[self appDelegate].xmppStream isDisconnected])
     {
@@ -168,7 +171,7 @@
 {
     if (self.appDelegate.roster.count == 0)
     {
-        [self.appDelegate reConnect];
+//        [self.appDelegate reConnect];
         [self.appDelegate queryRoster];
         [self.memberTableView removeFromSuperview];
         self.tempArray = self.appDelegate.roster;

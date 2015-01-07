@@ -73,7 +73,9 @@
     
     [self pushAndPopStyle];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"售后查看"];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"查看售后"];
     self.navigationItem.titleView = top;
     
     labelArray = [[NSMutableArray alloc] init];
@@ -167,7 +169,7 @@
             {
                 if([[dataDic objectForKey:@"createdate"] isKindOfClass:[NSNull class]])
                 {
-                    NSLog(@"空");
+//                    NSLog(@"空");
                 }
                 else
                 {
@@ -304,15 +306,16 @@
         _tv.dataSource = self;
         [_tv setShowsHorizontalScrollIndicator:NO];
         [_tv setShowsVerticalScrollIndicator:NO];
-        _tv.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
+        _tv.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
         _tv.layer.borderWidth = 1.0f;
+        _tv.layer.cornerRadius = 5;
         [self.view addSubview:_tv];
     }
     [_tv reloadData];
     
     UILabel *buttomLabel = [[UILabel alloc] initWithFrame:CGRectMake(_tv.frame.origin.x, _tv.frame.size.height+_tv.frame.origin.y + 5,_tv.frame.size.width, 30)];
     [buttomLabel setText:@"详细操作以及凭证请登录电脑后查看"];
-    [buttomLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    [buttomLabel setFont:[UIFont systemFontOfSize:15]];
     [self.view addSubview:buttomLabel];
 }
 
@@ -363,7 +366,7 @@
         if(moreCell == nil)
         {
             moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
         }
         if(!dataArray || dataArray.count == 0)
         {
@@ -376,7 +379,7 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+        [cell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {

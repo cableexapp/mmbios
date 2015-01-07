@@ -29,6 +29,7 @@
 {
     FourthNaviViewController *fourthNavi;
     AppDelegate *app;
+    ThirdNaviViewController *thirdNavi;
 }
 @end
 
@@ -117,39 +118,40 @@
     [self initCutomBar];
     
     //设置tabbar背景颜色
-//    [[UITabBar appearance] setBarTintColor:[UIColor redColor]];
-
-    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+    [[UITabBar appearance] setBarTintColor:[UIColor whiteColor]];
+    
+    //    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
     
     //设置tabbar图片文字颜色
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:18/255.0 green:104/255.0 blue:253/255.0 alpha:1.0]];
-//    [[UITabBar appearance] setTintColor:[UIColor orangeColor]];
+    //    [[UITabBar appearance] setTintColor:[UIColor orangeColor]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetMessageCount:) name:@"sendMessageToBadge" object:nil];
+}
 
+-(void)resetMessageCount:(NSNotification *)sender
+{
+    if ([sender.object isEqualToString:@"0"])
+    {
+        thirdNavi.tabBarItem.badgeValue = nil;
+        return;
+    }
+    thirdNavi.tabBarItem.badgeValue = sender.object;
 }
 
 - (BOOL)shouldAutorotate
 {
     return YES;
 }
+
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

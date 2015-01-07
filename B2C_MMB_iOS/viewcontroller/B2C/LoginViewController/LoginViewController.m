@@ -112,9 +112,11 @@
     _tf_BackView.layer.masksToBounds = YES;
     
     [_tf_Account setReturnKeyType:UIReturnKeyNext];
+    _tf_Account.tintColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     _tf_Account.frame = CGRectMake(20, 0, ScreenWidth-40, 50);
     [_tf_Account setReturnKeyType:UIReturnKeyNext];
     _tf_Secrect.frame = CGRectMake(20, 51, ScreenWidth-40, 50);
+    _tf_Secrect.tintColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
     
     [_tf_Secrect setReturnKeyType:UIReturnKeyDone];
@@ -157,6 +159,7 @@
             case 0:
                 [label setText:@"账 号"];
                 [_tf_Account setLeftView:label];
+                 _tf_Account.placeholder = @"用户名/手机号码";
                 [_tf_Account setLeftViewMode:UITextFieldViewModeAlways];
                 break;
             case 1:
@@ -200,60 +203,49 @@
 }
 
 //连接服务器
-- (BOOL)connect:(NSString *)userName;
-{
-    NSString *myJID = [NSString stringWithFormat:@"%@@%@",userName,@"fgame.com"];
-    
-    NSString *myPassword = @"123456";
-    if (myJID == nil || myPassword == nil)
-    {
-        return NO;
-    }
-    XMPPJID *jid = [XMPPJID jidWithString:myJID resource:@"XMPP"];
-    [xmppStream setMyJID:jid];
-    
-    NSError *error = nil;
-    if (![xmppStream connect:&error])
-    {
-        return NO;
-    }
-    return YES;
-    
-    NSLog(@"用户登录-IM-连接");
-}
+//- (BOOL)connect:(NSString *)userName;
+//{
+//    NSString *myJID = [NSString stringWithFormat:@"%@@%@",userName,@"fgame.com"];
+//    
+//    NSString *myPassword = @"123456";
+//    if (myJID == nil || myPassword == nil)
+//    {
+//        return NO;
+//    }
+//    XMPPJID *jid = [XMPPJID jidWithString:myJID resource:@"XMPP"];
+//    [xmppStream setMyJID:jid];
+//    
+//    NSError *error = nil;
+//    if (![xmppStream connect:&error])
+//    {
+//        return NO;
+//    }
+//    return YES;
+//    
+//    NSLog(@"用户登录-IM-连接");
+//}
+//
 
 //IM注册
 - (void)registerInSide:(NSString *)userName;
 {
     NSLog(@"用户登录_IM注册");
     NSError *error;
-    NSString *hostName = @"58.215.50.9";
-    NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",userName,hostName];
+    NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@/smack",userName,IM_hostName];
     if ([xmppStream isConnected])
     {
         if (![xmppStream registerWithPassword:@"123456" error:&error])
         {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建帐号失败"
-//                                                                message:[error localizedDescription]
-//                                                               delegate:nil
-//                                                      cancelButtonTitle:@"Ok"
-//                                                      otherButtonTitles:nil];
-//            [alertView show];
+            
         }
     }
     else
     {
         [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
-//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
-//                                                            message:@"创建帐号成功"
-//                                                           delegate:nil
-//                                                  cancelButtonTitle:@"Ok"
-//                                                  otherButtonTitles:nil];
-//        [alertView show];
     }
 }
 
-////IM登录
+//IM登录
 - (BOOL)reConnect:(NSString *)userName;
 {
     if (![xmppStream isDisconnected])
@@ -371,10 +363,11 @@
             
             //切换登录账号，结束之前对话
             [app goOffline];
-//            [app disconnect];
-//            [self connect:self.tf_Account.text];
-            [self registerInSide:self.tf_Account.text];
-            [self reConnect:self.tf_Account.text];
+            [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName_IM"];
+            [app registerInSide];
+            [app disconnect];
+            [app reConnect];
+
             app.isConnect = @"断开";
             
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"app_username"];

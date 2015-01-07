@@ -98,6 +98,12 @@
     self.headpic.layer.masksToBounds = YES;
     NSString *headPortraitUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"headPortraitUrl"];
     [self.headpic setImageWithURL:[NSURL URLWithString:headPortraitUrl] placeholderImage:[UIImage imageNamed:@"headPic.png"]];
+    
+    NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"fromhasnologin"];
+    if (str.length > 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_hasnologin" object:nil];
+    }
 }
 
 //请求询价车商品数量
@@ -222,6 +228,7 @@
     else
     {
         B2BAskPriceCarViewController *b2bAskPriceCar = [sb instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+        b2bAskPriceCar.fromString = @"未登录";
         [self.navigationController pushViewController:b2bAskPriceCar animated:YES];
     }
     [self setHidesBottomBarWhenPushed:NO];

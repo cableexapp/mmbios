@@ -488,13 +488,10 @@
                 B2BAskPriceDetailData *b2bData = [dataArray objectAtIndex:i];
                 if([data isEqual:b2bData])
                 {
-                    NSLog(@"第%d个",i);
                     index = i;
                     break;
                 }
             }
-            NSLog(@"index = %d",index);
-            
             [chooseArray removeObject:data];
             [sectionHeadBtnArray removeObjectAtIndex:index];
             [cellHeightArray removeObjectAtIndex:index];
@@ -562,7 +559,7 @@
     //    }];
     
     UIButton *btn = (UIButton *) sender;
-    NSLog(@"tag = %d",btn.tag);
+
     btn.selected = !btn.selected;
     //    for(UIButton *b in sectionHeadBtnArray)
     //    {
@@ -744,7 +741,6 @@
 
 -(void)buyBtnClick
 {
-    NSLog(@"buyBtnClick--去首页看看");
     if ([self.fromString isEqualToString:@"首页"])
     {
         [self.navigationController popViewControllerAnimated:YES];
@@ -753,13 +749,16 @@
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"mmb" forKey:@"frommmb"];
         [self.navigationController popToRootViewControllerAnimated:YES];
-        NSLog(@"询价车----买卖宝通知");
     }
     else if ([self.fromString isEqualToString:@"更多"])
     {
          [[NSUserDefaults standardUserDefaults] setObject:@"mmb" forKey:@"frommore"];
          [self.navigationController popToRootViewControllerAnimated:YES];
-         NSLog(@"询价车----更多通知");
+    }
+    else if ([self.fromString isEqualToString:@"未登录"])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@"mmb" forKey:@"fromhasnologin"];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     else
     {

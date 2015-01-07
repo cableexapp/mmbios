@@ -144,7 +144,6 @@
 		
 		return jid;
 	}
-	
 	return nil;
 }
 

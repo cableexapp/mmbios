@@ -319,7 +319,6 @@
 		8B1672531A36D72200C79A2B /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1672521A36D72200C79A2B /* location.png */; };
 		8B1672551A36DCE100C79A2B /* location_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B1672541A36DCE100C79A2B /* location_arrow.png */; };
 		8B17CA241A555A0F00193ED2 /* RegisterProvisionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B17CA231A555A0F00193ED2 /* RegisterProvisionViewController.m */; };
-		8B1F0FCC1A174E6000F819D1 /* MyCableOrderSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */; };
 		8B28213F1A148F9100060534 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B28213E1A148F9100060534 /* AddressBook.framework */; };
 		8B2821411A148FA700060534 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B2821401A148FA700060534 /* AudioToolbox.framework */; };
 		8B2821501A1492D700060534 /* iflyMSC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B28214C1A1492D700060534 /* iflyMSC.framework */; };
@@ -353,6 +352,8 @@
 		8B8B985B1A2F165500697375 /* 热门型号.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8B98531A2F165500697375 /* 热门型号.png */; };
 		8B8B985C1A2F165500697375 /* 在线客服.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8B98541A2F165500697375 /* 在线客服.png */; };
 		8B8B98641A2F250C00697375 /* shoppingCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8B98631A2F250C00697375 /* shoppingCar.png */; };
+		8B8F37DA1A5E14DA00E9B450 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F37D91A5E14DA00E9B450 /* ChatViewController.m */; };
+		8B8F37DD1A5E150C00E9B450 /* MyCableOrderSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F37DC1A5E150C00E9B450 /* MyCableOrderSearchViewController.m */; };
 		8B9D0C4A1A3B052900DAE583 /* delete_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B9D0C491A3B052900DAE583 /* delete_1.png */; };
 		8BA7C05C1A10A85500758B0F /* chat_timeline_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA7BF631A10A85500758B0F /* chat_timeline_bg.png */; };
 		8BA7C0611A10A85500758B0F /* active_page_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA7BF691A10A85500758B0F /* active_page_image.png */; };
@@ -596,7 +597,6 @@
 		8BA7C31B1A10A93B00758B0F /* GrayPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA7C30F1A10A93B00758B0F /* GrayPageControl.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8BACA79A1A5CD18600F995BC /* ChatListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BACA7991A5CD18600F995BC /* ChatListViewController.m */; };
 		8BACA79D1A5CD18E00F995BC /* WaitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BACA79C1A5CD18E00F995BC /* WaitViewController.m */; };
-		8BACA7A01A5CD19500F995BC /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BACA79F1A5CD19500F995BC /* ChatViewController.m */; };
 		8BACA98C1A5D2C7700F995BC /* XMPPElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BACA97B1A5D2C7700F995BC /* XMPPElement.m */; };
 		8BACA98D1A5D2C7700F995BC /* XMPPIQ.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BACA97E1A5D2C7700F995BC /* XMPPIQ.m */; };
 		8BACA98E1A5D2C7700F995BC /* XMPPJID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BACA9801A5D2C7700F995BC /* XMPPJID.m */; };
@@ -1384,8 +1384,6 @@
 		8B1672541A36DCE100C79A2B /* location_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_arrow.png; sourceTree = "<group>"; };
 		8B17CA221A555A0F00193ED2 /* RegisterProvisionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterProvisionViewController.h; sourceTree = "<group>"; };
 		8B17CA231A555A0F00193ED2 /* RegisterProvisionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterProvisionViewController.m; sourceTree = "<group>"; };
-		8B1F0FCA1A174E6000F819D1 /* MyCableOrderSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderSearchViewController.h; sourceTree = "<group>"; };
-		8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableOrderSearchViewController.m; sourceTree = "<group>"; };
 		8B28213E1A148F9100060534 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8B2821401A148FA700060534 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8B28214C1A1492D700060534 /* iflyMSC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iflyMSC.framework; sourceTree = "<group>"; };
@@ -1426,6 +1424,10 @@
 		8B8B98531A2F165500697375 /* 热门型号.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "热门型号.png"; sourceTree = "<group>"; };
 		8B8B98541A2F165500697375 /* 在线客服.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "在线客服.png"; sourceTree = "<group>"; };
 		8B8B98631A2F250C00697375 /* shoppingCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoppingCar.png; sourceTree = "<group>"; };
+		8B8F37D81A5E14DA00E9B450 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		8B8F37D91A5E14DA00E9B450 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		8B8F37DB1A5E150C00E9B450 /* MyCableOrderSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderSearchViewController.h; sourceTree = "<group>"; };
+		8B8F37DC1A5E150C00E9B450 /* MyCableOrderSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableOrderSearchViewController.m; sourceTree = "<group>"; };
 		8B9D0C491A3B052900DAE583 /* delete_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_1.png; sourceTree = "<group>"; };
 		8BA7BF631A10A85500758B0F /* chat_timeline_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_timeline_bg.png; sourceTree = "<group>"; };
 		8BA7BF691A10A85500758B0F /* active_page_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_page_image.png; sourceTree = "<group>"; };
@@ -1687,8 +1689,6 @@
 		8BACA7991A5CD18600F995BC /* ChatListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatListViewController.m; sourceTree = "<group>"; };
 		8BACA79B1A5CD18E00F995BC /* WaitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaitViewController.h; sourceTree = "<group>"; };
 		8BACA79C1A5CD18E00F995BC /* WaitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaitViewController.m; sourceTree = "<group>"; };
-		8BACA79E1A5CD19500F995BC /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
-		8BACA79F1A5CD19500F995BC /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		8BACA9791A5D2C7700F995BC /* XMPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPP.h; sourceTree = "<group>"; };
 		8BACA97A1A5D2C7700F995BC /* XMPPElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPElement.h; sourceTree = "<group>"; };
 		8BACA97B1A5D2C7700F995BC /* XMPPElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPElement.m; sourceTree = "<group>"; };
@@ -2339,10 +2339,10 @@
 				616BE0B71A1447C60061C956 /* MyCableHostSubTableViewController.m */,
 				616BE0B81A1447C60061C956 /* MyCableOrderHostViewController.h */,
 				616BE0B91A1447C60061C956 /* MyCableOrderHostViewController.m */,
-				8B1F0FCA1A174E6000F819D1 /* MyCableOrderSearchViewController.h */,
-				8B1F0FCB1A174E6000F819D1 /* MyCableOrderSearchViewController.m */,
 				8BB7D49B1A29A70F00C716E4 /* MyCableOrderB2BViewController.h */,
 				8BB7D49C1A29A70F00C716E4 /* MyCableOrderB2BViewController.m */,
+				8B8F37DB1A5E150C00E9B450 /* MyCableOrderSearchViewController.h */,
+				8B8F37DC1A5E150C00E9B450 /* MyCableOrderSearchViewController.m */,
 				616BE0C01A14A4020061C956 /* MyCableOrderDetailViewController.h */,
 				616BE0C11A14A4020061C956 /* MyCableOrderDetailViewController.m */,
 				616BE0C31A14ABC60061C956 /* MyCableDetailTableViewController.h */,
@@ -3829,8 +3829,8 @@
 				8BACA7991A5CD18600F995BC /* ChatListViewController.m */,
 				8BACA79B1A5CD18E00F995BC /* WaitViewController.h */,
 				8BACA79C1A5CD18E00F995BC /* WaitViewController.m */,
-				8BACA79E1A5CD19500F995BC /* ChatViewController.h */,
-				8BACA79F1A5CD19500F995BC /* ChatViewController.m */,
+				8B8F37D81A5E14DA00E9B450 /* ChatViewController.h */,
+				8B8F37D91A5E14DA00E9B450 /* ChatViewController.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -5040,7 +5040,6 @@
 				8BA7C3161A10A93B00758B0F /* MessageCell.m in Sources */,
 				61B710DE19FF3B53001CC3BD /* ShopHostTableViewController.m in Sources */,
 				8BACAAA71A5D2C9E00F995BC /* XMPPPing.m in Sources */,
-				8B1F0FCC1A174E6000F819D1 /* MyCableOrderSearchViewController.m in Sources */,
 				6181A50819CFC4C2000E2D14 /* FMResultSet.m in Sources */,
 				8BACAA801A5D2C9E00F995BC /* XMPPRoomOccupantHybridMemoryStorageObject.m in Sources */,
 				61B710ED19FF3B53001CC3BD /* UpOrderViewController.m in Sources */,
@@ -5133,6 +5132,7 @@
 				61B710BB19FF3B53001CC3BD /* SettingViewController.m in Sources */,
 				6181A35A19CFC3F9000E2D14 /* AppDelegate.m in Sources */,
 				6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */,
+				8B8F37DA1A5E14DA00E9B450 /* ChatViewController.m in Sources */,
 				61ADE7DE1A10537A00D773B9 /* HotScreenFirstViewController.m in Sources */,
 				6114F7AA1A188754007DAC39 /* ModifyBangDingMobileViewController.m in Sources */,
 				8BACAA761A5D2C9E00F995BC /* XMPPIQ+JabberRPCResonse.m in Sources */,
@@ -5232,7 +5232,6 @@
 				8B17CA241A555A0F00193ED2 /* RegisterProvisionViewController.m in Sources */,
 				8BACA9B71A5D2C9200F995BC /* NSXMLElement+XMPP.m in Sources */,
 				61EF03801A2071520048FBBB /* ModifyLoginSecViewController.m in Sources */,
-				8BACA7A01A5CD19500F995BC /* ChatViewController.m in Sources */,
 				8BACAAA01A5D2C9E00F995BC /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				61B710C419FF3B53001CC3BD /* DiscussViewController.m in Sources */,
 				611C8C4019E3BDD2000F4532 /* B2CAddressData.m in Sources */,
@@ -5283,6 +5282,7 @@
 				8BACAA7D1A5D2C9E00F995BC /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				61A197C719F7509400909C6F /* QBImagePickerFooterView.m in Sources */,
 				8BACAA781A5D2C9E00F995BC /* XMPPPrivacy.m in Sources */,
+				8B8F37DD1A5E150C00E9B450 /* MyCableOrderSearchViewController.m in Sources */,
 				6181A50F19CFC4C2000E2D14 /* SDImageCache.m in Sources */,
 				61B710C819FF3B53001CC3BD /* FourthNaviViewController.m in Sources */,
 				618057571A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.m in Sources */,
@@ -5462,8 +5462,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: jiang huajun (54826ETQ9V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jiang huajun (54826ETQ9V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tools/lib",
@@ -5492,7 +5492,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9c6466f4-def4-4fc8-8962-8211be46ee9a";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -5504,8 +5504,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: jiang huajun (54826ETQ9V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jiang huajun (54826ETQ9V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tools/lib",
@@ -5533,7 +5533,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9c6466f4-def4-4fc8-8962-8211be46ee9a";
+				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

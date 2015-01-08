@@ -1198,6 +1198,7 @@
         cellWebView.opaque = NO;
         [cellWebView setScalesPageToFit:YES];
         cellWebView.scrollView.bounces = NO;
+        cellWebView.userInteractionEnabled = NO;
         [(UIScrollView *)[[cellWebView subviews] objectAtIndex:0] setBounces:NO];
         [cellWebView setBackgroundColor:[UIColor clearColor]];
 //        NSString *jsString = [NSString stringWithFormat:@"<html> "
@@ -1242,7 +1243,7 @@
     
     int height = [height_str intValue];
     
-    webView.frame = CGRectMake(0,0,ScreenWidth,height-ScreenHeight+20);
+    webView.frame = CGRectMake(0,0,ScreenWidth,height-(ScreenHeight-44));
 
     NSLog(@"height: %@", [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"]);
     

@@ -88,10 +88,12 @@
     
     self.discussBtn.layer.cornerRadius = 5;
     [self.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.discussBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     self.discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     
     self.tradeBtn.layer.cornerRadius = 5;
     [self.tradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.tradeBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     self.tradeBtn.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
     NSString *memberid = [self getMemberId];

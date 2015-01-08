@@ -39,8 +39,10 @@
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+
 -(void)viewWillAppear:(BOOL)animated
 {
+//
     NSLog(@"工具栏入口状态 = %@",self.appDelegate.isConnect);
     self.view.backgroundColor = [UIColor whiteColor];
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
@@ -50,9 +52,9 @@
         
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = @"工具栏客服";
-        [self setHidesBottomBarWhenPushed:YES];
+        
 //        [self pushViewController:chatVC animated:YES];
-      
+//        [self setHidesBottomBarWhenPushed:YES];
         [self setViewControllers:[NSArray arrayWithObject:chatVC]];
         NSLog(@"工具栏入口连接状态ViewArray = %@",self.viewControllers);
     }

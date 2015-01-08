@@ -92,10 +92,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
     dataArray = [[NSMutableArray alloc] init];
     searchArray = [[NSMutableArray alloc] init];
+    searchResults = [[NSMutableArray alloc]init];
     
     //导航栏标题
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"搜索家装线订单"];
     self.navigationItem.titleView = top;
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
+    backButton.title = @"";
+    self.navigationItem.backBarButtonItem = backButton;
     
     mySB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
     
@@ -136,7 +141,6 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-
     [self loadRequestB2COrderListAllWithStatus:@""];
 }
 
@@ -466,52 +470,52 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         GoodsPic = [[UIImageView alloc] init];
         GoodsPic.frame = CGRectMake(20, 71, 60, 60);
-        [cell addSubview:GoodsPic];
+        [cell.contentView addSubview:GoodsPic];
         
         GoodsName = [[UILabel alloc] init];
         GoodsName.frame = CGRectMake(90, 61, 122, 89);
         GoodsName.numberOfLines = 5;
         GoodsName.font = [UIFont systemFontOfSize:13];
-        [cell addSubview:GoodsName];
+        [cell.contentView addSubview:GoodsName];
         
         GoodsPrice = [[UILabel alloc] init];
         GoodsPrice.frame = CGRectMake(214, 61, 98, 32);
         GoodsPrice.textColor = [UIColor redColor];
         GoodsPrice.textAlignment = NSTextAlignmentRight;
         GoodsPrice.font = [UIFont systemFontOfSize:13];
-        [cell addSubview:GoodsPrice];
+        [cell.contentView addSubview:GoodsPrice];
         
         GoodsColor = [[UILabel alloc] init];
         GoodsColor.frame = CGRectMake(214, 93, 98, 28);
         GoodsColor.textAlignment = NSTextAlignmentRight;
         GoodsColor.font = [UIFont systemFontOfSize:13];
-        [cell addSubview:GoodsColor];
+        [cell.contentView addSubview:GoodsColor];
         
         GoodsNum = [[UILabel alloc] init];
         GoodsNum.frame = CGRectMake(214,121, 98, 29);
         GoodsNum.textAlignment = NSTextAlignmentRight;
         GoodsNum.font = [UIFont systemFontOfSize:13];
-        [cell addSubview:GoodsNum];
+        [cell.contentView addSubview:GoodsNum];
         
         logisticsPriceLabel = [[UILabel alloc] init];
         logisticsPriceLabel.frame = CGRectMake(10,155, 98, 32);
         logisticsPriceLabel.textAlignment = NSTextAlignmentLeft;
         logisticsPriceLabel.font = [UIFont systemFontOfSize:13];
-        [cell addSubview:logisticsPriceLabel];
+        [cell.contentView addSubview:logisticsPriceLabel];
         
         statusLabe = [[UILabel alloc] init];
         statusLabe.frame = CGRectMake(180,155, 56, 32);
         statusLabe.textAlignment = NSTextAlignmentRight;
         statusLabe.text = @"订单状态:";
         statusLabe.font = [UIFont systemFontOfSize:13];
-        [cell addSubview:statusLabe];
+        [cell.contentView addSubview:statusLabe];
         
         statusContent = [[UILabel alloc] init];
         statusContent.frame = CGRectMake(242,155, 80, 32);
         statusContent.textAlignment = NSTextAlignmentLeft;
         statusContent.font = [UIFont systemFontOfSize:13];
         statusContent.textColor = [UIColor redColor];
-        [cell addSubview:statusContent];
+        [cell.contentView addSubview:statusContent];
         
         onLinePayBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         onLinePayBtn.frame = CGRectMake(10, 195,(ScreenWidth-30)/2, 30);
@@ -585,6 +589,13 @@
         shopNameLabel.textAlignment = NSTextAlignmentLeft;
         [titleBackView addSubview:shopNameLabel];
     }
+    else
+    {
+        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+        {
+            [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+        }
+    }
     if(!dataArray || dataArray.count == 0)
     {
         return [self returnMoreCell:self.myTableView];
@@ -629,7 +640,7 @@
         }
         if(status == 2)
         {
-            [cancelOrderBtn setFrame:CGRectMake(10, 151, cell.contentView.frame.size.width-20, 30)];
+            [cancelOrderBtn setFrame:CGRectMake(10, 195, cell.contentView.frame.size.width-20, 30)];
             [cancelOrderBtn setHidden:NO];
             [discussBtn setHidden:YES];
             [lookForCustomBtn setHidden:YES];
@@ -665,10 +676,10 @@
             {
                 if(afterStatus == 2 || afterStatus == 3)
                 {
-                    [discussBtn setFrame:CGRectMake(10, 5, (cell.contentView.frame.size.width-40)/3, 30)];
+                    [discussBtn setFrame:CGRectMake(10,195, (cell.contentView.frame.size.width-40)/3, 30)];
                     
-                    [lookForCustomBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 10, 151, discussBtn.frame.size.width, 30)];
-                    [lookForTradeBtn setFrame:CGRectMake(lookForCustomBtn.frame.origin.x + lookForCustomBtn.frame.size.width + 10,151, lookForCustomBtn.frame.size.width, 30)];
+                    [lookForCustomBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 10, 195, discussBtn.frame.size.width, 30)];
+                    [lookForTradeBtn setFrame:CGRectMake(lookForCustomBtn.frame.origin.x + lookForCustomBtn.frame.size.width + 10,195, lookForCustomBtn.frame.size.width, 30)];
                    
                     [lookForCustomBtn setHidden:NO];
                     [lookForTradeBtn setHidden:NO];
@@ -679,8 +690,8 @@
                 }
                 else
                 {
-                    [discussBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-30)/2, 30)];
-                    [lookForTradeBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 10, 151, discussBtn.frame.size.width, 30)];
+                    [discussBtn setFrame:CGRectMake(10, 195, (cell.contentView.frame.size.width-30)/2, 30)];
+                    [lookForTradeBtn setFrame:CGRectMake(discussBtn.frame.origin.x + discussBtn.frame.size.width + 10, 195, discussBtn.frame.size.width, 30)];
                     
                     [discussBtn setHidden:NO];
                     [lookForTradeBtn setHidden:NO];
@@ -694,8 +705,8 @@
             {
                 if(afterStatus == 2 || afterStatus == 3)
                 {
-                    [lookForCustomBtn setFrame:CGRectMake(10, 151, (cell.contentView.frame.size.width-25)/2, 30)];
-                    [lookForTradeBtn setFrame:CGRectMake(lookForCustomBtn.frame.origin.x + lookForCustomBtn.frame.size.width + 10, 151, lookForCustomBtn.frame.size.width, 30)];
+                    [lookForCustomBtn setFrame:CGRectMake(10, 195, (cell.contentView.frame.size.width-25)/2, 30)];
+                    [lookForTradeBtn setFrame:CGRectMake(lookForCustomBtn.frame.origin.x + lookForCustomBtn.frame.size.width + 10, 195, lookForCustomBtn.frame.size.width, 30)];
                     
                     [lookForCustomBtn setHidden:NO];
                     [lookForTradeBtn setHidden:NO];
@@ -706,7 +717,7 @@
                 }
                 else
                 {
-                    [lookForTradeBtn setFrame:CGRectMake(10, 151, cell.contentView.frame.size.width-20, 30)];
+                    [lookForTradeBtn setFrame:CGRectMake(10, 195, cell.contentView.frame.size.width-20, 30)];
                     
                     [lookForTradeBtn setHidden:NO];
                     [discussBtn setHidden:YES];
@@ -765,9 +776,8 @@
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
 }
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+-(void)searchGoods
 {
-    searchResults = [[NSMutableArray alloc]init];
     for (int i=0; i<dataArray.count; i++)
     {
         if([[dataArray[i] objectForKey:@"orderNum"] rangeOfString:search.text].location !=NSNotFound || [[[[dataArray[i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productName"] rangeOfString:search.text].location !=NSNotFound || [[dataArray[i] objectForKey:@"shopName"] rangeOfString:search.text].location !=NSNotFound)
@@ -776,27 +786,33 @@
         }
     }
     
+    dataArray = searchResults;
+    
+    [search resignFirstResponder];
     if (searchResults.count == 0)
     {
-        dataArray = searchResults;
         noResultView.hidden = NO;
     }
     else
     {
         noResultView.hidden = YES;
-//        [self.myTableView removeFromSuperview];
-//        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
-//        self.myTableView.delegate = self;
-//        self.myTableView.dataSource = self;
-//        self.myTableView.scrollEnabled = YES;
-//        self.myTableView.backgroundColor = [UIColor clearColor];
-//        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-//        [self.view addSubview:self.myTableView];
-        dataArray = searchResults;
+        [self.myTableView removeFromSuperview];
+        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
+        self.myTableView.delegate = self;
+        self.myTableView.dataSource = self;
+        self.myTableView.scrollEnabled = YES;
+        self.myTableView.backgroundColor = [UIColor clearColor];
+        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+        [self.view addSubview:self.myTableView];
+        [self.myTableView reloadData];
     }
-    [self.myTableView reloadData];
-    [search resignFirstResponder];
+
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self searchGoods];
 }
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar

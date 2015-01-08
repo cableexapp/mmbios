@@ -291,14 +291,11 @@ NSString *strUserId = @"";
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
+    self.roster  = [[NSMutableArray alloc] init];//客服组列表数组
     
-    self.roster  = [[NSMutableArray alloc] init];
+    [self setupStream]; //xmpp初始化
     
-    //xmpp初始化
-    [self setupStream];
-    
-    //数据库创建
-    [self SQLDataSteup];
+    [self SQLDataSteup]; //聊天记录存储数据库创建
     
     
     NSString *p = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
@@ -347,8 +344,7 @@ NSString *strUserId = @"";
         WelComeViewController *welcome = [sb instantiateViewControllerWithIdentifier:@"welComeViewController"];
         self.window.rootViewController = welcome;
         [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
-        //连接
-        [self connect];
+        [self connect]; //连接openfire
     }
     else
     {
@@ -364,7 +360,6 @@ NSString *strUserId = @"";
         }
     }
     
-    
     [PhoneHelper sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
@@ -374,8 +369,8 @@ NSString *strUserId = @"";
     
     [self loadFMDB];
     
-    //注册
-    [self registerInSide];
+    
+    [self registerInSide]; //注册IM账号
     
     return YES;
 }
@@ -641,26 +636,6 @@ NSString *strUserId = @"";
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    //程序进入后台时将xmpp下线
-    //    [self goOffline];
-    //    UIApplication*   app = [UIApplication sharedApplication];
-    //    __block    UIBackgroundTaskIdentifier bgTask;
-    //    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
-    //        dispatch_async(dispatch_get_main_queue(), ^{
-    //            if (bgTask != UIBackgroundTaskInvalid)
-    //            {
-    //                bgTask = UIBackgroundTaskInvalid;
-    //            }
-    //        });
-    //    }];
-    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    //        dispatch_async(dispatch_get_main_queue(), ^{
-    //            if (bgTask != UIBackgroundTaskInvalid)
-    //            {
-    //                bgTask = UIBackgroundTaskInvalid;
-    //            }
-    //        });
-    //    });
     [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
     //接收客服会话通知栏推送
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
@@ -929,13 +904,13 @@ NSString *strUserId = @"";
     if ([presenceType isEqualToString:@"unavailable"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
-        isOnLine = @"unavailable";
+        self.isOnLine = @"unavailable";
         [self goOffline];
         self.uesrID = nil;
     }
     else
     {
-        isOnLine = @"available";
+        self.isOnLine = @"available";
     }
 }
 

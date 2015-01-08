@@ -105,11 +105,11 @@
     
     
     pageControl = [[UIPageControl alloc] init];
-    pageControl.frame = CGRectMake(0, ScreenHeight-145, ScreenWidth, 30);
+    pageControl.frame = CGRectMake(0, ScreenHeight-100, ScreenWidth, 30);
     pageControl.currentPage=0;
     pageControl.numberOfPages=4;
-    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:204/255.0 green:204/255.0 blue:204/255.0 alpha:1.0];
-    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:19/255.0 green:90/255.0 blue:168/255.0 alpha:1.0];
+    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     [self.view addSubview:pageControl];
     
     self.hotTelBtn.layer.cornerRadius = 5;
@@ -131,7 +131,6 @@
 {
     if(page <= 0)
     {
-        NSLog(@"到头了");
         return;
     }
     else
@@ -145,7 +144,6 @@
 {
     if(page >= 3)
     {
-        NSLog(@"到底了");
         return;
     }
     else
@@ -217,6 +215,7 @@
 
 - (IBAction)chooseBtnClick:(id)sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
     SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
     [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
 }

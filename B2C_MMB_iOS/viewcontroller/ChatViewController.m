@@ -74,8 +74,6 @@ int messageCountNum = 0;
     [super viewDidLoad];
     self.view.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     
-    self.view.backgroundColor = [UIColor yellowColor];
-    
     //导航标题
     naviTitle = [[UILabel alloc] initWithFrame:CGRectMake(130,20, 120, 44)];
     naviTitle.textColor = [UIColor whiteColor];
@@ -85,14 +83,18 @@ int messageCountNum = 0;
     naviTitle.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = naviTitle;
     
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(0, self.view.frame.size.height-44, 100, 40);
+    label.backgroundColor = [UIColor redColor];
+    label.text = @"12444124";
+    [self.view addSubview:label];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-300) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-//    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
-    self.tableView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.tableView];
+    [self.view insertSubview:self.tableView atIndex:0];
 
     getArray = [[NSMutableArray alloc] init];
     
@@ -474,12 +476,12 @@ int messageCountNum = 0;
     self.navigationItem.rightBarButtonItem = rightItem;
     
     //聊天输入工具条
-//    if (!btn || !toolBar || !rightBtn || !keyboardButton || !sendButton || !messageField)
-//    {
-//       self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
+    if (!btn || !toolBar || !rightBtn || !keyboardButton || !sendButton || !messageField)
+    {
+       self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44);
       
         toolBar = [[UIView alloc] init];
-        toolBar.frame = CGRectMake(0, 450, self.view.frame.size.width, 44);
+        toolBar.frame = CGRectMake(0,self.view.frame.size.height-44, self.view.frame.size.width, 44);
         toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
         toolBar.backgroundColor = [UIColor yellowColor];
         [self.view addSubview:toolBar];
@@ -511,7 +513,7 @@ int messageCountNum = 0;
         [messageField setReturnKeyType:UIReturnKeyNext];
         messageField.layer.cornerRadius =3;
         [toolBar addSubview:messageField];
-//    }
+    }
 //    NSLog(@"self.appDelegate.uesrID =%@",self.appDelegate.uesrID);
     if (self.appDelegate.uesrID.length > 0)
     {

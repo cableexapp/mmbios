@@ -867,6 +867,11 @@ NSString *strUserId = @"";
             NSLog(@"注册成功++++++++++++++++++++++++");
         }
     }
+    else
+    {
+        [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
+        [self reConnect];
+    }
     
 }
 
@@ -980,6 +985,9 @@ NSString *strUserId = @"";
     }
     if ([iq.type isEqualToString:@"error"] && [[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue] isEqualToString:@"cancel"])
     {
+        //        self.errorMessage = [[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue];
+        
+        
         self.errorMessage = @"cancel";
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckTheStatus_offline" object:nil];
     }

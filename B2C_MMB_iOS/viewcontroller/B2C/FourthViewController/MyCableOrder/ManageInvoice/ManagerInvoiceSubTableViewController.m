@@ -60,7 +60,7 @@
 {
     [super viewWillAppear:YES];
     
-
+    
 }
 
 - (void)viewDidLoad
@@ -112,7 +112,7 @@
             else
             {
                 [dataArray addObjectsFromArray:[B2BManagBillData getListArray:[dicRespon objectForKey:@"items"]]];
-
+                
                 NSString *invoiceId = nil;
                 if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BBillMsg"])
                 {
@@ -178,7 +178,7 @@
                     [secondLabel setText:headName];
                     [secondLabel setFont:[UIFont systemFontOfSize:13]];
                     [secondLabel setNumberOfLines:0];
-//                    [secondLabel setTextAlignment:NSTextAlignmentRight];
+                    //                    [secondLabel setTextAlignment:NSTextAlignmentRight];
                     
                     //重设frame
                     [iv setFrame:CGRectMake(iv.frame.origin.x, (secondLabel.frame.size.height+10-30)/2, iv.frame.size.width, 30)];
@@ -199,7 +199,7 @@
                     [cellLabelArray addObject:firstLabel];
                     [cellAnotherLabelArray addObject:secondLabel];
                     [cellImageArray addObject:iv];
-
+                    
                 }
             }
         }
@@ -271,10 +271,9 @@
     
     if(!cell)
     {
-        NSLog(@"row = %d",indexPath.row);
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:0];
-    
+        
         UIImageView *iv = (UIImageView *)[cellImageArray objectAtIndex:indexPath.row];
         [iv setTag:100];
         [cell.contentView addSubview:iv];
@@ -295,7 +294,7 @@
     
     UILabel *second = (UILabel *)[cell.contentView viewWithTag:102];
     [cell.contentView addSubview:second];
-
+    
     return cell;
 }
 
@@ -342,15 +341,15 @@
             UIImageView *iv = (UIImageView *)[cellImageArray objectAtIndex:i];
             if(self.status == YES)
             {
-                    NSString *dataInvoiceId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:i] invoiceId]];
-                    if([invoiceId isEqualToString:dataInvoiceId])
-                    {
-                        [iv setImage:[UIImage imageNamed:@"choose.png"]];
-                    }
-                    else
-                    {
-                        [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
-                    }
+                NSString *dataInvoiceId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:i] invoiceId]];
+                if([invoiceId isEqualToString:dataInvoiceId])
+                {
+                    [iv setImage:[UIImage imageNamed:@"choose.png"]];
+                }
+                else
+                {
+                    [iv setImage:[UIImage imageNamed:@"unchoose.png"]];
+                }
             }
             else
             {
@@ -393,15 +392,11 @@
             }
             
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:data.headType,@"type",data.headName,@"name",data.invoiceId,@"invoiceId", nil];
-            NSLog(@"dic = %@",dic);
             [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"B2BBillMsg"];
             
             [self.navigationController popViewControllerAnimated:YES];
         }
         
-        
-        //        NSLog(@"arr = %@",chooseArray);
-        //        [self changeChooseArray];
     }
     else
     {

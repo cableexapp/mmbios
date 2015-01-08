@@ -25,19 +25,19 @@
     
     _ctems = [[NSArray alloc] initWithArray:[dictionary objectForKey:@"ctems"]];
     
-//    _createdate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"createdate"]];
-//    
-//    if([[_createdate allKeys] count] == 0 || [_createdate isKindOfClass:[NSNull class]])
-//    {
-//        _time = @"";
-//    }
-//    else
-//    {
-//        //时间戳
-//        NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[_createdate objectForKey:@"time"] doubleValue]/1000];
-//        
-//        _time = [DCFCustomExtra nsdateToString:confromTimesp];
-//    }
+    //    _createdate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"createdate"]];
+    //
+    //    if([[_createdate allKeys] count] == 0 || [_createdate isKindOfClass:[NSNull class]])
+    //    {
+    //        _time = @"";
+    //    }
+    //    else
+    //    {
+    //        //时间戳
+    //        NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[_createdate objectForKey:@"time"] doubleValue]/1000];
+    //
+    //        _time = [DCFCustomExtra nsdateToString:confromTimesp];
+    //    }
     _items = [[NSArray alloc] initWithArray:[dictionary objectForKey:@"items"]];
     
     NSDictionary *dic = nil;
@@ -122,8 +122,8 @@
     
     _isShowparam = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isShowparam"]];
     _phoneDescribe = [NSString stringWithFormat:@"%@",[dic objectForKey:@"phoneDescribe"]];
-  
-//     _phoneDescribe = [NSString stringWithFormat:@"%@",[dic objectForKey:@"describe"]];
+    
+    //     _phoneDescribe = [NSString stringWithFormat:@"%@",[dic objectForKey:@"describe"]];
     
     _productPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"productPrice"]];
     
@@ -161,7 +161,7 @@
     
     _shopId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopId"]];
     
-//    _score = [NSString stringWithFormat:@"%@",[[dictionary objectForKey:@"score"] objectAtIndex:0]];
+    //    _score = [NSString stringWithFormat:@"%@",[[dictionary objectForKey:@"score"] objectAtIndex:0]];
     
     NSArray *scoreArray = [dictionary objectForKey:@"score"];
     if([scoreArray isKindOfClass:[NSNull class]] || scoreArray.count == 0)
@@ -183,7 +183,7 @@
     
     _freightType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"freightType"]];
     
-
+    
     NSArray *arr = [[NSArray alloc] initWithObjects:_emsFreightPrice,_surfaceFreightPrice,_expressFreightPrice, nil];
     NSArray *testArr = [self getSortArrForMainApp:arr];
     

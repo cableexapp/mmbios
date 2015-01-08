@@ -34,7 +34,7 @@
 }
 
 - (void) sureBtnClick:(UIButton *) sender
-{    
+{
     [myCableSureOrderTableViewController loadRequest];
 }
 
@@ -45,7 +45,7 @@
     {
         if([vc isKindOfClass:[MyCableOrderHostViewController class]])
         {
-//            [myCableOrder loadRequest:self.btnIndex];
+            //            [myCableOrder loadRequest:self.btnIndex];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"MyCableOrderHostViewControllerRefreshRequest" object:[NSNumber numberWithInt:self.btnIndex]];
             [self.navigationController popToViewController:vc animated:YES];
             return;
@@ -113,7 +113,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableSubView.backgroundColor = [UIColor whiteColor];
     myCableSureOrderTableViewController.view.backgroundColor = [UIColor whiteColor];
-
+    
     
     
     myCableSureOrderTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableSureOrderTableViewController"];
@@ -122,28 +122,28 @@
     myCableSureOrderTableViewController.myOrderid = [[NSString alloc] initWithFormat:@"%@",_theOrderId];
     myCableSureOrderTableViewController.view.frame = self.tableSubView.bounds;
     [self.tableSubView addSubview:myCableSureOrderTableViewController.view];
-
-
+    
+    
     self.sureBtn.layer.cornerRadius = 5.0f;
     self.sureBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-//    if(_b2bMyCableOrderListData.cableOrderTime.length == 0 || [_b2bMyCableOrderListData.cableOrderTime isKindOfClass:[NSNull class]])
-//    {
-//        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-85, 2, 80, 20)];
-//    }
-//    else
-//    {
-//        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime] WithSize:CGSizeMake(MAXFLOAT, 20)];
-//        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-5-size.width, 2, size.width, 20)];
-//    }
-//    [self.myOrderNumberLabel setFrame:CGRectMake(5, 2, ScreenWidth-5-self.myOrderTimeLabel.frame.size.width, 20)];
-//    [self.myOrderNumberLabel setText:[NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial]];
-//    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime]];
-//    [self.myOrderStatusLabel setText:[NSString stringWithFormat:@"状态: %@",_b2bMyCableOrderListData.myStatus]];
-//    [self.myOrderTotalLabel setText:[NSString stringWithFormat:@"订单总额:¥ %@",_b2bMyCableOrderListData.ordertotal]];
-//    self.myOrderTotalLabel.textColor = [UIColor redColor];
+    //    if(_b2bMyCableOrderListData.cableOrderTime.length == 0 || [_b2bMyCableOrderListData.cableOrderTime isKindOfClass:[NSNull class]])
+    //    {
+    //        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-85, 2, 80, 20)];
+    //    }
+    //    else
+    //    {
+    //        CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    //        [self.myOrderTimeLabel setFrame:CGRectMake(ScreenWidth-5-size.width, 2, size.width, 20)];
+    //    }
+    //    [self.myOrderNumberLabel setFrame:CGRectMake(5, 2, ScreenWidth-5-self.myOrderTimeLabel.frame.size.width, 20)];
+    //    [self.myOrderNumberLabel setText:[NSString stringWithFormat:@"订单号:%@",_b2bMyCableOrderListData.orderserial]];
+    //    [self.myOrderTimeLabel setText:[NSString stringWithFormat:@"%@",_b2bMyCableOrderListData.cableOrderTime]];
+    //    [self.myOrderStatusLabel setText:[NSString stringWithFormat:@"状态: %@",_b2bMyCableOrderListData.myStatus]];
+    //    [self.myOrderTotalLabel setText:[NSString stringWithFormat:@"订单总额:¥ %@",_b2bMyCableOrderListData.ordertotal]];
+    //    self.myOrderTotalLabel.textColor = [UIColor redColor];
 }
 
 - (void)didReceiveMemoryWarning
@@ -153,14 +153,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

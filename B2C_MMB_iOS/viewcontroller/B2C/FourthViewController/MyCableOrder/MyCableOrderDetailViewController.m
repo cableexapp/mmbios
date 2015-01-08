@@ -173,14 +173,14 @@
     [theOrderStatus addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(3, orderStatus.length-3)];
     [self.myOrderStatusLabel setAttributedText:theOrderStatus];
     self.myOrderStatusLabel.backgroundColor = [UIColor whiteColor];
-
+    
     NSString *orderTotal = [NSString stringWithFormat:@"订单总额: ¥%@",detailData.ordertotal];
     NSMutableAttributedString *theOrderTotal = [[NSMutableAttributedString alloc] initWithString:orderTotal];
     [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
     [theOrderTotal addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(5, orderTotal.length-5)];
     [self.myOrderTotalLabel setAttributedText:theOrderTotal];
     self.myOrderTotalLabel.backgroundColor = [UIColor whiteColor];
-
+    
 }
 
 - (void)viewDidLoad

@@ -222,7 +222,7 @@
                                   data.receiver,@"receiver",
                                   data.mobile,@"receiveTel",
                                   data.addressId,@"receiveAddressId",
-                                   nil];
+                                  nil];
                 }
                 else
                 {
@@ -484,14 +484,14 @@
     }
     [self.navigationController popViewControllerAnimated:YES];
     
-//    data.province,@"receiveprovince",
-//    data.city,@"receivecity",
-//    data.area,@"receivedistrict",
-//    data.streetOrTown,@"receiveaddress",
-//    data.detailAddress,@"fullAddress",
-//    data.receiver,@"receiver",
-//    data.mobile,@"receiveTel",
-//    data.addressId,@"receiveAddressId",
+    //    data.province,@"receiveprovince",
+    //    data.city,@"receivecity",
+    //    data.area,@"receivedistrict",
+    //    data.streetOrTown,@"receiveaddress",
+    //    data.detailAddress,@"fullAddress",
+    //    data.receiver,@"receiver",
+    //    data.mobile,@"receiveTel",
+    //    data.addressId,@"receiveAddressId",
     B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:tag];
     NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                 data.province,@"receiveprovince",

@@ -55,8 +55,8 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-
-
+    
+    
     
     
 }
@@ -88,12 +88,10 @@
     
     self.discussBtn.layer.cornerRadius = 5;
     [self.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.discussBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     self.discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     
     self.tradeBtn.layer.cornerRadius = 5;
     [self.tradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.tradeBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     self.tradeBtn.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
     NSString *memberid = [self getMemberId];
@@ -116,7 +114,7 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetOrderDetailTag)
     {
-//        NSLog(@"%@",dicRespon);
+        //        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CGetOrderDetailData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -153,7 +151,7 @@
                 showOrHideDisCussBtn = NO;
                 showOrHideTradeBtn = YES;
             }
-
+            
             if(status == 6)
             {
                 int judgeStatus = [[[dataArray lastObject] juderstatus] intValue];
@@ -185,7 +183,7 @@
                     }
                 }
             }
-
+            
             if(showOrHideDisCussBtn == YES || showOrHideTradeBtn == YES)
             {
                 [self.buttomView setHidden:NO];
@@ -266,7 +264,7 @@
     logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
     logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray lastObject] logisticsId]];
     logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray lastObject] logisticsNum]];
-//    NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
+    //    NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
 }
 
@@ -325,16 +323,16 @@
         }
     }
     return 30;
-//    CGFloat height;
-//    if (section == 0)
-//    {
-//        height = 98;
-//    }
-//    else
-//    {
-//        height = 45;
-//    }
-//    return height;
+    //    CGFloat height;
+    //    if (section == 0)
+    //    {
+    //        height = 98;
+    //    }
+    //    else
+    //    {
+    //        height = 45;
+    //    }
+    //    return height;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -596,15 +594,15 @@
             }
             if ([add rangeOfString:@"null"].location != NSNotFound)
             {
-                 [add stringByReplacingOccurrencesOfString:@"null" withString:@""];
+                [add stringByReplacingOccurrencesOfString:@"null" withString:@""];
             }
-           
+            
             add = [add stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
-
+            
             add = [add stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
-
+            
             add = [add stringByReplacingOccurrencesOfString:@" " withString:@""];
- 
+            
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:add WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 40, ScreenWidth-20, size.height)];
             [label setText:add];
@@ -632,6 +630,7 @@
                     [cell.contentView addSubview:label];
                 }
             }
+            
             
         }
     }

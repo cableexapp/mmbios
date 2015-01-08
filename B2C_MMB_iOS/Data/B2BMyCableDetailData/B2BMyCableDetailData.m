@@ -49,6 +49,8 @@
     
     _address = [NSString stringWithFormat:@"%@",[dic objectForKey:@"address"]];
     
+    _detailAddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"address"]];
+    
     _fullAddress = [NSString stringWithFormat:@"%@%@%@%@",_province,_city,_district,_address];
     
     if([_fullAddress rangeOfString:@"(null)"].location != NSNotFound)
@@ -56,12 +58,12 @@
         [_fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
     }
     _fullAddress = [_fullAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
-
+    
     _fullAddress = [_fullAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
-
+    
     
     _theTel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"phone"]];
-
+    
     _zip = [NSString stringWithFormat:@"%@",[dic objectForKey:@"zip"]];
     
     _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
@@ -114,7 +116,7 @@
     if(self = [super init])
     {
     }
-            return self;
+    return self;
 }
 
 + (NSMutableArray *) getListArray:(NSMutableArray *) array

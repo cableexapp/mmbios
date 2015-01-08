@@ -73,9 +73,7 @@
     
     [self pushAndPopStyle];
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"查看售后"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"售后查看"];
     self.navigationItem.titleView = top;
     
     labelArray = [[NSMutableArray alloc] init];
@@ -108,7 +106,7 @@
             case 7:
                 str = @"售后留言:";
                 break;
-  
+                
             default:
                 break;
         }
@@ -122,7 +120,7 @@
     }
     
     
-//    NSString *memberid = [self getMemberId];
+    //    NSString *memberid = [self getMemberId];
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getAfterSaleInfo",time];
@@ -130,8 +128,8 @@
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@",token,self.orderNum];
     
-//    NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@",@"bc2e98e1423b9fbac5119fa438812cb3",@"201404258079343759"];
-
+    //    NSString *pushString = [NSString stringWithFormat:@"token=%@&ordernum=%@",@"bc2e98e1423b9fbac5119fa438812cb3",@"201404258079343759"];
+    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetAfterSaleInfoTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getAfterSaleInfo.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -169,7 +167,7 @@
             {
                 if([[dataDic objectForKey:@"createdate"] isKindOfClass:[NSNull class]])
                 {
-//                    NSLog(@"空");
+                    NSLog(@"空");
                 }
                 else
                 {
@@ -177,7 +175,7 @@
                     NSString *time = [DCFCustomExtra nsdateToString:confromTimesp];
                     [anotherLabel setText:time];
                 }
-             
+                
             }
             if(i == 2)
             {
@@ -255,7 +253,7 @@
                     [anotherLabel setFrame:testLabel.frame];
                     [anotherLabel setText:productItmeTitle];
                 }
-        
+                
             }
             if(i == 5)
             {
@@ -306,16 +304,15 @@
         _tv.dataSource = self;
         [_tv setShowsHorizontalScrollIndicator:NO];
         [_tv setShowsVerticalScrollIndicator:NO];
-        _tv.layer.borderColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0].CGColor;
+        _tv.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
         _tv.layer.borderWidth = 1.0f;
-        _tv.layer.cornerRadius = 5;
         [self.view addSubview:_tv];
     }
     [_tv reloadData];
     
     UILabel *buttomLabel = [[UILabel alloc] initWithFrame:CGRectMake(_tv.frame.origin.x, _tv.frame.size.height+_tv.frame.origin.y + 5,_tv.frame.size.width, 30)];
     [buttomLabel setText:@"详细操作以及凭证请登录电脑后查看"];
-    [buttomLabel setFont:[UIFont systemFontOfSize:15]];
+    [buttomLabel setFont:[UIFont boldSystemFontOfSize:15]];
     [self.view addSubview:buttomLabel];
 }
 
@@ -352,7 +349,7 @@
             CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:remark WithSize:CGSizeMake(ScreenWidth-40, MAXFLOAT)];
             return size.height+35;
         }
-
+        
     }
     return 44;
 }
@@ -366,7 +363,7 @@
         if(moreCell == nil)
         {
             moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
         }
         if(!dataArray || dataArray.count == 0)
         {
@@ -379,7 +376,7 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        [cell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+        [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
@@ -401,7 +398,7 @@
         [nameLabel setFont:[UIFont systemFontOfSize:12]];
         [cell.contentView addSubview:nameLabel];
     }
-
+    
     
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[[[data operateDate] objectForKey:@"time"] doubleValue]/1000];
     NSString *time = [DCFCustomExtra nsdateToString:confromTimesp];
@@ -426,7 +423,7 @@
         [remarkLabel setNumberOfLines:0];
         [cell.contentView addSubview:remarkLabel];
     }
-
+    
     
     return cell;
 }
@@ -442,7 +439,7 @@
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
-{    
+{
     if(HUD)
     {
         [HUD hide:YES];
@@ -455,7 +452,7 @@
     if(URLTag == URLGetAfterSaleInfoTag)
     {
         [moreCell stopAnimation];
-
+        
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CAfterSaleData getListArray:[dicRespon objectForKey:@"loglist"]]];
@@ -502,14 +499,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

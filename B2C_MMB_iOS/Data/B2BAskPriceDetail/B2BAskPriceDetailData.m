@@ -49,20 +49,20 @@
         
         NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
         NSString *testNum = [DCFCustomExtra notRounding:NumBer];
-//        NSString *testNum = nil;
-//        for(int i=0;i<NumBer.length;i++)
-//        {
-//            char c = [NumBer characterAtIndex:i];
-//            if(c == '.')
-//            {
-//                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-//                break;
-//            }
-//            else if(i == NumBer.length-1)
-//            {
-//                testNum = NumBer;
-//            }
-//        }
+        //        NSString *testNum = nil;
+        //        for(int i=0;i<NumBer.length;i++)
+        //        {
+        //            char c = [NumBer characterAtIndex:i];
+        //            if(c == '.')
+        //            {
+        //                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+        //                break;
+        //            }
+        //            else if(i == NumBer.length-1)
+        //            {
+        //                testNum = NumBer;
+        //            }
+        //        }
         
         _num = [NSString stringWithFormat:@"%@",testNum];
         

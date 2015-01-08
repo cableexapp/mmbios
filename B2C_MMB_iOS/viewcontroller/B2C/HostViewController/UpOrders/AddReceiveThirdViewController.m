@@ -65,7 +65,7 @@
         top = [[DCFTopLabel alloc] initWithTitle:@"新增收货地址"];
     }
     self.navigationItem.titleView = top;
-
+    
     
     [self loadDataBase];
 }
@@ -215,10 +215,10 @@
     else
     {
         AddReceiveFinalViewController *final = nil;
-
+        
         if(_edit == YES)
         {
-//            final = [[AddReceiveFinalViewController alloc] initWithPushDic:_pushDic];
+            //            final = [[AddReceiveFinalViewController alloc] initWithPushDic:_pushDic];
             for(UIViewController *vc in self.navigationController.viewControllers)
             {
                 NSLog(@"vc = %@",vc);
@@ -240,9 +240,9 @@
             
             [self.navigationController pushViewController:final animated:YES];
         }
-  
         
-
+        
+        
     }
 }
 

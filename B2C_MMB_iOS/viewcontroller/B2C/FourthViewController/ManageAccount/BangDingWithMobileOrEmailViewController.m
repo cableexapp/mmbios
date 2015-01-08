@@ -27,7 +27,7 @@
     
     
     
-//    UILabel *buttomLabel;
+    //    UILabel *buttomLabel;
     
     NSString *code;
     
@@ -55,7 +55,7 @@
     
     
     [_nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height+20, self.nextBtn.frame.size.width, self.nextBtn.frame.size.height)];
-
+    
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -103,9 +103,9 @@
     [_chooseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _chooseBtn.frame = CGRectMake(_getValidateBtn.frame.origin.x, (_getValidateBtn.frame.origin.y-_getValidateBtn.frame.size.height-18)                            , _getValidateBtn.frame.size.width,_getValidateBtn.frame.size.height+5);
     [_chooseBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
-//        _chooseBtn.backgroundColor = [UIColor colorWithRed:4.0/255.0 green:94.0/255.0 blue:253.0/255.0 alpha:1.0];
+    //        _chooseBtn.backgroundColor = [UIColor colorWithRed:4.0/255.0 green:94.0/255.0 blue:253.0/255.0 alpha:1.0];
     _chooseBtn.layer.cornerRadius = 5.0f;
-   
+    
     
     UITapGestureRecognizer *TAP = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     [self.view addGestureRecognizer:TAP];
@@ -115,7 +115,7 @@
     [_buttomLabel setTextColor:[UIColor colorWithRed:166.0/255.0 green:166.0/255.0 blue:166.0/255.0 alpha:1.0]];
     
     [_buttomLabel setFrame:CGRectMake(_buttomLabel.frame.origin.x, _nextBtn.frame.origin.y + _nextBtn.frame.size.height + 20, _buttomLabel.frame.size.width, _buttomLabel.frame.size.height)];
-
+    
     
     if(self.myEmail.length == 0 || [self.myEmail isKindOfClass:[NSNull class]])
     {
@@ -124,7 +124,7 @@
     else
     {
         //
-
+        
         
         for(int i=0;i<self.myEmail.length;i++)
         {
@@ -155,7 +155,7 @@
                 
             }
         }
-
+        
         [self whenShowEmail:theEmail];
     }
     
@@ -168,7 +168,7 @@
         [self whenShowPhone];
         
     }
-
+    
     if(self.myPhone.length != 0 && self.myEmail.length != 0)
     {
         [self.chooseBtn setUserInteractionEnabled:YES];
@@ -213,7 +213,7 @@
     
     [self.backView setFrame:CGRectMake(self.backView.frame.origin.x, self.backView.frame.origin.y, self.backView.frame.size.width, 171)];
     
-
+    
     
     
     [self.firstView setFrame:CGRectMake(self.firstView.frame.origin.x, 58, self.firstView.frame.size.width, 1)];
@@ -227,17 +227,17 @@
     [self.tf_getValidate setFrame:CGRectMake(self.tf_getValidate.frame.origin.x, 122, self.tf_getValidate.frame.size.width, 38)];
     
     _chooseBtn.frame = CGRectMake(_getValidateBtn.frame.origin.x, (_getValidateBtn.frame.origin.y-_getValidateBtn.frame.size.height-20)                            , _getValidateBtn.frame.size.width,_getValidateBtn.frame.size.height);
-
+    
     [self.chooseBtn setTitle:@"已验证手机" forState:UIControlStateNormal];
-
+    
     self.nextBtn.layer.cornerRadius = 5.0f;
-//    [self.nextBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
+    //    [self.nextBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
     [_nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height+20, self.nextBtn.frame.size.width, self.nextBtn.frame.size.height)];
     
     [_buttomLabel setText:@"如果您没有收到验证码,可以直接联系买卖宝在线客服,或者拨打客服服务热线4008280188"];
     [_buttomLabel setFrame:CGRectMake(_buttomLabel.frame.origin.x, _nextBtn.frame.origin.y + _nextBtn.frame.size.height + 20, _buttomLabel.frame.size.width, _buttomLabel.frame.size.height)];
     
-
+    
 }
 
 - (void) whenShowEmail:(NSString *) email
@@ -252,7 +252,7 @@
     [_showLabel setText:theEmail];
     
     [self.backView setFrame:CGRectMake(self.backView.frame.origin.x, self.backView.frame.origin.y, self.backView.frame.size.width, 113)];
-
+    
     self.nextBtn.layer.cornerRadius = 5.0f;
     [self.nextBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
     [_nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height+20, self.nextBtn.frame.size.width, self.nextBtn.frame.size.height)];
@@ -263,7 +263,7 @@
     
     [self.getValidateBtn setFrame:CGRectMake(self.getValidateBtn.frame.origin.x, 67, self.getValidateBtn.frame.size.width, 40)];
     
-     _chooseBtn.frame = CGRectMake(_getValidateBtn.frame.origin.x, (_getValidateBtn.frame.origin.y-_getValidateBtn.frame.size.height-20)                            , _getValidateBtn.frame.size.width,_getValidateBtn.frame.size.height);
+    _chooseBtn.frame = CGRectMake(_getValidateBtn.frame.origin.x, (_getValidateBtn.frame.origin.y-_getValidateBtn.frame.size.height-20)                            , _getValidateBtn.frame.size.width,_getValidateBtn.frame.size.height);
     
     [self.secondLine setFrame:CGRectMake(self.secondLine.frame.origin.x, 113, self.secondLine.frame.size.width, 0)];
     
@@ -272,12 +272,12 @@
     
     
     [self.chooseBtn setTitle:@"已验证邮箱" forState:UIControlStateNormal];
-
+    
     NSLog(@"%@",email);
     [_buttomLabel setFrame:CGRectMake(_buttomLabel.frame.origin.x, _backView.frame.origin.y+_backView.frame.size.height + 20, _buttomLabel.frame.size.width, _buttomLabel.frame.size.height)];
     [_buttomLabel setText:[NSString stringWithFormat:@"您的邮箱%@已经收到一份账号绑定确认邮件,请在24小时内去你的邮箱查收并按照邮件提示进行操作,完成绑定",email]];
     [_buttomLabel setTextColor:[UIColor orangeColor]];
-
+    
 }
 
 - (void) pickerView:(NSString *)title WithTag:(int)tag
@@ -303,11 +303,11 @@
     }
     else if ([title isEqualToString:@"已验证邮箱"])
     {
-
+        
         [self whenShowEmail:theEmail];
     }
     
-//    [_nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height+20, self.nextBtn.frame.size.width, self.nextBtn.frame.size.height)];
+    //    [_nextBtn setFrame:CGRectMake(self.nextBtn.frame.origin.x, self.backView.frame.origin.y + self.backView.frame.size.height+20, self.nextBtn.frame.size.width, self.nextBtn.frame.size.height)];
     //    [self adjustTheScreen];
 }
 
@@ -403,14 +403,14 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
-//    [self.getValidateBtn setUserInteractionEnabled:YES];
-//    
-//    if(timer_tel)
-//    {
-//        [timer_tel invalidate];
-//        timer_tel = nil;
-//        timeCount_tel = 60;
-//    }
+    //    [self.getValidateBtn setUserInteractionEnabled:YES];
+    //
+    //    if(timer_tel)
+    //    {
+    //        [timer_tel invalidate];
+    //        timer_tel = nil;
+    //        timeCount_tel = 60;
+    //    }
     
     
     if(URLTag == URLSendMsgTag)
@@ -455,8 +455,8 @@
         {
             [DCFStringUtil showNotice:msg];
             _isMobileOrEmail = NO;
-//            SendEmailViewController *sendEmail = [self.storyboard instantiateViewControllerWithIdentifier:@"sendEmailViewController"];
-//            [self.navigationController pushViewController:sendEmail animated:YES];
+            //            SendEmailViewController *sendEmail = [self.storyboard instantiateViewControllerWithIdentifier:@"sendEmailViewController"];
+            //            [self.navigationController pushViewController:sendEmail animated:YES];
         }
         else
         {
@@ -477,7 +477,7 @@
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     userName = [DCFCustomExtra UTF8Encoding:userName];
-
+    
     if(userName.length == 0)
     {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];

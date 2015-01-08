@@ -47,13 +47,13 @@
         [conn stopConnection];
         conn = nil;
     }
-//    UITextView *headTV;
-//    UITextView *companyTV;
-//    UITextView *tokenTV;
-//    UITextView *addressTV;
-//    UITextView *telTV;
-//    UITextView *bankTV;
-//    UITextView *accountTV;
+    //    UITextView *headTV;
+    //    UITextView *companyTV;
+    //    UITextView *tokenTV;
+    //    UITextView *addressTV;
+    //    UITextView *telTV;
+    //    UITextView *bankTV;
+    //    UITextView *accountTV;
     if([headTV isFirstResponder])
     {
         [headTV resignFirstResponder];
@@ -81,6 +81,14 @@
     if([accountTV isFirstResponder])
     {
         [accountTV resignFirstResponder];
+    }
+    
+    if(textViewArray)
+    {
+        for(UITextView *tv in textViewArray)
+        {
+            [tv removeObserver:self forKeyPath:@"contentSize" context:NULL];
+        }
     }
 }
 - (void)contentSizeToFit:(UITextView *) sender

@@ -68,13 +68,13 @@
 - (void) headBtnClick:(UIButton *) sender
 {
     int tag = sender.tag;
-//    if (tag == 0)
-//    {
-//        [self setHidesBottomBarWhenPushed:YES];
-//        MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
-//        [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
-//        [self setHidesBottomBarWhenPushed:NO];
-//    }
+    //    if (tag == 0)
+    //    {
+    //        [self setHidesBottomBarWhenPushed:YES];
+    //        MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
+    //        [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
+    //        [self setHidesBottomBarWhenPushed:NO];
+    //    }
     if(tag == 1)
     {
         [self setHidesBottomBarWhenPushed:YES];
@@ -103,6 +103,7 @@
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     if(memberid.length == 0 || [memberid isKindOfClass:[NSNull class]])
     {
+        memberid = @"";
     }
     return memberid;
 }
@@ -112,7 +113,7 @@
 - (void) pushToVC
 {
     [self setHidesBottomBarWhenPushed:YES];
-//    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
+    //    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     fourthHostViewController.myStatus = @"";
     [self.navigationController pushViewController:fourthHostViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
@@ -194,9 +195,9 @@
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
-//
+                //
                 NSString *s = [NSString stringWithFormat:@"%@",[badgeArray objectAtIndex:i]];
-   
+                
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 
                 if(s.intValue < 99 && s.intValue > 0)
@@ -214,7 +215,7 @@
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
-//                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
+                        //                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
                         if (i == 8)
                         {
                             [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 13, 18, 18)];
@@ -257,7 +258,7 @@
                     }
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
-//                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
+                        //                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
                         [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 17, 22, 19)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
@@ -280,15 +281,15 @@
                     [cellBtn addSubview:btn];
                 }
             }
+            [self.tableView reloadData];
             
             [self loadbadgeCount];
-
+            
         }
         else
         {
             
         }
-        [self.tableView reloadData];
     }
     if (URLTag == URLInquiryCartCountTag)
     {
@@ -297,19 +298,19 @@
             tempCount = [[dicRespon objectForKey:@"value"] intValue];
             
             [self loadShopCarCount];
-
+            
         }
     }
     if (URLTag == URLShopCarCountTag)
     {
         if(result == 1)
         {
-           tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
+            tempShopCar = [[dicRespon objectForKey:@"total"] intValue];
         }
     }
     if (tempCount > 0 || tempShopCar > 0)
     {
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:@"1"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hidenRedPoint" object:@"1"];
     }
     if (tempCount == 0 && tempShopCar == 0)
     {
@@ -341,7 +342,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-      [self.tabBarController.tabBar setHidden:NO];
+    [self.tabBarController.tabBar setHidden:NO];
 }
 
 - (void) loadGetCountNumRequest
@@ -365,25 +366,25 @@
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
-
+    
     [self.tabBarController.tabBar setHidden:NO];
-
-//    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    //    [self.navigationController popToRootViewControllerAnimated:YES];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
- 
+    
     [self loadGetCountNumRequest];
     
     [self.navigationController.tabBarController.tabBar setHidden:NO];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popShopCar_mmb:) name:@"popShopCar" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
-
+    
     NSString *str = [[NSUserDefaults standardUserDefaults] objectForKey:@"frommmb"];
     if (str.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_mmb" object:nil];
-//        NSLog(@"买卖宝---首页通知");
+        //        NSLog(@"买卖宝---首页通知");
     }
     
     self.tableView.scrollEnabled = YES;
@@ -432,7 +433,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self pushAndPopStyle];
-//    isPopShow = NO;
+    //    isPopShow = NO;
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"我的买卖宝"];
     self.navigationItem.titleView = top;
     
@@ -484,7 +485,7 @@
         if(i == 0)
         {
             [label_1 setText:@"我的买卖宝询价单"];
-//            [btn addSubview:label_2];
+            //            [btn addSubview:label_2];
             
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"mmbOrder.png"]];
@@ -537,16 +538,16 @@
         [headBtnArray addObject:btn];
     }
     
-//    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_9,_btn_10,_btn_11,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
+    //    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_9,_btn_10,_btn_11,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
     
-     cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_11,_btn_9,_btn_10,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
+    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_11,_btn_9,_btn_10,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
     
     for(int i=0;i<cellBtnArray.count;i++)
     {
         UIButton *btn = (UIButton *)[cellBtnArray objectAtIndex:i];
         [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
     }
-   
+    
     self.photoBtn = [[UIImageView alloc] init];
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(photoBtnAction:)];
     [self.photoBtn setUserInteractionEnabled:YES];
@@ -577,11 +578,11 @@
 
 - (void)photoBtnAction:(id)sender
 {
-//    changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像", nil];
-//    if (self.navigationController)
-//    {
-//        [changePhotoSheet showInView:self.navigationController.navigationBar];
-//    }
+    //    changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像", nil];
+    //    if (self.navigationController)
+    //    {
+    //        [changePhotoSheet showInView:self.navigationController.navigationBar];
+    //    }
     
     albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
     if (self.navigationController)
@@ -600,7 +601,7 @@
             case 0://更改头像
                 [self uploadPhoto];
                 break;
-
+                
             default:
                 break;
         }
@@ -626,11 +627,11 @@
 #pragma mark - 上传头像
 - (void)uploadPhoto
 {
-//    albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
-//    if (self.navigationController)
-//    {
-//        [albumSheet showInView:self.navigationController.navigationBar];
-//    }
+    //    albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
+    //    if (self.navigationController)
+    //    {
+    //        [albumSheet showInView:self.navigationController.navigationBar];
+    //    }
 }
 
 - (void) openAlbum:(id) sender
@@ -1017,7 +1018,7 @@
     {
         text = @"4";
     }
-
+    
     [self setHidesBottomBarWhenPushed:YES];
     fourthHostViewController.myStatus = text;
     [self.navigationController pushViewController:fourthHostViewController animated:YES];

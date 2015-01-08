@@ -58,17 +58,17 @@
         _logisticsId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsId"]];
         
         _logisticsNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsNum"]];
-
+        
         _logisticsCompanay = [NSString stringWithFormat:@"%@",[dic objectForKey:@"logisticsCompanay"]];
-
+        
         _orderId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderId"]];
-
+        
         _orderNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderNum"]];
-
+        
         _juderstatus = [NSString stringWithFormat:@"%@",[dic objectForKey:@"juderstatus"]];
-
+        
         _afterStatus = [NSString stringWithFormat:@"%@",[dic objectForKey:@"afterStatus"]];
-
+        
     }
     return self;
 }

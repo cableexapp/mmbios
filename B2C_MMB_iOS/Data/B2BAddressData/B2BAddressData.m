@@ -14,7 +14,7 @@
 {
     if(self = [super init])
     {
-
+        
         _addressId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"addressId"]];
         
         _addressName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"addressName"]];

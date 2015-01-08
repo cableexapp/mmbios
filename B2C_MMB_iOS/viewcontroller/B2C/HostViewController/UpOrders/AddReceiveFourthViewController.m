@@ -1,4 +1,4 @@
-	//
+//
 //  AddReceiveFourthViewController.m
 //  B2C_MMB_iOS
 //
@@ -170,7 +170,7 @@
         
         [self.navigationController pushViewController:final animated:YES];
     }
-
+    
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

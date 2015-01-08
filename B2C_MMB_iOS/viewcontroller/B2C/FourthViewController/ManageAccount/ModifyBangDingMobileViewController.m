@@ -48,7 +48,7 @@
     NSString *s3 = @"****";
     NSString *tel = [NSString stringWithFormat:@"%@%@%@",s1,s3,s2];
     [self.telLabel setText:[NSString stringWithFormat:@"已绑定手机:%@",tel]];
-
+    
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -98,7 +98,7 @@
     self.backView.layer.cornerRadius = 5;
     self.validateBtn.layer.cornerRadius = 5.0f;
     
-
+    
     self.upBtn.layer.cornerRadius = 5.0f;
     
 }
@@ -109,14 +109,14 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLSendMsgTag)
     {
-//        [self.validateBtn setUserInteractionEnabled:YES];
-//        [self.validateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-//        if(timer_tel)
-//        {
-//            [timer_tel invalidate];
-//            timer_tel = nil;
-//            timeCount_tel = 60;
-//        }
+        //        [self.validateBtn setUserInteractionEnabled:YES];
+        //        [self.validateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        //        if(timer_tel)
+        //        {
+        //            [timer_tel invalidate];
+        //            timer_tel = nil;
+        //            timeCount_tel = 60;
+        //        }
         
         
         
@@ -193,7 +193,7 @@
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     userName = [DCFCustomExtra UTF8Encoding:userName];
-
+    
     if(userName.length == 0)
     {
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -230,7 +230,7 @@
     if(![self.validateTf.text isEqualToString:code])
     {
         [DCFStringUtil showNotice:@"请输入正确的验证码"];
-         return;
+        return;
     }
     
     AddBangDingMobileViewController *addBangDingMobileViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"addBangDingMobileViewController"];
@@ -244,14 +244,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

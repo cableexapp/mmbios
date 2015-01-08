@@ -90,7 +90,7 @@
         UIBarButtonItem *barItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
         self.navigationItem.rightBarButtonItem = barItem;
     }
-
+    
     
     self.sureBtn.layer.cornerRadius = 5.0f;
     [self.sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
@@ -130,8 +130,8 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"发票信息管理"];
     self.navigationItem.titleView = top;
     
-
-     self.sureBtn.layer.cornerRadius = 5.0f;
+    
+    self.sureBtn.layer.cornerRadius = 5.0f;
     self.sureBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     //    [self.sureBtn addTarget:self action:@selector(sure:) forControlEvents:UIControlEventTouchUpInside];
     

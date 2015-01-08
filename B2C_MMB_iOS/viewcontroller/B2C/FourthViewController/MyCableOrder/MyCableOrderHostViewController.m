@@ -41,12 +41,12 @@
     [super viewWillAppear:YES];
     
     [self.sv setContentOffset:CGPointMake(ScreenWidth*self.btnIndex, 0) animated:YES];
-
+    
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     if(app.isB2BPush == YES)
     {
         [self setHidesBottomBarWhenPushed:YES];
-
+        
         MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
         myCableOrderDetailViewController.myOrderNumber = app.key3;
         NSLog(@"key3 = %@",app.key3);
@@ -193,7 +193,7 @@
 {
     [super viewDidLoad];
     
-
+    
 }
 
 -(void)searchOrderBtnClick

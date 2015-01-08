@@ -141,7 +141,11 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    [self loadRequestB2COrderListAllWithStatus:@""];
+    if (dataArray.count == 0)
+    {
+        [self loadRequestB2COrderListAllWithStatus:@""];
+    }
+    
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -796,18 +800,22 @@
     else
     {
         noResultView.hidden = YES;
-        [self.myTableView removeFromSuperview];
-        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
-        self.myTableView.delegate = self;
-        self.myTableView.dataSource = self;
-        self.myTableView.scrollEnabled = YES;
-        self.myTableView.backgroundColor = [UIColor clearColor];
-        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-        [self.view addSubview:self.myTableView];
-        [self.myTableView reloadData];
+        [self refreshTableView];
     }
+}
 
+-(void)refreshTableView
+{
+    [self.myTableView removeFromSuperview];
+    self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
+    self.myTableView.delegate = self;
+    self.myTableView.dataSource = self;
+    self.myTableView.scrollEnabled = YES;
+    self.myTableView.backgroundColor = [UIColor clearColor];
+    self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.view addSubview:self.myTableView];
+    [self.myTableView reloadData];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -845,9 +853,7 @@
 {
     if (searchBar.text.length == 0)
     {
-        dataArray = tempOrderNum;
-        [self.myTableView reloadData];
-        
+        [self loadRequestB2COrderListAllWithStatus:@""];
         noResultView.hidden = NO;
         [self.view bringSubviewToFront:noResultView];
     }

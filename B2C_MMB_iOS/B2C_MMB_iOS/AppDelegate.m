@@ -92,13 +92,13 @@ NSString *strUserId = @"";
             break;
         case ReachableViaWWAN:  //使用3g/gprs网络
         {
-            [self reConnect];
+//            [self reConnect];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NetisConnect" object:nil];
         }
             break;
         case ReachableViaWiFi:  //使用wifi网络
         {
-            [self reConnect];
+//            [self reConnect];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NetisConnect" object:nil];
         }
             break;
@@ -150,7 +150,7 @@ NSString *strUserId = @"";
         self.appId = [res valueForKey:BPushRequestAppIdKey];
         self.baiduPushUserId = [res valueForKey:BPushRequestUserIdKey];
         self.channelId = [res valueForKey:BPushRequestChannelIdKey];
-        NSLog(@"appId = %@  baiduPushUserId = %@   channelId = %@",self.appId,self.baiduPushUserId,self.channelId);
+//        NSLog(@"appId = %@  baiduPushUserId = %@   channelId = %@",self.appId,self.baiduPushUserId,self.channelId);
         
         int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
         NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
@@ -167,7 +167,7 @@ NSString *strUserId = @"";
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     
-    NSLog(@"%@",userInfo);
+//    NSLog(@"%@",userInfo);
     
     NSString *pushTitle = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     
@@ -180,7 +180,7 @@ NSString *strUserId = @"";
     //    {
     
     
-    NSLog(@"修改memberid");
+//    NSLog(@"修改memberid");
     
     if (application.applicationState == UIApplicationStateActive)
     {
@@ -295,9 +295,10 @@ NSString *strUserId = @"";
     
     //xmpp初始化
     [self setupStream];
-    //连接
-    [self connect];
     
+    
+    
+
     //数据库创建
     [self SQLDataSteup];
     
@@ -312,8 +313,24 @@ NSString *strUserId = @"";
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    if (hasLogin == YES)
+    {
+        NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+        [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
+        
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
+    }
+    NSLog(@"IM_name = %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"]);
+    [self connect]; //连接openfire
+    
     //启动页滞留2秒
     [NSThread sleepForTimeInterval:2.0];
+    
+   
     
     //接收关闭推送
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"closeOrOpenPush"])
@@ -347,33 +364,23 @@ NSString *strUserId = @"";
         WelComeViewController *welcome = [sb instantiateViewControllerWithIdentifier:@"welComeViewController"];
         self.window.rootViewController = welcome;
         [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
+        
+        
     }
 
-    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    if (hasLogin == YES)
-    {
-        NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
-        [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
-    }
-
-    [self connect]; //连接openfire
     
+
+   
+    
+
     [PhoneHelper sharedInstance];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    
     
     mainQueue = [[NSOperationQueue alloc] init] ;
     [self.mainQueue setMaxConcurrentOperationCount:30];
     
     [self loadFMDB];
-    
-    //注册
-    [self registerInSide];
     
     return YES;
 }
@@ -402,11 +409,11 @@ NSString *strUserId = @"";
     }
     
     
-    //    NSString *dbPath = [documentDirectory stringByAppendingPathComponent:@"MyDB.db"];
+    //NSString *dbPath = [documentDirectory stringByAppendingPathComponent:@"MyDB.db"];
     
     NSString *dbPath = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
     
-    //    self.db = [[FMDatabase alloc] initWithPath:dbPath];
+    //self.db = [[FMDatabase alloc] initWithPath:dbPath];
     self.db = [FMDatabase databaseWithPath:dbPath];
     [self.db setLogsErrors:YES];
     [self.db setTraceExecution:YES];
@@ -475,7 +482,6 @@ NSString *strUserId = @"";
     {
         memberid = @"";
     }
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -485,13 +491,9 @@ NSString *strUserId = @"";
     {
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
     }
-    
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDeleteAppCartItemsTag delegate:self];
     conn.LogOut = YES;
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/deleteAppCartItems.html?"];
-    
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
@@ -515,7 +517,6 @@ NSString *strUserId = @"";
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [self performSelector:@selector(EnterToLogin) withObject:nil afterDelay:2.5];
-            
         }
     }
 }
@@ -544,7 +545,7 @@ NSString *strUserId = @"";
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
          standbyCallback:^(NSDictionary *resultDic) {
-             NSLog(@"result = %@", resultDic);
+//             NSLog(@"result = %@", resultDic);
              if([[resultDic allKeys] count] == 0 || [resultDic isKindOfClass:[NSNull class]])
              {
                  
@@ -552,7 +553,7 @@ NSString *strUserId = @"";
              else
              {
                  NSString *resultStatus = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"resultStatus"]];
-                 NSLog(@"resultStatus = %@",resultStatus);
+//                 NSLog(@"resultStatus = %@",resultStatus);
                  
                  DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
                  self.window.rootViewController = tabbar;
@@ -646,15 +647,16 @@ NSString *strUserId = @"";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    //    [self reConnect];
+    [self reConnect];
     [self queryRoster];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
-//        [self reConnect];
+    [self reConnect];
     [self queryRoster];
+    
     NSLog(@"程序进入前台+++++++++++++++");
     
     if(self.isB2CPush == YES || self.isB2BPush == YES)
@@ -707,10 +709,20 @@ NSString *strUserId = @"";
         }
         _localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
         _localNotification.soundName= UILocalNotificationDefaultSoundName;
+        //判断重复与否
+        _localNotification.repeatInterval = NSWeekCalendarUnit;
+        
+        // 设定通知的userInfo，用来标识该通知
+        NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:@"mmb_ios_push",@"ydmmbkey",nil];
+        
+        [_localNotification setUserInfo:dict];
+        
         [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
+        
         NSLog(@"running in the background");
     }
     self.appDelegate.pushChatView = @"push";
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
 }
 
@@ -762,13 +774,20 @@ NSString *strUserId = @"";
     {
         NSLog(@"连接服务器 = %@",[[error userInfo] description]);
     }
+    else
+    {
+        //注册
+        [self registerInSide];
+        NSLog(@"连接服务器++++++++++++++++++++++");
+    }
 }
 
-//验证通过 上线、
+//验证通过上线、
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
     [self goonline];
     
+    NSLog(@"验证通过上线+++++++++++++++++");
     //如果客服列表数组为空
     if (self.roster.count == 0)
     {
@@ -781,6 +800,8 @@ NSString *strUserId = @"";
 {
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
     [xmppStream sendElement:presence];
+     [self queryRoster];
+    NSLog(@"上线goonline++++++++++++++++++++++");
 }
 
 - (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket
@@ -791,13 +812,13 @@ NSString *strUserId = @"";
 //连接服务器
 - (BOOL)connect
 {
+     NSLog(@"connect++++++++++++++++++++++11111");
     if (![xmppStream isDisconnected])
     {
         [self goonline];
-        
         return YES;
     }
-    
+    NSLog(@"connect++++++++++++++++++++++22222");
     NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
     
     NSString *myJID = [NSString stringWithFormat:@"%@@%@",username_IM,IM_hostName];
@@ -808,10 +829,9 @@ NSString *strUserId = @"";
     {
         return NO;
     }
+    NSLog(@"connect++++++++++++++++++++++333333 = %@",myJID);
     
-    XMPPJID *jid = [XMPPJID jidWithString:myJID resource:@"Mobile"];
-    
-    [xmppStream setMyJID:jid];
+    [xmppStream setMyJID:[XMPPJID jidWithString:myJID resource:@"Mobile"]];
     
     NSError *error = nil;
     
@@ -820,19 +840,21 @@ NSString *strUserId = @"";
         NSLog(@"连接服务器错误消息 = %@",[[error userInfo] description]);
         return NO;
     }
+    NSLog(@"connect++++++++++++++++++++++444444");
     return YES;
 }
 
 - (void)xmppStreamDidRegister:(XMPPStream *)sender
 {
-    NSLog(@"注册帐号成功");
-    
+    NSLog(@"注册帐号成功++++++++++++++++++++++");
+    [self disconnect];
     [self reConnect];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error
 {
-    NSLog(@"账号已注册 = %@",error.description);
+    NSLog(@"账号已注册++++++++++++++++++++ = %@",error.description);
+    [self disconnect];
     [self reConnect];
 }
 
@@ -842,7 +864,7 @@ NSString *strUserId = @"";
     NSError *error;
     NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
     NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@",username_IM,IM_hostName];
-    [xmppStream setMyJID:[XMPPJID jidWithString:tjid resource:@"Mobile"]];
+//    [xmppStream setMyJID:[XMPPJID jidWithString:tjid resource:@"Mobile"]];
     
     if([xmppStream isConnected])
     {
@@ -850,12 +872,11 @@ NSString *strUserId = @"";
         {
             NSLog(@"注册++++++++++++++++++++++++ = %@",error.description);
         }
-    }
-    else
-    {
-        [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
-        NSLog(@"注册成功++++++++++++++++++++++++");
-        [self reConnect];
+        else
+        {
+            [xmppStream setMyJID:[XMPPJID jidWithString:tjid]];
+            NSLog(@"注册成功++++++++++++++++++++++++");
+        }
     }
     
 }
@@ -866,18 +887,15 @@ NSString *strUserId = @"";
     NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
     NSString *myJID =[NSString stringWithFormat:@"%@@%@",username_IM,IM_hostName];
     NSString *myPassword = @"cableex123@yd?";
-    
     if (![xmppStream isDisconnected])
     {
         [self goonline];
         return YES;
     }
-    
     if (myJID == nil || myPassword == nil)
     {
         return NO;
     }
-    
     XMPPJID *jid = [XMPPJID jidWithString:myJID resource:@"Mobile"];
     [xmppStream setMyJID:jid];
     
@@ -895,6 +913,10 @@ NSString *strUserId = @"";
 -(void)goOffline
 {
     //    NSLog(@"goOffline");
+    if (self.roster.count > 0)
+    {
+        [self.roster removeAllObjects];
+    }
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
     [xmppStream sendElement:presence];
 }
@@ -906,10 +928,12 @@ NSString *strUserId = @"";
     //取得好友当前状态
     NSString *presenceType = [presence type];
     
+    NSLog(@"客服状态presence = %@",presenceType);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:presenceType];
+
     if ([presenceType isEqualToString:@"unavailable"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
-        self.isOnLine = @"unavailable";
+    {    self.isOnLine = @"unavailable";
         [self goOffline];
         self.uesrID = nil;
     }
@@ -967,15 +991,11 @@ NSString *strUserId = @"";
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"memberGroupName" object:self.roster];
             }
         }
+        NSLog(@"self.roster = %@\n\n",self.roster);
     }
     if ([iq.type isEqualToString:@"error"] && [[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue] isEqualToString:@"cancel"])
     {
-        //        self.errorMessage = [[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue];
-        
-        NSLog(@"self.errorMessage = %@",self.errorMessage);
-        
         self.errorMessage = @"cancel";
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckTheStatus_offline" object:nil];
     }
     return NO;
@@ -1059,7 +1079,6 @@ NSString *strUserId = @"";
                     [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:messageg_hasLogin];
                     NSLog(@"登录状态_收消息——---------------------------------存储消息");
                 }
-                
                 self.personName = to;
             }
         }
@@ -1085,11 +1104,6 @@ NSString *strUserId = @"";
                 }
             }
             self.personName = to;
-        }
-        NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
-        if ([tempMessagePush isEqualToString:@"1"])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
         }
     }
     

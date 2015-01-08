@@ -191,27 +191,27 @@ int messageCountNum = 0;
 
 -(void)goBackActionToHome
 {
-    [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
-   
     self.appDelegate.forgroudPushMessage = @"前台推送";
     
     [self pageFromWhere];
     
-    if ([self.appDelegate.isOnLine isEqualToString:@"available"])
-    {
-        self.appDelegate.isConnect = @"连接";
-    }
-    else
-    {
-         self.appDelegate.isConnect = @"断开";
-    }
+//    if ([self.appDelegate.isOnLine  isEqualToString:@"available"])
+//    {
+//        self.appDelegate.isConnect = @"连接";
+//    }
+//    else
+//    {
+//         self.appDelegate.isConnect = @"断开";
+//    }
 }
 
 -(void)pageFromWhere
 {
-//    NSLog(@"返回self.appDelegate.isConnect = %@",self.appDelegate.isConnect);
+    NSLog(@"返回self.appDelegate.isConnect = %@",self.appDelegate.isConnect);
     
-//    NSLog(@"返回self.fromStringFlag = %@",self.fromStringFlag);
+    NSLog(@"返回self.fromStringFlag = %@",self.fromStringFlag);
+    
+    NSLog(@"返回ison = %@",isOn);
 
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
@@ -360,15 +360,28 @@ int messageCountNum = 0;
 
 -(void)noFriendOnLineMessage:(NSNotification *)busyMessage
 {
-    isOn = @"unavailable";
-    [messageField resignFirstResponder];
-    self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
-    toolBar.hidden = YES;
-    noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
-    noNet.hidden = NO;
-    noNetView.hidden = NO;
-    noNetMessage.hidden = NO;
-    self.appDelegate.isConnect = @"断开";
+    if ([busyMessage.object isEqualToString:@"unavailable"])
+    {
+        [messageField resignFirstResponder];
+        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+        toolBar.hidden = YES;
+        noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
+        noNet.hidden = NO;
+        noNetView.hidden = NO;
+        noNetMessage.hidden = NO;
+        self.appDelegate.isConnect = @"断开";
+    }
+    if ([busyMessage.object  isEqualToString:@"available"])
+    {
+        self.appDelegate.isConnect = @"连接";
+    }
+    else
+    {
+        self.appDelegate.isConnect = @"断开";
+    }
+    isOn = busyMessage.object;
+    
+    NSLog(@"busyMessage.object = %@",busyMessage.object);
 }
 
 //服务器繁忙提示
@@ -424,22 +437,22 @@ int messageCountNum = 0;
             [self creatRoom];
         }
     }
-    //取消某一个通知
-    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    //获取当前所有的本地通知
-    if (!notificaitons || notificaitons.count <= 0)
-    {
-        return;
-    }
-    for (UILocalNotification *notify in notificaitons)
-    {
-        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
-        {
-            //取消一个特定的通知
-            [[UIApplication sharedApplication] cancelLocalNotification:notify];
-            break;
-        }
-    }
+//    //取消某一个通知
+//    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
+//    //获取当前所有的本地通知
+//    if (!notificaitons || notificaitons.count <= 0)
+//    {
+//        return;
+//    }
+//    for (UILocalNotification *notify in notificaitons)
+//    {
+//        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
+//        {
+//            //取消一个特定的通知
+//            [[UIApplication sharedApplication] cancelLocalNotification:notify];
+//            break;
+//        }
+//    }
 
     [self firstPageMessageData];
     
@@ -455,8 +468,6 @@ int messageCountNum = 0;
         }
     }
 //    [[UIApplication sharedApplication] cancelAllLocalNotifications];
- 
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"message_Push"];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0,0, 15, 22);
@@ -483,7 +494,6 @@ int messageCountNum = 0;
         toolBar = [[UIView alloc] init];
         toolBar.frame = CGRectMake(0,self.view.frame.size.height-44, self.view.frame.size.width, 44);
         toolBar.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#ffffff"];
-        toolBar.backgroundColor = [UIColor yellowColor];
         [self.view addSubview:toolBar];
 
         //键盘按钮

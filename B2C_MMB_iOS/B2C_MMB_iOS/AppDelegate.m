@@ -819,29 +819,7 @@ NSString *strUserId = @"";
 //连接服务器
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
-    NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
-    
-    NSString *myJID = [NSString stringWithFormat:@"%@@%@",username_IM,IM_hostName];
-    NSLog(@"IM_username = %@\n\n",username_IM);
-    NSLog(@"IM_password = %@\n\n",myJID);
-    if (![xmppStream isDisconnected])
-    {
-        [self goonline];
-        
-        return YES;
-    }
-
-    NSString *myPassword = @"cableex123@yd?";
-    
-    if (myJID == nil || myPassword == nil)
-    {
-        return NO;
-    }
-    
-    XMPPJID *jid = [XMPPJID jidWithString:myJID resource:@"Mobile"];
-    
-    [xmppStream setMyJID:jid];
-    
+    isXmppConnected = YES;
     NSError *error = nil;
     if (![[self xmppStream] authenticateWithPassword:@"123456" error:&error])
     {
@@ -855,17 +833,20 @@ NSString *strUserId = @"";
 //验证通过 上线、
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
-    NSLog(@"注册帐号成功");
-    [self disconnect];
-    [self reConnect];
+    [self goonline];
 }
 
 //上线
 -(void)goonline
 {
-      NSLog(@"账号已注册 = %@",error.description);
-     [self disconnect];
-     [self reConnect];
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"available"];
+    [xmppStream sendElement:presence];
+    //如果客服列表数组为空
+    if (self.roster.count == 0)
+    {
+        //查询客服组列表
+        [self queryRoster];
+    }
 }
 
 //注册
@@ -903,9 +884,20 @@ NSString *strUserId = @"";
 //连接服务器
 - (BOOL)connect
 {
-    NSString *myJID = [NSString stringWithFormat:@"%@@%@",[PhoneHelper getDeviceId],@"fgame.com"];
+    NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
     
-    NSString *myPassword = @"123456";
+    NSString *myJID = [NSString stringWithFormat:@"%@@%@",username_IM,IM_hostName];
+    NSLog(@"IM_username = %@\n\n",username_IM);
+    NSLog(@"IM_password = %@\n\n",myJID);
+    if (![xmppStream isDisconnected])
+    {
+        [self goonline];
+        
+        return YES;
+    }
+
+    NSString *myPassword = @"cableex123@yd?";
+    
     if (myJID == nil || myPassword == nil)
     {
         return NO;
@@ -920,6 +912,29 @@ NSString *strUserId = @"";
         return NO;
     }
     return YES;
+}
+
+- (void)xmppStreamDidRegister:(XMPPStream *)sender
+{
+    NSLog(@"注册帐号成功");
+    [self disconnect];
+    [self reConnect];
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error
+{
+      NSLog(@"账号已注册 = %@",error.description);
+     [self disconnect];
+     [self reConnect];
+}
+
+//注册
+- (void)registerInSide
+{
+    NSError *error;
+    NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
+    NSString *tjid = [[NSString alloc] initWithFormat:@"%@@%@",username_IM,IM_hostName];
+    [xmppStream setMyJID:[XMPPJID jidWithString:tjid resource:@"Mobile"]];
     
     NSLog(@"APP-IM-连接");
 }
@@ -929,10 +944,14 @@ NSString *strUserId = @"";
 {
     NSString *myJID =[NSString stringWithFormat:@"%@@fgame.com",[PhoneHelper getDeviceId]];
     
-    //取得好友当前状态
-    NSString *presenceType = [presence type];
-    NSLog(@"客服状态 = %@++++++++++++++",[presence type]);
-    if ([presenceType isEqualToString:@"unavailable"])
+    if (![xmppStream isDisconnected])
+    {
+        [self goonline];
+        return YES;
+    }
+    
+    NSString *myPassword = @"123456";
+    if (myJID == nil || myPassword == nil)
     {
         return NO;
     }
@@ -946,6 +965,46 @@ NSString *strUserId = @"";
     NSLog(@"APP-IM-重新连接");
 }
 
+
+//下线
+-(void)goOffline
+{
+    //    NSLog(@"goOffline");
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+    [xmppStream sendElement:presence];
+}
+
+- (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
+{
+    NSLog(@"presence = %@",presence);
+    
+    //取得好友当前状态
+    NSString *presenceType = [presence type];
+    NSLog(@"客服状态 = %@++++++++++++++",[presence type]);
+    if ([presenceType isEqualToString:@"unavailable"])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];
+        self.isOnLine = @"unavailable";
+        [self goOffline];
+        self.uesrID = nil;
+    }
+    else
+    {
+        self.isOnLine = @"available";
+    }
+}
+
+- (void)disconnect
+{
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+    [self.xmppStream sendElement:presence];
+    [self.xmppStream disconnect];
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
+{
+    //    NSLog(@"didNotAuthenticate");
+}
 
 //查询客服组列表
 - (void)queryRoster

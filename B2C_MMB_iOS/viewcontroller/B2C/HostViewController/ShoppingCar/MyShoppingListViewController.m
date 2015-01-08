@@ -1097,7 +1097,6 @@
 //
 //
     NSString *memberId = [self getMemberId];
-    NSLog(@"memberId = %@",memberId);
     if([DCFCustomExtra validateString:memberId] == NO)
     {
         

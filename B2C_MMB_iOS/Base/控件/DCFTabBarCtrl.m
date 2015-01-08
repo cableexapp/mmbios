@@ -103,11 +103,7 @@
 
 - (void) changeSelectItem
 {
-//    UIStoryboard *fourthSB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
-//    fourthNavi = [fourthSB instantiateViewControllerWithIdentifier:@"fourthNaviViewController"];
-//    NSLog(@"%@",fourthNavi.viewControllers);
-//    [self setSelectedIndex:3];
-////    [self setSelectedViewController:[fourthNavi.viewControllers objectAtIndex:0]];
+
 }
 
 - (void)viewDidLoad

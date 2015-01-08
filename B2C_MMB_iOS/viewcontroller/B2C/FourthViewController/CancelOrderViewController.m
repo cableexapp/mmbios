@@ -262,7 +262,6 @@
     {
         str = [myTextView text];
     }
-    NSLog(@"%@",str);
 }
 
 

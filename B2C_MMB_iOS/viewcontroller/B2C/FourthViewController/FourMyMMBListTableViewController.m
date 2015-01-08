@@ -215,7 +215,6 @@
                     }
                     else if (cellBtn.frame.size.width >= 100 && cellBtn.frame.size.width < 153)
                     {
-                        //                        NSLog(@"2= %d",cellBtn.titleLabel.text.length);
                         if (i == 8)
                         {
                             [btn setFrame:CGRectMake(cellBtn.frame.size.width-38, 13, 18, 18)];
@@ -258,7 +257,6 @@
                     }
                     else if (cellBtn.frame.size.width >= 70 && cellBtn.frame.size.width < 100)
                     {
-                        //                        NSLog(@"3= %d",cellBtn.titleLabel.text.length);
                         [btn setFrame:CGRectMake(cellBtn.frame.size.width-25, 17, 22, 19)];
                     }
                     [btn setBackgroundImage:[UIImage imageNamed:@"msg_bqy.png"] forState:UIControlStateNormal];
@@ -384,7 +382,6 @@
     if (str.length > 0)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToHostView_mmb" object:nil];
-        //        NSLog(@"买卖宝---首页通知");
     }
     
     self.tableView.scrollEnabled = YES;

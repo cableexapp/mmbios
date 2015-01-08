@@ -187,7 +187,6 @@
 
 - (void) whenShowPhone
 {
-    NSLog(@"%@",self.myPhone);
     
     thePhone = [NSString stringWithFormat:@"%@",self.myPhone];
     NSString *s1 = [thePhone substringToIndex:3];
@@ -273,7 +272,6 @@
     
     [self.chooseBtn setTitle:@"已验证邮箱" forState:UIControlStateNormal];
     
-    NSLog(@"%@",email);
     [_buttomLabel setFrame:CGRectMake(_buttomLabel.frame.origin.x, _backView.frame.origin.y+_backView.frame.size.height + 20, _buttomLabel.frame.size.width, _buttomLabel.frame.size.height)];
     [_buttomLabel setText:[NSString stringWithFormat:@"您的邮箱%@已经收到一份账号绑定确认邮件,请在24小时内去你的邮箱查收并按照邮件提示进行操作,完成绑定",email]];
     [_buttomLabel setTextColor:[UIColor orangeColor]];
@@ -379,7 +377,6 @@
         NSString *token = [DCFCustomExtra md5:string];
         
         NSString *pushString = [NSString stringWithFormat:@"phone=%@&token=%@&username=%@",self.myPhone,token,[self getUserName]];
-        NSLog(@"push = %@",pushString);
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendMsgTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendMessage.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -390,7 +387,6 @@
         NSString *token = [DCFCustomExtra md5:string];
         
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&username=%@&email=%@",[self getMemberId],token,[self getUserName],self.myEmail];
-        NSLog(@"push = %@",pushString);
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSendEmailTag delegate:self];
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/sendEmail.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -470,7 +466,6 @@
             }
         }
     }
-    NSLog(@"%@",dicRespon);
 }
 
 - (NSString *) getUserName

@@ -42,7 +42,6 @@
 {
     if(managerInvoiceSubTableViewController)
     {
-        NSLog(@"***  %@",[managerInvoiceSubTableViewController changeChooseArray]);
         
         if([[managerInvoiceSubTableViewController changeChooseArray] count] > 1)
         {

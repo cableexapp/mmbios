@@ -482,7 +482,6 @@
     
     for(int i=0;i<goodsListArray.count;i++)
     {
-        NSLog(@"chooseSendTitleArray = %@",chooseSendTitleArray);
         NSString *logo = nil;
         if(chooseSendTitleArray.count == 0 || [chooseSendTitleArray isKindOfClass:[NSNull class]])
         {
@@ -1246,7 +1245,6 @@
             if(indexPath.row == 0)
             {
                 NSArray *itemArray = [[[[[goodsListArray lastObject] lastObject] summariesArray] lastObject] objectForKey:@"items"];
-                NSLog(@"%@",itemArray);
                 NSDictionary *itemDic = [[NSDictionary alloc] initWithDictionary:[itemArray lastObject]];
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 200, 20)];

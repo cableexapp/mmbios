@@ -117,7 +117,6 @@
     NSString *urlString = nil;
     if([DCFCustomExtra validateMobile:string_TF] == NO)
     {
-        NSLog(@"不是手机号码");
         
         string = [NSString stringWithFormat:@"%@%@",@"getMemberObjByUsername",time];
         token = [DCFCustomExtra md5:string];
@@ -126,7 +125,6 @@
     }
     else
     {
-        NSLog(@"是手机号码");
         
         string = [NSString stringWithFormat:@"%@%@",@"getMemberObjByPhone",time];
         token = [DCFCustomExtra md5:string];
@@ -151,7 +149,6 @@
     NSString *msg = [dicRespon objectForKey:@"msg"];
     if(URLTag == URLGetMemberObjByUsernameTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             phone = [NSString stringWithFormat:@"%@",[[dicRespon objectForKey:@"items"] objectForKey:@"phone"]];

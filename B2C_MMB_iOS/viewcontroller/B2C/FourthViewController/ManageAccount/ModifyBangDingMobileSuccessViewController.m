@@ -28,7 +28,6 @@
 - (void) back:(id) sender
 {
     //  跳转到首页
-    NSLog(@"%@",self.navigationController.viewControllers);
     for(UIViewController *vc in self.navigationController.viewControllers)
     {
         if([vc isKindOfClass:[AccountManagerTableViewController class]])

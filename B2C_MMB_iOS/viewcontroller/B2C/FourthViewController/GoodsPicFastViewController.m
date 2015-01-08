@@ -126,7 +126,6 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetProductSnapTag)
     {
-        NSLog(@"商品快照dicRespon = %@",dicRespon);
         if(result == 1)
         {
             if([[dicRespon objectForKey:@"items"] isKindOfClass:[NSNull class]] || [[dicRespon objectForKey:@"items"] count] == 0)
@@ -138,9 +137,6 @@
                 [moreCell stopAnimation];
                 dataArray = [[NSMutableArray alloc] initWithArray:[B2CGoodsFastPicData getListArray:[dicRespon objectForKey:@"items"]]];
                 data = [dataArray lastObject];
-                
-                NSLog(@"商品快照dataArray = %@",dataArray);
-                NSLog(@"商品快照data = %@",data);
                 
             }
             [tv reloadData];
@@ -172,7 +168,6 @@
             detailData = [[B2CGoodsDetailData alloc] init];
             [detailData dealData:dicRespon];
             
-            NSLog(@"商品快照detailData = %@",detailData);
             
             if ([[dicRespon objectForKey:@"score"] count] > 0)
             {

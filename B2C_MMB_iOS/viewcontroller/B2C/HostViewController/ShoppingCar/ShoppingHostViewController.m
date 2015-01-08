@@ -147,10 +147,7 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     if(URLTag == URLHotSaleProductTag)
-    {
-//        NSLog(@"家装馆频道 = %@",[dicRespon objectForKey:@"items"]);
-//        NSLog(@"家装馆频道 = %@",[[[dicRespon objectForKey:@"items"] objectAtIndex:0] objectForKey:@"describe"]);
-        
+    {        
         [[NSUserDefaults standardUserDefaults] setObject:[[[dicRespon objectForKey:@"items"] objectAtIndex:0] objectForKey:@"describe"] forKey:@"content"];
         NSMutableArray *moneyArray = nil;
         NSMutableArray *arr = nil;

@@ -114,7 +114,6 @@
     int result = [[dicRespon objectForKey:@"result"] intValue];
     if(URLTag == URLGetOrderDetailTag)
     {
-        //        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             dataArray = [[NSMutableArray alloc] initWithArray:[B2CGetOrderDetailData getListArray:[dicRespon objectForKey:@"items"]]];
@@ -264,7 +263,6 @@
     logisticsTrackingViewController *logisticsTrackingView = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingView"];
     logisticsTrackingView.mylogisticsId = [NSString stringWithFormat:@"%@",[[dataArray lastObject] logisticsId]];
     logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray lastObject] logisticsNum]];
-    //    NSLog(@"mylogisticsId＝%@  mylogisticsNum＝%@",logisticsTrackingView.mylogisticsId,logisticsTrackingView.mylogisticsNum);
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
 }
 

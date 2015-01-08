@@ -605,7 +605,6 @@
                     {
                         return 0;
                     }
-                    NSLog(@"cellWebView.frame.size.height = %f",cellWebView.frame.size.height);
                     return cellWebView.frame.size.height;
 //                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
 //                    return size.height+15;
@@ -1003,37 +1002,10 @@
                     NSString *finalName = nil;
                     NSString *isAnonymous = [NSString stringWithFormat:@"%@",[[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"isAnonymous"]];
                     
-//                    NSLog(@"商品详情匿名 = %@",[detailData.ctems objectAtIndex:0]);
-//                    
-//                    NSLog(@"商品详情是否匿名 = %@",isAnonymous);
                     
                     NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
                     
                     NSString *discusserName = [s1 stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
-//                    //1匿名  0本名
-//                    if([isAnonymous intValue] == 1)
-//                    {
-//                        NSMutableString *discussName = [[NSMutableString alloc] init];
-//                        for(int i=0;i<discusserName.length-2;i++)
-//                        {
-//                            NSString *s = @"*";
-//                            [discussName appendString:s];
-//                        }
-//                        NSRange range_1;
-//                        range_1 = NSMakeRange(0, 1);
-//                        NSString *firstStr = [discusserName substringWithRange:range_1];
-//                        
-//                        NSRange range_2;
-//                        range_2 = NSMakeRange(discusserName.length-1, 1);
-//                        NSString *lastStr = [discusserName substringWithRange:range_2];
-//                        
-//                        finalName = [NSString stringWithFormat:@"%@%@%@(匿名)",firstStr,discussName,lastStr];
-//                    }
-//                    else
-//                    {
-//                        finalName = discusserName;
-//                    }
     
                     //1匿名  0本名
                     if([isAnonymous intValue] == 1)
@@ -1244,8 +1216,6 @@
     int height = [height_str intValue];
     
     webView.frame = CGRectMake(0,0,ScreenWidth,height-(ScreenHeight-44));
-
-    NSLog(@"height: %@", [webView stringByEvaluatingJavaScriptFromString: @"document.body.offsetHeight"]);
     
     [tv reloadData];
 }

@@ -137,7 +137,6 @@
             chooseStreet = [addressArrayForAdd lastObject];
         }
         finalAddress = [finalAddress stringByReplacingOccurrencesOfString:@"," withString:@""];
-        NSLog(@"chooseProvince = %@ chooseCity = %@ chooseBorough = %@  chooseStreet = %@",chooseProvince,chooseCity,chooseBorough,chooseStreet);
     }
     return self;
 }
@@ -338,7 +337,6 @@
         //        province(省份)city(城市),area(地区),addressname(街道),fulladdress(详细地址)
         NSString *pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&receiver=%@&province=%@&city=%@&area=%@&addressname=%@&fulladdress=%@&zip=%@&mobile=%@&tel=%@&addressid=%@",memberid,token,chooseReceiver,chooseProvince,chooseCity,chooseBorough,chooseStreet,chooseDetailAddress,chooseCode,choosePhone,chooseTel,b2cAddressData.addressId];
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditMemberAddressTag delegate:self];
-        NSLog(@"push = %@",pushString);
         NSString *urlString = nil;
         if(self.B2COrB2B == YES)
         {
@@ -381,7 +379,6 @@
 - (void) dealEditData
 {
     NSString *string = [notiArray objectAtIndex:0];
-    NSLog(@"str = %@",string);
     NSArray *addressArrayForEdit = [string componentsSeparatedByString:@","];
     
     chooseProvince = [addressArrayForEdit objectAtIndex:0];
@@ -398,7 +395,6 @@
         chooseStreet = [addressArrayForEdit lastObject];
     }
     finalAddress = [finalAddress stringByReplacingOccurrencesOfString:@"," withString:@""];
-    NSLog(@"chooseProvince = %@ chooseCity = %@ chooseBorough = %@  chooseStreet = %@",chooseProvince,chooseCity,chooseBorough,chooseStreet);
     NSString *topStr = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
     [topTf setText:topStr];
     
@@ -555,7 +551,6 @@
             receiveFullAddress = [receiveFullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
             receiveFullAddress = [receiveFullAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"(null)"]];
             receiveFullAddress = [receiveFullAddress stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"null"]];
-            NSLog(@"receiveFullAddress = %@",receiveFullAddress);
             
             addSuccessDic = [[NSDictionary alloc] initWithObjectsAndKeys:receiveFullAddress,@"receiveFullAddress",chooseReceiver,@"receiver",choosePhone,@"mobile",addressid_b2b,@"addressid_b2b",addressid_b2c,@"addressid_b2c", nil];
             

@@ -142,7 +142,6 @@
 
 -(void)goBack
 {
-    NSLog(@"快速询价 = %@  数量 = %d",self.navigationController.viewControllers,self.navigationController.viewControllers.count);
     if ([self.fromWherePush isEqualToString:@"首页"] || [self.fromWherePush isEqualToString:@"工具栏客服"])
     {
        [self.navigationController popToRootViewControllerAnimated:YES];
@@ -203,7 +202,6 @@
 {
     deleteOrNot = NO;
     
-    NSLog(@"picBtnClick++++++++++++++++++++++");
     
     [self setHidesBottomBarWhenPushed:YES];
     LookForBigPicViewController *lookForBigPicViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"lookForBigPicViewController"];
@@ -279,9 +277,6 @@
 
 - (void) deleteWithPicBtn:(NSMutableArray *)btnArray WithImageArray:(NSMutableArray *)imageArray
 {
-    
-    NSLog(@"deleteWithPicBtn------------------------");
-    
     deleteOrNot = YES;
     
     if(chooseImageArray && chooseImageArray.count != 0)
@@ -407,8 +402,6 @@
 
 - (IBAction)lastUpPicBtnClick:(id)sender
 {
-    NSLog(@"lastUpPicBtnClick#########################");
-    
     UIActionSheet *sheet;
     
     // 判断是否支持相机
@@ -536,7 +529,6 @@
 #pragma mark - 加载图片按钮
 - (void) loadImageBtn:(NSMutableArray *)ImageArray WithFlag:(BOOL)flag
 {
-    NSLog(@"ImageArray = %@",ImageArray);
 }
 
 -(void)procesPic:(NSMutableArray*)imgarray
@@ -637,9 +629,6 @@
     
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
     
-    NSLog(@"imgDic = %@",imgDic);
-    
-     NSLog(@"strImageFileNameArray = %@",strImageFileNameArray);
     
     [conn getResultFromUrlString:urlString dicText:nil dicImage:imgDic imageFilename:strImageFileNameArray];
 }
@@ -649,7 +638,6 @@
 
 - (void)imagePickerController:(QBImagePickerController *)imagePickerController didFinishPickingMediaWithInfo:(id)info
 {
-    NSLog(@"info = %@",info);
     [self dismissViewControllerAnimated:YES completion:NULL];
     
     if(!chooseImageArray || chooseImageArray.count == 0)
@@ -668,8 +656,6 @@
         {
             NSArray *mediaInfoArray = (NSArray *)info;
             
-            NSLog(@"mediaInfoArray = %@",mediaInfoArray);
-            
             if(mediaInfoArray.count + chooseImageArray.count > 3)
             {
                 [DCFStringUtil showNotice:@"最多上传3张"];
@@ -680,15 +666,10 @@
             {
                 NSDictionary *dic = (NSDictionary *)[mediaInfoArray objectAtIndex:i];
                 
-                NSLog(@"dic = %@",dic);
-                
                 UIImage *img=[dic objectForKey:UIImagePickerControllerOriginalImage];
-                
-                NSLog(@"img = %@",img);
                 
                 [chooseImageArray addObject:img];
                 
-                NSLog(@"chooseImageArray = %@",chooseImageArray);
             }
         }
     }
@@ -752,9 +733,7 @@
 }
 
 - (void)imagePickerControllerDidCancel:(QBImagePickerController *)imagePickerController
-{
-    NSLog(@"Cancelled");
-    
+{    
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

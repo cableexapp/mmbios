@@ -204,15 +204,7 @@
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
     [self.agreeBtn setSelected:YES];
-    
-//    NSLog(@"%f",self.agreeBtn.frame.origin.y);
-//    UIButton *agrementBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [agrementBtn setFrame:CGRectMake(90, self.agreeBtn.frame.origin.y, 210, 30)];
-//    [agrementBtn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-//    [agrementBtn setTitle:@"《电缆买卖宝用户注册协议》" forState:UIControlStateNormal];
-//    [agrementBtn setTitleColor:MYCOLOR forState:UIControlStateNormal];
-//    [agrementBtn addTarget:self action:@selector(agreementBtn) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:agrementBtn];
+
 }
 
 

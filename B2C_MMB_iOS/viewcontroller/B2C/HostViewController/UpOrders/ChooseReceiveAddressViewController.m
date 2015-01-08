@@ -171,7 +171,6 @@
 {
     if (URLTag == URLReceiveAddressTag)
     {
-        NSLog(@"%@",dicRespon);
         int result= [[dicRespon objectForKey:@"result"] intValue];
         //        NSString *msg = [dicRespon objectForKey:@"msg"];
         
@@ -185,7 +184,6 @@
         {
             addressListDataArray = [[NSMutableArray alloc] initWithArray:[B2CAddressData getListArray:[dicRespon objectForKey:@"items"]]];
             
-            NSLog(@"修改地址 = %@",dicRespon);
             cellBtnArray = [[NSMutableArray alloc] init];
             
             if(!addressListDataArray || addressListDataArray.count == 0)
@@ -204,7 +202,7 @@
                 [cellBtnArray addObject:btn];
                 
                 B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:i];
-                NSLog(@"[data isDefault] = %@",[data isDefault]);
+
                 
                 if([[data isDefault] isEqualToString:@"1"])
                 {
@@ -503,7 +501,7 @@
                                 data.mobile,@"receiveTel",
                                 data.addressId,@"receiveAddressId",
                                 nil];
-    NSLog(@"receiveDic=%@",receiveDic);
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"B2CReceiveAddressHasChange" object:receiveDic userInfo:nil];
     //    [[NSUserDefaults standardUserDefaults] setObject:receiveDic forKey:@"defaultReceiveAddress"];
 }

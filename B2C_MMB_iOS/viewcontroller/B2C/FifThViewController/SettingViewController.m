@@ -67,7 +67,6 @@
 {
     switch (buttonIndex) {
         case 0:
-            NSLog(@"确定") ;
             break;
         case 1:
              break;

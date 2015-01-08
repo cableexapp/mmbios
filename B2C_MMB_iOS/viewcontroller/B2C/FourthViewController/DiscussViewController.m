@@ -56,7 +56,6 @@
 
 - (void) rightBtnClick:(UIButton *) sender
 {
-    NSLog(@"提交");
     
     [dic setObject:[NSString stringWithFormat:@"%d",descriptionCount] forKey:@"description"];
     [dic setObject:[NSString stringWithFormat:@"%d",serviceCount] forKey:@"service"];
@@ -65,8 +64,7 @@
     [dic setObject:self.textView.text forKey:@"comment"];
     [dic setObject:[NSString stringWithFormat:@"%d",isAnonymousFlag] forKey:@"isAnonymous"];
     
-    NSLog(@"是否匿名 = %@",[dic objectForKey:@"isAnonymous"]);
-                                                                                                          
+    
     if(self.itemArray.count != 0)
     {
         [self.itemArray removeAllObjects];
@@ -295,39 +293,6 @@
     isAnonymousFlag = YES;
 }
 
-//- (void) descriptionBtnClick:(UIButton *) sender
-//{
-//    descriptionCount = 0;
-//    int tag = sender.tag;
-//    for(UIButton *btn in descriptionBtnArray)
-//    {
-//        if(tag <= 1)
-//        {
-//            [btn setBackgroundImage:[UIImage imageNamed:@"ratingbar_selected_low.png"] forState:UIControlStateNormal];
-//            descriptionCount++;
-//        }
-//        else
-//        {
-//            [btn setBackgroundImage:[UIImage imageNamed:@"ratingbar_unselect.png"] forState:UIControlStateNormal];
-//        }
-//    }
-//    NSLog(@"descriptionCount = %d",descriptionCount);
-//}
-//
-//- (void) serviceBtnClick:(UIButton *) sender
-//{
-//    
-//}
-//
-//- (void) deliveryBtnClick:(UIButton *) sender
-//{
-//    
-//}
-//
-//- (void) qualityBtnClick:(UIButton *) sender
-//{
-//    
-//}
 
 //字典转字符串
 - (NSString *)dictoJSON:(NSDictionary *)theDic
@@ -695,7 +660,6 @@
 
 - (IBAction)showOrHideBtnClick:(id)sender
 {
-    NSLog(@"评价+++++++++++");
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     isAnonymousFlag = btn.selected;

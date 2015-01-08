@@ -519,7 +519,6 @@
 
 - (IBAction)searchBtnClick:(id)sender
 {
-//    NSLog(@"搜索");
 }
 
 - (IBAction)nextBtnClick:(id)sender

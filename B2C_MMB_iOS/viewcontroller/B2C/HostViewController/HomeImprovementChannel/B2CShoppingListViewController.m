@@ -332,7 +332,6 @@
             [b setSelected:NO];
         }
     }
-    NSLog(@"btnRotationNumArray = %@",btnRotationNumArray);
 }
 
 //选择筛选条件后，数据排序
@@ -693,7 +692,6 @@
                         [HUD hide:YES];
                     }
                 }
-//                NSLog(@"dicRespon = %@",[dicRespon objectForKey:@"items"]);
                 
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 
@@ -749,7 +747,6 @@
             
             ScreeningCondition = [[NSMutableArray alloc] initWithObjects:brandsArray,modelsArray,specsArray,usesArray, nil];
             
-//            NSLog(@"ScreeningCondition = %@",ScreeningCondition);
         }
     }
 }

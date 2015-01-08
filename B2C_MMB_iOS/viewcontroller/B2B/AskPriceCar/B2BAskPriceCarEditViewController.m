@@ -498,8 +498,7 @@
 
 - (void) pickerView:(NSString *) title WithTag:(int)tag
 {
-    NSLog(@"title = %@",title);
-    NSLog(@"tag = %d",tag);
+
     
     if(tag == 10000)
     {

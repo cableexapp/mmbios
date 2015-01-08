@@ -161,7 +161,6 @@
     }
     if(URLTag == URLDeleteMemberAddressTag)
     {
-        NSLog(@"%@",dicRespon);
         if(result == 1)
         {
             [self loadRequest];

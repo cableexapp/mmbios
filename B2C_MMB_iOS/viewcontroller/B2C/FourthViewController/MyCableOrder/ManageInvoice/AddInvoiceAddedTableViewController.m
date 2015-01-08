@@ -95,7 +95,6 @@
 {
     if([sender.text length]>0) {
         CGSize contentSize = sender.contentSize;
-        //NSLog(@"w:%f h%f",contentSize.width,contentSize.height);
         UIEdgeInsets offset;
         CGSize newSize = contentSize;
         if(contentSize.height <= sender.frame.size.height)
@@ -521,7 +520,6 @@
     
     //token,memberid(用户id),type(类型1-普通2-增值税),name(抬头),company(公司名),tel(电话),taxcode(纳税人识别号),regaddress(注册地址),bank(开户银行),bankaccount(开户账号)
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&type=%@&name=%@&company=%@&taxcode=%@&regaddress=%@&tel=%@&bank=%@&bankaccount=%@",token,[self getMemberId],@"2",[(UITextView *)[textViewArray objectAtIndex:0] text],[(UITextView *)[textViewArray objectAtIndex:1] text],[(UITextView *)[textViewArray objectAtIndex:2] text],[(UITextView *)[textViewArray objectAtIndex:3] text],[(UITextView *)[textViewArray objectAtIndex:4] text],[(UITextView *)[textViewArray objectAtIndex:5] text],[(UITextView *)[textViewArray objectAtIndex:6] text]];
-    NSLog(@"push = %@",pushString);
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2BAddInvoiceAddTag delegate:self];
     

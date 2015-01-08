@@ -196,7 +196,6 @@
     
     if(URLTag == URLSubHotTypeTag)
     {
-        NSLog(@"%@",dicRespon);
         
         if(result == 1)
         {

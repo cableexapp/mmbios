@@ -29,7 +29,6 @@
 {
     if([sender.text length]>0) {
         CGSize contentSize = sender.contentSize;
-        //NSLog(@"w:%f h%f",contentSize.width,contentSize.height);
         UIEdgeInsets offset;
         CGSize newSize = contentSize;
         if(contentSize.height <= sender.frame.size.height)
@@ -241,7 +240,6 @@
             else
             {
                 UILabel *label = (UILabel *)[labelArray objectAtIndex:indexPath.row];
-                NSLog(@"labe = %f  %f",label.frame.size.width,label.frame.size.height);
                 [cell.contentView addSubview:label];
             }
             if(!textViewArray)
@@ -250,7 +248,6 @@
             }
             else
             {
-                NSLog(@"textViewArray = %@",textViewArray);
                 UITextView *tv = (UITextView *)[textViewArray objectAtIndex:indexPath.row];
                 [cell.contentView addSubview:tv];
             }

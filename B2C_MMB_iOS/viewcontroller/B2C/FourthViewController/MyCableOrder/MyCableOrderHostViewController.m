@@ -49,7 +49,6 @@
         
         MyCableOrderDetailViewController *myCableOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderDetailViewController"];
         myCableOrderDetailViewController.myOrderNumber = app.key3;
-        NSLog(@"key3 = %@",app.key3);
         myCableOrderDetailViewController.btnIndex = self.btnIndex;
         //        myCableOrderDetailViewController.b2bMyCableOrderListData = data;
         [self.navigationController pushViewController:myCableOrderDetailViewController animated:NO];

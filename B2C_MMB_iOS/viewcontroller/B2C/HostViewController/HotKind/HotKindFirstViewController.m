@@ -81,9 +81,6 @@
     {
         [self.testSubTableView setEditing:NO];
     }
-    NSLog(@"test");
-    NSLog(@"test");
-    NSLog(@"test");
 
     rightButtonView.hidden = YES;
     [self deleteHistorySelestData];
@@ -300,7 +297,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    //    NSLog(@"indexPath = %zi",indexPath.row);
     if (tableView.tag == 33)
     {
         self.testTableView.frame = CGRectMake(0, 36, self.view.frame.size.width, self.view.frame.size.height-73);
@@ -444,7 +440,6 @@
 
 -(void)deleteHistorySelestData
 {
-    NSLog(@"清空选中记录");
     self.opend = NO;
     backView.hidden = YES;
     self.testTableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-33);

@@ -73,7 +73,6 @@
     toolBar.barStyle = 0;
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    NSLog(@"%f",self.frame.size.width);
     cancelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [cancelBtn setFrame:CGRectMake(20, 0,( self.frame.size.width-40)/2, 44)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];

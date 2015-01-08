@@ -229,9 +229,7 @@
         address = @"";
     }
     NSString *tel = b2bMyCableDetailData.theTel;
-    NSLog(@"tel = %@",tel);
     
-    NSLog(@"%@",tel);
     if([DCFCustomExtra validateString:tel] == NO)
     {
         tel = @"";
@@ -257,7 +255,6 @@
     {
         pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receivefulladdress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicefulladdress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,@"",name,tel,invoiceId,@"",@"",@"",@"",@"",@"",@""];
     }
-    NSLog(@"%@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmOrderTag delegate:self];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ConfirmOrder.html?"];
@@ -293,7 +290,6 @@
     }
     if(URLTag == URLOrderDetailTag)
     {
-        NSLog(@"%@",dicRespon);
         
         if(result == 1)
         {
@@ -320,7 +316,7 @@
 #pragma mark - 发票收货信息
 - (void) changeReceiveAddress:(NSDictionary *) dic
 {
-    NSLog(@"dic = %@",dic);
+
     if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
     {
         receiveAddressId = @"";
@@ -363,7 +359,7 @@
 
 - (void) B2BReceveAddress:(NSDictionary *)dic
 {
-    NSLog(@"dic = %@",dic);
+
     if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
     {
         receiveAddressId = @"";

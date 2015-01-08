@@ -167,7 +167,6 @@
             {
                 if([[dataDic objectForKey:@"createdate"] isKindOfClass:[NSNull class]])
                 {
-                    NSLog(@"空");
                 }
                 else
                 {
@@ -257,7 +256,7 @@
             }
             if(i == 5)
             {
-                NSString *money = [NSString stringWithFormat:@"%@元",[[[dataDic objectForKey:@"productlist"] lastObject] objectForKey:@"price"]];
+                NSString *money = [NSString stringWithFormat:@"%@元",[dataDic objectForKey:@"total"]];
                 [anotherLabel setText:money];
             }
             if(i == 6)

@@ -195,9 +195,7 @@
                        orderSpec, signedString, @"RSA"];
         
         [[AlipaySDK defaultService] payOrder:orderString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-            NSLog(@"res = %@",resultDic);
             NSString *resultStatus = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"resultStatus"]];
-            NSLog(@"resultStatus = %@",resultStatus);
             if([resultStatus isEqualToString:@"9000"])
             {
                 [app aliPayChange];

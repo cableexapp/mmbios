@@ -42,7 +42,6 @@
 
 - (void) back:(UIButton *) SENDER
 {
-    NSLog(@"%@",self.navigationController.viewControllers);
     for(UIViewController *vc in self.navigationController.viewControllers)
     {
         if([vc isKindOfClass:[B2BAskPriceCarViewController class]])

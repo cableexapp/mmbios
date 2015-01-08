@@ -64,7 +64,6 @@
 - (void) back:(id) sender
 {
     //  跳转到首页
-    NSLog(@"%@",self.navigationController.viewControllers);
     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
 }
 

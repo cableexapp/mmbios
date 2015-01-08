@@ -42,19 +42,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(PhoneHelper);
         case NotReachable:  //无网络
         {
             curNetType=NETWORK_NO;
-            NSLog(@"%@:NotReachable",NSStringFromSelector(_cmd));
         }
             break;
         case ReachableViaWWAN:  //使用3g/gprs网络
         {
             curNetType=NETWORK_3G;
-            NSLog(@"%@:ReachableViaWWAN 3g",NSStringFromSelector(_cmd));
         }
             break;
         case ReachableViaWiFi:  //使用wifi网络
         {
             curNetType=NETWORK_WIFI;
-            NSLog(@"%@:ReachableViaWiFi",NSStringFromSelector(_cmd)); 
         }
             break;
         default:

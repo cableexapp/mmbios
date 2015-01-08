@@ -123,7 +123,6 @@
     {
         if(result == 1)
         {
-            NSLog(@"筛选dicRespon = %@",dicRespon);
             
             brandsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"brands"]]];
             modelsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"models"]]];
@@ -893,10 +892,6 @@
 
 - (void) sure:(UIButton *) sender
 {
-    NSLog(@"useString = %@",useString);
-    NSLog(@"brandString = %@",brandString);
-    NSLog(@"specString = %@",specString);
-    NSLog(@"modelString = %@",modelString);
 
     if([self.delegate respondsToSelector:@selector(requestStringWithUse:WithBrand:WithSpec:WithModel:WithSeq:)])
     {
@@ -1179,7 +1174,6 @@
 
 -(void)headerClicked:(UIButton*)sender
 {
-//    NSLog(@"headerClicked+++++++++++ = %d",sender.tag);
 	int sectionIndex = sender.tag;
     if(sectionIndex == 0)
     {
@@ -1232,7 +1226,6 @@
             break;
     }
     
-    NSLog(@"flag[sectionIndex] = %d",flag[sectionIndex]);
     if(flag[sectionIndex])
 	{
         btn.selected = YES;

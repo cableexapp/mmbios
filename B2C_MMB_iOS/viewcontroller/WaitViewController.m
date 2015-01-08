@@ -173,7 +173,6 @@ double secondsCountDown =0;
 
 -(void)pageFromWhere_wait
 {
-//    NSLog(@"等待页面 = %@",self.tempFrom);
     if ([self.tempFrom isEqualToString:@"首页在线客服"])
     {
 //        [self.tabBarController setSelectedIndex:0];
@@ -256,9 +255,6 @@ double secondsCountDown =0;
             }
         }
     }
-//    NSLog(@"页面数组_wait = %d",self.navigationController.viewControllers.count);
-    
-//    NSLog(@"页面数组_wait = %@",self.navigationController.viewControllers);
 }
 
 -(void)goBack
@@ -271,7 +267,6 @@ double secondsCountDown =0;
 //退出队列
 -(void)exitQueue
 {
-    NSLog(@"退出队列 = %@",self.appDelegate.uesrID);
     NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
     [iq addAttributeWithName:@"id" stringValue:[[self.appDelegate.uesrID componentsSeparatedByString:@"@"] objectAtIndex:1]];
     [iq addAttributeWithName:@"to"stringValue:self.tempGroup];
@@ -298,7 +293,6 @@ double secondsCountDown =0;
 
     if (self.appDelegate.uesrID != nil)
     {
-        NSLog(@"进入聊天 = %@",self.appDelegate.uesrID);
         
         [timeCountTimer invalidate];
 
@@ -453,8 +447,6 @@ double secondsCountDown =0;
 
 -(void)autoMessageToServer_offline:(NSNotification *)newMessage
 {
-    NSLog(@"self.appDelegate.errorMessage = %@",self.appDelegate.errorMessage);
-    
     if ([self.appDelegate.errorMessage isEqualToString:@"cancel"])
     {
         [timeCountTimer invalidate];
@@ -466,7 +458,6 @@ double secondsCountDown =0;
 //请求连接客服
 -(void)autoMessageToServer_online:(NSNotification *)newMessage
 {
-    NSLog(@"请求连接客服 = %@",newMessage.object);
     if(self.appDelegate.tempID.length > 0)
     {
         memberCount = self.appDelegate.tempID;

@@ -84,10 +84,7 @@
                 {
                     TQRichTextEmojiRun *emoji = [[TQRichTextEmojiRun alloc] init];
                     emoji.range = NSMakeRange(i + 1 - emojiStr.length - offsetIndex, 1);
-                    
-//                    NSLog(@"+++++++++++ = %@",emojiStr);
-//                    NSString *subString1 = [emojiStr substringFromIndex:1];       //@"12345"
-//                    NSString *  stringI = [subString1 substringToIndex:5];
+
                     
                     emoji.originalText =[[[[emojiStr componentsSeparatedByString:@"["] objectAtIndex:1] componentsSeparatedByString:@"]"] objectAtIndex:0];
                     [*runArray addObject:emoji];

@@ -113,7 +113,6 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
    
-    NSLog(@"page = %d",page);
     [self.delegate deleteWithPicBtn:_myPicBtnArray WithImageArray:_myImageArray];
 }
 

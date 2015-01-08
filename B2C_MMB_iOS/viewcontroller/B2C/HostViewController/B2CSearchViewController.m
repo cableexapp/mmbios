@@ -269,7 +269,6 @@
     _iflyRecognizerView = [[IFlyRecognizerView alloc] initWithCenter:self.view.center];
     _iflyRecognizerView.delegate = self;
     
-    NSLog(@"viewwillappear++++++++");
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -429,7 +428,6 @@
         [self.view bringSubviewToFront:noResultView];
     }
     [tv reloadData];
-    NSLog(@"搜索历史 = %@",dataArray);
 }
 
 -(NSMutableArray *)arrayWithMemberIsOnly:(NSMutableArray *)array
@@ -589,10 +587,6 @@
 {
     if(URLTag == URLB2CGoodsListSearchTag)
     {
-       
-//        NSLog(@"家装馆搜索 = %@",[dicRespon objectForKey:@"items"]);
-        NSLog(@"家装馆搜索message = %@",[dicRespon objectForKey:@"msg"]);
-
             if(_reloading == YES)
             {
                 if (dataArray.count > 0)
@@ -626,7 +620,6 @@
 //                        dataArray = [self arrayWithMemberIsOnly:tempDataArray];
                     [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
                 
-//                   NSLog(@"家装馆搜索 = %@",[[dataArray objectAtIndex:0] productName]);
             
                     if (dataArray.count > 0)
                     {
@@ -947,17 +940,14 @@
         const char *dbpath = [databasePath UTF8String];
         if (sqlite3_open(dbpath, &contact)==SQLITE_OK)
         {
-//            NSLog(@"创建B2C表成功\n");
             char *errMsg;
             const char *sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS(ID INTEGER PRIMARY KEY AUTOINCREMENT,TYPE TEXT ,PRODUCTID TEXT, PRODUCTNAME TEXT)";
             if (sqlite3_exec(contact, sql_stmt, NULL, NULL, &errMsg)!=SQLITE_OK)
             {
-//                NSLog(@"创建B2C表失败\n");
             }
         }
         else
         {
-//            NSLog(@"创建B2C_打开数据库失败\n");
         }
     }
 }
@@ -976,11 +966,9 @@
         sqlite3_prepare_v2(contact, insert_stmt, -1, &statement, NULL);
         if (sqlite3_step(statement)==SQLITE_DONE)
         {
-//            NSLog(@"已存储到数据库");
         }
         else
         {
-//            NSLog(@"保存失败！");
         }
         sqlite3_finalize(statement);
         sqlite3_close(contact);
@@ -1009,20 +997,15 @@
                     
                     NSString *productName = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement,3)];
                     
-//                    NSLog(@"查询结果 = %@ %@ %@",type,productId,productName);
-//                    NSLog(@"已查到结果\n\n");
                     
                     NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:type,@"type",productId,@"productId",productName,@"searchName",nil];
-//                    NSLog(@"dic = %@\n\n",dic);
                     
                     [homehistoryArray addObject:dic];
                     
-//                    NSLog(@"self.history = %@",homehistoryArray);
                 }
             }
             else
             {
-//                NSLog(@"未查到结果");
             }
             sqlite3_finalize(statement);
         }
@@ -1056,7 +1039,6 @@
                         if (mySearchBar.text.length > 0)
                         {
                             tempFlag = 1;
-                            NSLog(@"上拉加载 = %d",intPage);
                             [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
                         }
                     }

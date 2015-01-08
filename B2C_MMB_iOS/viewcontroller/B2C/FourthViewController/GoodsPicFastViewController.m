@@ -62,6 +62,7 @@
     tv.separatorStyle = UITableViewCellSeparatorStyleNone;
     [tv setDataSource:self];
     [tv setDelegate:self];
+    //    tv.backgroundColor = [UIColor greenColor];
     [tv setShowsHorizontalScrollIndicator:NO];
     [tv setShowsVerticalScrollIndicator:NO];
     [self.view addSubview:tv];
@@ -97,7 +98,7 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     NSString *pushString = [NSString stringWithFormat:@"token=%@&snapid=%@",token,self.mySnapId];
-
+    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetProductSnapTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductSnap.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -136,6 +137,7 @@
                 [moreCell stopAnimation];
                 dataArray = [[NSMutableArray alloc] initWithArray:[B2CGoodsFastPicData getListArray:[dicRespon objectForKey:@"items"]]];
                 data = [dataArray lastObject];
+                
             }
             [tv reloadData];
         }
@@ -143,25 +145,39 @@
         {
             [moreCell failAcimation];
         }
+        
+        //        NSString *time = [DCFCustomExtra getFirstRunTime];
+        //
+        //        NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductDetail",time];
+        //
+        //        NSString *token = [DCFCustomExtra md5:string];
+        //
+        //        NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_myProductId,token];
+        //
+        //        NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
+        //        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
+        //        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
     else if(URLTag == URLB2CProductDetailTag)
     {
         int totalProductNumber = 0;
         int isSale = 0;
-
+        
         if(result == 1)
         {
             detailData = [[B2CGoodsDetailData alloc] init];
             [detailData dealData:dicRespon];
             
+            
             if ([[dicRespon objectForKey:@"score"] count] > 0)
             {
                 statrScore = ([[[dicRespon objectForKey:@"score"] objectAtIndex:0] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:1] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:2] intValue]+[[[dicRespon objectForKey:@"score"] objectAtIndex:3] intValue])/4;
+                
             }
             
             producturl = [dicRespon objectForKey:@"producturl"];
             
-             [tv reloadData];
+            [tv reloadData];
             
             NSArray *coloritems = [NSArray arrayWithArray:[dicRespon objectForKey:@"coloritems"]];
             if(coloritems.count == 0 || [coloritems isKindOfClass:[NSNull class]])
@@ -466,7 +482,7 @@
                             }
                         }
                     }
-
+                    
                     
                     UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0,0,ScreenWidth,cell.frame.size.height)];
                     [cell.contentView addSubview:firstView];
@@ -519,21 +535,21 @@
             }
             if(indexPath.row == 5)
             {
-//                GoodsFastPicTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsFastPicTableViewCell" owner:self options:nil] lastObject];
-//                
-//                [customCell.brandLabel setText:data.brand];
-//                
-//                [customCell.colorLabel setText:data.color];
-//                
-//                [customCell.freightPriceLabel setText:data.freightPrice];
-//                
-//                [customCell.modelLabel setText:data.model];
-//                
-//                [customCell.useLabel setText:data.range];
-//                
-//                [customCell.specLabel setText:data.spec];
-//                
-//                [customCell.voltageLabel setText:data.voltage];
+                //                GoodsFastPicTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsFastPicTableViewCell" owner:self options:nil] lastObject];
+                //
+                //                [customCell.brandLabel setText:data.brand];
+                //
+                //                [customCell.colorLabel setText:data.color];
+                //
+                //                [customCell.freightPriceLabel setText:data.freightPrice];
+                //
+                //                [customCell.modelLabel setText:data.model];
+                //
+                //                [customCell.useLabel setText:data.range];
+                //
+                //                [customCell.specLabel setText:data.spec];
+                //
+                //                [customCell.voltageLabel setText:data.voltage];
                 
                 GoodsDetailTableViewCell *customCell = [[[NSBundle mainBundle] loadNibNamed:@"GoodsDetailTableViewCell" owner:self options:nil] lastObject];
                 
@@ -583,7 +599,7 @@
 
 - (void) chatTap:(UITapGestureRecognizer *) sender
 {
-
+    
 }
 
 
@@ -610,7 +626,7 @@
 
 - (AppDelegate *)appDelegate
 {
-	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 #pragma mark - 在线客服

@@ -96,7 +96,6 @@
 {
     self.strUrl = [self.strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     self.postBody = [self.postBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%@%@",self.strUrl,self.postBody);
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:self.strUrl]];
     request.timeoutInterval = 20;
     
@@ -198,7 +197,6 @@
     [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
     NSError *error;
     NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:_dtReviceData options:NSJSONReadingMutableLeaves error:&error];
-    NSLog(@"dicRespon:%@",dicRespon);
 
     if ([self.delegate respondsToSelector:@selector(finish: statusMsg:)]) {
 

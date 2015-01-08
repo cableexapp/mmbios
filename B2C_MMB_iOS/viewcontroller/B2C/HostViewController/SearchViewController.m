@@ -700,11 +700,9 @@
     [self refreshTableView];
     [self.serchResultView reloadData];
     
-//    NSLog(@"搜索历史 = %@",dataArray);
     if (dataArray.count > 0)
     {
         isShowClearBtn = 1;
-//        NSLog(@"搜索历史关键词 = %@",[[dataArray objectAtIndex:0] objectForKey:@"productName"]);
     }
 }
 
@@ -742,7 +740,6 @@
 
 - (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-//    NSLog(@"searchBarTextDidBeginEditing");
 }
 
 - (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -768,7 +765,6 @@ float lastContentOffset;
 {
     if (lastContentOffset < scrollView.contentOffset.y)
     {
-//        NSLog(@"向上滚动");
         if ([tempFlag isEqualToString:@"4"])
         {
             leftBtn.hidden = YES;
@@ -779,7 +775,6 @@ float lastContentOffset;
     }
     else
     {
-//        NSLog(@"向下滚动");
         if ([tempFlag isEqualToString:@"4"])
         {
             leftBtn.hidden = NO;
@@ -947,7 +942,6 @@ float lastContentOffset;
     
     if ([text isEqualToString:@""])
     {
-//        NSLog(@"数据为空。。。。。。");
     }
     else
     {
@@ -1214,10 +1208,6 @@ float lastContentOffset;
             [self.navigationController pushViewController:B2CVC animated:YES];
             [self setHidesBottomBarWhenPushed:NO];
         }
-        
-//        NSLog(@"点击历史搜索 = %@ 行 = %d",mySearchBar.text,indexPath.row);
-        
-//        NSLog(@"点击历史tempType = %@  tempFlag = %@",tempType,tempFlag);
     }
 }
 
@@ -1255,17 +1245,14 @@ float lastContentOffset;
         const char *dbpath = [databasePathB2C UTF8String];
         if (sqlite3_open(dbpath, &contactDBB2C)==SQLITE_OK)
         {
-//             NSLog(@"创建B2C表成功\n");
             char *errMsg;
             const char *sql_stmt = "CREATE TABLE IF NOT EXISTS CONTACTS(ID INTEGER PRIMARY KEY AUTOINCREMENT,TYPE TEXT ,PRODUCTID TEXT, PRODUCTNAME TEXT)";
             if (sqlite3_exec(contactDBB2C, sql_stmt, NULL, NULL, &errMsg)!=SQLITE_OK)
             {
-//                NSLog(@"创建B2C表失败\n");
             }
         }
         else
         {
-//            NSLog(@"创建B2C_打开数据库失败\n");
         }
     }
 }
@@ -1284,11 +1271,9 @@ float lastContentOffset;
         sqlite3_prepare_v2(contactDBB2C, insert_stmt, -1, &statement, NULL);
         if (sqlite3_step(statement)==SQLITE_DONE)
         {
-//            NSLog(@"已存储到数据库");
         }
         else
         {
-//            NSLog(@"保存失败！");
         }
         sqlite3_finalize(statement);
         sqlite3_close(contactDBB2C);
@@ -1317,16 +1302,12 @@ float lastContentOffset;
                         NSString *productId = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement,2)];
                         
                         NSString *productName = [[NSString alloc] initWithUTF8String:(const char *)sqlite3_column_text(statement,3)];
-                        
-//                        NSLog(@"查询结果 = %@ %@ %@",type,productId,productName);
-//                        NSLog(@"已查到结果\n\n");
+
                         
                         NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:type,@"type",productId,@"productId",productName,@"productName",nil];
-//                        NSLog(@"dic = %@\n\n",dic);
                         
                         [B2ChistoryArray addObject:dic];
 
-//                        NSLog(@"self.history = %@",B2ChistoryArray);
                     }
             }
             else

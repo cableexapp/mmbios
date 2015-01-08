@@ -46,7 +46,6 @@
 
 - (void) dealChangeFourthNaviRootViewController:(NSNotification *) noti
 {
-    NSLog(@"flag=%d",[[noti object] boolValue]);
     flag = [[noti object] boolValue];
     if(flag == 1)
     {
@@ -83,7 +82,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dealhasLogOut:) name:@"hasLogOut" object:nil];
     
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    NSLog(@"MEMBERID = %@",memberid);
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName"];
     
     sb = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];

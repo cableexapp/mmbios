@@ -133,7 +133,6 @@
         }
         [tv reloadData];
 
-        NSLog(@"%@",dataArray);
         
     }
 }
@@ -277,7 +276,6 @@
     NSString *str = nil;
     for(UIView *view in cell.contentView.subviews)
     {
-        NSLog(@"view = %@",view);
         if(view.tag == 10)
         {
             str = [(UILabel *)view text];

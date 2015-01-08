@@ -91,7 +91,6 @@
     }
     
     
-    NSLog(@"%@",dicRespon);
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField

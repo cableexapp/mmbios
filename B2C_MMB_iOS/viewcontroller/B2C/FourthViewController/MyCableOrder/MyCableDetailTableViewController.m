@@ -70,7 +70,6 @@
         {
             if(result == 1)
             {
-                NSLog(@"%@",dicRespon);
                 b2bMyCableDetailData = [[B2BMyCableDetailData alloc] init];
                 [b2bMyCableDetailData dealData:dicRespon];
                 dataArray = [[NSMutableArray alloc] initWithArray:b2bMyCableDetailData.myItems];

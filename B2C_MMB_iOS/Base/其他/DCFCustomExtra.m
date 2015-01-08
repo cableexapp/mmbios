@@ -232,13 +232,10 @@
     CFShow((__bridge CFTypeRef)(infoDictionary));
     // app名称
     NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
-    NSLog(@"app_Name = %@",app_Name);
     // app版本
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSLog(@"app_Version = %@",app_Version);
     // app build版本
     NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
-    NSLog(@"app_build = %@",app_build);
     NSArray *array = [[NSArray alloc] initWithObjects:app_Name,app_Version,app_build, nil];
     return array;
 }
@@ -303,7 +300,7 @@
     }
     
     //    NSString *time = [[NSString alloc] initWithFormat:@"%d-%d-%d %d:%@:%@",year,month,day,hour,M,S];
-    //    NSLog(@"time = %@",time);
+
     
     NSString *time = [NSString stringWithFormat:@"%d-%@-%@",year,monthString_2,day_2];
     return time;
@@ -436,7 +433,6 @@
     //    NSInteger iMonth = lTime/60/60/24/12;
     //    NSInteger iYears = lTime/60/60/24/384;
     
-    //    NSLog(@"相差%d年%d月%d日%d时%d分%d秒", iYears,iMonth,iDays,iHours,iMinutes,iSeconds);
     
     NSString *timeInterval;
     
@@ -474,37 +470,6 @@
     return nil;
 }
 
-
-//#pragma mark - 截取时间
-//+ (NSString *) interceptTime:(NSString *) time
-//{
-//    NSString *finalTime;
-//    NSRange testRange = [time rangeOfString:@" "];
-//    if(testRange.location != NSNotFound)
-//    {
-//        NSString *s1 = [time substringToIndex:testRange.location];
-//        NSLog(@"s1 = %@",s1);
-//
-//        NSString *s2 = [s1 substringFromIndex:5];
-//        NSLog(@"s2 = %@",s2);
-//
-//        s2 = [s2 stringByReplacingOccurrencesOfString:@"-" withString:@"月"];
-//        NSLog(@"s2   s2 = %@",s2);
-//
-//        NSString *s3 = [s2 stringByAppendingString:@"日"];
-//        NSLog(@"s3 = %@",s3);
-//
-//        NSString *s4 = [time substringFromIndex:testRange.location + 1];
-//        NSLog(@"s4 = %@",s4);
-//
-//        NSString *s5 = [s4 substringToIndex:5];
-//        NSLog(@"s5 = %@",s5);
-//
-//        finalTime = [NSString stringWithFormat:@"%@ %@",s3,s5];
-//        NSLog(@"finalTime = %@",finalTime);
-//    }
-//    return finalTime;
-//}
 
 #pragma mark - 校验邮编
 + (BOOL) validateZip:(NSString *) zip
@@ -568,54 +533,7 @@
     
     
     return YES;
-    
-    /**
-     * 手机号码
-     * 移动：134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
-     * 联通：130,131,132,152,155,156,185,186
-     * 电信：133,1349,153,180,189
-     */
-    //    NSString * MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
-    //    /**
-    //     10         * 中国移动：China Mobile
-    //     11         * 134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
-    //     12         */
-    //    NSString * CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
-    //    /**
-    //     15         * 中国联通：China Unicom
-    //     16         * 130,131,132,152,155,156,185,186
-    //     17         */
-    //    NSString * CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
-    //    /**
-    //     20         * 中国电信：China Telecom
-    //     21         * 133,1349,153,180,189
-    //     22         */
-    //    NSString * CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
-    //    /**
-    //     25         * 大陆地区固话及小灵通
-    //     26         * 区号：010,020,021,022,023,024,025,027,028,029
-    //     27         * 号码：七位或八位
-    //     28         */
-    //     NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
-    //
-    //    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
-    //    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
-    //    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
-    //    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
-    //
-    //    if (([regextestmobile evaluateWithObject:mobileNum] == YES)
-    //        || ([regextestcm evaluateWithObject:mobileNum] == YES)
-    //        || ([regextestct evaluateWithObject:mobileNum] == YES)
-    //        || ([regextestcu evaluateWithObject:mobileNum] == YES))
-    //    {
-    //        NSLog(@"正确");
-    //        return YES;
-    //    }
-    //    else
-    //    {
-    //        NSLog(@"错误");
-    //        return NO;
-    //    }
+
 }
 
 #pragma mark - 验证邮箱
@@ -703,9 +621,7 @@
 #pragma mark - UTF8解码
 + (NSString *) UTF8Encoding:(NSString *) str
 {
-    NSLog(@"str = %@",str);
     NSString *userName = [str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%@",userName);
     return userName;
 }
 

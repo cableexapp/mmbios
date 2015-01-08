@@ -131,7 +131,6 @@
 
 -(void)soundSrarch
 {
-    NSLog(@"语音搜素");
 }
 
 
@@ -199,7 +198,6 @@
 - (void) pushMenuItem:(id)sender
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dissMiss" object:nil];
-    NSLog(@"%@", sender);
     
 }
 

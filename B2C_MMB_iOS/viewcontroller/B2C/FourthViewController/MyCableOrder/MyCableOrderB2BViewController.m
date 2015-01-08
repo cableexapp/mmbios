@@ -178,7 +178,6 @@
         {
             if(result == 1)
             {
-                NSLog(@"B2B全部订单 = %@",dicRespon);
                 if ([[dicRespon objectForKey:@"items"] count] > 0)
                 {
                     noResultView.hidden = NO;

@@ -35,7 +35,6 @@
 
 - (void) sureBtnClick:(UIButton *) sender
 {
-    NSLog(@"sure");
     
     NSString *btnTitle = [(UIButton *)sender titleLabel].text;
     if([btnTitle isEqualToString:@"确认订单"])
@@ -213,7 +212,6 @@
 {
     [super viewWillAppear:YES];
     
-    NSLog(@"btnIndex=%d",self.btnIndex);
 }
 
 - (void)didReceiveMemoryWarning

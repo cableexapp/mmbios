@@ -440,12 +440,11 @@
             }
             else
             {
-//                NSLog(@"Error saving file %@",error);
+
             }
         }
         else
         {
-//            NSLog(@"Error downloading zip file: %@", error);
             [self performSelectorOnMainThread:@selector(fail) withObject:nil waitUntilDone:YES];
         }
         

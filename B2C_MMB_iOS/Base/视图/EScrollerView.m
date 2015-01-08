@@ -198,7 +198,6 @@
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     currentPageIndex=page;
     
-//    NSLog(@"   %d",currentPageIndex);
     pageControl.currentPage=(page-1);
     int titleIndex=page-1;
     if (titleIndex==[titleArray count]) {
@@ -211,7 +210,6 @@
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)_scrollView
 {
-//    NSLog(@"page = %d",currentPageIndex);
 
     if(!timer)
     {

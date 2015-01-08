@@ -563,7 +563,6 @@
         cell = [[MyOrderHostTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     NSArray *itemsArray = [[dataArray objectAtIndex:path.section] myItems];
-    //    NSLog(@"itemsArray=%@",itemsArray);
     NSDictionary *itemDic = [itemsArray objectAtIndex:path.row];
     
     NSString *picString = [self dealPic:[itemDic objectForKey:@"productItemPic"]];
@@ -593,7 +592,6 @@
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
     int status = [[[dataArray objectAtIndex:path.section] status] intValue];
-    NSLog(@"status = %d",status);
     if(status == 1)
     {
         [cell.onLinePayBtn setHidden:NO];
@@ -863,12 +861,8 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     LookForCustomViewController *custom = [self.storyboard instantiateViewControllerWithIdentifier:@"lookForCustomViewController"];
-    //    custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    
-    //这部分暂时写死了
-    custom.orderNum = @"201404234998770799";
+        custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
     [self.navigationController pushViewController:custom animated:YES];
-    //    [self setHidesBottomBarWhenPushed:NO];
 }
 
 #pragma mark - 评价
@@ -916,7 +910,6 @@
     
     
     NSArray *itemsArray = [[dataArray objectAtIndex:sender.tag/10] myItems];
-    NSLog(@"%@",itemsArray);
     if(itemsArray.count != 0)
     {
         for(NSDictionary *dic in itemsArray)
@@ -947,7 +940,6 @@
     switch (buttonIndex)
     {
         case 0:
-            NSLog(@"取消");
             break;
         case 1:
         {
@@ -959,7 +951,6 @@
             
             NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&ordernum=%@",token,[self getMemberId],sureReceiveNumber];
             
-            NSLog(@"push%@",pushString);
             
             NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ReceiveProduct.html?"];
             conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSureReceiveTag delegate:self];
@@ -975,9 +966,7 @@
 
 #pragma mark - 确认接收
 - (void) receiveBtnClick:(UIButton *) sender
-{
-    NSLog(@"receiveBtnClick");
-    
+{    
     sureReceiveNumber = [[dataArray objectAtIndex:sender.tag/10] orderNum];
     
     UIAlertView *sureAlert = [[UIAlertView alloc] initWithTitle:nil

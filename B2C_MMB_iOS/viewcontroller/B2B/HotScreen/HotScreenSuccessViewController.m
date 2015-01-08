@@ -106,7 +106,6 @@
 #pragma mark - 在线客服
 - (IBAction)imBtn:(id)sender
 {
-     NSLog(@"场合选择提交成功—在线咨询");
 
     [self setHidesBottomBarWhenPushed:YES];
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])

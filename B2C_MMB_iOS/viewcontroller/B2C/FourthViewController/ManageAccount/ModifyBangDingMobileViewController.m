@@ -142,7 +142,6 @@
             }
         }
     }
-    NSLog(@"%@",dicRespon);
 }
 
 - (IBAction)validateBtnClick:(id)sender

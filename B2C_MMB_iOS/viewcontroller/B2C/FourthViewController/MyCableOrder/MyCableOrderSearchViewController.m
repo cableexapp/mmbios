@@ -195,7 +195,6 @@
 
     if(URLTag == URLB2COrderListAllTag)
     {
-//        NSLog(@"家装线订单搜索dicRespon = %@\n\n",dicRespon);
         int intTotal = [[dicRespon objectForKey:@"total"] intValue];
         int result = [[dicRespon objectForKey:@"result"] intValue];
 
@@ -324,10 +323,10 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     LookForCustomViewController *custom = [mySB instantiateViewControllerWithIdentifier:@"lookForCustomViewController"];
-    //    custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+        custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
     
     //这部分暂时写死了
-    custom.orderNum = @"201404234998770799";
+//    custom.orderNum = @"201404234998770799";
     [self.navigationController pushViewController:custom animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -406,7 +405,6 @@
     ali.productName = productTitle;
     ali.productPrice = total;
     ali.productOrderNum =  [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
-//    NSLog(@"%@  %@  %@  %@",ali.shopName,ali.productName,ali.productPrice,ali.productOrderNum);
     
     [ali testPay];
 }
@@ -415,7 +413,6 @@
 {
     switch (buttonIndex) {
         case 0:
-            NSLog(@"取消");
             break;
         case 1:
         {
@@ -427,7 +424,6 @@
             
             NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&ordernum=%@",token,[self getMemberId],sureReceiveNumber];
             
-            NSLog(@"push%@",pushString);
             
             NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ReceiveProduct.html?"];
             conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSureReceiveTag delegate:self];
@@ -444,7 +440,6 @@
 #pragma mark - 确认接收
 - (void) receiveBtnClick:(UIButton *) sender
 {
-    NSLog(@"receiveBtnClick");
     
     sureReceiveNumber = [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
     

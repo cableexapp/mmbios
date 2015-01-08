@@ -168,7 +168,6 @@
             {
                 [DCFStringUtil showNotice:msg];
                 
-                NSLog(@"返回msg = %@",msg);
             }
         }
     }
@@ -205,7 +204,6 @@
         receiver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiver"]];
         fullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress,detailAddress];
         fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
-        NSLog(@"receiver = %@",dic);
     }
     [tv reloadData];
 }

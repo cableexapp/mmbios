@@ -201,11 +201,9 @@
     
     NSString *town = [[dataArray objectAtIndex:indexPath.row] objectForKey:@"name"];
     NSString *str = [NSString stringWithFormat:@"%@,%@",_provinceAndCity,town];
-    NSLog(@"str = %@",str);
     
     if(arr.count != 0)
     {
-        NSLog(@"third=str = %@",str);
         AddReceiveFourthViewController *fourth = [[AddReceiveFourthViewController alloc] initWithData:arr WithTown:str];
         fourth.edit = _edit;
         fourth.pushDic = [NSDictionary dictionaryWithDictionary:_pushDic];
@@ -221,11 +219,9 @@
             //            final = [[AddReceiveFinalViewController alloc] initWithPushDic:_pushDic];
             for(UIViewController *vc in self.navigationController.viewControllers)
             {
-                NSLog(@"vc = %@",vc);
                 if([vc isKindOfClass:[AddReceiveFinalViewController class]])
                 {
                     NSArray *arr = [NSArray arrayWithObjects:str,_pushDic, nil];
-                    NSLog(@"third = %@   %@",str,_pushDic);
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"ThirdAddressStr" object:arr];
                     [self.navigationController popToViewController:vc animated:YES];
                     return;

@@ -118,7 +118,6 @@
     }
     
     
-    NSLog(@"%@",dicRespon);
 }
 
 

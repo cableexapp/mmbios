@@ -516,7 +516,6 @@
 //    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
     
     NSString *visitorid = [app getUdid];
-    NSLog(@"%@",visitorid);
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     NSString *pushString = nil;
     if([DCFCustomExtra validateString:memberid] == YES)

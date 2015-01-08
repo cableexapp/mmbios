@@ -39,7 +39,6 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"物流详情"];
     self.navigationItem.titleView = top;
     
-    NSLog(@"%@ %@ %@",self.mylogisticsNum,self.mylogisticsName,self.mylogisticsId);
     [self.logisticsNameLabel setText:self.mylogisticsName];
     [self.logisticsNumLabel setText:[NSString stringWithFormat:@"快递单号:%@",self.mylogisticsId]];
     
@@ -58,7 +57,6 @@
     //    http://m.kuaidi100.com/index_all.html?type="+com+"&postid="+nu
     
     NSString *str = [NSString stringWithFormat:@"http://m.kuaidi100.com/index_all.html?type=%@&postid=%@",self.mylogisticsNum,self.mylogisticsId];
-    NSLog(@"mylogisticsNum = %@ mylogisticsId = %@",self.mylogisticsNum,self.mylogisticsId);
     [_wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
     
 }
@@ -89,7 +87,6 @@
 
 - (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"error = %@",error.description);
 }
 
 - (void) webViewDidFinishLoad:(UIWebView *)webView
@@ -100,7 +97,6 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int logistStatus = [[dicRespon objectForKey:@"status"] intValue];
-    NSLog(@"logistStatus = %d",logistStatus);
     
     if(URLTag == URLLogisticsTrackingTag)
     {

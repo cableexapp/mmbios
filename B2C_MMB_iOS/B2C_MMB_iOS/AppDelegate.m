@@ -132,10 +132,8 @@ NSString *strUserId = @"";
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    //    NSLog(@"token = %@",deviceToken);
     NSString *token = [[deviceToken description]stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    //    NSLog(@"%@",token);
     [BPush registerDeviceToken:deviceToken]; // 必须
     [BPush bindChannel]; // 必须。可以在其它时机调用，只有在该方法返回（通过onMethod:response:回调）绑定成功时，app才能接收到Push消息。一个app绑定成功至少一次即可（如果access token变更请重新绑定）。
 }
@@ -204,7 +202,7 @@ NSString *strUserId = @"";
         _isB2CPush = YES;
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:_key2 forKey:@"memberId"];
+//    [[NSUserDefaults standardUserDefaults] setObject:_key2 forKey:@"memberId"];
     
     //    UIStoryboard *FourthSB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
     //    if([DCFCustomExtra validateString:memberid] == NO)
@@ -228,7 +226,6 @@ NSString *strUserId = @"";
 - (void)onlineConfigCallBack:(NSNotification *)note
 {
     
-    //NSLog(@"online config has fininshed and note = %@", note.userInfo);
 }
 
 - (void)umengTrack
@@ -238,11 +235,7 @@ NSString *strUserId = @"";
     [MobClick setAppVersion:XcodeAppVersion]; //参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
     //
     [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:nil];
-    //   reportPolicy为枚举类型,可以为 REALTIME,BATCH,SENDDAILY,SENDWIFIONLY几种
-    //   channelId 为NSString * 类型，channelId 为nil或@""时,默认会被被当作@"App Store"渠道
-    
-    //      [MobClick checkUpdate];   //自动更新检查, 如果需要自定义更新请使用下面的方法,需要接收一个(NSDictionary *)appInfo的参数
-    //    [MobClick checkUpdateWithDelegate:self selector:@selector(updateMethod:)];
+
     
     [MobClick updateOnlineConfig];  //在线参数配置
     
@@ -670,7 +663,6 @@ NSString *strUserId = @"";
 //点击通知栏推送聊天消息，进入聊天窗口
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    NSLog(@"在线客服——收到后台推送 = %@",notification);
     if ([self.pushChatView isEqualToString:@"push"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
@@ -772,7 +764,6 @@ NSString *strUserId = @"";
     NSError *error = nil;
     if (![xmppStream authenticateWithPassword:@"cableex123@yd?" error:&error])
     {
-        NSLog(@"连接服务器 = %@",[[error userInfo] description]);
     }
     else
     {
@@ -837,7 +828,6 @@ NSString *strUserId = @"";
     
     if (![xmppStream connect:&error])
     {
-        NSLog(@"连接服务器错误消息 = %@",[[error userInfo] description]);
         return NO;
     }
     NSLog(@"connect++++++++++++++++++++++444444");
@@ -870,7 +860,6 @@ NSString *strUserId = @"";
     {
         if (![xmppStream registerWithPassword:@"cableex123@yd?" error:&error])
         {
-            NSLog(@"注册++++++++++++++++++++++++ = %@",error.description);
         }
         else
         {
@@ -923,7 +912,6 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
-    NSLog(@"presence = %@",presence);
     
     //取得好友当前状态
     NSString *presenceType = [presence type];
@@ -952,7 +940,6 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
 {
-    //    NSLog(@"didNotAuthenticate");
 }
 
 //查询客服组列表
@@ -967,13 +954,11 @@ NSString *strUserId = @"";
     [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];
     [iq addChild:query];
     [[self xmppStream] sendElement:iq];
-    NSLog(@"查询列表 = %@\n\n",iq);
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     DDLogVerbose(@"%@", [iq description]);
-    NSLog(@"[IQ description] = %@\n\n",iq);
     if (self.roster.count == 0)
     {
         if ([@"result" isEqualToString:iq.type])
@@ -1004,16 +989,12 @@ NSString *strUserId = @"";
 //收到消息
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    NSLog(@"接收++++message = %@\n\n",message);
     //消息内容
     NSString *msg = [[message elementForName:@"body"] stringValue];
     NSString *from = [[message attributeForName:@"from"] stringValue];
     NSString *type= [[message attributeForName:@"type"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
-    
-    NSLog(@"from = %@\n\n",from);
-    
-    NSLog(@"to = %@\n\n",to);
+
     
     //排队等候，队列位置
     if([DCFCustomExtra validateString:[[message.children objectAtIndex:0] elementForName:@"position"].stringValue] == YES)
@@ -1041,9 +1022,7 @@ NSString *strUserId = @"";
     }
     else if([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound)
     {
-        NSLog(@"APP-self.personName = %@",self.personName);
-        
-        NSLog(@"APP-self.uesrID = %@",self.uesrID);
+
         
         self.personName = to;
         self.uesrID = from;
@@ -1077,7 +1056,6 @@ NSString *strUserId = @"";
                     NSString *loctime = [formatter stringFromDate:dates];
                     
                     [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:messageg_hasLogin];
-                    NSLog(@"登录状态_收消息——---------------------------------存储消息");
                 }
                 self.personName = to;
             }
@@ -1100,7 +1078,6 @@ NSString *strUserId = @"";
                     NSString *loctime = [formatter stringFromDate:dates];
                     
                     [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:messageg_noLogin];
-                    NSLog(@"未登录状态_收消息——-------------------------------存储消息");
                 }
             }
             self.personName = to;
@@ -1112,14 +1089,12 @@ NSString *strUserId = @"";
     {
         return;
     }
-    NSString *fromSimple=[from substringToIndex:range.location];
-    NSLog(@"接受%@的消息：%@ (消息类型:%@)",fromSimple,msg,type);
+//    NSString *fromSimple=[from substringToIndex:range.location];
 }
 
 // 发送消息回调方法
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
 {
-    //    NSLog(@"发送消息回调方法message = ++++++++++%@\n\n",message);
 }
 
 
@@ -1132,11 +1107,9 @@ NSString *strUserId = @"";
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documents = [paths objectAtIndex:0];
     NSString *filePath = [documents stringByAppendingPathComponent:@"ChatMessageList.sqlite"];
-    //    NSLog(@"进入数据库创建方法");
     
     //打开数据库
     int result = sqlite3_open([filePath UTF8String],&dataBase);
-    //    NSLog(@"result = %d",result);
     
     if (SQLITE_OK == result)
     {
@@ -1147,18 +1120,15 @@ NSString *strUserId = @"";
         //执行sql语句
         sqlite3_exec(dataBase, sqlCreate, nil, nil, &error);
         
-        //        NSLog(@"创建数据库 错误信息---%s",error);
         
         //版本更新增加新字段creater
         
         //字段增加
-        //        NSLog(@"进入数据库增加字段方法");
         
         char * sqlAdd = "ALTER TABLE MESSAGELIST ADD creater varchar(30)";
         
         sqlite3_exec(dataBase, sqlAdd, nil, nil, &error);
         
-        //        NSLog(@"增加字段错误信息----%s",error);
         
         //数据库使用完成后关闭数据库
         sqlite3_close(dataBase);

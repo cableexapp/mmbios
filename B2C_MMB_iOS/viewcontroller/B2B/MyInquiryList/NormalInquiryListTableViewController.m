@@ -457,7 +457,6 @@
         {
             if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
             {
-                NSLog(@"intpage = %d  pageSize = %d",intPage,pageSize);
                 if ((intPage-1) * pageSize < intTotal )
                 {
                     [self loadRequest];

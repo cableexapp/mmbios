@@ -155,7 +155,6 @@
 {
     UIButton *btn = (UIButton *) sender;
     int tag = btn.tag;
-    NSLog(@"TAG = %d",tag);
     btn.selected = !btn.selected;
     for(UIButton *btn in billBtnArray)
     {

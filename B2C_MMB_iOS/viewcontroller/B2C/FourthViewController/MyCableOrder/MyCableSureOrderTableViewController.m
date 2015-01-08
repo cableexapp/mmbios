@@ -540,7 +540,7 @@
 {
     if(indexPath.section == 0)
     {
-        if(!billMsgNameLabel)
+        if(billMsgNameLabel.frame.size.height<=30)
         {
             return 44;
         }
@@ -589,7 +589,7 @@
     
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[b2bMyCableDetailData.myItems objectAtIndex:indexPath.row]];
     
-    NSString *theInquirySpec = [NSString stringWithFormat:@"%@平方",[dic objectForKey:@"spec"]]; //规格
+    NSString *theInquirySpec = [NSString stringWithFormat:@"%@",[dic objectForKey:@"spec"]]; //规格
     NSString *theInquiryVoltage = [NSString stringWithFormat:@"%@",[dic objectForKey:@"voltage"]]; //电压
     NSString *theInquiryFeature = [NSString stringWithFormat:@"%@",[dic objectForKey:@"feature"]]; //阻燃
     NSString *thecolor = [NSString stringWithFormat:@"%@",[dic objectForKey:@"color"]]; //颜色
@@ -633,7 +633,9 @@
     }
     else
     {
-        requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
+        NSString *require = [NSString stringWithFormat:@"特殊要求: %@",[dic objectForKey:@"require"]]; //特殊要求
+
+        requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:require WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
         h4 = requestSize.height;
     }
     return 65.5+h1+h2+h3+h4+5;
@@ -954,8 +956,8 @@
                 [pricelabel setFrame:CGRectMake(10, 65.5+height_1+height_2,ScreenWidth-20,20)];
                 height_3 = 20;
                 [pricelabel setAttributedText:myPrice];
+                [cell.contentView addSubview:pricelabel];
             }
-            [cell.contentView addSubview:pricelabel];
             
             
             UILabel *requestLabel = [[UILabel alloc] init];

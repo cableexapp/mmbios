@@ -204,7 +204,7 @@ NSString *strUserId = @"";
         _isB2CPush = YES;
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:_key2 forKey:@"memberId"];
+//    [[NSUserDefaults standardUserDefaults] setObject:_key2 forKey:@"memberId"];
     
     //    UIStoryboard *FourthSB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
     //    if([DCFCustomExtra validateString:memberid] == NO)

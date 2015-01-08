@@ -86,7 +86,7 @@
     {
         billMsgNameLabel = [[UILabel alloc] init];
         [billMsgNameLabel setFont:[UIFont systemFontOfSize:13]];
-        [billMsgNameLabel setTextAlignment:NSTextAlignmentRight];
+//        [billMsgNameLabel setTextAlignment:NSTextAlignmentRight];
         [billMsgNameLabel setNumberOfLines:0];
     }
     
@@ -106,7 +106,7 @@
         invoiceId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"invoiceId"]];
         
         NSString *headType = [dic objectForKey:@"type"];
-        if(headType.length == 0 || [headType isKindOfClass:[NSNull class]])
+        if([DCFCustomExtra validateString:headType] == NO)
         {
             [billMsgTypeLabel setFrame:CGRectMake(10,5, 0, 30)];
         }
@@ -122,7 +122,7 @@
         [billMsgTypeLabel setText:headType];
         
         NSString *headName = [dic objectForKey:@"name"];
-        if(headName.length == 0 || [headName isKindOfClass:[NSNull class]])
+        if([DCFCustomExtra validateString:headName] == NO)
         {
             [billMsgNameLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x + billMsgTypeLabel.frame.size.width + 5, 5, 0, 30)];
         }
@@ -135,7 +135,7 @@
             }
             else
             {
-                [billMsgNameLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x + billMsgTypeLabel.frame.size.width + 5, 5, ScreenWidth-25-billMsgTypeLabel.frame.size.width, MAXFLOAT)];
+                [billMsgNameLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x + billMsgTypeLabel.frame.size.width + 5, 5, ScreenWidth-25-billMsgTypeLabel.frame.size.width, size.height)];
             }
         }
         [billMsgNameLabel setText:headName];
@@ -540,7 +540,11 @@
 {
     if(indexPath.section == 0)
     {
-        return 44;
+        if(!billMsgNameLabel)
+        {
+            return 44;
+        }
+        return billMsgNameLabel.frame.size.height+10;
     }
     if(indexPath.section == 1)
     {

@@ -71,12 +71,17 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
+    if(self.testSubTableView)
+    {
+        [self.testSubTableView setEditing:NO];
+    }
+    NSLog(@"test");
     rightButtonView.hidden = YES;
     [self deleteHistorySelestData];
 }
@@ -107,11 +112,11 @@
     [rightBtn addTarget:self action:@selector(searchRightBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [rightButtonView addSubview:rightBtn];
     
-//    [super viewDidLoad];
+    //    [super viewDidLoad];
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"热门分类"];
     self.navigationItem.titleView = top;
-//    [super viewDidLoad];
-
+    //    [super viewDidLoad];
+    
     //读取plist文件
     NSString *filePath = [[NSString alloc] initWithFormat:@"%@",[[NSBundle mainBundle] pathForResource:@"Hotpst" ofType:@"plist"]];
     dataArray = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
@@ -119,8 +124,8 @@
     {
         [_testTableView reloadData];
     }
-      selectArray = [NSMutableArray arrayWithCapacity:dataArray.count];
-     [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, 0)];
+    selectArray = [NSMutableArray arrayWithCapacity:dataArray.count];
+    [self.testSubTableView setFrame:CGRectMake(self.testSubTableView.frame.origin.x, self.testSubTableView.frame.origin.y, self.testSubTableView.frame.size.width, 0)];
     self.testSubTableView.hidden = YES;
     
     // 设置按钮内部的imageView的内容模式为居中
@@ -135,7 +140,7 @@
     self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
     self.testSubTableView.backgroundColor = [UIColor redColor];
     
-//    小三角按钮
+    //    小三角按钮
     backView = [[UIButton alloc] init];
     backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
     backView.hidden = YES;
@@ -143,7 +148,7 @@
     backView.backgroundColor = [UIColor lightGrayColor];
     [self.view insertSubview:backView aboveSubview:self.testTableView];
     
-//     返回按钮的操作
+    //     返回按钮的操作
     self.upBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     self.upBtn.layer.cornerRadius = 5;
 }
@@ -275,7 +280,7 @@
             cell = [[HotKindFirstViewTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellId];
         }
         cell.contentView.backgroundColor = [UIColor colorWithRed:245.0/255.0 green:228.0/255.0 blue:191.0/255.0 alpha:255.0/255.0];
-    
+        
         //显示数据
         NSString *str = [NSString stringWithFormat:@"%@",[[selectArray objectAtIndex: indexPath.row] objectForKey:@"typePls"]];
         [cell.textLabel setText:str];
@@ -292,7 +297,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-//    NSLog(@"indexPath = %zi",indexPath.row);
+    //    NSLog(@"indexPath = %zi",indexPath.row);
     if (tableView.tag == 33)
     {
         self.testTableView.frame = CGRectMake(0, 36, self.view.frame.size.width, self.view.frame.size.height-73);
@@ -304,7 +309,7 @@
     }
     [_testTableView reloadData];
     [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
-
+    
     if (self.isOpened)
     {
         [_testSubTableView reloadData];
@@ -368,32 +373,32 @@
 - (IBAction)typeBtn:(id)sender
 {
     
-if ( _opend )
+    if ( _opend )
     {
-//        判断字符串封装方法，如果为NO就为空。
-//        [DCFCustomExtra validateString:@"123"] == NO;
+        //        判断字符串封装方法，如果为NO就为空。
+        //        [DCFCustomExtra validateString:@"123"] == NO;
         self.opend = NO;
         backView.hidden = YES;
         
-//     2.动画效果
+        //     2.动画效果
         [UIView animateWithDuration:0.3 animations:^{
-         self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
+            self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(0);  //三角按钮旋转
         }];
-
+        
         _testTableView.userInteractionEnabled = YES;
         _testSubTableView.hidden = YES;
     }
-   else
+    else
     {
         self.opend = YES;
         backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
         backView.alpha = 0.6;
         backView.hidden = NO;
-        if (selectArray.count != 0) 
+        if (selectArray.count != 0)
         {
-         _testSubTableView.hidden = YES;
+            _testSubTableView.hidden = YES;
         }
-//        动画效果
+        //        动画效果
         [UIView animateWithDuration:0.3 animations:^{
             self.triangleBtn.imageView.transform = CGAffineTransformMakeRotation(-M_PI);  //三角按钮旋转
         }];
@@ -409,12 +414,12 @@ if ( _opend )
 #pragma mark - 清空按钮
 - (IBAction)clearBtn:(id)sender
 {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"确认要清空已选择的分类吗？"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                             destructiveButtonTitle:@"清空"
-                                                  otherButtonTitles:nil, nil];
-      [sheet showInView:self.view];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"确认要清空已选择的分类吗？"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                         destructiveButtonTitle:@"清空"
+                                              otherButtonTitles:nil, nil];
+    [sheet showInView:self.view];
 }
 
 #pragma mark - 提交

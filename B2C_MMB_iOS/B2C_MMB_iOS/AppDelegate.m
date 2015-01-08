@@ -344,7 +344,7 @@ NSString *strUserId = @"";
         WelComeViewController *welcome = [sb instantiateViewControllerWithIdentifier:@"welComeViewController"];
         self.window.rootViewController = welcome;
         [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
-        [self connect]; //连接openfire
+        
     }
     else
     {
@@ -359,7 +359,7 @@ NSString *strUserId = @"";
             [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
         }
     }
-    
+//    [self connect]; //连接openfire
     [PhoneHelper sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     
@@ -650,7 +650,7 @@ NSString *strUserId = @"";
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     //当程序恢复活跃的时候 连接上xmpp聊天服务器
-    //    [self reConnect];
+//        [self reConnect];
     [self queryRoster];
     NSLog(@"程序进入前台+++++++++++++++");
     
@@ -788,16 +788,17 @@ NSString *strUserId = @"";
 //连接服务器
 - (BOOL)connect
 {
+    NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
+    
+    NSString *myJID = [NSString stringWithFormat:@"%@@%@",username_IM,IM_hostName];
+    NSLog(@"IM_username = %@\n\n",username_IM);
+    NSLog(@"IM_password = %@\n\n",myJID);
     if (![xmppStream isDisconnected])
     {
         [self goonline];
         
         return YES;
     }
-    
-    NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
-    
-    NSString *myJID = [NSString stringWithFormat:@"%@@%@",username_IM,IM_hostName];
 
     NSString *myPassword = @"cableex123@yd?";
     
@@ -823,12 +824,14 @@ NSString *strUserId = @"";
 - (void)xmppStreamDidRegister:(XMPPStream *)sender
 {
     NSLog(@"注册帐号成功");
+    [self disconnect];
     [self reConnect];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error
 {
       NSLog(@"账号已注册 = %@",error.description);
+     [self disconnect];
      [self reConnect];
 }
 
@@ -900,7 +903,7 @@ NSString *strUserId = @"";
     
     //取得好友当前状态
     NSString *presenceType = [presence type];
-    
+    NSLog(@"客服状态 = %@++++++++++++++",[presence type]);
     if ([presenceType isEqualToString:@"unavailable"])
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"noFriendOnLine" object:nil];

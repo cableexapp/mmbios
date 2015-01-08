@@ -94,7 +94,7 @@ int messageCountNum = 0;
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view insertSubview:self.tableView atIndex:0];
+    [self.view addSubview:self.tableView];
 
     getArray = [[NSMutableArray alloc] init];
     
@@ -234,7 +234,7 @@ int messageCountNum = 0;
         self.appDelegate.personName = nil;
       if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"] || [self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
-//            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
+            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
             if (self.navigationController.viewControllers.count == 11)
             {
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:7] animated:NO];
@@ -398,10 +398,10 @@ int messageCountNum = 0;
      [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
-//-(void)viewDidDisappear:(BOOL)animated
-//{
-//    [self.navigationController.tabBarController.tabBar setHidden:NO];
-//}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:NO];
+}
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -1001,8 +1001,8 @@ int messageCountNum = 0;
         noNet.hidden = NO;
         noNetView.hidden = NO;
         noNetMessage.hidden = NO;
-        self.appDelegate.isConnect = @"断开";
     }
+    self.appDelegate.isConnect = @"断开";
 }
 
 //新人加入群聊

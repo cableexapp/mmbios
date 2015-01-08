@@ -71,25 +71,28 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-//    if(conn)
-//    {
-//        [conn stopConnection];
-//        conn = nil;
-//    }
-//    if(labelArray && labelArray.count != 0)
-//    {
-//        [labelArray removeAllObjects];
-//        labelArray = nil;
-//    }
-//    if(textViewArray && textViewArray.count != 0)
-//    {
-//        [textViewArray removeAllObjects];
-//        textViewArray = nil;
-//    }
+    //    if(conn)
+    //    {
+    //        [conn stopConnection];
+    //        conn = nil;
+    //    }
+    //    if(labelArray && labelArray.count != 0)
+    //    {
+    //        [labelArray removeAllObjects];
+    //        labelArray = nil;
+    //    }
+    //    if(textViewArray && textViewArray.count != 0)
+    //    {
+    //        [textViewArray removeAllObjects];
+    //        textViewArray = nil;
+    //    }
     if([headTV isFirstResponder])
     {
         [headTV resignFirstResponder];
     }
+    
+    //    [headTV addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+    [headTV removeObserver:self forKeyPath:@"contentSize" context:NULL];
 }
 
 

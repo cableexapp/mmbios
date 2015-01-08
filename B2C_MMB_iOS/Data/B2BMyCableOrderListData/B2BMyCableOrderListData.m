@@ -41,21 +41,21 @@
         _orderid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderid"]];
         
         _orderserial = [NSString stringWithFormat:@"%@",[dic objectForKey:@"orderserial"]];
-
+        
         _ordertotal = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ordertotal"]];
-
+        
         _receiveaddress = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveaddress"]];
-
+        
         _receivecity = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivecity"]];
-
+        
         _receivecompany = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivecompany"]];
-
+        
         _receivedistrict = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivedistrict"]];
-
+        
         _receivename = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receivename"]];
-
+        
         _receiveprovince = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveprovince"]];
-
+        
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
         
         if([_status isEqualToString:@"0"])

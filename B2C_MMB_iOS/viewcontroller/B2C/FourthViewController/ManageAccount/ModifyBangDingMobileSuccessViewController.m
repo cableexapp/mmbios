@@ -36,17 +36,17 @@
             [self.navigationController popToViewController:vc animated:YES];
             return;
         }
-//        else if([vc isKindOfClass:[B2CShoppingListViewController class]])
-//        {
-//            [self.navigationController popToViewController:vc animated:YES];
-//            return;
-//        }
-//        else if ([vc isKindOfClass:[ShoppingHostViewController class]])
-//        {
-//            [self.navigationController popToViewController:vc
-//                                                  animated:YES];
-//            return;
-//        }
+        //        else if([vc isKindOfClass:[B2CShoppingListViewController class]])
+        //        {
+        //            [self.navigationController popToViewController:vc animated:YES];
+        //            return;
+        //        }
+        //        else if ([vc isKindOfClass:[ShoppingHostViewController class]])
+        //        {
+        //            [self.navigationController popToViewController:vc
+        //                                                  animated:YES];
+        //            return;
+        //        }
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -74,14 +74,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

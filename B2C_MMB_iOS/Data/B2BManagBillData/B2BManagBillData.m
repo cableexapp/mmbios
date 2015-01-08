@@ -30,7 +30,7 @@
             _b2bManagBillTime = [DCFCustomExtra nsdateToString:confromTimesp];
         }
         
-  
+        
         
         _address = [NSString stringWithFormat:@"%@",[dic objectForKey:@"address"]];
         
@@ -51,21 +51,21 @@
         _invoiceId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"invoiceId"]];
         
         _headName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"name"]];
-
+        
         _province = [NSString stringWithFormat:@"%@",[dic objectForKey:@"province"]];
-
+        
         _receiveCompany = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveCompany"]];
-
+        
         _receiveTel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"receiveTel"]];
-
+        
         _recipient = [NSString stringWithFormat:@"%@",[dic objectForKey:@"recipient"]];
-
+        
         _regAddr = [NSString stringWithFormat:@"%@",[dic objectForKey:@"regAddr"]];
-
+        
         _taxCode = [NSString stringWithFormat:@"%@",[dic objectForKey:@"taxCode"]];
-
+        
         _tel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"tel"]];
-
+        
         _headType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"type"]];
         if([_headType isEqualToString:@"1"])
         {
@@ -77,7 +77,7 @@
         }
         
         _zip = [NSString stringWithFormat:@"%@",[dic objectForKey:@"zip"]];
-
+        
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
         
         if([_status isEqualToString:@"0"])

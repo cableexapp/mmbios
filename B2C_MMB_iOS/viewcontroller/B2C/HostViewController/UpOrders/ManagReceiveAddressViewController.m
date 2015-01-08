@@ -56,6 +56,10 @@
 {
     [super viewWillDisappear:YES];
     [self cancelRequest];
+    if(tv)
+    {
+        [tv setEditing:NO];
+    }
 }
 - (void) cancelRequest
 {

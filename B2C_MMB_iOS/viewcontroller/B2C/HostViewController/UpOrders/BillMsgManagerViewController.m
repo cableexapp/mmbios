@@ -29,7 +29,7 @@
     
     NSString *invoicetype;
     
-//    NSString *memberid;
+    //    NSString *memberid;
     
     UIStoryboard *sb;
     
@@ -134,7 +134,7 @@
             {
                 NSMutableArray *arr = [[NSMutableArray alloc] initWithObjects:tf.text,myInvoiceid,[NSNumber numberWithInt:_billHeadTag],status,nil];
                 [[NSUserDefaults standardUserDefaults] setObject:arr forKey:@"BillMsg"];
-
+                
             }
             else
             {
@@ -277,7 +277,7 @@
             {
                 invoicetype = @"2";
             }
-      
+            
             
             NSString *time = [DCFCustomExtra getFirstRunTime];
 #pragma mark - 当editOrAddBill为0的时候表示新增发票，为1的时候表示编辑发票
@@ -360,7 +360,7 @@
             {
                 needBtn = billBtn;
             }
-
+            
             UILabel *billLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 10+40*i, 200, 30)];
             if(i == 0)
             {
@@ -437,7 +437,7 @@
             tf.layer.borderColor = [[UIColor lightGrayColor] CGColor];
             tf.layer.cornerRadius = 5;
             tf.layer.borderWidth = 1;
-//            [tf setText:_tfContent];
+            //            [tf setText:_tfContent];
             [tf setPlaceholder:_tfContent];
             
             [self.view addSubview:tf];
@@ -466,7 +466,7 @@
             [self.view addSubview:sureBtn];
         }
     }
-
+    
 #pragma mark - 当editOrAddBill为0的时候表示新增发票，为1的时候表示编辑发票   当status为1的时候表示需要发票，为2的时候表示不需要发票
     if(_editOrAddBill == NO)
     {

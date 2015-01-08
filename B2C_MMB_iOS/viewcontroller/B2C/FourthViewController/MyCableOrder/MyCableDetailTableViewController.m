@@ -70,6 +70,7 @@
         {
             if(result == 1)
             {
+                NSLog(@"%@",dicRespon);
                 b2bMyCableDetailData = [[B2BMyCableDetailData alloc] init];
                 [b2bMyCableDetailData dealData:dicRespon];
                 dataArray = [[NSMutableArray alloc] initWithArray:b2bMyCableDetailData.myItems];
@@ -223,8 +224,8 @@
     {
         [label setText:@"型号信息"];
     }
-//    [label setBackgroundColor:[UIColor whiteColor]];
-//    [view setBackgroundColor:[UIColor whiteColor]];
+    //    [label setBackgroundColor:[UIColor whiteColor]];
+    //    [view setBackgroundColor:[UIColor whiteColor]];
     [view addSubview:label];
     
     for(int i=0;i<2;i++)
@@ -324,7 +325,7 @@
         size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:address WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
         return size.height+40;
     }
-
+    
     NSDictionary *dic = [NSDictionary dictionaryWithDictionary:[dataArray objectAtIndex:indexPath.row]];
     
     
@@ -392,20 +393,20 @@
             return 91.5 + 80*logstics_listArray.count+height_1+height_2+height_3+height_4;
         }
     }
-
+    
     return 91.5+height_1+height_2+height_3+height_4;
     
-//    if([status intValue] == 5)
-//    {
-//        NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
-//        
-//        return 95+height_1+height_2+height_3+height_4+20 + 77*logstics_listArray.count;
-//    }
-//    else
-//    {
-//        return 95+height_1+height_2+height_3+height_4+20;
-//    }
-
+    //    if([status intValue] == 5)
+    //    {
+    //        NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
+    //
+    //        return 95+height_1+height_2+height_3+height_4+20 + 77*logstics_listArray.count;
+    //    }
+    //    else
+    //    {
+    //        return 95+height_1+height_2+height_3+height_4+20;
+    //    }
+    
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -428,7 +429,7 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-//        [cell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+        //        [cell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
         
         BOOL hide = YES;
@@ -500,7 +501,7 @@
                 myRecipient = [[NSMutableAttributedString alloc] initWithString:invoiceName];
                 [myRecipient addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 4)];
                 [myRecipient addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, invoiceName.length-4)];
- 
+                
                 [recipientLabel setAttributedText:myRecipient];
                 [recipientLabel setFont:[UIFont systemFontOfSize:12]];
                 [cell.contentView addSubview:recipientLabel];
@@ -666,7 +667,7 @@
                     {
                         if([DCFCustomExtra validateString:[dic objectForKey:@"spec"]] == NO)
                         {
-//                            [label setText:@"规格:"];
+                            //                            [label setText:@"规格:"];
                             [label setFrame:CGRectMake(10, lineView.frame.origin.y+20, width, 0)];
                         }
                         else
@@ -681,7 +682,7 @@
                     {
                         if([DCFCustomExtra validateString:theInquiryVoltage] == NO)
                         {
-//                            [label setText:[NSString stringWithFormat:@"电压:"]];
+                            //                            [label setText:[NSString stringWithFormat:@"电压:"]];
                             [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+20, width, 0)];
                         }
                         else
@@ -705,7 +706,7 @@
                     {
                         if([DCFCustomExtra validateString:theInquiryFeature] == NO)
                         {
-//                            [label setText:[NSString stringWithFormat:@"阻燃耐火:"]];
+                            //                            [label setText:[NSString stringWithFormat:@"阻燃耐火:"]];
                             [label setFrame:CGRectMake(10, lineView.frame.origin.y+20+height_1, width*2-20, 0)];
                             height_2 = 0;
                         }
@@ -733,12 +734,12 @@
             
             CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:thePrice WithSize:CGSizeMake(MAXFLOAT, 20)];
             UILabel *pricelabel = [[UILabel alloc] init];
-
+            
             
             UILabel *label_2 = [[UILabel alloc] init];
             [label_2 setFont:[UIFont systemFontOfSize:12]];
             [label_2 setText:[NSString stringWithFormat:@"元/%@",theUnit]];
-           
+            
             
             if([DCFCustomExtra validateString:thePrice] == NO)
             {
@@ -764,11 +765,11 @@
                 [cell.contentView addSubview:label_2];
                 [cell.contentView addSubview:pricelabel];
             }
-  
+            
             
             UILabel *label_3 = [[UILabel alloc] init];
             UILabel *requestLabel = [[UILabel alloc] init];
-
+            
             
             CGSize requestSize;
             if([DCFCustomExtra validateString:theRequire] == NO)
@@ -780,7 +781,7 @@
             else
             {
                 requestSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:theRequire WithSize:CGSizeMake(ScreenWidth-75, MAXFLOAT)];
-
+                
                 [label_3 setText:@"特殊要求:"];
                 [label_3 setFont:[UIFont systemFontOfSize:12]];
                 
@@ -792,9 +793,9 @@
                 [cell.contentView addSubview:label_3];
                 [cell.contentView addSubview:requestLabel];
             }
-   
-       
-      
+            
+            
+            
             NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
             float shippedHasNum = [[dic objectForKey:@"shippedHasNum"] floatValue];
             if(shippedHasNum > 0.00)
@@ -804,7 +805,7 @@
                     UIView *seperateView = [[UIView alloc] initWithFrame:CGRectMake(0, requestLabel.frame.origin.y+requestLabel.frame.size.height, ScreenWidth, 1)];
                     [seperateView setBackgroundColor:[UIColor lightGrayColor]];
                     [cell.contentView addSubview:seperateView];
-
+                    
                     NSArray *logstics_listArray = [NSArray arrayWithArray:[dic objectForKey:@"logstics_list"]];
                     for(int i=0;i<logstics_listArray.count;i++)
                     {
@@ -862,8 +863,8 @@
                     
                 }
             }
- 
-
+            
+            
         }
     }
     

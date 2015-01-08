@@ -106,7 +106,7 @@
     }
     
     [self.navigationController.tabBarController.tabBar setHidden:YES];
- 
+    
     if(!btnArray)
     {
         [self.allBtn setTag:0];
@@ -244,7 +244,7 @@
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,[self getMemberId],pageSize,intPage,_myStatus];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getOrderList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:ULRGetOrderListTag delegate:self];
-     
+    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
     [moreCell startAnimation];
@@ -309,7 +309,7 @@
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
-             [self reloadViewDataSource];
+            [self reloadViewDataSource];
         }
         else
         {
@@ -516,16 +516,16 @@
                 [label setFrame:CGRectMake(195, 5, 119, 21)];
                 [label setFont:[UIFont systemFontOfSize:11]];
                 [label setTextAlignment:NSTextAlignmentRight];
-//                NSString *s1 = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"month"];
-//                NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
-//                
-//                NSString *date = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"date"];
-//                
-//                NSString *hours = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"hours"];
-//                
-//                NSString *minutes = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"minutes"];
-//                
-//                NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
+                //                NSString *s1 = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"month"];
+                //                NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
+                //
+                //                NSString *date = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"date"];
+                //
+                //                NSString *hours = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"hours"];
+                //
+                //                NSString *minutes = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"minutes"];
+                //
+                //                NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
                 
                 [label setText:[[dataArray objectAtIndex:section] myOderDataTime]];
             }
@@ -598,10 +598,10 @@
     {
         [cell.onLinePayBtn setHidden:NO];
         [cell.cancelOrderBtn setHidden:NO];
-
+        
         [cell.onLinePayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.onLinePayBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
-
+        
         [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
@@ -616,7 +616,7 @@
     if(status == 2)
     {
         [cell.cancelOrderBtn setHidden:NO];
-
+        
         [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
@@ -632,12 +632,12 @@
     if(status == 3)
     {
         [cell.receiveBtn setHidden:NO];
-
+        
         [cell.receiveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.receiveBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         
         [cell.lookForTradeBtn setHidden:NO];
-
+        
         [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
         
@@ -659,17 +659,17 @@
             if(afterStatus == 2 || afterStatus == 3)
             {
                 [cell.discussBtn setHidden:NO];
-    
+                
                 [cell.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.discussBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.lookForCustomBtn setHidden:NO];
-
+                
                 [cell.lookForCustomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForCustomBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.lookForTradeBtn setHidden:NO];
-  
+                
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
@@ -685,12 +685,12 @@
             else
             {
                 [cell.discussBtn setHidden:NO];
-    
+                
                 [cell.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.discussBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.lookForTradeBtn setHidden:NO];
-
+                
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
@@ -708,12 +708,12 @@
             if(afterStatus == 2 || afterStatus == 3)
             {
                 [cell.lookForCustomBtn setHidden:NO];
-
+                
                 [cell.lookForCustomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForCustomBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.lookForTradeBtn setHidden:NO];
-
+                
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
@@ -728,7 +728,7 @@
             else
             {
                 [cell.lookForTradeBtn setHidden:NO];
-      
+                
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
                 cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
                 
@@ -809,13 +809,13 @@
     {
         return;
     }
-
+    
     [self setHidesBottomBarWhenPushed:YES];
     FourOrderDetailViewController *fourOrderDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourOrderDetailViewController"];
     fourOrderDetailViewController.myOrderNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:indexPath.section] orderNum]];
-
+    
     [self.navigationController pushViewController:fourOrderDetailViewController animated:YES];
-//    [self setHidesBottomBarWhenPushed:NO];
+    //    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (NSString *) dealPic:(NSString *) picString
@@ -868,7 +868,7 @@
     //这部分暂时写死了
     custom.orderNum = @"201404234998770799";
     [self.navigationController pushViewController:custom animated:YES];
-//    [self setHidesBottomBarWhenPushed:NO];
+    //    [self setHidesBottomBarWhenPushed:NO];
 }
 
 #pragma mark - 评价
@@ -882,7 +882,7 @@
     disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:sender.tag/10] subDate]];
     
     [self.navigationController pushViewController:disCuss animated:YES];
-//    [self setHidesBottomBarWhenPushed:NO];
+    //    [self setHidesBottomBarWhenPushed:NO];
 }
 
 
@@ -895,7 +895,7 @@
     logisticsTrackingView.mylogisticsNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsNum]];
     logisticsTrackingView.mylogisticsName = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] logisticsCompanay]];
     [self.navigationController pushViewController:logisticsTrackingView animated:YES];
-//    [self setHidesBottomBarWhenPushed:NO];
+    //    [self setHidesBottomBarWhenPushed:NO];
 }
 
 #pragma mark - 取消
@@ -906,7 +906,7 @@
     cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
     cancelOrderViewController.myStatus = [[dataArray objectAtIndex:sender.tag/10] status];
     [self.navigationController pushViewController:cancelOrderViewController animated:YES];
-//    [self setHidesBottomBarWhenPushed:NO];
+    //    [self setHidesBottomBarWhenPushed:NO];
 }
 
 #pragma mark - 在线支付
@@ -925,7 +925,7 @@
             productTitle = [productTitle stringByAppendingString:productItmeTitle];
         }
     }
-
+    
     
     
     AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];

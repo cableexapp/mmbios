@@ -131,15 +131,15 @@
     }
     else
     {
-//        receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:
-//                      data.province,@"receiveprovince",
-//                      data.city,@"receivecity",
-//                      data.area,@"receivedistrict",
-//                      data.streetOrTown,@"receiveaddress",
-//                      data.detailAddress,@"fullAddress",
-//                      data.receiver,@"receiver",
-//                      data.mobile,@"receiveTel",
-//                      data.addressId,@"receiveAddressId",
+        //        receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:
+        //                      data.province,@"receiveprovince",
+        //                      data.city,@"receivecity",
+        //                      data.area,@"receivedistrict",
+        //                      data.streetOrTown,@"receiveaddress",
+        //                      data.detailAddress,@"fullAddress",
+        //                      data.receiver,@"receiver",
+        //                      data.mobile,@"receiveTel",
+        //                      data.addressId,@"receiveAddressId",
         receiver = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiver"]];
         receiveTel = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveTel"]];
         receiveprovince = [NSString stringWithFormat:@"%@",[addressDic objectForKey:@"receiveprovince"]];
@@ -636,7 +636,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-
+    
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"BillMsg"])
     {
         billMsg = @"暂无发票信息";
@@ -657,7 +657,7 @@
             billId = 0;
         }
     }
-
+    
     if(tv)
     {
         [tv reloadData];
@@ -682,16 +682,16 @@
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-//    switch (buttonIndex) {
-//        case 0:
-//            
-//            break;
-//        case 1:
-            [self.navigationController popViewControllerAnimated:YES];
-//            break;
-//        default:
-//            break;
-//    }
+    //    switch (buttonIndex) {
+    //        case 0:
+    //
+    //            break;
+    //        case 1:
+    [self.navigationController popViewControllerAnimated:YES];
+    //            break;
+    //        default:
+    //            break;
+    //    }
 }
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
@@ -1196,7 +1196,7 @@
                 else
                 {
                     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 43, ScreenWidth, 1)];
-                   [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
+                    [view setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
                     [cell.contentView addSubview:view];
                     
                     NSString *str = nil;
@@ -1282,24 +1282,24 @@
                 colorLabel.frame = CGRectMake(ScreenWidth-size_color.width-10, 28, size_color.width, 20);
                 colorLabel.text = color;
                 colorLabel.font = [UIFont systemFontOfSize:12];
-
+                
                 
                 NSString *NumBer = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"num"]];
                 NSString *testNum = [DCFCustomExtra notRounding:NumBer];
-//                NSString *testNum = nil;
-//                for(int i=0;i<NumBer.length;i++)
-//                {
-//                    char c = [NumBer characterAtIndex:i];
-//                    if(c == '.')
-//                    {
-//                        testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-//                        break;
-//                    }
-//                    else if(i == NumBer.length-1)
-//                    {
-//                        testNum = NumBer;
-//                    }
-//                }
+                //                NSString *testNum = nil;
+                //                for(int i=0;i<NumBer.length;i++)
+                //                {
+                //                    char c = [NumBer characterAtIndex:i];
+                //                    if(c == '.')
+                //                    {
+                //                        testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+                //                        break;
+                //                    }
+                //                    else if(i == NumBer.length-1)
+                //                    {
+                //                        testNum = NumBer;
+                //                    }
+                //                }
                 
                 NSString *price = [NSString stringWithFormat:@"%@",[itemDic objectForKey:@"price"]];
                 CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"¥ %@",price] WithSize:CGSizeMake(MAXFLOAT, 20)];
@@ -1309,13 +1309,13 @@
                 priceLabel.textColor = [UIColor redColor];
                 [priceLabel setFont:[UIFont systemFontOfSize:12]];
                 
-               
+                
                 NSString *number = [NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"数量: %@",[itemDic objectForKey:@"num"]]];
                 CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:number WithSize:CGSizeMake(MAXFLOAT, 20)];
                 UILabel *countlabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth-size_2.width-10,50, size_2.width, 20)];
                 [countlabel setText:number];
                 [countlabel setFont:[UIFont systemFontOfSize:12]];
- 
+                
                 UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
                 //                [view setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
                 CGFloat height = size.height+size_1.height;

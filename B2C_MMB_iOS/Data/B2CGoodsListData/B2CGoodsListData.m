@@ -32,7 +32,7 @@
         int docIndex = _p1Path.length-4;
         if([_p1Path characterAtIndex:docIndex] == '.')
         {
-  
+            
             NSString *s1 = [_p1Path substringToIndex:docIndex];
             
             NSString *s2 = [s1 stringByAppendingString:@"_100"];
@@ -49,7 +49,7 @@
         else
         {
             docIndex = _p1Path.length - 5;
-
+            
             NSString *s3 = [_p1Path substringToIndex:docIndex];
             
             NSString *s4 = [s3 stringByAppendingString:@"_300"];
@@ -62,7 +62,7 @@
             
             _p1Path = [NSString stringWithFormat:@"%@",has];
         }
-    
+        
     }
     return self;
 }

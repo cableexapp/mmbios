@@ -28,27 +28,27 @@
             
             _time = [DCFCustomExtra nsdateToString:confromTimesp];
         }
-
+        
         _inquiryid = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryid"]];
-
+        
         _inquiryserial = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquiryserial"]];
-
+        
         _inquirytotal = [NSString stringWithFormat:@"%@",[dic objectForKey:@"inquirytotal"]];
-
+        
         NSArray *ctems = [[NSArray alloc] initWithArray:[dic objectForKey:@"ctems"]];
-//        NSArray *items = [[NSArray alloc] initWithArray:[dic objectForKey:@"items"]];
-//        if(ctems.count == 0 || [ctems isKindOfClass:[NSNull class]])
-//        {
-//            _myItems = [[NSArray alloc] initWithArray:items];
-//        }
-//        else if(items.count == 0 || [items isKindOfClass:[NSNull class]])
-//        {
-            _myItems = [[NSArray alloc] initWithArray:ctems];
-//        }
-//        else
-//        {
-//            _myItems = [[NSArray alloc] init];
-//        }
+        //        NSArray *items = [[NSArray alloc] initWithArray:[dic objectForKey:@"items"]];
+        //        if(ctems.count == 0 || [ctems isKindOfClass:[NSNull class]])
+        //        {
+        //            _myItems = [[NSArray alloc] initWithArray:items];
+        //        }
+        //        else if(items.count == 0 || [items isKindOfClass:[NSNull class]])
+        //        {
+        _myItems = [[NSArray alloc] initWithArray:ctems];
+        //        }
+        //        else
+        //        {
+        //            _myItems = [[NSArray alloc] init];
+        //        }
         
         _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
         if([_status isEqualToString:@"0"])
@@ -83,19 +83,19 @@
         _address = [NSString stringWithFormat:@"%@",[dic objectForKey:@"address"]];
         
         _city = [NSString stringWithFormat:@"%@",[dic objectForKey:@"city"]];
-
+        
         _district = [NSString stringWithFormat:@"%@",[dic objectForKey:@"district"]];
-
+        
         _province = [NSString stringWithFormat:@"%@",[dic objectForKey:@"province"]];
-
+        
         _fullAddress = [NSString stringWithFormat:@"%@%@%@%@",_province,_city,_district,_address];
         
         _recipint = [NSString stringWithFormat:@"%@",[dic objectForKey:@"recipint"]];
-
+        
         _tel = [NSString stringWithFormat:@"%@",[dic objectForKey:@"tel"]];
-
+        
         _pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:_fullAddress,@"fullAddress",_tel,@"tel",_recipint,@"name", nil];
-
+        
     }
     return self;
 }

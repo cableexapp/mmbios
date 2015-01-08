@@ -43,7 +43,7 @@
     CGFloat height_2;
     CGFloat height_3;
     CGFloat height_4;
-  
+    
     ChooseReceiveAddressViewController *chooseAddress;
     
     B2BMyCableDetailData *b2bMyCableDetailData;
@@ -144,16 +144,16 @@
         if([DCFCustomExtra validateString:headName] == NO)
         {
             [billMsgTypeLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x, (billMsgNameLabel.frame.size.height+10-30)/2, 200, 30)];
-
+            
         }
         else
         {
             [billMsgTypeLabel setFrame:CGRectMake(billMsgTypeLabel.frame.origin.x, (billMsgNameLabel.frame.size.height+10-30)/2, billMsgTypeLabel.frame.size.width, 30)];
-
+            
         }
         
     }
-
+    
     //确认是否使用发票
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"B2BManageBillSwitchStatus"])
     {
@@ -198,10 +198,10 @@
     NSString *string = [NSString stringWithFormat:@"%@%@",@"ConfirmOrder",time];
     NSString *token = [DCFCustomExtra md5:string];
     
-//    loginid,token,ordernum(订单编号),usefp(是否使用发票,1-使用，2-不使用),receiveprovince(收货省),receivecity(收货市),receivedistrict(收货区),receiveaddress(详细地址),receiver(收货人),tel(电话),invoiceid(发票id),invoiceprovince(发票邮寄省）, invoicecity（发票邮寄市）, invoicedistrict（发票邮寄区）, invoiceaddress（发票邮寄具体地址）, invoicetel（发票收获人电话）, invoicereceiver（发票收获人）
+    //    loginid,token,ordernum(订单编号),usefp(是否使用发票,1-使用，2-不使用),receiveprovince(收货省),receivecity(收货市),receivedistrict(收货区),receiveaddress(详细地址),receiver(收货人),tel(电话),invoiceid(发票id),invoiceprovince(发票邮寄省）, invoicecity（发票邮寄市）, invoicedistrict（发票邮寄区）, invoiceaddress（发票邮寄具体地址）, invoicetel（发票收获人电话）, invoicereceiver（发票收获人）
     
     NSString *pushString = nil;
-//
+    //
     NSString *name = b2bMyCableDetailData.reciver;
     if([DCFCustomExtra validateString:name] == NO)
     {
@@ -230,22 +230,34 @@
     }
     NSString *tel = b2bMyCableDetailData.theTel;
     NSLog(@"tel = %@",tel);
-
+    
     NSLog(@"%@",tel);
     if([DCFCustomExtra validateString:tel] == NO)
     {
         tel = @"";
     }
-
     
+    if([DCFCustomExtra validateString:receivedistrict] == NO)
+    {
+        receivedistrict = @"";
+    }
+    if([DCFCustomExtra validateString:receiveaddress] == NO)
+    {
+        receiveaddress = @"";
+    }
+    if([DCFCustomExtra validateString:receiveDetailAddress] == NO)
+    {
+        receiveDetailAddress = @"";
+    }
     if([usefp intValue] == 1)
     {
-        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicefulladdress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,name,tel,invoiceId,receiveprovince,receivecity,receivedistrict,receiveaddress,receiveDetailAddress,receiveTel,receiver];
+        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receivefulladdress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicefulladdress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,@"",name,tel,invoiceId,receiveprovince,receivecity,receivedistrict,receiveaddress,receiveDetailAddress,receiveTel,receiver];
     }
     else
     {
-        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicefulladdress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,name,tel,invoiceId,@"",@"",@"",@"",@"",@"",@""];
+        pushString = [NSString stringWithFormat:@"token=%@&orderid=%@&usefp=%@&receiveprovince=%@&receivecity=%@&receivedistrict=%@&receiveaddress=%@&receivefulladdress=%@&receiver=%@&tel=%@&invoiceid=%@&invoiceprovince=%@&invoicecity=%@&invoicedistrict=%@&invoiceaddress=%@&invoicefulladdress=%@&invoicetel=%@&invoicereceiver=%@",token,self.myOrderid,usefp,province,city,district,address,@"",name,tel,invoiceId,@"",@"",@"",@"",@"",@"",@""];
     }
+    NSLog(@"%@",pushString);
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLConfirmOrderTag delegate:self];
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/ConfirmOrder.html?"];
@@ -282,7 +294,7 @@
     if(URLTag == URLOrderDetailTag)
     {
         NSLog(@"%@",dicRespon);
-
+        
         if(result == 1)
         {
             b2bMyCableDetailData = [[B2BMyCableDetailData alloc] init];
@@ -351,6 +363,7 @@
 
 - (void) B2BReceveAddress:(NSDictionary *)dic
 {
+    NSLog(@"dic = %@",dic);
     if([[dic allKeys] count] == 0 || [dic isKindOfClass:[NSNull class]])
     {
         receiveAddressId = @"";
@@ -360,6 +373,7 @@
         receivedistrict = @"";
         receiveprovince = @"";
         receiver = @"";
+        receiveDetailAddress = @"";
         fullAddress = @"";
     }
     else
@@ -371,6 +385,7 @@
         receivecity = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receivecity"]];
         receivedistrict = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receivedistrict"]];
         receiveprovince = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiveprovince"]];
+        receiveDetailAddress = [receiverDic objectForKey:@"fullAddress"];
         receiver = [NSString stringWithFormat:@"%@",[receiverDic objectForKey:@"receiver"]];
         fullAddress = [NSString stringWithFormat:@"%@%@%@%@%@",receiveprovince,receivecity,receivedistrict,receiveaddress,[receiverDic objectForKey:@"fullAddress"]];
         fullAddress = [fullAddress stringByReplacingOccurrencesOfString:@"(null)" withString:@""];
@@ -416,7 +431,7 @@
         [billReceiveAddressLabel_1 setText:@"暂无发票邮寄地址"];
         [billReceiveAddressLabel_2 setFrame:CGRectMake(10, billReceiveAddressLabel_1.frame.origin.y + billReceiveAddressLabel_1.frame.size.height, ScreenWidth-20, 0)];
     }
-
+    
     
     [self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:229.0/255.0 blue:240.0/255.0 alpha:1.0]];
     [self.tableView setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:229.0/255.0 blue:240.0/255.0 alpha:1.0]];
@@ -499,8 +514,8 @@
     {
         [label setText:@"  型号信息"];
     }
-//    [label setBackgroundColor:[UIColor whiteColor]];
-//    [view setBackgroundColor:[UIColor whiteColor]];
+    //    [label setBackgroundColor:[UIColor whiteColor]];
+    //    [view setBackgroundColor:[UIColor whiteColor]];
     [view addSubview:label];
     
     for(int i=0;i<2;i++)
@@ -541,7 +556,7 @@
             return 0;
         }
         
-
+        
         if([DCFCustomExtra validateString:fullAddress] == NO)
         {
             return 40;
@@ -725,18 +740,18 @@
             NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
             NSString *testNum = [DCFCustomExtra notRounding:NumBer];
             //            for(int i=0;i<NumBer.length;i++)
-//            {
-//                char c = [NumBer characterAtIndex:i];
-//                if(c == '.')
-//                {
-//                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-//                    break;
-//                }
-//                else if(i == NumBer.length-1)
-//                {
-//                    testNum = NumBer;
-//                }
-//            }
+            //            {
+            //                char c = [NumBer characterAtIndex:i];
+            //                if(c == '.')
+            //                {
+            //                    testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+            //                    break;
+            //                }
+            //                else if(i == NumBer.length-1)
+            //                {
+            //                    testNum = NumBer;
+            //                }
+            //            }
             
             NSString *theNumber = [NSString stringWithFormat:@"数量: %@%@",testNum,unit];  //数量
             NSMutableAttributedString *myNumber = [[NSMutableAttributedString alloc] initWithString:theNumber];
@@ -800,20 +815,20 @@
                         
                         NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
                         NSString *testNum = [DCFCustomExtra notRounding:NumBer];
-//                        NSString *testNum = nil;
-//                        for(int i=0;i<NumBer.length;i++)
-//                        {
-//                            char c = [NumBer characterAtIndex:i];
-//                            if(c == '.')
-//                            {
-//                                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-//                                break;
-//                            }
-//                            else if(i == NumBer.length-1)
-//                            {
-//                                testNum = NumBer;
-//                            }
-//                        }
+                        //                        NSString *testNum = nil;
+                        //                        for(int i=0;i<NumBer.length;i++)
+                        //                        {
+                        //                            char c = [NumBer characterAtIndex:i];
+                        //                            if(c == '.')
+                        //                            {
+                        //                                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+                        //                                break;
+                        //                            }
+                        //                            else if(i == NumBer.length-1)
+                        //                            {
+                        //                                testNum = NumBer;
+                        //                            }
+                        //                        }
                         
                         NSString *number = [NSString stringWithFormat:@"%@",testNum];
                         if([DCFCustomExtra validateString:number] == NO)
@@ -830,7 +845,7 @@
                     {
                         [label setFrame:CGRectMake(10+halfWidth, lineView.frame.origin.y+5.5, halfWidth, 20)];
                         NSString *deliver = [NSString stringWithFormat:@"%@",[dic objectForKey:@"deliver"]];
-
+                        
                         if([DCFCustomExtra validateString:deliver] == NO)
                         {
                             [label setText:[NSString stringWithFormat:@"交货期:%@",@""]];
@@ -865,7 +880,7 @@
                             [label setAttributedText:myInquiryVoltage];
                             [label setFrame:CGRectMake(10+halfWidth,65.5, halfWidth, 20)];
                         }
-//
+                        //
                         if([DCFCustomExtra validateString:[dic objectForKey:@"spec"]] == NO && [DCFCustomExtra validateString:[dic objectForKey:@"voltage"]] == NO)
                         {
                             height_1 = 0;
@@ -912,11 +927,11 @@
                         
                         break;
                     }
-//
+                        //
                     default:
                         break;
                 }
-//
+                //
                 [cell.contentView addSubview:label];
             }
             
@@ -942,7 +957,7 @@
             UILabel *requestLabel = [[UILabel alloc] init];
             [requestLabel setFont:[UIFont systemFontOfSize:12]];
             [requestLabel setNumberOfLines:0];
-//
+            //
             CGSize requestSize;
             if([DCFCustomExtra validateString:[dic objectForKey:@"require"]] == NO)
             {

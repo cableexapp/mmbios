@@ -10,7 +10,7 @@
 
 @interface B2CGoodsListData : NSObject
 {
-
+    
 }
 @property (strong,nonatomic) NSString *productName;
 @property (strong,nonatomic) NSString *productPrice;

@@ -21,7 +21,7 @@
         _colorName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"colorName"]];
         
         _colorPrice = [NSString stringWithFormat:@"%@",[dic objectForKey:@"colorPrice"]];
-
+        
         _createDate = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:@"createDate"]];
         
         _isAvaliable = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isAvaliable"]];
@@ -29,7 +29,7 @@
         _isSale = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isSale"]];
         
         _isUse = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isUse"]];
-
+        
         _isDelete = [NSString stringWithFormat:@"%@",[dic objectForKey:@"isDelete"]];
         
         _itemId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"itemId"]];
@@ -38,20 +38,20 @@
         
         NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
         NSString *testNum = [DCFCustomExtra notRounding:NumBer];
-//        NSString *testNum = nil;
-//        for(int i=0;i<NumBer.length;i++)
-//        {
-//            char c = [NumBer characterAtIndex:i];
-//            if(c == '.')
-//            {
-//                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
-//                break;
-//            }
-//            else if(i == NumBer.length-1)
-//            {
-//                testNum = NumBer;
-//            }
-//        }
+        //        NSString *testNum = nil;
+        //        for(int i=0;i<NumBer.length;i++)
+        //        {
+        //            char c = [NumBer characterAtIndex:i];
+        //            if(c == '.')
+        //            {
+        //                testNum = [DCFCustomExtra notRounding:[NumBer doubleValue]];
+        //                break;
+        //            }
+        //            else if(i == NumBer.length-1)
+        //            {
+        //                testNum = NumBer;
+        //            }
+        //        }
         
         _num = [NSString stringWithFormat:@"%@",testNum];
         

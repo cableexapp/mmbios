@@ -82,6 +82,9 @@
         [self.testSubTableView setEditing:NO];
     }
     NSLog(@"test");
+    NSLog(@"test");
+    NSLog(@"test");
+
     rightButtonView.hidden = YES;
     [self deleteHistorySelestData];
 }

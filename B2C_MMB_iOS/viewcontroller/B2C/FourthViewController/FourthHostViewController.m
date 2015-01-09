@@ -611,11 +611,13 @@
     
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:orderTotal WithSize:CGSizeMake(MAXFLOAT, cell.totalLabel.frame.size.height)];
     
-    [cell.totalLabel setFrame:CGRectMake(ScreenWidth-10-size.width, cell.totalLabel.frame.origin.y, size.width, cell.totalLabel.frame.size.height)];
-    
+    [cell.totalLabel setFrame:CGRectMake(ScreenWidth-20-size.width, cell.totalLabel.frame.origin.y, size.width+10, cell.totalLabel.frame.size.height)];
+//    cell.totalLabel.backgroundColor = [UIColor yellowColor];
+    cell.totalLabel.font = [UIFont systemFontOfSize:13];
     [cell.totalLabel setText:orderTotal];
     
-    [cell.anotherTotalLabel setFrame:CGRectMake(ScreenWidth-10-cell.totalLabel.frame.size.width-10, cell.totalLabel.frame.origin.y, cell.anotherTotalLabel.frame.size.width, cell.anotherTotalLabel.frame.size.height)];
+    [cell.anotherTotalLabel setFrame:CGRectMake(ScreenWidth-10-cell.totalLabel.frame.size.width-cell.anotherTotalLabel.frame.size.width, cell.totalLabel.frame.origin.y, cell.anotherTotalLabel.frame.size.width, cell.anotherTotalLabel.frame.size.height)];
+//    cell.anotherTotalLabel.backgroundColor = [UIColor redColor];
     
     return cell;
 }

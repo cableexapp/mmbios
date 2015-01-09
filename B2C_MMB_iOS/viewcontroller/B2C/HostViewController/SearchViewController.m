@@ -284,7 +284,7 @@
     [self.view insertSubview:noResultView aboveSubview:self.serchResultView];
     
     UIImageView *noResultImageView = [[UIImageView alloc] init];
-    noResultImageView.frame = CGRectMake((ScreenWidth-130)/2, 40, 130, 75);
+    noResultImageView.frame = CGRectMake((ScreenWidth-200)/2, 40,200,115);
     noResultImageView.image = [UIImage imageNamed:@"noResult"];
     [noResultView addSubview:noResultImageView];
     

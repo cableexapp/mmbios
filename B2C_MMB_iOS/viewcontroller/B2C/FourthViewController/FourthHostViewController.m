@@ -262,7 +262,6 @@
     
     if(URLTag == ULRGetOrderListTag)
     {
-        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];

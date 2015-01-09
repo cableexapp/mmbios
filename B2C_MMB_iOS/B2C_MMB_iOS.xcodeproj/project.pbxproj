@@ -332,6 +332,7 @@
 		8B52C5031A392FD6005DC53D /* mob.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B52C5011A392FD6005DC53D /* mob.png */; };
 		8B52C5041A392FD6005DC53D /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B52C5021A392FD6005DC53D /* setting.png */; };
 		8B5BDB451A5D222B00D0D3DC /* B2CSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5BDB441A5D222B00D0D3DC /* B2CSearchViewController.m */; };
+		8B64D8951A6008380053023F /* more_hotline_tel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B64D8941A6008380053023F /* more_hotline_tel.png */; };
 		8B7549421A26FB2E00271985 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549411A26FB2E00271985 /* close.png */; };
 		8B7549441A27013600271985 /* chatBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549431A27013600271985 /* chatBtn.png */; };
 		8B7549461A270A4B00271985 /* shopPic.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549451A270A4B00271985 /* shopPic.png */; };
@@ -1401,6 +1402,7 @@
 		8B52C5021A392FD6005DC53D /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
 		8B5BDB431A5D222B00D0D3DC /* B2CSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CSearchViewController.h; sourceTree = "<group>"; };
 		8B5BDB441A5D222B00D0D3DC /* B2CSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CSearchViewController.m; sourceTree = "<group>"; };
+		8B64D8941A6008380053023F /* more_hotline_tel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more_hotline_tel.png; sourceTree = "<group>"; };
 		8B7549411A26FB2E00271985 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		8B7549431A27013600271985 /* chatBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatBtn.png; sourceTree = "<group>"; };
 		8B7549451A270A4B00271985 /* shopPic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopPic.png; sourceTree = "<group>"; };
@@ -2742,6 +2744,7 @@
 				8BF452411A39367E00E3665F /* global_main_logo.png */,
 				8B1672521A36D72200C79A2B /* location.png */,
 				8BF115101A57D0DF00FC6665 /* orderSearch@2x.png */,
+				8B64D8941A6008380053023F /* more_hotline_tel.png */,
 				8BF115111A57D0DF00FC6665 /* orderSearch.png */,
 				8BBEC25D1A5FD42D0019ADE3 /* 购物车.png */,
 				8BBEC25E1A5FD42D0019ADE3 /* tabCar.png */,
@@ -4863,6 +4866,7 @@
 				8BA7C0D01A10A85500758B0F /* 哭了@2x.png in Resources */,
 				8BA7C0B61A10A85500758B0F /* 太阳@2x.png in Resources */,
 				61DF89E019FB8FCD00D47430 /* GoodsFastPicTableViewCell.xib in Resources */,
+				8B64D8951A6008380053023F /* more_hotline_tel.png in Resources */,
 				6130A8E71A3EC510000B4FB2 /* Icon@2x.png in Resources */,
 				8BBC3A531A37EBB2007BA3C5 /* star_selected.png in Resources */,
 				8BD9B8B51A13573B0037FB65 /* icon02.png in Resources */,

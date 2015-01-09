@@ -49,7 +49,7 @@
     //    self.lblContent.frame = CGRectMake(94, 11, 132, 21);
     [self setUserInteractionEnabled:NO];
     self.lblContent.text = @"上拉加载更多";
-    self.lblContent.font = [UIFont systemFontOfSize:12];
+    self.lblContent.font = [UIFont systemFontOfSize:14];
     [self.avState stopAnimating];
     self.avState.hidden = YES;
 }
@@ -59,6 +59,8 @@
     self.avState.frame = CGRectMake(99, 12, 20, 20);
     self.lblContent.frame = CGRectMake(0, 11,320, 21);
     self.lblContent.textAlignment = NSTextAlignmentCenter;
+    [self.lblContent setFont:[UIFont systemFontOfSize:12]];
+    [self.lblContent setTextColor:[UIColor lightGrayColor]];
 }
 
 - (void)failAcimation

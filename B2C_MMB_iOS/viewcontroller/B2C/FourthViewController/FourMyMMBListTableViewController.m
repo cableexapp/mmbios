@@ -1015,7 +1015,10 @@
     {
         text = @"4";
     }
-    
+    if([text isEqualToString:@"全部订单"])
+    {
+        text = @"";
+    }
     [self setHidesBottomBarWhenPushed:YES];
     fourthHostViewController.myStatus = text;
     [self.navigationController pushViewController:fourthHostViewController animated:YES];

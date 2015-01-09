@@ -123,7 +123,10 @@
         }
         if([[dicRespon allKeys] count] == 0)
         {
-            [moreCell noDataAnimation];
+//            [moreCell noDataAnimation];
+            moreCell.lblContent.text = @"您的询价单暂无数据哦~";
+            [moreCell.avState stopAnimating];
+            moreCell.avState.hidden = YES;
         }
         else
         {
@@ -141,7 +144,10 @@
                 
                 if(intTotal == 0)
                 {
-                    [moreCell noDataAnimation];
+//                    [moreCell noDataAnimation];
+                    moreCell.lblContent.text = @"您的询价单暂无数据哦~";
+                    [moreCell.avState stopAnimating];
+                    moreCell.avState.hidden = YES;
                 }
                 else
                 {
@@ -151,7 +157,10 @@
             }
             else
             {
-                [moreCell noClasses];
+//                [moreCell noClasses];
+                moreCell.lblContent.text = @"您的询价单暂无数据哦~";
+                [moreCell.avState stopAnimating];
+                moreCell.avState.hidden = YES;
             }
         }
         

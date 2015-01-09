@@ -14,7 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "DCFColorUtil.h"
 
-@interface ChatViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,FaceBoardDelegate,EGORefreshTableHeaderDelegate,UIAlertViewDelegate,XMPPRoomDelegate,XMPPMUCDelegate>
+@interface ChatViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextViewDelegate,FaceBoardDelegate,EGORefreshTableHeaderDelegate,UIAlertViewDelegate,XMPPRoomDelegate,XMPPMUCDelegate,XMPPStreamDelegate>
 {
     FaceBoard *faceBoard;
     

@@ -77,8 +77,15 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     [self getProductSnap];
     [self getProductDetail];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -620,6 +627,7 @@
 
 - (IBAction)buttomBtn:(id)sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:self.myProductId];
     [self.navigationController pushViewController:detail animated:YES];
 }
@@ -632,7 +640,6 @@
 #pragma mark - 在线客服
 - (IBAction)chatBtn:(id)sender
 {
-    [self setHidesBottomBarWhenPushed:YES];
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         ChatViewController *chatVC = [[ChatViewController alloc] init];
@@ -644,6 +651,7 @@
         transition.type =  kCATransitionMoveIn;
         transition.subtype =  kCATransitionFromTop;
         transition.delegate = self;
+        [self setHidesBottomBarWhenPushed:YES];
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:chatVC animated:NO];
     }
@@ -658,20 +666,11 @@
         transition.type =  kCATransitionMoveIn;
         transition.subtype =  kCATransitionFromTop;
         transition.delegate = self;
+        [self setHidesBottomBarWhenPushed:YES];
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:chatVC animated:NO];
     }
     [self setHidesBottomBarWhenPushed:NO];
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    [self.navigationController.tabBarController.tabBar setHidden:YES];
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    [self.navigationController.tabBarController.tabBar setHidden:NO];
 }
 
 @end

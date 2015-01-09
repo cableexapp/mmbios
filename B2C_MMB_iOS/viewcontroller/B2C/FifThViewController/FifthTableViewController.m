@@ -325,18 +325,17 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"hasLogOut" object:[NSNumber numberWithBool:YES]];
             
             [DCFStringUtil showNotice:@"退出成功"];
-
+            
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
             [self loadbadgeCount];
             [self loadShopCarCount];
 
             //切换登录账号，结束之前对话
             [self.appDelegate goOffline];
-            [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
             [self.appDelegate disconnect];
+            [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
             [self.appDelegate reConnect];
             self.appDelegate.isConnect = @"断开";
-            
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
         }
     }
     if (URLTag == URLInquiryCartCountTag)

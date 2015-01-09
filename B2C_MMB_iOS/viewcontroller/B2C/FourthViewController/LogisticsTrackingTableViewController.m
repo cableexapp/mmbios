@@ -127,7 +127,7 @@
     if(indexPath.row == 0)
     {
         [cell.showBtn setBackgroundImage:[UIImage imageNamed:@"tradeDocSelect.png"] forState:UIControlStateNormal];
-        [cell.statusLabel setTextColor:[UIColor greenColor]];
+        [cell.statusLabel setTextColor:[UIColor colorWithRed:37/255.0 green:174/255.0 blue:95/255.0 alpha:1.0]];
     }
     else
     {

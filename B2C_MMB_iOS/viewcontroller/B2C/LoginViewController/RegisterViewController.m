@@ -631,7 +631,7 @@
     
     if(self.agreeBtn.selected == NO)
     {
-        [DCFStringUtil showNotice:@"您确定不同意电缆买卖宝用户注册协议吗"];
+        [DCFStringUtil showNotice:@"您确定不同意买卖宝用户注册协议吗"];
         return;
     }
     if([DCFCustomExtra validateString:self.userTf.text] == NO)

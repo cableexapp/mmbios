@@ -34,13 +34,9 @@
     
     [self pushAndPopStyle];
     
-    UIButton *hotLineButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    hotLineButton.frame = CGRectMake(30, 65, 50, 50);
-    [hotLineButton setBackgroundImage:[UIImage imageNamed:@"电话服务"] forState:UIControlStateNormal];
-    [hotLineButton addTarget:self action:@selector(callHotLine) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:hotLineButton];
-    
-    [self.hotBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -30, 0, 30)];
+    self.hotBtn.layer.borderWidth = 1;
+    self.hotBtn.layer.borderColor = [[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0] CGColor];
+    self.hotBtn.layer.cornerRadius = 5;
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
@@ -71,7 +67,7 @@
             
             break;
         case 1:
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
             break;
         default:
             break;

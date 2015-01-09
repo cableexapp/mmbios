@@ -38,11 +38,11 @@
 {
     [super viewDidLoad];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"物流详情"];
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"查看物流信息"];
     self.navigationItem.titleView = top;
     
     [self.logisticsNameLabel setText:self.mylogisticsName];
-    [self.logisticsNumLabel setText:[NSString stringWithFormat:@"快递单号:%@",self.mylogisticsId]];
+    [self.logisticsNumLabel setText:[NSString stringWithFormat:@"快递单号: %@",self.mylogisticsId]];
     
     logisticsTrackingTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"logisticsTrackingTableViewController"];
     logisticsTrackingTableViewController.view.frame = self.tableBackView.bounds;
@@ -129,11 +129,11 @@
         
         if([sendStatus rangeOfString:@"已签收"].location !=NSNotFound)
         {
-            [self.logisticsStatusLabel setText:@"已签收"];
+            [self.logisticsStatusLabel setText:@"物流状态: 已签收"];
         }
         else
         {
-            [self.logisticsStatusLabel setText:@"在途"];
+            [self.logisticsStatusLabel setText:@"物流状态: 在途"];
         }
     }
 

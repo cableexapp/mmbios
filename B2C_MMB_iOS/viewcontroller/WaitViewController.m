@@ -488,7 +488,7 @@ double secondsCountDown =0;
     NSDate *currentDate = [NSDate date];
     if ([currentDate compare:dateFrom]==NSOrderedDescending && [currentDate compare:dateTo]==NSOrderedAscending)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"电缆买卖宝提示"
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"买卖宝提示"
                                                             message:@"尊敬的客户，现在暂时没有客服在线，请前往提交快速询价需求，我们将在收到需求的第一时间回复您!"
                                                            delegate:self
                                                   cancelButtonTitle:nil
@@ -502,7 +502,7 @@ double secondsCountDown =0;
     }
     else
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"电缆买卖宝提示"
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"买卖宝提示"
                                                             message:@"尊敬的客户，客服工作时间为9：00-21:00，请前往提交快速询价需求，我们将在收到需求的第一时间回复您!"
                                                            delegate:self
                                                   cancelButtonTitle:nil

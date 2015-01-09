@@ -581,13 +581,13 @@
         shopNameLabel.textAlignment = NSTextAlignmentLeft;
         [titleBackView addSubview:shopNameLabel];
     }
-    else
-    {
-        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
-        {
-            [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-        }
-    }
+//    else
+//    {
+//        while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
+//        {
+//            [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
+//        }
+//    }
     if(!dataArray || dataArray.count == 0)
     {
         return [self returnMoreCell:self.myTableView];

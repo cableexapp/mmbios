@@ -352,7 +352,7 @@ NSString *strUserId = @"";
         [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
     }
     
-//     [self registerInSide];
+     [self registerInSide];
 
     [PhoneHelper sharedInstance];
     
@@ -648,35 +648,47 @@ NSString *strUserId = @"";
 //点击通知栏推送聊天消息，进入聊天窗口
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-//    if ([self.pushChatView isEqualToString:@"push"])
-//    {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
-//    }
 //    NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
 //    if ([tempMessagePush isEqualToString:@"1"])
 //    {
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
 //    }
-    //取消某一个通知
-    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    //获取当前所有的本地通知
-    if (!notificaitons || notificaitons.count <= 0)
+//    //取消某一个通知
+//    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
+//    //获取当前所有的本地通知
+//    if (!notificaitons || notificaitons.count <= 0)
+//    {
+//        return;
+//    }
+//    for (UILocalNotification *notify in notificaitons)
+//    {
+//        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
+//        {
+//            //取消一个特定的通知
+//            [[UIApplication sharedApplication] cancelLocalNotification:notify];
+//            if ([self.pushChatView isEqualToString:@"push"])
+//            {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+//            }
+//
+//            break;
+//        }
+//    }
+    if(application.applicationState == UIApplicationStateActive)
     {
-        return;
-    }
-    for (UILocalNotification *notify in notificaitons)
-    {
-        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
+        NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
+        if ([tempMessagePush isEqualToString:@"1"])
         {
-            //取消一个特定的通知
-            [[UIApplication sharedApplication] cancelLocalNotification:notify];
-            if ([self.pushChatView isEqualToString:@"push"])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
-            }
-
-            break;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
         }
+    }
+    else
+    {
+        if ([self.pushChatView isEqualToString:@"push"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+        }
+
     }
 }
 

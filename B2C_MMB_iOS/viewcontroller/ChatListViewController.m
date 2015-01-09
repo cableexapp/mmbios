@@ -11,6 +11,7 @@
 #import "Reachability.h"
 #import "ChatViewController.h"
 #import "HostTableViewController.h"
+#import "PhoneHelper.h"
 @interface ChatListViewController ()
 {
     UILabel *noNet;
@@ -171,8 +172,18 @@
 {
     if (self.appDelegate.roster.count == 0)
     {
-//        [self.appDelegate reConnect];
-        [self.appDelegate queryRoster];
+         BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+        if (hasLogin == YES)
+        {
+            NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+            [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
+            
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
+        }
+        [self.appDelegate reConnect];
         [self.memberTableView removeFromSuperview];
         self.tempArray = self.appDelegate.roster;
         self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
@@ -229,6 +240,18 @@
     noNetView.hidden = YES;
     noNetMessage.hidden = YES;
     [self reloadMemberList];
+    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+    if (hasLogin == YES)
+    {
+        NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+        [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
+        
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
+    }
+    [self.appDelegate reConnect];
 }
 
 //网络未连接提示

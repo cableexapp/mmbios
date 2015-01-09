@@ -159,13 +159,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mmb.png" highlighted="YES" id="eyY-BJ-FWw">
-                                <rect key="frame" x="72" y="89" width="176" height="50"/>
+                                <rect key="frame" x="35" y="65" width="250" height="81"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" V1.1.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xj1-lQ-Atb">
-                                <rect key="frame" x="186" y="137" width="62" height="30"/>
+                                <rect key="frame" x="192" y="137" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.023529411764705882" green="0.62745098039215685" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
@@ -318,11 +318,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="KtR-tr-yWE">
-                                <rect key="frame" x="0.0" y="140" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="140" width="320.0000661129975" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="清除本地缓存图片" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hZK-7S-2oZ">
-                                        <rect key="frame" x="14.999996264782826" y="8" width="181" height="30"/>
+                                        <rect key="frame" x="15" y="8" width="181.00006105332778" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
@@ -350,7 +350,7 @@
     </scenes>
     <resources>
         <image name="about.png" width="32" height="32"/>
-        <image name="mmb.png" width="246" height="70"/>
+        <image name="mmb.png" width="620" height="200"/>
         <image name="mob.png" width="32" height="32"/>
         <image name="set_clear.png" width="33" height="31"/>
         <image name="setting.png" width="32" height="32"/>

@@ -338,32 +338,31 @@
         {
             if(deleteOrNot == NO)
             {
-                [btn setFrame:CGRectMake(20*(i+1)+(ScreenWidth-80)/3*i, self.upLabel.frame.origin.y + self.upLabel.frame.size.height, (ScreenWidth-80)/3, (ScreenWidth-80)/3-5)];
+                [btn setFrame:CGRectMake(20*(i+1)+(ScreenWidth-80)/3*i, self.upLabel.frame.origin.y + self.upLabel.frame.size.height, (ScreenWidth-80)/3, (ScreenWidth-80)/3)];
                 if(i == picBtnArray.count-1)
                 {
-                    [self.lastUpPicBtn setFrame:CGRectMake(btn.frame.origin.x+btn.frame.size.width+20,btn.frame.origin.y+10,(ScreenWidth-80)/3,(ScreenWidth-80)/3)];
+                    [self.lastUpPicBtn setFrame:CGRectMake(btn.frame.origin.x+btn.frame.size.width+20,btn.frame.origin.y+14,(ScreenWidth-80)/3,(ScreenWidth-80)/3)];
                 }
             }
             else
             {
                 [btn setFrame:CGRectMake(20*(i+1)+(ScreenWidth-80)/3*i, self.upLabel.frame.origin.y + self.upLabel.frame.size.height+10, (ScreenWidth-80)/3, (ScreenWidth-80)/3-5)];
+                
                 if(i == picBtnArray.count-1)
                 {
                     [self.lastUpPicBtn setFrame:CGRectMake(btn.frame.origin.x+btn.frame.size.width+20,btn.frame.origin.y,(ScreenWidth-80)/3,(ScreenWidth-80)/3)];
                 }
             }
-            iv.frame = CGRectMake(0,10, (ScreenWidth-80)/3, (ScreenWidth-80)/3);
         }
         else
         {
-            [btn setFrame:CGRectMake(20*(i+1)+(ScreenWidth-80)/3*i, self.upLabel.frame.origin.y + self.upLabel.frame.size.height+10, (ScreenWidth-80)/3, (ScreenWidth-80)/3)];
+            [btn setFrame:CGRectMake(20*(i+1)+(ScreenWidth-80)/3*i, self.upLabel.frame.origin.y + self.upLabel.frame.size.height, (ScreenWidth-80)/3, (ScreenWidth-80)/3)];
             if(i == picBtnArray.count-1)
             {
                 [self.lastUpPicBtn setFrame:CGRectMake(btn.frame.origin.x+btn.frame.size.width+20,btn.frame.origin.y,(ScreenWidth-80)/3,(ScreenWidth-80)/3)];
             }
-            iv.frame = CGRectMake(0,0, (ScreenWidth-80)/3, (ScreenWidth-80)/3);
         }
-                           
+        iv.frame = CGRectMake(0,0, (ScreenWidth-80)/3, (ScreenWidth-80)/3);
         [iv setImage:(UIImage *)[chooseImageArray objectAtIndex:i]];
         [btn addSubview:iv];
         [self.mySv addSubview:btn];

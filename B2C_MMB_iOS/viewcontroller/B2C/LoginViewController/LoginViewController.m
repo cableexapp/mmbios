@@ -101,7 +101,7 @@
     self.navigationItem.titleView = top;
     
     UIImageView *titleImageView = [[UIImageView alloc] init];
-    titleImageView.frame = CGRectMake((ScreenWidth-176)/2, 20, 176, 50);
+    titleImageView.frame = CGRectMake((ScreenWidth-250)/2, 20,250, 81);
     titleImageView.image = [UIImage imageNamed:@"mmb"];
     [self.view addSubview:titleImageView];
     

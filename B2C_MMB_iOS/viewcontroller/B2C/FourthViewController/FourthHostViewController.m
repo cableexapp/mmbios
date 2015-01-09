@@ -544,7 +544,7 @@
             if(i == 4)
             {
                 NSString *status = [DCFCustomExtra compareStatus:[[dataArray objectAtIndex:section] status]];
-                NSString *str = [NSString stringWithFormat:@"订单状态:%@",status];
+                NSString *str = [NSString stringWithFormat:@"订单状态: %@",status];
                 CGSize size_2;
                 if([DCFCustomExtra validateString:status] == NO)
                 {
@@ -559,7 +559,7 @@
                     
                     NSMutableAttributedString *shopStatus = [[NSMutableAttributedString alloc] initWithString:str];
                     [shopStatus addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
-                    [shopStatus addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(5, str.length-5)];
+                    [shopStatus addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(5, str.length-5)];
                     [label setAttributedText:shopStatus];
                 }
 
@@ -608,10 +608,15 @@
     [cell.logisticsPriceLabel setText:[NSString stringWithFormat:@"运费: ￥%@",logisticsPriceString]];
     
     NSString *orderTotal = [NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:path.section] orderTotal]];
+    
     CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:orderTotal WithSize:CGSizeMake(MAXFLOAT, cell.totalLabel.frame.size.height)];
+    
     [cell.totalLabel setFrame:CGRectMake(ScreenWidth-10-size.width, cell.totalLabel.frame.origin.y, size.width, cell.totalLabel.frame.size.height)];
+    
     [cell.totalLabel setText:orderTotal];
+    
     [cell.anotherTotalLabel setFrame:CGRectMake(ScreenWidth-10-cell.totalLabel.frame.size.width-10, cell.totalLabel.frame.origin.y, cell.anotherTotalLabel.frame.size.width, cell.anotherTotalLabel.frame.size.height)];
+    
     return cell;
 }
 

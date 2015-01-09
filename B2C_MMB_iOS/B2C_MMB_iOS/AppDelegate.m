@@ -641,7 +641,7 @@ NSString *strUserId = @"";
         if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
         {
             //取消一个特定的通知
-            [[UIApplication sharedApplication] cancelLocalNotification:notify];
+//            [[UIApplication sharedApplication] cancelLocalNotification:notify];
             if ([self.pushChatView isEqualToString:@"push"])
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];

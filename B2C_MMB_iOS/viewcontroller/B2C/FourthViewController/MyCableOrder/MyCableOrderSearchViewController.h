@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
-@interface MyCableOrderSearchViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,UIAlertViewDelegate>
+#import "MBProgressHUD.h"
+
+@interface MyCableOrderSearchViewController : UIViewController<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,ConnectionDelegate,UIAlertViewDelegate,MBProgressHUDDelegate>
 {
     NSString *fromFlag;
     DCFConnectionUtil *conn;
+    MBProgressHUD *HUD;
 }
 
 @property (nonatomic,strong) UITableView *myTableView;

@@ -109,7 +109,6 @@
 
 @property (nonatomic,strong) NSString *forgroudPushMessage;
 
-
 #pragma mark - XMPP方法
 -(BOOL)connect;
 

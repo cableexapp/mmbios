@@ -298,7 +298,6 @@
             [app registerInSide];
             [app disconnect];
             [app reConnect];
-
             app.isConnect = @"断开";
             
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"app_username"];

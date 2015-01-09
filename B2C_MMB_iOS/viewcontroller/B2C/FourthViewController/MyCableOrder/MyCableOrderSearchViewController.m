@@ -141,7 +141,10 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController.tabBarController.tabBar setHidden:YES];
-    [self loadRequestB2COrderListAllWithStatus:@""];
+    if (dataArray.count == 0)
+    {
+        [self loadRequestB2COrderListAllWithStatus:@""];
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -196,7 +199,8 @@
 
             if([[dicRespon allKeys] count] == 0)
             {
-                [moreCell noDataAnimation];
+//                [moreCell noDataAnimation];
+                 noResultView.hidden = NO;
             }
             else
             {
@@ -205,22 +209,23 @@
                     if(intTotal == 0)
                     {
                         noResultView.hidden = NO;
-                        [moreCell noDataAnimation];
+//                        [moreCell noDataAnimation];
                     }
                     else
                     {
                         noResultView.hidden = NO;
                         dataArray = [dicRespon objectForKey:@"items"];
                         tempOrderNum = [dicRespon objectForKey:@"items"];
+                         [self.myTableView reloadData];
                     }
                 }
                 else
                 {
                     noResultView.hidden = YES;
-                    [moreCell failAcimation];
+//                    [moreCell failAcimation];
                 }
             }
-        [self.myTableView reloadData];
+       
        }
 }
 
@@ -244,7 +249,7 @@
     NSInteger row;
     if (dataArray.count == 0)
     {
-        row = 1;
+        row = 0;
     }
     else
     {
@@ -258,19 +263,11 @@
     CGFloat height;
     if(!dataArray || dataArray.count == 0)
     {
-        height =  44;
+        height = 0;
     }
     else
     {
-//        int status = [[dataArray[indexPath.row] objectForKey:@"status"] intValue];
-//        if(status == 5 || status == 7)
-//        {
-//            height = 188;
-//        }
-//        else
-//        {
-            height = 230;
-//        }
+        height = 230;
     }
     return height;
 }
@@ -773,6 +770,7 @@
 
 -(void)searchGoods
 {
+    [searchResults removeAllObjects];
     for (int i=0; i<dataArray.count; i++)
     {
         if([[dataArray[i] objectForKey:@"orderNum"] rangeOfString:search.text].location !=NSNotFound || [[[[dataArray[i] objectForKey:@"items"] objectAtIndex:0] objectForKey:@"productName"] rangeOfString:search.text].location !=NSNotFound || [[dataArray[i] objectForKey:@"shopName"] rangeOfString:search.text].location !=NSNotFound)
@@ -782,7 +780,7 @@
     }
     
     dataArray = searchResults;
-    
+
     [search resignFirstResponder];
     if (searchResults.count == 0)
     {
@@ -791,18 +789,22 @@
     else
     {
         noResultView.hidden = YES;
-        [self.myTableView removeFromSuperview];
-        self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
-        self.myTableView.delegate = self;
-        self.myTableView.dataSource = self;
-        self.myTableView.scrollEnabled = YES;
-        self.myTableView.backgroundColor = [UIColor clearColor];
-        self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-        [self.view addSubview:self.myTableView];
-        [self.myTableView reloadData];
+        [self refreshTableView];
     }
+}
 
+-(void)refreshTableView
+{
+    [self.myTableView removeFromSuperview];
+    self.myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 45,self.view.frame.size.width,self.view.frame.size.height-45) style:UITableViewStylePlain];
+    self.myTableView.delegate = self;
+    self.myTableView.dataSource = self;
+    self.myTableView.scrollEnabled = YES;
+    self.myTableView.backgroundColor = [UIColor clearColor];
+    self.myTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.myTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
+    [self.view addSubview:self.myTableView];
+    [self.myTableView reloadData];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -840,9 +842,7 @@
 {
     if (searchBar.text.length == 0)
     {
-        dataArray = tempOrderNum;
-        [self.myTableView reloadData];
-        
+        [self loadRequestB2COrderListAllWithStatus:@""];
         noResultView.hidden = NO;
         [self.view bringSubviewToFront:noResultView];
     }

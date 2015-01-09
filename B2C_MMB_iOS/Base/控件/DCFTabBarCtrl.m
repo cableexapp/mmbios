@@ -66,7 +66,7 @@
     [secondNavi.tabBarItem setTag:2];
     
     UIStoryboard *thirdSB = [UIStoryboard storyboardWithName:@"ThirdSB" bundle:nil];
-    ThirdNaviViewController *thirdNavi = [thirdSB instantiateViewControllerWithIdentifier:@"thirdNaviViewController"];
+    thirdNavi = [thirdSB instantiateViewControllerWithIdentifier:@"thirdNaviViewController"];
     UIImage *selectImImg = [UIImage imageNamed:@"imSelect.png"];
     UIImage *unSelectImImg = [UIImage imageNamed:@"imUnSelect.png"];
     selectImImg = [UIImage imageWithCGImage:selectImImg.CGImage scale:1.5 orientation:selectImImg.imageOrientation];

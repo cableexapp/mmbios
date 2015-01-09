@@ -263,55 +263,54 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
     NSError *error;
     NSString *resultStr = [[NSString alloc] initWithData:_dtReviceData encoding:NSUTF8StringEncoding];
-    
-    NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:_dtReviceData options:NSJSONReadingMutableLeaves error:&error];
-    
-//    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-//    NSError *err;
-//    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-//                                                        options:NSJSONReadingMutableContainers
-//                                                          error:&err];
-//    
-    ResultCode theResultCode = RS_Error;
-    
-    if (dicRespon && [[dicRespon allKeys] containsObject:@"result"]) {
+    NSLog(@"res = %@",resultStr);
+    if(appDel.lookForTradeMsg == YES)
+    {
+        [self.delegate resultWithString:resultStr];
+    }
+    else
+    {
+        NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:_dtReviceData options:NSJSONReadingMutableLeaves error:&error];
         
-        theResultCode = RS_Success;
-    }
-    int result = [[dicRespon objectForKey:@"result"] intValue];
-    
-//    if(self.LogOut == YES)
-//    {
-//        
-//    }
-    if(result == 1)
-    {
-        [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-    }
-    else if (result == 0)
-    {
-        [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-    }
-#pragma mark - 支付宝校验
-    else if(result == 2 || result == 3)
-    {
-        [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-   
-    }
-    else if (result == 99)
-    {
-        if(self.LogOut == YES)
+        ResultCode theResultCode = RS_Error;
+        
+        if (dicRespon && [[dicRespon allKeys] containsObject:@"result"]) {
+            
+            theResultCode = RS_Success;
+        }
+        int result = [[dicRespon objectForKey:@"result"] intValue];
+        
+        
+        if(result == 1)
         {
             [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-            return;
         }
-        AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        [appDel logOutMethod];
+        else if (result == 0)
+        {
+            [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
+        }
+#pragma mark - 支付宝校验
+        else if(result == 2 || result == 3)
+        {
+            [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
+            
+        }
+        else if (result == 99)
+        {
+            if(self.LogOut == YES)
+            {
+                [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
+                return;
+            }
+            [appDel logOutMethod];
+        }
     }
+
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error

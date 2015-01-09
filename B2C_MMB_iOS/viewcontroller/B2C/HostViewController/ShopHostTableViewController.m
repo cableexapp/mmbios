@@ -311,27 +311,6 @@
     if(indexPath.row >= 1 && indexPath.row < row + 1)
     {
         return 210;
-        //        for(int i=0;i<2;i++)
-        //        {
-        //            int n = (indexPath.row-1)*2 + i;
-        //            if(n <= dataArray.count-1)
-        //            {
-        //                NSString *str_1 = [[dataArray objectAtIndex:n] productName];
-        //                CGSize size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str_1 WithSize:CGSizeMake(125, MAXFLOAT)];
-        //                UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 125, 125, size_1.height)];
-        //                [nameLabel setText:str_1];
-        //                [nameLabel setFont:[UIFont systemFontOfSize:12]];
-        //                [nameLabel setNumberOfLines:0];
-        //
-        //                NSString *str_2 = [[dataArray objectAtIndex:n] productPrice];
-        //                CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:str_2 WithSize:CGSizeMake(125, MAXFLOAT)];
-        //                UILabel *priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, nameLabel.frame.origin.y+nameLabel.frame.size.height+10, 125, size_2.height)];
-        //                [priceLabel setText:str_2];
-        //                [priceLabel setFont:[UIFont systemFontOfSize:13]];
-        //
-        //                return 125+size_1.height+size_2.height+5+20;
-        //            }
-        //        }
     }
     return 43;
 }

@@ -35,7 +35,7 @@
             
             NSString *s1 = [_p1Path substringToIndex:docIndex];
             
-            NSString *s2 = [s1 stringByAppendingString:@"_100"];
+            NSString *s2 = [s1 stringByAppendingString:@"_310"];
             
             NSString *pre = [_p1Path substringFromIndex:docIndex];
             
@@ -52,7 +52,7 @@
             
             NSString *s3 = [_p1Path substringToIndex:docIndex];
             
-            NSString *s4 = [s3 stringByAppendingString:@"_300"];
+            NSString *s4 = [s3 stringByAppendingString:@"_310"];
             
             NSString *pre = [_p1Path substringFromIndex:docIndex];
             

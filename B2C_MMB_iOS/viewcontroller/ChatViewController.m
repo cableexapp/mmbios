@@ -39,8 +39,6 @@ int messageCountNum = 0;
     NSString *stringLabel;
     NSString *roomMessage;
     
-    NSString *isOn;
-    
     NSString *MessageFlag; //商品详情是否发送商品网址链接标记
     
     NSString *MessageTempFlag; //商品快照是否发送商品网址链接标记
@@ -50,7 +48,7 @@ int messageCountNum = 0;
     UIButton *rightBtn;
     
     NSMutableArray *getArray;
-    
+
 }
 
 @end
@@ -160,6 +158,9 @@ int messageCountNum = 0;
     //接收客服会话窗口关闭通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (noFriendOnLineMessage:) name:@"noFriendOnLine" object:nil];
 
+    //IM账号被迫下线
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(offtheopenfire:) name:@"Forced off the assembly line" object:nil];
+    
     ArrTimeCheck = [[NSMutableArray alloc]init];
 }
 
@@ -206,13 +207,41 @@ int messageCountNum = 0;
     }
 }
 
+-(void)noFriendOnLineMessage:(NSNotification *)busyMessage
+{
+    if ([busyMessage.object isEqualToString:@"unavailable"])
+    {
+        [messageField resignFirstResponder];
+        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+        toolBar.hidden = YES;
+        noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
+        noNet.hidden = NO;
+        noNetView.hidden = NO;
+        noNetMessage.hidden = NO;
+        self.appDelegate.isConnect = @"断开";
+    }    
+//    NSLog(@"busyMessage.object = %@",busyMessage.object);
+}
+
+-(void)offtheopenfire:(NSNotification *)busyMessage
+{
+    [messageField resignFirstResponder];
+    self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+    toolBar.hidden = YES;
+    noNetMessage.text = @"账号已在其他设备登录，请重新登录!";
+    noNet.hidden = NO;
+    noNetView.hidden = NO;
+    noNetMessage.hidden = NO;
+    self.appDelegate.isConnect = @"断开";
+}
+
 -(void)pageFromWhere
 {
-    NSLog(@"返回self.appDelegate.isConnect = %@",self.appDelegate.isConnect);
-    
-    NSLog(@"返回self.fromStringFlag = %@",self.fromStringFlag);
-    
-    NSLog(@"返回ison = %@",isOn);
+//    NSLog(@"返回self.appDelegate.isConnect = %@",self.appDelegate.isConnect);
+//    
+//    NSLog(@"返回self.fromStringFlag = %@",self.fromStringFlag);
+//    
+//    NSLog(@"返回ison = %@",isOn);
 
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
@@ -363,25 +392,6 @@ int messageCountNum = 0;
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
--(void)noFriendOnLineMessage:(NSNotification *)busyMessage
-{
-    if ([busyMessage.object isEqualToString:@"unavailable"])
-    {
-        [messageField resignFirstResponder];
-        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
-        toolBar.hidden = YES;
-        noNetMessage.text = @"本次咨询已经结束,客服已经离开!";
-        noNet.hidden = NO;
-        noNetView.hidden = NO;
-        noNetMessage.hidden = NO;
-        self.appDelegate.isConnect = @"断开";
-    }
-
-    isOn = busyMessage.object;
-    
-    NSLog(@"busyMessage.object = %@",busyMessage.object);
-}
-
 //服务器繁忙提示
 -(void)ServerisBusy:(NSNotification *)busyMessage
 {
@@ -412,6 +422,7 @@ int messageCountNum = 0;
 -(void)viewDidDisappear:(BOOL)animated
 {
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Forced off the assembly line" object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -466,7 +477,7 @@ int messageCountNum = 0;
             [view setHidden:YES];
         }
     }
-//    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
     btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0,0, 15, 22);
@@ -560,20 +571,6 @@ int messageCountNum = 0;
     }
 //    NSLog(@"咨询入口 = %@",self.fromStringFlag);
 //    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
-}
-
-- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error;
-{
-    NSLog(@"断开连接错误++++++++++++++++ = %@",[error description]);
-
-    [messageField resignFirstResponder];
-    self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
-    toolBar.hidden = YES;
-    noNetMessage.text = @"账号已在其他设备登录，请重新登录!";
-    noNet.hidden = NO;
-    noNetView.hidden = NO;
-    noNetMessage.hidden = NO;
-    self.appDelegate.isConnect = @"断开";
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView

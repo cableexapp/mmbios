@@ -44,6 +44,7 @@
 {
 //
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];

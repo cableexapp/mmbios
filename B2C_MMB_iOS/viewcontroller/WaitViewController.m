@@ -169,6 +169,20 @@ double secondsCountDown =0;
     
     //接收网络连接消息通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (NetisConnection:) name:@"NetisConnect" object:nil];
+    
+    //IM账号被迫下线
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(offtheopenfire:) name:@"Forced off the assembly line" object:nil];
+}
+
+-(void)offtheopenfire:(NSNotification *)busyMessage
+{
+    noNetMessage.text = @"账号已在其他设备登录，请重新登录!";
+    noNet.hidden = NO;
+    noNetView.hidden = NO;
+    noNetMessage.hidden = NO;
+    [timeCountTimer invalidate];
+    [self exitQueue];
+    self.appDelegate.isConnect = @"断开";
 }
 
 -(void)pageFromWhere_wait
@@ -566,6 +580,7 @@ double secondsCountDown =0;
 -(void)viewDidDisappear:(BOOL)animated
 {
     [self.navigationController.tabBarController.tabBar setHidden:NO];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Forced off the assembly line" object:nil];
 }
 
 - (void)didReceiveMemoryWarning

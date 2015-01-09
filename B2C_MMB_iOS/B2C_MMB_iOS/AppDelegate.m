@@ -631,10 +631,10 @@ NSString *strUserId = @"";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    if ([self.pushChatView isEqualToString:@"push"])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
-    }
+//    if ([self.pushChatView isEqualToString:@"push"])
+//    {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+//    }
 
 }
 
@@ -651,23 +651,34 @@ NSString *strUserId = @"";
 //点击通知栏推送聊天消息，进入聊天窗口
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+    NSLog(@"收到本地IM本地推送+++++++++ = %@",notification.userInfo);
+    
     if(application.applicationState == UIApplicationStateActive)
     {
         NSLog(@"APP是前台活跃状态");
-        if ([forgroudPushMessage isEqualToString:@"前台推送"])
-        {
-            //接收客服会话通知栏推送
-            [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
-        }
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
+        //接收客服会话通知栏推送
+        [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
     }
-    else
-    {
+//    else
+//    {
+     NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        for (UILocalNotification *notify in notificaitons)
+        {
+            if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
+            {
+                //取消一个特定的通知
+                [[UIApplication sharedApplication] cancelLocalNotification:notify];
+                if ([self.pushChatView isEqualToString:@"push"])
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+                }
+                break;
+            }
+        }
         NSLog(@"APP已推入后台");
-        if ([self.pushChatView isEqualToString:@"push"])
-        {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
-        }
-    }
+    
+//    }
 }
 
 -(void)chatRoomMessage:(NSNotification *)chatRoomMessage
@@ -714,9 +725,9 @@ NSString *strUserId = @"";
         
         NSLog(@"running in the background");
     }
-    self.appDelegate.pushChatView = @"push";
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
+//    self.appDelegate.pushChatView = @"push";
+//    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -807,12 +818,12 @@ NSString *strUserId = @"";
 //连接服务器
 - (BOOL)connect
 {
-    if (![xmppStream isDisconnected])
-    {
-        [self goonline];
-        
-        return YES;
-    }
+//    if (![xmppStream isDisconnected])
+//    {
+//        [self goonline];
+//        
+//        return YES;
+//    }
     NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
     
     NSString *myJID = [NSString stringWithFormat:@"%@@%@",username_IM,IM_hostName];
@@ -867,12 +878,12 @@ NSString *strUserId = @"";
 //注册账号成功后，重新登录连接
 - (BOOL)reConnect
 {
-    if (![xmppStream isDisconnected])
-    {
-        [self goonline];
-        
-        return YES;
-    }
+//    if (![xmppStream isDisconnected])
+//    {
+//        [self goonline];
+//        
+//        return YES;
+//    }
     NSString *username_IM = [[NSUserDefaults standardUserDefaults] objectForKey:@"userName_IM"];
     NSString *myJID =[NSString stringWithFormat:@"%@@%@",username_IM,IM_hostName];
     NSString *myPassword = @"cableex123@yd?";
@@ -915,6 +926,7 @@ NSString *strUserId = @"";
 {
     NSLog(@"断开连接错误++++++++++++++++ = %@",[error description]);
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Forced off the assembly line" object:nil];
 }
 
 - (void)logout
@@ -942,16 +954,6 @@ NSString *strUserId = @"";
     {
         self.isOnLine = @"available";
     }
-}
-
--(void)showAlertView:(NSString *)message
-{
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil
-                                                       message:message
-                                                      delegate:self
-                                             cancelButtonTitle:@"ok"
-                                             otherButtonTitles:nil, nil];
-    [alertView show];
 }
 
 - (void)disconnect
@@ -1054,12 +1056,12 @@ NSString *strUserId = @"";
         self.messageCount++;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
         
-//        if ([forgroudPushMessage isEqualToString:@"前台推送"])
-//        {
-//            //接收客服会话通知栏推送
-//            [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
-//        }
-        
+//        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"] isEqualToString:@"1"])
+        {
+            //接收客服会话通知栏推送
+            [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
+        }
         if(hasLogin == YES)
         {
             if ([from rangeOfString:tempUserName].location ==NSNotFound)

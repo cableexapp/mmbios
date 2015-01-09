@@ -562,27 +562,18 @@ int messageCountNum = 0;
 //    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
 
- - (void)xmppStream:(XMPPStream *)sender didReceiveError:(id)error
+- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error;
 {
-    NSLog(@"didReceiveError:%@",error);
-    DDXMLNode *errorNode = (DDXMLNode *)error;
-    
-    //遍历错误节点
-    for(DDXMLNode *node in [errorNode children])
-    {
-        //若错误节点有【冲突】
-        if([[node name] isEqualToString:@"conflict"])
-        {
-            [messageField resignFirstResponder];
-            self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
-            toolBar.hidden = YES;
-            noNetMessage.text = @"账号已在其他设备登录，请重新登录!";
-            noNet.hidden = NO;
-            noNetView.hidden = NO;
-            noNetMessage.hidden = NO;
-            self.appDelegate.isConnect = @"断开";
-        }
-    }
+    NSLog(@"断开连接错误++++++++++++++++ = %@",[error description]);
+
+    [messageField resignFirstResponder];
+    self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
+    toolBar.hidden = YES;
+    noNetMessage.text = @"账号已在其他设备登录，请重新登录!";
+    noNet.hidden = NO;
+    noNetView.hidden = NO;
+    noNetMessage.hidden = NO;
+    self.appDelegate.isConnect = @"断开";
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
@@ -1024,16 +1015,6 @@ int messageCountNum = 0;
 - (void)xmppRoomDidLeave:(XMPPRoom *)sender
 {
     NSLog(@"离开聊天室");
-    if ([self.appDelegate.isOnLine isEqualToString:@"available"])
-    {
-        [messageField resignFirstResponder];
-        self.tableView.frame = CGRectMake(0,0, self.view.frame.size.width, self.view.frame.size.height);
-        toolBar.hidden = YES;
-        noNetMessage.text = @"账号已在其他设备登录，请重新登录!";
-        noNet.hidden = NO;
-        noNetView.hidden = NO;
-        noNetMessage.hidden = NO;
-    }
     self.appDelegate.isConnect = @"断开";
 }
 

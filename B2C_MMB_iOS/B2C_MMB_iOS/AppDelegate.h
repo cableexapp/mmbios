@@ -22,7 +22,7 @@
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 #define yCompensation (([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)?88.0:0.0)
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,ConnectionDelegate,XMPPRosterDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,ConnectionDelegate,XMPPRosterDelegate,XMPPStreamDelegate>
 {
     DCFConnectionUtil *conn;
     
@@ -127,5 +127,7 @@
 -(void)aliPayChange;
 
 -(void)logOutMethod;
+
+- (void)logout;
 
 @end

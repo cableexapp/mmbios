@@ -448,9 +448,10 @@ NSString *strUserId = @"";
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
         [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
         //切换登录账号，结束之前对话
-        [self.appDelegate goOffline];
-        [self.appDelegate disconnect];
-        [self.appDelegate reConnect];
+        [self goOffline];
+//        [self.appDelegate disconnect];
+        [self logout];
+        [self reConnect];
     }
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"deleteAppCartItems",time];
@@ -903,6 +904,22 @@ NSString *strUserId = @"";
     }
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
     [xmppStream sendElement:presence];
+}
+
+- (void)xmppStreamWasToldToDisconnect:(XMPPStream *)sender;
+{
+    NSLog(@"断开连接+++++++++++++++++++++++++");
+}
+
+- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error;
+{
+    NSLog(@"断开连接错误++++++++++++++++ = %@",[error description]);
+    
+}
+
+- (void)logout
+{
+    [xmppStream disconnectAfterSending];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence

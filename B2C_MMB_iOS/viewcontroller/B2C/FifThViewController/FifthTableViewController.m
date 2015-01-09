@@ -332,7 +332,8 @@
 
             //切换登录账号，结束之前对话
             [self.appDelegate goOffline];
-            [self.appDelegate disconnect];
+//            [self.appDelegate disconnect];
+            [self.appDelegate logout];
             [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
             [self.appDelegate reConnect];
             self.appDelegate.isConnect = @"断开";

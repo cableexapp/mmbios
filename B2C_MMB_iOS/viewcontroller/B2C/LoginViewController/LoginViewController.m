@@ -298,7 +298,8 @@
             [app goOffline];
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName_IM"];
             [app registerInSide];
-            [app disconnect];
+//            [app disconnect];
+            [app logout];
             [app reConnect];
             app.isConnect = @"断开";
             

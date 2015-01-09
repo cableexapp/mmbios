@@ -242,6 +242,10 @@
     
     NSString *token = [DCFCustomExtra md5:string];
     
+    if([DCFCustomExtra validateString:_myStatus] == NO)
+    {
+        _myStatus = @"";
+    }
     NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&pagesize=%d&pageindex=%d&status=%@",token,[self getMemberId],pageSize,intPage,_myStatus];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getOrderList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:ULRGetOrderListTag delegate:self];
@@ -258,6 +262,7 @@
     
     if(URLTag == ULRGetOrderListTag)
     {
+        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];
@@ -495,7 +500,7 @@
     }
     else
     {
-        for(int i=0;i<4;i++)
+        for(int i=0;i<5;i++)
         {
             UILabel *label = [[UILabel alloc] init];
             if(i == 0)
@@ -517,28 +522,51 @@
                 [label setFrame:CGRectMake(195, 5, 119, 21)];
                 [label setFont:[UIFont systemFontOfSize:11]];
                 [label setTextAlignment:NSTextAlignmentRight];
-                //                NSString *s1 = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"month"];
-                //                NSString *month = [NSString stringWithFormat:@"%d",[s1 intValue]+1];
-                //
-                //                NSString *date = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"date"];
-                //
-                //                NSString *hours = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"hours"];
-                //
-                //                NSString *minutes = [[[dataArray objectAtIndex:section] subDate] objectForKey:@"minutes"];
-                //
-                //                NSString *time = [NSString stringWithFormat:@"%@-%@ %@:%@",month,date,hours,minutes];
-                
                 [label setText:[[dataArray objectAtIndex:section] myOderDataTime]];
             }
             if(i == 3)
             {
-                [label setFrame:CGRectMake(10, 26, ScreenWidth-10, 25)];
+                NSString *shopName = [[dataArray objectAtIndex:section] shopName];
+                CGSize size_1;
+                if([DCFCustomExtra validateString:shopName] == NO)
+                {
+                    size_1 = CGSizeMake(100, 25);
+                }
+                else
+                {
+                    size_1 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:shopName WithSize:CGSizeMake(MAXFLOAT, 25)];
+                }
+                [label setFrame:CGRectMake(10, 26, size_1.width, 25)];
                 [label setFont:[UIFont systemFontOfSize:14]];
                 [label setTextAlignment:NSTextAlignmentLeft];
-                [label setText:[[dataArray objectAtIndex:section] shopName]];
+                [label setText:shopName];
+            }
+            if(i == 4)
+            {
+                NSString *status = [DCFCustomExtra compareStatus:[[dataArray objectAtIndex:section] status]];
+                NSString *str = [NSString stringWithFormat:@"订单状态:%@",status];
+                CGSize size_2;
+                if([DCFCustomExtra validateString:status] == NO)
+                {
+                    size_2 = CGSizeMake(300, 25);
+                }
+                else
+                {
+                    size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:str WithSize:CGSizeMake(MAXFLOAT, 25)];
+                    [label setFrame:CGRectMake(ScreenWidth-10-size_2.width, 26, size_2.width, 25)];
+                    [label setFont:[UIFont systemFontOfSize:14]];
+                    [label setTextAlignment:NSTextAlignmentLeft];
+                    
+                    NSMutableAttributedString *shopStatus = [[NSMutableAttributedString alloc] initWithString:str];
+                    [shopStatus addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, 5)];
+                    [shopStatus addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:NSMakeRange(5, str.length-5)];
+                    [label setAttributedText:shopStatus];
+                }
+
             }
             [headView addSubview:label];
         }
+
     }
     return headView;
 }
@@ -579,8 +607,11 @@
     
     [cell.logisticsPriceLabel setText:[NSString stringWithFormat:@"运费: ￥%@",logisticsPriceString]];
     
-    NSString *status = [DCFCustomExtra compareStatus:[[dataArray objectAtIndex:path.section] status]];
-    [cell.STATUSlABEL setText:[NSString stringWithFormat:@"%@",status]];
+    NSString *orderTotal = [NSString stringWithFormat:@"¥%@",[[dataArray objectAtIndex:path.section] orderTotal]];
+    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:13] WithText:orderTotal WithSize:CGSizeMake(MAXFLOAT, cell.totalLabel.frame.size.height)];
+    [cell.totalLabel setFrame:CGRectMake(ScreenWidth-10-size.width, cell.totalLabel.frame.origin.y, size.width, cell.totalLabel.frame.size.height)];
+    [cell.totalLabel setText:orderTotal];
+    [cell.anotherTotalLabel setFrame:CGRectMake(ScreenWidth-10-cell.totalLabel.frame.size.width-10, cell.totalLabel.frame.origin.y, cell.anotherTotalLabel.frame.size.width, cell.anotherTotalLabel.frame.size.height)];
     return cell;
 }
 

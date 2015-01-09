@@ -138,7 +138,10 @@
         }
         if([[dicRespon allKeys] count] == 0)
         {
-            [moreCell noDataAnimation];
+//            [moreCell noDataAnimation];
+            moreCell.lblContent.text = @"您的电缆订单暂无数据哦~";
+            [moreCell.avState stopAnimating];
+            moreCell.avState.hidden = YES;
         }
         else
         {
@@ -153,7 +156,10 @@
                 
                 if(intTotal == 0)
                 {
-                    [moreCell noDataAnimation];
+//                    [moreCell noDataAnimation];
+                    moreCell.lblContent.text = @"您的电缆订单暂无数据哦~";
+                    [moreCell.avState stopAnimating];
+                    moreCell.avState.hidden = YES;
                 }
                 else
                 {
@@ -170,7 +176,9 @@
                         [dataArray removeAllObjects];
                     }
                 }
-                [moreCell noClasses];
+                moreCell.lblContent.text = @"您的电缆订单暂无数据哦~";
+                [moreCell.avState stopAnimating];
+                moreCell.avState.hidden = YES;
             }
         }
         

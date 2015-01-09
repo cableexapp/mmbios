@@ -38,6 +38,8 @@ typedef NSUInteger URLTag;
 //- (void)pushToLoginViewControllerWithTag:(URLTag)theUrlTag;
 @required
 - (void)resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode;
+@optional
+- (void) resultWithString:(NSString *) str;
 @end
 
 @interface DCFConnectionUtil : NSObject<NSURLConnectionDelegate>{

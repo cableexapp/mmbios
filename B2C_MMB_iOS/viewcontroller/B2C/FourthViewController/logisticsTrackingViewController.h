@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "DCFConnectionUtil.h"
 
-@interface logisticsTrackingViewController : UIViewController<UIWebViewDelegate,ConnectionDelegate>
+@interface logisticsTrackingViewController : UIViewController<UIWebViewDelegate,ConnectionDelegate,NSXMLParserDelegate>
 {
     DCFConnectionUtil *conn;
     NSString *com;

@@ -70,6 +70,8 @@
 @property (assign,nonatomic) BOOL isB2BPush;
 @property (assign,nonatomic) BOOL isB2CPush;
 
+@property (assign,nonatomic) BOOL lookForTradeMsg;
+
 @property (strong,nonatomic) NSString *key1;
 @property (strong,nonatomic) NSString *key2;
 @property (strong,nonatomic) NSString *key3;

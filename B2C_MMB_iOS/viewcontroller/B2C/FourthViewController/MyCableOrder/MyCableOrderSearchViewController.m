@@ -316,10 +316,7 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     LookForCustomViewController *custom = [mySB instantiateViewControllerWithIdentifier:@"lookForCustomViewController"];
-        custom.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    
-    //这部分暂时写死了
-//    custom.orderNum = @"201404234998770799";
+        custom.orderNum = [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
     [self.navigationController pushViewController:custom animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }

@@ -436,22 +436,22 @@ int messageCountNum = 0;
             [self creatRoom];
         }
     }
-    //取消某一个通知
-    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    //获取当前所有的本地通知
-    if (!notificaitons || notificaitons.count <= 0)
-    {
-        return;
-    }
-    for (UILocalNotification *notify in notificaitons)
-    {
-        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
-        {
-            //取消一个特定的通知
-            [[UIApplication sharedApplication] cancelLocalNotification:notify];
-            break;
-        }
-    }
+//    //取消某一个通知
+//    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
+//    //获取当前所有的本地通知
+//    if (!notificaitons || notificaitons.count <= 0)
+//    {
+//        return;
+//    }
+//    for (UILocalNotification *notify in notificaitons)
+//    {
+//        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
+//        {
+//            //取消一个特定的通知
+//            [[UIApplication sharedApplication] cancelLocalNotification:notify];
+//            break;
+//        }
+//    }
 
     [self firstPageMessageData];
     

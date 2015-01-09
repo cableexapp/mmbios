@@ -115,6 +115,8 @@
     _tf_Account.tintColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     _tf_Account.frame = CGRectMake(20, 0, ScreenWidth-40, 50);
     [_tf_Account setReturnKeyType:UIReturnKeyNext];
+    _tf_Account.text = @"竹海";
+    _tf_Secrect.text = @"sal123";
     _tf_Secrect.frame = CGRectMake(20, 51, ScreenWidth-40, 50);
     _tf_Secrect.tintColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     

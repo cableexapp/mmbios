@@ -648,47 +648,22 @@ NSString *strUserId = @"";
 //点击通知栏推送聊天消息，进入聊天窗口
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-//    NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
-//    if ([tempMessagePush isEqualToString:@"1"])
-//    {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
-//    }
-//    //取消某一个通知
-//    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
-//    //获取当前所有的本地通知
-//    if (!notificaitons || notificaitons.count <= 0)
-//    {
-//        return;
-//    }
-//    for (UILocalNotification *notify in notificaitons)
-//    {
-//        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
-//        {
-//            //取消一个特定的通知
-//            [[UIApplication sharedApplication] cancelLocalNotification:notify];
-//            if ([self.pushChatView isEqualToString:@"push"])
-//            {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
-//            }
-//
-//            break;
-//        }
-//    }
     if(application.applicationState == UIApplicationStateActive)
     {
-        NSString *tempMessagePush = [[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"];
-        if ([tempMessagePush isEqualToString:@"1"])
+        NSLog(@"APP是前台活跃状态");
+        if ([forgroudPushMessage isEqualToString:@"前台推送"])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
+            //接收客服会话通知栏推送
+            [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
         }
     }
     else
     {
+        NSLog(@"APP已推入后台");
         if ([self.pushChatView isEqualToString:@"push"])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
         }
-
     }
 }
 

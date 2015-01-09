@@ -634,6 +634,21 @@ NSString *strUserId = @"";
 //    if ([self.pushChatView isEqualToString:@"push"])
 //    {
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+    
+    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    for (UILocalNotification *notify in notificaitons)
+    {
+        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
+        {
+            //取消一个特定的通知
+            [[UIApplication sharedApplication] cancelLocalNotification:notify];
+            if ([self.pushChatView isEqualToString:@"push"])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+            }
+//            break;
+        }
+    }
 //    }
 
 }
@@ -662,20 +677,20 @@ NSString *strUserId = @"";
     }
 //    else
 //    {
-     NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
-        for (UILocalNotification *notify in notificaitons)
-        {
-            if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
-            {
-                //取消一个特定的通知
-                [[UIApplication sharedApplication] cancelLocalNotification:notify];
-                if ([self.pushChatView isEqualToString:@"push"])
-                {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
-                }
-                break;
-            }
-        }
+//     NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
+//        for (UILocalNotification *notify in notificaitons)
+//        {
+//            if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
+//            {
+//                //取消一个特定的通知
+//                [[UIApplication sharedApplication] cancelLocalNotification:notify];
+//                if ([self.pushChatView isEqualToString:@"push"])
+//                {
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
+//                }
+//                break;
+//            }
+//        }
         NSLog(@"APP已推入后台");
     
 //    }

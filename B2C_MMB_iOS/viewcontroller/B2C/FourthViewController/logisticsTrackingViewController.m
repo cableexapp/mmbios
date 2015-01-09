@@ -48,24 +48,13 @@
     logisticsTrackingTableViewController.view.frame = self.tableBackView.bounds;
     [self addChildViewController:logisticsTrackingTableViewController];
     [self.tableBackView addSubview:logisticsTrackingTableViewController.view];
-    logisticsTrackingTableViewController.myArray = [[NSMutableArray alloc] init];
-
+    
     logisticsTrackingTableViewController.isRequest = YES;
     [logisticsTrackingTableViewController.tableView reloadData];
-    
-    _wv = [[UIWebView alloc] initWithFrame:CGRectZero];
-    [_wv setDelegate:self];
-    
-    //    http://m.kuaidi100.com/index_all.html?type="+com+"&postid="+nu
-    
-//    NSString *str = [NSString stringWithFormat:@"http://m.kuaidi100.com/index_all.html?type=%@&postid=%@",self.mylogisticsNum,self.mylogisticsId];
-//    [_wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
-    
-    
+ 
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     app.lookForTradeMsg = YES;
     [self loadRequest];
-    
 }
 
 
@@ -80,20 +69,13 @@
         [conn stopConnection];
         conn = nil;
     }
-//    if(!conn)
-//    {
-//    NSString *pushString = [NSString stringWithFormat:@"rand=%@&id=%@&fromWeb=%@&postid=@",@"1",self.mylogisticsNum,@"null",self.mylogisticsId];
-
+    
     NSString *pushString = [NSString stringWithFormat:@"rand=%@&id=%@&fromWeb=%@&postid=%@",@"1",self.mylogisticsNum,@"null",self.mylogisticsId];
     
-//        NSString *pushString = [NSString stringWithFormat:@"id=%@&com=%@&nu=%@&show=%@&muti=%@&order=%@",@"ac0b8f2dcfe149fc",self.mylogisticsNum,self.mylogisticsId,@"0",@"1",@"desc"];
+    NSString *urlString = [NSString stringWithFormat:@"%@",@"http://wap.kuaidi100.com/wap_result.jsp?"];
+    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLogisticsTrackingTag delegate:self];
     
-        NSString *urlString = [NSString stringWithFormat:@"%@",@"http://wap.kuaidi100.com/wap_result.jsp?"];
-        conn = [[DCFConnectionUtil alloc] initWithURLTag:URLLogisticsTrackingTag delegate:self];
-        
-        [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-//    }
-
+    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -102,140 +84,69 @@
 
 - (void) webViewDidFinishLoad:(UIWebView *)webView
 {
-//    [self loadRequest];
+    //    [self loadRequest];
 }
 
 - (void) resultWithString:(NSString *)str
 {
     app.lookForTradeMsg = NO;
-    NSLog(@"str = %@",str);
+    logisticsTrackingTableViewController.myArray = [[NSMutableArray alloc] init];
 
-    NSString *dataStr = str;
-    NSLog(@"%@",dataStr);
-    dataStr = [dataStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    NSLog(@"data = %@",dataStr);
     
-    NSXMLParser *parse = [[NSXMLParser alloc] initWithData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
-    [parse setDelegate:self];
-    [parse parse];
-}
-
-- (void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
-{
-    NSLog(@"elementName =%@",elementName);
-    //判断是否是meeting
-    if ([elementName isEqualToString:@"html"])
+    NSString *dataStr = str;
+    dataStr = [dataStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    NSArray *arr = [dataStr componentsSeparatedByString:@"<p>"];
+    
+    NSMutableArray *strArr = [[NSMutableArray alloc] init];
+    for(int i=0;i<arr.count;i++)
     {
-        if([elementName isEqualToString:@"body"])
+        NSString *s = [NSString stringWithFormat:@"%@",[arr objectAtIndex:i]];
+        if([s hasPrefix:@"&middot;"])
         {
-            NSLog(@"%@",elementName);
-        }
-        //判断属性节点
-        if ([attributeDict objectForKey:@"class"])
-        {
-            //获取属性节点中的值
-            NSString *addr=[attributeDict objectForKey:@"class"];
-            NSLog(@"addr = %@",addr);
+            [strArr addObject:s];
         }
     }
-    //判断member
-//    if ([elementName isEqualToString:@"member"])
-//    {
-//        NSLog(@"member");
-//    }
+    for(int i=0;i<strArr.count;i++)
+    {
+        NSString *str = [NSString stringWithFormat:@"%@",[strArr objectAtIndex:i]];
+        NSArray *a = [str componentsSeparatedByString:@"<br />"];
+        
+        NSString *s1 = [NSString stringWithFormat:@"%@",[a objectAtIndex:0]];
+        s1 = [s1 substringFromIndex:8];
+        
+        NSString *s2 = [NSString stringWithFormat:@"%@",[a lastObject]];
+        NSArray *b = [s2 componentsSeparatedByString:@"</p>"];
+        s2 = [b objectAtIndex:0];
+        
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:s1,@"time",s2,@"content", nil];
+        [logisticsTrackingTableViewController.myArray addObject:dic];
+    }
+    if(logisticsTrackingTableViewController.myArray.count != 0)
+    {
+        logisticsTrackingTableViewController.myArray = (NSMutableArray *)[[logisticsTrackingTableViewController.myArray reverseObjectEnumerator] allObjects];
+        NSString *sendStatus = (NSString *)[[logisticsTrackingTableViewController.myArray objectAtIndex:0] objectForKey:@"content"];
+        
+        if([sendStatus rangeOfString:@"已签收"].location !=NSNotFound)
+        {
+            [self.logisticsStatusLabel setText:@"已签收"];
+        }
+        else
+        {
+            [self.logisticsStatusLabel setText:@"在途"];
+        }
+    }
+
+//    [logisticsTrackingTableViewController.myArray removeAllObjects];
+    logisticsTrackingTableViewController.isRequest = NO;
+    [logisticsTrackingTableViewController reloadData:logisticsTrackingTableViewController.isRequest];
+//    [logisticsTrackingTableViewController.tableView reloadData];
 }
+
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-//    int logistStatus = [[dicRespon objectForKey:@"status"] intValue];
-//    
-//    if(URLTag == URLLogisticsTrackingTag)
-//    {
-        NSLog(@"%@",dicRespon);
-    
-//    NSArray *arr = [[NSArray alloc] init];
 
-
-    
-    if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
-    {
-        
-    }
-    else
-    {
-//        NSString *dataStr = [dicRespon objectForKey:@"lookForTradeMsg"];
-//        NSLog(@"%@",dataStr);
-//        dataStr = [dataStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//        NSLog(@"data = %@",dataStr);
-//        
-//        NSXMLParser *parse = [[NSXMLParser alloc] initWithData:[dataStr dataUsingEncoding:NSUTF8StringEncoding]];
-//        [parse setDelegate:self];
-//        [parse parse];
-        
-//        for(int i=0;i<arr.count;i++)
-//        {
-//            [logisticsTrackingTableViewController.myArray addObject:[arr objectAtIndex:i]];
-//        }
-    }
-    
-    logisticsTrackingTableViewController.isRequest = NO;
-    [logisticsTrackingTableViewController.tableView reloadData];
-
-    
-//        if(logistStatus == 1)
-//        {
-//            NSArray *arr = [[NSArray alloc] initWithObjects:[dicRespon objectForKey:@"data"], nil];
-//            for(int i=0;i<arr.count;i++)
-//            {
-//                [logisticsTrackingTableViewController.myArray addObject:[arr objectAtIndex:i]];
-//            }
-//
-//            logisticsTrackingTableViewController.isRequest = NO;
-//            [logisticsTrackingTableViewController.tableView reloadData];
-//
-//            NSString *statusString = [NSString stringWithFormat:@"%@",[dicRespon objectForKey:@"state"]];
-//            int statusInt = [statusString intValue];
-//            if([DCFCustomExtra validateString:statusString] == NO)
-//            {
-//                [self.logisticsStatusLabel setText:[NSString stringWithFormat:@"%@",@"状态请求错误"]];
-//                return;
-//            }
-//            switch (statusInt) {
-//                case 0:
-//                    [self.logisticsStatusLabel setText:@"物流状态:在途"];
-//                    break;
-//                case 1:
-//                    [self.logisticsStatusLabel setText:@"物流状态:已揽件"];
-//                    break;
-//                case 2:
-//                    [self.logisticsStatusLabel setText:@"物流状态:疑难"];
-//                    break;
-//                case 3:
-//                    [self.logisticsStatusLabel setText:@"物流状态:已签收"];
-//                    break;
-//                case 4:
-//                    [self.logisticsStatusLabel setText:@"物流状态:退签"];
-//                    break;
-//                case 5:
-//                    [self.logisticsStatusLabel setText:@"物流状态:派件中"];
-//                    break;
-//                case 6:
-//                    [self.logisticsStatusLabel setText:@"物流状态:退回中"];
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//        else if(logistStatus == 2)
-//        {
-////            [DCFStringUtil showNotice:msg];
-//            [self loadRequest];
-//        }
-//        else if (logistStatus == 0)
-//        {
-//            
-//        }
-//    }
 }
 
 - (void)didReceiveMemoryWarning

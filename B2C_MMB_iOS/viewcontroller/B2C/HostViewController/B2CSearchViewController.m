@@ -375,7 +375,7 @@
     NSString * str = [[NSString alloc]init];
     str = [str stringByAppendingString:soundInput];
     //去掉识别结果最后的标点符号
-    if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"])
+    if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"]  || [str isEqualToString:@"，"])
     {
         
     }

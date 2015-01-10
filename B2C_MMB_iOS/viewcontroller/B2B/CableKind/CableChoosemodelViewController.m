@@ -217,7 +217,7 @@
     {
         mySearch = [[UISearchBar alloc] initWithFrame:CGRectMake(0, topLabel.frame.origin.y+topLabel.frame.size.height, ScreenWidth, 44)];
         [mySearch setDelegate:self];
-        [[mySearch.subviews objectAtIndex:0] setBackgroundColor:[UIColor clearColor]];
+        [(UIView *)[mySearch.subviews objectAtIndex:0] setBackgroundColor:[UIColor clearColor]];
         [mySearch setPlaceholder:@"搜索该分类下的型号"];
         [self.view addSubview:mySearch];
     }

@@ -131,28 +131,7 @@
             [btn setSelected:NO];
         }
     }
-    
-    //    if([self.myStatus isEqualToString:@"0"])
-    //    {
-    //        [self.allBtn setSelected:YES];
-    //    }
-    //    if([self.myStatus isEqualToString:@"1"])
-    //    {
-    //        [self.waitForPayBtn setSelected:YES];
-    //    }
-    //    if([self.myStatus isEqualToString:@"2"])
-    //    {
-    //        [self.waitForSend setSelected:YES];
-    //    }
-    //    if([self.myStatus isEqualToString:@"3"])
-    //    {
-    //        [self.waitForSureBtn setSelected:YES];
-    //    }
-    //    if([self.myStatus isEqualToString:@"4"])
-    //    {
-    //        [self.waitForDiscussBtn setSelected:YES];
-    //    }
-    
+
     for(int i=0;i<btnArray.count;i++)
     {
         UIButton *btn = (UIButton *)[btnArray objectAtIndex:i];
@@ -165,17 +144,8 @@
         
         [btn setTag:i];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-        //        if([btn.titleLabel.text isEqualToString:_myStatus])
-        //        {
-        //            [btn setSelected:YES];
-        //        }
-        //        else
-        //        {
-        //            [btn setSelected:NO];
-        //        }
+
     }
-    //    [self loadRequest:_myStatus];
     
     intPage = 1;
     [self loadRequest:self.myStatus];
@@ -412,7 +382,7 @@
         {
             if(section == dataArray.count-1)
             {
-                if([[[dataArray objectAtIndex:section] status] intValue] == 7 || [[[dataArray objectAtIndex:section] status] intValue] == 5 ||[[[dataArray objectAtIndex:section] status] intValue] == 8)
+                if([[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 7 || [[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 5 ||[[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 8)
                 {
                     return row+1;
                 }
@@ -420,14 +390,14 @@
             }
             else
             {
-                if([[[dataArray objectAtIndex:section] status] intValue] == 7 || [[[dataArray objectAtIndex:section] status] intValue] == 5 ||[[[dataArray objectAtIndex:section] status] intValue] == 8)
+                if([[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 7 || [[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 5 ||[[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 8)
                 {
                     return row;
                 }
                 return row + 1;
             }
         }
-        if([[[dataArray objectAtIndex:section] status] intValue] == 7 || [[[dataArray objectAtIndex:section] status] intValue] == 5 ||[[[dataArray objectAtIndex:section] status] intValue] == 8)
+        if([[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 7 || [[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 5 ||[[[dataArray objectAtIndex:section] B2CMyOrderDataStatus] intValue] == 8)
         {
             return row;
         }
@@ -449,7 +419,7 @@
         }
         if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
-            if([[[dataArray objectAtIndex:indexPath.section] status] intValue] == 7 || [[[dataArray objectAtIndex:indexPath.section] status] intValue] == 5 ||[[[dataArray objectAtIndex:indexPath.section] status] intValue] == 8)
+            if([[[dataArray objectAtIndex:indexPath.section] B2CMyOrderDataStatus] intValue] == 7 || [[[dataArray objectAtIndex:indexPath.section] B2CMyOrderDataStatus] intValue] == 5 ||[[[dataArray objectAtIndex:indexPath.section] B2CMyOrderDataStatus] intValue] == 8)
             {
                 return 0;
             }
@@ -464,7 +434,7 @@
         }
         if(indexPath.row == [[[dataArray objectAtIndex:indexPath.section] myItems] count])
         {
-            if([[[dataArray objectAtIndex:indexPath.section] status] intValue] == 7 || [[[dataArray objectAtIndex:indexPath.section] status] intValue] == 5 ||[[[dataArray objectAtIndex:indexPath.section] status] intValue] == 8)
+            if([[[dataArray objectAtIndex:indexPath.section] B2CMyOrderDataStatus] intValue] == 7 || [[[dataArray objectAtIndex:indexPath.section] B2CMyOrderDataStatus] intValue] == 5 ||[[[dataArray objectAtIndex:indexPath.section] B2CMyOrderDataStatus] intValue] == 8)
             {
                 return 0;
             }
@@ -542,10 +512,10 @@
             }
             if(i == 4)
             {
-                NSString *status = [DCFCustomExtra compareStatus:[[dataArray objectAtIndex:section] status]];
-                NSString *str = [NSString stringWithFormat:@"订单状态: %@",status];
+                NSString *theStatus = [DCFCustomExtra compareStatus:[[dataArray objectAtIndex:section] B2CMyOrderDataStatus]];
+                NSString *str = [NSString stringWithFormat:@"订单状态: %@",theStatus];
                 CGSize size_2;
-                if([DCFCustomExtra validateString:status] == NO)
+                if([DCFCustomExtra validateString:theStatus] == NO)
                 {
                     size_2 = CGSizeMake(300, 25);
                 }
@@ -629,7 +599,7 @@
     {
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
-    int statuss = [[[dataArray objectAtIndex:path.section] status] intValue];
+    int statuss = [[[dataArray objectAtIndex:path.section] B2CMyOrderDataStatus] intValue];
     if(statuss == 1)
     {
         [cell.onLinePayBtn setHidden:NO];
@@ -936,7 +906,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     CancelOrderViewController *cancelOrderViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"cancelOrderViewController"];
     cancelOrderViewController.myOrderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    cancelOrderViewController.myStatus = [[dataArray objectAtIndex:sender.tag/10] status];
+    cancelOrderViewController.myStatus = [[dataArray objectAtIndex:sender.tag/10] B2CMyOrderDataStatus];
     [self.navigationController pushViewController:cancelOrderViewController animated:YES];
     //    [self setHidesBottomBarWhenPushed:NO];
 }

@@ -112,6 +112,39 @@
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
+    [self refreshView:_editDic];
+    
+}
+
+- (void) refreshView:(NSDictionary *) dic
+{
+//    NSDictionary *editDic = [[NSDictionary alloc] initWithObjectsAndKeys:
+//                             editNum,@"editNum",
+//                             editUnit,@"editUnit",
+//                             editDeliver,@"editDeliver",
+//                             editSpec,@"editSpec",
+//                             editVol,@"editVol",
+//                             editColor,@"editColor",
+//                             editFeatureone,@"editFeatureone",
+//                             editRequire,@"editRequire",
+    
+    editNum = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editNum"]];
+    editUnit = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editUnit"]];
+    editDeliver = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editDeliver"]];
+    editSpec = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editSpec"]];
+    editVol = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editVol"]];
+    editColor = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editColor"]];
+    editFeatureone = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editFeatureone"]];
+    editRequire = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editRequire"]];
+
+    [self.numTF setText:editNum];
+    [self.unitBtn setTitle:editUnit forState:UIControlStateNormal];
+    [self.timeTF setText:editDeliver];
+    [self.specTf setText:editSpec];
+    [self.volBtn setTitle:editVol forState:UIControlStateNormal];
+    [self.colorBtn setTitle:editColor forState:UIControlStateNormal];
+    [self.featherBtn setTitle:editFeatureone forState:UIControlStateNormal];
+    [self.requestTF setText:editRequire];
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode

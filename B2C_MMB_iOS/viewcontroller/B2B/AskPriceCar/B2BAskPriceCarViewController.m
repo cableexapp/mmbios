@@ -305,19 +305,70 @@
     [subViewBtn addTarget:self action:@selector(subViewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:subViewBtn];
     
+    int editTag = btn.tag;
+    NSString *editNum = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:editTag] num]];
+    if([DCFCustomExtra validateString:editNum] == NO || [editNum floatValue] <= 0.0)
+    {
+        editNum = @"";
+    }
+    NSString *editUnit = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:editTag] unit]];
+    if([DCFCustomExtra validateString:editUnit] == NO )
+    {
+        editUnit = @"";
+    }
+    NSString *editDeliver = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:editTag] deliver]];
+    if([DCFCustomExtra validateString:editDeliver] == NO || [editDeliver floatValue] <= 0.0)
+    {
+        editDeliver = @"";
+    }
+    NSString *editSpec = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:editTag] cartSpec]];
+    if([DCFCustomExtra validateString:editSpec] == NO)
+    {
+        editSpec = @"";
+    }
+    NSString *editVol = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:editTag] cartVoltage]];
+    if([DCFCustomExtra validateString:editVol] == NO)
+    {
+        editVol = @"";
+    }
+    NSString *editColor = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:editTag] cartColor]];
+    if([DCFCustomExtra validateString:editColor] == NO)
+    {
+        editColor = @"";
+    }
+    NSString *editFeatureone = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:editTag] featureone]];
+    if([DCFCustomExtra validateString:editFeatureone] == NO)
+    {
+        editFeatureone = @"";
+    }
+    NSString *editRequire = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:editTag] require]];
+    if([DCFCustomExtra validateString:editRequire] == NO)
+    {
+        editRequire = @"";
+    }
+    NSDictionary *editDic = [[NSDictionary alloc] initWithObjectsAndKeys:
+                             editNum,@"editNum",
+                             editUnit,@"editUnit",
+                             editDeliver,@"editDeliver",
+                             editSpec,@"editSpec",
+                             editVol,@"editVol",
+                             editColor,@"editColor",
+                             editFeatureone,@"editFeatureone",
+                             editRequire,@"editRequire",
+                             nil];
     
     b2bAskPriceCarEditViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarEditViewController"];
+    b2bAskPriceCarEditViewController.editDic = [[NSDictionary alloc] initWithDictionary:editDic];
     b2bAskPriceCarEditViewController.myModel = data.cartModel;
     b2bAskPriceCarEditViewController.myCartId = data.cartId;
     b2bAskPriceCarEditViewController.view.layer.cornerRadius = 5;
     b2bAskPriceCarEditViewController.view.frame = CGRectMake(20, 20, subViewBtn.frame.size.width-40, subViewBtn.frame.size.height-70);
-    //    UILabel *tempLabel = [[UILabel alloc] init];
-    //    tempLabel.frame = CGRectMake(0, 25, b2bAskPriceCarEditViewController.view.frame.size.width, 8);
-    //    tempLabel.backgroundColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
-    //    [b2bAskPriceCarEditViewController.view addSubview:tempLabel];
+
     b2bAskPriceCarEditViewController.delegate = self;
     [self addChildViewController:b2bAskPriceCarEditViewController];
     [subViewBtn addSubview:b2bAskPriceCarEditViewController.view];
+    
+   
 }
 
 

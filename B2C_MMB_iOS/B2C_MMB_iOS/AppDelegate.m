@@ -645,12 +645,13 @@ NSString *strUserId = @"";
     if(application.applicationState == UIApplicationStateActive)
     {
         NSLog(@"APP是前台活跃状态");
-//        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
-//        //接收客服会话通知栏推送
-//        [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
+        //接收客服会话通知栏推送
+        [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
     }
     else
     {
+        
         NSLog(@"self.pushChatView = %@",self.pushChatView);
         NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
         for (UILocalNotification *notify in notificaitons)
@@ -658,11 +659,14 @@ NSString *strUserId = @"";
             
             if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
             {
+                
                 if ([self.pushChatView isEqualToString:@"push"])
                 {
+                    
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
                     
                 }
+                
                 //取消一个特定的通知
                 [[UIApplication sharedApplication] cancelLocalNotification:notify];
                 
@@ -670,6 +674,24 @@ NSString *strUserId = @"";
             }
         }
         NSLog(@"APP已推入后台");
+    }
+}
+
+-(void)messageSoundRemaind
+{
+    NSString *strPath = [[NSBundle mainBundle]pathForResource:@"sms01" ofType:@"mp3"];
+    
+    NSData * voiceData = [[NSData alloc]initWithContentsOfFile:strPath];
+    
+    messageSound = [[AVAudioPlayer alloc]initWithData:voiceData error:nil];
+    
+    if ([messageSound isPlaying])
+    {
+        [messageSound stop];
+    }
+    else
+    {
+        [messageSound play];
     }
 }
 
@@ -718,11 +740,6 @@ NSString *strUserId = @"";
         [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
         
         NSLog(@"running in the background");
-        
-        self.appDelegate.pushChatView = @"push";
-        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"pushChatView" object:@"push"];
-
     }
 }
 
@@ -915,12 +932,12 @@ NSString *strUserId = @"";
 
 - (void)xmppStreamWasToldToDisconnect:(XMPPStream *)sender;
 {
-    NSLog(@"断开连接+++++++++++++++++++++++++");
+//    NSLog(@"断开连接+++++++++++++++++++++++++");
 }
 
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error;
 {
-    NSLog(@"断开连接错误++++++++++++++++ = %@",[error description]);
+//    NSLog(@"断开连接错误++++++++++++++++ = %@",[error description]);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Forced off the assembly line" object:nil];
 }
@@ -932,7 +949,7 @@ NSString *strUserId = @"";
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
-    NSLog(@"客服状态presence = %@",presence);
+//    NSLog(@"客服状态presence = %@",presence);
     
     //取得好友当前状态
     NSString *presenceType = [presence type];
@@ -999,7 +1016,6 @@ NSString *strUserId = @"";
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"memberGroupName" object:self.roster];
             }
         }
-//        NSLog(@"self.roster = %@\n\n",self.roster);
     }
     if ([iq.type isEqualToString:@"error"] && [[[[[iq elementsForName:@"error"] objectAtIndex:0] attributeForName:@"type"] stringValue] isEqualToString:@"cancel"])
     {
@@ -1052,12 +1068,12 @@ NSString *strUserId = @"";
         self.messageCount++;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
         
-        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
-        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"] isEqualToString:@"1"])
-        {
-            //接收客服会话通知栏推送
-            [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
-        }
+//        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
+//        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"] isEqualToString:@"1"])
+//        {
+//            //接收客服会话通知栏推送
+//            [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
+//        }
         if(hasLogin == YES)
         {
             if ([from rangeOfString:tempUserName].location ==NSNotFound)
@@ -1102,10 +1118,11 @@ NSString *strUserId = @"";
             }
             self.personName = to;
         }
-//        if ([self.forgroudPushMessage isEqualToString:@"前台推送"])
-//        {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
-//        }
+        if ([self.forgroudPushMessage isEqualToString:@"前台推送"])
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
+            [self messageSoundRemaind];
+        }
     }
     
     NSRange range=[from rangeOfString:@"@"];
@@ -1113,8 +1130,9 @@ NSString *strUserId = @"";
     {
         return;
     }
-//    NSString *fromSimple=[from substringToIndex:range.location];
 }
+
+
 
 // 发送消息回调方法
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message

@@ -436,8 +436,10 @@ int messageCountNum = 0;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.appDelegate.messageCount]];
    
-    self.appDelegate.pushChatView = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sendMessageToBadge" object:nil];
+    
     [self checkNet];
+    
     if ([[self appDelegate].xmppStream isDisconnected])
     {
 //       noNetMessage.text = @"服务器未连接，请退出重新登录!";

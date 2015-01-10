@@ -805,7 +805,7 @@
         CGFloat halfWidth = cell.contentView.frame.size.width/2+10;
         
         NSString *num;
-        if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] num]] == NO || [[[dataArray objectAtIndex:indexPath.section] num] floatValue] <= 0.0)
+        if([DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] num]] == NO || [[[dataArray objectAtIndex:indexPath.section] num] floatValue] <= 0.0 || [DCFCustomExtra validateString:[[dataArray objectAtIndex:indexPath.section] unit]]== NO)
         {
             num = [NSString stringWithFormat:@"数量 "];
         }

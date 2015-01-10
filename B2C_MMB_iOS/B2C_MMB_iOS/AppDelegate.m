@@ -172,13 +172,6 @@ NSString *strUserId = @"";
     _key1 = [NSString stringWithFormat:@"%@",[userInfo objectForKey:@"key1"]];
     _key2 = [NSString stringWithFormat:@"%@",[userInfo objectForKey:@"key2"]];
     _key3 = [NSString stringWithFormat:@"%@",[userInfo objectForKey:@"key3"]];
-    //    NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    //    NSLog(@"memberId = %@",memberid);
-    //    if([_key2 isEqualToString:memberid])
-    //    {
-    
-    
-//    NSLog(@"修改memberid");
     
     if (application.applicationState == UIApplicationStateActive)
     {
@@ -189,7 +182,6 @@ NSString *strUserId = @"";
                                                   otherButtonTitles:nil];
         [alertView show];
     }
-    [application setApplicationIconBadgeNumber:0];
     
     if([_key1 intValue] == 3)
     {
@@ -201,18 +193,14 @@ NSString *strUserId = @"";
         _isB2BPush = NO;
         _isB2CPush = YES;
     }
+
+    badge = badge + 1;
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:badge] forKey:@"badge"];
     
-//    [[NSUserDefaults standardUserDefaults] setObject:_key2 forKey:@"memberId"];
+    [application setApplicationIconBadgeNumber:badge];
+
     
-    //    UIStoryboard *FourthSB = [UIStoryboard storyboardWithName:@"FourthSB" bundle:nil];
-    //    if([DCFCustomExtra validateString:memberid] == NO)
-    //    {
-    //
-    //    }
-    //    else
-    //    {
     [BPush handleNotification:userInfo];
-    //    }
 }
 
 
@@ -248,7 +236,6 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-#pragma mark - 修改测试
     //检测是否第一次安装，还是第一次启动
     [self isFirstOpen];
     

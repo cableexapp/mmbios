@@ -41,9 +41,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.navigationController.navigationBar.translucent = YES;
-    self.wantsFullScreenLayout = YES;
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.tabBarController.tabBar setHidden:YES];
 //
     self.view.backgroundColor = [UIColor whiteColor];

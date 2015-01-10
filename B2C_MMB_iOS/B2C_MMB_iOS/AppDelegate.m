@@ -882,6 +882,8 @@ NSString *strUserId = @"";
     NSString *from = [[message attributeForName:@"from"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
 
+    NSLog(@"message = %@",message);
+    
     //排队等候，队列位置
     if([DCFCustomExtra validateString:[[message.children objectAtIndex:0] elementForName:@"position"].stringValue] == YES)
     {
@@ -935,9 +937,12 @@ NSString *strUserId = @"";
                 self.personName = to;
                 if ([self.forgroudPushMessage isEqualToString:@"前台推送"])
                 {
-                    self.messageCount++;
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
-                    [self messageSoundRemaind];
+                    if (messageg_hasLogin.length > 0)
+                    {
+                        self.messageCount++;
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
+                        [self messageSoundRemaind];
+                    }
                 }
             }
         }
@@ -962,9 +967,12 @@ NSString *strUserId = @"";
                 }
                 if ([self.forgroudPushMessage isEqualToString:@"前台推送"])
                 {
-                    self.messageCount++;
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
-                    [self messageSoundRemaind];
+                    if (messageg_hasLogin.length > 0)
+                    {
+                        self.messageCount++;
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
+                        [self messageSoundRemaind];
+                    }
                 }
             }
             self.personName = to;
@@ -974,7 +982,6 @@ NSString *strUserId = @"";
             [[NSNotificationCenter defaultCenter] postNotificationName:@"chatRoomMessagePush" object:nil];
         }
     }
-    
     NSRange range=[from rangeOfString:@"@"];
     if(range.length==0)
     {

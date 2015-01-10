@@ -435,10 +435,6 @@ int messageCountNum = 0;
     self.appDelegate.pushChatView = nil;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.appDelegate.messageCount]];
-   
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sendMessageToBadge" object:nil];
-    
-    
     
     [self checkNet];
     

@@ -1116,6 +1116,8 @@ NSString *strUserId = @"";
 //    NSString *fromSimple=[from substringToIndex:range.location];
 }
 
+
+
 // 发送消息回调方法
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
 {

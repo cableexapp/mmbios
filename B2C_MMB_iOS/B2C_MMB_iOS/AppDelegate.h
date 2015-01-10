@@ -17,6 +17,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "XMPPMessageArchiving.h"
 #import "XMPPMessageArchivingCoreDataStorage.h"
+
+
 #define UMENG_APPKEY @"546d533bfd98c55662004041"
 
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
@@ -33,7 +35,7 @@
     BOOL * isOpen;//是否开着
     XMPPStream * xmppStream;
     XMPPReconnect *xmppReconnect;
-
+    
     NSString *personName;
     NSString *sendMessageInfo;
     NSString *userID;

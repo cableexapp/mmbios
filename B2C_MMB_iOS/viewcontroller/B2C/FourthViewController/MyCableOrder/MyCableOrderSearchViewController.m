@@ -188,7 +188,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-
     if(URLTag == URLB2COrderListAllTag)
     {
         int intTotal = [[dicRespon objectForKey:@"total"] intValue];
@@ -222,7 +221,6 @@
 //                    [moreCell failAcimation];
                 }
             }
-       
        }
 }
 

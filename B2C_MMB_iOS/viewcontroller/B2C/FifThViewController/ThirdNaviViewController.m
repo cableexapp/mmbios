@@ -31,7 +31,6 @@
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor whiteColor];
-
 }
 
 - (AppDelegate *)appDelegate
@@ -57,6 +56,8 @@
 //        [self pushViewController:chatVC animated:YES];
 //        [self setHidesBottomBarWhenPushed:YES];
         [self setViewControllers:[NSArray arrayWithObject:chatVC]];
+        
+//         [self pushViewController:rootView animated:YES];
     }
     else
     {

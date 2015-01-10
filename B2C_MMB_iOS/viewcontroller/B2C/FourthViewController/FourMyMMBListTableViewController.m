@@ -68,13 +68,6 @@
 - (void) headBtnClick:(UIButton *) sender
 {
     int tag = sender.tag;
-    //    if (tag == 0)
-    //    {
-    //        [self setHidesBottomBarWhenPushed:YES];
-    //        MyInquiryListFirstViewController *myInquiryListFirstViewController = [sb instantiateViewControllerWithIdentifier:@"myInquiryListFirstViewController"];
-    //        [self.navigationController pushViewController:myInquiryListFirstViewController animated:YES];
-    //        [self setHidesBottomBarWhenPushed:NO];
-    //    }
     if(tag == 1)
     {
         [self setHidesBottomBarWhenPushed:YES];
@@ -96,8 +89,6 @@
     }
 }
 
-
-
 - (NSString *) getMemberId
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
@@ -108,17 +99,13 @@
     return memberid;
 }
 
-
-
 - (void) pushToVC
 {
     [self setHidesBottomBarWhenPushed:YES];
-    //    fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     fourthHostViewController.myStatus = @"";
     [self.navigationController pushViewController:fourthHostViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
-
 
 //请求询价车商品数量
 -(void)loadbadgeCount
@@ -128,11 +115,8 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -155,11 +139,8 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -188,18 +169,14 @@
         {
             
         }
-        
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
-                //
                 NSString *s = [NSString stringWithFormat:@"%@",[badgeArray objectAtIndex:i]];
-                
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                
                 if(s.intValue < 99 && s.intValue > 0)
                 {
                     if (cellBtn.frame.size.width >= 153)
@@ -361,14 +338,10 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     fourthHostViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fourthHostViewController"];
     
     [self.tabBarController.tabBar setHidden:NO];
-    
-    //    [self.navigationController popToRootViewControllerAnimated:YES];
-    
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
     [self loadGetCountNumRequest];
@@ -482,8 +455,6 @@
         if(i == 0)
         {
             [label_1 setText:@"我的询价单"];
-            //            [btn addSubview:label_2];
-            
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"mmbOrder.png"]];
             [btn addSubview:iv];
@@ -517,14 +488,6 @@
             lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
             [btn addSubview:lineView];
         }
-        //        if(i == 4)
-        //        {
-        //            [label_1 setText:@"收货地址"];
-        //
-        //            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
-        //            [iv setImage:[UIImage imageNamed:@"getAddress.png"]];
-        //            [btn addSubview:iv];
-        //        }
         [btn addSubview:label_1];
         if (i != 0)
         {
@@ -534,9 +497,6 @@
         }
         [headBtnArray addObject:btn];
     }
-    
-    //    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_9,_btn_10,_btn_11,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
-    
     cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_11,_btn_9,_btn_10,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
     
     for(int i=0;i<cellBtnArray.count;i++)
@@ -557,11 +517,8 @@
     [self.refreshView refreshLastUpdatedDate];
 }
 
-
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-    
-    
     if(tabBarController.selectedIndex == 3)    //"我的账号"
     {
         return NO;
@@ -572,22 +529,14 @@
     }
 }
 
-
 - (void)photoBtnAction:(id)sender
 {
-    //    changePhotoSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"更改头像", nil];
-    //    if (self.navigationController)
-    //    {
-    //        [changePhotoSheet showInView:self.navigationController.navigationBar];
-    //    }
-    
     albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
     if (self.navigationController)
     {
         [albumSheet showInView:self.navigationController.navigationBar];
     }
 }
-
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -640,11 +589,9 @@
         
         pickerImage.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
-    
     pickerImage.delegate = self;
     pickerImage.allowsEditing = NO;
     [self presentViewController:pickerImage animated:YES completion:nil];
-    
 }
 
 - (void) takePhotos:(id) sender
@@ -656,11 +603,9 @@
         
         pickerImage.sourceType = UIImagePickerControllerSourceTypeCamera;
     }
-    
     pickerImage.delegate = self;
     pickerImage.allowsEditing = NO;
     [self presentViewController:pickerImage animated:YES completion:nil];
-    
 }
 
 #pragma mark - 处理图片
@@ -682,10 +627,7 @@
     NSMutableArray *strImageFileNameArray = [[NSMutableArray alloc] init];
     NSString *strImageFileName = nil;
     
-    
     [imgArr addObject:image];
-    //        imgArr = [NSArray arrayWithObject:img];
-    
     NSString *nameString = [NSString stringWithFormat:@"%@",img.description];
     
     NSRange range = NSMakeRange(1, nameString.length-2);
@@ -700,7 +642,6 @@
     strImageFileName = [NSString stringWithFormat:@"%@",@"headPic"];
     [strImageFileNameArray addObject:strImageFileName];
     
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"setHeadPortrait",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -712,7 +653,6 @@
     {
         loginid = @"";
     }
-    
     NSString *strRequest = [NSString stringWithFormat:@"memberid=%@&token=%@&loginid=%@",[self getMemberId],token,loginid];
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",URL_HOST_CHEN,@"/B2CAppRequest/setHeadPortrait.html?",strRequest];
     NSDictionary *imgDic = [NSDictionary dictionaryWithObjects:imgArr forKeys:nameArr];
@@ -727,36 +667,21 @@
         
         UIImageWriteToSavedPhotosAlbum(img, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
-    
     [picker dismissViewControllerAnimated:YES completion:nil];
-    if (img) {
-        
+    if (img)
+    {
         [self performSelector:@selector(procesPic:) withObject:img afterDelay:0.1];
-        
     }
-    
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo
 {
     NSString *msg = nil;
-    
-    if(error != NULL){
+    if(error != NULL)
+    {
         msg = @"保存图片失败";
         [DCFStringUtil showNotice:msg];
-        //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-        //
-        //                                                        message:msg
-        //
-        //                                                       delegate:self
-        //
-        //                                              cancelButtonTitle:@"确定"
-        //
-        //                                              otherButtonTitles:nil];
-        //
-        //        [alert show];
     }
-    
 }
 
 - (void)popShopCar_mmb:(NSNotification *)sender
@@ -1036,13 +961,7 @@
         {
             if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
             {
-                //                [self loadRequest];
-                //
-                //                [self loadProductType];
-                //
-                //                [self loadbadgeCount];
-                //
-                //                [self loadShopCarCount];
+
             }
         }
     }

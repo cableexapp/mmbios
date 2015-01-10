@@ -214,8 +214,7 @@ int messageCountNum = 0;
         noNetView.hidden = NO;
         noNetMessage.hidden = NO;
         self.appDelegate.isConnect = @"断开";
-    }    
-//    NSLog(@"busyMessage.object = %@",busyMessage.object);
+    }
 }
 
 -(void)offtheopenfire:(NSNotification *)busyMessage
@@ -232,12 +231,6 @@ int messageCountNum = 0;
 
 -(void)pageFromWhere
 {
-//    NSLog(@"返回self.appDelegate.isConnect = %@",self.appDelegate.isConnect);
-//    
-//    NSLog(@"返回self.fromStringFlag = %@",self.fromStringFlag);
-//    
-//    NSLog(@"返回ison = %@",isOn);
-
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         if([self.fromStringFlag isEqualToString:@"工具栏客服"])
@@ -259,7 +252,6 @@ int messageCountNum = 0;
         self.appDelegate.personName = nil;
       if([self.fromStringFlag isEqualToString:@"首页在线客服"] ||[self.fromStringFlag isEqualToString:@"来自快速询价客服"] || [self.fromStringFlag isEqualToString:@"热门型号在线咨询"] || [self.fromStringFlag isEqualToString:@"场合选择客服"] || [self.fromStringFlag isEqualToString:@"场合选择提交成功客服"] || [self.fromStringFlag isEqualToString:@"热门型号提交成功在线客服"] || [self.fromStringFlag isEqualToString:@"热门分类在线客服"] || [self.fromStringFlag isEqualToString:@"工具栏客服"])
         {
-            NSLog(@"页面数组_综合 = %d",self.navigationController.viewControllers.count);
             if (self.navigationController.viewControllers.count == 11)
             {
                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:7] animated:NO];
@@ -305,7 +297,6 @@ int messageCountNum = 0;
         {
             if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"家装线商品详情"])
             {
-//                NSLog(@"页面数组_家装线商品详情 = %d",self.navigationController.viewControllers.count);
                 if (self.navigationController.viewControllers.count == 11)
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:7] animated:NO];
@@ -341,8 +332,6 @@ int messageCountNum = 0;
             }
             if([[[self.fromStringFlag componentsSeparatedByString:@"@"] objectAtIndex:1] isEqualToString:@"商品快照在线客服"])
             {
-//                NSLog(@"页面数组_商品快照在线客服 = %d",self.navigationController.viewControllers.count);
-
                 if (self.navigationController.viewControllers.count == 11)
                 {
                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:7] animated:NO];
@@ -420,6 +409,10 @@ int messageCountNum = 0;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Forced off the assembly line" object:nil];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sendMessageToBadge" object:nil];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -449,10 +442,7 @@ int messageCountNum = 0;
             [self creatRoom];
         }
     }
-
     [self firstPageMessageData];
-    
-     NSLog(@"聊天窗口self.navigationController.viewControllers = %@",self.navigationController.viewControllers);
 
     [self.navigationController.tabBarController.tabBar setHidden:YES];
     
@@ -520,7 +510,6 @@ int messageCountNum = 0;
         messageField.layer.cornerRadius =3;
         [toolBar addSubview:messageField];
     }
-//    NSLog(@"self.appDelegate.uesrID =%@",self.appDelegate.uesrID);
     if (self.appDelegate.uesrID.length > 0)
     {
         [[NSUserDefaults standardUserDefaults] setObject:self.appDelegate.uesrID forKey:@"toJID"];
@@ -555,8 +544,6 @@ int messageCountNum = 0;
                               atScrollPosition:UITableViewScrollPositionBottom
                                       animated:NO];
     }
-//    NSLog(@"咨询入口 = %@",self.fromStringFlag);
-//    NSLog(@"viewWillAppear_self.appDelegate.isOnLine = %@",self.appDelegate.isOnLine);
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
@@ -950,7 +937,7 @@ int messageCountNum = 0;
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchConfigurationForm:(NSXMLElement *)configForm
 {
-//    NSLog(@"didFetchConfigurationForm");
+
 }
 
 -(void)xmppMUC:(XMPPMUC *)sender roomJID:(XMPPJID *)roomJID didReceiveInvitation:(XMPPMessage *)message
@@ -961,7 +948,6 @@ int messageCountNum = 0;
 //获取聊天室信息
 - (void)xmppRoomDidJoin:(XMPPRoom *)sender
 {
-//    NSLog(@"获取聊天室信息");
     [xmppRoom fetchConfigurationForm];
     [xmppRoom fetchBanList];
     [xmppRoom fetchMembersList];
@@ -973,58 +959,51 @@ int messageCountNum = 0;
 // 收到禁止名单列表
 - (void)xmppRoom:(XMPPRoom *)sender didFetchBanList:(NSArray *)items
 {
-//   NSLog(@"didFetchBanList = %@\n\n",items);
+
 }
 
 // 收到好友名单列表
 - (void)xmppRoom:(XMPPRoom *)sender didFetchMembersList:(NSArray *)items
 {
-    NSLog(@"收到好友名单列表 = %@\n\n",items);
+   
 }
 
 // 收到主持人名单列表
 - (void)xmppRoom:(XMPPRoom *)sender didFetchModeratorsList:(NSArray *)items
 {
-    NSLog(@"收到主持人名单列表 = %@\n\n",items);
+    
 }
 
 //创建聊天室成功
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender
 {
-//    NSLog(@"创建聊天室成功");
+
 }
 
 //离开聊天室
 - (void)xmppRoomDidLeave:(XMPPRoom *)sender
 {
-    NSLog(@"离开聊天室");
     self.appDelegate.isConnect = @"断开";
 }
 
 //新人加入群聊
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidJoin:(XMPPJID *)occupantJID
 {
-//    NSLog(@"新人加入群聊");
+
 }
 //有人退出群聊
 - (void)xmppRoom:(XMPPRoom *)sender occupantDidLeave:(XMPPJID *)occupantJID
 {
-//    NSLog(@"有人退出群聊");
+
 }
 
 //有人在群里发言
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID
 {
-//   NSLog(@"有人在群里发言+++++++++++++++++++++++++++++ = %@\n\n",message);
     tempJID =[NSString stringWithFormat:@"%@",occupantJID];
-   
     if (![[[tempJID componentsSeparatedByString:@"/"] objectAtIndex:1] isEqualToString:self.appDelegate.chatRequestJID])
     {
-//       roomMessage = [[message elementForName:@"body"] stringValue];
-        
-//      [[NSNotificationCenter defaultCenter] postNotificationName:@"messageGetting" object:roomMessage];
-        
-//        NSLog(@"群里发言————————————————————————————");
+
     }
 }
 
@@ -1065,17 +1044,6 @@ int messageCountNum = 0;
     
     if (SQLITE_OK == result)
     {
-//        NSLog(@"删除重复数据111111\n\n");
-//        if (sqlite3_prepare_v2(dataBase,[delateString UTF8String],-1, &statement, nil)==SQLITE_OK)
-//        {
-//            NSLog(@"删除重复数据222222\n\n");
-//            
-//            while (sqlite3_step(statement)==SQLITE_ROW)
-//            {
-//                NSLog(@"删除重复数据 = %@",delateString);
-//            }
-//        }
-
         //创建SQL语句查询
         NSString *selectString;
         
@@ -1104,13 +1072,9 @@ int messageCountNum = 0;
                 
                 //查询结果处理
 //                NSString *rec_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 1) encoding:NSUTF8StringEncoding];
-                
                 NSString *sen_userId =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 2) encoding:NSUTF8StringEncoding];
-                
                 NSString *time =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 4) encoding:NSUTF8StringEncoding];
-                
                 NSString *msg =[[NSString alloc] initWithCString:(char *)sqlite3_column_text(statement, 5) encoding:NSUTF8StringEncoding];
-                
                 NSDictionary * dic;
 
                 if ([sen_userId isEqualToString:@"0"])
@@ -1326,7 +1290,6 @@ int messageCountNum = 0;
 
 -(void)reloadTableViewDataSource
 {
-    NSLog(@"==开始加载数据");
     pageIndex++;
     [self getMessageData];
     _reloading = YES;
@@ -1334,7 +1297,6 @@ int messageCountNum = 0;
 
 - (void)doneLoadingTableViewData
 {
-    NSLog(@"===加载完数据");
     _reloading = NO;
     [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }

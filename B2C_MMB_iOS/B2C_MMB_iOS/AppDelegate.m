@@ -46,6 +46,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 #endif
 
 NSString *strUserId = @"";
+
 @implementation AppDelegate
 {
     UIStoryboard *sb;
@@ -61,7 +62,6 @@ NSString *strUserId = @"";
 @synthesize personName;
 @synthesize sendMessageInfo;
 @synthesize roster;
-//@synthesize xmppRosterStorage;
 @synthesize xmppStream;
 @synthesize xmppRoom;
 @synthesize uesrID;
@@ -73,6 +73,8 @@ NSString *strUserId = @"";
 @synthesize tempID;
 @synthesize errorMessage;
 @synthesize isConnect;
+@synthesize messageCount;
+@synthesize forgroudPushMessage;
 
 
 - (void) reachabilityChanged: (NSNotification* )note
@@ -146,14 +148,8 @@ NSString *strUserId = @"";
         self.appId = [res valueForKey:BPushRequestAppIdKey];
         self.baiduPushUserId = [res valueForKey:BPushRequestUserIdKey];
         self.channelId = [res valueForKey:BPushRequestChannelIdKey];
-//        NSLog(@"appId = %@  baiduPushUserId = %@   channelId = %@",self.appId,self.baiduPushUserId,self.channelId);
         
-        NSLog(@"userId = %@   channelId = %@",self.baiduPushUserId,self.channelId);
-              
-        int returnCode = [[res valueForKey:BPushRequestErrorCodeKey] intValue];
-        NSString *requestid = [res valueForKey:BPushRequestRequestIdKey];
-        
-        //        BPushRequestResponseParamsKey
+//        NSLog(@"userId = %@   channelId = %@",self.baiduPushUserId,self.channelId);
     }
     else if ([BPushRequestMethod_Unbind isEqualToString:method])
     {
@@ -164,9 +160,7 @@ NSString *strUserId = @"";
 #pragma mark - 推送
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    
-    NSLog(@"%@",userInfo);
-    
+//    NSLog(@"%@",userInfo);
     NSString *pushTitle = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     
     _key1 = [NSString stringWithFormat:@"%@",[userInfo objectForKey:@"key1"]];
@@ -182,7 +176,6 @@ NSString *strUserId = @"";
                                                   otherButtonTitles:nil];
         [alertView show];
     }
-    
     if([_key1 intValue] == 3)
     {
         _isB2BPush = YES;
@@ -193,13 +186,7 @@ NSString *strUserId = @"";
         _isB2BPush = NO;
         _isB2CPush = YES;
     }
-
-    badge = badge + 1;
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:badge] forKey:@"badge"];
-    
-    [application setApplicationIconBadgeNumber:badge];
-
-    
+    [application setApplicationIconBadgeNumber:0];
     [BPush handleNotification:userInfo];
 }
 
@@ -224,15 +211,12 @@ NSString *strUserId = @"";
     //
     [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) REALTIME channelId:nil];
 
-    
     [MobClick updateOnlineConfig];  //在线参数配置
     
     //    1.6.8之前的初始化方法
     //    [MobClick setDelegate:self reportPolicy:REALTIME];  //建议使用新方法
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
-    
 }
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -247,9 +231,8 @@ NSString *strUserId = @"";
     
     //所有服务启动前，需要确保执行createUtility
     [IFlySpeechUtility createUtility:initString];
-    
-    //友盟
-    //  友盟的方法本身是异步执行，所以不需要再异步调用
+
+    //友盟的方法本身是异步执行，所以不需要再异步调用
     [self umengTrack];
     
     //百度云推送
@@ -279,10 +262,6 @@ NSString *strUserId = @"";
     //数据库创建
     [self SQLDataSteup];
     
-    NSString *p = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
-    //    sqlite3 *dataBase;
-    //    if(sqlite3_open([p UTF8String], &dataBase) != SQLITE_OK)
-    
     NSString *userId = [NSString stringWithFormat:@"%@",@"12345"];
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"userId"])
     {
@@ -295,7 +274,6 @@ NSString *strUserId = @"";
     {
         NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
         [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
-        
     }
     else
     {
@@ -374,22 +352,14 @@ NSString *strUserId = @"";
     NSString *documentDirectory = [paths objectAtIndex:0];
     if(!documentDirectory)
     {
-        //        NSLog(@"Not Found!");
         return;
     }
-    
-    
-    //NSString *dbPath = [documentDirectory stringByAppendingPathComponent:@"MyDB.db"];
-    
     NSString *dbPath = [[NSBundle mainBundle] pathForResource:@"t_prov_city_area_street" ofType:@"db"];
-    
-    //self.db = [[FMDatabase alloc] initWithPath:dbPath];
     self.db = [FMDatabase databaseWithPath:dbPath];
     [self.db setLogsErrors:YES];
     [self.db setTraceExecution:YES];
     [self.db setCrashOnErrors:YES];
     [self.db setShouldCacheStatements:YES];
-    
     [self.db open];
     [self openDatabase];
 }
@@ -401,18 +371,7 @@ NSString *strUserId = @"";
         return;
     }
     [self.db beginTransaction];
-    
-    //    //用户集合
-    //    if(![self.db tableExists:@"UserIdCollection"])
-    //    {
-    //        [self.db executeQuery:@"CREATE TABLE UserIdCollection (Name text,UserId text)"];
-    //    }
-    //
-    //    //主页用户查询商品集合
-    //    if(![self.db tableExists:@"HostCabelCollection"])
-    //    {
-    //        [self.db executeQuery:@"CREATE TABLE HostCabelCollection (SearchCabelName text,UserId text)"];
-    //    }
+
     [self.db commit];
 }
 
@@ -436,7 +395,6 @@ NSString *strUserId = @"";
         [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
         //切换登录账号，结束之前对话
         [self goOffline];
-//        [self.appDelegate disconnect];
         [self logout];
         [self reConnect];
     }
@@ -516,16 +474,12 @@ NSString *strUserId = @"";
         [[AlipaySDK defaultService]
          processOrderWithPaymentResult:url
          standbyCallback:^(NSDictionary *resultDic) {
-//             NSLog(@"result = %@", resultDic);
              if([[resultDic allKeys] count] == 0 || [resultDic isKindOfClass:[NSNull class]])
              {
                  
              }
              else
              {
-                 NSString *resultStatus = [NSString stringWithFormat:@"%@",[resultDic objectForKey:@"resultStatus"]];
-//                 NSLog(@"resultStatus = %@",resultStatus);
-                 
                  DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
                  self.window.rootViewController = tabbar;
                  [tabbar setSelectedIndex:3];
@@ -541,77 +495,11 @@ NSString *strUserId = @"";
 //独立客户端回调函数
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    //	[self parse:url application:application];
 	return YES;
 }
-//
-//- (void)parse:(NSURL *)url application:(UIApplication *)application {
-//
-//    //结果处理
-//    AlixPayResult* result = [self handleOpenURL:url];
-//
-//
-//	if (result)
-//    {
-//
-//
-//		if (result.statusCode == 9000)
-//        {
-//			/*
-//			 *用公钥验证签名 严格验证请使用result.resultString与result.signString验签
-//			 */
-//
-//            //交易成功
-//            NSString* key = AlipayPubKey;//签约帐户后获取到的支付宝公钥
-//			id<DataVerifier> verifier;
-//            verifier = CreateRSADataVerifier(key);
-//
-//			if ([verifier verifyString:result.resultString withSign:result.signString])
-//            {
-//                //验证签名成功，交易结果无篡改
-//			}
-//
-//            DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
-//            self.window.rootViewController = tabbar;
-//            [tabbar setSelectedIndex:3];
-//
-//            _aliPayHasFinished = YES;
-//        }
-//        else
-//        {
-//            //交易失败
-//            _aliPayHasFinished = NO;
-//        }
-//    }
-//    else
-//    {
-//        //失败
-//        _aliPayHasFinished = NO;
-//    }
-//}
-//
-//- (AlixPayResult *)resultFromURL:(NSURL *)url {
-//	NSString * query = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//#if ! __has_feature(objc_arc)
-//    return [[[AlixPayResult alloc] initWithString:query] autorelease];
-//#else
-//	return [[AlixPayResult alloc] initWithString:query];
-//#endif
-//}
-//
-//- (AlixPayResult *)handleOpenURL:(NSURL *)url {
-//	AlixPayResult * result = nil;
-//
-//	if (url != nil && [[url host] compare:@"safepay"] == 0) {
-//		result = [self resultFromURL:url];
-//	}
-//
-//	return result;
-//}
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    NSLog(@"applicationDidEnterBackground+++++++++++++++++++++++++");
     self.appDelegate.pushChatView = @"push";
     
     [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
@@ -621,65 +509,33 @@ NSString *strUserId = @"";
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-     NSLog(@"applicationWillEnterForeground+++++++++++++++++++++++++");
+    [application setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    NSLog(@"applicationDidBecomeActive+++++++++++++++++++++++++");
     if(self.isB2CPush == YES || self.isB2BPush == YES)
     {
         DCFTabBarCtrl *tabbar = [sb instantiateViewControllerWithIdentifier:@"dcfTabBarCtrl"];
         self.window.rootViewController = tabbar;
         [tabbar setSelectedIndex:3];
     }
-    NSLog(@"self.pushChatView = %@",self.pushChatView);
 }
-
 
 //点击通知栏推送聊天消息，进入聊天窗口
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    NSLog(@"收到本地IM本地推送+++++++++ = %@",notification.userInfo);
-    
     if(application.applicationState == UIApplicationStateActive)
     {
-        NSLog(@"APP是前台活跃状态");
-//        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
-//        //接收客服会话通知栏推送
-//        [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
     }
     else
     {
-        
-        NSLog(@"self.pushChatView = %@",self.pushChatView);
         if ([self.pushChatView isEqualToString:@"push"])
         {
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
             
         }
-//        NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
-//        for (UILocalNotification *notify in notificaitons)
-//        {
-//            
-//            if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
-//            {
-//                
-//                if ([self.pushChatView isEqualToString:@"push"])
-//                {
-//                    
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:@"goToChatView" object:nil];
-//                    
-//                }
-//                
-//                //取消一个特定的通知
-//                [[UIApplication sharedApplication] cancelLocalNotification:notify];
-//                
-//                break;
-//            }
-//        }
-        NSLog(@"APP已推入后台");
     }
 }
 
@@ -715,7 +571,6 @@ NSString *strUserId = @"";
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
     }
-    
     UILocalNotification *_localNotification;
     if (!_localNotification)
     {
@@ -737,15 +592,10 @@ NSString *strUserId = @"";
 //        _localNotification.repeatInterval = NSWeekCalendarUnit;
         
         _localNotification.repeatInterval=0;
-        
         // 设定通知的userInfo，用来标识该通知
         NSDictionary *dict =[NSDictionary dictionaryWithObjectsAndKeys:@"mmb_ios_push",@"ydmmbkey",nil];
-        
         [_localNotification setUserInfo:dict];
-        
         [[UIApplication sharedApplication] scheduleLocalNotification:_localNotification];
-        
-        NSLog(@"running in the background");
     }
 }
 
@@ -791,14 +641,12 @@ NSString *strUserId = @"";
 
 - (void)xmppStreamWillConnect:(XMPPStream *)sender
 {
-//    NSLog(@"xmppStreamWillConnect");
+
 }
 
 //连接服务器
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
-    
-//    NSLog(@"连接服务器++++++++++++++++++++++");
     NSError *error = nil;
     if (![xmppStream authenticateWithPassword:@"cableex123@yd?" error:&error])
     {
@@ -813,7 +661,6 @@ NSString *strUserId = @"";
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
     [self goonline];
-//    NSLog(@"验证通过上线+++++++++++++++++");
 }
 
 -(void)goonline
@@ -826,7 +673,6 @@ NSString *strUserId = @"";
         //查询客服组列表
         [self queryRoster];
     }
-//    NSLog(@"上线goonline++++++++++++++++++++++");
 }
 
 - (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket
@@ -860,7 +706,6 @@ NSString *strUserId = @"";
     
     if ([xmppStream connect:&error])
     {
-//        NSLog(@"my connected error : %@",error.description);
         return NO;
     }
 
@@ -918,7 +763,6 @@ NSString *strUserId = @"";
     
     if (![xmppStream connect:&error])
     {
-//         NSLog(@"my connected error : %@",error.description);
         return NO;
     }
     return YES;
@@ -1064,26 +908,11 @@ NSString *strUserId = @"";
     }
     else if([from rangeOfString:@"conference"].location !=NSNotFound && [from rangeOfString:@"/"].location ==NSNotFound)
     {
-
-        
         self.personName = to;
         self.uesrID = from;
     }
     else
     {
-        if ([self.forgroudPushMessage isEqualToString:@"前台推送"])
-        {
-            self.messageCount++;
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
-            [self messageSoundRemaind];
-        }
-       
-//        [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
-//        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"message_Push"] isEqualToString:@"1"])
-//        {
-//            //接收客服会话通知栏推送
-//            [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (chatRoomMessage:) name:@"chatRoomMessagePush" object:nil];
-//        }
         if(hasLogin == YES)
         {
             if ([from rangeOfString:tempUserName].location ==NSNotFound)
@@ -1104,6 +933,12 @@ NSString *strUserId = @"";
                     [self recUserId:@"1" toUserId:@"1" toUserName:tempUserName toTime:loctime toMessage:messageg_hasLogin];
                 }
                 self.personName = to;
+                if ([self.forgroudPushMessage isEqualToString:@"前台推送"])
+                {
+                    self.messageCount++;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
+                    [self messageSoundRemaind];
+                }
             }
         }
         else
@@ -1125,6 +960,12 @@ NSString *strUserId = @"";
                     
                     [self recUserId:@"1" toUserId:@"1" toUserName:[self.appDelegate getUdid] toTime:loctime toMessage:messageg_noLogin];
                 }
+                if ([self.forgroudPushMessage isEqualToString:@"前台推送"])
+                {
+                    self.messageCount++;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.messageCount]];
+                    [self messageSoundRemaind];
+                }
             }
             self.personName = to;
         }
@@ -1140,8 +981,6 @@ NSString *strUserId = @"";
         return;
     }
 }
-
-
 
 // 发送消息回调方法
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message

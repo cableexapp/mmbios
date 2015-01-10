@@ -103,8 +103,6 @@ BOOL isPopShow = NO;
     self.tableView.scrollEnabled = YES;
     [self loadbadgeCount];
     [self loadShopCarCount];
-    self.appDelegate.messageCount = 0;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.appDelegate.messageCount]];
 }
 
 - (void) viewWillDisappear:(BOOL)animated

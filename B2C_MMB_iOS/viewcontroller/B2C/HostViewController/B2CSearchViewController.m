@@ -377,7 +377,7 @@
     //去掉识别结果最后的标点符号
     if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"])
     {
-        NSLog(@"末尾标点符号：%@",str);
+        
     }
     else
     {

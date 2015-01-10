@@ -130,11 +130,7 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (NetisConnection:) name:@"NetisConnect" object:nil];
     
     //接收分组列表
-    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (memberGroupList:) name:@"memberGroupName" object:nil];
-    
-   
-//    NSLog(@"self.appDelegate.roster = %@",self.appDelegate.roster);
-    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (memberGroupList:) name:@"memberGroupName" object:nil];    
 }
 
 

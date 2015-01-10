@@ -176,7 +176,6 @@
         chooseColorAndCountView = nil;
     }
     backView.hidden = YES;
-//  [self setHidesBottomBarWhenPushed:NO];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -268,12 +267,7 @@
         [buyOrAddBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [buttomView addSubview:buyOrAddBtn];
     }
-    
     [self loadRequest];
-    
-    //    tableView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight-50-64)];
-    //    [tableView setBackgroundColor:[UIColor redColor]];
-    //    [self.view addSubview:tableView];
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,  ScreenHeight-50-64) style:0];
     [tv setDataSource:self];
@@ -297,14 +291,9 @@
 - (void) loadRequest
 {
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductDetail",time];
-    
     NSString *token = [DCFCustomExtra md5:string];
-    
     NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",_productid,token];
-    //    NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@",@"1156",token];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductDetail.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CProductDetailTag delegate:self];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -356,11 +345,6 @@
         {
             detailData = [[B2CGoodsDetailData alloc] init];
             [detailData dealData:dicRespon];
-//            detailData.phoneDescribe = @"<p>远东买卖宝</p>";
-            
-            //测试字段
-//            detailData.phoneDescribe = [[NSUserDefaults standardUserDefaults] objectForKey:@"content"];
-            
             [self loadWebView];
         }
         else
@@ -429,7 +413,6 @@
             else
             {
                 [DCFStringUtil showNotice:msg];
-                //                [self loadShopCarCount];
             }
         }
     }
@@ -541,15 +524,7 @@
     }
     if(indexPath.row == 4)
     {
-        //        NSString *discuss = detailData.score;
-        //        if(discuss.length == 0)
-        //        {
-        //            return 0;
-        //        }
-        //        else
-        //        {
         return 40;
-        //        }
     }
     if (indexPath.row == 5)
     {
@@ -606,8 +581,6 @@
                         return 0;
                     }
                     return cellWebView.frame.size.height;
-//                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-//                    return size.height+15;
                 }
             }
         }
@@ -689,19 +662,7 @@
                         return 0;
                     }
                     return cellWebView.frame.size.height;
-                    //                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-                    //                    return size.height+15;
                 }
-                
-//                if([DCFCustomExtra validateString:detailData.phoneDescribe] == NO)
-//                {
-//                    return 0;
-//                }
-//                else
-//                {
-//                    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:detailData.phoneDescribe WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-//                    return size.height+15;
-//                }
             }
         }
     }
@@ -714,8 +675,6 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    [tableView setSeparatorStyle:0];
-    
     NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(cell == nil)
@@ -853,11 +812,9 @@
         }
         if(indexPath.row == 4)
         {
-            
             for(int i = 0;i < 2;i++)
             {
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                //                [btn setFrame:CGRectMake(10+100*i, 5, 100, 34)];
                 UIView *selectView = [[UIView alloc] init];
                 [btn.titleLabel setFont:[UIFont systemFontOfSize:15]];
                 if(i == 0)
@@ -968,7 +925,6 @@
                     [moreCell.lblContent setText:@"暂无评论哦~~"];
                     moreCell.lblContent.font = [UIFont systemFontOfSize:13];
                     [moreCell.contentView setBackgroundColor:[UIColor whiteColor]];
-                    //                    [moreCell noDataAnimation];
                 }
                 return moreCell;
                 
@@ -1152,8 +1108,6 @@
         //替换字符
         html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
     }
-    //    NSString * regEx = @"<([^>]*)>";
-    //    html = [html stringByReplacingOccurrencesOfString:regEx withString:@""];
     return html;
 }
 
@@ -1173,40 +1127,9 @@
         cellWebView.userInteractionEnabled = NO;
         [(UIScrollView *)[[cellWebView subviews] objectAtIndex:0] setBounces:NO];
         [cellWebView setBackgroundColor:[UIColor clearColor]];
-//        NSString *jsString = [NSString stringWithFormat:@"<html> "
-//                              "<head> "
-//                              "<style type=\"text/css\"> "
-//                              "body {font-size: %d;color:%@}"
-//                              "</style> "
-//                              "</head> "
-//                              "<body>%@</body> "
-//                              "</html>", 13, @"#000000",detailData.phoneDescribe];
         [cellWebView loadHTMLString:detailData.phoneDescribe baseURL:nil];
-        
     }
 }
-
-
-//- (void) webViewDidFinishLoad:(UIWebView *)webView
-//{
-//    const CGFloat defaultWebViewHeight = 22.0;
-//    //reset webview size
-//    CGRect originalFrame = webView.frame;
-//    webView.frame = CGRectMake(originalFrame.origin.x, originalFrame.origin.y, ScreenWidth, defaultWebViewHeight);
-//    
-//    CGSize actualSize = [webView sizeThatFits:CGSizeZero];
-//    
-//    if (actualSize.height <= defaultWebViewHeight)
-//    {
-//        actualSize.height = defaultWebViewHeight;
-//    }
-//    CGRect webViewFrame = webView.frame;
-//    webViewFrame.size.height = actualSize.height;
-//    webView.frame = webViewFrame;
-//    [tv reloadData];
-//}
-
-
 
 //webview 自适应高度
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -1234,13 +1157,6 @@
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-//    CGSize size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:[self filterHTML:detailData.phoneDescribe] WithSize:CGSizeMake(ScreenWidth-20, MAXFLOAT)];
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, size.width, size.height)];
-//    [label setFont:[UIFont systemFontOfSize:14]];
-//    [label setNumberOfLines:0];
-//    [label setText:[self filterHTML:detailData.phoneDescribe]];
-//    [cell.contentView addSubview:label];
-    
     [cell.contentView addSubview:cellWebView];
     
     UIView *lineView = [[UIView alloc] init];
@@ -1429,40 +1345,12 @@
     
     if(btn.tag == 1000)
     {
-        //        if(btn.selected == YES)
-        //        {
         showCell = YES;
-        //
-        //        }
-        //        else
-        //        {
-        //            showCell = NO;
-        //        }
     }
     if(btn.tag == 1001)
     {
-        //        if(btn.selected == YES)
-        //        {
         showCell = NO;
-        //        }
-        //        else
-        //        {
-        //            showCell = YES;
-        //        }
     }
-    
-    //    for(UIButton *btn in cellBtnArray)
-    //    {
-    //        if(btn.tag == [sender tag])
-    //        {
-    //
-    //        }
-    //        else
-    //        {
-    //            [btn setSelected:NO];
-    //        }
-    //    }
-    
     [tv reloadData];
 }
 
@@ -1605,9 +1493,6 @@
             [chooseColorAndCountView addSubview:label];
             [colorLabelArray addObject:label];
         }
-        
-        
-        
         UILabel *chooseCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 200, 80, 20)];
         [chooseCountLabel setText:@"购买数量"];
         [chooseCountLabel setTextAlignment:NSTextAlignmentLeft];
@@ -1646,8 +1531,6 @@
             [chooseColorAndCountView addSubview:btn];
             [chooseCountBtnArray addObject:btn];
         }
-        
-        
         sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [sureBtn setFrame:CGRectMake((self.view.frame.size.width-140)/2, 240, 140, 40)];
         [sureBtn setTitle:@"确 认" forState:UIControlStateNormal];
@@ -1658,8 +1541,6 @@
         [sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1] size:CGSizeMake(sureBtn.frame.size.width, sureBtn.frame.size.height)] forState:UIControlStateNormal];
         [sureBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor lightGrayColor] size:CGSizeMake(sureBtn.frame.size.width, sureBtn.frame.size.height)] forState:UIControlStateDisabled];
         sureBtn.layer.cornerRadius = 5;
-        //        sureBtn.layer.borderColor = [UIColor colorWithRed:255/255.0 green:141/255.0 blue:1/255.0 alpha:1].CGColor;
-        //        sureBtn.layer.borderWidth = 1.0f;
         sureBtn.layer.masksToBounds = YES;
         sureBtn.enabled = NO;
         [chooseColorAndCountView addSubview:sureBtn];
@@ -1715,7 +1596,6 @@
             {
                 for(int i=0; i< 3; i++)
                 {
-                    //                NSString *colorPrice = [[detailData.coloritems objectAtIndex:j] objectForKey:@"colorPrice"];
                     UILabel *label = (UILabel *)[colorLabelArray objectAtIndex:i];
                     [label setHidden:NO];
                     if(i == 2)
@@ -1763,7 +1643,6 @@
             {
                 for(int i=0; i< 3; i++)
                 {
-                    //                NSString *colorPrice = [[detailData.coloritems objectAtIndex:j] objectForKey:@"colorPrice"];
                     UILabel *label = (UILabel *)[colorLabelArray objectAtIndex:i];
                     switch (i) {
                         case 2:

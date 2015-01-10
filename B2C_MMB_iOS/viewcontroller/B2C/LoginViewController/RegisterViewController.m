@@ -457,14 +457,6 @@
 //校验是否是手机注册
 -(void)CheckPhone
 {
-//    if([DCFCustomExtra validateString:self.userTf.text] == NO || [DCFCustomExtra validateString:self.secTf.text] == NO || [DCFCustomExtra validateString:self.sureSecTf.text] == NO)
-//    {
-//        justValidate = YES;
-//    }
-//    else
-//    {
-//        justValidate = NO;
-//    }
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"CheckPhone",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -487,34 +479,6 @@
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
-//校验是否是用户名注册
--(void)RegisterByUserName
-{
-//    if([DCFCustomExtra validateString:self.userTf.text] == NO || [DCFCustomExtra validateString:self.secTf.text] == NO || [DCFCustomExtra validateString:self.sureSecTf.text] == NO)
-//    {
-//        justValidate = YES;
-//    }
-//    else
-//    {
-//        justValidate = NO;
-//    }
-//    NSString *time = [DCFCustomExtra getFirstRunTime];
-//    
-//    NSString *string = [NSString stringWithFormat:@"%@%@",@"UserRegister",time];
-//    
-//    NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UserRegister.html?"];
-//    
-//    NSString *token = [DCFCustomExtra md5:string];
-//    
-//    NSString *des = [MCdes encryptUseDES:self.secTf.text key:@"cableex_app*#!Key"];
-//    
-//    NSString *pushString = [NSString stringWithFormat:@"username=%@&password=%@&token=%@",self.userTf.text,des,token];
-//    NSLog(@"push = %@",pushString);
-//    conn = [[DCFConnectionUtil alloc] initWithURLTag:URLRegesterTag delegate:self];
-//    
-//    [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-}
-
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
     if(textField == self.secTf || textField == self.sureSecTf)
@@ -533,34 +497,6 @@
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-//    if(textField == self.userTf)
-//    {
-//        [self.userTf resignFirstResponder];
-//        
-//        //校验手机号是否已注册
-//        if([DCFCustomExtra validateMobile:self.userTf.text] == YES)
-//        {
-//            phoneOrUserName = YES;
-//            
-//            [self RegisterByMobile];
-//        }
-//        else //校验用户名是否已注册
-//        {
-//            phoneOrUserName = NO;
-//            
-//            [self RegisterByUserName];
-//        }
-//        [self checkStatus];
-//    }
-//    if(textField == self.secTf)
-//    {
-//        [self.secTf resignFirstResponder];
-//    }
-//    
-//    if(textField == self.sureSecTf)
-//    {
-//        [self.sureSecTf resignFirstResponder];
-//    }
     [textField resignFirstResponder];
     return YES;
 }

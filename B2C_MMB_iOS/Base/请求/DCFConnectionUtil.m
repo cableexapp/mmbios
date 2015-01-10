@@ -83,7 +83,7 @@
        urlStr = [NSString stringWithFormat:@"%@%@",strUrl,strPostBody];
 
     }
-    NSLog(@"urlStr = %@",urlStr);
+//    NSLog(@"urlStr = %@",urlStr);
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlStr]];
     request.timeoutInterval = 20;
     //设置传送类型
@@ -264,11 +264,9 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
     [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
     NSError *error;
     NSString *resultStr = [[NSString alloc] initWithData:_dtReviceData encoding:NSUTF8StringEncoding];
-    NSLog(@"res = %@",resultStr);
     if(appDel.lookForTradeMsg == YES)
     {
         [self.delegate resultWithString:resultStr];

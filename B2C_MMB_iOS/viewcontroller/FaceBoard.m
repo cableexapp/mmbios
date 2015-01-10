@@ -39,7 +39,6 @@
             _faceMap = [[NSDictionary dictionaryWithContentsOfFile:
                          [[NSBundle mainBundle] pathForResource:@"_expression_en"
                                                          ofType:@"plist"]] retain];
-//            NSLog([_faceMap description]);
         }
     
         [[NSUserDefaults standardUserDefaults] setObject:_faceMap forKey:@"FaceMap"];
@@ -128,12 +127,8 @@
     {
         NSMutableString *faceString = [[NSMutableString alloc]initWithString:self.inputTextView.text];
         [faceString appendString:[_faceMap objectForKey:[NSString stringWithFormat:@"%03d", i]]];
-//        NSLog([NSString stringWithFormat:@"%03d", i]);
-//        NSLog([_faceMap objectForKey:[NSString stringWithFormat:@"%03d", i]]);
-//        NSLog([_faceMap description]);
         self.inputTextView.text = faceString;
         [faceString release];
-
         [delegate textViewDidChange:self.inputTextView];
     }
 }

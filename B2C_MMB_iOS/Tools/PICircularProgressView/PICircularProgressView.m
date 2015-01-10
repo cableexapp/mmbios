@@ -231,9 +231,7 @@
 
 - (void)setProgress:(double)progress
 {
-//   _progress = MIN(1.0, MAX(0.0, progress));
     _progress = progress/100;
-//    NSLog(@"progress = %f",progress);
     [self setNeedsDisplay];
 }
 

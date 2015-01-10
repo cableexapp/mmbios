@@ -636,7 +636,7 @@
     //去掉识别结果最后的标点符号
     if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"])
     {
-            NSLog(@"末尾标点符号：%@",str);
+        
     }
     else
     {
@@ -679,11 +679,10 @@
      {
         if (mySearchBar.text.length==0)
         {
-            NSLog(@"无识别结果");
+            
         }
         else
         {
-            NSLog(@"识别成功");
             if ([tempType isEqualToString:@"2"])
             {
                 [self setHidesBottomBarWhenPushed:YES];

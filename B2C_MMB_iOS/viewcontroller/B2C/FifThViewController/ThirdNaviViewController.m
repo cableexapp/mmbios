@@ -42,13 +42,15 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.navigationController.navigationBar.translucent = YES;
+    self.wantsFullScreenLayout = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.tabBarController.tabBar setHidden:YES];
 //
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.navigationController.tabBarController.tabBar setHidden:YES];
+
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
-        NSMutableArray *ViewArray = [[NSMutableArray alloc] initWithArray:self.navigationController.viewControllers];
-        
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = @"工具栏客服";
         

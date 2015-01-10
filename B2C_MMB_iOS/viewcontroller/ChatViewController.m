@@ -82,12 +82,6 @@ int messageCountNum = 0;
     naviTitle.textAlignment = NSTextAlignmentCenter;
     self.navigationItem.titleView = naviTitle;
     
-    UILabel *label = [[UILabel alloc] init];
-    label.frame = CGRectMake(0, self.view.frame.size.height-44, 100, 40);
-    label.backgroundColor = [UIColor redColor];
-    label.text = @"12444124";
-    [self.view addSubview:label];
-    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-44) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -194,6 +188,7 @@ int messageCountNum = 0;
 -(void)goBackActionToHome
 {
     self.appDelegate.forgroudPushMessage = @"前台推送";
+    self.appDelegate.pushChatView = @"push";
      [[NSUserDefaults standardUserDefaults] setObject:@"1" forKey:@"message_Push"];
     [self pageFromWhere];
     
@@ -428,10 +423,17 @@ int messageCountNum = 0;
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+   
+    self.wantsFullScreenLayout = YES;
+   
+    [self.tabBarController.tabBar setHidden:YES];
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"message_Push"];
     messageCountNum = 0;
     self.appDelegate.messageCount = 0;
     self.appDelegate.forgroudPushMessage = @"取消前台推送";
+    self.appDelegate.pushChatView = nil;
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"sendMessageToBadge" object:[NSString stringWithFormat:@"%d",self.appDelegate.messageCount]];
    
     self.appDelegate.pushChatView = nil;
@@ -447,22 +449,6 @@ int messageCountNum = 0;
             [self creatRoom];
         }
     }
-//    //取消某一个通知
-//    NSArray *notificaitons = [[UIApplication sharedApplication] scheduledLocalNotifications];
-//    //获取当前所有的本地通知
-//    if (!notificaitons || notificaitons.count <= 0)
-//    {
-//        return;
-//    }
-//    for (UILocalNotification *notify in notificaitons)
-//    {
-//        if ([[notify.userInfo objectForKey:@"ydmmbkey"] isEqualToString:@"mmb_ios_push"])
-//        {
-//            //取消一个特定的通知
-//            [[UIApplication sharedApplication] cancelLocalNotification:notify];
-//            break;
-//        }
-//    }
 
     [self firstPageMessageData];
     

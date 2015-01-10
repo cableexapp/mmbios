@@ -293,13 +293,13 @@
     {
         [moreCell stopAnimation];
     }
+    [_iflyRecognizerView cancel];
+    _iflyRecognizerView.delegate = nil;
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-    [_iflyRecognizerView cancel];
-    _iflyRecognizerView.delegate = nil;
 }
 
 -(void)rightSearchBtnClick
@@ -372,7 +372,19 @@
     NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *arrDic = (NSDictionary *)[data mutableObjectFromJSONData];
     NSString *soundInput = [[[[[arrDic objectForKey:@"ws"] objectAtIndex:0] objectForKey:@"cw"] objectAtIndex:0] objectForKey:@"w"];
-    mySearchBar.text = soundInput;
+    NSString * str = [[NSString alloc]init];
+    str = [str stringByAppendingString:soundInput];
+    //去掉识别结果最后的标点符号
+    if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"])
+    {
+        NSLog(@"末尾标点符号：%@",str);
+    }
+    else
+    {
+        searchBarText = str;
+        mySearchBar.text = str;
+    }
+
     intPage = 1;
     tempFlag = 1;
     if (selctBtn.tag == 0)

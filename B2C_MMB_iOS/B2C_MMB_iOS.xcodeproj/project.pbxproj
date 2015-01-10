@@ -331,12 +331,10 @@
 		8B52C5001A392FCD005DC53D /* about.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B52C4FF1A392FCD005DC53D /* about.png */; };
 		8B52C5031A392FD6005DC53D /* mob.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B52C5011A392FD6005DC53D /* mob.png */; };
 		8B52C5041A392FD6005DC53D /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B52C5021A392FD6005DC53D /* setting.png */; };
-		8B5BDB451A5D222B00D0D3DC /* B2CSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5BDB441A5D222B00D0D3DC /* B2CSearchViewController.m */; };
 		8B64D8951A6008380053023F /* more_hotline_tel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B64D8941A6008380053023F /* more_hotline_tel.png */; };
 		8B7549421A26FB2E00271985 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549411A26FB2E00271985 /* close.png */; };
 		8B7549441A27013600271985 /* chatBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549431A27013600271985 /* chatBtn.png */; };
 		8B7549461A270A4B00271985 /* shopPic.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549451A270A4B00271985 /* shopPic.png */; };
-		8B82B0B51A5A2D060032161A /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B82B0B21A5A2D060032161A /* SearchViewController.m */; };
 		8B876EF01A3C2C7000059034 /* DCFRootNaviController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B876EEF1A3C2C7000059034 /* DCFRootNaviController.m */; };
 		8B89E1E01A1B204F00AA33C2 /* ZSYPopoverListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B89E1DF1A1B204F00AA33C2 /* ZSYPopoverListView.m */; };
 		8B8AA0741A5E6252001D68D1 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8AA0721A5E6252001D68D1 /* Icon@2x.png */; };
@@ -351,8 +349,10 @@
 		8B8B985C1A2F165500697375 /* 在线客服.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8B98541A2F165500697375 /* 在线客服.png */; };
 		8B8B98641A2F250C00697375 /* shoppingCar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8B98631A2F250C00697375 /* shoppingCar.png */; };
 		8B8E83191A5FA3D900CC8CBB /* cabel.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B8E83181A5FA3D900CC8CBB /* cabel.png */; };
-		8B8F37DA1A5E14DA00E9B450 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F37D91A5E14DA00E9B450 /* ChatViewController.m */; };
 		8B8F37DD1A5E150C00E9B450 /* MyCableOrderSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8F37DC1A5E150C00E9B450 /* MyCableOrderSearchViewController.m */; };
+		8B9A702A1A60BF41006E874F /* B2CSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9A70271A60BF41006E874F /* B2CSearchViewController.m */; };
+		8B9A702B1A60BF41006E874F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9A70291A60BF41006E874F /* SearchViewController.m */; };
+		8B9A702E1A60BF85006E874F /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9A702D1A60BF85006E874F /* ChatViewController.m */; };
 		8B9D0C4A1A3B052900DAE583 /* delete_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B9D0C491A3B052900DAE583 /* delete_1.png */; };
 		8BA7C05C1A10A85500758B0F /* chat_timeline_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA7BF631A10A85500758B0F /* chat_timeline_bg.png */; };
 		8BA7C0611A10A85500758B0F /* active_page_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA7BF691A10A85500758B0F /* active_page_image.png */; };
@@ -1400,14 +1400,10 @@
 		8B52C4FF1A392FCD005DC53D /* about.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = about.png; sourceTree = "<group>"; };
 		8B52C5011A392FD6005DC53D /* mob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mob.png; sourceTree = "<group>"; };
 		8B52C5021A392FD6005DC53D /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
-		8B5BDB431A5D222B00D0D3DC /* B2CSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CSearchViewController.h; sourceTree = "<group>"; };
-		8B5BDB441A5D222B00D0D3DC /* B2CSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CSearchViewController.m; sourceTree = "<group>"; };
 		8B64D8941A6008380053023F /* more_hotline_tel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more_hotline_tel.png; sourceTree = "<group>"; };
 		8B7549411A26FB2E00271985 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		8B7549431A27013600271985 /* chatBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatBtn.png; sourceTree = "<group>"; };
 		8B7549451A270A4B00271985 /* shopPic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopPic.png; sourceTree = "<group>"; };
-		8B82B0B11A5A2D060032161A /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		8B82B0B21A5A2D060032161A /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		8B876EEE1A3C2C7000059034 /* DCFRootNaviController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCFRootNaviController.h; sourceTree = "<group>"; };
 		8B876EEF1A3C2C7000059034 /* DCFRootNaviController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCFRootNaviController.m; sourceTree = "<group>"; };
 		8B89E1DE1A1B204F00AA33C2 /* ZSYPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSYPopoverListView.h; sourceTree = "<group>"; };
@@ -1424,10 +1420,14 @@
 		8B8B98541A2F165500697375 /* 在线客服.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "在线客服.png"; sourceTree = "<group>"; };
 		8B8B98631A2F250C00697375 /* shoppingCar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoppingCar.png; sourceTree = "<group>"; };
 		8B8E83181A5FA3D900CC8CBB /* cabel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cabel.png; sourceTree = "<group>"; };
-		8B8F37D81A5E14DA00E9B450 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
-		8B8F37D91A5E14DA00E9B450 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		8B8F37DB1A5E150C00E9B450 /* MyCableOrderSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderSearchViewController.h; sourceTree = "<group>"; };
 		8B8F37DC1A5E150C00E9B450 /* MyCableOrderSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableOrderSearchViewController.m; sourceTree = "<group>"; };
+		8B9A70261A60BF41006E874F /* B2CSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CSearchViewController.h; sourceTree = "<group>"; };
+		8B9A70271A60BF41006E874F /* B2CSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CSearchViewController.m; sourceTree = "<group>"; };
+		8B9A70281A60BF41006E874F /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		8B9A70291A60BF41006E874F /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		8B9A702C1A60BF85006E874F /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		8B9A702D1A60BF85006E874F /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		8B9D0C491A3B052900DAE583 /* delete_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_1.png; sourceTree = "<group>"; };
 		8BA7BF631A10A85500758B0F /* chat_timeline_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat_timeline_bg.png; sourceTree = "<group>"; };
 		8BA7BF691A10A85500758B0F /* active_page_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active_page_image.png; sourceTree = "<group>"; };
@@ -3233,10 +3233,10 @@
 				61B7108219FF3B53001CC3BD /* ShopHostPreTableViewController.m */,
 				61B7108319FF3B53001CC3BD /* ShopHostTableViewController.h */,
 				61B7108419FF3B53001CC3BD /* ShopHostTableViewController.m */,
-				8B82B0B11A5A2D060032161A /* SearchViewController.h */,
-				8B82B0B21A5A2D060032161A /* SearchViewController.m */,
-				8B5BDB431A5D222B00D0D3DC /* B2CSearchViewController.h */,
-				8B5BDB441A5D222B00D0D3DC /* B2CSearchViewController.m */,
+				8B9A70261A60BF41006E874F /* B2CSearchViewController.h */,
+				8B9A70271A60BF41006E874F /* B2CSearchViewController.m */,
+				8B9A70281A60BF41006E874F /* SearchViewController.h */,
+				8B9A70291A60BF41006E874F /* SearchViewController.m */,
 				61B7108519FF3B53001CC3BD /* ShoppingCar */,
 				61B7108A19FF3B53001CC3BD /* SpeedAskPrice */,
 				61B7109119FF3B53001CC3BD /* UpOrders */,
@@ -3832,8 +3832,8 @@
 				8BACA7991A5CD18600F995BC /* ChatListViewController.m */,
 				8BACA79B1A5CD18E00F995BC /* WaitViewController.h */,
 				8BACA79C1A5CD18E00F995BC /* WaitViewController.m */,
-				8B8F37D81A5E14DA00E9B450 /* ChatViewController.h */,
-				8B8F37D91A5E14DA00E9B450 /* ChatViewController.m */,
+				8B9A702C1A60BF85006E874F /* ChatViewController.h */,
+				8B9A702D1A60BF85006E874F /* ChatViewController.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -5038,6 +5038,7 @@
 				8B876EF01A3C2C7000059034 /* DCFRootNaviController.m in Sources */,
 				61B710EA19FF3B53001CC3BD /* ChoosePayTableViewController.m in Sources */,
 				8BACA98D1A5D2C7700F995BC /* XMPPIQ.m in Sources */,
+				8B9A702B1A60BF41006E874F /* SearchViewController.m in Sources */,
 				8BACAA691A5D2C9E00F995BC /* XMPPCoreDataStorage.m in Sources */,
 				6181A51819CFC4C2000E2D14 /* UIImage+MultiFormat.m in Sources */,
 				61B710D919FF3B53001CC3BD /* B2CShoppingListViewController.m in Sources */,
@@ -5102,7 +5103,6 @@
 				6130AA071A3ED619000B4FB2 /* RSADataSigner.m in Sources */,
 				8BACAA921A5D2C9E00F995BC /* XMPPvCardTempModule.m in Sources */,
 				8BACA9A91A5D2C8800F995BC /* XMPPDeprecatedDigestAuthentication.m in Sources */,
-				8B5BDB451A5D222B00D0D3DC /* B2CSearchViewController.m in Sources */,
 				6181A50619CFC4C2000E2D14 /* FMDatabase.m in Sources */,
 				61A197C919F7509400909C6F /* QBImagePickerVideoInfoView.m in Sources */,
 				61B710C219FF3B53001CC3BD /* AccountManagerTableViewController.m in Sources */,
@@ -5136,7 +5136,6 @@
 				61B710BB19FF3B53001CC3BD /* SettingViewController.m in Sources */,
 				6181A35A19CFC3F9000E2D14 /* AppDelegate.m in Sources */,
 				6195F5F91A0CCE6B0036D168 /* MyNormalInquiryDetailController.m in Sources */,
-				8B8F37DA1A5E14DA00E9B450 /* ChatViewController.m in Sources */,
 				61ADE7DE1A10537A00D773B9 /* HotScreenFirstViewController.m in Sources */,
 				6114F7AA1A188754007DAC39 /* ModifyBangDingMobileViewController.m in Sources */,
 				8BACAA761A5D2C9E00F995BC /* XMPPIQ+JabberRPCResonse.m in Sources */,
@@ -5183,7 +5182,6 @@
 				61B710B819FF3B53001CC3BD /* FifthNaviViewController.m in Sources */,
 				6181A50319CFC4C2000E2D14 /* ELCAssetTablePicker.m in Sources */,
 				61B710CF19FF3B53001CC3BD /* ChooseTypeViewController.m in Sources */,
-				8B82B0B51A5A2D060032161A /* SearchViewController.m in Sources */,
 				8BACAA701A5D2C9E00F995BC /* XMPPUserCoreDataStorageObject.m in Sources */,
 				6181A50B19CFC4C2000E2D14 /* Objc+UserInfo.m in Sources */,
 				61B710DB19FF3B53001CC3BD /* HostNaviViewController.m in Sources */,
@@ -5230,8 +5228,10 @@
 				61551E8D1A0B4D21004F50FF /* B2BAskPriceCarEditViewController.m in Sources */,
 				61CD8D041A1DF279003C75F8 /* ValidateForEmailViewController.m in Sources */,
 				8BACAA861A5D2C9E00F995BC /* XMPPRoom.m in Sources */,
+				8B9A702A1A60BF41006E874F /* B2CSearchViewController.m in Sources */,
 				8BACAAA31A5D2C9E00F995BC /* XMPPMessageArchiving.m in Sources */,
 				6181A51019CFC4C2000E2D14 /* SDWebImageCompat.m in Sources */,
+				8B9A702E1A60BF85006E874F /* ChatViewController.m in Sources */,
 				8BACAA791A5D2C9E00F995BC /* XMPPRoom.xcdatamodeld in Sources */,
 				8B17CA241A555A0F00193ED2 /* RegisterProvisionViewController.m in Sources */,
 				8BACA9B71A5D2C9200F995BC /* NSXMLElement+XMPP.m in Sources */,

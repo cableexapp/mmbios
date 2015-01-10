@@ -94,7 +94,7 @@
     self.tel_Tf.placeholder = @"手机号码/固定号码";
     self.tel_Tf.layer.borderWidth = 0.5;
     self.tel_Tf.layer.borderColor = [[UIColor clearColor] CGColor];
-    self.tel_Tf.tintColor = [UIColor redColor];
+    self.tel_Tf.tintColor = [UIColor colorWithRed:9.0/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
     UIView *tel_lineView = [[UIView alloc] init];
     tel_lineView.backgroundColor = [UIColor colorWithRed:235.0/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
@@ -122,9 +122,9 @@
     content_lineView.frame = CGRectMake(0, self.content_Tv.frame.origin.y+self.content_Tv.frame.size.height-1, ScreenWidth, 1);
     [self.mySv addSubview:content_lineView];
     
-    self.content_Tv.tintColor = [UIColor redColor];
+    self.content_Tv.tintColor = [UIColor colorWithRed:9.0/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     
-    self.upBtn.layer.cornerRadius = 6;
+    self.upBtn.layer.cornerRadius = 5;
     self.upBtn.layer.backgroundColor = [[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0] CGColor];
     [self.upBtn setTitle:@"提交" forState:UIControlStateNormal];
     //    self.upBtn.frame = CGRectMake(20, self.view.frame.size.height-55, self.view.frame.size.width-16, 40);
@@ -302,7 +302,7 @@
         {
             [picBtnArray addObject:[btnArray objectAtIndex:i]];
             UIButton *picBtn = [picBtnArray objectAtIndex:i];
-            [picBtn setBackgroundColor:[UIColor redColor]];
+//            [picBtn setBackgroundColor:[UIColor redColor]];
             
         }
     }

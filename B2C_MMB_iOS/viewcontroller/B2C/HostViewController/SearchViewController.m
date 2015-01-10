@@ -144,14 +144,15 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-    [_iflyRecognizerView cancel];
-    _iflyRecognizerView.delegate = nil;
+
     isShowClearBtn = 1;
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
+    [_iflyRecognizerView cancel];
+    _iflyRecognizerView.delegate = nil;
     rightButtonView.hidden = YES;
     rightBtn.hidden = YES;
     tempFlag = @"4";
@@ -630,8 +631,18 @@
     NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *arrDic = (NSDictionary *)[data mutableObjectFromJSONData];
     NSString *soundInput = [[[[[arrDic objectForKey:@"ws"] objectAtIndex:0] objectForKey:@"cw"] objectAtIndex:0] objectForKey:@"w"];
-    searchBarText = soundInput;
-    mySearchBar.text = soundInput;
+    NSString * str = [[NSString alloc]init];
+    str = [str stringByAppendingString:soundInput];
+    //去掉识别结果最后的标点符号
+    if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"])
+    {
+            NSLog(@"末尾标点符号：%@",str);
+    }
+    else
+    {
+        searchBarText = str;
+        mySearchBar.text = str;
+    }
     if ([tempType isEqualToString:@"1"])
     {
         [self sendRquest];
@@ -644,23 +655,19 @@
     if ([tempType isEqualToString:@"2"])
     {
         [self sendRquest];
+        
         if (mySearchBar.text.length > 0)
         {
             [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
             [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
         }
-        [self setHidesBottomBarWhenPushed:YES];
-        B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
-        B2CVC.tempSearchText = mySearchBar.text;
-        [self.navigationController pushViewController:B2CVC animated:YES];
-    }
-    if (soundInput != nil)
-    {
-        [self cancelIFlyRecognizer];
-        speakButtonView.hidden = YES;
-        speakButton.hidden = YES;
-
-        clearBtn.hidden = YES;
+        if (soundInput != nil)
+        {
+            [self cancelIFlyRecognizer];
+            speakButtonView.hidden = YES;
+            speakButton.hidden = YES;
+            clearBtn.hidden = YES;
+        }
     }
 }
 //识别会话错误返回代理
@@ -668,6 +675,24 @@
 {
 //    [self.view addSubview:_popView];
 //    [_popView setText:@"识别结束!"];
+   if (error.errorCode ==0 )
+     {
+        if (mySearchBar.text.length==0)
+        {
+            NSLog(@"无识别结果");
+        }
+        else
+        {
+            NSLog(@"识别成功");
+            if ([tempType isEqualToString:@"2"])
+            {
+                [self setHidesBottomBarWhenPushed:YES];
+                B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
+                B2CVC.tempSearchText = mySearchBar.text;
+                [self.navigationController pushViewController:B2CVC animated:YES];
+            }
+        }
+    }
 }
 
 -(void)refreshTableView

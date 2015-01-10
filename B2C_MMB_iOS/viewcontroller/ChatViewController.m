@@ -438,6 +438,8 @@ int messageCountNum = 0;
    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sendMessageToBadge" object:nil];
     
+    
+    
     [self checkNet];
     
     if ([[self appDelegate].xmppStream isDisconnected])

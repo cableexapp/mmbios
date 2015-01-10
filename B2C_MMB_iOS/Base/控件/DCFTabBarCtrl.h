@@ -10,9 +10,6 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface DCFTabBarCtrl : UITabBarController
-{
-    AVAudioPlayer * messageSound;
-}
 
 - (void) changeSelectItem;
 

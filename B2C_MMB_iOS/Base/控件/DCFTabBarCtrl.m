@@ -133,27 +133,6 @@
         return;
     }
     thirdNavi.tabBarItem.badgeValue = sender.object;
-    [self messageSoundRemaind];
-}
-
--(void)messageSoundRemaind
-{
-    NSString *strPath = [[NSBundle mainBundle]pathForResource:@"sms01" ofType:@"mp3"];
-    
-    NSData * voiceData = [[NSData alloc]initWithContentsOfFile:strPath];
-    
-    messageSound = [[AVAudioPlayer alloc]initWithData:voiceData error:nil];
-    
-    
-    if ([messageSound isPlaying])
-    {
-        [messageSound stop];
-    }
-    else
-    {
-        [messageSound play];
-    }
-    
 }
 
 - (BOOL)shouldAutorotate

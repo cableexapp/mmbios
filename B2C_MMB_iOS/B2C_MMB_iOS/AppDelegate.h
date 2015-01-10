@@ -17,7 +17,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "XMPPMessageArchiving.h"
 #import "XMPPMessageArchivingCoreDataStorage.h"
-
+#import <AVFoundation/AVFoundation.h>
 
 #define UMENG_APPKEY @"546d533bfd98c55662004041"
 
@@ -56,6 +56,8 @@
     NSString *pushChatView;
     
     int messageCount;
+    
+    AVAudioPlayer * messageSound;
     
     NSString *forgroudPushMessage;
 }

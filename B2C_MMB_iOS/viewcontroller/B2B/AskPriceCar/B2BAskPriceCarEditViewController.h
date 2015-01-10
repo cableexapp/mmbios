@@ -20,6 +20,16 @@
 @interface B2BAskPriceCarEditViewController : UIViewController<PickerView,UITextFieldDelegate,ConnectionDelegate,UITextViewDelegate>
 {
     DCFConnectionUtil *conn;
+
+    
+    NSString *editNum;
+    NSString *editUnit;
+    NSString *editDeliver;
+    NSString *editSpec;
+    NSString *editVol;
+    NSString *editColor;
+    NSString *editFeatureone;
+    NSString *editRequire;
 }
 @property (strong,nonatomic) NSString *myModel;
 @property (strong,nonatomic) NSString *myCartId;
@@ -47,6 +57,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *sureBtn;
 
+@property (strong,nonatomic) NSDictionary *editDic;
 
 @property (assign,nonatomic) id<RemoveSubView> delegate;
 @end

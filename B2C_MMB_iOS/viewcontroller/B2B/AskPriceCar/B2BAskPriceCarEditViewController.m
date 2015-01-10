@@ -118,16 +118,6 @@
 
 - (void) refreshView:(NSDictionary *) dic
 {
-//    NSDictionary *editDic = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                             editNum,@"editNum",
-//                             editUnit,@"editUnit",
-//                             editDeliver,@"editDeliver",
-//                             editSpec,@"editSpec",
-//                             editVol,@"editVol",
-//                             editColor,@"editColor",
-//                             editFeatureone,@"editFeatureone",
-//                             editRequire,@"editRequire",
-    
     editNum = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editNum"]];
     editUnit = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editUnit"]];
     editDeliver = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editDeliver"]];
@@ -138,6 +128,10 @@
     editRequire = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editRequire"]];
 
     [self.numTF setText:editNum];
+    if([DCFCustomExtra validateString:editUnit] == NO)
+    {
+        editUnit = @"KM";
+    }
     [self.unitBtn setTitle:editUnit forState:UIControlStateNormal];
     [self.timeTF setText:editDeliver];
     [self.specTf setText:editSpec];

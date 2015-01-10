@@ -30,7 +30,7 @@
 @property (strong,nonatomic) NSString *sellName;
 @property (strong,nonatomic) NSString *shopId;
 @property (strong,nonatomic) NSString *shopName;
-@property (strong,nonatomic) NSString *status;
+@property (strong,nonatomic) NSString *B2CMyOrderDataStatus;
 
 @property (strong,nonatomic) NSString *logisticsNum;
 @property (strong,nonatomic) NSString *logisticsCompanay;

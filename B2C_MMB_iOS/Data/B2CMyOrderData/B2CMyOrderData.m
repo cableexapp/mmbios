@@ -61,7 +61,7 @@
         
         _shopName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"shopName"]];
         
-        _status = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
+        _B2CMyOrderDataStatus = [NSString stringWithFormat:@"%@",[dic objectForKey:@"status"]];
         
         _afterStatus = [NSString stringWithFormat:@"%@",[dic objectForKey:@"afterStatus"]];
         

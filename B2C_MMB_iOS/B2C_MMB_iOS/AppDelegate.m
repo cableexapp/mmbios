@@ -165,7 +165,7 @@ NSString *strUserId = @"";
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     
-//    NSLog(@"%@",userInfo);
+    NSLog(@"%@",userInfo);
     
     NSString *pushTitle = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     

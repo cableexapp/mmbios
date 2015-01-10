@@ -629,8 +629,8 @@
     {
         cell = [[MyOrderHostBtnTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
     }
-    int status = [[[dataArray objectAtIndex:path.section] status] intValue];
-    if(status == 1)
+    int statuss = [[[dataArray objectAtIndex:path.section] status] intValue];
+    if(statuss == 1)
     {
         [cell.onLinePayBtn setHidden:NO];
         [cell.cancelOrderBtn setHidden:NO];
@@ -649,7 +649,7 @@
         [cell.lookForTradeBtn setHidden:YES];
         [cell.receiveBtn setHidden:YES];
     }
-    if(status == 2)
+    if(statuss == 2)
     {
         [cell.cancelOrderBtn setHidden:NO];
         
@@ -665,7 +665,7 @@
         [cell.onLinePayBtn setHidden:YES];
     }
     
-    if(status == 3)
+    if(statuss == 3)
     {
         [cell.receiveBtn setHidden:NO];
         
@@ -686,7 +686,7 @@
         [cell.cancelOrderBtn setHidden:YES];
     }
     
-    if(status == 6)
+    if(statuss == 6)
     {
         int judgeStatus = [[[dataArray objectAtIndex:path.section] juderstatus] intValue];
         int afterStatus = [[[dataArray objectAtIndex:path.section] afterStatus] intValue];

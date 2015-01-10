@@ -24,6 +24,8 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,ConnectionDelegate,XMPPRosterDelegate,XMPPStreamDelegate>
 {
+    int badge;
+    
     DCFConnectionUtil *conn;
     
     //XMPP

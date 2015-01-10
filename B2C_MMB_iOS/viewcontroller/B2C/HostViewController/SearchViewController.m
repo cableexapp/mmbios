@@ -643,38 +643,36 @@
         searchBarText = str;
         mySearchBar.text = str;
     }
+    if (mySearchBar.text.length > 0)
+    {
+        speakButtonView.hidden = YES;
+        speakButton.hidden = YES;
+        clearBtn.hidden = YES;
+    }
     if ([tempType isEqualToString:@"1"])
     {
-        [self sendRquest];
         if (mySearchBar.text.length > 0)
         {
+            [self sendRquest];
+            [self cancelIFlyRecognizer];
             [self saveType:@"1" ProductId:nil ProductName:mySearchBar.text];
             [self saveType:@"1" ProductId:nil ProductName:mySearchBar.text];
         }
     }
     if ([tempType isEqualToString:@"2"])
     {
-        [self sendRquest];
-        
         if (mySearchBar.text.length > 0)
         {
-            [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
-            [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
-        }
-        if (soundInput != nil)
-        {
+            [self sendRquest];
             [self cancelIFlyRecognizer];
-            speakButtonView.hidden = YES;
-            speakButton.hidden = YES;
-            clearBtn.hidden = YES;
+            [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
+            [self saveType:@"2" ProductId:nil ProductName:mySearchBar.text];
         }
     }
 }
 //识别会话错误返回代理
 - (void)onError: (IFlySpeechError *) error
 {
-//    [self.view addSubview:_popView];
-//    [_popView setText:@"识别结束!"];
    if (error.errorCode ==0 )
      {
         if (mySearchBar.text.length==0)

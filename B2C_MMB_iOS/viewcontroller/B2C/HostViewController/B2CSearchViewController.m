@@ -384,9 +384,17 @@
         searchBarText = str;
         mySearchBar.text = str;
     }
-
     intPage = 1;
     tempFlag = 1;
+    if (mySearchBar.text.length > 0)
+    {
+        [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
+        [self cancelIFlyRecognizer];
+        speakButtonView.hidden = YES;
+        speakButton.hidden = YES;
+        [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
+        [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
+    }
     if (selctBtn.tag == 0)
     {
         selctBtn.selected = YES;
@@ -394,25 +402,12 @@
         lineView_3.hidden = YES;
         lineView_4.hidden = YES;
     }
-    [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
-    if (mySearchBar.text.length > 0)
-    {
-        [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
-        [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
-    }
-    if (soundInput != nil)
-    {
-        [self cancelIFlyRecognizer];
-        speakButtonView.hidden = YES;
-        speakButton.hidden = YES;
-    }
 }
 
 //识别会话错误返回代理
 - (void)onError: (IFlySpeechError *) error
 {
-    //    [self.view addSubview:_popView];
-    //    [_popView setText:@"识别结束!"];
+    [self cancelIFlyRecognizer];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -422,11 +417,7 @@
 
 -(void)readHistoryData
 {
-//    [self refreshTableView];
-//    [self refreshHistoryTableView];
-  
     [self SearchHomeDataFromDataBase];
-
     if (homehistoryArray.count > 0)
     {
         selectBtnView.hidden = YES;
@@ -485,7 +476,6 @@
     UIButton *btn = (UIButton *) sender;
     btn.selected = !btn.selected;
     int tag = btn.tag;
-    
     //遍历数组比较tag
     for(UIView *view in buttonLineViewArray)
     {

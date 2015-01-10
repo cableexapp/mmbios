@@ -881,8 +881,6 @@ NSString *strUserId = @"";
     //消息内容
     NSString *from = [[message attributeForName:@"from"] stringValue];
     NSString *to= [[message attributeForName:@"to"] stringValue];
-
-    NSLog(@"message = %@",message);
     
     //排队等候，队列位置
     if([DCFCustomExtra validateString:[[message.children objectAtIndex:0] elementForName:@"position"].stringValue] == YES)

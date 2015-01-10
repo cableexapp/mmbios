@@ -63,6 +63,7 @@
     self.specTf.layer.borderWidth = 0.5f;
     [self.specTf setReturnKeyType:UIReturnKeyDone];
     [self.specTf setTextAlignment:NSTextAlignmentCenter];
+    [self.specTf setTextColor:[UIColor lightGrayColor]];
     //    [self.specTf setKeyboardType:UIKeyboardTypeNumberPad];
     
     self.sureBtn.layer.backgroundColor = [UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0/255.0 alpha:1.0].CGColor;
@@ -72,20 +73,25 @@
     
     self.unitBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.unitBtn.layer.borderWidth = 0.5f;
+    [self.unitBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.unitBtn setTitle:@"KM" forState:UIControlStateNormal];
     
     self.specBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.specBtn.layer.borderWidth = 0.5f;
-    
+    [self.specBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+
     self.featherBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.featherBtn.layer.borderWidth = 0.5f;
-    
+    [self.featherBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+
     self.volBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.volBtn.layer.borderWidth = 0.5f;
-    
+    [self.volBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+
     self.colorBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.colorBtn.layer.borderWidth = 0.5f;
-    
-#pragma mark - v1.1.2 陈晓修改询价车编辑界面BUG
+    [self.colorBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+
     [self.modelLabel setText:self.myModel];
     self.modelLabel.textColor = [UIColor whiteColor];
     self.modelLabel.layer.cornerRadius = 5;

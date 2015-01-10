@@ -875,9 +875,9 @@
     moneyLabel = [[UILabel alloc] init];
     totalMoney = 0.00;
 
-    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",totalMoney]]] WithSize:CGSizeMake(MAXFLOAT, 20)];
+    CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%.2f",totalMoney]]] WithSize:CGSizeMake(MAXFLOAT, 20)];
  
-    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",totalMoney]]]];
+    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%.2f",totalMoney]]]];
     
     [moneyLabel setFont:[UIFont systemFontOfSize:12]];
     [moneyLabel setTextColor:[UIColor redColor]];
@@ -1468,28 +1468,12 @@ NSComparator cmptr = ^(id obj1, id obj2){
         NSMutableArray *arr = [dataArray objectAtIndex:indexPath.section];
         if(arr.count != 0 )
         {
-            //商品数组不为空
-            //            [
-            //            (
-            //            "<B2CShopCarListData: 0x1806be80>"
-            //            ),
-            //            (
-            //            )
-            //             ]
             flag = NO;
         }
         else
         {
             flag = YES;
         }
-        
-        //        if(arr.count == 0 && indexPath.section == dataArray.count-1 && flag == YES)
-        //        {
-        //            return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
-        //        }
-        //        else
-        //        {
-        //        }
     }
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
@@ -1526,7 +1510,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     else
     {
-        /**陈晓修改整数后面没有后2位**/
         for(int i=0;i<shopPrice.length;i++)
         {
             char c = [shopPrice characterAtIndex:i];
@@ -1702,7 +1685,7 @@ NSComparator cmptr = ^(id obj1, id obj2){
     CGSize moneySize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",totalMoney]]] WithSize:CGSizeMake(MAXFLOAT, 20)];
     [moneyLabel setFrame:CGRectMake(ScreenWidth-120-moneySize.width, 10, moneySize.width, 20)];
     [countLabel setFrame:CGRectMake(moneyLabel.frame.origin.x-55, 10, 50, 20)];
-    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%f",totalMoney]]]];
+    [moneyLabel setText:[NSString stringWithFormat:@"￥ %@",[DCFCustomExtra notRounding:[NSString stringWithFormat:@"%.2f",totalMoney]]]];
 }
 
 #pragma  mark  -  滚动加载

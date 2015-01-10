@@ -481,7 +481,7 @@
         
         if(i == 0)
         {
-            [label_1 setText:@"我的买卖宝询价单"];
+            [label_1 setText:@"我的询价单"];
             //            [btn addSubview:label_2];
             
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
@@ -490,7 +490,7 @@
         }
         if(i == 1)
         {
-            [label_1 setText:@"我的电缆采购订单"];
+            [label_1 setText:@"我的电缆订单"];
             [btn addSubview:label_2];
             
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
@@ -499,7 +499,7 @@
         }
         if(i == 2)
         {
-            [label_1 setText:@"我的家装馆订单"];
+            [label_1 setText:@"我的家装线订单"];
             [btn addSubview:label_2];
             
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];

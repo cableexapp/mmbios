@@ -294,8 +294,6 @@
 - (void) edit:(UIButton *) sender
 {
     UIButton *btn = (UIButton *) sender;
-    NSLog(@"tag = %d",btn.tag);
-
     
     data = [dataArray objectAtIndex:btn.tag];
     
@@ -358,8 +356,6 @@
                              editFeatureone,@"editFeatureone",
                              editRequire,@"editRequire",
                              nil];
-    NSLog(@"%@",editDic);
-    
     
     b2bAskPriceCarEditViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarEditViewController"];
     b2bAskPriceCarEditViewController.editDic = [[NSDictionary alloc] initWithDictionary:editDic];

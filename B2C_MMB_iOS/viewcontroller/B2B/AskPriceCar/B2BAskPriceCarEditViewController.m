@@ -112,7 +112,6 @@
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     
-    NSLog(@"_editDic=%@",_editDic);
     [self refreshView:_editDic];
     
 }

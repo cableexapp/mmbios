@@ -211,8 +211,6 @@
     {
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
     }
-    
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarGoodsMsgTag delegate:self];
     
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -244,7 +242,6 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    [payBtn setEnabled:YES];
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
@@ -409,7 +406,6 @@
                         [cellBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
                         [cellBtn setSelected:NO];
                         [cellBtn addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                        //                    [cellBtn setTag:i];
                         [cellBtn setSelected:NO];
                         
                         UIImageView *cellIv = [[UIImageView alloc] initWithFrame:CGRectMake(cellBtn.frame.origin.x + cellBtn.frame.size.width + 10, 20, 70, 70)];
@@ -529,19 +525,14 @@
         }
         if(result == 1)
         {
-//            [DCFStringUtil showNotice:msg];
-            
             B2CShopCarListData *data =  [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
             data.num = [NSString stringWithFormat:@"%d",addNum];
-            
             
             [self calculateTotalMoney];
             [tv reloadData];
         }
-        
         B2CShopCarListData *data =  [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
         data.num = [NSString stringWithFormat:@"%d",addNum];
-        
     }
     if(URLTag == URLShopCarDeleteTag)
     {
@@ -561,23 +552,17 @@
                     int section = btn.tag/1000;
                     if(btn.selected == YES)
                     {
-                        
                         NSMutableArray *data = [dataArray objectAtIndex:section];
-
                         B2CShopCarListData *car = [data objectAtIndex:row];
-                        
                         [data removeObject:car];
-                        
                         
                         [chooseGoodsArray removeObject:car];
                         
                         UIImageView *cellIv = [[cellImageViewArray objectAtIndex:section] objectAtIndex:row];
                         [[cellImageViewArray objectAtIndex:section] removeObject:cellIv];
                         
-                        
                         UIButton *subBtn = [[subtractArray objectAtIndex:section] objectAtIndex:row];
                         [[subtractArray objectAtIndex:section] removeObject:subBtn];
-                        
                         
                         UIButton *addBtn = [[addArray objectAtIndex:section] objectAtIndex:row];
                         [[addArray objectAtIndex:section] removeObject:addBtn];
@@ -593,7 +578,6 @@
                     }
                 }
             }
-            
             total = 0;
             for( int i=0;i<dataArray.count;i++)
             {
@@ -624,7 +608,6 @@
                     [[headBtnArray objectAtIndex:i] removeAllObjects];
                 }
             }
-
             [moneyLabel setText:[DCFCustomExtra notRounding:@"0.00"]];
             [buttomBtn setSelected:NO];
             [tv reloadData];
@@ -668,7 +651,6 @@
 
 - (void) subtractBtnClick:(UIButton *) sender
 {
-    
     subtractBtnRow = sender.tag%1000;
     subtractBtnSection = sender.tag/1000;
     
@@ -693,23 +675,14 @@
         {
             subtractNum = subtractNum - 1;
         }
-        
         NSString *time = [DCFCustomExtra getFirstRunTime];
-        
         NSString *string = [NSString stringWithFormat:@"%@%@",@"UpdateShoppingCart",time];
-        
         NSString *token = [DCFCustomExtra md5:string];
-        
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UpdateShoppingCart.html?"];
-        
         NSString *pushNum = [NSString stringWithFormat:@"%d",subtractNum];
-        
         NSString  *pushString = [NSString stringWithFormat:@"cartid=%@&itemnum=%@&token=%@",carListData.itemId,pushNum,token];
-        
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarsubtractTag delegate:self];
-        
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-        
     }
 }
 
@@ -750,28 +723,16 @@
         addNum = addNum + 1;
         
         NSString *time = [DCFCustomExtra getFirstRunTime];
-        
         NSString *string = [NSString stringWithFormat:@"%@%@",@"UpdateShoppingCart",time];
-        
         NSString *token = [DCFCustomExtra md5:string];
-        
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/UpdateShoppingCart.html?"];
-        
         NSString *pushNum = [NSString stringWithFormat:@"%d",addNum];
-        
         NSString  *pushString = [NSString stringWithFormat:@"cartid=%@&itemnum=%@&token=%@",carListData.itemId,pushNum,token];
         
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarAddTag delegate:self];
-        
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
-    
-    
-    
     [tv reloadData];
-    //    NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:section];
-    //    NSArray *arr = [NSArray arrayWithObject:path];
-    //    [tv reloadRowsAtIndexPaths:arr withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void) payBtnChange
@@ -865,7 +826,7 @@
     payBtn.layer.cornerRadius = 5.0f;
     payBtn.layer.masksToBounds = YES;
     [self payBtnChange];
-    [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [payBtn addTarget:self action:@selector(starButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [buttomView addSubview:payBtn];
     
     moneyLabel = [[UILabel alloc] init];
@@ -910,7 +871,6 @@
     [noCell.contentView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [noCell setSelectionStyle:0];
 }
-
 
 -(void)hiddenButtomView
 {
@@ -964,7 +924,6 @@
                     }
                 }
             }
-            
 #pragma mark - 去掉重复元素
             NSSet *set = [NSSet setWithArray:chooseGoodsArray];
             
@@ -976,9 +935,7 @@
             {
                 [chooseGoodsArray addObject:[[set allObjects] objectAtIndex:i]];
             }
-            
         }
-        
     }
     else
     {
@@ -1031,9 +988,16 @@
     return strP;
 }
 
-- (void) payBtnClick:(UIButton *) sender
+//解决快速连续点击，多次跳转界面。
+- (void)starButtonClicked:(UIButton *)sender
 {
-    
+    //先将未到时间执行前的任务取消。
+    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(payBtnClick) object:sender];
+    [self performSelector:@selector(payBtnClick) withObject:sender afterDelay:0.2f];
+}
+
+- (void) payBtnClick
+{
     if(!chooseGoodsArray || chooseGoodsArray.count == 0)
     {
         [DCFStringUtil showNotice:@"您尚未选择商品"];
@@ -1094,7 +1058,6 @@
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/validProductBeforeSubOrder.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
-    [payBtn setEnabled:NO];
 }
 
 - (NSArray*)getSortArrForMainApp:(NSArray*)arrSrc

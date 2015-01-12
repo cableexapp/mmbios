@@ -164,25 +164,20 @@
 //网络连接后刷新加载客服列表
 -(void)reloadMemberList
 {
-    NSLog(@"self.appDelegate.roster = %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Customer service group"]);
-
     if (self.appDelegate.roster.count == 0)
     {
-        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"Customer service group"] length] == 0)
+        BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+        if (hasLogin == YES)
         {
-            BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-            if (hasLogin == YES)
-            {
-                NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
-                [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
-                
-            }
-            else
-            {
-                [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
-            }
-            [self.appDelegate reConnect];
+            NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+            [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
+            
         }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
+        }
+        [self.appDelegate reConnect];
         [self.memberTableView removeFromSuperview];
         self.tempArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"Customer service group"];
         self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];

@@ -71,11 +71,16 @@
         NSString *secrect = [regiserDic objectForKey:@"registerSecrect"];
         [self.tf_Account setText:account];
         [self.tf_Secrect setText:secrect];
-        
+        //切换登录账号，结束之前对话
+        [app goOffline];
+        [[NSUserDefaults standardUserDefaults] setObject:account forKey:@"userName_IM"];
+        [app registerInSide];
+        [app logout];
+        [app reConnect];
+        app.isConnect = @"断开";
         [self logWithAccount:account WithSec:secrect];
     }
 }
-
 
 - (void)viewDidLoad
 {
@@ -90,10 +95,7 @@
         RegisterViewController *regist = [self.storyboard instantiateViewControllerWithIdentifier:@"registerViewController"];
         [self.navigationController pushViewController:regist animated:NO];
     }
-    
-    
     logInSuccess = NO;
-    
     
     [self pushAndPopStyle];
     
@@ -140,7 +142,6 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 50, 23);
-    //    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [btn setTitle:@"取消" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(cancelBtnClick:) forControlEvents: UIControlEventTouchUpInside];
@@ -190,14 +191,11 @@
     if([_tf_Secrect isFirstResponder])
     {
         [_tf_Secrect resignFirstResponder];
-        //        [_tf_Account becomeFirstResponder];
     }
     if([_tf_Account isFirstResponder])
     {
         [_tf_Account resignFirstResponder];
-        //        [_tf_Secrect becomeFirstResponder];
     }
-    
 }
 
 //登录
@@ -294,7 +292,6 @@
             [app goOffline];
             [[NSUserDefaults standardUserDefaults] setObject:self.tf_Account.text forKey:@"userName_IM"];
             [app registerInSide];
-//            [app disconnect];
             [app logout];
             [app reConnect];
             app.isConnect = @"断开";

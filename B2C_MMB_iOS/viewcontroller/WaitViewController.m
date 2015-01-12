@@ -335,12 +335,10 @@ double secondsCountDown =0;
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController.tabBarController.tabBar setHidden:YES];
-    
-    [self checkNet];
-
     //发起请求加入咨询队列
     [self sendJoinRequest];
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
+    [self checkNet];
 }
 
 //检查网络是否连接
@@ -397,7 +395,6 @@ double secondsCountDown =0;
     {
         NSInteger index = arc4random() % ([self.changeArray count] - 1);
         getStr = [self.changeArray objectAtIndex:index];
-        
         self.changeString = (NSMutableString *)[self.changeString stringByAppendingString:getStr];
     }
 }

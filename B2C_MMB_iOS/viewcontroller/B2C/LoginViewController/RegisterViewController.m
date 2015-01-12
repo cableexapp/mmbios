@@ -13,6 +13,7 @@
 #import "MCdes.h"
 #import "MCDefine.h"
 #import "RegisterProvisionViewController.h"
+#import "AppDelegate.h"
 
 @interface RegisterViewController ()
 {
@@ -29,6 +30,8 @@
     int isRegisterFlag;
     
     NSString *remindMessage;
+    
+    AppDelegate *app;
 }
 @end
 
@@ -176,6 +179,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     self.view.backgroundColor = [UIColor whiteColor];
     DCFTopLabel *TOP = [[DCFTopLabel alloc] initWithTitle:@"用户注册"];
@@ -204,9 +208,7 @@
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
     [self.agreeBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
     [self.agreeBtn setSelected:YES];
-
 }
-
 
 - (IBAction)agreeBtn:(id)sender
 {
@@ -243,22 +245,22 @@
     }
 }
 
-
-
 #pragma mark - 输入框长度
 - (int)convertToInt:(NSString*)strtemp
 {
     int strlength = 0;
     char* p = (char*)[strtemp cStringUsingEncoding:NSUnicodeStringEncoding];
-    for (int i=0 ; i<[strtemp lengthOfBytesUsingEncoding:NSUnicodeStringEncoding] ;i++) {
-        if (*p) {
+    for (int i=0 ; i<[strtemp lengthOfBytesUsingEncoding:NSUnicodeStringEncoding] ;i++)
+    {
+        if (*p)
+        {
             p++;
             strlength++;
         }
-        else {
+        else
+        {
             p++;
         }
-        
     }
     return strlength;
 }
@@ -289,14 +291,6 @@
         }
         
 #pragma mark - 只含有汉字、数字、字母、下划线，下划线位置不限：
-        //        NSString * regex_1 = @"^[a-zA-Z0-9_\u4e00-\u9fa5]{4,30}$";
-        //        NSPredicate *pred_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex_1];
-        //        BOOL isMatch_1 = [pred_1 evaluateWithObject:self.userTf.text];
-        //        if(isMatch_1 == NO)
-        //        {
-        //            [DCFStringUtil showNotice:@"用户名只支持数字、字母、下划线、中文"];
-        //            return NO;
-        //        }
 
         if([self.userTf.text hasSuffix:@"_"] || [self.userTf.text hasPrefix:@"_"])
         {
@@ -311,15 +305,6 @@
             [DCFStringUtil showNotice:@"用户名不能是纯数字"];
             return NO;
         }
-        
-        //        BOOL pureLetters = [self PureLetters:self.userTf.text];
-        //        if(pureLetters == YES)
-        //        {
-        //            [DCFStringUtil showNotice:@"用户名不能是纯字母"];
-        //            return NO;
-        //        }
-        
-        
         NSString *allChinese_1 = @"^[\u4E00-\u9FA5]*$";
         NSPredicate *predallChinese_1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", allChinese_1];
         
@@ -409,22 +394,14 @@
             [DCFStringUtil showNotice:@"密码不能是纯数字"];
             return NO;
         }
-        
         if([self PureLetters:self.secTf.text] == YES)
         {
             [DCFStringUtil showNotice:@"密码不能是纯字母"];
             return NO;
         }
-        
     }
-    
-    
     return YES;
-    //    }
-    
 }
-
-
 
 #pragma mark - 纯字母
 -(BOOL)PureLetters:(NSString*)str
@@ -635,23 +612,11 @@
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
     if(URLTag == URLSendMsgTag)
     {
-        //        [self.getValidateBtn setUserInteractionEnabled:YES];
-        //        [self.getValidateBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        //        if(timer_tel)
-        //        {
-        //            [timer_tel invalidate];
-        //            timer_tel = nil;
-        //            timeCount_tel = 60;
-        //        }
-        
-        
-        
         if([[dicRespon allKeys] count] == 0 || [dicRespon isKindOfClass:[NSNull class]])
         {
             [DCFStringUtil showNotice:@"获取失败"];
@@ -674,7 +639,6 @@
             }
         }
     }
-    
     if(URLTag == URLRegesterTag)
     {
 
@@ -710,22 +674,16 @@
             }
             else if (result == 1)
             {
-
-                    if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
-                    {
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
-                    }
-                    
-                    dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.userTf.text,@"registerAccount",self.secTf.text,@"registerSecrect", nil];
-                    [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
-                    
-                    [self.navigationController popViewControllerAnimated:YES];
-            
+                if([[NSUserDefaults standardUserDefaults] objectForKey:@"regiserDic"])
+                {
+                    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"regiserDic"];
+                }
+                dic = [[NSDictionary alloc] initWithObjectsAndKeys:self.userTf.text,@"registerAccount",self.secTf.text,@"registerSecrect", nil];
+                [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"regiserDic"];
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }
-        
     }
-    
     if(URLTag == URLCheckPhoneTag)
     {
         NSDictionary *dic = nil;
@@ -771,9 +729,7 @@
                 [self checkStatus];
             }
         }
-
     }
-    
     if(URLTag == URLCheckUseNameTag)
     {
         NSDictionary *dic = nil;
@@ -819,7 +775,6 @@
                 [self checkStatus];
             }
         }
-
     }
 }
 
@@ -831,24 +786,20 @@
     }
 }
 
-
 - (IBAction)registerBtnClick:(id)sender
 {
     [self regester];
 }
-
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     currentPageIndex=page;
-    
     if(currentPageIndex == 1)
     {
         
     }
-    
 }
 
 - (void) hudWasHidden:(MBProgressHUD *)hud

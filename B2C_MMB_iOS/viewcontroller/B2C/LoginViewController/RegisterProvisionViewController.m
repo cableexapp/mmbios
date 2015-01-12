@@ -8,6 +8,8 @@
 
 #import "RegisterProvisionViewController.h"
 #import "DCFTopLabel.h"
+#import "MCDefine.h"
+
 @interface RegisterProvisionViewController ()
 
 @end
@@ -46,7 +48,9 @@
     register_webview.delegate = self;
     [self.view addSubview:register_webview];
     
-    NSURL *url = [[NSURL alloc]initWithString:@"http://58.215.20.140:8001/agreement.html"];
+//    NSURL *url = [[NSURL alloc]initWithString:@"http://58.215.20.140:8001/agreement.html"];
+    NSURL *url = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/agreement.html"]];
+
     [register_webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
 

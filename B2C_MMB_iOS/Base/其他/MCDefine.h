@@ -26,9 +26,11 @@
 //#define URL_HOST_CHEN @"http://10.10.6.134:8080" //HJ
 //#define URL_HOST_CHEN @"http://58.215.20.140:9989" //公司测试环境外网
 //#define URL_HOST_CHEN @"http://58.215.20.68:8008" //加息测试环境外网
-#define URL_HOST_CHEN @"http://58.215.20.140:8001" //测试库环境
+//#define URL_HOST_CHEN @"http://58.215.20.140:8001" //测试库环境
+#define URL_HOST_CHEN @"http://58.215.50.9:8980" //正式库环境
 
-#define URL_PIC_DEV   @"http://58.215.20.140:8083/"  //测试库图片（测试环境）
+//#define URL_PIC_DEV   @"http://58.215.20.140:8083/"  //测试库图片（测试环境）
+#define URL_PIC_DEV   @"http://dianxian.cableex.com/"  //正式库图片（正式环境）
 
 #define ENCRYPT_KEY @"A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,0,1,2,3,4,5,6,7,8,9,+,/"
 #define MDpageSize 20

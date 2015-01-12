@@ -308,6 +308,11 @@
     }
     [_testTableView reloadData];
     [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
+    if (selectArray.count > 50)
+    {
+        [DCFStringUtil showNotice:@"最多选择50条"];
+//        [_testTableView setSelectionStyle:UITableViewCellSelectionStyleNone];
+    }
     
     if (self.isOpened)
     {

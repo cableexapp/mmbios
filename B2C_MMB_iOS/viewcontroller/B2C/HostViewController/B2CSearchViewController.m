@@ -616,22 +616,15 @@
                     {
                         [dataArray removeAllObjects];
                     }
-
-//                        [tempDataArray removeAllObjects];
-//                        [tempDataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
-//                        dataArray = [self arrayWithMemberIsOnly:tempDataArray];
                     [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
-                
-            
                     if (dataArray.count > 0)
                     {
-//                         [self refreshTableView];
+                        tempFlag = 1;
                         noResultView.hidden = YES;
                         selectBtnView.hidden = NO;
                         tv.frame = CGRectMake(0, selectBtnView.frame.origin.y + selectBtnView.frame.size.height, ScreenWidth, ScreenHeight -85);
                         tv.hidden = NO;
                         [mySearchBar resignFirstResponder];
-                        
                     }
                     if(intTotal == 0)
                     {
@@ -890,6 +883,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"tempFlag = %zi",tempFlag);
     if(!dataArray || dataArray.count == 0)
     {
         return;
@@ -900,7 +894,6 @@
         NSString *productId = [[dataArray objectAtIndex:indexPath.row] productId];
         GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
         [self.navigationController pushViewController:detail animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
     }
     else
     {
@@ -911,6 +904,7 @@
         }
         else
         {
+            NSLog(@"dataArray = %@",dataArray);
             searchBarText = [dataArray[indexPath.row] objectForKey:@"searchName"];;
             mySearchBar.text = searchBarText;
             speakButton.hidden = YES;

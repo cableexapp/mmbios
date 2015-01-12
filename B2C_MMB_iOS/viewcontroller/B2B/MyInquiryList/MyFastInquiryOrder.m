@@ -349,7 +349,8 @@
                 }
                 else
                 {
-                    NSString *filePath = [NSString stringWithFormat:@"%@%@",@"http://58.215.20.140:8085/",[[[dicRespon objectForKey:@"items"] lastObject] objectForKey:@"filePath"]];
+                    
+                    NSString *filePath = [NSString stringWithFormat:@"%@%@",@"http://www.cableex.com/",[[[dicRespon objectForKey:@"items"] lastObject] objectForKey:@"filePath"]];
                     if([DCFCustomExtra validateString:filePath] == NO)
                     {
                         

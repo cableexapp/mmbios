@@ -89,7 +89,6 @@
 
 - (void) reloadData:(BOOL) status
 {
-    NSLog(@"%@",_myArray);
     [self.tableView reloadData];
 }
 

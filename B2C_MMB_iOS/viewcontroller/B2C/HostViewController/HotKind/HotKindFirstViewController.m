@@ -267,7 +267,7 @@
         [label setNumberOfLines:0];
         [cell.contentView addSubview:label];
         label.textAlignment = NSTextAlignmentCenter;
-        if (selectArray.count == 50)
+        if (selectArray.count >= 50)
         {
             cell.userInteractionEnabled= false;
         }
@@ -275,7 +275,6 @@
         {
             cell.userInteractionEnabled= true;
         }
-        
         return cell;
     }
     else
@@ -315,7 +314,7 @@
     }
     [_testTableView reloadData];
     [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
-    if (selectArray.count == 50)
+    if (selectArray.count >= 50)
     {
         [DCFStringUtil showNotice:@"最多选择50条"];
     }

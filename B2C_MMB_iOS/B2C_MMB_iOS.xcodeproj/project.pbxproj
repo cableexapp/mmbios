@@ -5482,7 +5482,7 @@
 					"\"$(SRCROOT)/AliPay\"",
 				);
 				INFOPLIST_FILE = "B2C_MMB_iOS/B2C_MMB_iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tools/Vendor/libidn",
@@ -5524,7 +5524,7 @@
 					"\"$(SRCROOT)/AliPay\"",
 				);
 				INFOPLIST_FILE = "B2C_MMB_iOS/B2C_MMB_iOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tools/Vendor/libidn",

@@ -239,7 +239,6 @@
     {
         tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-buttomView.frame.size.height-64)];
         [tv setDataSource:self];
-        //        tv.backgroundColor = [UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0];
         [tv setDelegate:self];
         tv.separatorStyle = UITableViewCellSeparatorStyleNone;
         [tv setShowsHorizontalScrollIndicator:NO];
@@ -247,9 +246,6 @@
         [self.view addSubview:tv];
     }
 }
-
-
-
 
 - (void) subViewBtnClick:(UIButton *) sender
 {
@@ -407,7 +403,7 @@
         //        [DCFStringUtil showNotice:@"您尚未选择商品"];
         return;
     }
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您确定要删除嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"是否删除该条询价单记录？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [av show];
     
     UIButton *btn = (UIButton *) sender;

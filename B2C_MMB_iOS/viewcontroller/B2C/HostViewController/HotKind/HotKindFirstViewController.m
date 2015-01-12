@@ -138,8 +138,7 @@
     
     self.testSubTableView.separatorColor = [DCFColorUtil colorFromHexRGB:@"#ba7d04"];
     self.testSubTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 15);
-    self.testSubTableView.backgroundColor = [UIColor redColor];
-    
+   
     //    小三角按钮
     backView = [[UIButton alloc] init];
     backView.frame = CGRectMake(0, 84, self.view.frame.size.width, self.view.frame.size.height-128);
@@ -268,6 +267,14 @@
         [label setNumberOfLines:0];
         [cell.contentView addSubview:label];
         label.textAlignment = NSTextAlignmentCenter;
+        if (selectArray.count == 50)
+        {
+            cell.userInteractionEnabled= false;
+        }
+        if (selectArray.count < 50)
+        {
+            cell.userInteractionEnabled= true;
+        }
         
         return cell;
     }
@@ -308,10 +315,9 @@
     }
     [_testTableView reloadData];
     [_typeBtn setTitle:[NSString stringWithFormat:@"             已经选中的分类 %d",selectArray.count] forState:UIControlStateNormal];
-    if (selectArray.count > 50)
+    if (selectArray.count == 50)
     {
         [DCFStringUtil showNotice:@"最多选择50条"];
-//        [_testTableView setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     
     if (self.isOpened)

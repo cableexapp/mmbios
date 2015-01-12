@@ -816,11 +816,6 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"订单确认"];
     self.navigationItem.titleView = top;
     
-    
-    //    sendMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 7,ScreenWidth-30, 0)];
-    //    [sendMoneyLabel setTextAlignment:NSTextAlignmentRight];
-    //    [sendMoneyLabel setFont:[UIFont systemFontOfSize:12]];
-    
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 - 50)];
     [tv setDataSource:self];
     [tv setDelegate:self];

@@ -242,10 +242,9 @@
 }
 
 
-
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
-    
+    [payBtn setEnabled:YES];
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
     
@@ -790,6 +789,7 @@
         [conn stopConnection];
         conn = nil;
     }
+    [payBtn setUserInteractionEnabled:YES];
 }
 
 - (void) doLoadRequest
@@ -800,14 +800,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(doLoadRequest) name:@"B2CGoodsHasBuy" object:nil];
-    
+
     [self pushAndPopStyle];
     
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
-    //    [moreCell startAnimation];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     
@@ -943,7 +939,6 @@
         {
             [b setSelected:YES];
         }
-        
         if(chooseGoodsArray.count == 0)
         {
             for(int i=0;i<a.count;i++)
@@ -1014,12 +1009,8 @@
                     }
                 }
             }
-            
         }
-        
-        
     }
-    
     if(chooseGoodsArray.count == total)
     {
         [buttomBtn setSelected:YES];
@@ -1037,21 +1028,18 @@
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theDic options:NSJSONWritingPrettyPrinted error:&error];
     NSString *strP = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    //    return [Rsa rsaEncryptString:strP];
     return strP;
 }
 
 - (void) payBtnClick:(UIButton *) sender
 {
+    
     if(!chooseGoodsArray || chooseGoodsArray.count == 0)
     {
         [DCFStringUtil showNotice:@"您尚未选择商品"];
         return;
     }
-
-    
     NSMutableArray *goodsArray = [[NSMutableArray alloc] init];
-//
     if(chooseGoodsArray && chooseGoodsArray.count != 0)
     {
         for(int i=0;i<chooseGoodsArray.count;i++)
@@ -1085,7 +1073,6 @@
             [goodsArray addObject:dic];
         }
     }
-//
     NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:
                              goodsArray,@"goodsList",
                              nil];
@@ -1094,8 +1081,7 @@
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"validProductBeforeSubOrder",time];
     NSString *token = [DCFCustomExtra md5:string];
-//
-//
+
     NSString *memberId = [self getMemberId];
     if([DCFCustomExtra validateString:memberId] == NO)
     {
@@ -1108,12 +1094,13 @@
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/validProductBeforeSubOrder.html?"];
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
     }
+    [payBtn setEnabled:NO];
 }
 
-
-- (NSArray*)getSortArrForMainApp:(NSArray*)arrSrc {
-    NSArray* arrDes = [arrSrc sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        //change your code
+- (NSArray*)getSortArrForMainApp:(NSArray*)arrSrc
+{
+    NSArray* arrDes = [arrSrc sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
+    {
         NSString *value1 = obj1;
         NSString *value2 = obj2;
         return value1.intValue < value2.intValue ? NSOrderedAscending : NSOrderedDescending;
@@ -1122,19 +1109,18 @@
     return arrDes;
 }
 
-
-
-NSComparator cmptr = ^(id obj1, id obj2){
-    if ([obj1 integerValue] > [obj2 integerValue]) {
+NSComparator cmptr = ^(id obj1, id obj2)
+{
+    if ([obj1 integerValue] > [obj2 integerValue])
+    {
         return (NSComparisonResult)NSOrderedDescending;
     }
-    
-    if ([obj1 integerValue] < [obj2 integerValue]) {
+    if ([obj1 integerValue] < [obj2 integerValue])
+    {
         return (NSComparisonResult)NSOrderedAscending;
     }
     return (NSComparisonResult)NSOrderedSame;
 };
-
 
 - (NSMutableArray *) sort:(NSMutableArray *) arr
 {
@@ -1197,8 +1183,8 @@ NSComparator cmptr = ^(id obj1, id obj2){
         return;
     }
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要删除么"
-                                                 message:nil
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"删除提示"
+                                                 message:@"确定删除选中的商品"
                                                 delegate:self
                                        cancelButtonTitle:@"取消"
                                        otherButtonTitles:@"确定", nil];
@@ -1311,13 +1297,11 @@ NSComparator cmptr = ^(id obj1, id obj2){
     
     NSString *title = [[[dataArray objectAtIndex:section] lastObject] sShopName];
     UILabel *sectionLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 5, 200, 30)];
-    //    [sectionLabel setText:[headLabelArray objectAtIndex:section]];
     [sectionLabel setText:title];
     [sectionLabel setTextAlignment:NSTextAlignmentLeft];
     [sectionLabel setTextColor:[UIColor blackColor]];
     [sectionLabel setFont:[UIFont systemFontOfSize:13]];
     [view addSubview:sectionLabel];
-    
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, sectionLabel.frame.origin.y+sectionLabel.frame.size.height+10, ScreenWidth-10, 1)];
     [lineView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
@@ -1382,19 +1366,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
 {
-    //    static NSString *moreCellId = @"moreCell";
-    //    UITableViewCell *noCell = [tableView cellForRowAtIndexPath:indexPath];
-    //    if(!noCell)
-    //    {
-    //        noCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:moreCellId];
-    //        [noCell.contentView setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:234.0/255.0 blue:242.0/255.0 alpha:1.0]];
-    //    }
-    
-    //    if(rightBtn)
-    //    {
-    //        [rightBtn setHidden:YES]
-    //    }
-    
     NSString *myMemberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
     if([DCFCustomExtra validateString:myMemberid] == NO)
     {
@@ -1414,8 +1385,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
             loginView = nil;
         }
     }
-    
-    
     if (!shopcarView)
     {
         shopcarView = [[UIImageView alloc] init];
@@ -1452,7 +1421,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
     noCell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return noCell;
-    
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -1462,7 +1430,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
         return [self loadNonDataTableview:tableView NoIndexPath:indexPath];
         
     }
-    
     if(dataArray)
     {
         NSMutableArray *arr = [dataArray objectAtIndex:indexPath.section];
@@ -1477,12 +1444,10 @@ NSComparator cmptr = ^(id obj1, id obj2){
     }
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    //    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell.contentView setBackgroundColor:[UIColor whiteColor]];
-//        [cell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
@@ -1490,7 +1455,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
     UIButton *cellBtn = [[cellBtnArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-//    [cellBtn setTag:indexPath.row + indexPath.section*1000];
     [cell.contentView addSubview:cellBtn];
     UIImageView *cellIv = [[cellImageViewArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     cellIv.userInteractionEnabled = YES;
@@ -1586,7 +1550,6 @@ NSComparator cmptr = ^(id obj1, id obj2){
     [addBtn setFrame:CGRectMake(numLabel.frame.origin.x+numLabel.frame.size.width-0.5, subBtn.frame.origin.y, 35+0.5, 30)];
     [addBtn setTag:indexPath.row + indexPath.section*1000];
     [cell.contentView addSubview:addBtn];
-    //
 
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, subColorLab.frame.origin.y+subColorLab.frame.size.height+25, ScreenWidth, 10)];
     [lineView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];

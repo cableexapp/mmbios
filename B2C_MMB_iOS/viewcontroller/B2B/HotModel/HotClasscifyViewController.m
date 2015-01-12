@@ -81,16 +81,74 @@
     {
         [HUD hide:YES];
     }
-
 }
 
-- (void) loadAlertView
+- (void) loadAlertView_back
 {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"您尚有商品未加入询价车,是否加入" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    [av setTag:10];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                 message:@"是否将已选中的型号加入询价车后再离开？"
+                                                delegate:self
+                                       cancelButtonTitle:nil
+                                       otherButtonTitles:@"是",@"直接返回", nil];
+    [av setTag:100];
     [av show];
 }
 
+- (void) loadAlertView_gotoAskCar
+{
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                 message:@"是否将已选中的型号加入询价车后再进入询价车？"
+                                                delegate:self
+                                       cancelButtonTitle:nil
+                                       otherButtonTitles:@"是",@"进入询价车", nil];
+    [av setTag:101];
+    [av show];
+}
+
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 100)
+    {
+        if (buttonIndex == 0)
+        {
+            [self addToCar];
+        }
+        else if (buttonIndex == 1)
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
+    if (alertView.tag == 101)
+    {
+        if (buttonIndex == 0)
+        {
+            [self addToCar];
+        }
+        else if (buttonIndex == 1)
+        {
+            [self setHidesBottomBarWhenPushed:YES];
+            B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+            [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
+        }
+    }
+    if (alertView.tag == 102)
+    {
+        if (buttonIndex == 1)
+        {
+            [self setHidesBottomBarWhenPushed:YES];
+            B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
+            [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
+        }
+    }
+    if (alertView.tag == 103)
+    {
+        if (buttonIndex == 1)
+        {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
+        }
+    }
+}
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -109,7 +167,6 @@
     }
     [self loadAskPriceCarCount];
     
-
     if (addToCarArray.count > 0)
     {
         for(UIView *view in self.sv.subviews)
@@ -135,7 +192,7 @@
     flag = NO;
     if(addToCarArray && addToCarArray.count != 0)
     {
-        [self loadAlertView];
+        [self loadAlertView_gotoAskCar];
     }
     else
     {
@@ -160,18 +217,18 @@
         if(result == 1)
         {
             [self setHidesBottomBarWhenPushed:YES];
-            
             if(badgeBtn)
             {
                 carCount = carCount + addToCarArray.count;
                 [badgeBtn setTitle:[NSString stringWithFormat:@"%d",carCount] forState:UIControlStateNormal];
             }
-//            if(addToCarArray)
-//            {
-//                [addToCarArray removeAllObjects];
-//            }
-            B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
-            [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                                message:@"加入询价车成功，是否进入询价车查看？"
+                                                               delegate:self
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:@"取消",@"是", nil];
+            alertView.tag = 102;
+            [alertView show];
         }
         else
         {
@@ -216,7 +273,7 @@
     flag = YES;
     if(addToCarArray && addToCarArray.count != 0)
     {
-        [self loadAlertView];
+        [self loadAlertView_back];
     }
     else
     {
@@ -339,11 +396,8 @@
     NSString *token = [DCFCustomExtra md5:string];
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -353,15 +407,9 @@
     {
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
     }
-    
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLInquiryCartCountTag delegate:self];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/InquiryCartCount.html?"];
-    
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-
 }
 
 
@@ -385,7 +433,6 @@
             b = (UILabel *)view;
         }
     }
-   
     if(btn.selected == YES)
     {
         [addToCarArray addObject:btn];
@@ -394,23 +441,7 @@
     {
         [addToCarArray removeObject:btn];
     }
-    
-    
-    
-//    int badge = addToCarArray.count;
-//    NSString *str = nil;
-//    if(badge <= 0)
-//    {
-//        str = [NSString stringWithFormat:@"%@",@"询价车"];
-//    }
-//    else
-//    {
-//        str = [NSString stringWithFormat:@"询价车 +%i",badge];
-//    }
-//    [askPriceBtn setTitle:str forState:UIControlStateNormal];
 }
-
-
 
 - (void) scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -450,7 +481,6 @@
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theDic options:NSJSONWritingPrettyPrinted error:&error];
     NSString *strP = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
-    //    return [Rsa rsaEncryptString:strP];
     return strP;
 }
 
@@ -461,7 +491,13 @@
         [DCFStringUtil showNotice:@"您尚未选择型号"];
         return;
     }
-    
+    NSLog(@"addToCarArray.count = %d",addToCarArray.count);
+    NSLog(@"carCount = %d",carCount);
+    if (addToCarArray.count >= 50 || (addToCarArray.count + carCount >= 50))
+    {
+        [DCFStringUtil showNotice:@"询价车中最多添加50条记录"];
+        return;
+    }
     NSMutableArray *modelListArray = [[NSMutableArray alloc] init];
     for(UIButton *btnn in addToCarArray)
     {
@@ -477,19 +513,14 @@
         
         [modelListArray addObject:senderDic];
     }
-    
     NSDictionary *pushDic = [[NSDictionary alloc] initWithObjectsAndKeys:modelListArray,@"modellist", nil];
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"BatchJoinInquiryCart",time];
     NSString *token = [DCFCustomExtra md5:string];
     
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -499,16 +530,12 @@
     {
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@&items=%@",visitorid,token,[self dictoJSON:pushDic]];
     }
-    
     HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [HUD setLabelText:@"正在加入询价车..."];
     [HUD setDelegate:self];
     
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLBatchJoinInquiryCartTag delegate:self];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/BatchJoinInquiryCart.html?"];
-    
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
@@ -519,6 +546,7 @@
 
 - (IBAction)searchBtnClick:(id)sender
 {
+    
 }
 
 - (IBAction)nextBtnClick:(id)sender
@@ -551,43 +579,13 @@
 
 - (IBAction)hotLineBtnClick:(id)sender
 {
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
-    [av setTag:20];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"您确定要拨打热线电话么"
+                                                 message:nil
+                                                delegate:self
+                                       cancelButtonTitle:@"取消"
+                                       otherButtonTitles:@"呼叫", nil];
+    [av setTag:103];
     [av show];
-}
-
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex)
-    {
-        case 0:
-            if(alertView.tag == 10)
-            {
-                if(flag == YES)
-                {
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-                else
-                {
-                    [self setHidesBottomBarWhenPushed:YES];
-                    B2BAskPriceCarViewController *b2bAskPriceCarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarViewController"];
-                    [self.navigationController pushViewController:b2bAskPriceCarViewController animated:YES];
-                }
-            }
-            break;
-        case 1:
-            if(alertView.tag == 10)
-            {
-                [self addToCar];
-            }
-            else
-            {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://4008280188"]];
-            }
-            break;
-        default:
-            break;
-    }
 }
 
 - (AppDelegate *)appDelegate

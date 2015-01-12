@@ -717,8 +717,7 @@ int messageCountNum = 0;
     //接收消息处理
     [self getMessageWithContent:notification.object time:loctime timeIsShow:getTime];
     
-//    roomMessage = [[message elementForName:@"body"] stringValue];
-      roomMessage = notification.object;
+    roomMessage = notification.object;
     
     //刷新UI界面
     [self refreshUI];

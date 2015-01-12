@@ -826,7 +826,6 @@ NSString *strUserId = @"";
     [self.xmppStream disconnect];
 }
 
-
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
 {
     DDLogVerbose(@"%@: %@", THIS_FILE, THIS_METHOD);
@@ -861,9 +860,10 @@ NSString *strUserId = @"";
                 {
                     NSString *jid = [item attributeStringValueForName:@"jid"];
                     XMPPJID *xmppJID = [XMPPJID jidWithString:jid];
-                    [self.roster addObject:xmppJID];
+                    [self.roster addObject:[NSString stringWithFormat:@"%@",xmppJID]];
                 }
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"memberGroupName" object:self.roster];
+                [[NSUserDefaults standardUserDefaults] setObject:self.roster forKey:@"Customer service group"];
             }
         }
     }
@@ -896,7 +896,6 @@ NSString *strUserId = @"";
     if([from rangeOfString:@"workgroup"].location !=NSNotFound)
     {
         self.personName = to;
-        
         if(hasLogin == YES)
         {
             self.chatRequestJID = tempUserName;
@@ -992,7 +991,6 @@ NSString *strUserId = @"";
 {
 }
 
-
 #pragma mark - 数据库创建
 -(void)SQLDataSteup
 {
@@ -1015,15 +1013,12 @@ NSString *strUserId = @"";
         //执行sql语句
         sqlite3_exec(dataBase, sqlCreate, nil, nil, &error);
         
-        
         //版本更新增加新字段creater
         
         //字段增加
-        
         char * sqlAdd = "ALTER TABLE MESSAGELIST ADD creater varchar(30)";
         
         sqlite3_exec(dataBase, sqlAdd, nil, nil, &error);
-        
         
         //数据库使用完成后关闭数据库
         sqlite3_close(dataBase);

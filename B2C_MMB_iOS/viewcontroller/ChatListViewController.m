@@ -164,22 +164,27 @@
 //网络连接后刷新加载客服列表
 -(void)reloadMemberList
 {
+    NSLog(@"self.appDelegate.roster = %@",[[NSUserDefaults standardUserDefaults] objectForKey:@"Customer service group"]);
+
     if (self.appDelegate.roster.count == 0)
     {
-         BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-        if (hasLogin == YES)
+        if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"Customer service group"] length] == 0)
         {
-            NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
-            [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
-            
+            BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
+            if (hasLogin == YES)
+            {
+                NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
+                [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
+                
+            }
+            else
+            {
+                [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
+            }
+            [self.appDelegate reConnect];
         }
-        else
-        {
-            [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
-        }
-        [self.appDelegate reConnect];
         [self.memberTableView removeFromSuperview];
-        self.tempArray = self.appDelegate.roster;
+        self.tempArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"Customer service group"];
         self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
         self.memberTableView.dataSource = self;
         self.memberTableView.delegate = self;
@@ -234,18 +239,6 @@
     noNetView.hidden = YES;
     noNetMessage.hidden = YES;
     [self reloadMemberList];
-    BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    if (hasLogin == YES)
-    {
-        NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
-        [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
-        
-    }
-    else
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
-    }
-    [self.appDelegate reConnect];
 }
 
 //网络未连接提示

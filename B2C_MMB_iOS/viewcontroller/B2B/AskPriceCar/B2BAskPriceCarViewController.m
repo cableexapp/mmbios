@@ -417,19 +417,13 @@
     if(URLTag == URLInquiryCartListTag)
     {
         dataArray = [[NSMutableArray alloc] init];
-        
         sectionHeadBtnArray = [[NSMutableArray alloc] init];
-        
         cellHeightArray = [[NSMutableArray alloc] init];
-        
         editAndDelBtnArray = [[NSMutableArray alloc] init];
-        
         chooseArray = [[NSMutableArray alloc] init];
-        
         if(result == 1)
         {
             [dataArray addObjectsFromArray:[B2BAskPriceDetailData getListArray:[dicRespon objectForKey:@"items"]]];
-            
             if(dataArray.count == 0)
             {
                 [moreCell noDataAnimation];
@@ -458,7 +452,6 @@
                     }
                     [sectionHeadBtn setTag:i];
                     [sectionHeadBtn addTarget:self action:@selector(sectionHeadBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                    //                    [sectionHeadBtn setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] size:CGSizeMake(1, 1)] forState:UIControlStateNormal];
                     [sectionHeadBtn setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
                     
                     //编辑删除按钮
@@ -535,7 +528,6 @@
             
             [moreCell noClasses];
         }
-        
         [tv reloadData];
     }
     if(URLTag == URLDeleteInquiryCartItemTag)

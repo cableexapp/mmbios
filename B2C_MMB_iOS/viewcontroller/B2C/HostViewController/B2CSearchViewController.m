@@ -883,7 +883,6 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"tempFlag = %zi",tempFlag);
     if(!dataArray || dataArray.count == 0)
     {
         return;
@@ -904,18 +903,12 @@
         }
         else
         {
-            NSLog(@"dataArray = %@",dataArray);
-            searchBarText = [dataArray[indexPath.row] objectForKey:@"searchName"];;
+            searchBarText = [dataArray[indexPath.row] objectForKey:@"searchName"];
             mySearchBar.text = searchBarText;
             speakButton.hidden = YES;
             speakButtonView.hidden = YES;
-            
-//           [dataArray removeAllObjects];
-//           [tv reloadData];
-
             intPage = 1;
             [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
-            
         }
     }
 }

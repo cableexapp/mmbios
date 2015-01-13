@@ -654,6 +654,7 @@
 {
     if(URLTag == URLB2CGoodsListTag)
     {
+        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             if (dataArray.count > 0)

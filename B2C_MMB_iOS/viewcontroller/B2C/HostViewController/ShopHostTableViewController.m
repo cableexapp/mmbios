@@ -321,6 +321,7 @@
     
     if(URLTag == URLB2CGoodsListTag)
     {
+        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             [self doneLoadingViewData];

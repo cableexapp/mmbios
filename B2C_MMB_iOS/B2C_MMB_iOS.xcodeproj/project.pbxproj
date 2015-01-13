@@ -46,6 +46,9 @@
 		6130AA061A3ED619000B4FB2 /* openssl_wrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6130A9FB1A3ED619000B4FB2 /* openssl_wrapper.m */; };
 		6130AA071A3ED619000B4FB2 /* RSADataSigner.m in Sources */ = {isa = PBXBuildFile; fileRef = 6130A9FD1A3ED619000B4FB2 /* RSADataSigner.m */; };
 		6130AA081A3ED619000B4FB2 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 6130A9FF1A3ED619000B4FB2 /* RSADataVerifier.m */; };
+		6136F53A1A64B3800027A607 /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6136F5391A64B3800027A607 /* Icon-60@3x.png */; };
+		6136F53D1A64B39F0027A607 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 6136F53B1A64B39F0027A607 /* Icon-76.png */; };
+		6136F53E1A64B39F0027A607 /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6136F53C1A64B39F0027A607 /* Icon-76@2x.png */; };
 		61383A9E1A0F32AC00AD3446 /* CableChoosemodelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61383A9D1A0F32AC00AD3446 /* CableChoosemodelViewController.m */; };
 		61383AA51A0F540200AD3446 /* B2BGetModelByIdData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61383AA41A0F540200AD3446 /* B2BGetModelByIdData.m */; };
 		6139BA8519EFBBDD00B44032 /* B2CMyOrderData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6139BA8419EFBBDD00B44032 /* B2CMyOrderData.m */; };
@@ -916,6 +919,9 @@
 		6130A9FD1A3ED619000B4FB2 /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
 		6130A9FE1A3ED619000B4FB2 /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
 		6130A9FF1A3ED619000B4FB2 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
+		6136F5391A64B3800027A607 /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@3x.png"; sourceTree = "<group>"; };
+		6136F53B1A64B39F0027A607 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		6136F53C1A64B39F0027A607 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
 		61383A9C1A0F32AC00AD3446 /* CableChoosemodelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CableChoosemodelViewController.h; sourceTree = "<group>"; };
 		61383A9D1A0F32AC00AD3446 /* CableChoosemodelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CableChoosemodelViewController.m; sourceTree = "<group>"; };
 		61383A9F1A0F4E2F00AD3446 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
@@ -3399,6 +3405,9 @@
 		61CCBCDA19CFFF150008A46B /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				6136F53B1A64B39F0027A607 /* Icon-76.png */,
+				6136F53C1A64B39F0027A607 /* Icon-76@2x.png */,
+				6136F5391A64B3800027A607 /* Icon-60@3x.png */,
 				61CCBCDB19CFFF150008A46B /* Icon-40@2x.png */,
 				61CCBCDC19CFFF150008A46B /* Icon-60@2x.png */,
 				61CCBCDD19CFFF150008A46B /* Icon-Small.png */,
@@ -4596,6 +4605,7 @@
 				8BA7C13D1A10A85500758B0F /* 饥饿.png in Resources */,
 				8BA7C0B11A10A85500758B0F /* 大兵.png in Resources */,
 				8BF2D8BC1A4EC7A200715D18 /* icon02@2x.png in Resources */,
+				6136F53D1A64B39F0027A607 /* Icon-76.png in Resources */,
 				8BA7C0741A10A85500758B0F /* 不行@2x.png in Resources */,
 				8BA7C1091A10A85500758B0F /* 白眼.png in Resources */,
 				8BF114F71A57B61600FC6665 /* search@2x.png in Resources */,
@@ -4617,6 +4627,7 @@
 				61B710B619FF3B53001CC3BD /* AliViewController.xib in Resources */,
 				8BA7C0CA1A10A85500758B0F /* 得意@2x.png in Resources */,
 				8BA7C0881A10A85500758B0F /* 小刀@2x.png in Resources */,
+				6136F53A1A64B3800027A607 /* Icon-60@3x.png in Resources */,
 				8BA7C0721A10A85500758B0F /* faceKey.plist in Resources */,
 				8BA7C1301A10A85500758B0F /* 鄙视@2x.png in Resources */,
 				8BA7C1111A10A85500758B0F /* 礼物.png in Resources */,
@@ -4881,6 +4892,7 @@
 				8B4969901A1DB05E008C75DF /* board_system.png in Resources */,
 				8BA7C0B01A10A85500758B0F /* 坏笑@2x.png in Resources */,
 				61565BCD1A57D606003A9DE8 /* tradeDocUnselect.png in Resources */,
+				6136F53E1A64B39F0027A607 /* Icon-76@2x.png in Resources */,
 				8BA7C11C1A10A85500758B0F /* 菜刀@2x.png in Resources */,
 				8B49698D1A1DB05E008C75DF /* board_system@2x.png in Resources */,
 				8BB3509A1A2425AC00E76495 /* choose.png in Resources */,
@@ -5386,8 +5398,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Far East Trading Pay network Co., Ltd. (2H6767RL8U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Far East Trading Pay network Co., Ltd. (2H6767RL8U)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -5410,7 +5422,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6597ce89-f095-49f6-af42-4e5620150703";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
@@ -5434,8 +5446,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Far East Trading Pay network Co., Ltd. (2H6767RL8U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Far East Trading Pay network Co., Ltd. (2H6767RL8U)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -5452,7 +5464,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "6597ce89-f095-49f6-af42-4e5620150703";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -5466,8 +5478,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jiang huajun (54826ETQ9V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jiang huajun (54826ETQ9V)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tools/lib",
@@ -5496,7 +5508,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dc5fc5e4-67a4-4e3d-a63a-52f21d83c662";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
@@ -5508,8 +5521,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jiang huajun (54826ETQ9V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jiang huajun (54826ETQ9V)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Tools/lib",
@@ -5537,7 +5550,8 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dc5fc5e4-67a4-4e3d-a63a-52f21d83c662";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};

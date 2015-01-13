@@ -58,19 +58,7 @@
         strPostBody = [strPostBody stringByAppendingString:[NSString stringWithFormat:@"&loginid=%@",loginid]];
     }
 
-//    if(_isSpecialCharacter == YES)
-//    {
-//        strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//
-//
-//        NSString *str = [NSString stringWithFormat:@"%@20%@22%@%@22,%@0A%@20%@20%@22",@"%",@"%",self.specialString,@"%",@"%",@"%",@"%",@"%"];
-//        strPostBody = [strPostBody stringByReplacingOccurrencesOfString:@"%20%22%22,%0A%20%20%22" withString:str];
-//
-//    }
-//    else if (_isSpecialCharacter == NO)
-//    {
-        strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//    }
+    strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSString *urlStr;
     if(strPostBody.length == 0 || [strPostBody isKindOfClass:[NSNull class]] || strPostBody == nil || strPostBody == NULL)
@@ -83,14 +71,15 @@
        urlStr = [NSString stringWithFormat:@"%@%@",strUrl,strPostBody];
 
     }
-//    NSLog(@"urlStr = %@",urlStr);
+    NSLog(@"urlStr = %@",urlStr);
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlStr]];
     request.timeoutInterval = 20;
     //设置传送类型
     NSString *contentType = [NSString stringWithFormat:@"application/x-www-form-urlencoded"];
     //给传输类型添加内容
     [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-    
+//    [request addValue:@"MMB-HttpRequest_1.0" forHTTPHeaderField:@"User Agent"];
+    [request setHTTPBody:[strPostBody dataUsingEncoding:NSUTF8StringEncoding]];
     if (theMethod == GET) {
         [request setHTTPMethod:@"GET"];
     }else{
@@ -109,7 +98,7 @@
 //    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
 //    
 //    [request setHTTPBody:[strPostBody dataUsingEncoding:NSUTF8StringEncoding]];
-//    
+//
 //    if (theMethod == GET) {
 //        [request setHTTPMethod:@"GET"];
 //    }else{
@@ -205,6 +194,7 @@
     [request setValue:content forHTTPHeaderField:@"Content-Type"];
     //设置Content-Length
     [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
+//    [request setValue:@"MMB-HttpRequest_1.0" forHTTPHeaderField:@"User Agent"];
     //设置http body
     [request setHTTPBody:myRequestData];
     //http method

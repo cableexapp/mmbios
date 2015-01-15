@@ -57,29 +57,39 @@
         }
         strPostBody = [strPostBody stringByAppendingString:[NSString stringWithFormat:@"&loginid=%@",loginid]];
     }
-
+    
+    //    if(_isSpecialCharacter == YES)
+    //    {
+    //        strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //
+    //
+    //        NSString *str = [NSString stringWithFormat:@"%@20%@22%@%@22,%@0A%@20%@20%@22",@"%",@"%",self.specialString,@"%",@"%",@"%",@"%",@"%"];
+    //        strPostBody = [strPostBody stringByReplacingOccurrencesOfString:@"%20%22%22,%0A%20%20%22" withString:str];
+    //
+    //    }
+    //    else if (_isSpecialCharacter == NO)
+    //    {
     strPostBody = [strPostBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //    }
     
     NSString *urlStr;
     if(strPostBody.length == 0 || [strPostBody isKindOfClass:[NSNull class]] || strPostBody == nil || strPostBody == NULL)
     {
         urlStr = [NSString stringWithFormat:@"%@",strUrl];
-
+        
     }
     else
     {
-       urlStr = [NSString stringWithFormat:@"%@%@",strUrl,strPostBody];
-
+        urlStr = [NSString stringWithFormat:@"%@%@",strUrl,strPostBody];
+        
     }
-    NSLog(@"urlStr = %@",urlStr);
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlStr]];
     request.timeoutInterval = 20;
     //设置传送类型
     NSString *contentType = [NSString stringWithFormat:@"application/x-www-form-urlencoded"];
     //给传输类型添加内容
     [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-//    [request addValue:@"MMB-HttpRequest_1.0" forHTTPHeaderField:@"User Agent"];
-    [request setHTTPBody:[strPostBody dataUsingEncoding:NSUTF8StringEncoding]];
+    
     if (theMethod == GET) {
         [request setHTTPMethod:@"GET"];
     }else{
@@ -90,24 +100,24 @@
     self.conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [self.conn start];
     
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:strUrl]];
-//    request.timeoutInterval = 20;
-//    //设置传送类型
-//    NSString *contentType = [NSString stringWithFormat:@"application/x-www-form-urlencoded"];
-//    //给传输类型添加内容
-//    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-//    
-//    [request setHTTPBody:[strPostBody dataUsingEncoding:NSUTF8StringEncoding]];
-//
-//    if (theMethod == GET) {
-//        [request setHTTPMethod:@"GET"];
-//    }else{
-//        [request setHTTPMethod:@"POST"];
-//    }
-//    
-//    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:YES];
-//    self.conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//    [self.conn start];
+    //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:strUrl]];
+    //    request.timeoutInterval = 20;
+    //    //设置传送类型
+    //    NSString *contentType = [NSString stringWithFormat:@"application/x-www-form-urlencoded"];
+    //    //给传输类型添加内容
+    //    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+    //
+    //    [request setHTTPBody:[strPostBody dataUsingEncoding:NSUTF8StringEncoding]];
+    //
+    //    if (theMethod == GET) {
+    //        [request setHTTPMethod:@"GET"];
+    //    }else{
+    //        [request setHTTPMethod:@"POST"];
+    //    }
+    //
+    //    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:YES];
+    //    self.conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    //    [self.conn start];
 }
 
 
@@ -132,7 +142,7 @@
         NSString *strValue = [dicText objectForKey:strKey];
         [body appendFormat:@"\r\n--%@\r\ncontent-disposition: form-data; name=\"%@\"\r\n\r\n%@",TWITTERFON_FORM_BOUNDARY,strKey,strValue];
     }
-
+    
     //添加分界线，换行
     [body appendString:@"\r\n"];
     NSMutableArray *aryBody = [[NSMutableArray alloc]init];
@@ -142,7 +152,7 @@
         NSString *strImageKey = [NSString stringWithFormat:@"%@",[[dicImage allKeys] objectAtIndex:i]];
         NSMutableString *strBody = [[NSMutableString alloc]init];
         [strBody appendFormat:@"\r\n%@\r\n",MPboundary];
-
+        
         NSString *S = [NSString stringWithFormat:@"%@",[strImageFileName objectAtIndex:i]];
         
         //声明pic字段，文件名
@@ -155,18 +165,18 @@
         
         [aryBody addObject:strBody];
     }
-//    for (NSString *strImageKey in [dicImage allKeys]) {
-//        NSMutableString *strBody = [[NSMutableString alloc]init];
-//        
-//        [strBody appendFormat:@"\r\n%@\r\n",MPboundary];
-//        //声明pic字段，文件名
-//        [strBody appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",strImageFileName,strImageKey];
-//        //声明上传文件的格式
-//        [strBody appendString:@"Content-Type: multipart/form-data\r\n\r\n"];
-//        
-//        
-//        [aryBody addObject:strBody];
-//    }
+    //    for (NSString *strImageKey in [dicImage allKeys]) {
+    //        NSMutableString *strBody = [[NSMutableString alloc]init];
+    //
+    //        [strBody appendFormat:@"\r\n%@\r\n",MPboundary];
+    //        //声明pic字段，文件名
+    //        [strBody appendFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n",strImageFileName,strImageKey];
+    //        //声明上传文件的格式
+    //        [strBody appendString:@"Content-Type: multipart/form-data\r\n\r\n"];
+    //
+    //
+    //        [aryBody addObject:strBody];
+    //    }
     //声明结束符：--AaB03x--
     NSString *end=[[NSString alloc]initWithFormat:@"\r\n%@",endMPboundary];
     //声明myRequestData，用来放入http body
@@ -180,7 +190,7 @@
         UIImage *imgUpload = [[dicImage allValues] objectAtIndex:i];
         //上传图片格式为png，可以更改为jpeg，同时需要更改文件名
         NSData *dtImg = UIImagePNGRepresentation(imgUpload);
-//        NSData *dtImg = UIImageJPEGRepresentation(imgUpload, 0.5);
+        //        NSData *dtImg = UIImageJPEGRepresentation(imgUpload, 0.5);
         [myRequestData appendData:[strBody dataUsingEncoding:NSUTF8StringEncoding]];
         [myRequestData appendData:dtImg];
     }
@@ -194,7 +204,6 @@
     [request setValue:content forHTTPHeaderField:@"Content-Type"];
     //设置Content-Length
     [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[myRequestData length]] forHTTPHeaderField:@"Content-Length"];
-//    [request setValue:@"MMB-HttpRequest_1.0" forHTTPHeaderField:@"User Agent"];
     //设置http body
     [request setHTTPBody:myRequestData];
     //http method
@@ -205,21 +214,21 @@
     self.conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [self.conn start];
     
-//    //建立连接，设置代理
-//    NSURLConnection *conn1 = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    //    //建立连接，设置代理
+    //    NSURLConnection *conn1 = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     
-//    //设置接受response的data
-//    if (conn1) {
-//        NSURLResponse *response = 0x00;
-//        NSError *error = 0x00;
-//        NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-//        NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-//        MDLog(@">>%@",returnString);
-//        NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingMutableLeaves error:&error];
-//        MDLog(@">>%@",[dicRespon objectForKey:@"msg"]);
-//        return  [dicRespon objectForKey:@"msg"];
-//    }
-//    return @"连接失败";
+    //    //设置接受response的data
+    //    if (conn1) {
+    //        NSURLResponse *response = 0x00;
+    //        NSError *error = 0x00;
+    //        NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    //        NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+    //        MDLog(@">>%@",returnString);
+    //        NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingMutableLeaves error:&error];
+    //        MDLog(@">>%@",[dicRespon objectForKey:@"msg"]);
+    //        return  [dicRespon objectForKey:@"msg"];
+    //    }
+    //    return @"连接失败";
     
 }
 
@@ -253,60 +262,63 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
     [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
     NSError *error;
     NSString *resultStr = [[NSString alloc] initWithData:_dtReviceData encoding:NSUTF8StringEncoding];
-    if(appDel.lookForTradeMsg == YES)
-    {
-        [self.delegate resultWithString:resultStr];
+    
+    NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:_dtReviceData options:NSJSONReadingMutableLeaves error:&error];
+    
+    //    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    //    NSError *err;
+    //    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+    //                                                        options:NSJSONReadingMutableContainers
+    //                                                          error:&err];
+    //
+    ResultCode theResultCode = RS_Error;
+    
+    if (dicRespon && [[dicRespon allKeys] containsObject:@"result"]) {
+        
+        theResultCode = RS_Success;
     }
-    else
+    int result = [[dicRespon objectForKey:@"result"] intValue];
+    
+    //    if(self.LogOut == YES)
+    //    {
+    //
+    //    }
+    if(result == 1)
     {
-        NSDictionary *dicRespon = [NSJSONSerialization JSONObjectWithData:_dtReviceData options:NSJSONReadingMutableLeaves error:&error];
-        
-        ResultCode theResultCode = RS_Error;
-        
-        if (dicRespon && [[dicRespon allKeys] containsObject:@"result"]) {
-            
-            theResultCode = RS_Success;
-        }
-        int result = [[dicRespon objectForKey:@"result"] intValue];
-        
-        
-        if(result == 1)
-        {
-            [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-        }
-        else if (result == 0)
-        {
-            [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-        }
+        [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
+    }
+    else if (result == 0)
+    {
+        [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
+    }
 #pragma mark - 支付宝校验
-        else if(result == 2 || result == 3)
+    else if(result == 2 || result == 3)
+    {
+        [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
+        
+    }
+    else if (result == 99)
+    {
+        if(self.LogOut == YES)
         {
             [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-            
+            return;
         }
-        else if (result == 99)
-        {
-            if(self.LogOut == YES)
-            {
-                [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
-                return;
-            }
-            [appDel logOutMethod];
-        }
+        AppDelegate *appDel = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDel logOutMethod];
     }
-
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
-//    if (self.isShowErrorView == YES) {
-//        [DCFStringUtil showNotice:error.localizedDescription];
-//    }
+    //    if (self.isShowErrorView == YES) {
+    //        [DCFStringUtil showNotice:error.localizedDescription];
+    //    }
     ResultCode theResultCode = RS_Error;
     [self.delegate resultWithDic:nil urlTag:self.urlTag isSuccess:theResultCode];
     

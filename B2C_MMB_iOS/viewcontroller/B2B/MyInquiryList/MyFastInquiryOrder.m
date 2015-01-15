@@ -211,15 +211,12 @@
         [myMan addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0] range:NSMakeRange(4, myman.length-4)];
         [self.linkManLabel setAttributedText:myMan];
     }
-    
-    [self.requestFirstLabel setHidden:YES];
-    [self.requestFirstLabel setFrame:CGRectMake(0, 0, ScreenWidth, 0)];
+
     
     CGSize testSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:@"询价需求:" WithSize:CGSizeMake(MAXFLOAT, 30)];
     UILabel *requestFirstLabel = [[UILabel alloc] init];
     [requestFirstLabel setText:@"询价需求:"];
     [requestFirstLabel setFont:[UIFont systemFontOfSize:14]];
-    [self.sv addSubview:requestFirstLabel];
     
     requestLabel = [[UILabel alloc] init];
     NSString *request = [NSString stringWithFormat:@"%@",self.fastData.content];
@@ -243,11 +240,13 @@
             [requestLabel setFrame:CGRectMake(requestFirstLabel.frame.origin.x+requestFirstLabel.frame.size.width+5, requestFirstLabel.frame.origin.y, ScreenWidth-25-requestFirstLabel.frame.size.width, size.height)];
         }
         [requestLabel setText:request];
+        [self.sv addSubview:requestFirstLabel];
+        [requestLabel setFont:[UIFont systemFontOfSize:14]];
+        [requestLabel setNumberOfLines:0];
+        [requestLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
+        [self.sv addSubview:requestLabel];
     }
-    [requestLabel setFont:[UIFont systemFontOfSize:14]];
-    [requestLabel setNumberOfLines:0];
-    [requestLabel setTextColor:[UIColor colorWithRed:135.0/255.0 green:135.0/255.0 blue:135.0/255.0 alpha:1.0]];
-    [self.sv addSubview:requestLabel];
+ 
     
     UIImageView *iv = [[UIImageView alloc] init];
     if(!picArray || picArray.count == 0)

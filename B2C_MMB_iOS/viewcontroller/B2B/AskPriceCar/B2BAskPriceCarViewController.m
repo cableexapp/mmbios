@@ -64,6 +64,8 @@
     BOOL isUp_Down;
     
     UIImageView *askView;
+    
+    int changeIndex; //编辑之后状态改变
 }
 @end
 
@@ -279,10 +281,10 @@
     }
 }
 
-- (void) reloadData
+- (void) reloadDataWithTag:(int)tag
 {
+    changeIndex = tag;
     [self loadRequest];
-    [tv reloadData];
 }
 
 
@@ -290,7 +292,6 @@
 - (void) edit:(UIButton *) sender
 {
     UIButton *btn = (UIButton *) sender;
-    
     data = [dataArray objectAtIndex:btn.tag];
     
     subViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -351,6 +352,7 @@
                              editColor,@"editColor",
                              editFeatureone,@"editFeatureone",
                              editRequire,@"editRequire",
+                             [NSNumber numberWithInt:btn.tag],@"tag",
                              nil];
     
     b2bAskPriceCarEditViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"b2bAskPriceCarEditViewController"];
@@ -527,6 +529,17 @@
         {
             
             [moreCell noClasses];
+        }
+        for(UIButton *btn in sectionHeadBtnArray)
+        {
+            if(btn.tag == changeIndex)
+            {
+                [btn setSelected:NO];
+            }
+            else
+            {
+                [btn setSelected:YES];
+            }
         }
         [tv reloadData];
     }

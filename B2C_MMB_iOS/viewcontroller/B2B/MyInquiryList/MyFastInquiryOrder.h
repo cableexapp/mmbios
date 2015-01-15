@@ -31,7 +31,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *linkManLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *requestFirstLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *againAskBtn;
 

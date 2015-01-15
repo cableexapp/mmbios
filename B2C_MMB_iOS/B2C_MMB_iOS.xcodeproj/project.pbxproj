@@ -281,6 +281,12 @@
 		61B710F119FF3B53001CC3BD /* SecondNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B710AE19FF3B53001CC3BD /* SecondNaviViewController.m */; };
 		61B710F219FF3B53001CC3BD /* SecondTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B710B019FF3B53001CC3BD /* SecondTableViewController.m */; };
 		61B710F319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B710B319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m */; };
+		61BBB4761A67A7BD00271ACE /* hot_situation_itemimage_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BBB4701A67A7BD00271ACE /* hot_situation_itemimage_1.png */; };
+		61BBB4771A67A7BD00271ACE /* hot_situation_itemimage_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BBB4711A67A7BD00271ACE /* hot_situation_itemimage_2.png */; };
+		61BBB4781A67A7BD00271ACE /* hot_situation_itemimage_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BBB4721A67A7BD00271ACE /* hot_situation_itemimage_3.png */; };
+		61BBB4791A67A7BD00271ACE /* hot_situation_itemimage_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BBB4731A67A7BD00271ACE /* hot_situation_itemimage_10.png */; };
+		61BBB47A1A67A7BD00271ACE /* hot_situation_itemimage_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BBB4741A67A7BD00271ACE /* hot_situation_itemimage_11.png */; };
+		61BBB47B1A67A7BD00271ACE /* hot_situation_itemimage_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BBB4751A67A7BD00271ACE /* hot_situation_itemimage_12.png */; };
 		61C686D91A0DE11C00477622 /* CableSecondAndThirdStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C686D81A0DE11C00477622 /* CableSecondAndThirdStepViewController.m */; };
 		61C686DC1A0DE1B500477622 /* CableSecondStepTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C686DB1A0DE1B500477622 /* CableSecondStepTableViewController.m */; };
 		61C686E21A0E2A4300477622 /* CableThirdStepViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C686E11A0E2A4300477622 /* CableThirdStepViewController.m */; };
@@ -311,6 +317,7 @@
 		61E65DDF1A17815800E22E2E /* ModifyLogSecSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DDE1A17815800E22E2E /* ModifyLogSecSuccessViewController.m */; };
 		61E65DE21A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */; };
 		61EF03801A2071520048FBBB /* ModifyLoginSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EF037F1A2071520048FBBB /* ModifyLoginSecViewController.m */; };
+		61F00D541A64DC4700F77E7B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61F00D531A64DC4700F77E7B /* Main_iPad.storyboard */; };
 		61FFC5A319F6405E00F16E64 /* B2CGetOrderDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */; };
 		8B12EA0B1A38698900046CA7 /* sendOK.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B12EA0A1A38698900046CA7 /* sendOK.png */; };
 		8B12EA0D1A3869C100046CA7 /* b2b_enquiry_im.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B12EA0C1A3869C100046CA7 /* b2b_enquiry_im.png */; };
@@ -1331,6 +1338,12 @@
 		61B710B019FF3B53001CC3BD /* SecondTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondTableViewController.m; sourceTree = "<group>"; };
 		61B710B219FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+AddPushAndPopStyle.h"; sourceTree = "<group>"; };
 		61B710B319FF3B53001CC3BD /* UIViewController+AddPushAndPopStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+AddPushAndPopStyle.m"; sourceTree = "<group>"; };
+		61BBB4701A67A7BD00271ACE /* hot_situation_itemimage_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot_situation_itemimage_1.png; sourceTree = "<group>"; };
+		61BBB4711A67A7BD00271ACE /* hot_situation_itemimage_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot_situation_itemimage_2.png; sourceTree = "<group>"; };
+		61BBB4721A67A7BD00271ACE /* hot_situation_itemimage_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot_situation_itemimage_3.png; sourceTree = "<group>"; };
+		61BBB4731A67A7BD00271ACE /* hot_situation_itemimage_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot_situation_itemimage_10.png; sourceTree = "<group>"; };
+		61BBB4741A67A7BD00271ACE /* hot_situation_itemimage_11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot_situation_itemimage_11.png; sourceTree = "<group>"; };
+		61BBB4751A67A7BD00271ACE /* hot_situation_itemimage_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hot_situation_itemimage_12.png; sourceTree = "<group>"; };
 		61C686D71A0DE11C00477622 /* CableSecondAndThirdStepViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CableSecondAndThirdStepViewController.h; sourceTree = "<group>"; };
 		61C686D81A0DE11C00477622 /* CableSecondAndThirdStepViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CableSecondAndThirdStepViewController.m; sourceTree = "<group>"; };
 		61C686DA1A0DE1B500477622 /* CableSecondStepTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CableSecondStepTableViewController.h; sourceTree = "<group>"; };
@@ -1378,6 +1391,7 @@
 		61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BangDingWithMobileOrEmailViewController.m; sourceTree = "<group>"; };
 		61EF037E1A2071520048FBBB /* ModifyLoginSecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyLoginSecViewController.h; sourceTree = "<group>"; };
 		61EF037F1A2071520048FBBB /* ModifyLoginSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyLoginSecViewController.m; sourceTree = "<group>"; };
+		61F00D531A64DC4700F77E7B /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
 		61FFC5A119F6405E00F16E64 /* B2CGetOrderDetailData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CGetOrderDetailData.h; sourceTree = "<group>"; };
 		61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGetOrderDetailData.m; sourceTree = "<group>"; };
 		8B12EA0A1A38698900046CA7 /* sendOK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sendOK.png; sourceTree = "<group>"; };
@@ -2736,6 +2750,7 @@
 		6181A3F419CFC4C2000E2D14 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				61BBB46F1A67A15D00271ACE /* HotScreen */,
 				61565BCA1A57D606003A9DE8 /* tradeDocSelect.png */,
 				61565BCB1A57D606003A9DE8 /* tradeDocUnselect.png */,
 				611E34801A53BB7500CA3012 /* iosappAd.png */,
@@ -3049,6 +3064,7 @@
 		619A624C1A00C09900556B90 /* storyBoard */ = {
 			isa = PBXGroup;
 			children = (
+				61F00D531A64DC4700F77E7B /* Main_iPad.storyboard */,
 				619A624D1A00C09900556B90 /* FifthSB.storyboard */,
 				619A624E1A00C09900556B90 /* FourthSB.storyboard */,
 				619A62501A00C09900556B90 /* ThirdSB.storyboard */,
@@ -3385,6 +3401,19 @@
 				8B8B98541A2F165500697375 /* 在线客服.png */,
 			);
 			path = "首页";
+			sourceTree = "<group>";
+		};
+		61BBB46F1A67A15D00271ACE /* HotScreen */ = {
+			isa = PBXGroup;
+			children = (
+				61BBB4701A67A7BD00271ACE /* hot_situation_itemimage_1.png */,
+				61BBB4711A67A7BD00271ACE /* hot_situation_itemimage_2.png */,
+				61BBB4721A67A7BD00271ACE /* hot_situation_itemimage_3.png */,
+				61BBB4731A67A7BD00271ACE /* hot_situation_itemimage_10.png */,
+				61BBB4741A67A7BD00271ACE /* hot_situation_itemimage_11.png */,
+				61BBB4751A67A7BD00271ACE /* hot_situation_itemimage_12.png */,
+			);
+			path = HotScreen;
 			sourceTree = "<group>";
 		};
 		61C686D61A0DE0FC00477622 /* CableKind */ = {
@@ -4627,6 +4656,7 @@
 				61B710B619FF3B53001CC3BD /* AliViewController.xib in Resources */,
 				8BA7C0CA1A10A85500758B0F /* 得意@2x.png in Resources */,
 				8BA7C0881A10A85500758B0F /* 小刀@2x.png in Resources */,
+				61BBB4771A67A7BD00271ACE /* hot_situation_itemimage_2.png in Resources */,
 				6136F53A1A64B3800027A607 /* Icon-60@3x.png in Resources */,
 				8BA7C0721A10A85500758B0F /* faceKey.plist in Resources */,
 				8BA7C1301A10A85500758B0F /* 鄙视@2x.png in Resources */,
@@ -4658,6 +4688,7 @@
 				6181A4C519CFC4C2000E2D14 /* DCFChenMoreCell.xib in Resources */,
 				619A62541A00C09900556B90 /* ThirdSB.storyboard in Resources */,
 				8BA7C1281A10A85500758B0F /* 足球@2x.png in Resources */,
+				61BBB4781A67A7BD00271ACE /* hot_situation_itemimage_3.png in Resources */,
 				8BA7C0A71A10A85500758B0F /* 啤酒.png in Resources */,
 				8BA7C0781A10A85500758B0F /* 乒乓@2x.png in Resources */,
 				8BA7C0C81A10A85500758B0F /* 很强@2x.png in Resources */,
@@ -4735,6 +4766,7 @@
 				8BA7C0A41A10A85500758B0F /* 咖啡.png in Resources */,
 				8BA7C09C1A10A85500758B0F /* 呕吐@2x.png in Resources */,
 				8BA7C1231A10A85500758B0F /* 西瓜.png in Resources */,
+				61BBB47A1A67A7BD00271ACE /* hot_situation_itemimage_11.png in Resources */,
 				8BA7C0BD1A10A85500758B0F /* 尴尬.png in Resources */,
 				8BA7C10B1A10A85500758B0F /* 睡觉.png in Resources */,
 				8BCC0C901A1F7586004F0EF8 /* mmbOrder.png in Resources */,
@@ -4787,6 +4819,7 @@
 				8BA7C0BA1A10A85500758B0F /* 委屈@2x.png in Resources */,
 				8BA7C0901A10A85500758B0F /* 发抖@2x.png in Resources */,
 				8BA7C0BC1A10A85500758B0F /* 害羞@2x.png in Resources */,
+				61BBB4761A67A7BD00271ACE /* hot_situation_itemimage_1.png in Resources */,
 				8BA7C0F41A10A85500758B0F /* 流泪@2x.png in Resources */,
 				8BBB2CAE1A1E1BC100895B4C /* 8.png in Resources */,
 				6140E7CB1A01DE4C00E349E3 /* hotModelSelected@3x.png in Resources */,
@@ -4799,6 +4832,7 @@
 				617395CB1A54E9D100509531 /* Default@2x.png in Resources */,
 				8BACAAE91A5D2CB100F995BC /* README.txt in Resources */,
 				8BA7C10D1A10A85500758B0F /* 磕头.png in Resources */,
+				61BBB47B1A67A7BD00271ACE /* hot_situation_itemimage_12.png in Resources */,
 				61E0E17E1A36DD0E00F6D5F1 /* complete.png in Resources */,
 				8BA7C0E71A10A85500758B0F /* 撇嘴.png in Resources */,
 				8BA7C0CC1A10A85500758B0F /* 微笑@2x.png in Resources */,
@@ -4816,6 +4850,7 @@
 				8BA7C1391A10A85500758B0F /* 难过.png in Resources */,
 				8BA7C1321A10A85500758B0F /* 装酷@2x.png in Resources */,
 				8BA7C07D1A10A85500758B0F /* 偷笑.png in Resources */,
+				61F00D541A64DC4700F77E7B /* Main_iPad.storyboard in Resources */,
 				8BA7C0871A10A85500758B0F /* 小刀.png in Resources */,
 				8BA7C1071A10A85500758B0F /* 疑问.png in Resources */,
 				8BA7C1051A10A85500758B0F /* 瓢虫.png in Resources */,
@@ -4870,6 +4905,7 @@
 				61C8DBB219F260F400E2A17D /* msg_bqy@2x.png in Resources */,
 				619A62521A00C09900556B90 /* FourthSB.storyboard in Resources */,
 				8BA7C1291A10A85500758B0F /* 跳绳.png in Resources */,
+				61BBB4791A67A7BD00271ACE /* hot_situation_itemimage_10.png in Resources */,
 				8BA7C1271A10A85500758B0F /* 足球.png in Resources */,
 				8BA7C0671A10A85500758B0F /* del_emoji_normal.png in Resources */,
 				61A197DE19F75BBD00909C6F /* Overlay.png in Resources */,
@@ -5398,8 +5434,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Far East Trading Pay network Co., Ltd. (2H6767RL8U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Far East Trading Pay network Co., Ltd. (2H6767RL8U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jiang huajun (54826ETQ9V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jiang huajun (54826ETQ9V)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -5420,9 +5456,9 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/AliPay\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "6597ce89-f095-49f6-af42-4e5620150703";
+				PROVISIONING_PROFILE = "dc5fc5e4-67a4-4e3d-a63a-52f21d83c662";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
@@ -5446,8 +5482,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Far East Trading Pay network Co., Ltd. (2H6767RL8U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Far East Trading Pay network Co., Ltd. (2H6767RL8U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: jiang huajun (54826ETQ9V)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: jiang huajun (54826ETQ9V)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -5462,9 +5498,9 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/AliPay\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "6597ce89-f095-49f6-af42-4e5620150703";
+				PROVISIONING_PROFILE = "dc5fc5e4-67a4-4e3d-a63a-52f21d83c662";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

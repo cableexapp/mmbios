@@ -62,7 +62,7 @@
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"请选择使用场合"];
     self.navigationItem.titleView = top;
     
-    [_sv setContentSize:CGSizeMake(ScreenWidth*4, self.sv.frame.size.height-200)];
+    [_sv setContentSize:CGSizeMake(ScreenWidth*5, self.sv.frame.size.height-200)];
     [_sv setBounces:NO];
     [_sv setDelegate:self];
     
@@ -92,22 +92,63 @@
     for(UIButton *btn in btnArray)
     {
         NSString *tetx = btn.titleLabel.text;
-        if([tetx isEqualToString:@"拨打热线电话"] || [tetx isEqualToString:@"在线咨询"] || [tetx isEqualToString:@"填写使用场合"] || [tetx isEqualToString:@"重新浏览"])
+        if([tetx isEqualToString:@"拨打400电话"] || [tetx isEqualToString:@"在线咨询"] || [tetx isEqualToString:@"填写使用场合"] || [tetx isEqualToString:@"重新浏览"])
         {
             
         }
         else
         {
+            UIImageView *iv = [[UIImageView alloc] init];
+            if([tetx isEqualToString:@"插座照明"])
+            {
+                btn.titleEdgeInsets = UIEdgeInsetsMake(-80, 0, -20, 0);
+                [iv setFrame:CGRectMake(20, btn.frame.size.height/2-30,btn.frame.size.width-40, 60)];
+                [iv setImage:[UIImage imageNamed:@"hot_situation_itemimage_1.png"]];
+                [btn addSubview:iv];
+            }
+            if([tetx isEqualToString:@"电梯供电"])
+            {
+                btn.titleEdgeInsets = UIEdgeInsetsMake(-80, 0, -20, 0);
+                [iv setFrame:CGRectMake(20, btn.frame.size.height/2-30,btn.frame.size.width-40, 60)];
+                [iv setImage:[UIImage imageNamed:@"hot_situation_itemimage_2.png"]];
+                [btn addSubview:iv];
+            }
+            if([tetx isEqualToString:@"电话线"])
+            {
+                btn.titleEdgeInsets = UIEdgeInsetsMake(-80, 0, -20, 0);
+                [iv setFrame:CGRectMake(20, btn.frame.size.height/2-30,btn.frame.size.width-40, 60)];
+                [iv setImage:[UIImage imageNamed:@"hot_situation_itemimage_3.png"]];
+                [btn addSubview:iv];
+            }
+            if([tetx isEqualToString:@"有线电视"])
+            {
+                btn.titleEdgeInsets = UIEdgeInsetsMake(-80, 0, -20, 0);
+                [iv setFrame:CGRectMake(20, btn.frame.size.height/2-30,btn.frame.size.width-40, 60)];
+                [iv setImage:[UIImage imageNamed:@"hot_situation_itemimage_10.png"]];
+                [btn addSubview:iv];
+            }
+            if([tetx isEqualToString:@"电源连接线"])
+            {
+                btn.titleEdgeInsets = UIEdgeInsetsMake(-80, 0, -20, 0);
+                [iv setFrame:CGRectMake(20, btn.frame.size.height/2-30,btn.frame.size.width-40, 60)];
+                [iv setImage:[UIImage imageNamed:@"hot_situation_itemimage_11.png"]];
+                [btn addSubview:iv];
+            }
+            if([tetx isEqualToString:@"电脑网线"])
+            {
+                btn.titleEdgeInsets = UIEdgeInsetsMake(-80, 0, -20, 0);
+                [iv setFrame:CGRectMake(20, btn.frame.size.height/2-30,btn.frame.size.width-40, 60)];
+                [iv setImage:[UIImage imageNamed:@"hot_situation_itemimage_12.png"]];
+                [btn addSubview:iv];
+            }
             [btn addTarget:self action:@selector(screenBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
     
-    
-    
     pageControl = [[UIPageControl alloc] init];
     pageControl.frame = CGRectMake(0, ScreenHeight-100, ScreenWidth, 30);
     pageControl.currentPage=0;
-    pageControl.numberOfPages=4;
+    pageControl.numberOfPages=5;
     pageControl.pageIndicatorTintColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0];
     [self.view addSubview:pageControl];

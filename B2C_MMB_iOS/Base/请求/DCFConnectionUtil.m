@@ -72,7 +72,7 @@
 
     }
     NSLog(@"urlStr = %@",urlStr);
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlStr]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:strUrl]];
     request.timeoutInterval = 20;
     //设置传送类型
     NSString *contentType = [NSString stringWithFormat:@"application/x-www-form-urlencoded"];

@@ -97,7 +97,7 @@
     [rs close];
     
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight-64)];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-64)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
@@ -122,7 +122,7 @@
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 50)];
     [view setBackgroundColor:[UIColor colorWithRed:253.0/255.0 green:231.0/255.0 blue:180.0/255.0 alpha:1.0]];
     
     

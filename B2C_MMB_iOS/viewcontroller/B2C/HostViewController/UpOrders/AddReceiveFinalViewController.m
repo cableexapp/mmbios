@@ -455,7 +455,7 @@
     [super viewDidLoad];
     
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [self pushAndPopStyle];
     
@@ -468,13 +468,14 @@
     [backView setBackgroundColor:[UIColor whiteColor]];
     backView.layer.borderColor = [UIColor colorWithRed:188.0/255.0 green:188.0/255.0 blue:188.0/255.0 alpha:1.0].CGColor;
     backView.layer.borderWidth = 1.0f;
+    backView.layer.cornerRadius = 5;
     [self.view addSubview:backView];
     
     backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backBtn setFrame:CGRectMake(20, backView.frame.origin.y + backView.frame.size.height + 10, ScreenWidth-40, 35)];
+    [backBtn setFrame:CGRectMake(20, backView.frame.origin.y + backView.frame.size.height + 10, ScreenWidth-40, 43)];
     [backBtn setTitle:@"完成" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [backBtn setBackgroundColor:[UIColor colorWithRed:10.0/255.0 green:79.0/255.0 blue:191.0/255.0 alpha:1.0]];
+    [backBtn setBackgroundColor:[UIColor colorWithRed:9.0/255.0 green:99.0/255.0 blue:189.0/255.0 alpha:1.0]];
     backBtn.layer.cornerRadius = 5.0f;
     [backBtn addTarget:self action:@selector(backBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backBtn];

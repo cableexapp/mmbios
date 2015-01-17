@@ -91,8 +91,6 @@
 {
     app.lookForTradeMsg = NO;
     logisticsTrackingTableViewController.myArray = [[NSMutableArray alloc] init];
-
-    
     NSString *dataStr = str;
     dataStr = [dataStr stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     
@@ -127,7 +125,7 @@
         logisticsTrackingTableViewController.myArray = (NSMutableArray *)[[logisticsTrackingTableViewController.myArray reverseObjectEnumerator] allObjects];
         NSString *sendStatus = (NSString *)[[logisticsTrackingTableViewController.myArray objectAtIndex:0] objectForKey:@"content"];
         
-        if([sendStatus rangeOfString:@"已签收"].location !=NSNotFound)
+        if([sendStatus rangeOfString:@"已签收"].location !=NSNotFound || [sendStatus rangeOfString:@"拍照签收"].location !=NSNotFound)
         {
             [self.logisticsStatusLabel setText:@"物流状态: 已签收"];
         }

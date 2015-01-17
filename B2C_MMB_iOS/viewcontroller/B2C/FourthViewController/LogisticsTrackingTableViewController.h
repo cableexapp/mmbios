@@ -15,5 +15,7 @@
 @property (assign,nonatomic) BOOL isRequest;  //判断是否正在请求数据
 
 - (void) reloadData:(BOOL) status;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
+
 @end
 

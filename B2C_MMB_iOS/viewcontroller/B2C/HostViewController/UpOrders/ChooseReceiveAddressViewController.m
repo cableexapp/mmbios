@@ -49,14 +49,12 @@
     ManagReceiveAddressViewController *managReceiveAddressViewController = [[ManagReceiveAddressViewController alloc] init];
     managReceiveAddressViewController.B2COrB2B = self.B2COrB2B;
     [self.navigationController pushViewController:managReceiveAddressViewController animated:YES];
-    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) rightItemClick:(UIButton *) sender
 {
     //    [self showButtomView];
-    
-    
+    [self setHidesBottomBarWhenPushed:YES];
     AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
     [self.navigationController pushViewController:add animated:YES];
 }

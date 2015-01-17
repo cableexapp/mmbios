@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *showBtn;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UIView *lineView;
 
 @end

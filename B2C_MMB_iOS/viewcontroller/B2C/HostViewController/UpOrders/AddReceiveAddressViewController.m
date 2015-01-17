@@ -36,7 +36,7 @@
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor redColor]];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
     
     [self pushAndPopStyle];
     
@@ -83,8 +83,7 @@
     }
     [rs close];
     
-    
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeight-64)];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-64)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];

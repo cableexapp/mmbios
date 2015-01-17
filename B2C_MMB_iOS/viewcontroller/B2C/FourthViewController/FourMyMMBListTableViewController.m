@@ -23,6 +23,7 @@
 #import "AppDelegate.h"
 #import "UIImage (fixOrientation).h"
 #import "DCFStringUtil.h"
+#import "DCFColorUtil.h"
 #import "UIImageView+WebCache.h"
 #import "FourthNaviViewController.h"
 
@@ -43,7 +44,6 @@
     int tempCount;
     
     int tempShopCar;
-    
     
     UIActionSheet *changePhotoSheet;
     UIActionSheet *albumSheet;
@@ -531,7 +531,7 @@
 
 - (void)photoBtnAction:(id)sender
 {
-    albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"手机相册",@"拍照", nil];
+    albumSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册选择",@"拍照", nil];
     if (self.navigationController)
     {
         [albumSheet showInView:self.navigationController.navigationBar];
@@ -591,6 +591,11 @@
     }
     pickerImage.delegate = self;
     pickerImage.allowsEditing = NO;
+
+    [pickerImage.navigationBar setBackgroundImage:[DCFCustomExtra imageWithColor:[DCFColorUtil colorFromHexRGB:@"#1465ba"] size:CGSizeMake(1, 1)] forBarMetrics:UIBarMetricsDefault];
+    
+    [pickerImage.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,[UIFont systemFontOfSize:20], UITextAttributeFont,nil]];
+    
     [self presentViewController:pickerImage animated:YES completion:nil];
 }
 

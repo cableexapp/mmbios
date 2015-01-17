@@ -1121,6 +1121,10 @@
             {
                 B2CShopCarListData *data = [[goodsListArray objectAtIndex:indexPath.section-3] objectAtIndex:indexPath.row];
                 
+//                for (int; <#condition#>; <#increment#>) {
+//                    <#statements#>
+//                }
+                
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 200, 20)];
                 [label setText:data.sShopName];
                 [label setFont:[UIFont systemFontOfSize:12]];

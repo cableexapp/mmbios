@@ -73,7 +73,9 @@
     
     [self pushAndPopStyle];
     
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"售后查看"];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"查看售后"];
     self.navigationItem.titleView = top;
     
     labelArray = [[NSMutableArray alloc] init];
@@ -258,6 +260,7 @@
             {
                 NSString *money = [NSString stringWithFormat:@"%@元",[dataDic objectForKey:@"total"]];
                 [anotherLabel setText:money];
+                [anotherLabel setTextColor:[UIColor redColor]];
             }
             if(i == 6)
             {
@@ -272,12 +275,10 @@
                 [testLabel setNumberOfLines:0];
                 [testLabel setFont:[UIFont systemFontOfSize:12]];
                 
-                [anotherLabel setFrame:testLabel.frame];
+                [anotherLabel setFrame:CGRectMake(testLabel.frame.origin.x, testLabel.frame.origin.y+3, testLabel.frame.size.width, testLabel.frame.size.height)];
                 [anotherLabel setText:afterwords];
             }
-            
             [anotherLabelArray addObject:anotherLabel];
-            
             [self.view addSubview:anotherLabel];
         }
     }
@@ -303,6 +304,7 @@
         _tv.dataSource = self;
         [_tv setShowsHorizontalScrollIndicator:NO];
         [_tv setShowsVerticalScrollIndicator:NO];
+         _tv.layer.cornerRadius = 5;
         _tv.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
         _tv.layer.borderWidth = 1.0f;
         [self.view addSubview:_tv];

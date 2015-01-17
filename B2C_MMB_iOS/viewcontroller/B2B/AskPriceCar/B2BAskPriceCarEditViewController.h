@@ -13,7 +13,7 @@
 @protocol RemoveSubView <NSObject>
 
 - (void) removeSubView;
-- (void) reloadData;
+- (void) reloadDataWithTag:(int) tag;
 
 @end
 

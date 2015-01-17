@@ -28,7 +28,7 @@
     
     NSMutableArray *arr;
     
-    
+    int tag;
 }
 @end
 
@@ -98,6 +98,7 @@
     
     self.requestTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.requestTF.layer.borderWidth = 0.5f;
+
     
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getSpecVoltageByModel",time];
@@ -126,7 +127,8 @@
     editColor = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editColor"]];
     editFeatureone = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editFeatureone"]];
     editRequire = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editRequire"]];
-
+    tag = [[_editDic objectForKey:@"tag"] intValue];
+    
     [self.numTF setText:editNum];
     if([DCFCustomExtra validateString:editUnit] == NO)
     {
@@ -138,7 +140,15 @@
     [self.volBtn setTitle:editVol forState:UIControlStateNormal];
     [self.colorBtn setTitle:editColor forState:UIControlStateNormal];
     [self.featherBtn setTitle:editFeatureone forState:UIControlStateNormal];
-    [self.requestTF setText:editRequire];
+    if([DCFCustomExtra validateString:editRequire] == NO)
+    {
+        [self.requestLabel setHidden:NO];
+    }
+    else
+    {
+        [self.requestTF setText:editRequire];
+        [self.requestLabel setHidden:YES];
+    }
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -214,7 +224,7 @@
         {
             [DCFStringUtil showNotice:@"编辑成功"];
             [self.delegate removeSubView];
-            [self.delegate reloadData];
+            [self.delegate reloadDataWithTag:tag];
             
             [[NSUserDefaults standardUserDefaults] setObject:self.unitBtn.titleLabel.text forKey:@"unit"];
         }

@@ -37,33 +37,21 @@ BOOL isPopShow = NO;
 
 @interface HostTableViewController ()
 {
-//    NSMutableArray *textViewDataArray;
-//    NSMutableArray *moneyDataArray;
     NSArray *typeArray;  //一级分类数组
     NSMutableArray *typeBtnArray;  //一级分类按钮
-    
     UIStoryboard *sb;
-    
     NSMutableArray *typeIdArray;
-    
     ZSYPopoverListView *listView;
     NSArray *useArray;
+    NSArray *picArray;
     UIActivityIndicatorView *activityIndicator;
     UILabel *labell;
-    
     NSMutableArray *dataArray;
-//    NSMutableArray *picArray;
- 
     UIView *secondBarView;
-    
     NSMutableArray *arr;
-    
     NSString *fromPage;
-    
     UIImageView *countLabel;
-    
     int tempCount;
-    
     int tempShopCar;
 }
 @end
@@ -121,7 +109,6 @@ BOOL isPopShow = NO;
     isPopShow = NO;
 }
 
-
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:YES];
@@ -129,19 +116,18 @@ BOOL isPopShow = NO;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"startNsTimer" object:nil];
 }
 
-
 - (void) searchTap:(UITapGestureRecognizer *) sender
 {
-     [self setHidesBottomBarWhenPushed:YES];
+    [self setHidesBottomBarWhenPushed:YES];
     SearchViewController *searchVC = [[SearchViewController alloc] init];
     [self.navigationController pushViewController:searchVC animated:YES];
-     [self setHidesBottomBarWhenPushed:NO];
+    [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) search:(UIButton *) sender
 {
     ChooseListTableViewController *choose = [[ChooseListTableViewController alloc] init];
-     [self setHidesBottomBarWhenPushed:YES];
+    [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:choose animated:YES];
 }
 
@@ -155,18 +141,14 @@ BOOL isPopShow = NO;
     {
         
     }
-    
     int result = [[dicRespon objectForKey:@"result"] intValue];
-  
     if(URLTag == URLGetProductTypeTag)
     {
         NSString *msg = [dicRespon objectForKey:@"msg"];
         if(result == 1)
         {
             NSMutableArray *dataArrayy = [[NSMutableArray alloc] init];
-            
             typeIdArray = [[NSMutableArray alloc] init];
-            
             for(int i=0;i<[(NSArray *)[dicRespon objectForKey:@"items"] count];i++)
             {
                 NSDictionary *dic = [[dicRespon objectForKey:@"items"] objectAtIndex:i];
@@ -181,9 +163,7 @@ BOOL isPopShow = NO;
                 NSUInteger len1 = [(NSString *)obj2 length];
                 return len0 > len1 ? NSOrderedAscending : NSOrderedDescending;
             }];
-            
             typeBtnArray = [[NSMutableArray alloc] init];
-            
             for(int i=0;i<typeArray.count;i++)
             {
                 NSString *str = [typeArray objectAtIndex:i];
@@ -192,11 +172,10 @@ BOOL isPopShow = NO;
                 [typeBtn setTitle:str forState:UIControlStateNormal];
                 [typeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [typeBtn setTag:i];
-                typeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+                typeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
                 [typeBtn addTarget:self action:@selector(typeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 [typeBtnArray addObject:typeBtn];
             }
-            
             [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
         }
         else
@@ -211,7 +190,6 @@ BOOL isPopShow = NO;
             }
         }
     }
-    
     if(URLTag == URLHotSaleProductTag)
     {
         if([[dicRespon allKeys] copy] == 0 || [dicRespon isKindOfClass:[NSNull class]])
@@ -287,7 +265,6 @@ BOOL isPopShow = NO;
     {
          cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:tag];
     }
-   
     [self.navigationController pushViewController:cableSecondAndThirdStepViewController animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -305,40 +282,28 @@ BOOL isPopShow = NO;
     
 #pragma mark - 一级分类
     NSString *pushString = [NSString stringWithFormat:@"token=%@&type=%@",token,@"1"];
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLGetProductTypeTag delegate:self];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/getProductType.html?"];
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void) loadRequest
 {
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    
     NSString *string = [NSString stringWithFormat:@"%@%@",@"HotSaleProduct",time];
-    
     NSString *token = [DCFCustomExtra md5:string];
-    
     NSString *pushString = [NSString stringWithFormat:@"token=%@",token];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/HotSaleProduct.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLHotSaleProductTag delegate:self];
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self pushAndPopStyle];
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reRequest) name:@"NetisConnect" object:nil];
-    
     [self loadRequest];
-    
     [self loadProductType];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -348,7 +313,6 @@ BOOL isPopShow = NO;
     [self.refreshView setDelegate:self];
     [self.tableView addSubview:self.refreshView];
     [self.refreshView refreshLastUpdatedDate];
-    
     
     UIImageView *naviImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10,8, 28,28)];
     naviImageView.image = [UIImage imageNamed:@"global_main_logo"];
@@ -370,7 +334,7 @@ BOOL isPopShow = NO;
     
     UILabel *searchLabel = [[UILabel alloc] initWithFrame:CGRectMake(31, 5, 190, 20)];
     searchLabel.text = @"寻找电缆、品牌、型号、规格";
-    searchLabel.font = [UIFont systemFontOfSize:14];
+    searchLabel.font = [UIFont systemFontOfSize:13];
     searchLabel.textColor = [UIColor lightGrayColor];
     [searchImageView addSubview:searchLabel];
     
@@ -378,7 +342,6 @@ BOOL isPopShow = NO;
     [searchImageView addGestureRecognizer:searchTap];
     
     [self.tableView setShowsVerticalScrollIndicator:NO];
-    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     secondBarView = [[UIView alloc] init];
@@ -388,8 +351,8 @@ BOOL isPopShow = NO;
     UITapGestureRecognizer *popShopCarTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(popShopCarTap:)];
     [secondBarView addGestureRecognizer:popShopCarTap];
 
-    useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
-    
+    useArray = [[NSArray alloc] initWithObjects:@"照明",@"插座",@"热水器",@"挂壁空调",@"立式空调",@"中央空调",@"网络",@"电话",@"音/视频",@"电源连接线",@"进户主线",@"装潢明线", nil];
+    picArray = [[NSArray alloc] initWithObjects:@"0.png",@"1.png",@"2.png",@"3.png",@"4.png",@"5.png",@"6.png",@"7.png",@"8.png",@"9.png",@"10.png",@"11", nil];
     countLabel = [[UIImageView alloc] init];
     countLabel.frame = CGRectMake(self.view.frame.size.width/5-24, 5, 10, 10);
     countLabel.hidden = YES;
@@ -401,15 +364,10 @@ BOOL isPopShow = NO;
     es.delegate = self;
     
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (goToChatView:) name:@"goToChatView" object:nil];
-    
-     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
-    
+    [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (changeClick:) name:@"dissMiss" object:nil];
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (hidenShopCarRedPoint:) name:@"hidenRedPoint" object:nil];
-    
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostVC_mmb:) name:@"goToHostView_mmb" object:nil];
-    
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostVC_more:) name:@"goToHostView_more" object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostVC_mmb:) name:@"goToHostView_mmb" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostVC_more:) name:@"goToHostView_more" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToHostView_hasnologin:) name:@"goToHostView_hasnologin" object:nil];
 }
 
@@ -446,13 +404,9 @@ BOOL isPopShow = NO;
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"InquiryCartCount",time];
     NSString *token = [DCFCustomExtra md5:string];
-    
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [self.appDelegate getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -473,13 +427,9 @@ BOOL isPopShow = NO;
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
     NSString *token = [DCFCustomExtra md5:string];
-    
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [self.appDelegate getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -499,10 +449,9 @@ BOOL isPopShow = NO;
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+#pragma mark - 在线客服
 -(void)IMTap:(UITapGestureRecognizer *)sender
 {
-//    [self.navigationController.tabBarController setSelectedIndex:2];
-#pragma mark - 在线客服
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         [self setHidesBottomBarWhenPushed:YES];
@@ -689,7 +638,6 @@ BOOL isPopShow = NO;
                         return 3;
                     }
                 }
-                //                return typeArray.count/2;
             }
         }
         return 3;
@@ -710,12 +658,10 @@ BOOL isPopShow = NO;
     else if (indexPath.section == 1)
     {
         return 185;
-        //        return 200;
     }
     else if (indexPath.section == 3)
     {
-        return 175;
-        
+        return 225;
     }
     else if (indexPath.section == 4)
     {
@@ -759,7 +705,7 @@ BOOL isPopShow = NO;
     [headBackView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
 
     UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0,ScreenWidth-10, 35)];
-    headLabel.font = [UIFont systemFontOfSize:16];
+    headLabel.font = [UIFont systemFontOfSize:15];
     
     if(section == 3)
     {
@@ -938,7 +884,6 @@ BOOL isPopShow = NO;
         {
             cableSecondAndThirdStepViewController.typeId = [typeIdArray objectAtIndex:4];
         }
-        
     }
     else
     {
@@ -950,28 +895,11 @@ BOOL isPopShow = NO;
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-//    static NSString *cellId = @"cellId";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-//    if(!cell)
-//    {
-//        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-//        [cell setSelectionStyle:0];
-//    }
-//    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil) {
-//        [CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
-//    }
-    
     UITableViewCell *cell = [[UITableViewCell alloc] init];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if(indexPath.section == 0)
     {
-//        if(!es)
-//        {
-
-            [cell.contentView addSubview:es];
-//        }
-        
+        [cell.contentView addSubview:es];
     }
     if(indexPath.section == 1)
     {
@@ -1100,36 +1028,29 @@ BOOL isPopShow = NO;
     {
         for (int i = 0; i < 3; i++)
         {
-            UILabel *label = [[UILabel alloc] init];
             UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.frame = CGRectMake(5, 7.5, 30, 30);
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             if (i == 0)
             {
                 button.frame = CGRectMake(ScreenWidth/3*i+6, 15, ScreenWidth/3-6, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 1)
             {
                 button.frame = CGRectMake(ScreenWidth/3*i+6, 15, ScreenWidth/3-6, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 2)
             {
                 button.frame = CGRectMake(ScreenWidth/3*i+6, 15, ScreenWidth/3-12, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
-            button.layer.borderWidth = 1;
-            button.titleLabel.textAlignment = NSTextAlignmentRight;
-            button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
-            button.backgroundColor = [UIColor whiteColor];
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
-            label.text = [useArray objectAtIndex:i];
-            label.backgroundColor = [UIColor clearColor];
-            label.font = [UIFont systemFontOfSize:13];
-            [button addSubview:label];
+            [button setTitle:[useArray objectAtIndex:i] forState:UIControlStateNormal];
+            button.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+            [button.titleLabel setFont:[UIFont systemFontOfSize:12]];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.textAlignment = NSTextAlignmentLeft;
             button.tag = i;
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
@@ -1137,34 +1058,29 @@ BOOL isPopShow = NO;
         }
         for (int i = 3; i < 6; i++)
         {
-             UILabel *label = [[UILabel alloc] init];
             UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.frame = CGRectMake(5, 7.5, 30, 30);
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             if (i == 3)
             {
                 button.frame = CGRectMake(6, 65, ScreenWidth/3-6, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 4)
             {
                 button.frame = CGRectMake(ScreenWidth/3+6, 65, ScreenWidth/3-6, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 5)
             {
                 button.frame = CGRectMake(ScreenWidth/3*2+6,65, ScreenWidth/3-12, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
-            button.layer.borderWidth = 1;
-            button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
-            label.text = [useArray objectAtIndex:i];
-            label.backgroundColor = [UIColor clearColor];
-            label.font = [UIFont systemFontOfSize:13];
-            [button addSubview:label];
+            [button setTitle:[useArray objectAtIndex:i] forState:UIControlStateNormal];
+            button.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0);
+            [button.titleLabel setFont:[UIFont systemFontOfSize:12]];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.textAlignment = NSTextAlignmentLeft;
             button.tag = i;
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
@@ -1172,39 +1088,63 @@ BOOL isPopShow = NO;
         }
         for (int i = 6; i < 9; i++)
         {
-            UILabel *label = [[UILabel alloc] init];
             UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.frame = CGRectMake(5, 7.5, 30, 30);
             UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             if (i == 6)
             {
                 button.frame = CGRectMake(6, 115, ScreenWidth/3-6, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else if (i == 7)
             {
                 button.frame = CGRectMake(ScreenWidth/3+6, 115, ScreenWidth/3-6, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-46, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
             }
             else
             {
                 button.frame = CGRectMake(ScreenWidth/3*2+6, 115, ScreenWidth/3-12, 45);
-                label.frame = CGRectMake(40, 0, ScreenWidth/3-52, 45);
-                imageView.frame = CGRectMake(0, 2.5, 40, 40);
-                label.numberOfLines = 2;
             }
-            button.layer.borderWidth = 1;
-            button.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0] CGColor];
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0] CGColor];
             [cell addSubview:button];
-            label.text = [useArray objectAtIndex:i];
-            label.backgroundColor = [UIColor clearColor];
-            label.font = [UIFont systemFontOfSize:13];
             button.tag = i;
+            [button setTitle:[useArray objectAtIndex:i] forState:UIControlStateNormal];
+            button.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
+            [button.titleLabel setFont:[UIFont systemFontOfSize:12]];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.textAlignment = NSTextAlignmentLeft;
             [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
             imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
             [button addSubview:imageView];
-            [button addSubview:label];
+        }
+        for (int i = 9; i < 12; i++)
+        {
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.frame = CGRectMake(5, 7.5, 30, 30);
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            if (i == 9)
+            {
+                button.frame = CGRectMake(6, 165, ScreenWidth/3-6, 45);
+            }
+            else if (i == 10)
+            {
+                button.frame = CGRectMake(ScreenWidth/3+6, 165, ScreenWidth/3-6, 45);
+            }
+            else
+            {
+                button.frame = CGRectMake(ScreenWidth/3*2+6, 165, ScreenWidth/3-12, 45);
+            }
+            button.layer.borderWidth = 0.5;
+            button.layer.borderColor = [[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0] CGColor];
+            [cell addSubview:button];
+            button.tag = i;
+            [button setTitle:[useArray objectAtIndex:i] forState:UIControlStateNormal];
+            button.titleEdgeInsets = UIEdgeInsetsMake(0, 30, 0, 0);
+            [button.titleLabel setFont:[UIFont systemFontOfSize:12]];
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.titleLabel.textAlignment = NSTextAlignmentLeft;
+            [button addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i]];
+            [button addSubview:imageView];
         }
     }
     if(indexPath.section == 4)
@@ -1226,7 +1166,7 @@ BOOL isPopShow = NO;
                     UIView *cabelShowView = [[UIView alloc] initWithFrame:CGRectMake(10 + 155*i,0, 145, 215)];
                     [cabelShowView setBackgroundColor:[UIColor whiteColor]];
                     cabelShowView.layer.borderWidth = 0.5;
-                    cabelShowView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                    cabelShowView.layer.borderColor = [[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0] CGColor];
                     [cabelShowView setTag:2*indexPath.row + i ];
                     
                     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
@@ -1240,13 +1180,12 @@ BOOL isPopShow = NO;
                     UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 145, 145)];
                     [pic setImageWithURL:[NSURL URLWithString:picUrl] placeholderImage:[UIImage imageNamed:@"cabel.png"]];
                     pic.layer.borderWidth = 0.5;
-                    pic.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                    pic.layer.borderColor = [[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0] CGColor];
                     [cabelShowView addSubview:pic];
                     
                     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x+5, pic.frame.origin.y + pic.frame.size.height + 5, pic.frame.size.width-10, 40)];
                     [contentLabel setBackgroundColor:[UIColor clearColor]];
                     [contentLabel setNumberOfLines:0];
-//                    contentLabel.textAlignment = 1;
                     [contentLabel setText:[NSString stringWithFormat:@"%@",content]];
                     [contentLabel setFont:[UIFont systemFontOfSize:11]];
                     [cabelShowView addSubview:contentLabel];
@@ -1254,7 +1193,7 @@ BOOL isPopShow = NO;
                     UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(pic.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height + 5, pic.frame.size.width, 20)];
                     NSString *money = [NSString stringWithFormat:@" %@%@",@"¥",price];
                     [moneyLabel setText:money];
-                    moneyLabel.font = [UIFont systemFontOfSize:14];
+                    moneyLabel.font = [UIFont systemFontOfSize:13];
                     [moneyLabel setTextColor:[UIColor redColor]];
                     [cabelShowView addSubview:moneyLabel];
                     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -1263,34 +1202,12 @@ BOOL isPopShow = NO;
             }
         }
     }
-//}
     return cell;
 }
 
 -(void)buttonClick:(UIButton *)sender
 {
-    NSString *str = nil;
-    if(sender.tag == 0)
-    {
-        str = @"照明";
-    }
-    else if(sender.tag == 3)
-    {
-        str = @"插座";
-    }
-    else if (sender.tag == 4)
-    {
-        str = @"立式空调";
-    }
-    else if (sender.tag == 5)
-    {
-        str = @"进户主线";
-    }
-    else if(sender.tag != 0 && sender.tag != 3 && sender.tag != 4 && sender.tag != 5)
-    {
-        str = [useArray objectAtIndex:sender.tag];
-    }
-    B2CShoppingListViewController *shoppingList = [[B2CShoppingListViewController alloc] initWithUse:str];
+    B2CShoppingListViewController *shoppingList = [[B2CShoppingListViewController alloc] initWithUse:[useArray objectAtIndex:sender.tag]];
     [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:shoppingList animated:YES];
 }
@@ -1334,13 +1251,10 @@ BOOL isPopShow = NO;
     }
 }
 
-
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
     return NO;
 }
-
-
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {
@@ -1378,50 +1292,40 @@ BOOL isPopShow = NO;
 #pragma mark SCROLLVIEW DELEGATE METHODS
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     [self.refreshView egoRefreshScrollViewDidScroll:self.tableView];
 }
-//
+
 #pragma mark -
 #pragma mark DATA SOURCE LOADING / RELOADING METHODS
 - (void)reloadViewDataSource
 {
     _reloading = YES;
-    
     [self loadRequest];
-    
     [self loadProductType];
-    
     [self loadbadgeCount];
-    
     [self loadShopCarCount];
 }
-//
+
 - (void)doneLoadingViewData
 {
-    
     _reloading = NO;
     [self.refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }
-//
-//#pragma mark -
+
 //#pragma mark REFRESH HEADER DELEGATE METHODS
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
 {
     
     [self reloadViewDataSource];
 }
-//
+
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
 {
-    
     return _reloading;
 }
 
-
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
 {
-    
     return [NSDate date];
 }
 

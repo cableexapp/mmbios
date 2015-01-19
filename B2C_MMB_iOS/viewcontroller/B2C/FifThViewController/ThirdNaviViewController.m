@@ -41,20 +41,14 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.tabBarController.tabBar setHidden:YES];
-//
     self.view.backgroundColor = [UIColor whiteColor];
-
+    self.navigationController.navigationBarHidden = YES;
     if ([self.appDelegate.isConnect isEqualToString:@"连接"])
     {
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = @"工具栏客服";
-        
-//        [self pushViewController:chatVC animated:YES];
-//        [self setHidesBottomBarWhenPushed:YES];
+
         [self setViewControllers:[NSArray arrayWithObject:chatVC]];
-        
-//         [self pushViewController:rootView animated:YES];
     }
     else
     {

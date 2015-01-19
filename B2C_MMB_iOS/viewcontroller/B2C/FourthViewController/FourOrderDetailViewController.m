@@ -304,13 +304,12 @@
             }
             [nameBtn setTitle:[[dataArray lastObject] shopName] forState:UIControlStateNormal];
             [nameBtn addTarget:self action:@selector(nameBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            
-            
+        
             [self.myOederLabel setText:[NSString stringWithFormat:@"%@",[[dataArray lastObject] orderNum]]];
             [self.myTimeLabel setText:[NSString stringWithFormat:@"%@",[[dataArray lastObject] myTime]]];
             
             int status = [[[dataArray lastObject] status] intValue];
-            NSLog(@"家装线订单详情状态 = %d",status);
+    
             if(status == 1)
             {
                 [onLinePayBtn setHidden:NO];

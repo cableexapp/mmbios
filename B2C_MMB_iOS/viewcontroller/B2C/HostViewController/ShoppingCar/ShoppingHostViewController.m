@@ -188,57 +188,38 @@
         for(int i = 0; i < arr.count; i++)
         {
             UIView * view = [[UIView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-5, 10, 150, 220)];
-            [view.layer setCornerRadius:3]; //设置矩圆角半径
-            view.layer.borderWidth = 1.0f;
-            view.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
-            [view setBackgroundColor:[UIColor clearColor]];
+            view.layer.borderWidth = 0.5f;
+            view.layer.borderColor = [[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0]CGColor];
             [sv addSubview:view];
             
-            
-            UIImageView *svImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-2, 12, 145, 145)];
+            UIImageView *svImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10*(i+1) + 145*i-2.5, 10.5, 145, 145)];
             NSURL *url = [NSURL URLWithString:[arr objectAtIndex:i]];
             [svImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"cabel.png"]];
             [svImageView setTag:10+i];
             [svImageView setUserInteractionEnabled:YES];
-            svImageView.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
             svImageView.layer.masksToBounds = YES;
             [sv addSubview:svImageView];
             
-            
             UIView *lineView = [[UIView alloc]init];
-            lineView.frame = CGRectMake(10*(i+1) + 145*i+5, 200, 120, 0.7);
-            lineView.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0];
+            lineView.frame = CGRectMake(10*(i+1) + 145*i-5, 156, 150, 0.5);
+            lineView.backgroundColor = [UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0];
             [sv addSubview:lineView];
-            
-            
+
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
             [svImageView addGestureRecognizer:tap];
             
             UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-//            CGSize size;
-//            NSString *s = [contentArray objectAtIndex:i];
-//            if([DCFCustomExtra validateString:s] == NO)
-//            {
-//                size = CGSizeMake(svImageView.frame.size.width, 0);
-//            }
-//            else
-//            {
-//                size = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:[contentArray objectAtIndex:i] WithSize:CGSizeMake(svImageView.frame.size.width, MAXFLOAT)];//获取视图大小
-//            }
-            
-            [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height, svImageView.frame.size.width, 40)];  //设置该cell的高度
+            [contentLabel setFrame:CGRectMake(svImageView.frame.origin.x, svImageView.frame.origin.y + svImageView.frame.size.height+5, svImageView.frame.size.width, 40)];  //设置该cell的高度
             [contentLabel setFont:[UIFont systemFontOfSize:11]];
             [contentLabel setText:[contentArray objectAtIndex:i]];
-            [contentLabel setBackgroundColor:[UIColor clearColor]];
             [contentLabel setTextAlignment:NSTextAlignmentLeft];  //文本对齐
             [contentLabel setNumberOfLines:0]; //文本换行
             [sv addSubview:contentLabel];
             
-            UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height+5, contentLabel.frame.size.width, 20)];
+            UILabel *moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(contentLabel.frame.origin.x, contentLabel.frame.origin.y + contentLabel.frame.size.height+5, contentLabel.frame.size.width, 19.5)];
             [moneyLabel setTextAlignment:NSTextAlignmentLeft];
-            [moneyLabel setBackgroundColor:[UIColor clearColor]];                                                                                                              
             [moneyLabel setTextColor:[UIColor redColor]];
-            [moneyLabel setFont:[UIFont boldSystemFontOfSize:15]];
+            [moneyLabel setFont:[UIFont systemFontOfSize:13]];
             [moneyLabel setText:[NSString stringWithFormat:@"¥ %@",[moneyArray objectAtIndex:i]]];
             [sv addSubview:moneyLabel];
             
@@ -274,10 +255,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     self.view.backgroundColor = [UIColor whiteColor];
     [self pushAndPopStyle];
-    
     [self loadHotSale];
     
     sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -288,7 +268,7 @@
     [top setTextColor:[UIColor whiteColor]];
     self.navigationItem.titleView = top;
     
-    topTextField = [[UITextField alloc] initWithFrame:CGRectMake(10,10, 300, 34)];
+    topTextField = [[UITextField alloc] initWithFrame:CGRectMake(10,10, ScreenWidth-20, 34)];
     topTextField.layer.cornerRadius = 5;
     topTextField.layer.masksToBounds = YES;
     [topTextField setBackgroundColor:[UIColor whiteColor]];
@@ -303,12 +283,13 @@
     topTextField.leftView = view1;
     topTextField.leftViewMode = UITextFieldViewModeAlways;
     [topTextField setPlaceholder:@"搜索家装馆内电线型号、电线品牌等"];
-     [topTextField setReturnKeyType:UIReturnKeySearch];
+    [topTextField setReturnKeyType:UIReturnKeySearch];
     [self.view addSubview:topTextField];
 
-    useArray = [[NSArray alloc] initWithObjects:@"照明用线",@"挂壁空调",@"热水器",@"插座用线",@"立式空调",@"进户主线",@"中央空调",@"装潢明线",@"电源连接线", nil];
-    picArray = [[NSArray alloc] initWithObjects:@"0.png",@"1.png",@"2.png",@"3.png",@"4.png",@"5.png",@"6.png",@"7.png",@"8.png", nil];
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height, 320, ScreenHeight - topTextField.frame.size.height+10)];
+    useArray = [[NSArray alloc] initWithObjects:@"照明",@"插座",@"热水器",@"挂壁空调",@"立式空调",@"中央空调",@"网络",@"电话",@"音/视频",@"电源连接线",@"进户主线",@"装潢明线", nil];
+    
+    picArray = [[NSArray alloc] initWithObjects:@"0.png",@"1.png",@"2.png",@"3.png",@"4.png",@"5.png",@"6.png",@"7.png",@"8.png",@"9.png",@"10.png",@"11", nil];
+    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, topTextField.frame.origin.y + topTextField.frame.size.height+5, ScreenWidth, ScreenHeight -78)];
     [tv setDataSource:self];
     [tv setDelegate:self];
     [tv setShowsVerticalScrollIndicator:NO];
@@ -317,14 +298,12 @@
     [self loadScrollview];
 }
 
-
-
 - (void) rightBtnClick:(UIButton *) sender
 {
     [self setHidesBottomBarWhenPushed:YES];
     MyShoppingListViewController *shoppingList = [[MyShoppingListViewController alloc] initWithDataArray:nil];
     [self.navigationController pushViewController:shoppingList animated:YES];
-//    [self setHidesBottomBarWhenPushed:NO];
+//   [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (void) loadScrollview
@@ -338,7 +317,6 @@
     int tag = [[tap view] tag]-10;
     NSString *s = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:tag] myProductId]];
     [self setHidesBottomBarWhenPushed:YES];
-//    GoodsDetailViewController *goodsDetail = [sb instantiateViewControllerWithIdentifier:@"goodsDetailViewController"];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];
     [self.navigationController pushViewController:goodsDetail animated:YES];
 //    [self setHidesBottomBarWhenPushed:NO];
@@ -350,15 +328,6 @@
     {
         [topTextField resignFirstResponder];
     }
-
-//    if (topTextField.text.length > 0)
-//    {
-//        [self setHidesBottomBarWhenPushed:YES];
-//        B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
-//        B2CVC.tempSearchText = topTextField.text;
-//        [self.navigationController pushViewController:B2CVC animated:YES];
-//    }
-    
     return YES;
 }
 
@@ -379,12 +348,11 @@
 {
     
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -402,7 +370,6 @@
             return nil;
         }
         [hotLabel setText:@"  热销商品"];
- 
     }
     else if (section == 1)
     {
@@ -459,21 +426,18 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
     static NSString *cellId = @"cellId";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     [tableView setSeparatorColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
-    //    [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-//        [cell.contentView setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:235.0/255.0 blue:243.0/255.0 alpha:1.0]];
     }
-    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT) {
+    while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT)
+    {
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-    
     if(indexPath.section == 0 && indexPath.row == 0)
     {
         if(sv)
@@ -489,24 +453,20 @@
             if(indexPath.row*3 + i < useArray.count)
             {
                 UIView * view = [[UIView alloc] initWithFrame:CGRectMake(2+103*i+5, 10, 100, 45)];
-                [view setBackgroundColor:[UIColor clearColor]];
                 [cell.contentView addSubview:view];
 
-                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(0, 2.5, 40, 40)];
+                UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(5, 7.5, 30, 30)];
                 [iv setImage:[UIImage imageNamed:[picArray objectAtIndex:indexPath.row*3 + i]]];
                 [view addSubview:iv];
           
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + 44, iv.frame.origin.y-2.5,60, 45)];
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(iv.frame.origin.x + 34,7.5,60, 30)];
                 [label setText:[useArray objectAtIndex:indexPath.row*3 + i]];
                 [label setBackgroundColor:[UIColor clearColor]];
-                [label setTextColor:[UIColor colorWithRed:52.0/255.0 green:52.0/255.0 blue:52.0/255.0 alpha:1.0]];
-                [label setFont:[UIFont systemFontOfSize:13]];
+                [label setFont:[UIFont systemFontOfSize:12]];
                 label.numberOfLines = 2;
-//                label.textAlignment = 1; 
                 [view addSubview:label];
                 [view.layer setBorderWidth:0.5];   //边框宽度
-                 view.layer.borderColor = [[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]CGColor];
-
+                 view.layer.borderColor = [[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0]CGColor];
                 [view addSubview:label];
                 [view setTag:indexPath.row*2 + i];
                 UITapGestureRecognizer *viewTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTap:)];
@@ -519,24 +479,9 @@
 
 - (void) viewTap:(UITapGestureRecognizer *) sender
 {
-    int tag = [[sender view] tag];
-
     UILabel *label = (UILabel *)[[[sender view] subviews] lastObject];
-    NSString *str = label.text;
-    if([str isEqualToString:@"照明用线"])
-    {
-        str = @"照明";
-    }
-    else if([str isEqualToString:@"插座用线"])
-    {
-        str = @"插座";
-    }
-    else if(tag != 0 && tag != 3)
-    {
-        str = label.text;
-    }
     [self setHidesBottomBarWhenPushed:YES];
-    B2CShoppingListViewController *shoppingList = [[B2CShoppingListViewController alloc] initWithUse:str];
+    B2CShoppingListViewController *shoppingList = [[B2CShoppingListViewController alloc] initWithUse:label.text];
     [self.navigationController pushViewController:shoppingList animated:YES];
 //    [self setHidesBottomBarWhenPushed:NO];
 }

@@ -464,7 +464,7 @@
         [cell setSelectionStyle:0];
         
         UIView *lineView = [[UIView alloc] init];
-        lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        lineView.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
         [cell addSubview:lineView];
         if (indexPath.row == 0)
         {
@@ -472,27 +472,18 @@
         }
         else if (indexPath.row == 1)
         {
-            lineView.frame = CGRectMake(0, 0, cell.frame.size.width, 1);
+            lineView.frame = CGRectMake(0, 0, cell.frame.size.width, 0.5);
         }
         else  if (indexPath.row >= 2)
         {
-            lineView.frame = CGRectMake(0, 0, cell.frame.size.width, 1);
+            lineView.frame = CGRectMake(0, 0, cell.frame.size.width, 0.5);
         }
     }
     while (CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT != nil)
     {
         [(UIView *) CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
     }
-    
-    //    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
-    //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    //    if(cell == nil)
-    //    {
-    //        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-    //        [cell setSelectionStyle:0];
-    
     CGFloat cellWidth = cell.contentView.frame.size.width;
-    
     if(indexPath.row < [[[dataArray objectAtIndex:indexPath.section] myItems] count])
     {
         NSArray *itemArray = [[dataArray objectAtIndex:indexPath.section] myItems];
@@ -523,7 +514,6 @@
         UILabel *requestLabel = [[UILabel alloc] init];
         [requestLabel setFont:[UIFont systemFontOfSize:12]];
         [requestLabel setNumberOfLines:0];
-        
         
         if(itemArray.count == 0 || [itemArray isKindOfClass:[NSNull class]])
         {

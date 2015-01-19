@@ -491,8 +491,6 @@
         [DCFStringUtil showNotice:@"您尚未选择型号"];
         return;
     }
-    NSLog(@"addToCarArray.count = %d",addToCarArray.count);
-    NSLog(@"carCount = %d",carCount);
     if (addToCarArray.count >= 50 || (addToCarArray.count + carCount >= 50))
     {
         [DCFStringUtil showNotice:@"询价车中最多添加50条记录"];

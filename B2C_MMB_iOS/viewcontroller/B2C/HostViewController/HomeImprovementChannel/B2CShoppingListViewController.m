@@ -654,7 +654,6 @@
 {
     if(URLTag == URLB2CGoodsListTag)
     {
-        NSLog(@"%@",dicRespon);
         if(_reloading == YES)
         {
             if (dataArray.count > 0)
@@ -665,7 +664,6 @@
                 }
                  [self doneLoadingViewData];
             }
-           
         }
         else if(_reloading == NO)
         {
@@ -747,7 +745,6 @@
             NSMutableArray *usesArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"uses"]]];
             
             ScreeningCondition = [[NSMutableArray alloc] initWithObjects:brandsArray,modelsArray,specsArray,usesArray, nil];
-            
         }
     }
 }

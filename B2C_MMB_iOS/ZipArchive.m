@@ -281,11 +281,7 @@
 					// cann't set attributes 
 //					NSLog(@"Failed to set attributes");
 				}
-				
 			}
-		
-			
-			
 		}
 		unzCloseCurrentFile( _unzFile );
 		ret = unzGoToNextFile( _unzFile );

@@ -319,7 +319,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     GoodsDetailViewController *goodsDetail = [[GoodsDetailViewController alloc] initWithProductId:s];
     [self.navigationController pushViewController:goodsDetail animated:YES];
-//    [self setHidesBottomBarWhenPushed:NO];
+//  [self setHidesBottomBarWhenPushed:NO];
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField
@@ -340,7 +340,7 @@
     [textField resignFirstResponder];
     [self setHidesBottomBarWhenPushed:YES];
     B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
-//    B2CVC.tempSearchText = topTextField.text;
+//  B2CVC.tempSearchText = topTextField.text;
     [self.navigationController pushViewController:B2CVC animated:YES];
 }
 

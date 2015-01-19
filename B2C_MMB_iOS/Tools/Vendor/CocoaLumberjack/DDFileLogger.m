@@ -720,22 +720,18 @@
 {
 	NSLogVerbose(@"DDFileLogger: rollLogFileNow");
 	
-	
 	if (currentLogFileHandle == nil) return;
 	
 	[currentLogFileHandle synchronizeFile];
 	[currentLogFileHandle closeFile];
 	currentLogFileHandle = nil;
-	
 	currentLogFileInfo.isArchived = YES;
 	
 	if ([logFileManager respondsToSelector:@selector(didRollAndArchiveLogFile:)])
 	{
 		[logFileManager didRollAndArchiveLogFile:(currentLogFileInfo.filePath)];
 	}
-	
 	currentLogFileInfo = nil;
-	
 	if (rollingTimer)
 	{
 		dispatch_source_cancel(rollingTimer);

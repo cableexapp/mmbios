@@ -154,14 +154,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     app.aliPayHasFinished = NO;
     
     [self.tv setDataSource:self];
     [self.tv setDelegate:self];
     [self.tv setFrame:CGRectMake(0, 64, ScreenWidth, MainScreenHeight-64)];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
     
     [self pushAndPopStyle];
     
@@ -606,7 +604,7 @@
         [cell.cancelOrderBtn setHidden:NO];
         
         [cell.onLinePayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        cell.onLinePayBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        cell.onLinePayBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         
         [cell.cancelOrderBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cell.cancelOrderBtn.backgroundColor = [UIColor colorWithRed:255/255.0 green:80/255.0 blue:4/255.0 alpha:1.0];
@@ -640,7 +638,7 @@
         [cell.receiveBtn setHidden:NO];
         
         [cell.receiveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        cell.receiveBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        cell.receiveBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         
         [cell.lookForTradeBtn setHidden:NO];
         
@@ -667,17 +665,17 @@
                 [cell.discussBtn setHidden:NO];
                 
                 [cell.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                cell.discussBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                cell.discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.lookForCustomBtn setHidden:NO];
                 
                 [cell.lookForCustomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                cell.lookForCustomBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                cell.lookForCustomBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.lookForTradeBtn setHidden:NO];
                 
                 [cell.lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                cell.lookForTradeBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.onLinePayBtn setHidden:YES];
                 [cell.cancelOrderBtn setHidden:YES];
@@ -693,7 +691,7 @@
                 [cell.discussBtn setHidden:NO];
                 
                 [cell.discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                cell.discussBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                cell.discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.lookForTradeBtn setHidden:NO];
                 
@@ -716,7 +714,7 @@
                 [cell.lookForCustomBtn setHidden:NO];
                 
                 [cell.lookForCustomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                cell.lookForCustomBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+                cell.lookForCustomBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
                 
                 [cell.lookForTradeBtn setHidden:NO];
                 

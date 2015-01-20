@@ -98,7 +98,7 @@
     onLinePayBtn.frame = CGRectMake(10, 9,(ScreenWidth-30)/2, 35);
     [onLinePayBtn setTitle:@"在线支付" forState:UIControlStateNormal];
     [onLinePayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    onLinePayBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    onLinePayBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     [onLinePayBtn addTarget:self action:@selector(onLinePayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     onLinePayBtn.layer.cornerRadius = 5;
     [self.buttomView addSubview:onLinePayBtn];
@@ -115,7 +115,7 @@
     discussBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [discussBtn setTitle:@"评价" forState:UIControlStateNormal];
     [discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    discussBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     discussBtn.layer.cornerRadius = 5;
     [discussBtn addTarget:self action:@selector(discussBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.buttomView addSubview:discussBtn];
@@ -141,7 +141,7 @@
     [receiveBtn setTitle:@"确认收货" forState:UIControlStateNormal];
     receiveBtn.frame = CGRectMake(15, 9,(ScreenWidth-30)/2, 35);
     [receiveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    receiveBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+    receiveBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
     [receiveBtn addTarget:self action:@selector(receiveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     receiveBtn.layer.cornerRadius = 5;
     [self.buttomView addSubview:receiveBtn];

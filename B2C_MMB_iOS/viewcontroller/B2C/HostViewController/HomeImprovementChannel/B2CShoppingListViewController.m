@@ -161,16 +161,11 @@
         pageSize = 10;
         
         NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&brand=%@&spec=%@&pagesize=%d&pageindex=%d&memberid=%@&loginid=%@",token,delegateMyUse,delegateMyModel,delegateMyBrand,delegateMySpec,pageSize,intPage,@"",@""];
-        
         conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
-        
         NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductListByCondition.html?"];
-        
-        
         [conn getResultFromUrlString:urlString postBody:pushString method:POST];
         [moreCell startAnimation];
     }
-
 }
 
 #pragma mark- 筛选
@@ -369,15 +364,10 @@
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"ScreeningCondition",time];
     NSString *token = [DCFCustomExtra md5:string];
-    
     NSString *pushString = [NSString stringWithFormat:@"token=%@&use=%@&model=%@&spec=%@&brand=%@",token,@"",@"",@"",@""];
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLScreeningConditionTag delegate:self];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ScreeningCondition.html?"];
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -438,12 +428,10 @@
         selctBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [selctBtn setFrame:CGRectMake(10 + 100*i, 5, 100, 30)];
         [selctBtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
-//        selctBtn.backgroundColor = [UIColor redColor];
         UIImageView *sectionBtnIv = [[UIImageView alloc] initWithFrame:CGRectMake(selctBtn.frame.size.width-20, 10, 15, 15)];
         [sectionBtnIv setImage:[UIImage imageNamed:@"down_dark.png"]];
         [sectionBtnIv setContentMode:UIViewContentModeScaleAspectFit];
         [sectionBtnIv setHidden:YES];
-        
         [sectionBtnIvArray addObject:sectionBtnIv];
         
         switch (i)
@@ -538,9 +526,7 @@
     
     //    设置隐藏背景VIEW的通知事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeBackView" object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNomalData:) name:@"reloadNomalData" object:nil];
-    
 }
 
 -(void)reloadNomalData:(NSNotification *)sender
@@ -577,13 +563,6 @@
     {
         [textField resignFirstResponder];
     }
-//    if (searchTextField.text.length > 0)
-//    {
-//        [self setHidesBottomBarWhenPushed:YES];
-//        B2CSearchViewController *B2CVC = [[B2CSearchViewController alloc] init];
-//        B2CVC.tempSearchText = searchTextField.text;
-//        [self.navigationController pushViewController:B2CVC animated:YES];
-//    }
     return YES;
 }
 
@@ -603,20 +582,13 @@
 - (void) loadRequest:(NSString *) seq WithUse:(NSString *) use
 {
     pageSize = 10;
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductList",time];
-    
     NSString *s = [DCFCustomExtra md5:string];
-    
     NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d&seqmethod=%@",use,_seq,@"",@"",@"",s,pageSize,intPage,seqmethod];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
     [moreCell startAnimation];
 }
 
@@ -628,13 +600,9 @@
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
     NSString *token = [DCFCustomExtra md5:string];
-    
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -647,7 +615,6 @@
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
 }
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
@@ -683,7 +650,6 @@
                     [dataArray removeAllObjects];
                 }
                 [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
-                
                 if (dataArray.count > 0)
                 {
                     if(HUD)
@@ -691,9 +657,7 @@
                         [HUD hide:YES];
                     }
                 }
-                
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
-                
                 if(intTotal == 0)
                 {
                     [moreCell noDataAnimation];
@@ -720,7 +684,6 @@
         else if ([[dicRespon objectForKey:@"total"] intValue] >= 1 && [[dicRespon objectForKey:@"total"] intValue] < 99)
         {
             countLabel.hidden = NO;
-            
             countLabel.text = [NSString stringWithFormat:@"%@", [dicRespon objectForKey:@"total"]];
         }
         else if ([[dicRespon objectForKey:@"total"] intValue] > 99)
@@ -743,7 +706,6 @@
             NSMutableArray *modelsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"models"]]];
             NSMutableArray *specsArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"specs"]]];
             NSMutableArray *usesArray = [[NSMutableArray alloc] initWithArray:[self dealArray:[dicRespon objectForKey:@"uses"]]];
-            
             ScreeningCondition = [[NSMutableArray alloc] initWithObjects:brandsArray,modelsArray,specsArray,usesArray, nil];
         }
     }
@@ -753,9 +715,7 @@
 - (NSMutableArray *) dealArray:(NSMutableArray *) dealArray
 {
     NSSet *set = [NSSet setWithArray:dealArray];
-    
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    
     for(int i=0;i<[[set allObjects] count];i++)
     {
         [array addObject:[[set allObjects] objectAtIndex:i]];
@@ -795,7 +755,7 @@
     }
     else
     {
-        if ((intPage-1)*pageSize < intTotal )
+        if ((intPage-1)*pageSize < intTotal)
         {
             return dataArray.count+1;
         }
@@ -911,13 +871,10 @@
             cellIv.layer.borderColor = [[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]CGColor];
             [cell.contentView addSubview:cellIv];
         }
-     
-        
         return cell;
     }
     return nil;
 }
-
 
 #pragma  mark  -  滚动加载
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -968,15 +925,12 @@
 #pragma mark SCROLLVIEW DELEGATE METHODS
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     [self.refreshView egoRefreshScrollViewDidScroll:tv];
 }
-//
-#pragma mark -
+
 #pragma mark DATA SOURCE LOADING / RELOADING METHODS
 - (void)reloadViewDataSource
 {
-    
     _reloading = YES;
     intPage = 1;
     if(flag == YES)
@@ -988,28 +942,24 @@
         [self requestStringWithUse:delegateMyUse WithBrand:delegateMyBrand WithSpec:delegateMySpec WithModel:delegateMyModel WithSeq:_seq];
     }
 }
-//
+
 - (void)doneLoadingViewData
 {
-    
     _reloading = NO;
     [self.refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:tv];
 }
-//
-//#pragma mark -
+
 //#pragma mark REFRESH HEADER DELEGATE METHODS
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
 {
     [self performSelectorOnMainThread:@selector(reloadViewDataSource)withObject:nil waitUntilDone:NO];
 //    [self reloadViewDataSource];
 }
-//
+
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
 {
-    
     return _reloading;
 }
-
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
 {
@@ -1030,7 +980,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

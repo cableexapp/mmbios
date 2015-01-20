@@ -428,7 +428,6 @@
     if(!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        //        [cell.contentView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
         [cell setSelectionStyle:0];
         
         BOOL hide = YES;
@@ -442,7 +441,6 @@
         {
             invoceName = [[b2bMyCableDetailData invoiceDic] objectForKey:@"name"];
         }
-        
         if([DCFCustomExtra validateString:invoceName] == NO)
         {
             hide = YES;
@@ -451,7 +449,6 @@
         {
             hide = NO;
         }
-        
         if(indexPath.section == 0)
         {
             if(hide == YES)
@@ -605,7 +602,7 @@
             [view addSubview:typeLabel];
             
             UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, view.frame.origin.y+view.frame.size.height, cell.contentView.frame.size.width, 0.5)];
-            [lineView setBackgroundColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0]];
+            [lineView setBackgroundColor:[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0]];
             [cell.contentView addSubview:lineView];
             
             NSString *NumBer = [NSString stringWithFormat:@"%@",[dic objectForKey:@"num"]];
@@ -661,7 +658,6 @@
                         [label setFrame:CGRectMake(10+width, lineView.frame.origin.y, width, 20)];
                         break;
                     }
-                        
                     case 2:
                     {
                         if([DCFCustomExtra validateString:[dic objectForKey:@"spec"]] == NO)
@@ -676,7 +672,6 @@
                         }
                         break;
                     }
-                        
                     case 3:
                     {
                         if([DCFCustomExtra validateString:theInquiryVoltage] == NO)
@@ -689,7 +684,6 @@
                             [label setText:[NSString stringWithFormat:@"电压: %@",theInquiryVoltage]];
                             [label setFrame:CGRectMake(10+width, lineView.frame.origin.y+20, width, 20)];
                         }
-                        
                         if([DCFCustomExtra validateString:theInquiryVoltage] == NO && [DCFCustomExtra validateString:[dic objectForKey:@"spec"]] == NO)
                         {
                             height_1 = 0;
@@ -700,7 +694,6 @@
                         }
                         break;
                     }
-                        
                     case 4:
                     {
                         if([DCFCustomExtra validateString:theInquiryFeature] == NO)
@@ -715,15 +708,11 @@
                             [label setFrame:CGRectMake(10, lineView.frame.origin.y+20+height_1, width*2-20, 20)];
                             height_2 = 20;
                         }
-                        
                         break;
                     }
-                        
-                        
                     default:
-                        break;
+                    break;
                 }
-                
                 [cell.contentView addSubview:label];
             }
             
@@ -733,7 +722,6 @@
             
             CGSize size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:thePrice WithSize:CGSizeMake(MAXFLOAT, 20)];
             UILabel *pricelabel = [[UILabel alloc] init];
-            
             
             UILabel *label_2 = [[UILabel alloc] init];
             [label_2 setFont:[UIFont systemFontOfSize:12]];
@@ -851,7 +839,7 @@
                             if(i <= logstics_listArray.count-2)
                             {
                                 UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, logistics_noLabel.frame.origin.y+logistics_noLabel.frame.size.height, ScreenWidth, 0.5)];
-                                [line setBackgroundColor:[UIColor lightGrayColor]];
+                                [line setBackgroundColor:[UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0]];
                                 [logsticsView addSubview:line];
                             }
                         }

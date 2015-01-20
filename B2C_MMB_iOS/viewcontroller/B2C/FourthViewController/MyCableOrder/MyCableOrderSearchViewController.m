@@ -321,16 +321,10 @@
 {
     [self setHidesBottomBarWhenPushed:YES];
     DiscussViewController *disCuss = [mySB instantiateViewControllerWithIdentifier:@"discussViewController"];
-//    disCuss.itemArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:sender.tag/10] myItems]];
-//    disCuss.shopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag/10] shopId]];
-//    disCuss.orderNum = [[dataArray objectAtIndex:sender.tag/10] orderNum];
-//    disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:sender.tag/10] subDate]];
-    
     disCuss.itemArray = [[NSMutableArray alloc] initWithArray:[[dataArray objectAtIndex:sender.tag] objectForKey:@"items"]];
     disCuss.shopId = [NSString stringWithFormat:@"%@",[[dataArray objectAtIndex:sender.tag] objectForKey:@"shopId"]];
     disCuss.orderNum = [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
     disCuss.subDateDic = [[NSDictionary alloc] initWithDictionary:[[dataArray objectAtIndex:sender.tag] objectForKey:@"subDate"]];
-    
     [self.navigationController pushViewController:disCuss animated:YES];
     [self setHidesBottomBarWhenPushed:NO];
 }
@@ -361,9 +355,6 @@
 #pragma mark - 在线支付
 - (void) onLinePayBtnClick:(UIButton *) sender
 {
-    
-//    NSString *shopName = [[dataArray objectAtIndex:sender.tag] objectForKey:@"shopName"];
-    
     NSString *productTitle = @"";
     NSString *total = nil;
     float shopPrice = 0.00;
@@ -384,8 +375,7 @@
     [self setHidesBottomBarWhenPushed:YES];
     
     AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
-    //
-//    ali.shopName = shopName;
+//  ali.shopName = shopName;
     ali.shopName = @"家装馆产品";
     ali.productName = productTitle;
     ali.productPrice = total;
@@ -396,25 +386,19 @@
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
+    switch (buttonIndex)
+    {
         case 0:
             break;
         case 1:
         {
             NSString *time = [DCFCustomExtra getFirstRunTime];
-            
             NSString *string = [NSString stringWithFormat:@"%@%@",@"ReceiveProduct",time];
-            
             NSString *token = [DCFCustomExtra md5:string];
-            
             NSString *pushString = [NSString stringWithFormat:@"token=%@&memberid=%@&ordernum=%@",token,[self getMemberId],sureReceiveNumber];
-            
-            
             NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/ReceiveProduct.html?"];
             conn = [[DCFConnectionUtil alloc] initWithURLTag:URLSureReceiveTag delegate:self];
-            
             [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-            
             break;
         }
         default:
@@ -425,9 +409,7 @@
 #pragma mark - 确认接收
 - (void) receiveBtnClick:(UIButton *) sender
 {
-    
     sureReceiveNumber = [[dataArray objectAtIndex:sender.tag] objectForKey:@"orderNum"];
-    
     UIAlertView *sureAlert = [[UIAlertView alloc] initWithTitle:nil message:@"您确认要收货嘛" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
     [sureAlert show];
 }
@@ -505,7 +487,7 @@
         onLinePayBtn.frame = CGRectMake(10, 195,(ScreenWidth-30)/2, 30);
         [onLinePayBtn setTitle:@"在线支付" forState:UIControlStateNormal];
         [onLinePayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        onLinePayBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        onLinePayBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         onLinePayBtn.layer.cornerRadius = 5;
         
         cancelOrderBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -518,7 +500,7 @@
         discussBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [discussBtn setTitle:@"评价" forState:UIControlStateNormal];
         [discussBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        discussBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        discussBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         discussBtn.layer.cornerRadius = 5;
         
         lookForCustomBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -531,14 +513,14 @@
         [lookForTradeBtn setTitle:@"物流跟踪" forState:UIControlStateNormal];
         [lookForTradeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [lookForTradeBtn setFrame:CGRectMake(onLinePayBtn.frame.origin.x + onLinePayBtn.frame.size.width + 10, 195, onLinePayBtn.frame.size.width, 30)];
-        lookForTradeBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        lookForTradeBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         lookForTradeBtn.layer.cornerRadius = 5;
         
         receiveBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [receiveBtn setTitle:@"确认收货" forState:UIControlStateNormal];
         receiveBtn.frame = CGRectMake(15, 195,(ScreenWidth-30)/2, 30);
         [receiveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        receiveBtn.backgroundColor = [UIColor colorWithRed:227/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
+        receiveBtn.backgroundColor = [UIColor colorWithRed:237/255.0 green:142/255.0 blue:0/255.0 alpha:1.0];
         receiveBtn.layer.cornerRadius = 5;
         
         [cell.contentView addSubview:onLinePayBtn];
@@ -712,7 +694,6 @@
                 }
             }
         }
-        
         [lookForCustomBtn setTag:indexPath.row];
         [lookForCustomBtn addTarget:self action:@selector(lookForCustomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         

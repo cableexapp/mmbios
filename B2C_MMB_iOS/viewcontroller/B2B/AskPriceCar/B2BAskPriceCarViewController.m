@@ -236,7 +236,6 @@
     [label_1 setTextColor:[UIColor blackColor]];
     [label_1 setNumberOfLines:0];
     [label_1 setText:@"登录后可以同步电脑和手机端的商品,并保存在账户中"];
-    
     if(!tv)
     {
         tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight-buttomView.frame.size.height-64)];
@@ -361,12 +360,9 @@
     b2bAskPriceCarEditViewController.myCartId = data.cartId;
     b2bAskPriceCarEditViewController.view.layer.cornerRadius = 5;
     b2bAskPriceCarEditViewController.view.frame = CGRectMake(20, 20, subViewBtn.frame.size.width-40, subViewBtn.frame.size.height-70);
-
     b2bAskPriceCarEditViewController.delegate = self;
     [self addChildViewController:b2bAskPriceCarEditViewController];
     [subViewBtn addSubview:b2bAskPriceCarEditViewController.view];
-    
-   
 }
 
 

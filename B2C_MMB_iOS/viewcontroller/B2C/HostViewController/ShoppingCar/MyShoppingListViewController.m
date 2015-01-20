@@ -187,22 +187,14 @@
 - (void) loadRequest
 {
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartList",time];
-    
     NSString *token = [DCFCustomExtra md5:string];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartList.html?"];
     NSString *pushString = nil;
-    
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     if(hasLogin == YES)
     {
         pushString = [NSString stringWithFormat:@"memberid=%@&token=%@",memberid,token];
@@ -212,7 +204,6 @@
         pushString = [NSString stringWithFormat:@"visitorid=%@&token=%@",visitorid,token];
     }
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarGoodsMsgTag delegate:self];
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
 }
 
@@ -229,28 +220,23 @@
 - (NSString *) getMemberId
 {
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     if(memberid.length == 0)
     {
         LoginNaviViewController *loginNavi = [sb instantiateViewControllerWithIdentifier:@"loginNaviViewController"];
         [self presentViewController:loginNavi animated:YES completion:nil];
-        
     }
     return memberid;
 }
-
 
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
     NSString *msg = [dicRespon objectForKey:@"msg"];
-    
     if(URLTag == URLValidProductBeforeSubOrderTag)
     {
         if(result == 1)
         {
             NSString *items = nil;
-            
             if(chooseGoodsArray && chooseGoodsArray.count != 0)
             {
                 for(int i=0;i<chooseGoodsArray.count;i++)
@@ -267,16 +253,11 @@
                 }
                 items = [items substringWithRange:NSMakeRange(0, items.length-1)];
             }
-          
             NSString *time = [DCFCustomExtra getFirstRunTime];
-
             NSString *string = [NSString stringWithFormat:@"%@%@",@"cartConfirm",time];
-
             NSString *token = [DCFCustomExtra md5:string];
-
             NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/cartConfirm.html?"];
             NSString *pushString = nil;
-
             pushString = [NSString stringWithFormat:@"memberid=%@&token=%@&coloritem=%@",[self getMemberId],token,items];
             conn = [[DCFConnectionUtil alloc] initWithURLTag:URLCartConfirmTag delegate:self];
             [conn getResultFromUrlString:urlString postBody:pushString method:POST];
@@ -309,13 +290,9 @@
             if(!tempArray || tempArray.count == 0)
             {
                 tempArray = [[NSMutableArray alloc] initWithArray:[B2CShopCarListData getListArray:[dicRespon objectForKey:@"items"]]];
-                
                 dataArray = [[NSMutableArray alloc] init];
-                
                 headLabelArray = [[NSMutableArray alloc] init];
-                
                 chooseGoodsArray = [[NSMutableArray alloc] init];
-                
                 for(int i=0;i<tempArray.count;i++)
                 {
                     NSString *sShopName = [[tempArray objectAtIndex:i] shopId];
@@ -336,27 +313,22 @@
                         }
                     }
                 }
-                
                 headBtnArray = [[NSMutableArray alloc] init];
                 for(int i=0;i<headLabelArray.count;i++)
                 {
                     UIButton *headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [headBtn setFrame:CGRectMake(5, 5, 30, 30)];
-                    
+                    [headBtn setFrame:CGRectMake(5, 7.5, 25, 25)];
                     [headBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
                     [headBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
                     [headBtn setSelected:NO];
                     [headBtn setTag:i];
                     [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                     NSMutableArray *arr = [NSMutableArray arrayWithObject:headBtn];
-                    
                     [headBtnArray addObject:arr];
                 }
-                
                 for(NSArray *str in headLabelArray)
                 {
                     NSMutableArray *array = [[NSMutableArray alloc] init];
-                    
                     for(B2CShopCarListData *data in tempArray)
                     {
                         NSString *s = data.shopId;
@@ -367,8 +339,6 @@
                     }
                     [dataArray addObject:array];
                 }
-                
-                
                 if (dataArray.count > 0)
                 {
                     backView.hidden = YES;
@@ -379,14 +349,12 @@
                     backView.hidden = NO;
                     tv.scrollEnabled = NO;
                 }
-                
                 cellBtnArray = [[NSMutableArray alloc] init];
                 cellImageViewArray = [[NSMutableArray alloc] init];
                 subtractArray = [[NSMutableArray alloc] init];
                 addArray = [[NSMutableArray alloc] init];
                 priceLabelArray = [[NSMutableArray alloc] init];
                 colorLabelArray = [[NSMutableArray alloc] init];
-                
                 for(int i = 0;i < dataArray.count;i++)
                 {
                     NSMutableArray *a =  [[NSMutableArray alloc] init];
@@ -400,7 +368,7 @@
                     {
                         UIButton *cellBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                         [cellBtn setTag:1000*i+j];
-                        [cellBtn setFrame:CGRectMake(5, 40, 30, 30)];
+                        [cellBtn setFrame:CGRectMake(5, 42.5, 25, 25)];
                         
                         [cellBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
                         [cellBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
@@ -412,7 +380,7 @@
                         
                         UIButton *subtractBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                         [subtractBtn setTitle:@"-" forState:UIControlStateNormal];
-                        subtractBtn.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
+                        subtractBtn.layer.borderColor = [UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0].CGColor;
                         subtractBtn.layer.borderWidth = 1.0f;
                         [subtractBtn addTarget:self action:@selector(subtractBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                         subtractBtn.layer.masksToBounds = YES;
@@ -422,7 +390,7 @@
                         
                         UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                         [addBtn setTitle:@"+" forState:UIControlStateNormal];
-                        addBtn.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
+                        addBtn.layer.borderColor = [UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0].CGColor;
                         [addBtn addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                         addBtn.layer.borderWidth = 1.0f;
                         addBtn.layer.masksToBounds = YES;
@@ -437,15 +405,10 @@
                         [subColorLabel setFont:[UIFont systemFontOfSize:12]];
                         
                         [a addObject:cellBtn];
-                        
                         [b addObject:cellIv];
-                        
                         [c addObject:subtractBtn];
-                        
                         [d addObject:addBtn];
-                        
                         [e addObject:subPriceLabel];
-                        
                         [f addObject:subColorLabel];
                     }
                     [cellBtnArray addObject:a];
@@ -497,23 +460,17 @@
             
             B2CShopCarListData *data =  [[dataArray objectAtIndex:subtractBtnSection] objectAtIndex:subtractBtnRow];
             data.num = [NSString stringWithFormat:@"%d",subtractNum];
-            
             [self calculateTotalMoney];
-            
             [tv reloadData];
         }
-        
         B2CShopCarListData *data =  [[dataArray objectAtIndex:subtractBtnSection] objectAtIndex:subtractBtnRow];
         data.num = [NSString stringWithFormat:@"%d",subtractNum];
-        
     }
     if(URLTag == URLShopCarAddTag)
     {
-        
         if(result == 0)
         {
             addNum = addNum -1;
-            
             if(msg.length != 0)
             {
                 [DCFStringUtil showNotice:msg];
@@ -527,7 +484,6 @@
         {
             B2CShopCarListData *data =  [[dataArray objectAtIndex:addBtnSection] objectAtIndex:addBtnRow];
             data.num = [NSString stringWithFormat:@"%d",addNum];
-            
             [self calculateTotalMoney];
             [tv reloadData];
         }
@@ -539,15 +495,12 @@
         if(result == 1)
         {
             [DCFStringUtil showNotice:msg];
-            
             for(int i=cellBtnArray.count-1;i>=0;i--)
             {
                 NSMutableArray *arr = [cellBtnArray objectAtIndex:i];
-
                 for(int j=arr.count-1;j>=0;j--)
                 {
                     UIButton *btn = [arr objectAtIndex:j];
-
                     int row = btn.tag%1000;
                     int section = btn.tag/1000;
                     if(btn.selected == YES)
@@ -633,7 +586,6 @@
             [self setHidesBottomBarWhenPushed:YES];
             UpOrderViewController *order = [[UpOrderViewController alloc] initWithDataArray:chooseGoodsArray WithMoney:totalMoney WithOrderData:orderData WithTag:1];
             [self.navigationController pushViewController:order animated:YES];
-            
         }
         else if (result == 0)
         {
@@ -805,7 +757,7 @@
     [buttomView addSubview:buttomTopView];
     
     buttomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttomBtn setFrame:CGRectMake(5, 13, 28, 28)];
+    [buttomBtn setFrame:CGRectMake(5, 14.5, 25, 25)];
     [buttomBtn setBackgroundImage:[UIImage imageNamed:@"choose.png"] forState:UIControlStateSelected];
     [buttomBtn setBackgroundImage:[UIImage imageNamed:@"unchoose.png"] forState:UIControlStateNormal];
     [buttomBtn setSelected:NO];
@@ -857,7 +809,7 @@
     
     tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 54-54)];
     [tv setDataSource:self];
-    tv.backgroundColor = [UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0];
+    tv.backgroundColor = [UIColor whiteColor];
     [tv setDelegate:self];
     [self.view addSubview:tv];
     
@@ -1289,7 +1241,6 @@ NSComparator cmptr = ^(id obj1, id obj2)
         ShopHostTableViewController *shopHost = [[ShopHostTableViewController alloc] initWithHeadTitle:[[[dataArray objectAtIndex:tag] lastObject] sShopName] WithShopId:[[[dataArray objectAtIndex:tag] lastObject] shopId] WithUse:@""];
         [self.navigationController pushViewController:shopHost animated:YES];
     }
- 
 }
 
 - (void) logBtnClick:(UIButton *) sender
@@ -1298,11 +1249,8 @@ NSComparator cmptr = ^(id obj1, id obj2)
     [self presentViewController:loginNavi animated:YES completion:nil];
 }
 
-
 - (void) buyBtnClick:(UIButton *) sender
 {
-
-    
     [self setHidesBottomBarWhenPushed:YES];
     ShoppingHostViewController *shoppingHost = [[ShoppingHostViewController alloc] init];
     int n = 0;
@@ -1324,7 +1272,6 @@ NSComparator cmptr = ^(id obj1, id obj2)
         n++;
     }
     [self setHidesBottomBarWhenPushed:NO];
-
 }
 
 - (UITableViewCell *) loadNonDataTableview:tableView NoIndexPath:indexPath
@@ -1481,7 +1428,6 @@ NSComparator cmptr = ^(id obj1, id obj2)
     
     CGFloat maxWidth = (shopPriceSize.width >= shopColorSize.width)?shopPriceSize.width:shopColorSize.width;
 
-    
     //商品介绍
     NSString *content = [[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] productItmeTitle];
     UILabel *introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake(cellIv.frame.origin.x + cellIv.frame.size.width + 10, 20, ScreenWidth-155-maxWidth, 40)];
@@ -1492,21 +1438,19 @@ NSComparator cmptr = ^(id obj1, id obj2)
     [introduceLabel setText:content];
     [cell.contentView addSubview:introduceLabel];
 
-    
     UIButton *subBtn = [[subtractArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [subBtn setFrame:CGRectMake(introduceLabel.frame.origin.x,introduceLabel.frame.origin.y+introduceLabel.frame.size.height,35, 30)];
     [subBtn setTag:indexPath.row + indexPath.section*1000];
     [cell.contentView addSubview:subBtn];
-    //
+    
     UILabel *numLabel = [[UILabel alloc] init];
     [numLabel setFrame:CGRectMake(subBtn.frame.origin.x + subBtn.frame.size.width-0.5, subBtn.frame.origin.y, 35+0.5, 30)];
     [numLabel setText:[[[dataArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] num]];
     [numLabel setTextAlignment:NSTextAlignmentCenter];
     [numLabel setTextColor:[UIColor blackColor]];
-    numLabel.layer.borderColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0].CGColor;
+    numLabel.layer.borderColor = [UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0].CGColor;
     numLabel.layer.borderWidth = 1.0f;
     numLabel.layer.masksToBounds = YES;
-    [numLabel setBackgroundColor:[UIColor whiteColor]];
     [cell.contentView addSubview:numLabel];
     
     UIButton *addBtn = [[addArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
@@ -1515,7 +1459,7 @@ NSComparator cmptr = ^(id obj1, id obj2)
     [cell.contentView addSubview:addBtn];
 
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, subColorLab.frame.origin.y+subColorLab.frame.size.height+25, ScreenWidth, 10)];
-    [lineView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
+    [lineView setBackgroundColor:[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1.0]];
     [cell.contentView addSubview:lineView];
     
     return cell;
@@ -1527,7 +1471,6 @@ NSComparator cmptr = ^(id obj1, id obj2)
 - (void) cellBtnClick:(UIButton *) sender
 {
     sender.selected = !sender.selected;
-    
     
     int row = sender.tag%1000;
     int section = sender.tag/1000;

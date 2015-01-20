@@ -28,7 +28,7 @@
     
     NSMutableArray *arr;
     
-    int tag;
+    int tagFlag;
 }
 @end
 
@@ -127,7 +127,7 @@
     editColor = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editColor"]];
     editFeatureone = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editFeatureone"]];
     editRequire = [NSString stringWithFormat:@"%@",[_editDic objectForKey:@"editRequire"]];
-    tag = [[_editDic objectForKey:@"tag"] intValue];
+    tagFlag = [[_editDic objectForKey:@"tag"] intValue];
     
     [self.numTF setText:editNum];
     if([DCFCustomExtra validateString:editUnit] == NO)
@@ -224,8 +224,7 @@
         {
             [DCFStringUtil showNotice:@"编辑成功"];
             [self.delegate removeSubView];
-            [self.delegate reloadDataWithTag:tag];
-            
+            [self.delegate reloadDataWithTag:tagFlag];
             [[NSUserDefaults standardUserDefaults] setObject:self.unitBtn.titleLabel.text forKey:@"unit"];
         }
         else
@@ -590,7 +589,6 @@
         [DCFStringUtil showNotice:@"交货期不能为空"];
         return;
     }
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"EditInquiryItem",time];
     NSString *token = [DCFCustomExtra md5:string];
@@ -605,7 +603,6 @@
     {
         specTfString = @"";
     }
-    
     NSString *volString = nil;
     if([DCFCustomExtra validateString:self.volBtn.titleLabel.text] == NO)
     {
@@ -615,7 +612,6 @@
     {
         volString = self.volBtn.titleLabel.text;
     }
-    
     NSString *colorString = nil;
     if([DCFCustomExtra validateString:self.colorBtn.titleLabel.text] == NO)
     {
@@ -625,7 +621,6 @@
     {
         colorString = self.colorBtn.titleLabel.text;
     }
-    
     NSString *feathString = nil;
     if([DCFCustomExtra validateString:self.featherBtn.titleLabel.text] == NO)
     {
@@ -635,7 +630,6 @@
     {
         feathString = self.featherBtn.titleLabel.text;
     }
-    
     NSString *requireString = nil;
     if([DCFCustomExtra validateString:self.requestTF.text] == NO)
     {
@@ -645,19 +639,12 @@
     {
         requireString = self.requestTF.text;
     }
-    
     NSString *pushString = [NSString stringWithFormat:@"token=%@&cartid=%@&spec=%@&voltage=%@&unit=%@&num=%@&color=%@&featureone=%@&require=%@&deliver=%@",token,self.myCartId,specTfString,volString,self.unitBtn.titleLabel.text,self.numTF.text,colorString,feathString,requireString,self.timeTF.text];
-    
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLEditInquiryItemTag delegate:self];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2BAppRequest/EditInquiryItem.html?"];
-    
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
     [self.sureBtn setEnabled:NO];
 }
-
 
 - (void)didReceiveMemoryWarning
 {

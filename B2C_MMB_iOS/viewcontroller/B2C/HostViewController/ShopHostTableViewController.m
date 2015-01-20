@@ -164,7 +164,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self pushAndPopStyle];
     
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装馆频道"];
@@ -192,17 +191,12 @@
 -(void)loadShopCarCount
 {
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getShoppingCartCount",time];
     NSString *token = [DCFCustomExtra md5:string];
-    
     BOOL hasLogin = [[[NSUserDefaults standardUserDefaults] objectForKey:@"hasLogin"] boolValue];
-    
     NSString *visitorid = [app getUdid];
-    
     NSString *memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-    
     NSString *pushString = nil;
     if(hasLogin == YES)
     {
@@ -215,7 +209,6 @@
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLShopCarCountTag delegate:self];
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShoppingCartCount.html?"];
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -231,10 +224,6 @@
         [self.navigationController popViewControllerAnimated:YES];
         return NO;
     }
-    //    if([NSStringFromClass([touch.view class]) isEqualToString:@"UITabBarButton"])
-    //    {
-    //        return NO;
-    //    }
     return  YES;
 }
 
@@ -259,33 +248,19 @@
 
 - (void) loadRequest:(NSString *) shopId WithUse:(NSString *) use
 {
-    //    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    //    [HUD setDelegate:self];
-    //    [HUD setLabelText:@"正在登录....."];
-    
     pageSize = 10;
-    //    intPage = 1;
-    
     NSString *time = [DCFCustomExtra getFirstRunTime];
-    
     NSString *string = [NSString stringWithFormat:@"%@%@",@"getProductList",time];
-    
     NSString *token = [DCFCustomExtra md5:string];
-    
     NSString *pushString = [NSString stringWithFormat:@"use=%@&seq=%@&model=%@&brand=%@&shopid=%@&token=%@&pagesize=%d&pageindex=%d",use,@"",@"",@"",_shopId,token,pageSize,intPage];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getProductList.html?"];
     conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGoodsListTag delegate:self];
-    
     [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-    
     [moreCell startAnimation];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     if(indexPath.row == 0)
     {
         if(!discussArray || discussArray.count == 0)
@@ -294,20 +269,12 @@
         }
         return 170;
     }
-    
-    //    if(dataArray.count == 0)
-    //    {
-    //        return 43;
-    //    }
     int row = dataArray.count%2 + dataArray.count/2;
     
     if(indexPath.row == row+1)
     {
         return 43;
     }
-    
-    
-    //    if(indexPath.row <= row - 1)
     if(indexPath.row >= 1 && indexPath.row < row + 1)
     {
         return 210;
@@ -318,7 +285,6 @@
 - (void) resultWithDic:(NSDictionary *)dicRespon urlTag:(URLTag)URLTag isSuccess:(ResultCode)theResultCode
 {
     int result = [[dicRespon objectForKey:@"result"] intValue];
-    
     if(URLTag == URLB2CGoodsListTag)
     {
         if(_reloading == YES)
@@ -337,17 +303,13 @@
         {
             if(result == 1)
             {
-                
                 if(intPage == 1)
                 {
                     [dataArray removeAllObjects];
                 }
                 [dataArray addObjectsFromArray:[B2CGoodsListData getListArray:[dicRespon objectForKey:@"items"]]];
-                
                 scoreArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"score"]];
-                
                 [self loadHeadView];
-                
                 intTotal = [[dicRespon objectForKey:@"total"] intValue];
                 if(intTotal == 0)
                 {
@@ -358,17 +320,11 @@
                     [moreCell stopAnimation];
                 }
                 intPage++;
-                
                 NSString *time = [DCFCustomExtra getFirstRunTime];
-                
                 NSString *string = [NSString stringWithFormat:@"%@%@",@"getShopProductType",time];
-                
                 NSString *token = [DCFCustomExtra md5:string];
-                
                 NSString *pushString = [NSString stringWithFormat:@"token=%@&shopid=%@",token,_shopId];
-                
                 NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/getShopProductType.html?"];
-                
                 conn = [[DCFConnectionUtil alloc] initWithURLTag:URLB2CGetShopProductTypeTag delegate:self];
                 [conn getResultFromUrlString:urlString postBody:pushString method:POST];
             }
@@ -377,13 +333,10 @@
                 [moreCell failAcimation];
             }
         }
-        
         [self.tableView reloadData];
-        
     }
     if(URLTag == URLB2CGetShopProductTypeTag)
     {
-        
         if(result == 1)
         {
             typeArray = [[NSArray alloc] initWithArray:[dicRespon objectForKey:@"types"]];
@@ -419,7 +372,6 @@
     headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 170)];
     [headView setBackgroundColor:[UIColor whiteColor]];
     [headView setUserInteractionEnabled:YES];
-//    [cell.contentView addSubview:headView];
     
     UIView *sepView = [[UIView alloc] initWithFrame:CGRectMake(0, 160, ScreenWidth, 10)];
     [sepView setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
@@ -442,9 +394,6 @@
     UIView *sepView_5 = [[UIView alloc] initWithFrame:CGRectMake(240, 70, 1, 40)];
     [sepView_5 setBackgroundColor:[UIColor colorWithRed:234.0/255.0 green:234.0/255.0 blue:234.0/255.0 alpha:1.0]];
     [headView addSubview:sepView_5];
-    
-    
-    
     
     UILabel *scoreLabel =[[UILabel alloc] initWithFrame:CGRectMake(245, 0, 80, 30)];
     [scoreLabel setFont:[UIFont boldSystemFontOfSize:15]];
@@ -595,7 +544,6 @@
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     return nil;
-    //    return headView;
 }
 
 - (void) preBtnClick:(UIButton *) sender
@@ -608,8 +556,6 @@
     else
     {
         intPage = 1;
-        
-        
         preView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight)];
         [preView setBackgroundColor:[UIColor colorWithRed:203.0/255.0 green:203.0/255.0 blue:203.0/255.0 alpha:0.6]];
         [self.view.window addSubview:preView];
@@ -664,9 +610,7 @@
     preView.hidden = YES;
 }
 
-
 #pragma mark - Table view data source
-
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (dataArray.count == 0)
@@ -676,7 +620,6 @@
     else
     {
         int row = dataArray.count%2 + dataArray.count/2;
-        //        if ((intPage-1)*(pageSize/2) < intTotal )
         if(dataArray.count < intTotal)
         {
             return row+2;
@@ -685,11 +628,9 @@
     }
 }
 
-
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = dataArray.count%2 + dataArray.count/2;
-    
     if(indexPath.row == row+1)
     {
         static NSString *moreCellId = @"moreCell";
@@ -734,8 +675,8 @@
                 {
                     UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(10+155*i, 10, 145, 200)];
                     [cellView setTag:n];
-                    cellView.layer.borderWidth = 0.8;
-                    cellView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+                    cellView.layer.borderWidth = 0.7;
+                    cellView.layer.borderColor = [[UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0] CGColor];
                     [cell.contentView addSubview:cellView];
                     
                     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
@@ -748,8 +689,8 @@
                     [cellView addSubview:iv];
                     
                     UIView *lineView = [[UIView alloc] init];
-                    lineView.frame = CGRectMake(0, 145, 145, 0.8);
-                    lineView.backgroundColor = [UIColor lightGrayColor];
+                    lineView.frame = CGRectMake(0, 145, 145, 0.7);
+                    lineView.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
                     [cellView addSubview:lineView];
                     
                     NSString *str_1 = [[dataArray objectAtIndex:n] productName];
@@ -766,11 +707,8 @@
                     [priceLabel setTextColor:[UIColor redColor]];
                     [cellView addSubview:priceLabel];
                 }
-            } 
-            
+            }
         }
-        
-        
         return cell;
     }
     return nil;
@@ -799,7 +737,6 @@
 - (void) tap:(UITapGestureRecognizer *) sender
 {
     int tag = [[sender view] tag];
-    
     NSString *productId = [[dataArray objectAtIndex:tag] productId];
     GoodsDetailViewController *detail = [[GoodsDetailViewController alloc] initWithProductId:productId];
     [self.navigationController pushViewController:detail animated:YES];
@@ -822,48 +759,40 @@
         }
     }
 }
-//
-//
-//
-//#pragma mark -
+
 //#pragma mark SCROLLVIEW DELEGATE METHODS
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    
     [self.refreshView egoRefreshScrollViewDidScroll:self.tableView];
 }
-//
-#pragma mark -
+
 #pragma mark DATA SOURCE LOADING / RELOADING METHODS
 - (void)reloadViewDataSource
 {
-    
     _reloading = YES;
     intPage = 1;
     [self loadRequest:_shopId WithUse:shopUse];
 }
-//
+
 - (void)doneLoadingViewData
 {
     
     _reloading = NO;
     [self.refreshView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }
-//
-//#pragma mark -
+
 //#pragma mark REFRESH HEADER DELEGATE METHODS
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView *)view
 {
     
     [self reloadViewDataSource];
 }
-//
+
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
 {
     
     return _reloading;
 }
-
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
 {

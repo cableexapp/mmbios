@@ -132,18 +132,18 @@
 
 - (void) askDelegate
 {
-    NSLog(@"咨询");
+//    NSLog(@"咨询");
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://400-828-0188"]];
 }
 
 - (void) onLineDelegate
 {
-    NSLog(@"客服");
+//    NSLog(@"客服");
 }
 
 - (void) upDelegate
 {
-    NSLog(@"下单");
+//    NSLog(@"下单");
 }
 
 - (void)didReceiveMemoryWarning

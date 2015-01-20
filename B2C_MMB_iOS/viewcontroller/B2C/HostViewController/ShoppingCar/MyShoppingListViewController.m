@@ -1147,7 +1147,7 @@ NSComparator cmptr = ^(id obj1, id obj2)
     }
     
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"删除提示"
-                                                 message:@"确定删除选中的商品"
+                                                 message:@"确定删除选中的商品？"
                                                 delegate:self
                                        cancelButtonTitle:@"取消"
                                        otherButtonTitles:@"确定", nil];

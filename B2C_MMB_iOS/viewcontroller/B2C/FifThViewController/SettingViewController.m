@@ -40,13 +40,13 @@
     self.cleanBackView.backgroundColor = [UIColor whiteColor];
     
     UIView *firstLine = [[UIView alloc] init];
-    firstLine.frame = CGRectMake(0, 0, self.view.frame.size.width, 1);
-    firstLine.backgroundColor = [UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0];
+    firstLine.frame = CGRectMake(0, 0, self.view.frame.size.width, 0.5);
+    firstLine.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
     [self.cleanBackView addSubview:firstLine];
     
     UIView *secondLine = [[UIView alloc] init];
-    secondLine.frame = CGRectMake(0, 49, self.view.frame.size.width, 1);
-    secondLine.backgroundColor = [UIColor colorWithRed:236/255.0 green:236/255.0 blue:236/255.0 alpha:1.0];
+    secondLine.frame = CGRectMake(0,49.5, self.view.frame.size.width,0.5);
+    secondLine.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
     [self.cleanBackView addSubview:secondLine];
 
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
@@ -59,7 +59,11 @@
 
 - (void) tap:(UITapGestureRecognizer *) sender
 {    
-    as = [[UIActionSheet alloc] initWithTitle:@"您确定要清除缓存图片吗" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    as = [[UIActionSheet alloc] initWithTitle:@"您确定要清除缓存图片吗？"
+                                     delegate:self
+                            cancelButtonTitle:@"取消"
+                       destructiveButtonTitle:@"确定"
+                            otherButtonTitles:nil, nil];
     [as showInView:self.view];
 }
 

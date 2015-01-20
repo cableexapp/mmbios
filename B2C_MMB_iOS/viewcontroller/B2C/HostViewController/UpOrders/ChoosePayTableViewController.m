@@ -105,7 +105,7 @@
     self.navigationItem.titleView = top;
     
     cellBackView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 110)];
-    cellBackView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    cellBackView.layer.borderColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0].CGColor;
     cellBackView.layer.borderWidth = 1.0f;
     cellBackView.layer.cornerRadius = 5;
     
@@ -115,7 +115,7 @@
     [cellBackView addSubview:chooseLabel];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, chooseLabel.frame.origin.y+chooseLabel.frame.size.height, cellBackView.frame.size.width, 1)];
-    [lineView setBackgroundColor:[UIColor lightGrayColor]];
+    [lineView setBackgroundColor:[UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0]];
     [cellBackView addSubview:lineView];
     
     UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, lineView.frame.origin.y+10, 50, 50)];

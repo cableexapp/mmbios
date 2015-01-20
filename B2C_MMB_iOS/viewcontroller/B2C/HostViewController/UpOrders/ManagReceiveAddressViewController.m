@@ -39,6 +39,7 @@
 
 - (void)buttomBtnClick:(id)sender
 {
+    [self setHidesBottomBarWhenPushed:YES];
     AddReceiveAddressViewController *add = [[AddReceiveAddressViewController alloc] init];
     [self.navigationController pushViewController:add animated:YES];
     //    [self hideButtomView];
@@ -103,7 +104,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
     if(tv)
     {
         self.tvBackView.frame = tv.frame;
@@ -117,6 +118,11 @@
     }
     [self loadRequest];
     
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.navigationController.tabBarController.tabBar setHidden:YES];
 }
 
 - (NSString *) getMemberId
@@ -188,7 +194,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     /*丁瑞修改*/
     DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"管理收货地址"];
     self.navigationItem.titleView = top;
@@ -204,16 +210,12 @@
     [_buttomBtn setFrame:CGRectMake(10, 5, ScreenWidth-20, 40)];
     [_buttomBtn addTarget:self action:@selector(buttomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     _buttomBtn.layer.cornerRadius = 5.0f;
-    _buttomBtn.layer.borderWidth = 1.0f;
-    _buttomBtn.layer.borderColor = [UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0].CGColor;
     [_buttomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttomBtn setTitle:@"新增收货地址" forState:UIControlStateNormal];
-    [_buttomBtn setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:121.0/255.0 blue:11.0/255.0 alpha:1.0]];
+    [_buttomBtn setBackgroundColor:[UIColor colorWithRed:237.0/255.0 green:142.0/255.0 blue:0.0/255.0 alpha:1.0]];
     [_buttomView addSubview:_buttomBtn];
     
     [self pushAndPopStyle];
-    
-    
     
     moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
     [moreCell startAnimation];
@@ -338,15 +340,7 @@
         [provinceLabel setFont:[UIFont systemFontOfSize:13]];
         [provinceLabel setNumberOfLines:0];
         [cell.contentView addSubview:provinceLabel];
-        //
-        //
-        //        UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, provinceLabel.frame.origin.y + provinceLabel.frame.size.height, ScreenWidth-20, size_3.height)];
-        //        [addressLabel setText:address];
-        //        [addressLabel setFont:[UIFont systemFontOfSize:13]];
-        //        [addressLabel setNumberOfLines:0];
-        //        [cell.contentView addSubview:addressLabel];
-        //
-        //
+
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, provinceLabel.frame.origin.y+provinceLabel.frame.size.height+4, ScreenWidth, 0.3)];
         [lineView setBackgroundColor:[UIColor lightGrayColor]];
         [cell.contentView addSubview:lineView];
@@ -357,18 +351,13 @@
     return nil;
 }
 
-
-
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     B2CAddressData *data = (B2CAddressData *)[addressListDataArray objectAtIndex:indexPath.row];
-    
-    //    NSDictionary *receiveDic = [NSDictionary dictionaryWithObjectsAndKeys:data.addressName,@"receiveaddress",data.city,@"receivecity",data.area,@"receivedistrict",data.province,@"receiveprovince",data.receiver,@"receiver",data.mobile,@"receiveTel",data.addressId,@"receiveAddressId", nil];
-    
+    [self setHidesBottomBarWhenPushed:YES];
     AddReceiveFinalViewController *final = [[AddReceiveFinalViewController alloc] initWithAddressData:data];
     final.B2COrB2B = self.B2COrB2B;
     [self.navigationController pushViewController:final animated:YES];
-    
 }
 
 

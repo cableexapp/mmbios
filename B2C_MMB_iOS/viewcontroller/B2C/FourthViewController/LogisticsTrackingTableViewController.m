@@ -96,40 +96,35 @@
 {
     if(!_myArray || _myArray.count == 0)
     {
-        static NSString *moreCellId = @"moreCell";
-//        moreCell = (DCFChenMoreCell *)[tableView dequeueReusableCellWithIdentifier:moreCellId];
-//        if(moreCell == nil)
-//        {
-            moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
-            [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
-            if(_isRequest == YES)
-            {
-                [moreCell startAnimation];
-            }
-            else
-            {
-                moreCell.lblContent.text = @"此单号暂无物流信息,请稍后再查";
-                [moreCell.avState stopAnimating];
-                moreCell.avState.hidden = YES;
-            }
-//        }
+        moreCell = [[[NSBundle mainBundle] loadNibNamed:@"DCFChenMoreCell" owner:self options:nil] lastObject];
+        [moreCell.contentView setBackgroundColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0]];
+        if(_isRequest == YES)
+        {
+            [moreCell startAnimation];
+        }
+        else
+        {
+            moreCell.lblContent.text = @"此单号暂无物流信息,请稍后再查";
+            [moreCell.avState stopAnimating];
+            moreCell.avState.hidden = YES;
+        }
         return moreCell;
     }
-    
     static NSString *cellId = @"logisticsTrackingTableViewCell";
     LogisticsTrackingTableViewCell *cell = (LogisticsTrackingTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellId];
     if(!cell)
     {
         cell = [[LogisticsTrackingTableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-        
     }
     if(indexPath.row == 0)
     {
+        cell.lineView.backgroundColor = [UIColor clearColor];
         [cell.showBtn setBackgroundImage:[UIImage imageNamed:@"tradeDocSelect.png"] forState:UIControlStateNormal];
         [cell.statusLabel setTextColor:[UIColor colorWithRed:37/255.0 green:174/255.0 blue:95/255.0 alpha:1.0]];
     }
     else
     {
+        cell.lineView.backgroundColor = [UIColor colorWithRed:213.0/255.0 green:213.0/255.0 blue:213.0/255.0 alpha:1.0];
         [cell.showBtn setBackgroundImage:[UIImage imageNamed:@"tradeDocUnselect.png"] forState:UIControlStateNormal];
         [cell.statusLabel setTextColor:[UIColor grayColor]];
     }
@@ -143,9 +138,6 @@
         [cell.statusLabel setText:[dic objectForKey:@"content"]];
         [cell.dateLabel setText:[dic objectForKey:@"time"]];
     }
-
-    
-    
     return cell;
 }
 

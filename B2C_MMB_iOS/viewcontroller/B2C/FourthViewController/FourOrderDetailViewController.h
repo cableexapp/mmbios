@@ -22,30 +22,9 @@
 //@property (strong,nonatomic) NSString *myTime;
 
 @property (weak, nonatomic) IBOutlet UIView *topView;
-
-
 @property (weak, nonatomic) IBOutlet UILabel *myOederLabel;
 @property (weak, nonatomic) IBOutlet UILabel *myTimeLabel;
-
-@property (weak, nonatomic) IBOutlet UIButton *discussBtn;
-@property (weak, nonatomic) IBOutlet UIButton *tradeBtn;
-
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
-
 @property (weak, nonatomic) IBOutlet UIView *buttomView;
-
-
-//@property (assign,nonatomic) BOOL showOrHideDisCussBtn;
-//@property (assign,nonatomic) BOOL showOrHideTradeBtn;
-//
-//@property (strong,nonatomic) NSString *theLogiId;
-//@property (strong,nonatomic) NSString *theLogiNum;
-//
-//@property (strong,nonatomic) NSMutableArray *theLogiArray;
-//@property (strong,nonatomic) NSString *theShopId;
-//@property (strong,nonatomic) NSString *theOrderNum;
-//@property (strong,nonatomic) NSDictionary *theDic;
-
-//@property (strong,nonatomic) NSString *myStatus;
 
 @end

@@ -521,9 +521,9 @@
                 }
                 else
                 {
-                    size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:14] WithText:str WithSize:CGSizeMake(MAXFLOAT, 25)];
+                    size_2 = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:12] WithText:str WithSize:CGSizeMake(MAXFLOAT, 25)];
                     [label setFrame:CGRectMake(ScreenWidth-10-size_2.width, 26, size_2.width, 25)];
-                    [label setFont:[UIFont systemFontOfSize:14]];
+                    [label setFont:[UIFont systemFontOfSize:12]];
                     [label setTextAlignment:NSTextAlignmentLeft];
                     
                     NSMutableAttributedString *shopStatus = [[NSMutableAttributedString alloc] initWithString:str];
@@ -943,6 +943,20 @@
     //    [self.navigationController pushViewController:ali animated:YES];
 }
 
+
+#pragma mark - 确认接收
+- (void) receiveBtnClick:(UIButton *) sender
+{
+    sureReceiveNumber = [[dataArray objectAtIndex:sender.tag/10] orderNum];
+    
+    UIAlertView *sureAlert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"您确认要收货嘛"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确认", nil];
+    [sureAlert show];
+}
+
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex)
@@ -970,19 +984,6 @@
         default:
             break;
     }
-}
-
-#pragma mark - 确认接收
-- (void) receiveBtnClick:(UIButton *) sender
-{    
-    sureReceiveNumber = [[dataArray objectAtIndex:sender.tag/10] orderNum];
-    
-    UIAlertView *sureAlert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"您确认要收货嘛"
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"确认", nil];
-    [sureAlert show];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

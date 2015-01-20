@@ -54,16 +54,16 @@
     phone = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserPhone"]];
     email = [NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"UserEmail"]];
     UIView *lineView1 = [[UIView alloc] init];
-    lineView1.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
-    lineView1.backgroundColor = [UIColor lightGrayColor];
+    lineView1.frame = CGRectMake(0, self.cell_1.frame.size.height-0.5, self.cell_1.frame.size.width, 0.5);
+    lineView1.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
     
     UIView *lineView2 = [[UIView alloc] init];
-    lineView2.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
-    lineView2.backgroundColor = [UIColor lightGrayColor];
+    lineView2.frame = CGRectMake(0, self.cell_1.frame.size.height-0.5, self.cell_1.frame.size.width, 0.5);
+    lineView2.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
     
     UIView *lineView3 = [[UIView alloc] init];
-    lineView3.frame = CGRectMake(0, self.cell_1.frame.size.height-1, self.cell_1.frame.size.width, 1);
-    lineView3.backgroundColor = [UIColor lightGrayColor];
+    lineView3.frame = CGRectMake(0, self.cell_1.frame.size.height-0.5, self.cell_1.frame.size.width, 0.5);
+    lineView3.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
     [self.cell_1 addSubview:lineView1];
     [self.cell_2 addSubview:lineView2];
     [self.cell_3 addSubview:lineView3];

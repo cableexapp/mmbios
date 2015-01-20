@@ -255,7 +255,6 @@
     CGFloat pageWidth = scrollView.frame.size.width;
     int page = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     currentPageIndex=page;
-    
     for(UIButton *btn in topBtnArray)
     {
         if(btn.tag == currentPageIndex)
@@ -267,14 +266,8 @@
             [btn setSelected:NO];
         }
     }
-    
-    
 }
 
-//- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-//{
-//
-//}
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     if(currentPageIndex == 0)

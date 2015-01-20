@@ -12,8 +12,7 @@
 {
     UIActionSheet *as;
 }
-@property (weak, nonatomic) IBOutlet UIImageView *setIv;
-@property (weak, nonatomic) IBOutlet UIImageView *cleanIv;
+
 @property (weak, nonatomic) IBOutlet UISwitch *swith;
 @property (weak, nonatomic) IBOutlet UIView *cleanBackView;
 

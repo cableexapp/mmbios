@@ -50,7 +50,7 @@
     
 //    NSURL *url = [[NSURL alloc]initWithString:@"http://58.215.20.140:8001/agreement.html"];
     NSURL *url = [[NSURL alloc]initWithString:[NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/agreement.html"]];
-
+//    NSLog(@"服务条款 = %@",url);
     [register_webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
 

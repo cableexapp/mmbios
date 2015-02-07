@@ -232,10 +232,14 @@
     CFShow((__bridge CFTypeRef)(infoDictionary));
     // app名称
     NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    NSLog(@"name = %@",app_Name);
     // app版本
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSLog(@"Version=%@",app_Version);
     // app build版本
     NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    NSLog(@"build=%@",app_build);
+
     NSArray *array = [[NSArray alloc] initWithObjects:app_Name,app_Version,app_build, nil];
     return array;
 }

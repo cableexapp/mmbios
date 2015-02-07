@@ -125,6 +125,9 @@ NSString *strUserId = @"";
 
 -(NSString*) getUdid
 {
+    
+    
+    
     NSString *udid = [PhoneHelper getDeviceId];
     return udid;
 }
@@ -220,6 +223,8 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSLog(@"%@",[DCFCustomExtra getAppInfo]);
+    
     //检测是否第一次安装，还是第一次启动
     [self isFirstOpen];
     

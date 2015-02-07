@@ -307,7 +307,6 @@
                 [self setHidesBottomBarWhenPushed:YES];
                 
                 AliViewController *ali = [[AliViewController alloc] initWithNibName:@"AliViewController" bundle:nil];
-                
                 ali.shopName = myShopName;
                 ali.productName = myProductTitle;
                 ali.productPrice = myTotal;

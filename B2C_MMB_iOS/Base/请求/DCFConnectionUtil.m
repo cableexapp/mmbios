@@ -33,15 +33,12 @@
     return self;
 }
 
-
-
-
-
 //异步请求数据,strUrl表示域名,strPostBody表示上传的参数,theMethod表示请求方式
 - (void)getResultFromUrlString:(NSString *)strUrl postBody:(NSString *)strPostBody method:(URLMethod)theMethod
 {
 #pragma mark - UTF8编码
     strUrl = [strUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//     NSLog(@"resultStr = %@",strUrl);
     //登录
     if(self.LogIn == YES)
     {

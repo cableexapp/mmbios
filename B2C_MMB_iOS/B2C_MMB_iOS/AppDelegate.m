@@ -842,7 +842,8 @@ NSString *strUserId = @"";
     NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
     [iq addAttributeWithName:@"from" stringValue:self.personName];
     [iq addAttributeWithName:@"id" stringValue:@"disco2"];
-    [iq addAttributeWithName:@"to"stringValue:@"workgroup.cableex.com"];
+    [iq addAttributeWithName:@"to"stringValue:@"workgroup.cableex.com"]; //IM正式环境
+//    [iq addAttributeWithName:@"to"stringValue:@"workgroup.fgame.com"]; //测试环境
     [iq addAttributeWithName:@"type"stringValue:@"get"];
     NSXMLElement *query = [NSXMLElement elementWithName:@"query"];
     [query addAttributeWithName:@"xmlns" stringValue:@"http://jabber.org/protocol/disco#items"];

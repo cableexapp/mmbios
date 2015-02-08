@@ -6,27 +6,19 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>F10BB6AE-73D3-4117-B934-7BA0906B030D</string>
-	<key>IDESourceControlProjectName</key>
-	<string>B2C_MMB_iOS</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>55cf90a1-0c96-468b-aa50-050415425df3++4954</key>
 		<string>http://192.168.8.2/svn/su2_apps/ITS/trunk/ios/Hangzhoutong/tools/SDWebImage</string>
 		<key>55cf90a1-0c96-468b-aa50-050415425df3++5127</key>
 		<string>http://192.168.8.2/svn/su2_apps/SmartCity_ios/v1.0.0/trunk/SmartCity/tools/phone</string>
-		<key>F60F4B91C26728757CB15F60425EE88018D8FA71</key>
-		<string>ssh://github.com/cableexapp/mmbios.git</string>
 	</dict>
-	<key>IDESourceControlProjectPath</key>
-	<string>B2C_MMB_iOS/B2C_MMB_iOS.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>55cf90a1-0c96-468b-aa50-050415425df3++4954</key>
-		<string>../../..B2C_MMB_iOS/Tools/SDWebImage</string>
+		<string>SDWebImage/</string>
 		<key>55cf90a1-0c96-468b-aa50-050415425df3++5127</key>
-		<string>../../..B2C_MMB_iOS/Tools/phone</string>
-		<key>F60F4B91C26728757CB15F60425EE88018D8FA71</key>
-		<string>../../..</string>
+		<string>phone/</string>
 	</dict>
 	<key>IDESourceControlProjectRepositoryRootDictionary</key>
 	<dict>
@@ -36,21 +28,13 @@
 		<string>http://192.168.8.2/svn/su2_apps</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/cableexapp/mmbios.git</string>
+	<string>http://192.168.8.2/svn/su2_apps/ITS/trunk/ios/Hangzhoutong/tools/SDWebImage</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F60F4B91C26728757CB15F60425EE88018D8FA71</string>
+	<string>55cf90a1-0c96-468b-aa50-050415425df3++4954</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F60F4B91C26728757CB15F60425EE88018D8FA71</string>
-			<key>IDESourceControlWCCName</key>
-			<string>mmbios</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.subversion</string>

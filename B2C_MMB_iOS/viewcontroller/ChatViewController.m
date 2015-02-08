@@ -178,6 +178,7 @@ int messageCountNum = 0;
 
 -(void)endChatConfrence
 {
+    [self.appDelegate goOffline];
     [xmppRoom leaveRoom];
     
     [self pageFromWhere];

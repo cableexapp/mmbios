@@ -124,6 +124,21 @@ double secondsCountDown =0;
     
     timeCountTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeFireMethod)  userInfo:nil repeats:YES];
     
+    self.progressView = [[PICircularProgressView alloc] init];
+    self.progressView.frame = CGRectMake(20, 50, 280, 240);
+    self.progressView.thicknessRatio = 0.09;
+    self.progressView.outerBackgroundColor = [DCFColorUtil colorFromHexRGB:@"#f1f1f1"];
+    self.progressView.progressFillColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
+    self.progressView.showText = NO;
+    [self.view addSubview:self.progressView];
+    
+    label4 = [[UILabel alloc] init];
+    label4.frame = CGRectMake(0, 140, self.view.frame.size.width, 60);
+    label4.textColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
+    label4.font = [UIFont systemFontOfSize:80];
+    label4.textAlignment  = 1;
+    [self.view addSubview:label4];
+    
     shimmeringView = [[FBShimmeringView alloc] initWithFrame:CGRectMake(0, 190, self.view.frame.size.width, 30)];
     [self.view addSubview:shimmeringView];
     
@@ -135,22 +150,6 @@ double secondsCountDown =0;
     label3.text = NSLocalizedString(@"您正在进入队列，请稍后...", nil);
     shimmeringView.contentView = label3;
     shimmeringView.shimmering = YES;
-    
-    label4 = [[UILabel alloc] init];
-    label4.frame = CGRectMake(0, 140, self.view.frame.size.width, 60);
-    label4.textColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
-    label4.font = [UIFont systemFontOfSize:80];
-    label4.textAlignment  = 1;
-    [self.view addSubview:label4];
-    
-    self.progressView = [[PICircularProgressView alloc] init];
-    self.progressView.frame = CGRectMake(20, 50, 280, 240);
-    self.progressView.thicknessRatio = 0.09;
-    self.progressView.outerBackgroundColor = [DCFColorUtil colorFromHexRGB:@"#dddddd"];
-    self.progressView.progressFillColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
-    self.progressView.showText = NO;
-    self.progressView.textColor = [UIColor whiteColor];
-    [self.view addSubview:self.progressView];
     
     //接收openfire服务端客服在线自动回复
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (autoMessageToServer_online:) name:@"CheckTheStatus_online" object:nil];
@@ -307,12 +306,9 @@ double secondsCountDown =0;
 
     if (self.appDelegate.uesrID != nil)
     {
-        
         [timeCountTimer invalidate];
-
         ChatViewController *chatVC = [[ChatViewController alloc] init];
         chatVC.fromStringFlag = self.tempFrom;
-//
         CATransition *transition = [CATransition animation];
         transition.duration = 0.4f;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
@@ -465,7 +461,6 @@ double secondsCountDown =0;
     }
 }
 
-
 //请求连接客服
 -(void)autoMessageToServer_online:(NSNotification *)newMessage
 {
@@ -474,7 +469,6 @@ double secondsCountDown =0;
         memberCount = self.appDelegate.tempID;
         tempCount = [self.appDelegate.tempID intValue];
     }
-    
     isShowJoinMessage = newMessage.object;
 }
 

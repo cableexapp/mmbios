@@ -199,6 +199,7 @@
 		6186F4211A50F465009FA26E /* moreUnSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 6186F4171A50F465009FA26E /* moreUnSelect.png */; };
 		6186F4221A50F465009FA26E /* p_centerSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 6186F4181A50F465009FA26E /* p_centerSelect.png */; };
 		6186F4231A50F465009FA26E /* p_centerUnSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = 6186F4191A50F465009FA26E /* p_centerUnSelect.png */; };
+		6187CAE51A86F57800A3B66E /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6187CAE21A86F57800A3B66E /* libMobClickLibrary.a */; };
 		61939A171A84C02E00FB709C /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 61939A0B1A84C02E00FB709C /* Icon-40.png */; };
 		61939A181A84C02E00FB709C /* Icon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61939A0C1A84C02E00FB709C /* Icon-40@3x.png */; };
 		61939A191A84C02E00FB709C /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 61939A0D1A84C02E00FB709C /* Icon-60.png */; };
@@ -310,7 +311,6 @@
 		61CCBCE219CFFF150008A46B /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDC19CFFF150008A46B /* Icon-60@2x.png */; };
 		61CCBCE319CFFF150008A46B /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDD19CFFF150008A46B /* Icon-Small.png */; };
 		61CCBCE419CFFF150008A46B /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61CCBCDE19CFFF150008A46B /* Icon-Small@2x.png */; };
-		61CD8CFB1A1D959F003C75F8 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CD8CF81A1D959F003C75F8 /* libMobClickLibrary.a */; };
 		61CD8D011A1DDA70003C75F8 /* ValidateForPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CD8D001A1DDA70003C75F8 /* ValidateForPhoneViewController.m */; };
 		61CD8D041A1DF279003C75F8 /* ValidateForEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CD8D031A1DF279003C75F8 /* ValidateForEmailViewController.m */; };
 		61D6698119FE1D5300908016 /* LogisticsTrackingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D6698019FE1D5300908016 /* LogisticsTrackingTableViewCell.m */; };
@@ -1197,6 +1197,9 @@
 		6186F4171A50F465009FA26E /* moreUnSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moreUnSelect.png; sourceTree = "<group>"; };
 		6186F4181A50F465009FA26E /* p_centerSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p_centerSelect.png; sourceTree = "<group>"; };
 		6186F4191A50F465009FA26E /* p_centerUnSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = p_centerUnSelect.png; sourceTree = "<group>"; };
+		6187CAE21A86F57800A3B66E /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		6187CAE31A86F57800A3B66E /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		6187CAE41A86F57800A3B66E /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		61939A0B1A84C02E00FB709C /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
 		61939A0C1A84C02E00FB709C /* Icon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@3x.png"; sourceTree = "<group>"; };
 		61939A0D1A84C02E00FB709C /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60.png"; sourceTree = "<group>"; };
@@ -1385,9 +1388,6 @@
 		61CCBCDC19CFFF150008A46B /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
 		61CCBCDD19CFFF150008A46B /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		61CCBCDE19CFFF150008A46B /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		61CD8CF81A1D959F003C75F8 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		61CD8CF91A1D959F003C75F8 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
-		61CD8CFA1A1D959F003C75F8 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		61CD8CFF1A1DDA70003C75F8 /* ValidateForPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidateForPhoneViewController.h; sourceTree = "<group>"; };
 		61CD8D001A1DDA70003C75F8 /* ValidateForPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidateForPhoneViewController.m; sourceTree = "<group>"; };
 		61CD8D021A1DF279003C75F8 /* ValidateForEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidateForEmailViewController.h; sourceTree = "<group>"; };
@@ -2052,7 +2052,6 @@
 				8B2821501A1492D700060534 /* iflyMSC.framework in Frameworks */,
 				6181A55D19CFC6E6000E2D14 /* libresolv.dylib in Frameworks */,
 				8BACAAEF1A5D2CB100F995BC /* libidn.a in Frameworks */,
-				61CD8CFB1A1D959F003C75F8 /* libMobClickLibrary.a in Frameworks */,
 				6181A55B19CFC6DB000E2D14 /* MobileCoreServices.framework in Frameworks */,
 				6181A55919CFC6C7000E2D14 /* CoreLocation.framework in Frameworks */,
 				6181A55719CFC6BD000E2D14 /* Social.framework in Frameworks */,
@@ -2062,6 +2061,7 @@
 				6181A54F19CFC6A2000E2D14 /* libz.dylib in Frameworks */,
 				6181A54D19CFC69B000E2D14 /* SystemConfiguration.framework in Frameworks */,
 				6181A54B19CFC691000E2D14 /* CoreTelephony.framework in Frameworks */,
+				6187CAE51A86F57800A3B66E /* libMobClickLibrary.a in Frameworks */,
 				6181A54919CFC67F000E2D14 /* CoreText.framework in Frameworks */,
 				6130A8E31A3EC4D8000B4FB2 /* AlipaySDK.framework in Frameworks */,
 				6181A54719CFC675000E2D14 /* CFNetwork.framework in Frameworks */,
@@ -3495,9 +3495,9 @@
 		61CD8CF71A1D9574003C75F8 /* UMeng */ = {
 			isa = PBXGroup;
 			children = (
-				61CD8CF81A1D959F003C75F8 /* libMobClickLibrary.a */,
-				61CD8CF91A1D959F003C75F8 /* MobClick.h */,
-				61CD8CFA1A1D959F003C75F8 /* MobClickSocialAnalytics.h */,
+				6187CAE21A86F57800A3B66E /* libMobClickLibrary.a */,
+				6187CAE31A86F57800A3B66E /* MobClick.h */,
+				6187CAE41A86F57800A3B66E /* MobClickSocialAnalytics.h */,
 			);
 			path = UMeng;
 			sourceTree = "<group>";

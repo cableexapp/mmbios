@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MobClick.h"
 
 @interface ViewController ()
 
@@ -18,6 +19,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [MobClick beginLogPageView:@"OnePage"];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [MobClick endLogPageView:@"OnePage"];
 }
 
 - (void)didReceiveMemoryWarning

@@ -306,11 +306,7 @@
     [brandBtn_0 setHidden:NO];
     [triangle setHidden:YES];
     [brandBtn setTitle:brandString forState:UIControlStateNormal];
-    
     [[NSUserDefaults standardUserDefaults] setObject:brandString forKey:@"brand_save"];
-    
-//    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",sectionIndex] forKey:@"brandBtn_save"];
-    
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
 
@@ -323,9 +319,7 @@
     [modelBtn setHidden:NO];
     [modelBtn_1 setHidden:NO];
     [triangle_1 setHidden:YES];
-
     [[NSUserDefaults standardUserDefaults] setObject:modelString forKey:@"model_save"];
-    
     [modelBtn setTitle:modelString forState:UIControlStateNormal];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
@@ -340,9 +334,7 @@
     [useBtn_2 setHidden:NO];
     [triangle_2 setHidden:YES];
     [useBtn setTitle:useString forState:UIControlStateNormal];
-    
     [[NSUserDefaults standardUserDefaults] setObject:useString forKey:@"use_save"];
-    
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
     
 }
@@ -357,14 +349,9 @@
     [specBtn_3 setHidden:NO];
     [triangle_3 setHidden:YES];
     [specBtn setTitle:specString forState:UIControlStateNormal];
-    
     [[NSUserDefaults standardUserDefaults] setObject:specString forKey:@"spec_save"];
-    
-//    specString = [self getNumFromString:specString];
     [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
 }
-
-
 
 - (void) addHeadView
 {
@@ -376,7 +363,6 @@
     [label setText:@"商品分类"];
     [label setTextAlignment:NSTextAlignmentLeft];
     [label setFont:[UIFont boldSystemFontOfSize:15]];
-//    [label setBackgroundColor:[UIColor redColor]];
     [topView addSubview:label];
     
     _clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -426,7 +412,6 @@
 
         int yu = i%3;
         CGFloat originX = 0.0;
-   
         
         if(yu == 0)
         {
@@ -491,32 +476,6 @@
         int chu = i/3;
         CGFloat originY = 5*(chu+1) + 30*chu;
         [btn setFrame:CGRectMake(originX,originY, btnWidth-20, 30)];
-
-
-
-        
-//        for(UIButton *btn in array2)
-//        {
-//            NSString *str = btn.titleLabel.text;
-//            for(int i=0;i<brandsArray.count;i++)
-//            {
-//                if([str isEqualToString:[brandsArray objectAtIndex:i]])
-//                {
-//                    [btn setEnabled:YES];
-//                    break;
-//                }
-//                else
-//                {
-//                    [btn setEnabled:NO];
-//                }
-//            }
-//            if(brandsArray.count == 0)
-//            {
-//                [btn setEnabled:NO];
-//            }
-//        }
-
-        
     }
     
 #pragma mark - 型号数组
@@ -622,7 +581,6 @@
         [iv setImage:[UIImage imageNamed:@"askPriceCar"]];
         [ivArray addObject:iv];
     }
-    
     flag = (BOOL*)malloc([[_myDic allKeys] count]*sizeof(BOOL*));
     memset(flag, YES, sizeof(flag));
 }
@@ -631,7 +589,6 @@
 {
     if(self = [super init])
     {
-        
         myRect = rect;
         self.view.frame = rect;
         
@@ -669,7 +626,6 @@
 
 - (void)viewDidLoad
 {
-    
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor brownColor];
@@ -770,6 +726,42 @@
     [triangle_3 setTag:3];
   
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeChooseView" object:nil];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(delateChooseCondition:) name:@"delateChoose" object:nil];
+}
+
+-(void)delateChooseCondition:(NSNotification *)sender
+{
+    [headBtnArray removeAllObjects];
+    
+    showUseCell = YES;
+    showModelCell = YES;
+    showSpecCell = YES;
+    showBrandCell = YES;
+    
+    brandBtn.hidden = YES;
+    brandBtn_0.hidden = YES;
+    modelBtn.hidden = YES;
+    modelBtn_1.hidden = YES;
+    useBtn.hidden = YES;
+    useBtn_2.hidden = YES;
+    specBtn.hidden = YES;
+    specBtn_3.hidden = YES;
+    
+    triangle.hidden = NO;
+    triangle_1.hidden = NO;
+    triangle_2.hidden = NO;
+    triangle_3.hidden = NO;
+    
+    useString = @"";
+    modelString = @"";
+    specString = @"";
+    brandString = @"";
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
 }
 
 - (void)branBtnMet_0:(UIButton *)button
@@ -803,6 +795,8 @@
 - (void)useBtnMet_2:(UIButton *)button
 {
     int sectionIndex = ((UIButton*)button).tag;
+    NSLog(@"useBtnMet_2 = %zi",sectionIndex);
+    
     flag[sectionIndex] = !flag[sectionIndex];
     [useBtn setHidden:YES];
     [useBtn_2 setHidden:YES];
@@ -850,13 +844,18 @@
 
 - (void) clear:(UIButton *) sender
 {
-//    if(headBtnArray && headBtnArray.count != 0)
-//    {
+    NSString *tempBtand = [[NSUserDefaults standardUserDefaults] objectForKey:@"brand_save"];
+    NSString *tempModel = [[NSUserDefaults standardUserDefaults] objectForKey:@"model_save"];
+    NSString *tempUse = [[NSUserDefaults standardUserDefaults] objectForKey:@"use_save"];
+    NSString *tempSpec = [[NSUserDefaults standardUserDefaults] objectForKey:@"spec_save"];
+    
+    if (tempBtand.length > 0 || tempModel.length > 0 || tempUse.length > 0 || tempSpec.length > 0)
+    {
         [headBtnArray removeAllObjects];
         
-        showUseCell = YES;
-        showModelCell = YES;
-        showSpecCell = YES;
+        showUseCell = NO;
+        showModelCell = NO;
+        showSpecCell = NO;
         showBrandCell = YES;
         
         brandBtn.hidden = YES;
@@ -867,42 +866,39 @@
         useBtn_2.hidden = YES;
         specBtn.hidden = YES;
         specBtn_3.hidden = YES;
-
-         triangle.hidden = NO;
-         triangle_1.hidden = NO;
-         triangle_2.hidden = NO;
-         triangle_3.hidden = NO;
-    
-        useString = nil;
-        modelString = nil;
-        specString = nil;
-        brandString = nil;
-    
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
-    
-    [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
-
-//    
-//    // 背影view的通知事件
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadNomalData" object:nil];
+        
+        triangle.hidden = NO;
+        triangle_1.hidden = NO;
+        triangle_2.hidden = NO;
+        triangle_3.hidden = NO;
+        
+        useString = @"";
+        modelString = @"";
+        specString = @"";
+        brandString = @"";
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"brand_save"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"model_save"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"use_save"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"spec_save"];
+        
+        [self loadRequestWithUse:useString WithModel:modelString WithSpec:specString WithBrand:brandString WithRequestName:@"ScreeningCondition" WithTag:0];
+        // 背影view的通知事件
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadNomalData" object:nil];
+    }
 }
 
 - (void) sure:(UIButton *) sender
 {
-
     if([self.delegate respondsToSelector:@selector(requestStringWithUse:WithBrand:WithSpec:WithModel:WithSeq:)])
     {
         [self.delegate requestStringWithUse:useString WithBrand:brandString WithSpec:specString WithModel:modelString WithSeq:@""];
     }
-
-    //关闭筛选界面_动画效果
-     [self closeViewAnimations];
-    
     // 背影view的通知事件
     [[NSNotificationCenter defaultCenter] postNotificationName:@"closeBackView" object:nil];
+    //关闭筛选界面_动画效果
+    [self closeViewAnimations];
+
 }
 
 
@@ -920,17 +916,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if(section == 0)
-//    {
-//        if(!headBtnArray || headBtnArray.count == 0)
-//        {
-//            return 0;
-//        }
-//        return 1;
-//    }
 	return [self numberOfRowsInSection:section];
 }
-
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -1012,7 +999,7 @@
         }
         return btn.frame.origin.y + btn.frame.size.height +5;
     
-    return 0;
+//    return 0;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -1136,38 +1123,12 @@
         [(UIView *)CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT removeFromSuperview];
         
     }
-
-    
-    //	NSString *str = [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:[indexPath section]]] objectAtIndex:indexPath.row];
-    //	cell.imageView.image = [UIImage imageNamed:@"102.png"];
-    //	cell.textLabel.text = str;
-    //	cell.detailTextLabel.text = @"cocoaChina 会员";
-    
-//    if(indexPath.section == 0)
-//    {
-//        if(!headBtnArray || headBtnArray.count == 0)
-//        {
-//            
-//        }
-//        else
-//        {
-//           选中的btn
-//            for(UIButton *btn in headBtnArray)
-//            {
-//                [cell.contentView addSubview:btn];
-//            }
-//        }
-//    }
-//    else
-//    {
 //        列表的所有Btn
         NSMutableArray *array = [_myDic valueForKey:[[_myDic allKeys] objectAtIndex:indexPath.section]];
         for(UIButton *btn in array)
         {
             [cell.contentView addSubview:btn];
         }
-//    }
-
     return cell;
 }
 
@@ -1195,6 +1156,7 @@
         showSpecCell = !showSpecCell;
         flag[sectionIndex] = showSpecCell;
     }
+        [tv reloadData];
 	UIButton *btn = sender;
 //	flag[sectionIndex] = !flag[sectionIndex];
     UIImageView *iv = [ivArray objectAtIndex:sectionIndex];
@@ -1225,7 +1187,7 @@
                 triangle_3.transform = CGAffineTransformMakeRotation(0);
             break;
     }
-    
+
     if(flag[sectionIndex])
 	{
         btn.selected = YES;
@@ -1237,7 +1199,7 @@
         iv.transform = CGAffineTransformMakeRotation(0);
 	}
     
-	[tv reloadData];
+	
 }
 
 
@@ -1246,7 +1208,6 @@
 {
 	if (flag[section])
     {
-        //		return [[_myDic valueForKey:[[_myDic allKeys] objectAtIndex:section]] count];
         return 1;
 	}
 	else {

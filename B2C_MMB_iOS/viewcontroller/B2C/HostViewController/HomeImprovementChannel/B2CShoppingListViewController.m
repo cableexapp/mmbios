@@ -103,6 +103,13 @@
             [view setHidden:YES];
         }
     }
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 15, 22);
+    [btn setBackgroundImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(goBackAction) forControlEvents: UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
     rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setBackgroundImage:[UIImage imageNamed:@"购物车"] forState:UIControlStateNormal];
     [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
@@ -130,6 +137,12 @@
     {
         flag = NO;
     }
+}
+
+-(void)goBackAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"delateChoose" object:nil];
 }
 
 #pragma mark - delegate

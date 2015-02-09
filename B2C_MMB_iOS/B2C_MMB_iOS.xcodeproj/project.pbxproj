@@ -267,8 +267,6 @@
 		61B710D519FF3B53001CC3BD /* ChooseListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7107219FF3B53001CC3BD /* ChooseListTableViewController.m */; };
 		61B710D619FF3B53001CC3BD /* GoodsDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7107419FF3B53001CC3BD /* GoodsDetailTableViewCell.m */; };
 		61B710D719FF3B53001CC3BD /* GoodsDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61B7107519FF3B53001CC3BD /* GoodsDetailTableViewCell.xib */; };
-		61B710D919FF3B53001CC3BD /* B2CShoppingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7107A19FF3B53001CC3BD /* B2CShoppingListViewController.m */; };
-		61B710DA19FF3B53001CC3BD /* B2CShoppingSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7107C19FF3B53001CC3BD /* B2CShoppingSearchViewController.m */; };
 		61B710DB19FF3B53001CC3BD /* HostNaviViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7107E19FF3B53001CC3BD /* HostNaviViewController.m */; };
 		61B710DC19FF3B53001CC3BD /* HostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7108019FF3B53001CC3BD /* HostTableViewController.m */; };
 		61B710DD19FF3B53001CC3BD /* ShopHostPreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B7108219FF3B53001CC3BD /* ShopHostPreTableViewController.m */; };
@@ -373,8 +371,6 @@
 		8B7249981A86444700C8D0B7 /* RFImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7249811A86444700C8D0B7 /* RFImageToDataTransformer.m */; };
 		8B7249991A86444700C8D0B7 /* XMPPIDTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7249831A86444700C8D0B7 /* XMPPIDTracker.m */; };
 		8B72499A1A86444700C8D0B7 /* XMPPSRVResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7249851A86444700C8D0B7 /* XMPPSRVResolver.m */; };
-		8B7249A01A86446000C8D0B7 /* build-libidn.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8B72499C1A86446000C8D0B7 /* build-libidn.sh */; };
-		8B7249A11A86446000C8D0B7 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B72499E1A86446000C8D0B7 /* libidn.a */; };
 		8B7549421A26FB2E00271985 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549411A26FB2E00271985 /* close.png */; };
 		8B7549441A27013600271985 /* chatBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549431A27013600271985 /* chatBtn.png */; };
 		8B7549461A270A4B00271985 /* shopPic.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7549451A270A4B00271985 /* shopPic.png */; };
@@ -750,6 +746,10 @@
 		8BCC0C8E1A1F7586004F0EF8 /* dlOrder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC0C8B1A1F7586004F0EF8 /* dlOrder.png */; };
 		8BCC0C8F1A1F7586004F0EF8 /* homeOrder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC0C8C1A1F7586004F0EF8 /* homeOrder.png */; };
 		8BCC0C901A1F7586004F0EF8 /* mmbOrder.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC0C8D1A1F7586004F0EF8 /* mmbOrder.png */; };
+		8BCC82B01A875C4D00450EEF /* B2CShoppingListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC82AD1A875C4D00450EEF /* B2CShoppingListViewController.m */; };
+		8BCC82B11A875C4D00450EEF /* B2CShoppingSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCC82AF1A875C4D00450EEF /* B2CShoppingSearchViewController.m */; };
+		8BCC82CE1A878D3100450EEF /* build-libidn.sh in Resources */ = {isa = PBXBuildFile; fileRef = 8BCC82CA1A878D3100450EEF /* build-libidn.sh */; };
+		8BCC82CF1A878D3100450EEF /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BCC82CC1A878D3100450EEF /* libidn.a */; };
 		8BD9B8AB1A1355330037FB65 /* icon01.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8AA1A1355330037FB65 /* icon01.png */; };
 		8BD9B8AE1A1355FA0037FB65 /* chatfrom_bg_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8AC1A1355FA0037FB65 /* chatfrom_bg_normal.png */; };
 		8BD9B8AF1A1355FA0037FB65 /* chatfrom_bg_focused.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9B8AD1A1355FA0037FB65 /* chatfrom_bg_focused.png */; };
@@ -1313,10 +1313,6 @@
 		61B7107319FF3B53001CC3BD /* GoodsDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailTableViewCell.h; sourceTree = "<group>"; };
 		61B7107419FF3B53001CC3BD /* GoodsDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailTableViewCell.m; sourceTree = "<group>"; };
 		61B7107519FF3B53001CC3BD /* GoodsDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoodsDetailTableViewCell.xib; sourceTree = "<group>"; };
-		61B7107919FF3B53001CC3BD /* B2CShoppingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShoppingListViewController.h; sourceTree = "<group>"; };
-		61B7107A19FF3B53001CC3BD /* B2CShoppingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShoppingListViewController.m; sourceTree = "<group>"; };
-		61B7107B19FF3B53001CC3BD /* B2CShoppingSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShoppingSearchViewController.h; sourceTree = "<group>"; };
-		61B7107C19FF3B53001CC3BD /* B2CShoppingSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShoppingSearchViewController.m; sourceTree = "<group>"; };
 		61B7107D19FF3B53001CC3BD /* HostNaviViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostNaviViewController.h; sourceTree = "<group>"; };
 		61B7107E19FF3B53001CC3BD /* HostNaviViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HostNaviViewController.m; sourceTree = "<group>"; };
 		61B7107F19FF3B53001CC3BD /* HostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HostTableViewController.h; sourceTree = "<group>"; };
@@ -1487,10 +1483,6 @@
 		8B7249831A86444700C8D0B7 /* XMPPIDTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPIDTracker.m; sourceTree = "<group>"; };
 		8B7249841A86444700C8D0B7 /* XMPPSRVResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPSRVResolver.h; sourceTree = "<group>"; };
 		8B7249851A86444700C8D0B7 /* XMPPSRVResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPSRVResolver.m; sourceTree = "<group>"; };
-		8B72499C1A86446000C8D0B7 /* build-libidn.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-libidn.sh"; sourceTree = "<group>"; };
-		8B72499D1A86446000C8D0B7 /* idn-int.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "idn-int.h"; sourceTree = "<group>"; };
-		8B72499E1A86446000C8D0B7 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
-		8B72499F1A86446000C8D0B7 /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
 		8B7549411A26FB2E00271985 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		8B7549431A27013600271985 /* chatBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatBtn.png; sourceTree = "<group>"; };
 		8B7549451A270A4B00271985 /* shopPic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shopPic.png; sourceTree = "<group>"; };
@@ -1994,6 +1986,14 @@
 		8BCC0C8B1A1F7586004F0EF8 /* dlOrder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dlOrder.png; sourceTree = "<group>"; };
 		8BCC0C8C1A1F7586004F0EF8 /* homeOrder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeOrder.png; sourceTree = "<group>"; };
 		8BCC0C8D1A1F7586004F0EF8 /* mmbOrder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mmbOrder.png; sourceTree = "<group>"; };
+		8BCC82AC1A875C4D00450EEF /* B2CShoppingListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShoppingListViewController.h; sourceTree = "<group>"; };
+		8BCC82AD1A875C4D00450EEF /* B2CShoppingListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShoppingListViewController.m; sourceTree = "<group>"; };
+		8BCC82AE1A875C4D00450EEF /* B2CShoppingSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = B2CShoppingSearchViewController.h; sourceTree = "<group>"; };
+		8BCC82AF1A875C4D00450EEF /* B2CShoppingSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CShoppingSearchViewController.m; sourceTree = "<group>"; };
+		8BCC82CA1A878D3100450EEF /* build-libidn.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-libidn.sh"; sourceTree = "<group>"; };
+		8BCC82CB1A878D3100450EEF /* idn-int.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "idn-int.h"; sourceTree = "<group>"; };
+		8BCC82CC1A878D3100450EEF /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
+		8BCC82CD1A878D3100450EEF /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
 		8BD9B8AA1A1355330037FB65 /* icon01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon01.png; path = ../icon01.png; sourceTree = "<group>"; };
 		8BD9B8AC1A1355FA0037FB65 /* chatfrom_bg_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatfrom_bg_normal.png; sourceTree = "<group>"; };
 		8BD9B8AD1A1355FA0037FB65 /* chatfrom_bg_focused.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatfrom_bg_focused.png; sourceTree = "<group>"; };
@@ -2051,7 +2051,7 @@
 				6130A8EA1A3EC69C000B4FB2 /* libcrypto.a in Frameworks */,
 				8B2821501A1492D700060534 /* iflyMSC.framework in Frameworks */,
 				6181A55D19CFC6E6000E2D14 /* libresolv.dylib in Frameworks */,
-				8B7249A11A86446000C8D0B7 /* libidn.a in Frameworks */,
+				8BCC82CF1A878D3100450EEF /* libidn.a in Frameworks */,
 				6181A55B19CFC6DB000E2D14 /* MobileCoreServices.framework in Frameworks */,
 				6181A55919CFC6C7000E2D14 /* CoreLocation.framework in Frameworks */,
 				6181A55719CFC6BD000E2D14 /* Social.framework in Frameworks */,
@@ -3317,10 +3317,10 @@
 		61B7107819FF3B53001CC3BD /* HomeImprovementChannel */ = {
 			isa = PBXGroup;
 			children = (
-				61B7107919FF3B53001CC3BD /* B2CShoppingListViewController.h */,
-				61B7107A19FF3B53001CC3BD /* B2CShoppingListViewController.m */,
-				61B7107B19FF3B53001CC3BD /* B2CShoppingSearchViewController.h */,
-				61B7107C19FF3B53001CC3BD /* B2CShoppingSearchViewController.m */,
+				8BCC82AC1A875C4D00450EEF /* B2CShoppingListViewController.h */,
+				8BCC82AD1A875C4D00450EEF /* B2CShoppingListViewController.m */,
+				8BCC82AE1A875C4D00450EEF /* B2CShoppingSearchViewController.h */,
+				8BCC82AF1A875C4D00450EEF /* B2CShoppingSearchViewController.m */,
 			);
 			path = HomeImprovementChannel;
 			sourceTree = "<group>";
@@ -3585,7 +3585,7 @@
 		8B7249521A86444700C8D0B7 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				8B72499B1A86446000C8D0B7 /* libidn */,
+				8BCC82C91A878D3100450EEF /* libidn */,
 				8B7249531A86444700C8D0B7 /* CocoaAsyncSocket */,
 				8B7249561A86444700C8D0B7 /* CocoaLumberjack */,
 				8B7249671A86444700C8D0B7 /* KissXML */,
@@ -3683,17 +3683,6 @@
 				8B7249851A86444700C8D0B7 /* XMPPSRVResolver.m */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		8B72499B1A86446000C8D0B7 /* libidn */ = {
-			isa = PBXGroup;
-			children = (
-				8B72499C1A86446000C8D0B7 /* build-libidn.sh */,
-				8B72499D1A86446000C8D0B7 /* idn-int.h */,
-				8B72499E1A86446000C8D0B7 /* libidn.a */,
-				8B72499F1A86446000C8D0B7 /* stringprep.h */,
-			);
-			path = libidn;
 			sourceTree = "<group>";
 		};
 		8B89E1DD1A1B202E00AA33C2 /* PopListView */ = {
@@ -4582,6 +4571,17 @@
 			path = opensource;
 			sourceTree = "<group>";
 		};
+		8BCC82C91A878D3100450EEF /* libidn */ = {
+			isa = PBXGroup;
+			children = (
+				8BCC82CA1A878D3100450EEF /* build-libidn.sh */,
+				8BCC82CB1A878D3100450EEF /* idn-int.h */,
+				8BCC82CC1A878D3100450EEF /* libidn.a */,
+				8BCC82CD1A878D3100450EEF /* stringprep.h */,
+			);
+			path = libidn;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5053,7 +5053,7 @@
 				8BA7C1151A10A85500758B0F /* 糗了.png in Resources */,
 				61A197DF19F75BBD00909C6F /* Overlay@2x.png in Resources */,
 				8BF452501A39A8BC00E3665F /* askPriceCar_arrow.png in Resources */,
-				8B7249A01A86446000C8D0B7 /* build-libidn.sh in Resources */,
+				8BCC82CE1A878D3100450EEF /* build-libidn.sh in Resources */,
 				61B710D719FF3B53001CC3BD /* GoodsDetailTableViewCell.xib in Resources */,
 				8BA7C10C1A10A85500758B0F /* 睡觉@2x.png in Resources */,
 				8BA7C0821A10A85500758B0F /* 再见@2x.png in Resources */,
@@ -5149,7 +5149,6 @@
 				8B9A702B1A60BF41006E874F /* SearchViewController.m in Sources */,
 				8BACAA691A5D2C9E00F995BC /* XMPPCoreDataStorage.m in Sources */,
 				6181A51819CFC4C2000E2D14 /* UIImage+MultiFormat.m in Sources */,
-				61B710D919FF3B53001CC3BD /* B2CShoppingListViewController.m in Sources */,
 				8BA7C3161A10A93B00758B0F /* MessageCell.m in Sources */,
 				61B710DE19FF3B53001CC3BD /* ShopHostTableViewController.m in Sources */,
 				8BACAAA71A5D2C9E00F995BC /* XMPPPing.m in Sources */,
@@ -5259,7 +5258,6 @@
 				8BACAA9A1A5D2C9E00F995BC /* XMPPCapabilities.xcdatamodel in Sources */,
 				8BACA98F1A5D2C7700F995BC /* XMPPMessage.m in Sources */,
 				8BACAAA51A5D2C9E00F995BC /* XMPPMessage+XEP_0184.m in Sources */,
-				61B710DA19FF3B53001CC3BD /* B2CShoppingSearchViewController.m in Sources */,
 				8BACAA901A5D2C9E00F995BC /* XMPPvCardTempEmail.m in Sources */,
 				61A197C219F7509400909C6F /* QBAssetCollectionViewController.m in Sources */,
 				61760A721A15981500F3BA0B /* MyCableSureOrderViewController.m in Sources */,
@@ -5380,6 +5378,7 @@
 				8BACA9B61A5D2C9200F995BC /* NSNumber+XMPP.m in Sources */,
 				8BACAA6D1A5D2C9E00F995BC /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				8BA7C1831A10A8CC00758B0F /* TQRichTextURLRun.m in Sources */,
+				8BCC82B11A875C4D00450EEF /* B2CShoppingSearchViewController.m in Sources */,
 				6181A4C319CFC4C2000E2D14 /* CustomAlertView.m in Sources */,
 				61B710F219FF3B53001CC3BD /* SecondTableViewController.m in Sources */,
 				8B2821551A14BA9200060534 /* PopupView.m in Sources */,
@@ -5410,6 +5409,7 @@
 				6181A50D19CFC4C2000E2D14 /* MKAnnotationView+WebCache.m in Sources */,
 				8BACAAA21A5D2C9E00F995BC /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				8BACAA751A5D2C9E00F995BC /* XMPPIQ+JabberRPC.m in Sources */,
+				8BCC82B01A875C4D00450EEF /* B2CShoppingListViewController.m in Sources */,
 				6130AA061A3ED619000B4FB2 /* openssl_wrapper.m in Sources */,
 				61ADE7E41A10959F00D773B9 /* HotScreenSuccessViewController.m in Sources */,
 				6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */,
@@ -5520,7 +5520,7 @@
 				PROVISIONING_PROFILE = "971c4557-10fe-4df5-932a-598a5a8d75aa";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv7 arm64 armv7s";
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -5562,7 +5562,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 arm64 armv7s";
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
@@ -5598,13 +5598,13 @@
 					"$(PROJECT_DIR)/Tools/XMPP/Vendor/libidn",
 					"$(PROJECT_DIR)/Tools/xmpp/Vendor/libidn",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "971c4557-10fe-4df5-932a-598a5a8d75aa";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = "armv7 arm64 armv7s";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -5647,7 +5647,7 @@
 				PROVISIONING_PROFILE = "971c4557-10fe-4df5-932a-598a5a8d75aa";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 arm64 armv7s";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

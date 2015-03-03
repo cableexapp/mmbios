@@ -632,16 +632,19 @@
     NSDictionary *arrDic = (NSDictionary *)[data mutableObjectFromJSONData];
     NSString *soundInput = [[[[[arrDic objectForKey:@"ws"] objectAtIndex:0] objectForKey:@"cw"] objectAtIndex:0] objectForKey:@"w"];
     NSString * str = [[NSString alloc]init];
-    str = [str stringByAppendingString:soundInput];
-    //去掉识别结果最后的标点符号
-    if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"] || [str isEqualToString:@"，"])
+    if (soundInput.length > 0)
     {
-        
-    }
-    else
-    {
-        searchBarText = str;
-        mySearchBar.text = str;
+        str = [str stringByAppendingString:soundInput];
+        //去掉识别结果最后的标点符号
+        if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"] || [str isEqualToString:@"，"])
+        {
+            
+        }
+        else
+        {
+            searchBarText = str;
+            mySearchBar.text = str;
+        }
     }
     if (mySearchBar.text.length > 0)
     {

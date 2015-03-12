@@ -243,7 +243,7 @@
     noNet.hidden = NO;
     noNetView.hidden = NO;
     noNetMessage.hidden = NO;
-//    [self.view bringSubviewToFront:noNet];
+//  [self.view bringSubviewToFront:noNet];
 }
 
 //获取客服组列表提示
@@ -251,7 +251,6 @@
 {
     [self.memberTableView removeFromSuperview];
     self.tempArray = memberList.object;
-    
     self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
     self.memberTableView.dataSource = self;
     self.memberTableView.delegate = self;

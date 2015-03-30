@@ -73,7 +73,8 @@
     self.memberTableView.backgroundColor = [UIColor clearColor];
     
     self.memberTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.memberTableView];
+//    [self.view addSubview:self.memberTableView];
+    [self.view insertSubview:self.memberTableView atIndex:0];
     
     UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-150, self.view.frame.size.width, 2)];
     separatorView.backgroundColor = [DCFColorUtil colorFromHexRGB:@"#1465ba"];
@@ -118,7 +119,6 @@
     noNetMessage.textAlignment = NSTextAlignmentLeft;
     noNetMessage.text = @"当前网络不可用，请检查网络设置!";
     [self.view insertSubview:noNetMessage atIndex:2];
-
     
     //服务器忙消息通知
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector (ServerisBusy:) name:@"errorMessage" object:nil];
@@ -171,7 +171,6 @@
         {
             NSString *tempUserName = [[NSUserDefaults standardUserDefaults]  objectForKey:@"app_username"];
             [[NSUserDefaults standardUserDefaults] setObject:tempUserName forKey:@"userName_IM"];
-            
         }
         else
         {
@@ -194,7 +193,8 @@
         self.memberTableView.backgroundColor = [UIColor clearColor];
         self.memberTableView.separatorColor = [UIColor clearColor];
         self.memberTableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);
-        [self.view addSubview:self.memberTableView];
+//        [self.view addSubview:self.memberTableView];
+        [self.view insertSubview:self.memberTableView atIndex:0];
         [self.memberTableView reloadData];
     }
     else
@@ -212,6 +212,7 @@
         noNet.hidden = NO;
         noNetView.hidden = NO;
         noNetMessage.hidden = NO;
+//        [self.view bringSubviewToFront:noNet];
     }
     else
     {
@@ -242,6 +243,7 @@
     noNet.hidden = NO;
     noNetView.hidden = NO;
     noNetMessage.hidden = NO;
+//  [self.view bringSubviewToFront:noNet];
 }
 
 //获取客服组列表提示
@@ -249,7 +251,6 @@
 {
     [self.memberTableView removeFromSuperview];
     self.tempArray = memberList.object;
-    
     self.memberTableView = [[UITableView alloc] initWithFrame:CGRectMake(5,7, self.view.frame.size.width-10, self.view.frame.size.height-157) style:UITableViewStylePlain];
     self.memberTableView.dataSource = self;
     self.memberTableView.delegate = self;

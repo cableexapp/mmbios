@@ -74,6 +74,11 @@
 		615C8F9019F8EFDF00A2B8CD /* ratingbar_unselect.png in Resources */ = {isa = PBXBuildFile; fileRef = 615C8F8D19F8EFDF00A2B8CD /* ratingbar_unselect.png */; };
 		6166ED5A19D2B86400D9A219 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5919D2B86400D9A219 /* area.plist */; };
 		6166ED5C19D2BAD200D9A219 /* t_prov_city_area_street.db in Resources */ = {isa = PBXBuildFile; fileRef = 6166ED5B19D2BAD200D9A219 /* t_prov_city_area_street.db */; };
+		616A91A41AC28EE80018910A /* SixSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 616A91A31AC28EE80018910A /* SixSB.storyboard */; };
+		616A91A81AC290C40018910A /* SixHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A91A71AC290C40018910A /* SixHostViewController.m */; };
+		616A91AE1AC291EB0018910A /* SixNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A91AD1AC291EB0018910A /* SixNavigationViewController.m */; };
+		616A91B11AC296180018910A /* SixHostFirstTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A91B01AC296180018910A /* SixHostFirstTableViewController.m */; };
+		616A91B41AC2962A0018910A /* SixHostSecondTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616A91B31AC2962A0018910A /* SixHostSecondTableViewController.m */; };
 		616BE0BA1A1447C60061C956 /* MyCableHostSubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616BE0B71A1447C60061C956 /* MyCableHostSubTableViewController.m */; };
 		616BE0BB1A1447C60061C956 /* MyCableOrderHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616BE0B91A1447C60061C956 /* MyCableOrderHostViewController.m */; };
 		616BE0BF1A1448600061C956 /* B2BMyCableOrderListData.m in Sources */ = {isa = PBXBuildFile; fileRef = 616BE0BE1A1448600061C956 /* B2BMyCableOrderListData.m */; };
@@ -939,6 +944,7 @@
 		6130A9FD1A3ED619000B4FB2 /* RSADataSigner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataSigner.m; sourceTree = "<group>"; };
 		6130A9FE1A3ED619000B4FB2 /* RSADataVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSADataVerifier.h; sourceTree = "<group>"; };
 		6130A9FF1A3ED619000B4FB2 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
+		61331FF11AA2EFB600C8FA5F /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		6136F5391A64B3800027A607 /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@3x.png"; sourceTree = "<group>"; };
 		6136F53B1A64B39F0027A607 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
 		6136F53C1A64B39F0027A607 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
@@ -985,6 +991,15 @@
 		615C8F8D19F8EFDF00A2B8CD /* ratingbar_unselect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ratingbar_unselect.png; sourceTree = "<group>"; };
 		6166ED5919D2B86400D9A219 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		6166ED5B19D2BAD200D9A219 /* t_prov_city_area_street.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = t_prov_city_area_street.db; sourceTree = "<group>"; };
+		616A91A31AC28EE80018910A /* SixSB.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SixSB.storyboard; sourceTree = "<group>"; };
+		616A91A61AC290C40018910A /* SixHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SixHostViewController.h; sourceTree = "<group>"; };
+		616A91A71AC290C40018910A /* SixHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SixHostViewController.m; sourceTree = "<group>"; };
+		616A91AC1AC291EB0018910A /* SixNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SixNavigationViewController.h; sourceTree = "<group>"; };
+		616A91AD1AC291EB0018910A /* SixNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SixNavigationViewController.m; sourceTree = "<group>"; };
+		616A91AF1AC296180018910A /* SixHostFirstTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SixHostFirstTableViewController.h; sourceTree = "<group>"; };
+		616A91B01AC296180018910A /* SixHostFirstTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SixHostFirstTableViewController.m; sourceTree = "<group>"; };
+		616A91B21AC2962A0018910A /* SixHostSecondTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SixHostSecondTableViewController.h; sourceTree = "<group>"; };
+		616A91B31AC2962A0018910A /* SixHostSecondTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SixHostSecondTableViewController.m; sourceTree = "<group>"; };
 		616BE0B61A1447C60061C956 /* MyCableHostSubTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableHostSubTableViewController.h; sourceTree = "<group>"; };
 		616BE0B71A1447C60061C956 /* MyCableHostSubTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCableHostSubTableViewController.m; sourceTree = "<group>"; };
 		616BE0B81A1447C60061C956 /* MyCableOrderHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCableOrderHostViewController.h; sourceTree = "<group>"; };
@@ -1083,7 +1098,6 @@
 		6181A3E219CFC4C2000E2D14 /* B2CGoodsListData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = B2CGoodsListData.m; sourceTree = "<group>"; };
 		6181A3E319CFC4C2000E2D14 /* DCFMyArrangeHomeWorkList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCFMyArrangeHomeWorkList.h; sourceTree = "<group>"; };
 		6181A3E419CFC4C2000E2D14 /* DCFMyArrangeHomeWorkList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCFMyArrangeHomeWorkList.m; sourceTree = "<group>"; };
-		6181A3E719CFC4C2000E2D14 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		6181A3E819CFC4C2000E2D14 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		6181A3EA19CFC4C2000E2D14 /* BaseExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseExecutor.h; sourceTree = "<group>"; };
 		6181A3EB19CFC4C2000E2D14 /* BaseExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseExecutor.m; sourceTree = "<group>"; };
@@ -2379,6 +2393,21 @@
 			path = B2CAfterSaleData;
 			sourceTree = "<group>";
 		};
+		616A91A51AC290AD0018910A /* SixVC */ = {
+			isa = PBXGroup;
+			children = (
+				616A91AC1AC291EB0018910A /* SixNavigationViewController.h */,
+				616A91AD1AC291EB0018910A /* SixNavigationViewController.m */,
+				616A91A61AC290C40018910A /* SixHostViewController.h */,
+				616A91A71AC290C40018910A /* SixHostViewController.m */,
+				616A91AF1AC296180018910A /* SixHostFirstTableViewController.h */,
+				616A91B01AC296180018910A /* SixHostFirstTableViewController.m */,
+				616A91B21AC2962A0018910A /* SixHostSecondTableViewController.h */,
+				616A91B31AC2962A0018910A /* SixHostSecondTableViewController.m */,
+			);
+			path = SixVC;
+			sourceTree = "<group>";
+		};
 		616BE0B51A1447C60061C956 /* MyCableOrder */ = {
 			isa = PBXGroup;
 			children = (
@@ -2740,7 +2769,7 @@
 		6181A3E619CFC4C2000E2D14 /* base */ = {
 			isa = PBXGroup;
 			children = (
-				6181A3E719CFC4C2000E2D14 /* Contact.h */,
+				61331FF11AA2EFB600C8FA5F /* Contact.h */,
 				6181A3E819CFC4C2000E2D14 /* SynthesizeSingleton.h */,
 			);
 			path = base;
@@ -2871,10 +2900,10 @@
 		6181A41819CFC4C2000E2D14 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				8BC2AD8E1A19F0E100E44BC2 /* LibBPush */,
 				8BACA9771A5D2C1F00F995BC /* XMPP */,
 				61CD8CF71A1D9574003C75F8 /* UMeng */,
 				8B89E1DD1A1B202E00AA33C2 /* PopListView */,
-				8BC2AD8E1A19F0E100E44BC2 /* LibBPush */,
 				8B2821521A14BA8200060534 /* PopView */,
 				8B28214B1A1492D700060534 /* lib */,
 				8BBB28BC1A11E526009AAEE8 /* PopMenu */,
@@ -3052,6 +3081,7 @@
 		6181A47819CFC4C2000E2D14 /* viewcontroller */ = {
 			isa = PBXGroup;
 			children = (
+				616A91A51AC290AD0018910A /* SixVC */,
 				8BA7C3031A10A92500758B0F /* Chat */,
 				61B7102919FF3B53001CC3BD /* B2B */,
 				61B7102C19FF3B53001CC3BD /* B2C */,
@@ -3098,6 +3128,7 @@
 				619A624D1A00C09900556B90 /* FifthSB.storyboard */,
 				619A624E1A00C09900556B90 /* FourthSB.storyboard */,
 				619A62501A00C09900556B90 /* ThirdSB.storyboard */,
+				616A91A31AC28EE80018910A /* SixSB.storyboard */,
 			);
 			path = storyBoard;
 			sourceTree = "<group>";
@@ -4918,6 +4949,7 @@
 				8B7549421A26FB2E00271985 /* close.png in Resources */,
 				8BA7C0FD1A10A85500758B0F /* 爱情.png in Resources */,
 				61828B601A247A790028AB4C /* back.png in Resources */,
+				616A91A41AC28EE80018910A /* SixSB.storyboard in Resources */,
 				8B8B98591A2F165500697375 /* 快速查询.png in Resources */,
 				8BA7C1131A10A85500758B0F /* 篮球.png in Resources */,
 				8B8B98581A2F165500697375 /* 家装线专卖.png in Resources */,
@@ -5198,6 +5230,7 @@
 				61383AA51A0F540200AD3446 /* B2BGetModelByIdData.m in Sources */,
 				6181A4CC19CFC4C2000E2D14 /* DCFTopLabel.m in Sources */,
 				61551E9C1A0BA00C004F50FF /* MyInquiryListFirstViewController.m in Sources */,
+				616A91B41AC2962A0018910A /* SixHostSecondTableViewController.m in Sources */,
 				6181A51C19CFC4C2000E2D14 /* UIImage (fixOrientation).m in Sources */,
 				6181A51519CFC4C2000E2D14 /* SDWebImagePrefetcher.m in Sources */,
 				61B710EB19FF3B53001CC3BD /* ChooseReceiveAddressViewController.m in Sources */,
@@ -5271,6 +5304,7 @@
 				8B7249881A86444700C8D0B7 /* DDASLLogger.m in Sources */,
 				6195F5F31A0C58B00036D168 /* B2BMyInquiryListNormalData.m in Sources */,
 				6181A51619CFC4C2000E2D14 /* UIButton+WebCache.m in Sources */,
+				616A91AE1AC291EB0018910A /* SixNavigationViewController.m in Sources */,
 				8BACAA9B1A5D2C9E00F995BC /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
 				8BACAA6B1A5D2C9E00F995BC /* XMPPReconnect.m in Sources */,
 				61B710C119FF3B53001CC3BD /* SendEmailViewController.m in Sources */,
@@ -5398,6 +5432,7 @@
 				61B710C819FF3B53001CC3BD /* FourthNaviViewController.m in Sources */,
 				618057571A4A8943001F71A4 /* MyFastInquiryOrderLookPicViewController.m in Sources */,
 				6181A4D019CFC4C2000E2D14 /* DCFMyArrangeHomeWorkList.m in Sources */,
+				616A91B11AC296180018910A /* SixHostFirstTableViewController.m in Sources */,
 				61B710C919FF3B53001CC3BD /* GoodsPicFastViewController.m in Sources */,
 				8B7249921A86444700C8D0B7 /* DDXMLNode.m in Sources */,
 				61B710BD19FF3B53001CC3BD /* ThirdTableViewController.m in Sources */,
@@ -5415,6 +5450,7 @@
 				6116A22E19EE1099005C3572 /* MyOrderHostBtnTableViewCell.m in Sources */,
 				8BACAA9D1A5D2C9E00F995BC /* XMPPCapsResourceCoreDataStorageObject.m in Sources */,
 				61B710F119FF3B53001CC3BD /* SecondNaviViewController.m in Sources */,
+				616A91A81AC290C40018910A /* SixHostViewController.m in Sources */,
 				8BACAA981A5D2C9E00F995BC /* XMPPMessage+XEP_0085.m in Sources */,
 				8BACAAAA1A5D2C9E00F995BC /* XMPPElement+Delay.m in Sources */,
 				8BBB28BF1A11E559009AAEE8 /* KxMenu.m in Sources */,
@@ -5520,7 +5556,7 @@
 				PROVISIONING_PROFILE = "971c4557-10fe-4df5-932a-598a5a8d75aa";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Debug;
 		};
@@ -5562,7 +5598,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 arm64";
 			};
 			name = Release;
 		};
@@ -5604,7 +5640,7 @@
 				PROVISIONING_PROFILE = "971c4557-10fe-4df5-932a-598a5a8d75aa";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -5647,7 +5683,7 @@
 				PROVISIONING_PROFILE = "971c4557-10fe-4df5-932a-598a5a8d75aa";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -179,6 +179,7 @@
     order.showUrl = @"m.alipay.com";
     
     //应用注册scheme,在AlixPayDemo-Info.plist定义URL types
+#pragma mark - 支付宝返回当前APP
     NSString *appScheme = @"far.east.Far-East-MMB-iOS";
     
     //将商品信息拼接成字符串

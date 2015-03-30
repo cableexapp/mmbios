@@ -108,20 +108,20 @@ NSString *strUserId = @"";
 }
 
 #pragma mark - 屏幕旋转
-- (BOOL)shouldAutorotate
-{
-    return NO;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;//只支持这一个方向(正常的方向)
-}
+//- (BOOL)shouldAutorotate
+//{
+//    return NO;
+//}
+//
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+//{
+//    return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
+//}
+//
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskPortrait;//只支持这一个方向(正常的方向)
+//}
 
 -(NSString*) getUdid
 {

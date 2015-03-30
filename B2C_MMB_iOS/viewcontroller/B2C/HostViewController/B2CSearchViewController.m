@@ -371,36 +371,44 @@
     }
     NSData *data = [result dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *arrDic = (NSDictionary *)[data mutableObjectFromJSONData];
-    NSString *soundInput = [[[[[arrDic objectForKey:@"ws"] objectAtIndex:0] objectForKey:@"cw"] objectAtIndex:0] objectForKey:@"w"];
-    NSString * str = [[NSString alloc]init];
-    str = [str stringByAppendingString:soundInput];
-    //去掉识别结果最后的标点符号
-    if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"]  || [str isEqualToString:@"，"])
+    if([arrDic isKindOfClass:[NSNull class]] || [[arrDic allKeys] count] == 0)
     {
-        
+        NSLog(@"为空");
     }
     else
     {
-        searchBarText = str;
-        mySearchBar.text = str;
-    }
-    intPage = 1;
-    tempFlag = 1;
-    if (mySearchBar.text.length > 0)
-    {
-        [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
-        [self cancelIFlyRecognizer];
-        speakButtonView.hidden = YES;
-        speakButton.hidden = YES;
-        [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
-        [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
-    }
-    if (selctBtn.tag == 0)
-    {
-        selctBtn.selected = YES;
-        lineView_2.hidden = NO;
-        lineView_3.hidden = YES;
-        lineView_4.hidden = YES;
+        NSString *soundInput = [[[[[arrDic objectForKey:@"ws"] objectAtIndex:0] objectForKey:@"cw"] objectAtIndex:0] objectForKey:@"w"];
+        NSString * str = [[NSString alloc]init];
+        str = [str stringByAppendingString:soundInput];
+        //去掉识别结果最后的标点符号
+        if ([str isEqualToString:@"。"] || [str isEqualToString:@"？"] || [str isEqualToString:@"！"]  || [str isEqualToString:@"，"])
+        {
+            
+        }
+        else
+        {
+            searchBarText = str;
+            mySearchBar.text = str;
+        }
+        intPage = 1;
+        tempFlag = 1;
+        if (mySearchBar.text.length > 0)
+        {
+            [self loadRequestSeq:@"" WithseqMethod:@"" WithContent:mySearchBar.text];
+            [self cancelIFlyRecognizer];
+            speakButtonView.hidden = YES;
+            speakButton.hidden = YES;
+            [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
+            [self saveType:nil ProductId:nil ProductName:mySearchBar.text];
+        }
+        if (selctBtn.tag == 0)
+        {
+            selctBtn.selected = YES;
+            lineView_2.hidden = NO;
+            lineView_3.hidden = YES;
+            lineView_4.hidden = YES;
+        }
+
     }
 }
 

@@ -419,6 +419,36 @@
     //读取plist文件
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"KindsPlist" ofType:@"plist"];
     dic = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+//    NSLog(@"dic = %@",dic);
+//    NSLog(@"%@",[dic allKeys]);
+    
+    
+//    NSMutableArray *keyArray = [[NSMutableArray alloc] init];
+//    for(int i=0;i<[[dic allKeys] count];i++)
+//    {
+//        NSString *str = [[dic allKeys] objectAtIndex:i];
+//        if([str hasPrefix:@"\""])
+//        {
+//            str = [str stringByReplacingOccurrencesOfString:@"" withString:@""];
+//        }
+//        NSLog(@"str = %@",str);
+//        [keyArray addObject:str];
+//    }
+    
+//    NSMutableDictionary *allKindDic = [[NSMutableDictionary alloc] init];
+//    for(int i=0;i<[dic allKeys].count;i++)
+//    {
+//        NSString *str = [[dic allKeys] objectAtIndex:i];
+//        NSLog(@"str = %@",str);
+//        if([str hasPrefix:@"\""])
+//        {
+//            str = [str stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+//        }
+//
+//        NSDictionary *dictionary = [[dic allValues] objectAtIndex:i];
+//        [allKindDic setObject:dictionary forKey:str];
+//    }
+//    NSLog(@"%@",allKindDic);
 }
 
 - (void) hotModelBtnClick:(UIButton *) sender
@@ -499,10 +529,28 @@
     NSMutableArray *modelListArray = [[NSMutableArray alloc] init];
     for(UIButton *btnn in addToCarArray)
     {
-        NSString *s = [btnn titleLabel].text;
+        NSString *s = [NSString stringWithFormat:@"%@",[btnn titleLabel].text];
+        NSLog(@"s = %@",s);
+
+//        for(NSString *str in [dic allKeys])
+//        {
+//            NSLog(@"str = %@",str);
+//        }
+//        60227IEC02(RV)
         
+
+        if([s rangeOfString:@"60227IEC01(BV)"].location != NSNotFound)
+        {
+            s = @"60227IEC01(BV)";
+        }
+        if([s rangeOfString:@"60227IEC02(RV)"].location != NSNotFound)
+        {
+            s = @"60227IEC02(RV)";
+        }
+ 
+        NSLog(@"%@",[[[dic objectForKey:s] class] description]);
         NSDictionary *d = [[NSDictionary alloc] initWithDictionary:[dic objectForKey:s]];
-        
+        NSLog(@"d = %@",d);
         NSString *oneKind = [d objectForKey:@"oneKind"];
         NSString *twoKind = [d objectForKey:@"twoKind"];
         NSString *threeKind = [d objectForKey:@"threeKind"];

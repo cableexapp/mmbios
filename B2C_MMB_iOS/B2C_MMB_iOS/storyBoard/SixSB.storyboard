@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="oD3-cL-38C">
+            <objects>
+                <navigationController storyboardIdentifier="sixNavigationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CFb-p6-6Rx" sceneMemberID="viewController">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="E3y-a1-Nld" customClass="DCFNavigationBar">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="yTZ-tu-Umq" kind="relationship" relationship="rootViewController" id="GlA-bK-nGh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Q4-Pl-AXK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-20" y="386"/>
+        </scene>
+        <!--Six Host View Controller-->
+        <scene sceneID="CdL-WM-HtU">
+            <objects>
+                <viewController storyboardIdentifier="sixHostViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yTZ-tu-Umq" customClass="SixHostViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xN1-7q-Lmt"/>
+                        <viewControllerLayoutGuide type="bottom" id="FCF-fe-vf9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0YX-y5-ROR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JE7-SL-qrw">
+                                <rect key="frame" x="91" y="0.0" width="1" height="504"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="15g-5E-bZh"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="REa-Rf-RE9">
+                                <rect key="frame" x="0.0" y="0.0" width="90" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ET-j6-2mg">
+                                <rect key="frame" x="93" y="0.0" width="227" height="504"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IMj-x5-bdu">
+                                <rect key="frame" x="160" y="0.0" width="1" height="504"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="7G8-Po-PrS"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IMj-x5-bdu" firstAttribute="leading" secondItem="JE7-SL-qrw" secondAttribute="trailing" constant="68" id="9df-DX-zTK"/>
+                            <constraint firstItem="JE7-SL-qrw" firstAttribute="leading" secondItem="REa-Rf-RE9" secondAttribute="trailing" id="AOo-fS-QYu"/>
+                            <constraint firstItem="0ET-j6-2mg" firstAttribute="leading" secondItem="JE7-SL-qrw" secondAttribute="trailing" constant="1" id="EZq-6d-dnn"/>
+                            <constraint firstItem="FCF-fe-vf9" firstAttribute="top" secondItem="0ET-j6-2mg" secondAttribute="bottom" id="G6d-OU-jx5"/>
+                            <constraint firstItem="0ET-j6-2mg" firstAttribute="top" secondItem="xN1-7q-Lmt" secondAttribute="bottom" id="GWp-Th-BtI"/>
+                            <constraint firstItem="FCF-fe-vf9" firstAttribute="top" secondItem="0ET-j6-2mg" secondAttribute="bottom" id="Hm3-az-cZ1"/>
+                            <constraint firstItem="FCF-fe-vf9" firstAttribute="top" secondItem="REa-Rf-RE9" secondAttribute="bottom" id="Jwj-s7-ONc"/>
+                            <constraint firstItem="JE7-SL-qrw" firstAttribute="bottom" secondItem="0YX-y5-ROR" secondAttribute="bottomMargin" id="Jy5-QO-IJi"/>
+                            <constraint firstAttribute="centerY" secondItem="IMj-x5-bdu" secondAttribute="centerY" id="KA6-34-9KB"/>
+                            <constraint firstItem="IMj-x5-bdu" firstAttribute="top" secondItem="JE7-SL-qrw" secondAttribute="top" id="LQd-Xn-F6R"/>
+                            <constraint firstAttribute="trailing" secondItem="0ET-j6-2mg" secondAttribute="trailing" id="RJI-kn-vS3"/>
+                            <constraint firstItem="FCF-fe-vf9" firstAttribute="top" secondItem="REa-Rf-RE9" secondAttribute="bottom" id="aaS-6f-9d9"/>
+                            <constraint firstItem="0ET-j6-2mg" firstAttribute="top" secondItem="xN1-7q-Lmt" secondAttribute="bottom" id="cVO-Pz-UFd"/>
+                            <constraint firstItem="JE7-SL-qrw" firstAttribute="top" secondItem="0YX-y5-ROR" secondAttribute="topMargin" id="cZc-EY-YVh"/>
+                            <constraint firstItem="REa-Rf-RE9" firstAttribute="leading" secondItem="0YX-y5-ROR" secondAttribute="leading" id="deW-ei-g33"/>
+                            <constraint firstItem="REa-Rf-RE9" firstAttribute="top" secondItem="xN1-7q-Lmt" secondAttribute="bottom" id="iav-az-AvB"/>
+                            <constraint firstAttribute="centerX" secondItem="IMj-x5-bdu" secondAttribute="centerX" id="jz4-KX-TGG"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Blu-G6-KRJ"/>
+                    <connections>
+                        <outlet property="firstView" destination="REa-Rf-RE9" id="G52-ev-iAj"/>
+                        <outlet property="secondView" destination="0ET-j6-2mg" id="Phn-Bp-34V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FDd-PN-8v8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="394" y="382"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

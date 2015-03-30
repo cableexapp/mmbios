@@ -80,6 +80,7 @@
         urlStr = [NSString stringWithFormat:@"%@%@",strUrl,strPostBody];
         
     }
+    NSLog(@"%@",urlStr);
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:[NSURL URLWithString:urlStr]];
     request.timeoutInterval = 20;
     //设置传送类型

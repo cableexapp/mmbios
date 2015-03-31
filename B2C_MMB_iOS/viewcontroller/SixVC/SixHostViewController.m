@@ -14,11 +14,15 @@
 #import "iflyMSC/IFlySpeechConstant.h"
 #import "JSONKit.h"
 #import "DCFCustomExtra.h"
+#import "MCDefine.h"
+#import "SixHostSearchView.h"
 
 @interface SixHostViewController ()
 {
-    UITextField *textField;
+    UITextField *searchTextField;
     IFlyRecognizerView *iflyRecognizerView;
+    
+    SixHostSearchView *searchView;
 }
 @end
 
@@ -38,6 +42,11 @@
     
 //    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"分类"];
 //    self.navigationItem.titleView = top;
+
+
+    searchView = [[SixHostSearchView alloc] initWithCustomFrame:CGRectMake(0, 0, MainScreenWidth, MainScreenHeight-64-44)];
+    [searchView setBackgroundColor:[UIColor whiteColor]];
+    [self.view insertSubview:searchView belowSubview:self.backView];
     
     SixHostFirstTableViewController *sixFirst = [[SixHostFirstTableViewController alloc] init];
     [self addChildViewController:sixFirst];
@@ -51,23 +60,24 @@
     [self.secondView addSubview:sixSecond.view];
     
     
-    textField = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, self.navigationController.navigationBar.frame.size.width-20, self.navigationController.navigationBar.frame.size.height-10)];
-    [self.navigationController.navigationBar addSubview:textField];
-    [textField setPlaceholder:@"搜索内容"];
-    [textField setBackgroundColor:[UIColor whiteColor]];
+    searchTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 5, self.navigationController.navigationBar.frame.size.width-20, self.navigationController.navigationBar.frame.size.height-10)];
+    [self.navigationController.navigationBar addSubview:searchTextField];
+    [searchTextField setPlaceholder:@"搜索内容"];
+    [searchTextField setReturnKeyType:UIReturnKeyDone];
+    [searchTextField setBackgroundColor:[UIColor whiteColor]];
+    [searchTextField setDelegate:self];
     
-    
-    UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, textField.frame.size.height-10, textField.frame.size.height-10)];
+    UIImageView *leftView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, searchTextField.frame.size.height-10, searchTextField.frame.size.height-10)];
     [leftView setImage:[UIImage imageNamed:@"search.png"]];
-    textField.leftView = leftView;
-    textField.leftViewMode = UITextFieldViewModeAlways;
+    searchTextField.leftView = leftView;
+    searchTextField.leftViewMode = UITextFieldViewModeAlways;
     
     UIButton *speakBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [speakBtn setBackgroundImage:[UIImage imageNamed:@"speak"] forState:UIControlStateNormal];
-    [speakBtn setFrame:CGRectMake(textField.frame.size.width-10-leftView.frame.size.width, 5, leftView.frame.size.width, leftView.frame.size.width)];
+    [speakBtn setFrame:CGRectMake(searchTextField.frame.size.width-10-leftView.frame.size.width, 5, leftView.frame.size.width, leftView.frame.size.width)];
     [speakBtn addTarget:self action:@selector(speakBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    textField.rightView = speakBtn;
-    textField.rightViewMode = UITextFieldViewModeAlways;
+    searchTextField.rightView = speakBtn;
+    searchTextField.rightViewMode = UITextFieldViewModeAlways;
     
 //    self.navigationItem.leftBarButtonItem
     
@@ -78,9 +88,9 @@
 
 - (void) speakBtnClick:(UIButton *) sender
 {
-    if([textField isFirstResponder])
+    if([searchTextField isFirstResponder])
     {
-        [textField resignFirstResponder];
+        [searchTextField resignFirstResponder];
     }
     //启动识别服务
     [iflyRecognizerView start];
@@ -131,6 +141,19 @@
 - (void)onError: (IFlySpeechError *) error
 {
     [self cancelIFlyRecognizer];
+}
+
+
+- (void) textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self.view insertSubview:searchView aboveSubview:self.backView];
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    [searchTextField resignFirstResponder];
+    [self.view insertSubview:_backView aboveSubview:searchView];
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

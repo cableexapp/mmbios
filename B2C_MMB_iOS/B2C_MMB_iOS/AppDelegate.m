@@ -223,7 +223,11 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    NSLog(@"%@",[DCFCustomExtra getAppInfo]);
+
+
+    
+//    _ScreenScaleX = MainScreenWidth/320 + (float)((int)MainScreenWidth%(int)320);
+    
     
     //检测是否第一次安装，还是第一次启动
     [self isFirstOpen];

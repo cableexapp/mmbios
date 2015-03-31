@@ -330,6 +330,7 @@
 		61E65DDC1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DDB1A177F6200E22E2E /* BangDingWithOutMobileOrEmailViewController.m */; };
 		61E65DDF1A17815800E22E2E /* ModifyLogSecSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DDE1A17815800E22E2E /* ModifyLogSecSuccessViewController.m */; };
 		61E65DE21A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */; };
+		61E6F5691ACA7CCA00F8DE94 /* SixHostSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E6F5681ACA7CCA00F8DE94 /* SixHostSearchView.m */; };
 		61EF03801A2071520048FBBB /* ModifyLoginSecViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EF037F1A2071520048FBBB /* ModifyLoginSecViewController.m */; };
 		61F00D541A64DC4700F77E7B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61F00D531A64DC4700F77E7B /* Main_iPad.storyboard */; };
 		61FFC5A319F6405E00F16E64 /* B2CGetOrderDetailData.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FFC5A219F6405E00F16E64 /* B2CGetOrderDetailData.m */; };
@@ -1423,6 +1424,8 @@
 		61E65DDE1A17815800E22E2E /* ModifyLogSecSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyLogSecSuccessViewController.m; sourceTree = "<group>"; };
 		61E65DE01A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BangDingWithMobileOrEmailViewController.h; sourceTree = "<group>"; };
 		61E65DE11A178AC100E22E2E /* BangDingWithMobileOrEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BangDingWithMobileOrEmailViewController.m; sourceTree = "<group>"; };
+		61E6F5671ACA7CCA00F8DE94 /* SixHostSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SixHostSearchView.h; sourceTree = "<group>"; };
+		61E6F5681ACA7CCA00F8DE94 /* SixHostSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SixHostSearchView.m; sourceTree = "<group>"; };
 		61EF037E1A2071520048FBBB /* ModifyLoginSecViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyLoginSecViewController.h; sourceTree = "<group>"; };
 		61EF037F1A2071520048FBBB /* ModifyLoginSecViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyLoginSecViewController.m; sourceTree = "<group>"; };
 		61F00D531A64DC4700F77E7B /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
@@ -2400,6 +2403,8 @@
 				616A91AD1AC291EB0018910A /* SixNavigationViewController.m */,
 				616A91A61AC290C40018910A /* SixHostViewController.h */,
 				616A91A71AC290C40018910A /* SixHostViewController.m */,
+				61E6F5671ACA7CCA00F8DE94 /* SixHostSearchView.h */,
+				61E6F5681ACA7CCA00F8DE94 /* SixHostSearchView.m */,
 				616A91AF1AC296180018910A /* SixHostFirstTableViewController.h */,
 				616A91B01AC296180018910A /* SixHostFirstTableViewController.m */,
 				616A91B21AC2962A0018910A /* SixHostSecondTableViewController.h */,
@@ -5337,6 +5342,7 @@
 				8BC2ADA41A19F0E100E44BC2 /* OpenUDID.m in Sources */,
 				8BACAA951A5D2C9E00F995BC /* TURNSocket.m in Sources */,
 				6181A50219CFC4C2000E2D14 /* ELCAssetCell.m in Sources */,
+				61E6F5691ACA7CCA00F8DE94 /* SixHostSearchView.m in Sources */,
 				8BA7C17E1A10A8CC00758B0F /* FBShimmeringView.m in Sources */,
 				61B710EE19FF3B53001CC3BD /* LoginNaviViewController.m in Sources */,
 				8BACAA7F1A5D2C9E00F995BC /* XMPPRoomMessageHybridCoreDataStorageObject.m in Sources */,

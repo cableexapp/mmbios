@@ -18,6 +18,8 @@
 
 #define CELL_CONTENTVIEW_SUBVIEWS_LASTOBJECT [cell.contentView.subviews lastObject]
 
+#define ScreenScaleX [UIScreen mainScreen].bounds.size.width/320
+#define ScreenScaleY [UIScreen mainScreen].bounds.size.height/480
 //NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:1];
 //NSIndexPath *pt = [self.tableView indexPathForSelectedRow];
 

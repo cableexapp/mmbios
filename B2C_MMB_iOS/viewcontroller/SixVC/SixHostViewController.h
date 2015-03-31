@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "iflyMSC/IFlyRecognizerViewDelegate.h"
 
-@interface SixHostViewController : UIViewController<IFlyRecognizerViewDelegate>
+@interface SixHostViewController : UIViewController<IFlyRecognizerViewDelegate,UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *firstView;
 
 @property (weak, nonatomic) IBOutlet UIView *secondView;
+
+@property (weak, nonatomic) IBOutlet UIView *backView;
 
 @end

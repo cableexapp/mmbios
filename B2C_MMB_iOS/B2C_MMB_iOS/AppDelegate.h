@@ -62,6 +62,10 @@
     NSString *forgroudPushMessage;
 }
 
+
+//@property (assign,nonatomic) double ScreenScaleX;
+//@property (assign,nonatomic) float ScreenScaleY;
+
 //修改登录密码之后不需要显示弹出框
 @property (assign,nonatomic) BOOL hideNotice;
 

@@ -25,24 +25,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn_2;
 @property (weak, nonatomic) IBOutlet UIButton *btn_3;
 
-@property (weak, nonatomic) IBOutlet UIButton *btn_5;
-@property (weak, nonatomic) IBOutlet UIButton *btn_6;
-@property (weak, nonatomic) IBOutlet UIButton *btn_7;
-
 @property (weak, nonatomic) IBOutlet UIButton *btn_8;
 @property (weak, nonatomic) IBOutlet UIButton *btn_9;
 @property (weak, nonatomic) IBOutlet UIButton *btn_10;
 @property (weak, nonatomic) IBOutlet UIButton *btn_11;
 
-@property (weak, nonatomic) IBOutlet UIView *view1;
-@property (weak, nonatomic) IBOutlet UIView *view2;
-@property (weak, nonatomic) IBOutlet UIView *view3;
-@property (weak, nonatomic) IBOutlet UIView *view4;
-@property (weak, nonatomic) IBOutlet UIView *view5;
-@property (weak, nonatomic) IBOutlet UIView *view6;
-@property (weak, nonatomic) IBOutlet UIView *view11;
-@property (weak, nonatomic) IBOutlet UIView *view22;
-@property (weak, nonatomic) IBOutlet UIView *view33;
+@property (weak, nonatomic) IBOutlet UIButton *customOrderBtn;
 
 @property(nonatomic,strong) EGORefreshTableHeaderView *refreshView;
 

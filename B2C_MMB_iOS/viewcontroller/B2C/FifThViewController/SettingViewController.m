@@ -11,7 +11,11 @@
 #import "DCFTopLabel.h"
 
 @interface SettingViewController ()
-
+{
+    NSString *sdPath;
+    
+    float sdPicCache;  //SDWebImage图片缓存大小
+}
 @end
 
 @implementation SettingViewController
@@ -23,6 +27,23 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    
+//    NSLog(@"%@",NSHomeDirectory());
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+//    NSLog(@"%@",paths);
+    NSString *LibraryDirectory = [paths objectAtIndex:0];
+//    NSLog(@"%@",LibraryDirectory);
+    sdPath = [NSString stringWithFormat:@"%@/%@/%@",LibraryDirectory,@"Caches",@"com.hackemist.SDWebImageCache.default"];
+//    NSLog(@"%@",sdPath);
+    
+    NSLog(@"%lld",[self fileSizeAtPath:sdPath]);
+    
+    NSLog(@"%f",sdPicCache);
 }
 
 - (void)viewDidLoad
@@ -67,13 +88,54 @@
     [as showInView:self.view];
 }
 
+#pragma mark - 单个文件的大小
+- (long long) fileSizeAtPath:(NSString*) filePath{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:filePath]){
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+    }
+    return 0;
+}
+
+#pragma mark - 遍历文件夹获得文件夹大小，返回多少M
+- (float ) folderSizeAtPath:(NSString*) folderPath
+{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if (![manager fileExistsAtPath:folderPath]) return 0;
+    NSEnumerator *childFilesEnumerator = [[manager subpathsAtPath:folderPath] objectEnumerator];
+    NSString* fileName;
+    long long folderSize = 0;
+    while ((fileName = [childFilesEnumerator nextObject]) != nil){
+        NSString* fileAbsolutePath = [folderPath stringByAppendingPathComponent:fileName];
+        folderSize += [self fileSizeAtPath:fileAbsolutePath];
+    }
+    sdPicCache = folderSize/(1024.0*1024.0);
+    return sdPicCache;
+}
+
 - (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex) {
         case 0:
+        {
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
+            BOOL bRet = [fileMgr fileExistsAtPath:sdPath];
+            if (bRet)
+            {
+                NSError *err;
+                [fileMgr removeItemAtPath:sdPath error:&err];
+                
+                NSLog(@"%lld",[self fileSizeAtPath:sdPath]);
+                
+                NSLog(@"%f",sdPicCache);
+            }
             break;
+        }
         case 1:
+        {
+      
              break;
+        }
         default:
             break;
     }

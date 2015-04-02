@@ -20,6 +20,8 @@
         
         searchDataArray = [[NSArray alloc] initWithObjects:@"热搜",@"123",@"213",@"321",@"e3434",@"ddsdsd",@"dsdfv",@"hjhl",@"ytyrty",@"ccxccv",@"xzx",@"wqwqw",@"jjjhjhj", nil];
         
+        listArray = [[NSMutableArray alloc] init];
+        
         [self loadSubView];
     }
     return self;
@@ -31,12 +33,11 @@
     [searchSV setDelegate:self];
     [searchSV setShowsHorizontalScrollIndicator:NO];
     [searchSV setShowsVerticalScrollIndicator:NO];
-    [searchSV setPagingEnabled:YES];
-    [searchSV setScrollEnabled:YES];
-    [searchSV setBounces:NO];
+//    [searchSV setPagingEnabled:YES];
+//    [searchSV setScrollEnabled:YES];
+//    [searchSV setBounces:YES];
     [searchSV setBackgroundColor:[UIColor whiteColor]];
     [searchSV setContentSize:CGSizeMake(MainScreenWidth*3, searchSV.frame.size.height)];
-    [self addSubview:searchSV];
     
     NSMutableArray *sizeArray = [[NSMutableArray alloc] init];
     
@@ -69,29 +70,13 @@
         [svBtn addTarget:self action:@selector(svBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [searchSV setContentSize:CGSizeMake(svBtn.frame.origin.x+svBtn.frame.size.width+10, 50*ScreenScaleY)];
         [searchSV addSubview:svBtn];
-        
-//        UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(MainScreenWidth*i, 0, MainScreenWidth, searchSV.frame.size.height)];
-//        switch (i) {
-//            case 0:
-//                [testView setBackgroundColor:[UIColor redColor]];
-//                break;
-//            case 1:
-//                [testView setBackgroundColor:[UIColor blackColor]];
-//                break;
-//            case 2:
-//                [testView setBackgroundColor:[UIColor orangeColor]];
-//                break;
-//            default:
-//                break;
-//        }
-//        [searchSV addSubview:testView];
     }
     
-    UIView *searchSVLineView = [[UIView alloc] initWithFrame:CGRectMake(0, searchSV.frame.size.height+1, MainScreenWidth, 1)];
-    [searchSVLineView setBackgroundColor:[UIColor lightGrayColor]];
-    [self addSubview:searchSVLineView];
+
     
-    UITableView *searchTV = [[UITableView alloc] initWithFrame:CGRectMake(0, searchSV.frame.size.height+searchSV.frame.origin.y+10, MainScreenWidth, self.frame.size.height-searchSV.frame.size.height-20)];
+    
+//    UITableView *searchTV = [[UITableView alloc] initWithFrame:CGRectMake(0, searchSV.frame.size.height+searchSV.frame.origin.y+10, MainScreenWidth, self.frame.size.height-searchSV.frame.size.height-20)];
+    searchTV = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, MainScreenWidth, self.frame.size.height-20)];
     [searchTV setDelegate:self];
     [searchTV setDataSource:self];
     [self addSubview:searchTV];
@@ -103,7 +88,21 @@
 - (void) svBtnClick:(UIButton *) sender
 {
     UIButton *btn = (UIButton *) sender;
-    NSLog(@"tag = %ld",(long)btn.tag);
+    
+    if(listArray)
+    {
+        NSString *title = [NSString stringWithFormat:@"%@",[searchDataArray objectAtIndex:btn.tag-10]];
+        NSLog(@"title = %@",title);
+        [listArray addObject:title];
+       
+        NSSet *set = [NSSet setWithArray:listArray];
+        [listArray removeAllObjects];
+        for(int i=0;i<[set allObjects].count;i++)
+        {
+            [listArray addObject:[[set allObjects] objectAtIndex:i]];
+        }
+        [searchTV reloadData];
+    }
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -111,73 +110,122 @@
     return 1;
 }
 
-//- (CGFloat) tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section
-//{
-//    return 30*ScreenScaleY;
-//}
-//
-//- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UILabel *headLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, MainScreenWidth, 30*ScreenScaleY)];
-//    [headLabel setBackgroundColor:[UIColor lightGrayColor]];
-//    [headLabel setText:@" 历史记录"];
-//    [headLabel setFont:[UIFont systemFontOfSize:13]];
-//    return headLabel;
-//}
-
-
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return searchDataArray.count+1;
+    if(listArray.count == 0)
+    {
+        return 1;
+    }
+    return listArray.count+2;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.row == 0)
+    {
+        return 50*ScreenScaleY+1;
+    }
     return 44+ScreenScaleY;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    if(indexPath.row == searchDataArray.count)
+    if(indexPath.row == 0)
     {
-        static NSString *cellId = @"clearBtnCellId";
-        UITableViewCell *clearBtnCell = [tableView dequeueReusableCellWithIdentifier:cellId];
-        if(!clearBtnCell)
+        static NSString *cellId = @"svCellId";
+        UITableViewCell *svCell = [tableView dequeueReusableCellWithIdentifier:cellId];
+        if(!svCell)
         {
-            clearBtnCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+            svCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+            [svCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            
+            [svCell.contentView addSubview:searchSV];
+
+            UIView *searchSVLineView = [[UIView alloc] initWithFrame:CGRectMake(0, searchSV.frame.size.height+1, MainScreenWidth, 1)];
+            [searchSVLineView setBackgroundColor:[UIColor lightGrayColor]];
+            [svCell.contentView addSubview:searchSVLineView];
         }
-        if(!clearBtn)
-        {
-            clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [clearBtn setFrame:CGRectMake((MainScreenWidth-260*ScreenScaleX)/2, 5, 260*ScreenScaleX, 34*ScreenScaleY)];
-            [clearBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [clearBtn setTitle:@"清空历史记录" forState:UIControlStateNormal];
-            [clearBtn setBackgroundColor:[UIColor whiteColor]];
-            [clearBtn.layer setCornerRadius:5.0f];
-            [clearBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-            [clearBtn.layer setBorderWidth:1.0f];
-            [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [clearBtnCell.contentView addSubview:clearBtn];
-        }
-        return clearBtnCell;
+        return svCell;
     }
-//    else if(indexPath.row < searchDataArray.count)
+    else if(indexPath.row == listArray.count+1)
+    {
+        if(listArray.count == 0)
+        {
+            
+        }
+        else
+        {
+            static NSString *cellId = @"clearBtnCellId";
+            UITableViewCell *clearBtnCell = [tableView dequeueReusableCellWithIdentifier:cellId];
+            if(!clearBtnCell)
+            {
+                clearBtnCell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+            }
+            if(!clearBtn)
+            {
+                clearBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [clearBtn setFrame:CGRectMake((MainScreenWidth-260*ScreenScaleX)/2, 5, 260*ScreenScaleX, 34*ScreenScaleY)];
+                [clearBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                [clearBtn setTitle:@"清空历史记录" forState:UIControlStateNormal];
+                [clearBtn setBackgroundColor:[UIColor whiteColor]];
+                [clearBtn.layer setCornerRadius:5.0f];
+                [clearBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+                [clearBtn.layer setBorderWidth:1.0f];
+                [clearBtn addTarget:self action:@selector(clearBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                [clearBtnCell.contentView addSubview:clearBtn];
+            }
+            return clearBtnCell;
+        }
+
+    }
+//    else
 //    {
-        static NSString *cellId = @"CellId";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
-    }
-        [cell.textLabel setText:[NSString stringWithFormat:@" %@",[searchDataArray objectAtIndex:indexPath.row]]];
+        if(listArray.count == 0)
+        {
+            
+        }
+        else
+        {
+            static NSString *cellId = @"CellId";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+            if(!cell)
+            {
+                cell = [[UITableViewCell alloc] initWithStyle:0 reuseIdentifier:cellId];
+            }
+            [cell.textLabel setText:[NSString stringWithFormat:@" %@",[listArray objectAtIndex:indexPath.row-1]]];
+            return cell;
+        }
+
 //    }
-    return cell;
+    return nil;
 }
 
 - (void) clearBtnClick:(UIButton *) sender
 {
-    NSLog(@"(cell.contentView.frame.size.height-34*ScreenScaleY)/2");
+    UIAlertView *clearAV = [[UIAlertView alloc] initWithTitle:nil message:@"确定清空历史搜索吗?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [clearAV show];
+}
+
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            
+            break;
+        case 1:
+            if(listArray.count != 0)
+            {
+                [listArray removeAllObjects];
+                [searchTV reloadData];
+            }
+            NSLog(@"清空");
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

@@ -26,6 +26,7 @@
 #import "DCFColorUtil.h"
 #import "UIImageView+WebCache.h"
 #import "FourthNaviViewController.h"
+#import "FifthTableViewController.h"
 
 @interface FourMyMMBListTableViewController ()
 {
@@ -67,26 +68,23 @@
 
 - (void) headBtnClick:(UIButton *) sender
 {
-    int tag = sender.tag;
+    NSInteger tag = sender.tag;
+    NSLog(@"tag = %ld",(long)tag);
     if(tag == 1)
     {
-        [self setHidesBottomBarWhenPushed:YES];
-        MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
-        myCableOrder.btnIndex = 0;
-        [self.navigationController pushViewController:myCableOrder animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
+
     }
-    if(tag == 2)
+    if(tag == 0)
     {
         [self pushToOrderListViewControllerWithBtn:sender];
     }
-    if(tag == 3)
-    {
-        [self setHidesBottomBarWhenPushed:YES];
-        AccountManagerTableViewController *accountManagerTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"accountManagerTableViewController"];
-        [self.navigationController pushViewController:accountManagerTableViewController animated:YES];
-        [self setHidesBottomBarWhenPushed:NO];
-    }
+//    if(tag == 3)
+//    {
+//        [self setHidesBottomBarWhenPushed:YES];
+//        AccountManagerTableViewController *accountManagerTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"accountManagerTableViewController"];
+//        [self.navigationController pushViewController:accountManagerTableViewController animated:YES];
+//        [self setHidesBottomBarWhenPushed:NO];
+//    }
 }
 
 - (NSString *) getMemberId
@@ -172,6 +170,11 @@
         if(result == 1)
         {
             badgeArray = [[NSMutableArray alloc] initWithArray:[dicRespon objectForKey:@"items"]];
+#pragma mark - 暂时写死，等接口出来再调试
+            
+            NSLog(@"test");
+            [badgeArray removeAllObjects];
+            NSLog(@"badgeArray=%@",badgeArray);
             for(int i =0;i<badgeArray.count;i++)
             {
                 UIButton *cellBtn = (UIButton *)[cellBtnArray objectAtIndex:i];
@@ -397,6 +400,13 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"popShopCar" object:nil];
 }
 
+- (void) setBtnClick:(UIButton *) sender
+{
+//    UIStoryboard *fifthSB = [UIStoryboard storyboardWithName:@"FifthSB" bundle:nil];
+    FifthTableViewController *fifthTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"fifthTableViewController"];
+    [self.navigationController pushViewController:fifthTableViewController animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -412,19 +422,28 @@
         [self pushToVC];
     }
     
-    self.view1.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    self.view2.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    self.view3.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    self.view4.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    self.view5.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    self.view6.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    UIButton *setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [setBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [setBtn setFrame:CGRectMake(0, 0, 50, 50)];
+    [setBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [setBtn addTarget:self action:@selector(setBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.view11.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    self.view22.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-    self.view33.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:setBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+//    self.view1.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    self.view2.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    self.view3.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    self.view4.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    self.view5.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    self.view6.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    
+//    self.view11.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    self.view22.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//    self.view33.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
     
     headBtnArray = [[NSMutableArray alloc] init];
-    for(int i=0;i<4;i++)
+    for(int i=0;i<2;i++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(-1, 0, ScreenWidth+1, 45)];
@@ -436,7 +455,7 @@
         UILabel *label_1 = [[UILabel alloc] init];
         [label_1 setTextColor:[UIColor blackColor]];
         [label_1 setFont:[UIFont systemFontOfSize:15]];
-        if(i <= 2)
+        if(i <= 1)
         {
             [label_1 setFrame:CGRectMake(45, 5, 200, 35)];
         }
@@ -450,59 +469,62 @@
         [label_2 setTextColor:[UIColor lightGrayColor]];
         [label_2 setFont:[UIFont systemFontOfSize:14]];
         [label_2 setTextAlignment:NSTextAlignmentRight];
-        [label_2 setText:@"查看全部订单"];
+        [label_2 setText:@"查看全部"];
         
         if(i == 0)
         {
-            [label_1 setText:@"我的询价单"];
+            [label_1 setText:@"我的订单"];
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"mmbOrder.png"]];
             [btn addSubview:iv];
+            [btn addSubview:label_2];
+            [btn addSubview:label_1];
         }
         if(i == 1)
         {
-            [label_1 setText:@"我的电缆订单"];
-            [btn addSubview:label_2];
-            
+            [label_1 setText:@"我的定制"];
+//            [btn addSubview:label_2];
+            [btn addSubview:label_1];
+
             UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
             [iv setImage:[UIImage imageNamed:@"dlOrder.png"]];
             [btn addSubview:iv];
         }
-        if(i == 2)
-        {
-            [label_1 setText:@"我的家装线订单"];
-            [btn addSubview:label_2];
-            
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
-            [iv setImage:[UIImage imageNamed:@"homeOrder.png"]];
-            [btn addSubview:iv];
-        }
-        if(i == 3)
-        {
-            [label_1 setText:@"账户安全"];
-            
-            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
-            [iv setImage:[UIImage imageNamed:@"count.png"]];
-            [btn addSubview:iv];
-            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height-1, self.view.frame.size.width, 1)];
-            lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
-            [btn addSubview:lineView];
-        }
-        [btn addSubview:label_1];
-        if (i != 0)
-        {
-            UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 35, 35)];
-            [arrowIv setImage:[UIImage imageNamed:@"set_clear.png"]];
-            [btn addSubview:arrowIv];
-        }
+//        if(i == 2)
+//        {
+//            [label_1 setText:@"我的家装线订单"];
+//            [btn addSubview:label_2];
+//            
+//            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
+//            [iv setImage:[UIImage imageNamed:@"homeOrder.png"]];
+//            [btn addSubview:iv];
+//        }
+//        if(i == 3)
+//        {
+//            [label_1 setText:@"账户安全"];
+//            
+//            UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 35, 35)];
+//            [iv setImage:[UIImage imageNamed:@"count.png"]];
+//            [btn addSubview:iv];
+//            UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, btn.frame.size.height-1, self.view.frame.size.width, 1)];
+//            lineView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+//            [btn addSubview:lineView];
+//        }
+//        [btn addSubview:label_1];
+//        if (i != 0)
+//        {
+//            UIImageView *arrowIv = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth-40, 5, 35, 35)];
+//            [arrowIv setImage:[UIImage imageNamed:@"set_clear.png"]];
+//            [btn addSubview:arrowIv];
+//        }
         [headBtnArray addObject:btn];
     }
-    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_11,_btn_9,_btn_10,_btn_2,_btn_3,_btn_5,_btn_6,_btn_7, nil];
+    cellBtnArray = [[NSMutableArray alloc] initWithObjects:_btn_8,_btn_11,_btn_9,_btn_10,_btn_2,_btn_3,nil];
     
     for(int i=0;i<cellBtnArray.count;i++)
     {
-        UIButton *btn = (UIButton *)[cellBtnArray objectAtIndex:i];
-        [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+//        UIButton *btn = (UIButton *)[cellBtnArray objectAtIndex:i];
+//        [btn setTitleEdgeInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
     }
     
     self.photoBtn = [[UIImageView alloc] init];
@@ -924,6 +946,17 @@
     }
     [self pushToOrderListViewControllerWithBtn:(UIButton *)sender];
 }
+
+
+- (IBAction)customOrderBtnClick:(id)sender
+{
+    [self setHidesBottomBarWhenPushed:YES];
+    MyCableOrderHostViewController *myCableOrder = [self.storyboard instantiateViewControllerWithIdentifier:@"myCableOrderHostViewController"];
+    myCableOrder.btnIndex = 0;
+    [self.navigationController pushViewController:myCableOrder animated:YES];
+    [self setHidesBottomBarWhenPushed:NO];
+}
+
 
 - (void) pushToOrderListViewControllerWithBtn:(UIButton *) sender
 {

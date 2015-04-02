@@ -223,9 +223,6 @@ NSString *strUserId = @"";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-
-
-    
 //    _ScreenScaleX = MainScreenWidth/320 + (float)((int)MainScreenWidth%(int)320);
     
     

@@ -21,6 +21,7 @@
 #import "B2BAskPriceCarViewController.h"
 #import "KxMenu.h"
 #import "PhoneHelper.h"
+#import "AccountManagerTableViewController.h"
 
 @interface FifthTableViewController ()
 {
@@ -113,16 +114,16 @@
     [self.logOutBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.logOutBtn.layer.cornerRadius = 5;
     [self.logOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
-    self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 60);
+//    self.logOutBtn.frame = CGRectMake(15, 30, self.view.frame.size.width-30, 60);
     
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.view1.frame = CGRectMake(0,50-0.5 , ScreenWidth+10, 0.5);
-    self.view2.frame = CGRectMake(0,50-0.5 , ScreenWidth+10, 0.5);
-    self.view3.frame = CGRectMake(0,50-0.5 , ScreenWidth+10, 0.5);
-    self.view1.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
-    self.view2.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
-    self.view3.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
+//    self.view1.frame = CGRectMake(0,50-0.5 , ScreenWidth+10, 0.5);
+//    self.view2.frame = CGRectMake(0,50-0.5 , ScreenWidth+10, 0.5);
+//    self.view3.frame = CGRectMake(0,50-0.5 , ScreenWidth+10, 0.5);
+//    self.view1.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
+//    self.view2.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
+//    self.view3.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
 }
 
 //请求询价车商品数量
@@ -332,11 +333,9 @@
             
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"app_username"];
             [self loadbadgeCount];
-            [self loadShopCarCount];
 
             //切换登录账号，结束之前对话
             [self.appDelegate goOffline];
-//            [self.appDelegate disconnect];
             [self.appDelegate logout];
             [[NSUserDefaults standardUserDefaults] setObject:[PhoneHelper getDeviceId] forKey:@"userName_IM"];
             [self.appDelegate reConnect];
@@ -349,6 +348,7 @@
         {
            tempCount = [[dicRespon objectForKey:@"value"] intValue];
         }
+        [self loadShopCarCount];
     }
     if (URLTag == URLShopCarCountTag)
     {
@@ -379,15 +379,31 @@
     [self setHidesBottomBarWhenPushed:YES];
     if(indexPath.row == 0)
     {
+        NSLog(@"第一个");
+        [self setHidesBottomBarWhenPushed:YES];
+        AccountManagerTableViewController *accountManagerTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"accountManagerTableViewController"];
+        [self.navigationController pushViewController:accountManagerTableViewController animated:YES];
+        [self setHidesBottomBarWhenPushed:NO];
+    }
+    if(indexPath.row == 1)
+    {
         SettingViewController *set = [self.storyboard instantiateViewControllerWithIdentifier:@"settingViewController"];
         [self.navigationController pushViewController:set animated:YES];
     }
-    if(indexPath.row == 1)
+    if(indexPath.row == 2)
+    {
+        NSLog(@"清理缓存");
+    }
+    if(indexPath.row == 3)
     {
         HotLineViewController *hot = [self.storyboard instantiateViewControllerWithIdentifier:@"hotLineViewController"];
         [self.navigationController pushViewController:hot animated:YES];
     }
-    if(indexPath.row == 2)
+    if(indexPath.row == 4)
+    {
+        NSLog(@"意见与建议");
+    }
+    if(indexPath.row == 5)
     {
         AboutViewController *about = [self.storyboard instantiateViewControllerWithIdentifier:@"aboutViewController"];
         [self.navigationController pushViewController:about animated:YES];

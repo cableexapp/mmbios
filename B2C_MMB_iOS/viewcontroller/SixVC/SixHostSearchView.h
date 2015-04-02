@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SixHostSearchView : UIView<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface SixHostSearchView : UIView<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     UIScrollView *searchSV;
     
     NSArray *searchDataArray;
     
+    NSMutableArray *listArray;
+    
     UIButton *clearBtn;
+    
+    UITableView *searchTV;
 }
 
 - (id) initWithCustomFrame:(CGRect)rect;

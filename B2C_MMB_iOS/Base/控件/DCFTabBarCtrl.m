@@ -94,21 +94,21 @@
     unSelectmoreUnSelectImg = [UIImage imageWithCGImage:unSelectmoreUnSelectImg.CGImage scale:1.5 orientation:unSelectmoreUnSelectImg.imageOrientation];
     fifthNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"更多" image:unSelectmoreUnSelectImg selectedImage:selectmoreSelectImg];
     [fifthNavi.tabBarItem setTag:5];
-//    [fifthNavi.tabBarItem setTitle:@"分类"];
+    [fifthNavi.tabBarItem setTitle:@"分类"];
     
     
-    UIStoryboard *sixSB = [UIStoryboard storyboardWithName:@"SixSB" bundle:nil];
-    SixNavigationViewController *sixNavi = [sixSB instantiateViewControllerWithIdentifier:@"sixNavigationViewController"];
-    UIImage *sixNaviselectmoreSelectImg = [UIImage imageNamed:@"moreSelect.png"];
-    UIImage *sixNaviunSelectmoreUnSelectImg = [UIImage imageNamed:@"moreUnSelect.png"];
-    sixNaviselectmoreSelectImg = [UIImage imageWithCGImage:selectmoreSelectImg.CGImage scale:1.5 orientation:selectmoreSelectImg.imageOrientation];
-    sixNaviunSelectmoreUnSelectImg = [UIImage imageWithCGImage:unSelectmoreUnSelectImg.CGImage scale:1.5 orientation:unSelectmoreUnSelectImg.imageOrientation];
-    sixNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"分类" image:unSelectmoreUnSelectImg selectedImage:selectmoreSelectImg];
-    [sixNavi.tabBarItem setTag:6];
+//    UIStoryboard *sixSB = [UIStoryboard storyboardWithName:@"SixSB" bundle:nil];
+//    SixNavigationViewController *sixNavi = [sixSB instantiateViewControllerWithIdentifier:@"sixNavigationViewController"];
+//    UIImage *sixNaviselectmoreSelectImg = [UIImage imageNamed:@"moreSelect.png"];
+//    UIImage *sixNaviunSelectmoreUnSelectImg = [UIImage imageNamed:@"moreUnSelect.png"];
+//    sixNaviselectmoreSelectImg = [UIImage imageWithCGImage:selectmoreSelectImg.CGImage scale:1.5 orientation:selectmoreSelectImg.imageOrientation];
+//    sixNaviunSelectmoreUnSelectImg = [UIImage imageWithCGImage:unSelectmoreUnSelectImg.CGImage scale:1.5 orientation:unSelectmoreUnSelectImg.imageOrientation];
+//    sixNavi.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"分类" image:unSelectmoreUnSelectImg selectedImage:selectmoreSelectImg];
+//    [sixNavi.tabBarItem setTag:6];
     
     //set the tab bar items
-   // NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi,fifthNavi,sixNavi, nil];
-    NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi,sixNavi, nil];
+    NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi,fifthNavi, nil];
+//    NSArray *tabbarItems = [[NSArray alloc] initWithObjects:hostNavi,secondNavi,thirdNavi,fourthNavi,sixNavi, nil];
 
     self.viewControllers = tabbarItems;
 

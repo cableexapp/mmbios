@@ -292,6 +292,7 @@
         //    }
         if(result == 1)
         {
+            NSLog(@"delegate = %@",self.delegate);
             [self.delegate resultWithDic:dicRespon urlTag:self.urlTag isSuccess:theResultCode];
         }
         else if (result == 0)

@@ -24,6 +24,7 @@
 #import "B2CUpOrderData.h"
 #import "ChatListViewController.h"
 #import "ChatViewController.h"
+#import "DCFNavigationBar.h"
 #define GoodsDetail_URL @"http://mmb.fgame.com:8083/"
 
 @interface GoodsDetailViewController ()
@@ -91,6 +92,9 @@
     UIWebView *cellWebView;
     
     NSString *memberid;
+    
+    UIView *buttomView;
+    //    UIView *naviView;   //导航条
 }
 @end
 
@@ -175,12 +179,33 @@
         [chooseColorAndCountView removeFromSuperview];
         chooseColorAndCountView = nil;
     }
+    if(tv)
+    {
+        [tv removeFromSuperview];
+        tv = nil;
+    }
+    if(buttomView)
+    {
+        [buttomView removeFromSuperview];
+        buttomView = nil;
+    }
     backView.hidden = YES;
+    
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.alpha = 1;
+    
+    //    [tv setContentOffset:CGPointMake(0, 64)];
+    
+    //    [self.navigationController.navigationBar setHidden:NO];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:YES];
+    
     [self.navigationController.tabBarController.tabBar setHidden:YES];
+    
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -195,44 +220,36 @@
             [view setHidden:YES];
         }
     }
-    num = @"0";
     
-    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightBtn setBackgroundImage:[UIImage imageNamed:@"购物车"] forState:UIControlStateNormal];
-    [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
-    [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
-    right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
-    countLabel = [[UILabel alloc] init];
-    countLabel.frame = CGRectMake(22, 0, 18, 18);
-    countLabel.layer.borderWidth = 1;
-    countLabel.layer.cornerRadius = 10;
-    countLabel.textColor = [UIColor whiteColor];
-    countLabel.font = [UIFont systemFontOfSize:11];
-    countLabel.textAlignment = 1;
-    countLabel.hidden = YES;
-    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
-    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
-    [rightBtn addSubview:countLabel];
-    self.navigationItem.rightBarButtonItem = right;
-    [self loadShopCarCount];
-}
+    [self.navigationController.navigationBar setAlpha:0.2];
+    if(self.navigationController.navigationBar.translucent == NO)
+    {
+        [self.navigationController.navigationBar setTranslucent:YES];
+    }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+    buttomView = [[UIView alloc] init];
+    chooseColorAndCountView = [[UIView alloc] init];
     
-    [self pushAndPopStyle];
+    if(self.navigationController.navigationBar.translucent == YES)
+    {
+        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,  MainScreenHeight-50) style:0];
+        [buttomView setFrame:CGRectMake(0, MainScreenHeight-50, MainScreenWidth, 50)];
+        [chooseColorAndCountView setFrame:CGRectMake(0, ScreenHeight-290, ScreenWidth, 290)];
+    }
+    else
+    {
+        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,  MainScreenHeight-50-64) style:0];
+        [buttomView setFrame:CGRectMake(0, MainScreenHeight-50-64, MainScreenWidth, 50)];
+        [chooseColorAndCountView setFrame:CGRectMake(0, ScreenHeight-290+64, ScreenWidth, 290)];
+    }
+    [tv setDataSource:self];
+    [tv setDelegate:self];
+    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
+    tv.showsHorizontalScrollIndicator = NO;
+    tv.showsVerticalScrollIndicator = NO;
+    [tv setBackgroundColor:[UIColor whiteColor]];
+    [self.view addSubview:tv];
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
-    showCell = YES;
-    
-    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线商品详情"];
-    self.navigationItem.titleView = top;
-    
-    UIView *buttomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-50-64, ScreenWidth, 50)];
     [buttomView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:buttomView];
     
@@ -267,23 +284,66 @@
         [buyOrAddBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         [buttomView addSubview:buyOrAddBtn];
     }
-    [self loadRequest];
     
-    tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,  ScreenHeight-50-64) style:0];
-    [tv setDataSource:self];
-    [tv setDelegate:self];
-    tv.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tv.showsHorizontalScrollIndicator = NO;
-    tv.showsVerticalScrollIndicator = NO;
-    [tv setBackgroundColor:[UIColor whiteColor]];
-    [self.view addSubview:tv];
+    rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightBtn setBackgroundImage:[UIImage imageNamed:@"购物车"] forState:UIControlStateNormal];
+    [rightBtn setFrame:CGRectMake(0, 0, 34,34)];
+    [rightBtn addTarget:self action:@selector(rightItemClick:) forControlEvents:UIControlEventTouchUpInside];
+    right = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
+    countLabel = [[UILabel alloc] init];
+    countLabel.frame = CGRectMake(22, 0, 18, 18);
+    countLabel.layer.borderWidth = 1;
+    countLabel.layer.cornerRadius = 10;
+    countLabel.textColor = [UIColor whiteColor];
+    countLabel.font = [UIFont systemFontOfSize:11];
+    countLabel.textAlignment = 1;
+    countLabel.hidden = YES;
+    countLabel.layer.borderColor = [[UIColor clearColor] CGColor];
+    countLabel.layer.backgroundColor = [[UIColor redColor] CGColor];
+    [rightBtn addSubview:countLabel];
+    self.navigationItem.rightBarButtonItem = right;
+    [self loadShopCarCount];
+    
+}
+
+- (void) back:(UIButton *) sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self pushAndPopStyle];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    app = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    showCell = YES;
+    
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"家装线商品详情"];
+    self.navigationItem.titleView = top;
+    
+    
+    num = @"0";
+    
+    
+    self.navigationController.navigationBar.translucent = YES;
+    
+    
+    
     
     backView = [[UIView alloc] init];
-    backView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    backView.frame = CGRectMake(0, 0, MainScreenWidth,  MainScreenHeight);
     backView.backgroundColor = [UIColor lightGrayColor];
     backView.hidden = YES;
     backView.alpha = 0.8;
     [self.view insertSubview:backView aboveSubview:tv];
+    
+    
+    [self loadRequest];
     
     cellBtnArray = [[NSMutableArray alloc] init];
 }
@@ -962,7 +1022,7 @@
                     NSString *s1 = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"loginName"];
                     
                     NSString *discusserName = [s1 stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
+                    
                     //1匿名  0本名
                     if([isAnonymous intValue] == 1)
                     {
@@ -973,7 +1033,7 @@
                         NSRange range_2;
                         range_2 = NSMakeRange(discusserName.length-1, 1);
                         NSString *lastStr = [discusserName substringWithRange:range_2];
-     
+                        
                         if (discusserName.length == 2)
                         {
                             finalName = [NSString stringWithFormat:@"%@*(匿名)",firstStr];
@@ -987,7 +1047,7 @@
                     {
                         finalName = discusserName;
                     }
-
+                    
                     CGSize nameSize;
                     
                     UILabel *nameLabel = nil;
@@ -1007,7 +1067,7 @@
                         [nameLabel setTextColor:[UIColor blackColor]];
                         [cell.contentView addSubview:nameLabel];
                         
-
+                        
                         NSString *color = [[detailData.ctems objectAtIndex:indexPath.row-6] objectForKey:@"colorName"];
                         NSString *colorStr = [NSString stringWithFormat:@"颜色分类:%@",color];
                         CGSize colorSize = [DCFCustomExtra adjustWithFont:[UIFont systemFontOfSize:10] WithText:colorStr WithSize:CGSizeMake(MAXFLOAT, 30)];
@@ -1063,7 +1123,7 @@
                     {
                         contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,nameLabel.frame.origin.y+nameLabel.frame.size.height, ScreenWidth-20, 0)];
                     }
-   
+                    
                     UIView *judgementLineView;
                     if (!judgementLineView)
                     {
@@ -1302,7 +1362,7 @@
 
 - (AppDelegate *)appDelegate
 {
-	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 #pragma mark - 在线客服
@@ -1382,7 +1442,7 @@
         
         chooseCountBtnArray = [[NSMutableArray alloc] init];
         
-        chooseColorAndCountView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-220, ScreenWidth, 290)];
+        
         [chooseColorAndCountView setBackgroundColor:[UIColor whiteColor]];
         
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
@@ -1585,7 +1645,7 @@
         
         itemid = [NSString stringWithFormat:@"%@",[[detailData.coloritems objectAtIndex:tag] objectForKey:@"recordId"]];
         itemprice = colorPrice;
-
+        
         if(detailData.coloritems.count == 0 || [detailData.coloritems isKindOfClass:[NSNull class]])
         {
             
@@ -1769,21 +1829,21 @@
         if(btnTag == 100)
         {
 #pragma mark - 立即购买
-
+            
             memberid = [[NSUserDefaults standardUserDefaults] objectForKey:@"memberId"];
-
-                NSString *time = [DCFCustomExtra getFirstRunTime];
-                
-                NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
-                
-                NSString *token = [DCFCustomExtra md5:string];
-                
-                
-                NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@&itemprice=%@",_productid,token,[self getMemberId],itemid,num,itemprice];
-                NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
-                conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
-                [conn getResultFromUrlString:urlString postBody:pushString method:POST];
-                
+            
+            NSString *time = [DCFCustomExtra getFirstRunTime];
+            
+            NSString *string = [NSString stringWithFormat:@"%@%@",@"DirectBuy",time];
+            
+            NSString *token = [DCFCustomExtra md5:string];
+            
+            
+            NSString *pushString = [NSString stringWithFormat:@"productid=%@&token=%@&memberid=%@&itemid=%@&num=%@&itemprice=%@",_productid,token,[self getMemberId],itemid,num,itemprice];
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",URL_HOST_CHEN,@"/B2CAppRequest/DirectBuy.html?"];
+            conn = [[DCFConnectionUtil alloc] initWithURLTag:URLDirectBuyTag delegate:self];
+            [conn getResultFromUrlString:urlString postBody:pushString method:POST];
+            
             
         }
         else
@@ -1845,6 +1905,58 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.1;
+}
+
+#pragma mark - 导航条渐变
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (tv == (UITableView *)scrollView)
+    {
+        CGFloat alpha = 0.0;
+        NSLog(@"scrollView.contentOffset.y = %f",scrollView.contentOffset.y);
+        if (scrollView.contentOffset.y >= -64.f)
+        {
+            alpha = fabsf((scrollView.contentOffset.y+64)/64.f);
+            if(alpha < 0.2 || alpha > 1)
+            {
+                
+            }
+            else
+            {
+                self.navigationController.navigationBar.alpha = alpha;
+            }
+        }
+        else
+        {
+            alpha = 64.f/fabsf(scrollView.contentOffset.y);
+            if(alpha < 0.2)
+            {
+                
+            }
+            else
+            {
+                self.navigationController.navigationBar.alpha = (alpha>0.2)?0.2:alpha;
+            }
+        }
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (tv == (UITableView *)scrollView)
+    {
+        if (scrollView.contentSize.height > 0 && (scrollView.contentSize.height-scrollView.frame.size.height)>0)
+        {
+            if (scrollView.contentOffset.y >= scrollView.contentSize.height-scrollView.frame.size.height)
+            {
+                
+            }
+            else
+            {
+            }
+        }
+        
+    }
 }
 
 - (void) hudWasHidden:(MBProgressHUD *)hud

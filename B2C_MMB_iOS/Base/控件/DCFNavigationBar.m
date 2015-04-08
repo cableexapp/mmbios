@@ -24,8 +24,12 @@
 
 - (void) awakeFromNib
 {
+//    [self setTranslucent:YES];
+    //ios7下面更改的是导航条的背景色，ios6下面更改的是返回按钮的背景色
     if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
+//        [self setBackgroundImage:[DCFCustomExtra imageWithColor:[UIColor redColor] size:CGSizeMake(1, 1)] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
+
         [self setBackgroundImage:[DCFCustomExtra imageWithColor:[DCFColorUtil colorFromHexRGB:@"#1465ba"] size:CGSizeMake(1, 1)] forBarPosition:UIBarPositionTopAttached barMetrics:UIBarMetricsDefault];
     }
     else
@@ -34,6 +38,12 @@
     }
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
 }
+
+- (void) changeBackGroundColor
+{
+
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

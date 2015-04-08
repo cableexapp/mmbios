@@ -17,6 +17,7 @@
 #import "B2CShoppingListViewController.h"
 #import "ShoppingHostViewController.h"
 #import "HostTableViewController.h"
+#import "NetDownPayViewController.h"
 
 @interface ChoosePayTableViewController ()
 {
@@ -28,6 +29,8 @@
     UIView *cellBackView;
     
     UIButton *payBtn;
+    
+    UIButton *netDownPayBtn;
 }
 @end
 
@@ -145,6 +148,20 @@
     [payBtn setBackgroundColor:[UIColor colorWithRed:9/255.0 green:99/255.0 blue:189/255.0 alpha:1.0]];
     [payBtn addTarget:self action:@selector(payBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [payBtn setFrame:CGRectMake(20, 10, ScreenWidth-40, 40)];
+    
+    netDownPayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [netDownPayBtn setTitle:@"线下支付" forState:UIControlStateNormal];
+    [netDownPayBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [netDownPayBtn setBackgroundColor:[UIColor redColor]];
+    [netDownPayBtn setFrame:CGRectMake(MainScreenWidth-120, 10, 100, 40)];
+    [netDownPayBtn addTarget:self action:@selector(netDownPayBtnclick:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:netDownPayBtn];
+}
+
+- (void) netDownPayBtnclick:(UIButton *) sender
+{
+    NetDownPayViewController *netDownPayViewController = [[NetDownPayViewController alloc] initWithNibName:@"NetDownPayViewController" bundle:nil];
+    [self.navigationController pushViewController:netDownPayViewController animated:YES];
 }
 
 - (void) payBtnClick:(UIButton *) sender
@@ -182,7 +199,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -231,7 +248,7 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellId = [NSString stringWithFormat:@"cell%d%d",indexPath.section,indexPath.row];
+    NSString *cellId = [NSString stringWithFormat:@"cell%ld%ld",(long)indexPath.section,(long)indexPath.row];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(!cell)
     {
@@ -249,6 +266,10 @@
     if(indexPath.row == 1)
     {
         [cell.contentView addSubview:payBtn];
+    }
+    if(indexPath.row == 2)
+    {
+        [cell.contentView addSubview:netDownPayBtn];
     }
     return cell;
 }

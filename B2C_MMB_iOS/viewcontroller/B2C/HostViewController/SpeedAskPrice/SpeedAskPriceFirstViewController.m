@@ -545,7 +545,7 @@
     {
         UIImage *img = [chooseImageArray objectAtIndex:i];
         
-        //图片压缩
+#pragma mark - 图片压缩
         CGSize imagesize = img.size;
         CGFloat scale = 0.0;
         CGFloat Height = 0.0;

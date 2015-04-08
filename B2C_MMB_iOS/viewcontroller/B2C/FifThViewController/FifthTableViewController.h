@@ -11,16 +11,21 @@
 #import "MBProgressHUD.h"
 #import "XMPPFramework.h"
 
-@interface FifthTableViewController : UITableViewController<ConnectionDelegate,MBProgressHUDDelegate,UIAlertViewDelegate,XMPPRoomDelegate>
+@interface FifthTableViewController : UITableViewController<ConnectionDelegate,MBProgressHUDDelegate,UIAlertViewDelegate,XMPPRoomDelegate,UIActionSheetDelegate>
 {
     MBProgressHUD *HUD;
     DCFConnectionUtil *conn;
     XMPPRoom *xmppRoom;
+    
+    UIActionSheet *as;
 }
 @property (weak, nonatomic) IBOutlet UIButton *logOutBtn;
 @property (weak, nonatomic) IBOutlet UIView *view1;
 @property (weak, nonatomic) IBOutlet UIView *view2;
 @property (weak, nonatomic) IBOutlet UIView *view3;
 @property (nonatomic,strong) XMPPRoom *xmppRoom;
+
+@property (weak, nonatomic) IBOutlet UIButton *cacheBtn;
+
 
 @end

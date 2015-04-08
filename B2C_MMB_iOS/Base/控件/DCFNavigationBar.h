@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ChangeBackGroundColor <NSObject>
+
+- (void) changeBackGroundColor;
+
+@end
+
 @interface DCFNavigationBar : UINavigationBar
 
 @end
+

@@ -40,10 +40,6 @@
 //    NSLog(@"%@",LibraryDirectory);
     sdPath = [NSString stringWithFormat:@"%@/%@/%@",LibraryDirectory,@"Caches",@"com.hackemist.SDWebImageCache.default"];
 //    NSLog(@"%@",sdPath);
-    
-    NSLog(@"%lld",[self fileSizeAtPath:sdPath]);
-    
-    NSLog(@"%f",sdPicCache);
 }
 
 - (void)viewDidLoad
@@ -124,10 +120,6 @@
             {
                 NSError *err;
                 [fileMgr removeItemAtPath:sdPath error:&err];
-                
-                NSLog(@"%lld",[self fileSizeAtPath:sdPath]);
-                
-                NSLog(@"%f",sdPicCache);
             }
             break;
         }

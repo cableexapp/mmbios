@@ -31,6 +31,11 @@
     BOOL isPopShow;
     int tempCount;
     int tempShopCar;
+    
+    
+    NSString *sdPath;
+    
+    float sdPicCache;  //SDWebImage图片缓存大小
 }
 @end
 
@@ -94,6 +99,21 @@
     self.tableView.scrollEnabled = YES;
     isPopShow = NO;
     [KxMenu dismissMenu];
+    
+    //    NSLog(@"%@",NSHomeDirectory());
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    //    NSLog(@"%@",paths);
+    NSString *LibraryDirectory = [paths objectAtIndex:0];
+    //    NSLog(@"%@",LibraryDirectory);
+    sdPath = [NSString stringWithFormat:@"%@/%@/%@",LibraryDirectory,@"Caches",@"com.hackemist.SDWebImageCache.default"];
+    //    NSLog(@"%@",sdPath);
+    
+    [self folderSizeAtPath:sdPath];
+    
+    [self.cacheBtn setTitle:[NSString stringWithFormat:@"%.2fM",sdPicCache] forState:UIControlStateNormal];
+    [self.cacheBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [self.cacheBtn.titleLabel setTextAlignment:NSTextAlignmentRight];
+    self.cacheBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 }
 
 - (void)viewDidLoad
@@ -125,6 +145,68 @@
 //    self.view2.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
 //    self.view3.backgroundColor = [UIColor colorWithRed:213/255.0 green:213/255.0 blue:213/255.0 alpha:1.0];
 }
+
+#pragma mark - 单个文件的大小
+- (long long) fileSizeAtPath:(NSString*) filePath{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:filePath]){
+        return [[manager attributesOfItemAtPath:filePath error:nil] fileSize];
+    }
+    return 0;
+}
+
+#pragma mark - 遍历文件夹获得文件夹大小，返回多少M
+- (float ) folderSizeAtPath:(NSString*) folderPath
+{
+    NSFileManager* manager = [NSFileManager defaultManager];
+    if (![manager fileExistsAtPath:folderPath]) return 0;
+    NSEnumerator *childFilesEnumerator = [[manager subpathsAtPath:folderPath] objectEnumerator];
+    NSString* fileName;
+    long long folderSize = 0;
+    while ((fileName = [childFilesEnumerator nextObject]) != nil){
+        NSString* fileAbsolutePath = [folderPath stringByAppendingPathComponent:fileName];
+        folderSize += [self fileSizeAtPath:fileAbsolutePath];
+    }
+    sdPicCache = folderSize/(1024.0*1024.0);
+    return sdPicCache;
+}
+
+- (void) actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+        {
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
+            BOOL bRet = [fileMgr fileExistsAtPath:sdPath];
+            if (bRet)
+            {
+                NSError *err;
+                [fileMgr removeItemAtPath:sdPath error:&err];
+                
+                [self.cacheBtn setTitle:[NSString stringWithFormat:@"%.2fM",[self folderSizeAtPath:sdPath]] forState:UIControlStateNormal];
+                [self.tableView reloadData];
+            }
+            break;
+        }
+        case 1:
+        {
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (IBAction)cacheBtnClick:(id)sender
+{
+    as = [[UIActionSheet alloc] initWithTitle:@"您确定要清除缓存图片吗？"
+                                     delegate:self
+                            cancelButtonTitle:@"取消"
+                       destructiveButtonTitle:@"确定"
+                            otherButtonTitles:nil, nil];
+    [as showInView:[UIApplication sharedApplication].keyWindow];
+}
+
 
 //请求询价车商品数量
 -(void)loadbadgeCount

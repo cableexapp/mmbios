@@ -21,6 +21,7 @@
 #import "MyShoppingListViewController.h"
 #import "DCFStringUtil.h"
 #import "B2CSearchViewController.h"
+#import "SpeedAskPriceFirstViewController.h"
 
 #define DEGREES_TO_RADIANS(angle) ((angle)/180.0 *M_PI)
 
@@ -67,6 +68,8 @@
     NSMutableArray *sectionBtnIvArray;
     
     UIButton *selctBtn;
+    
+    UIButton *CustomizationBtn;
 }
 @end
 
@@ -136,6 +139,20 @@
     if (tempBtand.length > 0 || tempModel.length > 0 || tempSpec.length > 0 ||tempUse.length > 0)
     {
         flag = NO;
+    }
+    
+    if(!CustomizationBtn)
+    {
+        CustomizationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [CustomizationBtn setTitle:@"定制" forState:UIControlStateNormal];
+        [CustomizationBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [CustomizationBtn setFrame:CGRectMake(MainScreenWidth-20-50*ScreenScaleX, MainScreenHeight-20-50*ScreenScaleX, 50*ScreenScaleX, 50*ScreenScaleX)];
+        CustomizationBtn.layer.cornerRadius = 50*ScreenScaleX/2;
+        CustomizationBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        CustomizationBtn.layer.borderWidth = 1.0f;
+        [CustomizationBtn setBackgroundColor:[UIColor whiteColor]];
+        [CustomizationBtn addTarget:self action:@selector(CustomizationBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [[UIApplication sharedApplication].keyWindow insertSubview:CustomizationBtn aboveSubview:tv];
     }
 }
 
@@ -239,6 +256,12 @@
     }
     searchTextField.text = nil;
     flag = YES;
+    
+    if(CustomizationBtn)
+    {
+        [CustomizationBtn removeFromSuperview];
+        CustomizationBtn = nil;
+    }
 }
 
 - (void) selectBtnClick:(UIButton *) sender
@@ -540,6 +563,17 @@
     //    设置隐藏背景VIEW的通知事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView:) name:@"closeBackView" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadNomalData:) name:@"reloadNomalData" object:nil];
+    
+    
+
+}
+
+- (void) CustomizationBtnClick:(UIButton *) sender
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    SpeedAskPriceFirstViewController *speedAskPriceFirstViewController = [sb instantiateViewControllerWithIdentifier:@"speedAskPriceFirstViewController"];
+    speedAskPriceFirstViewController.fromWherePush = @"首页";
+    [self.navigationController pushViewController:speedAskPriceFirstViewController animated:YES];
 }
 
 -(void)reloadNomalData:(NSNotification *)sender

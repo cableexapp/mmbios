@@ -102,7 +102,6 @@ BOOL isPopShow = NO;
         [conn stopConnection];
         conn = nil;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"stopNsTimer" object:nil];
     [self setHidesBottomBarWhenPushed:NO];
     self.tableView.scrollEnabled = YES;
     [KxMenu dismissMenu];

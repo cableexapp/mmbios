@@ -27,6 +27,10 @@
         [titleArray release];
         titleArray=nil;
     }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"startNsTimer" object:nil];
+
+    
     [super dealloc];
 }
 

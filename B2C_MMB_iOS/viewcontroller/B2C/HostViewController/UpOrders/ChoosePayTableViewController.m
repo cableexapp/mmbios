@@ -92,6 +92,8 @@
 {
     [super viewDidLoad];
     
+    [self pushAndPopStyle];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     //    [self pushAndPopStyle];
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];

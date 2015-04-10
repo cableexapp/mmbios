@@ -39,6 +39,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    DCFTopLabel *top = [[DCFTopLabel alloc] initWithTitle:@"提交线下支付凭证"];
+    self.navigationItem.titleView = top;
+    
     [self.uplabel setFrame:CGRectMake(self.uplabel.frame.origin.x, self.uplabel.frame.origin.y, self.uplabel.frame.size.width,30*ScreenScaleY)];
     
     lastUpPicBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -60,7 +63,7 @@
     [onlinePayBtn setBackgroundColor:[UIColor redColor]];
     [onlinePayBtn setFrame:CGRectMake(20, upBtn.frame.origin.y + upBtn.frame.size.height + 10, 100*ScreenScaleX, 30*ScreenScaleY)];
     [onlinePayBtn addTarget:self action:@selector(onlinePayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:upBtn];
+    [self.view addSubview:onlinePayBtn];
 }
 
 - (void) lastUpPicBtnClick:(UIButton *) sender
@@ -443,13 +446,11 @@
         for(int i=0;i<btnArray.count;i++)
         {
             [picBtnArray addObject:[btnArray objectAtIndex:i]];
-            UIButton *picBtn = [picBtnArray objectAtIndex:i];
-            //            [picBtn setBackgroundColor:[UIColor redColor]];
+//            UIButton *picBtn = [picBtnArray objectAtIndex:i];
             
         }
     }
     
-    NSLog(@"%@",chooseImageArray);
     
     [self refreshView];
 }
@@ -499,7 +500,7 @@
 
 - (void) onlinePayBtnClick:(UIButton *) sender
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

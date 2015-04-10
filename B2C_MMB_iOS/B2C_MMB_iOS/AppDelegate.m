@@ -221,6 +221,7 @@ NSString *strUserId = @"";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
 }
 
+#pragma mark - 启动
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 //    _ScreenScaleX = MainScreenWidth/320 + (float)((int)MainScreenWidth%(int)320);

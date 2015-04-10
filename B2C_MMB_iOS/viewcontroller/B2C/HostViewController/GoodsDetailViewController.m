@@ -228,20 +228,19 @@
     }
 
     buttomView = [[UIView alloc] init];
-    chooseColorAndCountView = [[UIView alloc] init];
-    
-    if(self.navigationController.navigationBar.translucent == YES)
-    {
+
+
+//    if(self.navigationController.navigationBar.translucent == YES)
+//    {
         tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,  MainScreenHeight-50) style:0];
         [buttomView setFrame:CGRectMake(0, MainScreenHeight-50, MainScreenWidth, 50)];
-        [chooseColorAndCountView setFrame:CGRectMake(0, ScreenHeight-290, ScreenWidth, 290)];
-    }
-    else
-    {
-        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,  MainScreenHeight-50-64) style:0];
-        [buttomView setFrame:CGRectMake(0, MainScreenHeight-50-64, MainScreenWidth, 50)];
-        [chooseColorAndCountView setFrame:CGRectMake(0, ScreenHeight-290+64, ScreenWidth, 290)];
-    }
+//    }
+//    else
+//    {
+//        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth,  MainScreenHeight-50-64) style:0];
+//        [buttomView setFrame:CGRectMake(0, MainScreenHeight-50-64, MainScreenWidth, 50)];
+//        [chooseColorAndCountView setFrame:CGRectMake(0, ScreenHeight-290+64, ScreenWidth, 290)];
+//    }
     [tv setDataSource:self];
     [tv setDelegate:self];
     tv.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -337,9 +336,9 @@
     
     backView = [[UIView alloc] init];
     backView.frame = CGRectMake(0, 0, MainScreenWidth,  MainScreenHeight);
-    backView.backgroundColor = [UIColor lightGrayColor];
+    backView.backgroundColor = [UIColor redColor];
     backView.hidden = YES;
-    backView.alpha = 0.8;
+    backView.alpha = 1;
     [self.view insertSubview:backView aboveSubview:tv];
     
     
@@ -1442,7 +1441,8 @@
         
         chooseCountBtnArray = [[NSMutableArray alloc] init];
         
-        
+        chooseColorAndCountView = [[UIView alloc] init];
+        [chooseColorAndCountView setFrame:CGRectMake(0, MainScreenHeight-290, ScreenWidth, 290)];
         [chooseColorAndCountView setBackgroundColor:[UIColor whiteColor]];
         
         UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 60, 60)];
